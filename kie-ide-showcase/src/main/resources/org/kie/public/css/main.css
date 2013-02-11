@@ -1,0 +1,345 @@
+.modal .options {
+    background-color: #FFF;
+    border-top: 1px solid #b1b1b1;
+    height: 100px;
+    -webkit-box-shadow:  0px -2px 10px 0px rgba(0,0,0,.3); 
+    box-shadow:  0px -2px 10px 0px rgba(0,0,0,.3);
+}
+.modal .options .wrapper {
+    padding: 0;
+    margin: 1px 0;
+}
+
+.modal-popup{
+  position: relative !important;
+  top: 0px !important;
+  left: 0px !important;
+  margin: 0px !important;
+}
+
+.modal .options .wrapper .option-button{
+    float: left;
+    width: 25%;
+    height: 98px;
+    display: block;
+    border-right: 1px solid #b1b1b1;
+    background-repeat: no-repeat;
+    background-position: top center;
+    text-indent: -9000px;
+    opacity: .5;
+}
+
+.modal .options .wrapper .option-button:hover{
+    opacity: 1;
+}
+
+.modal .options .wrapper  .option-button.start{
+    background-image: url(../images/start-icon-big.png);
+        
+}
+
+.modal .options .wrapper  .option-button.abort{
+    background-image: url(../images/abort-icon-big.png);        
+}
+
+.modal .options .wrapper  .option-button.forward{
+    background-image: url(../images/foward-icon-big.png);        
+}
+
+.modal .options .wrapper  .option-button.save{
+    background-image: url(../images/save-icon-big.png);        
+}
+
+.modal .options .wrapper  .option-button.complete{
+    background-image: url(../images/complete-icon-big.png);        
+}
+
+.modal .options .wrapper  .option-button.attach{
+    background-image: url(../images/attach-icon-big.png);        
+}
+
+/*
+ *  TASK CSS
+ */
+
+.day-tasks-container .top {
+    background-color: #bfbfbf;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #6d6b6c;
+    height: 24px;
+    line-height: 24px;
+}
+
+.day .tasks-list {
+    padding: 5px 20px 20px 20px;
+}
+
+.task {
+    background-color: #FFF;
+    border: 1px solid #9a9a9a;
+    margin-bottom: 5px;
+    -webkit-box-shadow: 0px 2px 0px 0px rgba(0,0,0,.2); 
+    box-shadow: 0px 2px 0px 0px rgba(0,0,0,.2);
+    position:relative;
+    padding: 1px;
+    -webkit-transition: all .25s;
+    transition: all .25s;
+}
+
+.task:hover {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,.2); 
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,.2); 
+    background-color: #e9faff;
+}
+
+.task .priority {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+
+
+.priority.five {
+    background-color: #ffaa00;
+}
+.priority.four {
+    background-color: #ffbf40;
+}
+.priority.three {
+    background-color: #ffd47f;
+}
+.priority.two {
+    background-color: #ffeabf;
+}
+.priority.one {
+    background-color: #fff7e6;
+}
+.priority span {
+    opacity: .3;
+}
+
+.priority.circle {
+    width: 10px;
+    display:inline-block;
+    height: 10px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+
+.task .hour {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 9px;
+    color: #FFF;
+    background-color: #979797;
+    padding: 0 4px;
+    font-family: Verdana, sans-serif;
+}
+.task .task-options {
+    position: absolute;
+    right: 0px;
+    top: 1px;
+}
+
+.task .task-options > a, .task .task-options > div {
+    display: inline-block;
+    background-repeat: no-repeat;
+    margin-right: 1px;
+}
+
+.task.in-progress .task-options > div {
+    background-color: #66cc00 !important;
+}
+
+.task.in-progress .task-options > a, .task.in-progress .task-options .sub-options > a  {
+    background-color: #d2f0b2 !important;
+}
+
+.task.in-progress .task-options > a:hover, .task.in-progress .task-options .sub-options > a:hover  {
+    background-color: #66cc00 !important;
+}
+
+
+.task .task-options .group-task {
+    width: 43px;
+    height: 43px;
+    overflow: hidden;
+    text-indent: -9000px;
+    background-color: #333333;
+    background-image: url(../images/group-task-icon.png);   
+}
+.task .task-options .personal-task {
+    width: 43px;
+    height: 43px;
+    overflow: hidden;
+    text-indent: -9000px;
+    background-color: #333333;
+    background-image: url(../images/personal-task-icon.png);   
+}
+.task .task-options .clickable {
+    width: 43px;
+    height: 43px;
+    overflow: hidden;
+    text-indent: -9000px;
+    background-color: #b2b2b2;
+}
+.task .task-options .clickable:hover {
+    background-color: #999;
+    -webkit-box-shadow: inset 0px 2px 8px 0px rgba(0,0,0,.4); 
+    box-shadow: inset 0px 2px 8px 0px rgba(0,0,0,.4);
+}
+
+
+.task .task-options .start {
+    background-image: url(../images/start-icon.png); 
+} 
+.task .task-options .claim {
+    background-image: url(../images/claim-icon.png); 
+}
+.task .task-options .release {
+    background-image: url(../images/release-icon.png); 
+}
+
+.task .task-options .complete {
+    background-image: url(../images/complete-icon.png); 
+}  
+
+.task .task-options .sub-options {
+    position: relative;
+    height: 43px;
+    width: auto;
+}
+
+.task .task-options .sub-options .arrow{
+    position: absolute;
+    right: -1px;
+    top: 0;
+    background-image: url(../images/sub-options.png);
+    width: 10px;
+    height: 43px;
+    background-repeat: no-repeat;
+    background-position: center right;
+    z-index: 10;
+}
+
+.task.in-progress .task-options .sub-options .arrow {
+    background-image: url(../images/sub-options-active.png);
+}
+
+.task .task-options .sub-options div{
+    display: inline-block;
+}
+
+/* DAY VIEW */
+
+.day .task {
+    height: 43px;
+}
+
+.day .task .priority {
+    width: 43px;
+    height: 43px;
+    text-align: center;
+    line-height: 43px;
+}
+
+.day .task .task-name {
+    font-size: 18px;
+    color: #666;
+    line-height: 44px;
+    padding-left: 55px;
+}
+
+.day .task .task-name div {
+    color: #666; 
+    text-decoration: none;
+    display: block;
+}
+.day .task .task-name div:hover {
+    color: #3a4041;
+}
+
+/* WEEK VIEW */
+#section-content.week  {
+    height: 85%;
+}
+
+.week .day-tasks-container {
+    width: 20%;
+    float: left;
+    height: 100%;
+    border-right: 1px solid #929292;
+    margin-right: -1px;
+}
+
+.week .day-tasks-container .tasks-list {
+    height: 90%;
+    padding: 5px 5px 100px 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+}
+
+.week #task-container {
+    overflow: hidden;    
+}
+
+.week .task {
+    height: 43px;
+}
+
+.week .task .task-options {
+    display: none;
+
+}
+
+.week .task:hover .task-options {
+    display: block;
+    z-index: 20;
+    background-color: #FFF;
+    padding-left: 1px;
+}
+
+.week .task .priority {
+    height: 43px;
+    line-height: 43px;
+    display: block;
+    position: static;
+}
+
+.week .task .priority span {
+    display: none;
+}
+
+.week .task .task-name {
+    font-size: 14px;
+    color: #666;
+    line-height: 44px;
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+}
+
+.week .task .task-name div {
+    color: #666; 
+    text-decoration: none;
+    display: block;
+    padding-left: 10px;
+}
+.week .task .task-name div:hover {
+    color: #000;
+}
+
+
+.week .task.active {
+    border-right: 10px solid #66cc00;
+}
+
+
+.week .task.active:hover .task-options {
+
+}

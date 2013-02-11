@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module rename-to="org.kie.KIEShowcase">
+
+    <inherits name="org.kie.KIEShowcase"/>
+
+    <set-property name="user.agent" value="gecko1_8,safari"/>
+    <set-property name="locale" value="default"/>
+    
+</module>

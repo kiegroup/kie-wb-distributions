@@ -1,0 +1,103 @@
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN"
+        "http://jetty.mortbay.org/configure.dtd">
+
+<Configure id="sample-weld" class="org.mortbay.jetty.webapp.WebAppContext">
+
+  <Array id="plusConfig" type="java.lang.String">
+    <Item>org.mortbay.jetty.webapp.WebInfConfiguration</Item>
+    <Item>org.mortbay.jetty.plus.webapp.EnvConfiguration</Item>
+    <Item>org.mortbay.jetty.plus.webapp.Configuration</Item>
+    <Item>org.mortbay.jetty.webapp.JettyWebXmlConfiguration</Item>
+  </Array>
+  
+  <Call name="getConfiguration" class="bitronix.tm.TransactionManagerServices">
+    <Set name="serverId">jetty-btm-node0</Set>
+    <Set name="logPart1Filename">
+      <SystemProperty name="jetty.home" default="." />
+      btm1.tlog
+    </Set>
+    <Set name="logPart2Filename">
+      <SystemProperty name="jetty.home" default="." />
+      btm2.tlog
+    </Set>
+  </Call>
+    
+  <New id="tx" class="org.mortbay.jetty.plus.naming.Resource">
+    <Arg>java:comp/UserTransaction</Arg>
+    <Arg>
+      <Call name="getTransactionManager" class="bitronix.tm.TransactionManagerServices" />
+    </Arg>
+  </New>  
+  
+  <New id="tx" class="org.mortbay.jetty.plus.naming.Resource">
+    <Arg>java:comp/TransactionManager</Arg>
+    <Arg>
+      <Call name="getTransactionManager" class="bitronix.tm.TransactionManagerServices" />
+    </Arg>
+  </New> 
+  
+   <New id="txsyncreg" class="org.mortbay.jetty.plus.naming.Resource">
+    <Arg>java:comp/TransactionSynchronizationRegistry</Arg>
+    <Arg>
+      <Call name="getTransactionSynchronizationRegistry" class="bitronix.tm.TransactionManagerServices" />
+    </Arg>
+  </New> 
+    
+  <New id="jbpmConsoleDS" class="org.mortbay.jetty.plus.naming.Resource">
+    <Arg>jdbc/jbpmConsoleDS</Arg>
+    <Arg>
+      <New class="bitronix.tm.resource.jdbc.PoolingDataSource">
+        <Set name="uniqueName">jbpmConsoleDS</Set>
+        <Set name="className">org.h2.jdbcx.JdbcDataSource</Set>
+        <Set name="maxPoolSize">50</Set>
+        <Set name="allowLocalTransactions">true</Set>
+        <Get name="driverProperties">
+          <Put name="user">sa</Put>
+          <Put name="password">sasa</Put>
+          <Put name="URL">jdbc:h2:~/jbpm-console-ng</Put>
+        </Get>
+        <Call name="init" />
+      </New>
+    </Arg>
+  </New>  
+    
+    
+  
+  <New id="BeanManager" class="org.mortbay.jetty.plus.naming.Resource">
+    <Arg>
+      <Ref id="sample-weld"/>
+    </Arg>
+    <Arg>BeanManager</Arg>
+    <Arg>
+      <New class="javax.naming.Reference">
+        <Arg>javax.enterprise.inject.spi.BeanManager</Arg>
+        <Arg>org.jboss.weld.resources.ManagerObjectFactory</Arg>
+        <Arg/>
+      </New>
+    </Arg>
+  </New>
+
+  <New id="Errai" class="org.mortbay.jetty.plus.naming.Resource">
+    <Arg>
+      <Ref id="sample-weld"/>
+    </Arg>
+    <Arg>ErraiService</Arg>
+    <Arg>
+      <New class="javax.naming.Reference">
+        <Arg>org.jboss.errai.bus.server.service.ErraiService</Arg>
+        <Arg>org.jboss.errai.container.ErraiServiceObjectFactory</Arg>
+        <Arg/>
+      </New>
+    </Arg>
+  </New>
+    
+  <New id="emf" class="org.mortbay.jetty.plus.naming.Resource">
+    <Arg>jBPMEMF</Arg>
+    <Arg>
+      <Call name="createEntityManagerFactory" class="javax.persistence.Persistence" >
+        <Arg>org.jbpm.domain</Arg>
+      </Call>
+    </Arg>
+  </New> 
+  
+</Configure>
