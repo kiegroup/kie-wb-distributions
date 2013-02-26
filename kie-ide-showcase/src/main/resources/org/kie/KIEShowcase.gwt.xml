@@ -47,6 +47,10 @@
   <inherits name="org.kie.guvnor.dtablexls.GuvnorDecisionTableXLSEditorClient"/>
   <inherits name="org.kie.guvnor.query.GuvnorSearchScreenClient"/>
   <inherits name="org.kie.guvnor.explorer.GuvnorExplorerClient"/>
+  
+   <!-- designer -->
+  <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
+  <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
 
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/guvnor-showcase.css'/>

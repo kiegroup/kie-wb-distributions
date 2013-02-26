@@ -40,6 +40,11 @@ public class AppSetup {
     private final IOService         ioService         = new IOServiceDotFileImpl();
     private final ActiveFileSystems activeFileSystems = new ActiveFileSystemsImpl();
     
+    private static final String JBPM_REPO_PLAYGROUND = "git://jbpm-playground";
+    private static final String JBPM_ORIGIN_URL      = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground.git";
+    
+    
+    private FileSystem fsJBPM = null;
     @PostConstruct
     public void onStartup() {
         final String gitURL = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
@@ -65,7 +70,21 @@ public class AppSetup {
             put( "default://uf-playground", "uf-playground" );
         }}, fs.supportedFileAttributeViews() ) );
         
+        final URI jBPMfsURI = URI.create(JBPM_REPO_PLAYGROUND);
+        try {
+
+            final Map<String, Object> jBPMEnv = new HashMap<String, Object>();
+            jBPMEnv.put( "username", userName );
+            jBPMEnv.put( "password", password );
+            jBPMEnv.put( "origin", JBPM_ORIGIN_URL );
+            fsJBPM = ioService.newFileSystem( jBPMfsURI, env, BOOTSTRAP_INSTANCE );
+        } catch ( FileSystemAlreadyExistsException ex ) {
+            fsJBPM = ioService.getFileSystem( jBPMfsURI );
+        }
         
+        activeFileSystems.addBootstrapFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
+            put( JBPM_REPO_PLAYGROUND, "jbpm-playground" );
+        }}, fsJBPM.supportedFileAttributeViews() ) );
 
         
     }
@@ -82,6 +101,12 @@ public class AppSetup {
     @Named("fs")
     public ActiveFileSystems fileSystems() {
         return activeFileSystems;
+    }
+
+    @Produces
+    @Named("fileSystem")
+    public FileSystem fileSystem() {
+        return fsJBPM;
     }
 
 }

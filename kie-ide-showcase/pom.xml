@@ -539,7 +539,22 @@
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-xjc</artifactId>
     </dependency>
-
+    <!-- jBPM Designer -->
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-designer-client</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-designer-api</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-designer-backend</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
  
   <build>
@@ -632,6 +647,9 @@
             <compileSourcesArtifact>org.uberfire:uberfire-workbench</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-backend-commons</compileSourcesArtifact>
+
+            <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
 
             <compileSourcesArtifact>org.kie.commons:kie-nio2-model</compileSourcesArtifact>
 

@@ -25,18 +25,15 @@ import org.uberfire.client.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
 
 
-/**
- * A Perspective to show File Explorer
- */
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "Tasks", isDefault=false)
-public class TasksListPerspective {
+@WorkbenchPerspective(identifier = "Process Instances", isDefault=false)
+public class ProcessInstancesPerspective {
 
     @Perspective
     public PerspectiveDefinition getPerspective() {
         final PerspectiveDefinition p = new PerspectiveDefinitionImpl();
-        p.setName( "Tasks" );
-        p.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "Tasks List" ) ) );
+        p.setName( "Process Instances" );
+        p.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "Process Instance List" ) ) );
         p.setTransient(true);
         return p;
     }

@@ -42,6 +42,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import java.util.Arrays;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
@@ -61,6 +62,8 @@ import org.uberfire.shared.mvp.PlaceRequest;
 import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
 
 import static org.uberfire.client.workbench.widgets.menu.MenuFactory.*;
+import org.uberfire.security.Identity;
+import org.uberfire.security.Role;
 
 /**
  *
@@ -76,12 +79,21 @@ public class ShowcaseEntryPoint {
     private ActivityManager activityManager;
     @Inject
     private IOCBeanManager iocManager;
+    @Inject
+    public Identity identity;
 
     private SuggestBox actionText;
     private TextBox textSuggestBox;
     DefaultSuggestionDisplay suggestionDisplay;
     Map<String, String> actions = new HashMap<String, String>();
 
+       private String[] menuItems = new String[]{
+            "Tasks",
+            "Process Definitions",
+            "Process Instances",
+            "Authoring"
+    };
+    
     @AfterInitialization
     public void startApp() {
         loadStyles();
@@ -151,6 +163,9 @@ public class ShowcaseEntryPoint {
                 .newTopLevelMenu( "Views" )
                 .withItems( getPerspectives() )
                 .endMenu()
+                .newTopLevelMenu( "BPM" )
+                .withItems( getViews() )
+                .endMenu()
                 .newTopLevelMenu( "Logout" )
                 .respondsWith( new Command() {
                     @Override
@@ -177,11 +192,39 @@ public class ShowcaseEntryPoint {
                     }
                 } )
                 .endMenu()
+                .newTopLevelMenu( identity.getName() )
+                    .position( MenuPosition.RIGHT )
+                    .withItems( getRoles() )
+                .endMenu()
                 .build();
 
         menubar.aggregateWorkbenchMenus( menus );
     }
 
+     private List<? extends MenuItem> getRoles() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( identity.getRoles().size() );
+        for ( final Role role : identity.getRoles() ) {
+            result.add( MenuFactory.newSimpleItem( role.getName() ).endMenu().build().getItems().get( 0 ) );
+        }
+
+        return result;
+    }
+
+    private List<? extends MenuItem> getViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( menuItems.length );
+        Arrays.sort( menuItems );
+        for ( final String menuItem : menuItems ) {
+            result.add( MenuFactory.newSimpleItem( menuItem ).respondsWith( new Command() {
+                @Override
+                public void execute() {
+                    placeManager.goTo( new DefaultPlaceRequest( menuItem ) );
+                }
+            } ).endMenu().build().getItems().get( 0 ) );
+        }
+
+        return result;
+    }
+    
     private AbstractWorkbenchPerspectiveActivity getDefaultPerspectiveActivity() {
         AbstractWorkbenchPerspectiveActivity defaultPerspective = null;
         final Collection<IOCBeanDef<AbstractWorkbenchPerspectiveActivity>> perspectives = iocManager.lookupBeans( AbstractWorkbenchPerspectiveActivity.class );

@@ -24,19 +24,21 @@ import org.uberfire.client.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.client.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
 
+
 /**
  * A Perspective to show File Explorer
  */
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "Jobs")
-public class RequestsPerspective {
+@WorkbenchPerspective(identifier = "Process Definitions", isDefault=false)
+public class ProcessDefinitionsPerspective {
+
     @Perspective
     public PerspectiveDefinition getPerspective() {
         final PerspectiveDefinition p = new PerspectiveDefinitionImpl();
-        p.setName("Jobs");
-        p.getRoot().addPart(new PartDefinitionImpl(new DefaultPlaceRequest("Requests List")));
+        p.setName( "Process Definitions" );
+        p.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "Process Definition List" ) ) );
         p.setTransient(true);
         return p;
-
     }
+
 }
