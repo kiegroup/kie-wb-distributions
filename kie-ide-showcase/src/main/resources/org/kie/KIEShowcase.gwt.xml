@@ -4,26 +4,52 @@
 <module>
   <inherits name="org.jboss.errai.enterprise.CDI"/>
 
+  <!-- UberFire -->
   <inherits name="org.uberfire.security.UberfireSecurityClient"/>
-
   <inherits name="org.uberfire.UberfireWorkbench"/>
   <inherits name="org.uberfire.UberfireWidgetsCore"/>
   <inherits name="org.uberfire.UberfireBackend"/>
-    
-  <!-- Panels --> 
+
+  <!-- jBPM Panels -->
   <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksClient"/>
   <inherits name="org.jbpm.console.ng.pr.JbpmConsoleNGProcessRuntimeClient"/>
   <inherits name="org.jbpm.console.ng.bd.JbpmConsoleNGBusinessDomainClient"/>
   <inherits name="org.jbpm.console.ng.es.JbpmConsoleNGExecutorServiceClient"/>
   <inherits name="org.jbpm.console.ng.bh.JbpmConsoleNGBPMHomeClient"/>
   <inherits name="org.jbpm.console.ng.pm.JbpmConsoleNGProcessModelingClient"/>
-  
-  <inherits name="com.github.gwtbootstrap.Bootstrap" />  
+
   <inherits name="com.google.gwt.xml.XML" />
-  <!--inherits name='com.googlecode.gchart.GChart'/-->
   <inherits name="org.jboss.errai.ui.UI" />
-  
+
+  <!-- Drools Infrastructure -->
+  <inherits name="org.kie.guvnor.project.GuvnorProjectAPI"/>
+  <inherits name="org.kie.guvnor.datamodel.GuvnorDataModelAPI"/>
+  <inherits name="org.kie.guvnor.workingset.GuvnorWorkingsetClientAPI"/>
+  <inherits name="org.kie.guvnor.commons.data.GuvnorCommonsData"/>
+  <inherits name="org.kie.guvnor.services.GuvnorCoreServicesAPI"/>
+
+  <!-- Drools Editors -->
+  <inherits name='org.kie.guvnor.categories.GuvnorCategoriesEditorClient'/>
+  <inherits name="org.kie.guvnor.drltext.GuvnorDRLTextEditorClient"/>
+  <inherits name="org.kie.guvnor.enums.GuvnorEnumEditorClient"/>
+  <inherits name="org.kie.guvnor.factmodel.GuvnorFactModelEditorClient"/>
+  <inherits name="org.kie.guvnor.guided.rule.GuvnorGuidedRuleEditorClient"/>
+  <inherits name="org.kie.guvnor.guided.template.GuvnorGuidedTemplateEditorClient"/>
+  <inherits name="org.kie.guvnor.guided.dtable.GuvnorGuidedDecisionTableEditorClient"/>
+  <inherits name="org.kie.guvnor.guided.scorecard.GuvnorGuidedScoreCardEditorClient"/>
+  <inherits name="org.kie.guvnor.dsltext.GuvnorDSLTextEditorClient"/>
+  <inherits name="org.kie.guvnor.globals.GuvnorGlobalsEditorClient"/>
+  <inherits name="org.kie.guvnor.defaulteditor.DefaultEditorClient"/>
+  <inherits name="org.kie.guvnor.projecteditor.GuvnorProjectEditorClient"/>
+  <inherits name="org.kie.guvnor.projectconfigscreen.GuvnorProjectConfigScreenClient"/>
+  <inherits name="org.kie.guvnor.m2repo.GuvnorM2RepoEditorClient"/>
+  <inherits name="org.kie.guvnor.inbox.GuvnorInboxClient"/>
+  <inherits name="org.kie.guvnor.dtablexls.GuvnorDecisionTableXLSEditorClient"/>
+  <inherits name="org.kie.guvnor.query.GuvnorSearchScreenClient"/>
+  <inherits name="org.kie.guvnor.explorer.GuvnorExplorerClient"/>
+
   <!-- Specify the application specific style sheet. -->
+  <stylesheet src='css/guvnor-showcase.css'/>
   <stylesheet src='css/uberfire-showcase.css'/>
   <stylesheet src='css/chome-override.css'/>
   <stylesheet src='css/console.css'/>

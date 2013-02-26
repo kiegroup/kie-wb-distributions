@@ -1,4 +1,4 @@
-package org.kie.server.editors.jbpm.knowledge;
+package org.kie.backend;
 
 import java.io.Serializable;
 import java.util.ArrayList;

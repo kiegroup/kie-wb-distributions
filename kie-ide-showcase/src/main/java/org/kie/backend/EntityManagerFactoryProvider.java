@@ -1,4 +1,4 @@
-package org.kie.ng.server.impl;
+package org.kie.backend;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
