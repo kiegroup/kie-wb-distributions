@@ -77,7 +77,7 @@ public class AppSetup {
             jBPMEnv.put( "username", userName );
             jBPMEnv.put( "password", password );
             jBPMEnv.put( "origin", JBPM_ORIGIN_URL );
-            fsJBPM = ioService.newFileSystem( jBPMfsURI, env, BOOTSTRAP_INSTANCE );
+            fsJBPM = ioService.newFileSystem( jBPMfsURI, jBPMEnv, BOOTSTRAP_INSTANCE );
         } catch ( FileSystemAlreadyExistsException ex ) {
             fsJBPM = ioService.getFileSystem( jBPMfsURI );
         }
