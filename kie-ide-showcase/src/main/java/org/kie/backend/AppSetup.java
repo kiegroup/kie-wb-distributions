@@ -72,7 +72,7 @@ public class AppSetup {
             fs = ioService.getFileSystem( fsURI );
         }
 
-        activeFileSystems.addBootstrapFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
+        activeFileSystems.addFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
             put( GUVNOR_REPO_PLAYGROUND, "uf-playground" );
         }}, fs.supportedFileAttributeViews() ) );
         
@@ -90,7 +90,7 @@ public class AppSetup {
             fsJBPM = ioService.getFileSystem( jBPMfsURI );
         }
         
-        activeFileSystems.addBootstrapFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
+        activeFileSystems.addFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
             put( JBPM_REPO_PLAYGROUND, "jbpm-playground" );
         }}, fsJBPM.supportedFileAttributeViews() ) );
 
