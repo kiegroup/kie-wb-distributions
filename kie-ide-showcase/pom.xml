@@ -98,12 +98,7 @@
       <version>${project.version}</version>
     </dependency>
     
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-bpm-home-client</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
+    
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-process-modeling-client</artifactId>
@@ -543,17 +538,22 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-client</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-api</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-backend</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-ide-home-client</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
  
@@ -579,6 +579,8 @@
           <module>org.kie.FastCompiledKIEShowcase</module>
           <logLevel>INFO</logLevel>
           <compileSourcesArtifacts>
+            <compileSourcesArtifact>org.kie:kie-ide-home-client</compileSourcesArtifact>  
+              
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-api</compileSourcesArtifact>

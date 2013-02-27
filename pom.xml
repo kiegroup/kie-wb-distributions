@@ -30,7 +30,7 @@
   <description>KIE IDE Modules</description>
  
   <modules>
-  
+    <module>kie-ide-home</module>
     <module>kie-ide-showcase</module>
     <module>kie-ide-distribution-wars</module>
     

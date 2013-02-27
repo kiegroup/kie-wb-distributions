@@ -41,6 +41,10 @@
     <class>org.drools.persistence.info.SessionInfo</class>
     <class>org.jbpm.persistence.processinstance.ProcessInstanceInfo</class>
     <class>org.drools.persistence.info.WorkItemInfo</class>
+    
+    <class>org.jbpm.persistence.correlation.CorrelationKeyInfo</class>
+    <class>org.jbpm.persistence.correlation.CorrelationPropertyInfo</class>
+    
     <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

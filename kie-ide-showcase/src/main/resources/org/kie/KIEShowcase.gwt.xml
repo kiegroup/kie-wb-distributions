@@ -4,6 +4,8 @@
 <module>
   <inherits name="org.jboss.errai.enterprise.CDI"/>
 
+  <inherits name="org.kie.home.KIEHomeClient"/>
+  
   <!-- UberFire -->
   <inherits name="org.uberfire.security.UberfireSecurityClient"/>
   <inherits name="org.uberfire.UberfireWorkbench"/>
@@ -15,7 +17,6 @@
   <inherits name="org.jbpm.console.ng.pr.JbpmConsoleNGProcessRuntimeClient"/>
   <inherits name="org.jbpm.console.ng.bd.JbpmConsoleNGBusinessDomainClient"/>
   <inherits name="org.jbpm.console.ng.es.JbpmConsoleNGExecutorServiceClient"/>
-  <inherits name="org.jbpm.console.ng.bh.JbpmConsoleNGBPMHomeClient"/>
   <inherits name="org.jbpm.console.ng.pm.JbpmConsoleNGProcessModelingClient"/>
 
   <inherits name="com.google.gwt.xml.XML" />
