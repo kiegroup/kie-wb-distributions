@@ -81,9 +81,7 @@ public class HomeViewImpl extends Composite
   @Inject
   @DataField
   public IconAnchor discoverLabel;
-  @Inject
-  @DataField
-  public IconAnchor designLabel;
+  
   @Inject
   @DataField
   public IconAnchor deployLabel;
@@ -93,12 +91,10 @@ public class HomeViewImpl extends Composite
   @Inject
   @DataField
   public IconAnchor monitorLabel;
+  
   @Inject
   @DataField
-  public IconAnchor improveLabel;
-  @Inject
-  @DataField
-  public IconAnchor modelProcessAnchor;
+  public IconAnchor authorKnowledgeAnchor;
   
   @Inject
   @DataField
@@ -107,16 +103,16 @@ public class HomeViewImpl extends Composite
   @Inject
   @DataField
   public IconAnchor workProcessRuntimeAnchor;
-//  @Inject
-//  @DataField
-//  public IconAnchor deployIdentityAnchor;
+  @Inject
+  @DataField
+  public IconAnchor adminitrationAnchor;
   @Inject
   @DataField
   public IconAnchor monitorBAMAnchor;
   
-//  @Inject
-//  @DataField
-//  public IconAnchor deployJobsAnchor;
+  @Inject
+  @DataField
+  public IconAnchor m2repoAnchor;
   
   @Inject
   private Event<NotificationEvent> notification;
@@ -141,18 +137,18 @@ public class HomeViewImpl extends Composite
 
     
     
-    carouselImg5.setUrl(url + "images/mountain.jpg");
-    carouselImg4.setUrl(url + "images/mountain.jpg");
-    carouselImg3.setUrl(url + "images/mountain.jpg");
-    carouselImg2.setUrl(url + "images/mountain.jpg");
-    carouselImg1.setUrl(url + "images/mountain.jpg");
-    carouselImg0.setUrl(url + "images/mountain.jpg");
+    carouselImg5.setUrl(url + "images/flowers.jpg");
+    carouselImg4.setUrl(url + "images/flowers.jpg");
+    carouselImg3.setUrl(url + "images/flowers.jpg");
+    carouselImg2.setUrl(url + "images/flowers.jpg");
+    carouselImg1.setUrl(url + "images/flowers.jpg");
+    carouselImg0.setUrl(url + "images/flowers.jpg");
     
 
     
    
 
-    modelProcessAnchor.addClickHandler(new ClickHandler() {
+    authorKnowledgeAnchor.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
         PlaceRequest placeRequestImpl = new DefaultPlaceRequest("Authoring");
@@ -176,21 +172,21 @@ public class HomeViewImpl extends Composite
       }
     });
     
-//    deployIdentityAnchor.addClickHandler(new ClickHandler() {
-//      @Override
-//      public void onClick(ClickEvent event) {
-//        PlaceRequest placeRequestImpl = new DefaultPlaceRequest("Users and Groups");
-//        placeManager.goTo(placeRequestImpl);
-//      }
-//    });
-//    
-//    deployJobsAnchor.addClickHandler(new ClickHandler() {
-//      @Override
-//      public void onClick(ClickEvent event) {
-//        PlaceRequest placeRequestImpl = new DefaultPlaceRequest("Requests List");
-//        placeManager.goTo(placeRequestImpl);
-//      }
-//    });
+    adminitrationAnchor.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent event) {
+        PlaceRequest placeRequestImpl = new DefaultPlaceRequest("org.kie.guvnor.client.perspectives.administration");
+        placeManager.goTo(placeRequestImpl);
+      }
+    });
+    
+    m2repoAnchor.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent event) {
+        PlaceRequest placeRequestImpl = new DefaultPlaceRequest("GuvnorM2RepoPerspective");
+        placeManager.goTo(placeRequestImpl);
+      }
+    });
     
     monitorBAMAnchor.addClickHandler(new ClickHandler() {
       @Override

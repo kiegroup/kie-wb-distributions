@@ -109,25 +109,12 @@ public class ShowcaseEntryPoint {
     }
 
     private void registerDoAction() {
-        actions.put( "Show me my pending Tasks", "Personal Tasks" );
-        actions.put( "Show me my Inbox", "Inbox Perspective" );
-        actions.put( "I want to start a new Process", "Process Runtime Perspective" );
-        actions.put( "I want to design a new Process Model", "Process Designer Perspective" );
-        actions.put( "I want to create a Task", "Quick New Task" );
-        actions.put( "Show me all the pending tasks in my Group", "Group Tasks" );
-        actions.put( "Logout", "Logout" );
+      
 
         KeyPressHandler keyPressHandler = new KeyPressHandler() {
             public void onKeyPress( KeyPressEvent event ) {
 
-                if ( event.getUnicodeCharCode() == 160 && event.isAltKeyDown() ) {
-                    final DialogBox dialogBox = createDialogBox();
-                    dialogBox.setGlassEnabled( true );
-                    dialogBox.setAnimationEnabled( true );
-                    dialogBox.center();
-                    dialogBox.show();
-                    actionText.setFocus( true );
-                }
+               
                 if ( event.isControlKeyDown() && event.getUnicodeCharCode() == 116 ) {
                     PlaceRequest placeRequestImpl = new DefaultPlaceRequest( "Quick New Task" );
                     placeManager.goTo( placeRequestImpl );
@@ -302,73 +289,5 @@ public class ShowcaseEntryPoint {
         $wnd.location = url;
     }-*/;
 
-    private DialogBox createDialogBox() {
-        // Create a dialog box and set the caption text
-        final DialogBox dialogBox = new DialogBox();
-        dialogBox.ensureDebugId( "cwDialogBox" );
-        dialogBox.setText( "Do Action" );
-
-        // Create a table to layout the content
-        VerticalPanel dialogContents = new VerticalPanel();
-        dialogContents.setSpacing( 4 );
-        dialogBox.setWidget( dialogContents );
-
-        // Add some text to the top of the dialog
-        HTML details = new HTML( "What do you want to do now?" );
-        dialogContents.add( details );
-        dialogContents.setCellHorizontalAlignment(
-                details, HasHorizontalAlignment.ALIGN_CENTER );
-
-        MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-        String[] words = { "Show me my pending Tasks",
-                "I want to start a new Process",
-                "I want to design a new Process Model",
-                "I want to design a new Form",
-                "I want to create a Task",
-                "Show me all the pending tasks in my Group",
-                "Show me my Inbox", "Logout"
-        };
-        for ( int i = 0; i < words.length; ++i ) {
-            oracle.add( words[ i ] );
-        }
-        // Create the suggest box
-        textSuggestBox = new TextBox();
-        suggestionDisplay = new DefaultSuggestionDisplay();
-        actionText = new SuggestBox( oracle, textSuggestBox, suggestionDisplay );
-
-        KeyPressHandler keyPressHandler = new KeyPressHandler() {
-            public void onKeyPress( KeyPressEvent event ) {
-                if ( event.getNativeEvent().getKeyCode() == 27 ) {
-
-                    dialogBox.hide();
-                    suggestionDisplay.hideSuggestions();
-
-                }
-                if ( event.getNativeEvent().getKeyCode() == 13 ) {
-
-                    doAction( actionText.getText() );
-                    dialogBox.hide();
-                }
-            }
-        };
-
-        actionText.addHandler( keyPressHandler, KeyPressEvent.getType() );
-
-        dialogContents.add( actionText );
-
-        // Return the dialog box
-        return dialogBox;
-    }
-
-    public void doAction( String action ) {
-        String locatedAction = actions.get( action );
-        if ( locatedAction == null || locatedAction.equals( "" ) ) {
-
-            return;
-        }
-        PlaceRequest placeRequestImpl = new DefaultPlaceRequest( locatedAction );
-//        placeRequestImpl.addParameter("taskId", Long.toString(task.getId()));
-
-        placeManager.goTo( placeRequestImpl );
-    }
+   
 }
