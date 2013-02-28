@@ -126,7 +126,7 @@
 
 <div id="login-wrapper" class="png_bg">
   <div id="login-top">
-    <img src="<%=request.getContextPath()%>/images/jbpm-console-ng.png" alt="jBPM Console NG Logo" title="Powered By jBPM"/>
+    <img src="<%=request.getContextPath()%>/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
   </div>
 
   <div id="login-content">

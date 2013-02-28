@@ -46,7 +46,7 @@
 
   <servlet-mapping>
     <servlet-name>UberFireImageServlet</servlet-name>
-    <url-pattern>/org.jbpm.console.ng.jBPMShowcase/uberFireImages/*</url-pattern>
+    <url-pattern>/org.kie.KIEShowcase/uberFireImages/*</url-pattern>
   </servlet-mapping>
 
   <servlet>
