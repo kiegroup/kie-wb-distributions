@@ -31,7 +31,7 @@
           </execution>
         </executions>
         <configuration>
-          <finalName>jbpm-console-ng</finalName>
+          <finalName>kie-ide</finalName>
           <descriptors>
             <descriptor>src/main/assembly/assembly-showcase-tomcat-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-showcase-jboss-as-7_0.xml</descriptor>

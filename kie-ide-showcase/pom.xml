@@ -794,7 +794,7 @@
             <artifactId>gwt-maven-plugin</artifactId>
             <configuration>
               <!-- Build all GWT permutations and optimize them -->
-              <module>org.jbpm.console.ng.jBPMShowcase</module>
+              <module>org.kie.KIEShowcase</module>
               <draftCompile>false</draftCompile>
             </configuration>
           </plugin>
