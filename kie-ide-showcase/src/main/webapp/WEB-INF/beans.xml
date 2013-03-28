@@ -27,7 +27,7 @@
                             http://jboss.org/schema/weld/beans http://jboss.org/schema/weld/beans_1_1.xsd">
     
     <alternatives>
-        <class>org.jbpm.task.lifecycle.listeners.JPATaskLifeCycleEventListener</class>
+        <class>org.jbpm.services.task.lifecycle.listeners.JPATaskLifeCycleEventListener</class>
         <class>org.droolsjbpm.services.impl.util.BTMTransactionManagerSynchronizations</class>
         <!--class>org.jbpm.task.impl.CommandBasedTaskInstanceServiceImpl</class-->
     </alternatives>

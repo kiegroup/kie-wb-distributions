@@ -521,7 +521,7 @@
 
     <!-- Rouge imports to avoid OSGi errors -->
     <dependency>
-      <groupId>org.apache.felix</groupId>
+      <groupId>org.osgi</groupId>
       <artifactId>org.osgi.core</artifactId>
     </dependency>
 
@@ -554,6 +554,16 @@
       <groupId>org.kie</groupId>
       <artifactId>kie-ide-home-client</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.commons</groupId>
+      <artifactId>kieora-backend-lucene</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.commons</groupId>
+      <artifactId>kieora-commons-io</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
  

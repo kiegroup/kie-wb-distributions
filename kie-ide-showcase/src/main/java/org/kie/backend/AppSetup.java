@@ -15,19 +15,36 @@
  */
 package org.kie.backend;
 
-import bitronix.tm.resource.jdbc.PoolingDataSource;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.kie.commons.io.IOSearchService;
 import org.kie.commons.io.IOService;
-import org.kie.commons.io.impl.IOServiceDotFileImpl;
+import org.kie.commons.io.attribute.DublinCoreView;
+import org.kie.commons.java.nio.base.version.VersionAttributeView;
 import org.kie.commons.java.nio.file.FileSystem;
 import org.kie.commons.java.nio.file.FileSystemAlreadyExistsException;
+import org.kie.guvnor.services.backend.metadata.attribute.OtherMetaView;
+import org.kie.guvnor.services.config.AppConfigService;
+import org.kie.guvnor.services.repositories.RepositoryService;
+import org.kie.kieora.backend.lucene.LuceneIndexEngine;
+import org.kie.kieora.backend.lucene.LuceneSearchIndex;
+import org.kie.kieora.backend.lucene.LuceneSetup;
+import org.kie.kieora.backend.lucene.fields.SimpleFieldFactory;
+import org.kie.kieora.backend.lucene.metamodels.InMemoryMetaModelStore;
+import org.kie.kieora.backend.lucene.setups.NIOLuceneSetup;
+import org.kie.kieora.engine.MetaIndexEngine;
+import org.kie.kieora.engine.MetaModelStore;
+import org.kie.kieora.search.SearchIndex;
+import org.kie.kieora.io.IOSearchIndex;
+import org.kie.kieora.io.IOServiceIndexedImpl;
 import org.uberfire.backend.vfs.ActiveFileSystems;
 import org.uberfire.backend.vfs.FileSystemFactory;
 import org.uberfire.backend.vfs.impl.ActiveFileSystemsImpl;
@@ -37,7 +54,11 @@ import static org.kie.commons.io.FileSystemType.Bootstrap.*;
 @Singleton
 public class AppSetup {
 
-    private final IOService         ioService         = new IOServiceDotFileImpl();
+    private final IOSearchService   ioSearchService;
+    private final LuceneSetup luceneSetup;
+    private final RepositoryService repositoryService;
+    private final AppConfigService  appConfigService;
+    private final IOService         ioService;
     private final ActiveFileSystems activeFileSystems = new ActiveFileSystemsImpl();
     
     private static final String JBPM_REPO_PLAYGROUND = "git://jbpm-playground";
@@ -52,6 +73,25 @@ public class AppSetup {
     private final String password = "test1234";
     
     private FileSystem fsJBPM = null;
+
+    @Inject
+    public AppSetup( final RepositoryService repositoryService, final AppConfigService appConfigService ) {
+        this.repositoryService = repositoryService;
+        this.appConfigService = appConfigService;
+
+        this.luceneSetup = new NIOLuceneSetup();
+        final MetaModelStore metaModelStore = new InMemoryMetaModelStore();
+        final MetaIndexEngine indexEngine = new LuceneIndexEngine( metaModelStore, luceneSetup, new SimpleFieldFactory() );
+        final SearchIndex searchIndex = new LuceneSearchIndex( luceneSetup );
+        this.ioService = new IOServiceIndexedImpl( indexEngine, DublinCoreView.class, VersionAttributeView.class, OtherMetaView.class );
+        this.ioSearchService = new IOSearchIndex( searchIndex, this.ioService );
+    }
+
+    @PreDestroy
+    private void cleanup() {
+        luceneSetup.dispose();
+    }
+
     @PostConstruct
     public void onStartup() {
         
@@ -96,8 +136,6 @@ public class AppSetup {
 
         
     }
-    
-    // @PreDestroy -> ds.close();???
 
     @Produces
     @Named("ioStrategy")
@@ -115,6 +153,12 @@ public class AppSetup {
     @Named("fileSystem")
     public FileSystem fileSystem() {
         return fsJBPM;
+    }
+
+    @Produces
+    @Named("ioSearchStrategy")
+    public IOSearchService ioSearchService() {
+        return ioSearchService;
     }
 
 }
