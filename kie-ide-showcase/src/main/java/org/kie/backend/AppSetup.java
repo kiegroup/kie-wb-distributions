@@ -28,6 +28,7 @@ import javax.inject.Singleton;
 import org.kie.commons.io.IOSearchService;
 import org.kie.commons.io.IOService;
 import org.kie.commons.io.attribute.DublinCoreView;
+import org.kie.commons.io.impl.IOServiceDotFileImpl;
 import org.kie.commons.java.nio.base.version.VersionAttributeView;
 import org.kie.commons.java.nio.file.FileSystem;
 import org.kie.commons.java.nio.file.FileSystemAlreadyExistsException;
@@ -94,30 +95,10 @@ public class AppSetup {
 
     @PostConstruct
     public void onStartup() {
-        
-        
-        final URI fsURI = URI.create( GUVNOR_REPO_PLAYGROUND );
-
-        final Map<String, Object> env = new HashMap<String, Object>() {{
-            put( "username", userName );
-            put( "password", password );
-            put( "origin", GUVNOR_URL );
-        }};
 
         FileSystem fs = null;
 
-        try {
-            fs = ioService.newFileSystem( fsURI, env, BOOTSTRAP_INSTANCE );
-        } catch ( FileSystemAlreadyExistsException ex ) {
-            fs = ioService.getFileSystem( fsURI );
-        }
-
-        activeFileSystems.addFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
-            put( GUVNOR_REPO_PLAYGROUND, "uf-playground" );
-        }}, fs.supportedFileAttributeViews() ) );
-        
-        
-        
+        // FOr now make sure jbpm repo is first one as designer supports only single repo at the moment
         final URI jBPMfsURI = URI.create(JBPM_REPO_PLAYGROUND);
         try {
 
@@ -129,10 +110,30 @@ public class AppSetup {
         } catch ( FileSystemAlreadyExistsException ex ) {
             fsJBPM = ioService.getFileSystem( jBPMfsURI );
         }
-        
+
         activeFileSystems.addFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
             put( JBPM_REPO_PLAYGROUND, "jbpm-playground" );
         }}, fsJBPM.supportedFileAttributeViews() ) );
+
+
+        final URI fsURI = URI.create( GUVNOR_REPO_PLAYGROUND );
+
+        final Map<String, Object> env = new HashMap<String, Object>() {{
+            put( "username", userName );
+            put( "password", password );
+            put( "origin", GUVNOR_URL );
+        }};
+        try {
+            fs = ioService.newFileSystem( fsURI, env, BOOTSTRAP_INSTANCE );
+        } catch ( FileSystemAlreadyExistsException ex ) {
+            fs = ioService.getFileSystem( fsURI );
+        }
+
+        activeFileSystems.addFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
+            put( GUVNOR_REPO_PLAYGROUND, "uf-playground" );
+        }}, fs.supportedFileAttributeViews() ) );
+        
+        
 
         
     }
