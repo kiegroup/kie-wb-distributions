@@ -51,7 +51,7 @@
       <dependency>
         <groupId>com.github.gwtbootstrap</groupId>
         <artifactId>gwt-bootstrap</artifactId>
-        <version>2.2.1.0-SNAPSHOT</version>
+        <version>2.2.1.0-20130321.211055-27</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
