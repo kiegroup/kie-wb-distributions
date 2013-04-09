@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-ide</artifactId>
-    <version>6.0.0.Beta1</version>
+    <version>6.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>kie-ide-showcase</artifactId>
@@ -558,12 +558,12 @@
     <dependency>
       <groupId>org.kie.commons</groupId>
       <artifactId>kieora-backend-lucene</artifactId>
-      <version>6.0.0.Beta1</version>
+      <version>6.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.kie.commons</groupId>
       <artifactId>kieora-commons-io</artifactId>
-      <version>6.0.0.Beta1</version>
+      <version>6.0.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
  
