@@ -45,6 +45,8 @@
           <exclude>WEB-INF/web.xml</exclude>
           <exclude>WEB-INF/beans.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
+          <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
+          <exclude>WEB-INF/classes/users.properties</exclude>
           <!-- Dom4j on as 7.1.1 breaks the PU--> 
           <exclude>WEB-INF/lib/dom4j*.jar</exclude>
           

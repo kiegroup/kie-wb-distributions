@@ -130,6 +130,7 @@
   </div>
 
   <div id="login-content">
+    <h3><%=request.getParameter("message")==null?"":request.getParameter("message")%></h3>
     <form action="j_security_check" method="POST">
       <p>
         <label>Username</label>

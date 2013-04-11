@@ -16,8 +16,6 @@
 package org.kie.backend;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.inject.Produces;
@@ -28,13 +26,10 @@ import javax.inject.Singleton;
 import org.kie.commons.io.IOSearchService;
 import org.kie.commons.io.IOService;
 import org.kie.commons.io.attribute.DublinCoreView;
-import org.kie.commons.io.impl.IOServiceDotFileImpl;
 import org.kie.commons.java.nio.base.version.VersionAttributeView;
 import org.kie.commons.java.nio.file.FileSystem;
 import org.kie.commons.java.nio.file.FileSystemAlreadyExistsException;
 import org.kie.guvnor.services.backend.metadata.attribute.OtherMetaView;
-import org.kie.guvnor.services.config.AppConfigService;
-import org.kie.guvnor.services.repositories.RepositoryService;
 import org.kie.kieora.backend.lucene.LuceneIndexEngine;
 import org.kie.kieora.backend.lucene.LuceneSearchIndex;
 import org.kie.kieora.backend.lucene.LuceneSetup;
@@ -46,96 +41,77 @@ import org.kie.kieora.engine.MetaModelStore;
 import org.kie.kieora.search.SearchIndex;
 import org.kie.kieora.io.IOSearchIndex;
 import org.kie.kieora.io.IOServiceIndexedImpl;
-import org.uberfire.backend.vfs.ActiveFileSystems;
-import org.uberfire.backend.vfs.FileSystemFactory;
-import org.uberfire.backend.vfs.impl.ActiveFileSystemsImpl;
-
-import static org.kie.commons.io.FileSystemType.Bootstrap.*;
+import org.uberfire.backend.repositories.Repository;
+import org.uberfire.backend.repositories.RepositoryService;
 
 @Singleton
 public class AppSetup {
 
-    private final IOSearchService   ioSearchService;
-    private final LuceneSetup luceneSetup;
-    private final RepositoryService repositoryService;
-    private final AppConfigService  appConfigService;
-    private final IOService         ioService;
-    private final ActiveFileSystems activeFileSystems = new ActiveFileSystemsImpl();
-    
-    private static final String JBPM_REPO_PLAYGROUND = "git://jbpm-playground";
-    
+    private static final String JBPM_REPO_PLAYGROUND = "jbpm-playground";
+    private static final String GUVNOR_REPO_PLAYGROUND = "uf-playground";
+    // default repository section - start
     private static final String JBPM_URL      = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground.git";
-    
     private static final String GUVNOR_URL      = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
-    
-    private static final String GUVNOR_REPO_PLAYGROUND = "git://uf-playground";
-    
+
     private final String userName = "guvnorngtestuser1";
     private final String password = "test1234";
-    
-    private FileSystem fsJBPM = null;
+    // default repository section - end
+
+    private final IOService ioService;
+    private final IOSearchService ioSearchService;
+
+    private FileSystem fs = null;
+    private final LuceneSetup luceneSetup = new NIOLuceneSetup();
 
     @Inject
-    public AppSetup( final RepositoryService repositoryService, final AppConfigService appConfigService ) {
-        this.repositoryService = repositoryService;
-        this.appConfigService = appConfigService;
+    private RepositoryService repositoryService;
 
-        this.luceneSetup = new NIOLuceneSetup();
+
+    public AppSetup() {
         final MetaModelStore metaModelStore = new InMemoryMetaModelStore();
-        final MetaIndexEngine indexEngine = new LuceneIndexEngine( metaModelStore, luceneSetup, new SimpleFieldFactory() );
+        final MetaIndexEngine indexEngine = new LuceneIndexEngine( metaModelStore,
+                luceneSetup,
+                new SimpleFieldFactory() );
         final SearchIndex searchIndex = new LuceneSearchIndex( luceneSetup );
-        this.ioService = new IOServiceIndexedImpl( indexEngine, DublinCoreView.class, VersionAttributeView.class, OtherMetaView.class );
-        this.ioSearchService = new IOSearchIndex( searchIndex, this.ioService );
-    }
-
-    @PreDestroy
-    private void cleanup() {
-        luceneSetup.dispose();
+        this.ioService = new IOServiceIndexedImpl( indexEngine,
+                DublinCoreView.class,
+                VersionAttributeView.class,
+                OtherMetaView.class );
+        this.ioSearchService = new IOSearchIndex( searchIndex,
+                this.ioService );
     }
 
     @PostConstruct
     public void onStartup() {
 
-        FileSystem fs = null;
-
-        // FOr now make sure jbpm repo is first one as designer supports only single repo at the moment
-        final URI jBPMfsURI = URI.create(JBPM_REPO_PLAYGROUND);
+        // TODO in case repo is not defined in system repository so we add default
+        Repository jbpmRepo = repositoryService.getRepository(JBPM_REPO_PLAYGROUND);
+        if(jbpmRepo == null) {
+            final String userName = "guvnorngtestuser1";
+            final String password = "test1234";
+            repositoryService.cloneRepository("git", JBPM_REPO_PLAYGROUND, JBPM_URL, userName, password);
+            jbpmRepo = repositoryService.getRepository(JBPM_REPO_PLAYGROUND);
+        }
         try {
+            fs = ioService.newFileSystem(URI.create(jbpmRepo.getUri()), jbpmRepo.getEnvironment());
 
-            final Map<String, Object> jBPMEnv = new HashMap<String, Object>();
-            jBPMEnv.put( "username", userName );
-            jBPMEnv.put( "password", password );
-            jBPMEnv.put( "origin", JBPM_URL );
-            fsJBPM = ioService.newFileSystem( jBPMfsURI, jBPMEnv, BOOTSTRAP_INSTANCE );
-        } catch ( FileSystemAlreadyExistsException ex ) {
-            fsJBPM = ioService.getFileSystem( jBPMfsURI );
+        } catch (FileSystemAlreadyExistsException e) {
+            fs = ioService.getFileSystem(URI.create(jbpmRepo.getUri()));
+
         }
 
-        activeFileSystems.addFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
-            put( JBPM_REPO_PLAYGROUND, "jbpm-playground" );
-        }}, fsJBPM.supportedFileAttributeViews() ) );
-
-
-        final URI fsURI = URI.create( GUVNOR_REPO_PLAYGROUND );
-
-        final Map<String, Object> env = new HashMap<String, Object>() {{
-            put( "username", userName );
-            put( "password", password );
-            put( "origin", GUVNOR_URL );
-        }};
-        try {
-            fs = ioService.newFileSystem( fsURI, env, BOOTSTRAP_INSTANCE );
-        } catch ( FileSystemAlreadyExistsException ex ) {
-            fs = ioService.getFileSystem( fsURI );
+        // TODO in case repo is not defined in system repository so we add default
+        Repository guvnorRepo = repositoryService.getRepository(GUVNOR_REPO_PLAYGROUND);
+        if(guvnorRepo == null) {
+            final String userName = "guvnorngtestuser1";
+            final String password = "test1234";
+            repositoryService.cloneRepository("git", GUVNOR_REPO_PLAYGROUND, GUVNOR_URL, userName, password);
+            guvnorRepo = repositoryService.getRepository(GUVNOR_REPO_PLAYGROUND);
         }
-
-        activeFileSystems.addFileSystem( FileSystemFactory.newFS( new HashMap<String, String>() {{
-            put( GUVNOR_REPO_PLAYGROUND, "uf-playground" );
-        }}, fs.supportedFileAttributeViews() ) );
-        
-        
-
-        
+    }
+    @PreDestroy
+    private void cleanup() {
+        luceneSetup.dispose();
     }
 
     @Produces
@@ -145,21 +121,17 @@ public class AppSetup {
     }
 
     @Produces
-    @Named("fs")
-    public ActiveFileSystems fileSystems() {
-        return activeFileSystems;
-    }
-
-    @Produces
-    @Named("fileSystem")
-    public FileSystem fileSystem() {
-        return fsJBPM;
-    }
-
-    @Produces
     @Named("ioSearchStrategy")
     public IOSearchService ioSearchService() {
         return ioSearchService;
     }
+
+
+    @Produces
+    @Named("fileSystem")
+    public FileSystem fileSystem() {
+        return fs;
+    }
+
 
 }
