@@ -16,6 +16,7 @@
 package org.kie.backend;
 
 import java.net.URI;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.inject.Produces;
@@ -60,7 +61,6 @@ public class AppSetup {
     private final IOService ioService;
     private final IOSearchService ioSearchService;
 
-    private FileSystem fs = null;
     private final LuceneSetup luceneSetup = new NIOLuceneSetup();
 
     @Inject
@@ -93,10 +93,10 @@ public class AppSetup {
             jbpmRepo = repositoryService.getRepository(JBPM_REPO_PLAYGROUND);
         }
         try {
-            fs = ioService.newFileSystem(URI.create(jbpmRepo.getUri()), jbpmRepo.getEnvironment());
+            ioService.newFileSystem(URI.create(jbpmRepo.getUri()), jbpmRepo.getEnvironment());
 
         } catch (FileSystemAlreadyExistsException e) {
-            fs = ioService.getFileSystem(URI.create(jbpmRepo.getUri()));
+            ioService.getFileSystem(URI.create(jbpmRepo.getUri()));
 
         }
 
@@ -124,13 +124,6 @@ public class AppSetup {
     @Named("ioSearchStrategy")
     public IOSearchService ioSearchService() {
         return ioSearchService;
-    }
-
-
-    @Produces
-    @Named("fileSystem")
-    public FileSystem fileSystem() {
-        return fs;
     }
 
 

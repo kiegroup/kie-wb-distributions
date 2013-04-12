@@ -6,7 +6,12 @@
          version="2.5">
 
 
-
+  <listener>
+    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.jboss.solder.servlet.event.ServletEventBridgeListener</listener-class>
+  </listener>
   <filter>
     <filter-name>UberFire Security Filter</filter-name>
     <filter-class>
@@ -63,10 +68,6 @@ profile in pom.xml to use that. -->
     <servlet-name>ErraiServlet</servlet-name>
     <url-pattern>*.erraiBus</url-pattern>
   </servlet-mapping>
-
-    <listener>
-        <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
-    </listener>
 
   <resource-env-ref>
     <description>Object factory for the CDI Bean Manager</description>
