@@ -15,116 +15,113 @@
  */
 package org.kie.backend;
 
-import java.net.URI;
-
+import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.enterprise.inject.Produces;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
 
-import org.kie.commons.io.IOSearchService;
-import org.kie.commons.io.IOService;
-import org.kie.commons.io.attribute.DublinCoreView;
-import org.kie.commons.java.nio.base.version.VersionAttributeView;
-import org.kie.commons.java.nio.file.FileSystem;
-import org.kie.commons.java.nio.file.FileSystemAlreadyExistsException;
-import org.kie.guvnor.services.backend.metadata.attribute.OtherMetaView;
-import org.kie.kieora.backend.lucene.LuceneIndexEngine;
-import org.kie.kieora.backend.lucene.LuceneSearchIndex;
-import org.kie.kieora.backend.lucene.LuceneSetup;
-import org.kie.kieora.backend.lucene.fields.SimpleFieldFactory;
-import org.kie.kieora.backend.lucene.metamodels.InMemoryMetaModelStore;
-import org.kie.kieora.backend.lucene.setups.NIOLuceneSetup;
-import org.kie.kieora.engine.MetaIndexEngine;
-import org.kie.kieora.engine.MetaModelStore;
-import org.kie.kieora.search.SearchIndex;
-import org.kie.kieora.io.IOSearchIndex;
-import org.kie.kieora.io.IOServiceIndexedImpl;
+import org.kie.commons.services.cdi.Startup;
+import org.kie.commons.services.cdi.StartupType;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
+import org.uberfire.backend.server.config.ConfigGroup;
+import org.uberfire.backend.server.config.ConfigType;
+import org.uberfire.backend.server.config.ConfigurationFactory;
+import org.uberfire.backend.server.config.ConfigurationService;
+import org.uberfire.backend.server.impl.ActiveFileSystemsFactory;
 
-@Singleton
+//This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
+//is not deployed to the Application Servers /bin folder. This will be remedied when an
+//installer is written to create the system.git repository in the correct location.
+@Startup(StartupType.BOOTSTRAP)
+@ApplicationScoped
 public class AppSetup {
 
-    private static final String JBPM_REPO_PLAYGROUND = "jbpm-playground";
-    private static final String GUVNOR_REPO_PLAYGROUND = "uf-playground";
     // default repository section - start
-    private static final String JBPM_URL      = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground.git";
-    private static final String GUVNOR_URL      = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
+    private static final String JBPM_WB_PLAYGROUND_SCHEME = "git";
+    private static final String JBPM_WB_PLAYGROUND_ALIAS = "jbpm-playground";
+    private static final String JBPM_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground.git";
+    private static final String JBPM_WB_PLAYGROUND_UID = "guvnorngtestuser1";
+    private static final String JBPM_WB_PLAYGROUND_PWD = "test1234";
 
-    private final String userName = "guvnorngtestuser1";
-    private final String password = "test1234";
+    private static final String DROOLS_WB_PLAYGROUND_SCHEME = "git";
+    private static final String DROOLS_WB_PLAYGROUND_ALIAS = "uf-playground";
+    private static final String DROOLS_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
+    private static final String DROOLS_WB_PLAYGROUND_UID = "guvnorngtestuser1";
+    private static final String DROOLS_WB_PLAYGROUND_PWD = "test1234";
+
+    private static final String GLOBAL_SETTINGS = "settings";
     // default repository section - end
-
-    private final IOService ioService;
-    private final IOSearchService ioSearchService;
-
-    private final LuceneSetup luceneSetup = new NIOLuceneSetup();
 
     @Inject
     private RepositoryService repositoryService;
 
+    @Inject
+    private ConfigurationService configurationService;
 
-    public AppSetup() {
-        final MetaModelStore metaModelStore = new InMemoryMetaModelStore();
-        final MetaIndexEngine indexEngine = new LuceneIndexEngine( metaModelStore,
-                luceneSetup,
-                new SimpleFieldFactory() );
-        final SearchIndex searchIndex = new LuceneSearchIndex( luceneSetup );
-        this.ioService = new IOServiceIndexedImpl( indexEngine,
-                DublinCoreView.class,
-                VersionAttributeView.class,
-                OtherMetaView.class );
-        this.ioSearchService = new IOSearchIndex( searchIndex,
-                this.ioService );
-    }
+    @Inject
+    private ConfigurationFactory configurationFactory;
+
+    @Inject
+    private ActiveFileSystemsFactory activeFileSystemsFactory;
 
     @PostConstruct
-    public void onStartup() {
-
-        // TODO in case repo is not defined in system repository so we add default
-        Repository jbpmRepo = repositoryService.getRepository(JBPM_REPO_PLAYGROUND);
-        if(jbpmRepo == null) {
-            final String userName = "guvnorngtestuser1";
-            final String password = "test1234";
-            repositoryService.cloneRepository("git", JBPM_REPO_PLAYGROUND, JBPM_URL, userName, password);
-            jbpmRepo = repositoryService.getRepository(JBPM_REPO_PLAYGROUND);
-        }
-        try {
-            ioService.newFileSystem(URI.create(jbpmRepo.getUri()), jbpmRepo.getEnvironment());
-
-        } catch (FileSystemAlreadyExistsException e) {
-            ioService.getFileSystem(URI.create(jbpmRepo.getUri()));
-
+    public void assertPlayground() {
+        // TODO Setup default repository for jBPM-Workbench
+        Repository jbpmWorkbenchRepository = repositoryService.getRepository( JBPM_WB_PLAYGROUND_ALIAS );
+        if ( jbpmWorkbenchRepository == null ) {
+            repositoryService.cloneRepository( JBPM_WB_PLAYGROUND_SCHEME,
+                                               JBPM_WB_PLAYGROUND_ALIAS,
+                                               JBPM_WB_PLAYGROUND_ORIGIN,
+                                               JBPM_WB_PLAYGROUND_UID,
+                                               JBPM_WB_PLAYGROUND_PWD );
+            jbpmWorkbenchRepository = repositoryService.getRepository( JBPM_WB_PLAYGROUND_ALIAS );
         }
 
-        // TODO in case repo is not defined in system repository so we add default
-        Repository guvnorRepo = repositoryService.getRepository(GUVNOR_REPO_PLAYGROUND);
-        if(guvnorRepo == null) {
-            final String userName = "guvnorngtestuser1";
-            final String password = "test1234";
-            repositoryService.cloneRepository("git", GUVNOR_REPO_PLAYGROUND, GUVNOR_URL, userName, password);
-            guvnorRepo = repositoryService.getRepository(GUVNOR_REPO_PLAYGROUND);
+        // TODO Setup default repository for Drools-Workbench
+        final Repository droolsWorkbenchRepository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
+        if ( droolsWorkbenchRepository == null ) {
+            repositoryService.cloneRepository( DROOLS_WB_PLAYGROUND_SCHEME,
+                                               DROOLS_WB_PLAYGROUND_ALIAS,
+                                               DROOLS_WB_PLAYGROUND_ORIGIN,
+                                               DROOLS_WB_PLAYGROUND_UID,
+                                               DROOLS_WB_PLAYGROUND_PWD );
         }
-    }
-    @PreDestroy
-    private void cleanup() {
-        luceneSetup.dispose();
+
+        // TODO Setup mandatory properties for Drools-Workbench
+        List<ConfigGroup> configGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
+        boolean globalSettingsDefined = false;
+        for ( ConfigGroup configGroup : configGroups ) {
+            if ( GLOBAL_SETTINGS.equals( configGroup.getName() ) ) {
+                globalSettingsDefined = true;
+                break;
+            }
+        }
+        if ( !globalSettingsDefined ) {
+            configurationService.addConfiguration( getGlobalConfiguration() );
+        }
+
+        //Ensure FileSystems are loaded
+        activeFileSystemsFactory.fileSystems();
     }
 
-    @Produces
-    @Named("ioStrategy")
-    public IOService ioService() {
-        return ioService;
+    private ConfigGroup getGlobalConfiguration() {
+        final ConfigGroup group = configurationFactory.newConfigGroup( ConfigType.GLOBAL,
+                                                                       GLOBAL_SETTINGS,
+                                                                       "" );
+        group.addConfigItem( configurationFactory.newConfigItem( "drools.dateformat",
+                                                                 "dd-MMM-yyyy" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "drools.datetimeformat",
+                                                                 "dd-MMM-yyyy hh:mm:ss" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "drools.defaultlanguage",
+                                                                 "en" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "drools.defaultcountry",
+                                                                 "US" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "build.enable-incremental",
+                                                                 "true" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "rule-modeller-onlyShowDSLStatements",
+                                                                 "false" ) );
+        return group;
     }
-
-    @Produces
-    @Named("ioSearchStrategy")
-    public IOSearchService ioSearchService() {
-        return ioSearchService;
-    }
-
 
 }
