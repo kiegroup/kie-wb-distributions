@@ -48,6 +48,7 @@
   <inherits name="org.kie.guvnor.dtablexls.GuvnorDecisionTableXLSEditorClient"/>
   <inherits name="org.kie.guvnor.query.GuvnorSearchScreenClient"/>
   <inherits name="org.kie.guvnor.explorer.GuvnorExplorerClient"/>
+  <inherits name="org.kie.guvnor.workitems.WorkItemsEditorClient"/>
   
    <!-- designer -->
   <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>

@@ -15,13 +15,29 @@
  */
 package org.kie.backend;
 
+import java.net.URI;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import org.droolsjbpm.services.api.DeploymentUnit;
+import org.droolsjbpm.services.impl.VFSDeploymentUnit;
+import org.jbpm.console.ng.pr.service.DeploymentManagerEntryPoint;
+import org.jbpm.console.ng.pr.service.Initializable;
+import org.kie.commons.io.IOService;
+import org.kie.commons.java.nio.file.DirectoryStream;
+import org.kie.commons.java.nio.file.FileSystemAlreadyExistsException;
+import org.kie.commons.java.nio.file.Path;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
+import org.uberfire.backend.group.GroupService;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
 import org.uberfire.backend.server.config.ConfigGroup;
@@ -54,6 +70,10 @@ public class AppSetup {
     // default repository section - end
 
     @Inject
+    @Named("ioStrategy")
+    private IOService ioService;
+
+    @Inject
     private RepositoryService repositoryService;
 
     @Inject
@@ -64,6 +84,12 @@ public class AppSetup {
 
     @Inject
     private ActiveFileSystemsFactory activeFileSystemsFactory;
+
+    @Inject
+    private GroupService groupService;
+
+    @Inject
+    private DeploymentManagerEntryPoint deploymentManager;
 
     @PostConstruct
     public void assertPlayground() {
@@ -103,6 +129,9 @@ public class AppSetup {
 
         //Ensure FileSystems are loaded
         activeFileSystemsFactory.fileSystems();
+
+        Set<DeploymentUnit> deploymentUnits = produceDeploymentUnits();
+        ((Initializable)deploymentManager).initDeployments(deploymentUnits);
     }
 
     private ConfigGroup getGlobalConfiguration() {
@@ -124,4 +153,36 @@ public class AppSetup {
         return group;
     }
 
+    @Produces
+    @RequestScoped
+    public Set<DeploymentUnit> produceDeploymentUnits() {
+        Set<DeploymentUnit> deploymentUnits = new HashSet<DeploymentUnit>();
+
+        Collection<Repository> repositories = repositoryService.getRepositories();
+        for (Repository repository : repositories) {
+
+            Path directory = ioService.get( repository.getUri() + "/processes" );
+            if (ioService.exists(directory)) {
+                Iterable<Path> assetDirectories = ioService.newDirectoryStream( directory, new DirectoryStream.Filter<Path>() {
+                    @Override
+                    public boolean accept( final Path entry ) {
+                        if ( org.kie.commons.java.nio.file.Files.isDirectory(entry) ) {
+                            return true;
+                        }
+                        return false;
+                    }
+                } );
+
+                for (Path p : assetDirectories) {
+                    String folder = p.toString();
+                    if (folder.startsWith("/")) {
+                        folder = folder.substring(1);
+                    }
+                    deploymentUnits.add(new VFSDeploymentUnit(p.getFileName().toString(), repository.getAlias(), folder));
+                }
+            }
+        }
+
+        return deploymentUnits;
+    }
 }
