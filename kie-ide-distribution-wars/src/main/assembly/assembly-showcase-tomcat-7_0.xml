@@ -26,6 +26,8 @@
         <excludes>
           <exclude>WEB-INF/jetty-env.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
+          <exclude>WEB-INF/beans.xml</exclude>
+          <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
 
           <!-- UF Client Related -->
           <exclude>WEB-INF/lib/widget-markdown-*.jar</exclude>
@@ -50,6 +52,11 @@
           <exclude>WEB-INF/lib/mail-*.jar</exclude>
           <exclude>WEB-INF/lib/geronimo-spec-jta-*.jar</exclude>
           <exclude>WEB-INF/lib/servlet-api-*.jar</exclude>
+
+          <exclude>WEB-INF/lib/jboss-servlet-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-transaction-*.jar</exclude>
+          <exclude>WEB-INF/lib/btm-*.jar</exclude>
+          <exclude>WEB-INF/lib/jta-*.jar</exclude>
 
           <!-- Errai -->
           <exclude>WEB-INF/lib/errai-jaxrs-client-*.jar</exclude>

@@ -8,6 +8,4 @@
 
   <security-domain>java:/jaas/kie-ide</security-domain>
 
-  <context-root>kie-ide</context-root>
-
 </jboss-web>

@@ -74,6 +74,7 @@
           <exclude>WEB-INF/lib/junit-*.jar</exclude>
           <exclude>WEB-INF/lib/h2*.jar</exclude>
           <exclude>WEB-INF/lib/weld-se*.jar</exclude>
+          <exclude>WEB-INF/lib/cdi-api*.jar</exclude>
           <exclude>WEB-INF/lib/hibernate*.jar</exclude>
 
           <!-- Jetty -->
