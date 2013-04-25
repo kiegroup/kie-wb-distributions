@@ -37,6 +37,7 @@ import org.kie.commons.java.nio.file.FileSystemAlreadyExistsException;
 import org.kie.commons.java.nio.file.Path;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
+import org.kie.guvnor.workitems.service.WorkItemsEditorService;
 import org.uberfire.backend.group.GroupService;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
@@ -127,11 +128,24 @@ public class AppSetup {
             configurationService.addConfiguration( getGlobalConfiguration() );
         }
 
+        // TODO Setup properties required by the Work Items Editor
+        List<ConfigGroup> editorConfigGroups = configurationService.getConfiguration( ConfigType.EDITOR );
+        boolean workItemsEditorSettingsDefined = false;
+        for ( ConfigGroup editorConfigGroup : editorConfigGroups ) {
+            if ( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS.equals( editorConfigGroup.getName() ) ) {
+                workItemsEditorSettingsDefined = true;
+                break;
+            }
+        }
+        if ( !workItemsEditorSettingsDefined ) {
+            configurationService.addConfiguration( getWorkItemElementDefinitions() );
+        }
+
         //Ensure FileSystems are loaded
         activeFileSystemsFactory.fileSystems();
 
         Set<DeploymentUnit> deploymentUnits = produceDeploymentUnits();
-        ((Initializable)deploymentManager).initDeployments(deploymentUnits);
+        ( (Initializable) deploymentManager ).initDeployments( deploymentUnits );
     }
 
     private ConfigGroup getGlobalConfiguration() {
@@ -153,32 +167,66 @@ public class AppSetup {
         return group;
     }
 
+    private ConfigGroup getWorkItemElementDefinitions() {
+        // Work Item Definition elements used when creating Work Item Definitions.
+        // Each entry in this file represents a Button in the Editor's Palette:-
+        //   - Underscores ('_') in the key will be converted in whitespaces (' ') and
+        //     will be used as Button's labels.
+        //   - The value will be the text pasted into the editor when an element in the
+        //     palette is selected. You can use a pipe ('|') to specify the place where
+        //     the cursor should be put after pasting the element into the editor.
+        final ConfigGroup group = configurationFactory.newConfigGroup( ConfigType.EDITOR,
+                                                                       WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS,
+                                                                       "" );
+        group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_DEFINITION,
+                                                                 "[\n" +
+                                                                         "    \"name\" : \"MyTask|\", \n" +
+                                                                         "    \"parameters\" : [ \n" +
+                                                                         "        \"MyFirstParam\" : new StringDataType(), \n" +
+                                                                         "        \"MySecondParam\" : new StringDataType(), \n" +
+                                                                         "        \"MyThirdParam\" : new ObjectDataType() \n" +
+                                                                         "    ], \n" +
+                                                                         "    \"results\" : [ \n" +
+                                                                         "        \"Result\" : new ObjectDataType(\"java.util.Map\") \n" +
+                                                                         "    ], \n" +
+                                                                         "    \"displayName\" : \"My Task\", \n" +
+                                                                         "    \"icon\" : \"\" \n" +
+                                                                         "]" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_PARAMETER,
+                                                                 "\"MyParam|\" : new StringDataType()" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_RESULT,
+                                                                 "\"Result|\" : new ObjectDataType()" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_DISPLAY_NAME,
+                                                                 "\"displayName\" : \"My Task|\"" ) );
+        return group;
+    }
+
     @Produces
     @RequestScoped
     public Set<DeploymentUnit> produceDeploymentUnits() {
         Set<DeploymentUnit> deploymentUnits = new HashSet<DeploymentUnit>();
 
         Collection<Repository> repositories = repositoryService.getRepositories();
-        for (Repository repository : repositories) {
+        for ( Repository repository : repositories ) {
 
             Path directory = ioService.get( repository.getUri() + "/processes" );
-            if (ioService.exists(directory)) {
+            if ( ioService.exists( directory ) ) {
                 Iterable<Path> assetDirectories = ioService.newDirectoryStream( directory, new DirectoryStream.Filter<Path>() {
                     @Override
                     public boolean accept( final Path entry ) {
-                        if ( org.kie.commons.java.nio.file.Files.isDirectory(entry) ) {
+                        if ( org.kie.commons.java.nio.file.Files.isDirectory( entry ) ) {
                             return true;
                         }
                         return false;
                     }
                 } );
 
-                for (Path p : assetDirectories) {
+                for ( Path p : assetDirectories ) {
                     String folder = p.toString();
-                    if (folder.startsWith("/")) {
-                        folder = folder.substring(1);
+                    if ( folder.startsWith( "/" ) ) {
+                        folder = folder.substring( 1 );
                     }
-                    deploymentUnits.add(new VFSDeploymentUnit(p.getFileName().toString(), repository.getAlias(), folder));
+                    deploymentUnits.add( new VFSDeploymentUnit( p.getFileName().toString(), repository.getAlias(), folder ) );
                 }
             }
         }
