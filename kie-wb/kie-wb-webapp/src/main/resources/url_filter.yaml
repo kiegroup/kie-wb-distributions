@@ -1,0 +1,12 @@
+filter:
+   - pattern: /admin/**
+     access: ADMIN
+   - pattern: /config/**
+     access: ADMIN, USER
+   - pattern: /private/**
+
+exclude:
+   - /*.ico
+   - /org.kie.workbench.KIEWebapp/images/**
+   - /org.kie.workbench.KIEWebapp/css/**
+   - /css/**
