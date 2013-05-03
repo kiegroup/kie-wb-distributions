@@ -29,7 +29,7 @@
           </execution>
         </executions>
         <configuration>
-          <finalName>guvnor-${project.version}</finalName>
+          <finalName>kie-drools-wb-${project.version}</finalName>
           <descriptors>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-as-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-tomcat-7_0.xml</descriptor>

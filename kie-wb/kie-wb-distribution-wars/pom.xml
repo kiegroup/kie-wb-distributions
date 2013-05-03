@@ -29,7 +29,7 @@
           </execution>
         </executions>
         <configuration>
-          <finalName>kie-wb</finalName>
+          <finalName>kie-wb-${project.version}</finalName>
           <descriptors>
             <descriptor>src/main/assembly/assembly-kie-wb-tomcat-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-wb-jboss-as-7_0.xml</descriptor>
