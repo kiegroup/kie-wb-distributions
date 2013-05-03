@@ -12,7 +12,7 @@
       margin: 0;
       pading: 0;
       color: #fff;
-      background: url('<%=request.getContextPath()%>/images/bg-login.png') repeat #1b1b1b;
+      background: url('org.kie.workbench.KIEWebapp/images/bg-login.png') repeat #1b1b1b;
       font-size: 14px;
       text-shadow: #050505 0 -1px 0;
       font-weight: bold;
@@ -29,7 +29,7 @@
       border-bottom: solid 3px #777973;
       height: 250px;
       width: 100%;
-      background: url('<%=request.getContextPath()%>/images/bg-login-top.png') repeat #fff;
+      background: url('org.kie.workbench.KIEWebapp/images/bg-login-top.png') repeat #fff;
       z-index: 1;
     }
 
@@ -126,7 +126,7 @@
 
 <div id="login-wrapper" class="png_bg">
   <div id="login-top">
-    <img src="<%=request.getContextPath()%>/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
+    <img src="org.kie.workbench.KIEWebapp/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
   </div>
 
   <div id="login-content">
