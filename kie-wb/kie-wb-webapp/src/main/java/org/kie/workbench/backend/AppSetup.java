@@ -162,6 +162,12 @@ public class AppSetup {
                                                                  "true" ) );
         group.addConfigItem( configurationFactory.newConfigItem( "rule-modeller-onlyShowDSLStatements",
                                                                  "false" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "designer.url",
+                                                                  "http://localhost:8080" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "designer.context",
+                                                                   "designer" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "designer.profile",
+                                                                    "jbpm" ) );
         return group;
     }
 

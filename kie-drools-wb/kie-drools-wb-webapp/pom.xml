@@ -354,6 +354,20 @@
       <artifactId>guvnor-workitems-editor-backend</artifactId>
     </dependency>
 
+    <!-- jBPM Designer -->
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-designer-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-designer-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-designer-backend</artifactId>
+    </dependency>
+
     <!-- UberFire -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -510,6 +524,12 @@
       <artifactId>jaxb-xjc</artifactId>
     </dependency>
 
+    <!-- Solder -->
+    <dependency>
+        <groupId>org.jboss.solder</groupId>
+        <artifactId>solder-impl</artifactId>
+    </dependency>
+
     <!--JUnit for Test scenarios -->
     <dependency>
       <groupId>junit</groupId>
@@ -621,6 +641,9 @@
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-core-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-commons</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-workbench</compileSourcesArtifact>
+
+            <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
 
             <compileSourcesArtifact>org.kie.commons:kie-nio2-model</compileSourcesArtifact>
           </compileSourcesArtifacts>
