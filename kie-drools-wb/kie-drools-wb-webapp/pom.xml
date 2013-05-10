@@ -64,28 +64,28 @@
 
     <!-- Models held within Drools -->
     <dependency>
-      <groupId>org.drools</groupId>
-      <artifactId>drools-guvnor-models-commons</artifactId>
+        <groupId>org.drools</groupId>
+        <artifactId>drools-workbench-models-commons</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-guvnor-models-guided-dtable</artifactId>
+      <artifactId>drools-workbench-models-guided-dtable</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-guvnor-models-guided-scorecard</artifactId>
+      <artifactId>drools-workbench-models-guided-scorecard</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-guvnor-models-guided-template</artifactId>
+      <artifactId>drools-workbench-models-guided-template</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-guvnor-models-test-scenarios</artifactId>
+      <artifactId>drools-workbench-models-test-scenarios</artifactId>
     </dependency>
 
     <!-- Guvnor editors -->
@@ -130,98 +130,98 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-default-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-default-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-default-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-default-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-categories-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-categories-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-guided-rule-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-rule-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-guided-rule-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-rule-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-guided-template-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-template-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-guided-template-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-template-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-guided-dtable-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-dtable-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-guided-dtable-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-dtable-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-guided-scorecard-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-scorecard-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-guided-scorecard-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-scorecard-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-drl-text-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-drl-text-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-drl-text-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-drl-text-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-enum-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-enum-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-enum-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-enum-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-factmodel-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-factmodel-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-factmodel-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-factmodel-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-dsl-text-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-dsl-text-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-dsl-text-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-dsl-text-editor-backend</artifactId>
     </dependency>
 
     <dependency>
@@ -245,53 +245,53 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-m2repo-editor-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-m2repo-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-m2repo-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-inbox-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-inbox-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-inbox-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-dtable-xls-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-dtable-xls-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-dtable-xls-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-dtable-xls-editor-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-scorecard-xls-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-scorecard-xls-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-scorecard-xls-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-scorecard-xls-editor-backend</artifactId>
     </dependency>
     
     <dependency>
@@ -320,39 +320,39 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-globals-editor-api</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-globals-editor-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-globals-editor-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-globals-editor-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-globals-editor-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-globals-editor-backend</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-test-scenario-editor-client</artifactId>
-    </dependency>
+      <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-wb-test-scenario-editor-client</artifactId>
+      </dependency>
 
-    <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-test-scenario-editor-backend</artifactId>
-    </dependency>
+      <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-wb-test-scenario-editor-backend</artifactId>
+      </dependency>
 
-    <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-workitems-editor-client</artifactId>
-    </dependency>
+      <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-wb-workitems-editor-client</artifactId>
+      </dependency>
 
-    <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-workitems-editor-backend</artifactId>
-    </dependency>
+      <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-wb-workitems-editor-backend</artifactId>
+      </dependency>
 
     <!-- jBPM Designer -->
     <dependency>
@@ -561,11 +561,11 @@
           <module>org.kie.workbench.drools.FastCompiledKIEDroolsWebapp</module>
           <logLevel>INFO</logLevel>
           <compileSourcesArtifacts>
-            <compileSourcesArtifact>org.drools:drools-guvnor-models-commons</compileSourcesArtifact>
-            <compileSourcesArtifact>org.drools:drools-guvnor-models-guided-dtable</compileSourcesArtifact>
-            <compileSourcesArtifact>org.drools:drools-guvnor-models-guided-scorecard</compileSourcesArtifact>
-            <compileSourcesArtifact>org.drools:drools-guvnor-models-guided-template</compileSourcesArtifact>
-            <compileSourcesArtifact>org.drools:drools-guvnor-models-test-scenarios</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-workbench-models-commons</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-workbench-models-guided-dtable</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-workbench-models-guided-scorecard</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-workbench-models-guided-template</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-workbench-models-test-scenarios</compileSourcesArtifact>
 
             <compileSourcesArtifact>org.kie.guvnor:guvnor-categories-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-enum-editor-api</compileSourcesArtifact>
