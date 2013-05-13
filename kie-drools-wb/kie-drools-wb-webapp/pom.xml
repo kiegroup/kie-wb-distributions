@@ -567,75 +567,61 @@
             <compileSourcesArtifact>org.drools:drools-workbench-models-guided-template</compileSourcesArtifact>
             <compileSourcesArtifact>org.drools:drools-workbench-models-test-scenarios</compileSourcesArtifact>
 
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-categories-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-enum-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-enum-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-drl-text-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-drl-text-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-factmodel-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-factmodel-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-guided-rule-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-guided-rule-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-guided-template-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-guided-template-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-guided-dtable-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-guided-dtable-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-guided-scorecard-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-guided-scorecard-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-dsl-text-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-dsl-text-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-globals-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-globals-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-test-scenario-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-test-scenario-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-categories-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-enum-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-enum-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-drl-text-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-drl-text-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-factmodel-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-factmodel-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-guided-rule-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-guided-rule-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-guided-template-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-guided-template-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-guided-dtable-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-guided-dtable-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-guided-scorecard-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-guided-scorecard-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-dsl-text-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-dsl-text-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-globals-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-globals-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-dtable-xls-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-dtable-xls-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-scorecard-xls-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-scorecard-xls-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-workitems-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.drools:drools-wb-workitems-editor-client</compileSourcesArtifact>
 
+            <compileSourcesArtifact>org.guvnor:guvnor-inbox-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-inbox-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-m2repo-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-m2repo-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-editor-client</compileSourcesArtifact>
-
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-config-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-config-editor-client</compileSourcesArtifact>
-
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-m2repo-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-m2repo-editor-client</compileSourcesArtifact>
-
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-inbox-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-inbox-client</compileSourcesArtifact>
-
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-dtable-xls-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-dtable-xls-editor-client</compileSourcesArtifact>
-            
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-scorecard-xls-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-scorecard-xls-editor-client</compileSourcesArtifact>
-
             <compileSourcesArtifact>org.kie.guvnor:guvnor-search-screen-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-search-screen-client</compileSourcesArtifact>
-
             <compileSourcesArtifact>org.kie.guvnor:guvnor-explorer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-explorer-client</compileSourcesArtifact>
-
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-workitems-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-workitems-editor-client</compileSourcesArtifact>
-
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-decorated-grid-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-view-source-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-error-messages-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-metadata-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-config-resource-widget</compileSourcesArtifact>
-
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-decorated-grid-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-view-source-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-error-messages-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-metadata-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-config-resource-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-datamodel-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-workingset-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-core-services-api</compileSourcesArtifact>
-
             <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-security</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-ui</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-services-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-data</compileSourcesArtifact>
-
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-api</compileSourcesArtifact>
 
+            <!-- UberFire dependencies -->
             <compileSourcesArtifact>org.kie.commons:kie-commons-data</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.commons:kie-commons-validation</compileSourcesArtifact>
-
             <compileSourcesArtifact>org.uberfire:uberfire-security-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>

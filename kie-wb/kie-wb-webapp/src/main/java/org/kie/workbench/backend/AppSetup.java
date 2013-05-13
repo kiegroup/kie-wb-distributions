@@ -26,8 +26,9 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jbpm.console.ng.pr.service.DeploymentManagerEntryPoint;
-import org.jbpm.console.ng.pr.service.Initializable;
+import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
+import org.jbpm.console.ng.bd.service.DeploymentManagerEntryPoint;
+import org.jbpm.console.ng.bd.service.Initializable;
 import org.jbpm.kie.services.api.DeploymentUnit;
 import org.jbpm.kie.services.impl.VFSDeploymentUnit;
 import org.kie.commons.io.IOService;
@@ -35,7 +36,7 @@ import org.kie.commons.java.nio.file.DirectoryStream;
 import org.kie.commons.java.nio.file.Path;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
-import org.kie.guvnor.workitems.service.WorkItemsEditorService;
+
 import org.uberfire.backend.group.GroupService;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
@@ -51,6 +52,8 @@ import org.uberfire.backend.server.impl.ActiveFileSystemsFactory;
 @Startup(StartupType.BOOTSTRAP)
 @ApplicationScoped
 public class AppSetup {
+
+    private static final String DEPLOYMENT_SERVICE_TYPE_CONFIG = "deployment.service";
 
     // default repository section - start
     private static final String JBPM_WB_PLAYGROUND_SCHEME = "git";

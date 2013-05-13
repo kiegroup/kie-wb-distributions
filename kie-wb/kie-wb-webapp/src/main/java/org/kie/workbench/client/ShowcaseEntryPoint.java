@@ -33,21 +33,16 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import java.util.Arrays;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
-import org.jbpm.console.ng.ht.client.resources.ShowcaseResources;
+import org.kie.guvnor.commons.ui.client.resources.RoundedCornersResource;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.Command;
@@ -104,8 +99,8 @@ public class ShowcaseEntryPoint {
 
     private void loadStyles() {
         //Ensure CSS has been loaded
-        ShowcaseResources.INSTANCE.showcaseCss().ensureInjected();
-        //RoundedCornersResource.INSTANCE.roundCornersCss().ensureInjected();
+        //ShowcaseResources.INSTANCE.showcaseCss().ensureInjected();
+        RoundedCornersResource.INSTANCE.roundCornersCss().ensureInjected();
     }
 
     private void registerDoAction() {
