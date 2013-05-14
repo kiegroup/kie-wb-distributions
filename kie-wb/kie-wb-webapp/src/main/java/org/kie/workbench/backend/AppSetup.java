@@ -15,30 +15,17 @@
  */
 package org.kie.workbench.backend;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
-import org.jbpm.console.ng.bd.service.DeploymentManagerEntryPoint;
-import org.jbpm.console.ng.bd.service.Initializable;
-import org.jbpm.kie.services.api.DeploymentUnit;
-import org.jbpm.kie.services.impl.VFSDeploymentUnit;
+import org.jbpm.console.ng.bd.backend.server.AdministrationService;
 import org.kie.commons.io.IOService;
-import org.kie.commons.java.nio.file.DirectoryStream;
-import org.kie.commons.java.nio.file.Path;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
-
-import org.uberfire.backend.group.GroupService;
-import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
 import org.uberfire.backend.server.config.ConfigGroup;
 import org.uberfire.backend.server.config.ConfigType;
@@ -88,33 +75,17 @@ public class AppSetup {
     private ActiveFileSystemsFactory activeFileSystemsFactory;
 
     @Inject
-    private GroupService groupService;
-
-    @Inject
-    private DeploymentManagerEntryPoint deploymentManager;
+    private AdministrationService administrationService;
 
     @PostConstruct
     public void assertPlayground() {
-        // TODO Setup default repository for jBPM-Workbench
-        Repository jbpmWorkbenchRepository = repositoryService.getRepository( JBPM_WB_PLAYGROUND_ALIAS );
-        if ( jbpmWorkbenchRepository == null ) {
-            repositoryService.cloneRepository( JBPM_WB_PLAYGROUND_SCHEME,
-                                               JBPM_WB_PLAYGROUND_ALIAS,
-                                               JBPM_WB_PLAYGROUND_ORIGIN,
-                                               JBPM_WB_PLAYGROUND_UID,
-                                               JBPM_WB_PLAYGROUND_PWD );
-            jbpmWorkbenchRepository = repositoryService.getRepository( JBPM_WB_PLAYGROUND_ALIAS );
-        }
 
+        // TODO Setup default repository for jBPM-Workbench
+        administrationService.bootstrapRepository(JBPM_WB_PLAYGROUND_ALIAS, JBPM_WB_PLAYGROUND_ORIGIN,
+                JBPM_WB_PLAYGROUND_UID, JBPM_WB_PLAYGROUND_PWD);
         // TODO Setup default repository for Drools-Workbench
-        final Repository droolsWorkbenchRepository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
-        if ( droolsWorkbenchRepository == null ) {
-            repositoryService.cloneRepository( DROOLS_WB_PLAYGROUND_SCHEME,
-                                               DROOLS_WB_PLAYGROUND_ALIAS,
-                                               DROOLS_WB_PLAYGROUND_ORIGIN,
-                                               DROOLS_WB_PLAYGROUND_UID,
-                                               DROOLS_WB_PLAYGROUND_PWD );
-        }
+        administrationService.bootstrapRepository(DROOLS_WB_PLAYGROUND_ALIAS, DROOLS_WB_PLAYGROUND_ORIGIN,
+                DROOLS_WB_PLAYGROUND_UID, DROOLS_WB_PLAYGROUND_PWD);
 
         // TODO Setup mandatory properties for Drools-Workbench
         List<ConfigGroup> configGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
@@ -145,8 +116,11 @@ public class AppSetup {
         //Ensure FileSystems are loaded
         activeFileSystemsFactory.fileSystems();
 
-        Set<DeploymentUnit> deploymentUnits = produceDeploymentUnits();
-        ( (Initializable) deploymentManager ).initDeployments( deploymentUnits );
+
+        // rest of jbpm wb bootstrap
+        administrationService.bootstrapConfig();
+        administrationService.bootstrapDeployments();
+
     }
 
     private ConfigGroup getGlobalConfiguration() {
@@ -208,36 +182,4 @@ public class AppSetup {
         return group;
     }
 
-    @Produces
-    @RequestScoped
-    public Set<DeploymentUnit> produceDeploymentUnits() {
-        Set<DeploymentUnit> deploymentUnits = new HashSet<DeploymentUnit>();
-
-        Collection<Repository> repositories = repositoryService.getRepositories();
-        for ( Repository repository : repositories ) {
-
-            Path directory = ioService.get( repository.getUri() + "/processes" );
-            if ( ioService.exists( directory ) ) {
-                Iterable<Path> assetDirectories = ioService.newDirectoryStream( directory, new DirectoryStream.Filter<Path>() {
-                    @Override
-                    public boolean accept( final Path entry ) {
-                        if ( org.kie.commons.java.nio.file.Files.isDirectory( entry ) ) {
-                            return true;
-                        }
-                        return false;
-                    }
-                } );
-
-                for ( Path p : assetDirectories ) {
-                    String folder = p.toString();
-                    if ( folder.startsWith( "/" ) ) {
-                        folder = folder.substring( 1 );
-                    }
-                    deploymentUnits.add( new VFSDeploymentUnit( p.getFileName().toString(), repository.getAlias(), folder ) );
-                }
-            }
-        }
-
-        return deploymentUnits;
-    }
 }
