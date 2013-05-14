@@ -74,7 +74,7 @@ profile in pom.xml to use that. -->
 
   <servlet>
     <servlet-name>DTableXLSFileServlet</servlet-name>
-    <servlet-class>org.kie.guvnor.dtablexls.backend.server.DecisionTableXLSFileServlet</servlet-class>
+    <servlet-class>org.drools.workbench.screens.dtablexls.backend.server.DecisionTableXLSFileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>DTableXLSFileServlet</servlet-name>
@@ -83,7 +83,7 @@ profile in pom.xml to use that. -->
   
   <servlet>
     <servlet-name>ScoreCardFileServlet</servlet-name>
-    <servlet-class>org.kie.guvnor.scorecardxls.backend.server.ScoreCardXLSFileServlet</servlet-class>
+    <servlet-class>org.drools.workbench.screens.scorecardxls.backend.server.ScoreCardXLSFileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ScoreCardFileServlet</servlet-name>
@@ -92,7 +92,7 @@ profile in pom.xml to use that. -->
     
   <servlet>
     <servlet-name>M2RepoFileServlet</servlet-name>
-    <servlet-class>org.kie.guvnor.m2repo.backend.server.FileServlet</servlet-class>
+    <servlet-class>org.guvnor.m2repo.backend.server.FileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>M2RepoFileServlet</servlet-name>
@@ -101,7 +101,7 @@ profile in pom.xml to use that. -->
     
   <servlet>
     <servlet-name>FileDownloadServlet</servlet-name>
-    <servlet-class>org.kie.guvnor.m2repo.backend.server.FileDownloadServlet</servlet-class>
+    <servlet-class>org.guvnor.m2repo.backend.server.FileDownloadServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>FileDownloadServlet</servlet-name>
