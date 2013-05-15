@@ -10,6 +10,10 @@
   <inherits name="org.uberfire.UberfireWidgetsCore"/>
   <inherits name="org.uberfire.UberfireBackend"/>
 
+  <!-- designer -->
+  <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
+  <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
+
   <!-- Guvnor dependencies -->
   <inherits name="org.guvnor.inbox.GuvnorInboxClient"/>
   <inherits name="org.guvnor.m2repo.GuvnorM2RepoEditorClient"/>
@@ -25,7 +29,7 @@
   <inherits name="org.kie.workbench.screens.search.KieWorkbenchSearchScreenClient"/>
 
   <!-- Common Services -->
-  <inherits name="org.kie.guvnor.services.GuvnorCoreServicesAPI"/>
+  <inherits name="org.kie.workbench.services.KieWorkbenchCommonServicesAPI"/>
 
   <!-- Models for Drools Workbench Screens -->
   <inherits name="org.drools.workbench.models.commons.DroolsWorkbenchModelsCommon"/>
@@ -49,10 +53,6 @@
 
   <inherits name="org.kie.guvnor.projecteditor.GuvnorProjectEditorClient"/>
   <inherits name="org.kie.guvnor.projectconfigscreen.GuvnorProjectConfigScreenClient"/>
-
-  <!-- designer -->
-  <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
-  <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
 
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/kie-drools-wb.css'/>

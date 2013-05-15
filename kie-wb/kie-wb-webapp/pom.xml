@@ -210,18 +210,18 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-commons-ui</artifactId>
+      <groupId>org.kie.workbench.widgets</groupId>
+      <artifactId>kie-wb-common-ui</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-core-services-api</artifactId>
+      <groupId>org.kie.workbench.services</groupId>
+      <artifactId>kie-wb-common-services-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-core-services-backend</artifactId>
+      <groupId>org.kie.workbench.services</groupId>
+      <artifactId>kie-wb-common-services-backend</artifactId>
     </dependency>
 
     <dependency>
@@ -682,6 +682,7 @@
           <module>org.kie.workbench.FastCompiledKIEWebapp</module>
           <logLevel>INFO</logLevel>
           <compileSourcesArtifacts>
+
             <!-- Home screen -->
             <compileSourcesArtifact>org.kie:kie-wb-home-client</compileSourcesArtifact>  
 
@@ -746,17 +747,18 @@
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-search-screen-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-explorer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-explorer-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-common-ui</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-decorated-grid-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-view-source-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-error-messages-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-metadata-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-config-resource-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-services-api</compileSourcesArtifact>
+
+            <!-- To be refactored.... -->
             <compileSourcesArtifact>org.kie.guvnor:guvnor-datamodel-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-workingset-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-core-services-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-security</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-ui</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-services-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-data</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-api</compileSourcesArtifact>
 

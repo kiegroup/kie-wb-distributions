@@ -16,6 +16,7 @@
 package org.kie.workbench.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,12 +38,15 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.TextBox;
-import java.util.Arrays;
+import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
+import org.jboss.errai.ioc.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
-import org.kie.guvnor.commons.ui.client.resources.RoundedCornersResource;
+import org.kie.workbench.services.shared.config.AppConfigService;
+import org.kie.workbench.services.shared.config.ApplicationPreferences;
+import org.kie.workbench.widgets.common.client.resources.RoundedCornersResource;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.Command;
@@ -53,12 +57,12 @@ import org.uberfire.client.workbench.widgets.menu.MenuPosition;
 import org.uberfire.client.workbench.widgets.menu.MenuSearchItem;
 import org.uberfire.client.workbench.widgets.menu.Menus;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
+import org.uberfire.security.Identity;
+import org.uberfire.security.Role;
 import org.uberfire.shared.mvp.PlaceRequest;
 import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
 
 import static org.uberfire.client.workbench.widgets.menu.MenuFactory.*;
-import org.uberfire.security.Identity;
-import org.uberfire.security.Role;
 
 /**
  *
@@ -68,14 +72,21 @@ public class ShowcaseEntryPoint {
 
     @Inject
     private PlaceManager placeManager;
+
     @Inject
     private WorkbenchMenuBarPresenter menubar;
+
     @Inject
     private ActivityManager activityManager;
+
     @Inject
     private IOCBeanManager iocManager;
+
     @Inject
     public Identity identity;
+
+    @Inject
+    private Caller<AppConfigService> appConfigService;
 
     private SuggestBox actionText;
     private TextBox textSuggestBox;
@@ -91,10 +102,20 @@ public class ShowcaseEntryPoint {
     
     @AfterInitialization
     public void startApp() {
+        loadPreferences();
         loadStyles();
         setupMenu();
         hideLoadingPopup();
         registerDoAction();
+    }
+
+    private void loadPreferences() {
+        appConfigService.call( new RemoteCallback<Map<String, String>>() {
+            @Override
+            public void callback( final Map<String, String> response ) {
+                ApplicationPreferences.setUp( response );
+            }
+        } ).loadPreferences();
     }
 
     private void loadStyles() {
