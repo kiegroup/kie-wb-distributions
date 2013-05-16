@@ -23,6 +23,7 @@ import org.guvnor.inbox.client.InboxPresenter;
 import org.kie.workbench.client.resources.i18n.Constants;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
+import org.kie.workbench.common.widgets.client.menu.ToolsMenu;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -46,13 +47,16 @@ import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
 
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "Authoring")
-public class ProjectAuthoringPerspective {
+public class DroolsAuthoringPerspective {
 
     @Inject
     private NewResourcePresenter newResourcePresenter;
 
     @Inject
     private NewResourcesMenu newResourcesMenu;
+
+    @Inject
+    private ToolsMenu toolsMenu;
 
     @Inject
     private PlaceManager placeManager;
@@ -141,6 +145,9 @@ public class ProjectAuthoringPerspective {
                 .endMenu()
                 .newTopLevelMenu( "New" )
                 .withItems( newResourcesMenu.getMenuItems() )
+                .endMenu()
+                .newTopLevelMenu( "Tools" )
+                .withItems( toolsMenu.getMenuItems() )
                 .endMenu().build();
     }
 

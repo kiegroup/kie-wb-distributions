@@ -68,7 +68,7 @@ import static org.uberfire.client.workbench.widgets.menu.MenuFactory.*;
  *
  */
 @EntryPoint
-public class ShowcaseEntryPoint {
+public class KieWorkbenchEntryPoint {
 
     @Inject
     private PlaceManager placeManager;

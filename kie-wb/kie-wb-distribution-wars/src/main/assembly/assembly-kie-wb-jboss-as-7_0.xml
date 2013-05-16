@@ -80,7 +80,6 @@
           <exclude>WEB-INF/lib/*-sources.jar</exclude>
           <exclude>WEB-INF/lib/el-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xml-apis-*.jar</exclude>
-          <exclude>WEB-INF/lib/junit-*.jar</exclude>
           <exclude>WEB-INF/lib/h2*.jar</exclude>
           <exclude>WEB-INF/lib/weld-se*.jar</exclude>
           <exclude>WEB-INF/lib/cdi-api*.jar</exclude>

@@ -75,7 +75,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-business-domain-client</artifactId>
@@ -87,7 +87,7 @@
       <artifactId>jbpm-console-ng-business-domain-backend</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-process-runtime-client</artifactId>
@@ -99,20 +99,20 @@
       <artifactId>jbpm-console-ng-process-runtime-backend</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-executor-service-client</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-executor-service-backend</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
-    
+
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-process-modeling-client</artifactId>
@@ -178,7 +178,7 @@
       <artifactId>drools-workbench-models-test-scenarios</artifactId>
     </dependency>
 
-    <!-- Drools  editors -->
+    <!-- Common -->
     <dependency>
       <groupId>org.kie.guvnor</groupId>
       <artifactId>guvnor-project-api</artifactId>
@@ -190,8 +190,18 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-workingset-client</artifactId>
+      <groupId>org.kie.workbench.services</groupId>
+      <artifactId>kie-wb-common-data</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.services</groupId>
+      <artifactId>kie-wb-common-workingset-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.services</groupId>
+      <artifactId>kie-wb-common-workingset-client</artifactId>
     </dependency>
 
     <dependency>
@@ -224,6 +234,82 @@
       <artifactId>kie-wb-common-services-backend</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.kie.guvnor</groupId>
+      <artifactId>guvnor-project-editor-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.guvnor</groupId>
+      <artifactId>guvnor-project-editor-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.guvnor</groupId>
+      <artifactId>guvnor-project-config-editor-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.guvnor</groupId>
+      <artifactId>guvnor-project-config-editor-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-m2repo-editor-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-m2repo-editor-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-m2repo-editor-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-inbox-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-inbox-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-inbox-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-search-screen-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-search-screen-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-project-explorer-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-project-explorer-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-project-explorer-backend</artifactId>
+    </dependency>
+
+    <!-- Drools Workbench Screens -->
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-default-editor-client</artifactId>
@@ -320,56 +406,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-project-editor-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-project-editor-backend</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-project-config-editor-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-project-config-editor-backend</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-m2repo-editor-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-m2repo-editor-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-m2repo-editor-backend</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-inbox-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-inbox-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-inbox-backend</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-dtable-xls-editor-client</artifactId>
     </dependency>
@@ -391,43 +427,33 @@
 
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-search-screen-client</artifactId>
+      <artifactId>kie-wb-common-data-modeller-api</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-search-screen-backend</artifactId>
+      <artifactId>kie-wb-common-data-modeller-backend</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-project-explorer-api</artifactId>
+      <artifactId>kie-wb-common-data-modeller-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-project-explorer-client</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-globals-editor-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-project-explorer-backend</artifactId>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-globals-editor-client</artifactId>
     </dependency>
 
-      <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-wb-globals-editor-api</artifactId>
-      </dependency>
-
-      <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-wb-globals-editor-client</artifactId>
-      </dependency>
-
-      <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-wb-globals-editor-backend</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-globals-editor-backend</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.drools</groupId>
@@ -505,18 +531,18 @@
       <artifactId>kie-nio2-fs</artifactId>
     </dependency>
 
-      <dependency>
-          <groupId>org.kie.commons</groupId>
-          <artifactId>kie-commons-io</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.kie.commons</groupId>
-          <artifactId>kie-commons-cdi</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.kie.commons</groupId>
-          <artifactId>kie-commons-data</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>org.kie.commons</groupId>
+      <artifactId>kie-commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.commons</groupId>
+      <artifactId>kie-commons-cdi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.commons</groupId>
+      <artifactId>kie-commons-data</artifactId>
+    </dependency>
 
     <!-- Errai Core -->
     <dependency>
@@ -659,47 +685,47 @@
     </dependency>
 
     <!-- formModeler dependencies -->
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-app</artifactId>
-          <version>6.0.0-SNAPSHOT</version>
-          <type>war</type>
-      </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-app</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
 
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-renderer-api</artifactId>
-          <version>6.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-renderer-client</artifactId>
-          <version>6.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
-          <version>6.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-editor-api</artifactId>
-          <version>6.0.0-SNAPSHOT</version>
-      </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-renderer-api</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-renderer-client</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-editor-api</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
 
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-editor-client</artifactId>
-          <version>6.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-editor-backend</artifactId>
-          <version>6.0.0-SNAPSHOT</version>
-      </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-editor-client</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-editor-backend</artifactId>
+      <version>6.0.0-SNAPSHOT</version>
+    </dependency>
 
   </dependencies>
- 
+
   <build>
 
     <resources>
@@ -724,7 +750,7 @@
           <compileSourcesArtifacts>
 
             <!-- Home screen -->
-            <compileSourcesArtifact>org.kie:kie-wb-home-client</compileSourcesArtifact>  
+            <compileSourcesArtifact>org.kie:kie-wb-home-client</compileSourcesArtifact>
 
             <!-- jbpm-wb -->
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-api</compileSourcesArtifact>
@@ -737,6 +763,31 @@
 
             <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
+
+            <!-- Guvnor -->
+            <compileSourcesArtifact>org.guvnor:guvnor-inbox-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-inbox-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-m2repo-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-m2repo-editor-client</compileSourcesArtifact>
+
+            <!-- Common dependencies -->
+            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-search-screen-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-search-screen-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-explorer-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-explorer-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-data-modeller-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-data-modeller-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-common-ui</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-decorated-grid-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-view-source-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-error-messages-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-metadata-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-config-resource-widget</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-services-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-security</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-data</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-workingset-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-workingset-client</compileSourcesArtifact>
 
             <!-- Models for drools-wb -->
             <compileSourcesArtifact>org.drools:drools-workbench-models-commons</compileSourcesArtifact>
@@ -774,38 +825,21 @@
             <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-client</compileSourcesArtifact>
 
-            <!-- Common dependencies -->
-            <compileSourcesArtifact>org.guvnor:guvnor-inbox-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.guvnor:guvnor-inbox-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.guvnor:guvnor-m2repo-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.guvnor:guvnor-m2repo-editor-client</compileSourcesArtifact>
+            <!-- To be refactored.... -->
+            <compileSourcesArtifact>org.kie.guvnor:guvnor-project-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-config-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-config-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-search-screen-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-search-screen-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-explorer-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-explorer-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-common-ui</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-decorated-grid-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-view-source-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-error-messages-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-metadata-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-config-resource-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-services-api</compileSourcesArtifact>
 
-            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-data</compileSourcesArtifact>
-
-            <!-- To be refactored.... -->
             <compileSourcesArtifact>org.kie.guvnor:guvnor-datamodel-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-workingset-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-security</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-project-api</compileSourcesArtifact>
 
-            <!-- UberFire dependencies -->
+            <!-- Kie Commons -->
             <compileSourcesArtifact>org.kie.commons:kie-commons-data</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.commons:kie-commons-validation</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.commons:kie-nio2-model</compileSourcesArtifact>
+
+            <!-- UberFire dependencies -->
             <compileSourcesArtifact>org.uberfire:uberfire-security-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>
@@ -813,8 +847,6 @@
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-commons</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-workbench</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
-
-            <compileSourcesArtifact>org.kie.commons:kie-nio2-model</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
           <runTarget>org.kie.workbench.KIEWebapp/KIEWebapp.html</runTarget>
@@ -848,22 +880,22 @@
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
-            <overlays>
-                <overlay>
-                    <groupId>org.jbpm</groupId>
-                    <artifactId>jbpm-form-modeler-app</artifactId>
-                </overlay>
-            </overlays>
-            <webResources>
-                <resource>
-                    <directory>${basedir}/src/main/webapp/WEB-INF</directory>
-                    <filtering>true</filtering>
-                    <targetPath>WEB-INF</targetPath>
-                    <includes>
-                        <include>**/web.xml</include>
-                    </includes>
-                </resource>
-            </webResources>
+          <overlays>
+            <overlay>
+              <groupId>org.jbpm</groupId>
+              <artifactId>jbpm-form-modeler-app</artifactId>
+            </overlay>
+          </overlays>
+          <webResources>
+            <resource>
+              <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+              <filtering>true</filtering>
+              <targetPath>WEB-INF</targetPath>
+              <includes>
+                <include>**/web.xml</include>
+              </includes>
+            </resource>
+          </webResources>
         </configuration>
       </plugin>
 

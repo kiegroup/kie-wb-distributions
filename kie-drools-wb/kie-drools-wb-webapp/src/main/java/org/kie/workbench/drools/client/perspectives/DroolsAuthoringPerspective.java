@@ -50,7 +50,7 @@ import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
  */
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "org.kie.guvnor.client.perspectives.authoring", isDefault = true)
-public class AuthoringPerspective {
+public class DroolsAuthoringPerspective {
 
     @Inject
     private NewResourcePresenter newResourcePresenter;
