@@ -518,11 +518,6 @@
           <artifactId>kie-commons-data</artifactId>
       </dependency>
 
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-kie-services</artifactId>
-      </dependency>
-
     <!-- Errai Core -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -799,6 +794,7 @@
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-metadata-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-config-resource-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-services-api</compileSourcesArtifact>
+
             <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-data</compileSourcesArtifact>
 
             <!-- To be refactored.... -->
