@@ -420,7 +420,7 @@ profile in pom.xml to use that. -->
         <load-on-startup>5</load-on-startup>
         <init-param>
             <param-name>base.app.dir</param-name>
-            <param-value>${project.basedir}/target/jbpm-form-modeler-showcase</param-value>
+            <param-value>${project.basedir}/target/${project.artifactId}-${project.version}</param-value>
         </init-param>
     </servlet>
 

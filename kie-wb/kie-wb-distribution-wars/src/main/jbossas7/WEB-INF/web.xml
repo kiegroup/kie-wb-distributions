@@ -426,7 +426,29 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   </mime-mapping>
   <!-- end designer -->
 
-  <!-- security settings -->
+    <!--start form-modeler -->
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
+        <load-on-startup>5</load-on-startup>
+    </servlet>
+
+
+    <!-- SERVLET-MAPPINGS(S) required by formModeler -->
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
+    </servlet-mapping>
+
+    <!-- TAGLIB(S) required by product externalLibs -->
+    <taglib>
+        <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
+        <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
+    </taglib>
+    <!-- end form-modeler -->
+
+
+    <!-- security settings -->
 
   <security-constraint>
     <web-resource-collection>
