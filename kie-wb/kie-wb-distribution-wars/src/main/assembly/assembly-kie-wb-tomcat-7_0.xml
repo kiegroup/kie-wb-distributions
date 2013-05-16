@@ -40,9 +40,7 @@
 
           <!-- UF Client Related -->
           <exclude>WEB-INF/lib/widget-markdown-*.jar</exclude>
-          <exclude>WEB-INF/lib/widgets-commons-*.jar</exclude>
           <exclude>WEB-INF/lib/widgets-core-client-*.jar</exclude>
-          <exclude>WEB-INF/lib/uberfire-workbench-*.jar</exclude>
           <exclude>WEB-INF/lib/security-client-*.jar</exclude>
 
           <!-- GWT Client Related -->
