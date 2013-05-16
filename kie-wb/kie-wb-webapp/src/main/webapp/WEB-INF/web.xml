@@ -413,8 +413,33 @@ profile in pom.xml to use that. -->
     <servlet-name>StencilSetServiceServlet</servlet-name>
     <url-pattern>/stencilset/*</url-pattern>
   </servlet-mapping>
-  <!-- the number within the session-timout element must be expressed in
-minutes. it is now 24 hours. -->
+
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
+        <load-on-startup>5</load-on-startup>
+        <init-param>
+            <param-name>base.app.dir</param-name>
+            <param-value>${project.basedir}/target/jbpm-form-modeler-showcase</param-value>
+        </init-param>
+    </servlet>
+
+
+    <!-- SERVLET-MAPPINGS(S) required by formModeler -->
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
+    </servlet-mapping>
+
+    <!-- TAGLIB(S) required by product externalLibs -->
+    <taglib>
+        <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
+        <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
+    </taglib>
+
+
+    <!-- the number within the session-timout element must be expressed in
+  minutes. it is now 24 hours. -->
   <session-config>
     <session-timeout>1440</session-timeout>
   </session-config>

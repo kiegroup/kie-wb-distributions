@@ -205,8 +205,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-commons-builder</artifactId>
+      <groupId>org.kie.workbench.services</groupId>
+      <artifactId>kie-wb-common-builder</artifactId>
     </dependency>
 
     <dependency>
@@ -518,6 +518,11 @@
           <artifactId>kie-commons-data</artifactId>
       </dependency>
 
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-kie-services</artifactId>
+      </dependency>
+
     <!-- Errai Core -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -658,6 +663,46 @@
       <artifactId>junit</artifactId>
     </dependency>
 
+    <!-- formModeler dependencies -->
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-form-modeler-app</artifactId>
+          <version>6.0.0-SNAPSHOT</version>
+          <type>war</type>
+      </dependency>
+
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-form-modeler-renderer-api</artifactId>
+          <version>6.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-form-modeler-renderer-client</artifactId>
+          <version>6.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
+          <version>6.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-form-modeler-editor-api</artifactId>
+          <version>6.0.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-form-modeler-editor-client</artifactId>
+          <version>6.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-form-modeler-editor-backend</artifactId>
+          <version>6.0.0-SNAPSHOT</version>
+      </dependency>
+
   </dependencies>
  
   <build>
@@ -754,12 +799,12 @@
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-metadata-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-config-resource-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-services-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-data</compileSourcesArtifact>
 
             <!-- To be refactored.... -->
             <compileSourcesArtifact>org.kie.guvnor:guvnor-datamodel-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-workingset-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-security</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-commons-data</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.guvnor:guvnor-project-api</compileSourcesArtifact>
 
             <!-- UberFire dependencies -->
@@ -807,6 +852,22 @@
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
+            <overlays>
+                <overlay>
+                    <groupId>org.jbpm</groupId>
+                    <artifactId>jbpm-form-modeler-app</artifactId>
+                </overlay>
+            </overlays>
+            <webResources>
+                <resource>
+                    <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+                    <filtering>true</filtering>
+                    <targetPath>WEB-INF</targetPath>
+                    <includes>
+                        <include>**/web.xml</include>
+                    </includes>
+                </resource>
+            </webResources>
         </configuration>
       </plugin>
 

@@ -44,9 +44,9 @@ import org.jboss.errai.ioc.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
-import org.kie.workbench.services.shared.config.AppConfigService;
-import org.kie.workbench.services.shared.config.ApplicationPreferences;
-import org.kie.workbench.widgets.common.client.resources.RoundedCornersResource;
+import org.kie.workbench.common.services.shared.config.AppConfigService;
+import org.kie.workbench.common.services.shared.config.ApplicationPreferences;
+import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.Command;
@@ -113,7 +113,7 @@ public class ShowcaseEntryPoint {
         appConfigService.call( new RemoteCallback<Map<String, String>>() {
             @Override
             public void callback( final Map<String, String> response ) {
-                ApplicationPreferences.setUp( response );
+                ApplicationPreferences.setUp(response);
             }
         } ).loadPreferences();
     }

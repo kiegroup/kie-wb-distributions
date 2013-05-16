@@ -30,14 +30,14 @@
   <inherits name="org.kie.guvnor.project.GuvnorProjectAPI"/>
   <inherits name='org.kie.guvnor.datamodel.GuvnorDataModelAPI'/>
   <inherits name="org.kie.guvnor.workingset.GuvnorWorkingsetClientAPI"/>
-  <inherits name="org.kie.guvnor.commons.data.GuvnorCommonsData"/>
+  <inherits name="org.kie.workbench.common.services.data.KieWorkbenchCommonData"/>
 
   <!--Common Screens -->
-  <inherits name="org.kie.workbench.screens.explorer.KieWorkbenchProjectExplorerClient"/>
-  <inherits name="org.kie.workbench.screens.search.KieWorkbenchSearchScreenClient"/>
+  <inherits name="org.kie.workbench.common.screens.explorer.KieWorkbenchProjectExplorerClient"/>
+  <inherits name="org.kie.workbench.common.screens.search.KieWorkbenchSearchScreenClient"/>
 
   <!-- Common Services -->
-  <inherits name="org.kie.workbench.services.KieWorkbenchCommonServicesAPI"/>
+  <inherits name="org.kie.workbench.common.services.KieWorkbenchCommonServicesAPI"/>
 
   <!-- Models for Drools Workbench Screens -->
   <inherits name="org.drools.workbench.models.commons.DroolsWorkbenchModelsCommon"/>
@@ -65,6 +65,10 @@
   <!-- Errai -->
   <inherits name="org.jboss.errai.ui.UI" />
   <inherits name="org.jboss.errai.enterprise.CDI"/>
+
+  <!-- Form-Modelere -->
+  <inherits name="org.jbpm.formModeler.editor.FormModelerClient"/>
+  <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>
 
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/guvnor-showcase.css'/>
