@@ -32,6 +32,7 @@
   <inherits name="org.kie.workbench.common.screens.datamodeller.KieWorkbenchDatamodellerClient"/>
   <inherits name="org.kie.workbench.projecteditor.GuvnorProjectEditorClient" />
   <inherits name="org.kie.workbench.projectimportsscreen.GuvnorProjectConfigScreenClient" />
+
   <!-- Common Services -->
   <inherits name="org.kie.workbench.common.services.KieWorkbenchCommonServicesAPI"/>
   <inherits name="org.kie.workbench.common.services.data.KieWorkbenchCommonData"/>
