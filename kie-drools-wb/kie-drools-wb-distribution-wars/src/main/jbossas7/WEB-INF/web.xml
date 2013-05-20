@@ -11,11 +11,15 @@
       <param-name>org.uberfire.cookie.id</param-name>
       <param-value>guvnor.app</param-value>
     </init-param>
+    <init-param>
+      <param-name>org.uberfire.auth.scheme</param-name>
+      <param-value>org.uberfire.security.server.auth.JACCAuthenticationScheme</param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>
     <filter-name>UberFire Security Filter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/*</url-pattern>
   </filter-mapping>
 
   <servlet>
