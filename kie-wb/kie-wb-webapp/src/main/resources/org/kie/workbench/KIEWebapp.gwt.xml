@@ -16,7 +16,6 @@
   <inherits name="org.jbpm.console.ng.pr.JbpmConsoleNGProcessRuntimeClient"/>
   <inherits name="org.jbpm.console.ng.bd.JbpmConsoleNGBusinessDomainClient"/>
   <inherits name="org.jbpm.console.ng.es.JbpmConsoleNGExecutorServiceClient"/>
-  <inherits name="org.jbpm.console.ng.pm.JbpmConsoleNGProcessModelingClient"/>
 
   <!-- designer -->
   <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
