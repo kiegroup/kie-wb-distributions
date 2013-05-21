@@ -10,6 +10,9 @@
   <listener>
     <listener-class>org.jboss.solder.servlet.event.ServletEventBridgeListener</listener-class>
   </listener>
+  <listener>
+    <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+  </listener>
 
   <filter>
     <filter-name>UberFire Security Filter</filter-name>
@@ -24,6 +27,13 @@
     <filter-name>UberFire Security Filter</filter-name>
     <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
   </filter-mapping>
+  <!-- disable UF security filter until redirect will be moved to forward to preserve http method
+    UF pull request https://github.com/droolsjbpm/uberfire/pull/4
+  -->
+  <!--filter-mapping>
+    <filter-name>UberFire Security Filter</filter-name>
+    <url-pattern>/rest/*</url-pattern>
+  </filter-mapping-->
 
   <!-- UberFire servlets -->
   <servlet>
@@ -105,6 +115,17 @@ profile in pom.xml to use that. -->
     <url-pattern>*.erraiBus</url-pattern>
   </servlet-mapping>
 
+  <!-- rest easy -->
+  <servlet>
+    <servlet-name>Resteasy</servlet-name>
+    <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Resteasy</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
   <resource-env-ref>
     <description>Object factory for the CDI Bean Manager</description>
     <resource-env-ref-name>BeanManager</resource-env-ref-name>
@@ -135,6 +156,21 @@ profile in pom.xml to use that. -->
   <context-param>
     <param-name>org.jboss.seam.transaction.disableListener</param-name>
     <param-value>true</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>resteasy.scan</param-name>
+      <param-value>true</param-value>
+    </context-param>
+
+  <context-param>
+    <param-name>resteasy.injector.factory</param-name>
+    <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>resteasy.servlet.mapping.prefix</param-name>
+    <param-value>/rest</param-value>
   </context-param>
 
   <welcome-file-list>
@@ -461,11 +497,13 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </servlet-mapping>
 
     <!-- TAGLIB(S) required by product externalLibs -->
-    <taglib>
-        <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
-        <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
-    </taglib>
-    <!-- end form-modeler -->
+    <jsp-config>
+      <taglib>
+          <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
+          <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
+      </taglib>
+    </jsp-config>
+  <!-- end form-modeler -->
 
 
     <resource-ref>

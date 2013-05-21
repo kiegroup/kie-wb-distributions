@@ -21,6 +21,9 @@
       <includes>
         <include>org.apache.ant:ant:jar</include>
         <include>org.apache.ant:ant-launcher:jar</include>
+        <include>org.jboss.resteasy:jaxrs-api</include>
+        <include>org.jboss.resteasy:resteasy-jaxrs</include>
+        <include>org.jboss.resteasy:resteasy-cdi</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>

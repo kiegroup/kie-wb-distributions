@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         version="2.5">
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+  <servlet-mapping>
+    <servlet-name>javax.ws.rs.core.Application</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
 
   <filter>
     <filter-name>UberFire Security Filter</filter-name>
@@ -21,6 +25,13 @@
     <filter-name>UberFire Security Filter</filter-name>
     <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
   </filter-mapping>
+  <!-- disable UF security filter until redirect will be moved to forward to preserve http method
+    UF pull request https://github.com/droolsjbpm/uberfire/pull/4
+  -->
+  <!--filter-mapping>
+    <filter-name>UberFire Security Filter</filter-name>
+    <url-pattern>/rest/*</url-pattern>
+  </filter-mapping-->
 
   <!-- UberFire servlets -->
   <servlet>
@@ -440,10 +451,12 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </servlet-mapping>
 
     <!-- TAGLIB(S) required by product externalLibs -->
-    <taglib>
-        <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
-        <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
-    </taglib>
+    <jsp-config>
+      <taglib>
+          <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
+          <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
+      </taglib>
+    </jsp-config>
     <!-- end form-modeler -->
 
 
@@ -453,6 +466,16 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <web-resource-collection>
       <web-resource-name>console</web-resource-name>
       <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>kie-user</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>rest</web-resource-name>
+      <url-pattern>/rest/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>kie-user</role-name>

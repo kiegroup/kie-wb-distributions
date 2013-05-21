@@ -120,6 +120,13 @@
       <version>${project.version}</version>
     </dependency>
 
+    <!-- kie remote -->
+    <dependency>
+      <groupId>org.kie.remote</groupId>
+      <artifactId>kie-services-remote</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- Miscellaneous jBPM dependencies -->
     <dependency>
       <groupId>com.github.gwtbootstrap</groupId>
@@ -237,7 +244,7 @@
 
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-project-editor-client</artifactId>
+      <artifactId>kie-wb-project-editor-api</artifactId>
     </dependency>
 
     <dependency>
@@ -900,6 +907,20 @@
               </includes>
             </resource>
           </webResources>
+          <dependentWarExcludes>
+            WEB-INF/lib/drools-compiler*.jar,
+            WEB-INF/lib/drools-core*.jar,
+            WEB-INF/lib/drools-workbench-models-commons-*.jar,
+            WEB-INF/lib/guvnor-m2repo-editor-*.jar,
+            WEB-INF/lib/guvnor-project-*.jar,
+            WEB-INF/lib/kie-api*.jar,
+            WEB-INF/lib/kie-ci*.jar,
+            WEB-INF/lib/kie-commons-*.jar,
+            WEB-INF/lib/kie-internal*.jar,
+            WEB-INF/lib/kie-nio2-fs*.jar,
+            WEB-INF/lib/kie-wb-common-*.jar,
+            WEB-INF/lib/uberfire-*.jar,
+          </dependentWarExcludes>
         </configuration>
       </plugin>
 

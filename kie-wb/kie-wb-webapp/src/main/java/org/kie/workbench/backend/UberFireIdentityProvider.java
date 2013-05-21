@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jbpm.kie.services.api.IdentityProvider;
 import org.uberfire.security.Identity;
@@ -17,10 +18,20 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
 
     @Inject
     private Identity identity;
+    @Inject
+    private HttpServletRequest request;
     
     @Override
     public String getName() {
-        return identity.getName();
+        try {
+
+            return identity.getName();
+        } catch (Exception e) {
+            if (request != null && request.getUserPrincipal() != null) {
+                return request.getUserPrincipal().getName();
+            }
+            return null;
+        }
     }
 
     @Override
