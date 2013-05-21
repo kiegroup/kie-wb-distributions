@@ -11,8 +11,7 @@
      <!--[if lt IE 9]>
      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
      <![endif]-->    
-
-    <link rel="stylesheet" href="css/main.css">
+     
     <link rel="shortcut icon" href="images/drools.gif" type="image/gif"/>
     <link rel="icon" href="images/drools.gif" type="image/gif"/>
 

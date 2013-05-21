@@ -45,7 +45,7 @@ public class AppSetup {
     // default repository section - start
     private static final String JBPM_WB_PLAYGROUND_SCHEME = "git";
     private static final String JBPM_WB_PLAYGROUND_ALIAS = "jbpm-playground";
-    private static final String JBPM_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground.git";
+    private static final String JBPM_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground-kjar.git";
     private static final String JBPM_WB_PLAYGROUND_UID = "guvnorngtestuser1";
     private static final String JBPM_WB_PLAYGROUND_PWD = "test1234";
 

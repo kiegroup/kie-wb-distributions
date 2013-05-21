@@ -31,8 +31,6 @@ import com.google.gwt.animation.client.Animation;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -44,6 +42,7 @@ import org.jboss.errai.ioc.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
+import org.kie.workbench.client.resources.i18n.Constants;
 import org.kie.workbench.common.services.shared.config.AppConfigService;
 import org.kie.workbench.common.services.shared.config.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
@@ -59,7 +58,6 @@ import org.uberfire.client.workbench.widgets.menu.Menus;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.security.Identity;
 import org.uberfire.security.Role;
-import org.uberfire.shared.mvp.PlaceRequest;
 import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
 
 import static org.uberfire.client.workbench.widgets.menu.MenuFactory.*;
@@ -70,6 +68,8 @@ import static org.uberfire.client.workbench.widgets.menu.MenuFactory.*;
 @EntryPoint
 public class KieWorkbenchEntryPoint {
 
+    private Constants constants = GWT.create(Constants.class);
+    
     @Inject
     private PlaceManager placeManager;
 
@@ -93,12 +93,7 @@ public class KieWorkbenchEntryPoint {
     DefaultSuggestionDisplay suggestionDisplay;
     Map<String, String> actions = new HashMap<String, String>();
 
-       private String[] menuItems = new String[]{
-            "Tasks",
-            "Process Definitions",
-            "Process Instances",
-            "Authoring"
-    };
+    
     
     @AfterInitialization
     public void startApp() {
@@ -106,7 +101,6 @@ public class KieWorkbenchEntryPoint {
         loadStyles();
         setupMenu();
         hideLoadingPopup();
-        registerDoAction();
     }
 
     private void loadPreferences() {
@@ -124,35 +118,11 @@ public class KieWorkbenchEntryPoint {
         RoundedCornersResource.INSTANCE.roundCornersCss().ensureInjected();
     }
 
-    private void registerDoAction() {
-      
-
-        KeyPressHandler keyPressHandler = new KeyPressHandler() {
-            public void onKeyPress( KeyPressEvent event ) {
-
-               
-                if ( event.isControlKeyDown() && event.getUnicodeCharCode() == 116 ) {
-                    PlaceRequest placeRequestImpl = new DefaultPlaceRequest( "Quick New Task" );
-                    placeManager.goTo( placeRequestImpl );
-                }
-
-                if ( event.isControlKeyDown() && event.getUnicodeCharCode() == 104 ) {
-                    PlaceRequest placeRequestImpl = new DefaultPlaceRequest( "Home Perspective" );
-                    placeManager.goTo( placeRequestImpl );
-                }
-
-            }
-        };
-
-        RootPanel.get().addDomHandler( keyPressHandler, KeyPressEvent.getType() );
-    }
-
     private void setupMenu() {
+
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
 
-        final Menus menus = MenuFactory
-                .newTopLevelMenu( "Home" )
-                .respondsWith( new Command() {
+        final Menus menus = MenuFactory.newTopLevelMenu(constants.Home()).respondsWith(new Command() {
                     @Override
                     public void execute() {
                         if ( defaultPerspective != null ) {
@@ -163,13 +133,13 @@ public class KieWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( "Views" )
+                .newTopLevelMenu( constants.Views() )
                 .withItems( getPerspectives() )
                 .endMenu()
-                .newTopLevelMenu( "BPM" )
-                .withItems( getViews() )
+                .newTopLevelMenu( constants.BPM() )
+                .withItems( getBPMViews() )
                 .endMenu()
-                .newTopLevelMenu( "Logout" )
+                .newTopLevelMenu( constants.LogOut() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -186,7 +156,7 @@ public class KieWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newSearchItem( "Search..." )
+                .newSearchItem( constants.Search() )
                 .position( MenuPosition.RIGHT )
                 .respondsWith( new MenuSearchItem.SearchCommand() {
                     @Override
@@ -212,19 +182,92 @@ public class KieWorkbenchEntryPoint {
 
         return result;
     }
+    
+     private List<? extends MenuItem> getAuthoringViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>(1);
 
-    private List<? extends MenuItem> getViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( menuItems.length );
-        Arrays.sort( menuItems );
-        for ( final String menuItem : menuItems ) {
-            result.add( MenuFactory.newSimpleItem( menuItem ).respondsWith( new Command() {
-                @Override
-                public void execute() {
-                    placeManager.goTo( new DefaultPlaceRequest( menuItem ) );
-                }
-            } ).endMenu().build().getItems().get( 0 ) );
-        }
+        result.add(MenuFactory.newSimpleItem(constants.Process_Authoring()).respondsWith(new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo(new DefaultPlaceRequest("Authoring"));
+            }
+        }).endMenu().build().getItems().get(0));
 
+        return result;
+    }
+
+    private List<? extends MenuItem> getProcessMGMTViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>(2);
+
+        result.add(MenuFactory.newSimpleItem(constants.Process_Definitions()).respondsWith(new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo(new DefaultPlaceRequest("Process Definitions"));
+            }
+        }).endMenu().build().getItems().get(0));
+
+        result.add(MenuFactory.newSimpleItem(constants.Process_Instances()).respondsWith(new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo(new DefaultPlaceRequest("Process Instances"));
+            }
+        }).endMenu().build().getItems().get(0));
+
+        return result;
+    }
+
+    private List<? extends MenuItem> getDeploymentViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>(1);
+
+        result.add(MenuFactory.newSimpleItem(constants.Deployments()).respondsWith(new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo(new DefaultPlaceRequest("Deployments"));
+            }
+        }).endMenu().build().getItems().get(0));
+
+        return result;
+    }
+
+    private List<? extends MenuItem> getWorkViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>(2);
+
+        result.add(MenuFactory.newSimpleItem(constants.Tasks_Calendar_View()).respondsWith(new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo(new DefaultPlaceRequest("Tasks"));
+            }
+        }).endMenu().build().getItems().get(0));
+
+        result.add(MenuFactory.newSimpleItem(constants.Tasks_Grid_View()).respondsWith(new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo(new DefaultPlaceRequest("Grid Tasks List"));
+            }
+        }).endMenu().build().getItems().get(0));
+
+        return result;
+    }
+
+    private List<? extends MenuItem> getBAMViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>(1);
+        result.add(MenuFactory.newSimpleItem(constants.Process_Dashboard()).respondsWith(new Command() {
+            @Override
+            public void execute() {
+                Window.open("http://localhost:8080/dashbuilder/workspace/jbpm-dashboard", "_blank", "");
+            }
+        }).endMenu().build().getItems().get(0));
+
+        return result;
+    }
+     
+    private List<? extends MenuItem> getBPMViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( );
+        result.addAll( getAuthoringViews());
+        result.addAll( getDeploymentViews());
+        result.addAll( getWorkViews());
+        result.addAll( getProcessMGMTViews());
+        result.addAll( getBAMViews());
         return result;
     }
     
@@ -305,5 +348,4 @@ public class KieWorkbenchEntryPoint {
         $wnd.location = url;
     }-*/;
 
-   
 }
