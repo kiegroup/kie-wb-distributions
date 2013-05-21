@@ -181,13 +181,13 @@
 
     <!-- Common -->
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-project-api</artifactId>
+        <groupId>org.kie.workbench.services</groupId>
+        <artifactId>kie-wb-common-project-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.guvnor</groupId>
-      <artifactId>guvnor-project-backend</artifactId>
+        <groupId>org.kie.workbench.services</groupId>
+        <artifactId>kie-wb-common-project-backend</artifactId>
     </dependency>
 
     <dependency>
@@ -800,6 +800,7 @@
             <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-workingset-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-workingset-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-datamodel-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-project-api</compileSourcesArtifact>
 
             <!-- Models for drools-wb -->
             <compileSourcesArtifact>org.drools:drools-workbench-models-commons</compileSourcesArtifact>
@@ -836,9 +837,6 @@
             <compileSourcesArtifact>org.drools:drools-wb-workitems-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-client</compileSourcesArtifact>
-
-            <!-- To be refactored.... -->
-            <compileSourcesArtifact>org.kie.guvnor:guvnor-project-api</compileSourcesArtifact>
 
             <!-- Kie Commons -->
             <compileSourcesArtifact>org.kie.commons:kie-commons-data</compileSourcesArtifact>
