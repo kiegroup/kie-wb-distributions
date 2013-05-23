@@ -33,7 +33,7 @@
     <url-pattern>/rest/*</url-pattern>
   </filter-mapping-->
 
-  <!--- RESTEasy configurations --->  
+  <!-- RESTEasy configurations -->
   <context-param>
     <param-name>javax.ws.rs.core.Application</param-name>
     <param-value>org.kie.workbench.common.services.rest.GuvnorRestApplication</param-value>
