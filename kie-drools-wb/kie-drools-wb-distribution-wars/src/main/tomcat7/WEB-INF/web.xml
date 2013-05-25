@@ -10,6 +10,9 @@
   <listener>
       <listener-class>org.jboss.solder.servlet.event.ServletEventBridgeListener</listener-class>
   </listener>
+  <listener>
+    <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+  </listener>
 
   <filter>
     <filter-name>UberFire Security Filter</filter-name>
@@ -27,8 +30,8 @@
   
   <!-- RESTEasy configurations -->
   <context-param>
-    <param-name>javax.ws.rs.core.Application</param-name>
-    <param-value>org.kie.workbench.common.services.rest.GuvnorRestApplication</param-value>
+    <param-name>resteasy.scan</param-name>
+    <param-value>true</param-value>
   </context-param>
 
   <context-param>

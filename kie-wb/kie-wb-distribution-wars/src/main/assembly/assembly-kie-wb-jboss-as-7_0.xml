@@ -50,6 +50,12 @@
       <unpack>true</unpack>
       <unpackOptions>
         <excludes>
+            <exclude>WEB-INF/jetty-env.xml</exclude>
+            <exclude>WEB-INF/web.xml</exclude>
+            <exclude>WEB-INF/beans.xml</exclude>
+            <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
+            <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
+            <exclude>WEB-INF/classes/users.properties</exclude>
             <!-- UF client related -->
             <exclude>WEB-INF/lib/uberfire-widget-markdown-*.jar</exclude>
             <exclude>WEB-INF/lib/uberfire-widgets-core-client-*.jar</exclude>
@@ -115,7 +121,7 @@
             <exclude>WEB-INF/lib/cdi-api*.jar</exclude>
             <exclude>WEB-INF/lib/javax*.jar</exclude>
             <exclude>WEB-INF/lib/jboss-interceptors-api_1-*.jar</exclude>
-
+            <exclude>WEB-INF/lib/resteasy*.jar</exclude>
             <!-- Netty-->
             <exclude>WEB-INF/lib/netty-3*.jar</exclude>
 
