@@ -37,15 +37,16 @@
   
   
   <!-- RESTEasy configurations -->
+
   <context-param>
-    <param-name>javax.ws.rs.core.Application</param-name>
-    <param-value>org.kie.workbench.common.services.rest.GuvnorRestApplication</param-value>
+    <param-name>resteasy.scan</param-name>
+    <param-value>true</param-value>
   </context-param>
 
   <context-param>
     <param-name>resteasy.servlet.mapping.prefix</param-name>
     <param-value>/rest</param-value>
-  </context-param>
+   </context-param>
 
   <context-param>
     <param-name>resteasy.injector.factory</param-name>
@@ -175,16 +176,6 @@ profile in pom.xml to use that. -->
     <url-pattern>*.erraiBus</url-pattern>
   </servlet-mapping>
 
-  <!-- rest easy -->
-  <servlet>
-    <servlet-name>Resteasy</servlet-name>
-    <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>Resteasy</servlet-name>
-    <url-pattern>/rest/*</url-pattern>
-  </servlet-mapping>
 
   <resource-env-ref>
     <description>Object factory for the CDI Bean Manager</description>
@@ -218,19 +209,6 @@ profile in pom.xml to use that. -->
     <param-value>true</param-value>
   </context-param>
 
-  <context-param>
-    <param-name>resteasy.scan</param-name>
-      <param-value>true</param-value>
-    </context-param>
-
-  <context-param>
-    <param-name>resteasy.injector.factory</param-name>
-    <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
-  </context-param>
-
-  <context-param>
-    <param-name>resteasy.servlet.mapping.prefix</param-name>
-    <param-value>/rest</param-value>
   </context-param>
 
   <welcome-file-list>
