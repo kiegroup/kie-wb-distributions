@@ -51,6 +51,8 @@
         <excludes>
           <exclude>WEB-INF/jetty-env.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
+          <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
+          <exclude>WEB-INF/classes/users.properties</exclude>
 
           <!-- UF client related -->
           <exclude>WEB-INF/lib/uberfire-widget-markdown-*.jar</exclude>
