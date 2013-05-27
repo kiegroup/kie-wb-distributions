@@ -31,7 +31,6 @@ import org.uberfire.backend.server.config.ConfigGroup;
 import org.uberfire.backend.server.config.ConfigType;
 import org.uberfire.backend.server.config.ConfigurationFactory;
 import org.uberfire.backend.server.config.ConfigurationService;
-import org.uberfire.backend.server.impl.ActiveFileSystemsFactory;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
 //is not deployed to the Application Servers /bin folder. This will be remedied when an
@@ -72,20 +71,17 @@ public class AppSetup {
     private ConfigurationFactory configurationFactory;
 
     @Inject
-    private ActiveFileSystemsFactory activeFileSystemsFactory;
-
-    @Inject
     private AdministrationService administrationService;
 
     @PostConstruct
     public void assertPlayground() {
 
         // TODO Setup default repository for jBPM-Workbench
-        administrationService.bootstrapRepository(JBPM_WB_PLAYGROUND_ALIAS, JBPM_WB_PLAYGROUND_ORIGIN,
-                JBPM_WB_PLAYGROUND_UID, JBPM_WB_PLAYGROUND_PWD);
+        administrationService.bootstrapRepository( JBPM_WB_PLAYGROUND_ALIAS, JBPM_WB_PLAYGROUND_ORIGIN,
+                                                   JBPM_WB_PLAYGROUND_UID, JBPM_WB_PLAYGROUND_PWD );
         // TODO Setup default repository for Drools-Workbench
-        administrationService.bootstrapRepository(DROOLS_WB_PLAYGROUND_ALIAS, DROOLS_WB_PLAYGROUND_ORIGIN,
-                DROOLS_WB_PLAYGROUND_UID, DROOLS_WB_PLAYGROUND_PWD);
+        administrationService.bootstrapRepository( DROOLS_WB_PLAYGROUND_ALIAS, DROOLS_WB_PLAYGROUND_ORIGIN,
+                                                   DROOLS_WB_PLAYGROUND_UID, DROOLS_WB_PLAYGROUND_PWD );
 
         // TODO Setup mandatory properties for Drools-Workbench
         List<ConfigGroup> configGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
@@ -113,10 +109,6 @@ public class AppSetup {
             configurationService.addConfiguration( getWorkItemElementDefinitions() );
         }
 
-        //Ensure FileSystems are loaded
-        activeFileSystemsFactory.fileSystems();
-
-
         // rest of jbpm wb bootstrap
         administrationService.bootstrapConfig();
         administrationService.bootstrapDeployments();
@@ -140,11 +132,11 @@ public class AppSetup {
         group.addConfigItem( configurationFactory.newConfigItem( "rule-modeller-onlyShowDSLStatements",
                                                                  "false" ) );
         group.addConfigItem( configurationFactory.newConfigItem( "designer.url",
-                                                                  "http://localhost:8080" ) );
+                                                                 "http://localhost:8080" ) );
         group.addConfigItem( configurationFactory.newConfigItem( "designer.context",
-                                                                   "designer" ) );
+                                                                 "designer" ) );
         group.addConfigItem( configurationFactory.newConfigItem( "designer.profile",
-                                                                    "jbpm" ) );
+                                                                 "jbpm" ) );
         return group;
     }
 

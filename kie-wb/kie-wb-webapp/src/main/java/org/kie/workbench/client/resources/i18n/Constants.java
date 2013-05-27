@@ -18,7 +18,6 @@ package org.kie.workbench.client.resources.i18n;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.Messages;
-import org.uberfire.client.workbench.widgets.menu.MenuItem;
 
 /**
  * This uses GWT to provide client side compile time resolving of locales. See:
@@ -66,11 +65,9 @@ public interface Constants
     String newItem();
 
     String Views();
-    
+
     String BPM();
 
     String Search();
-    
-    
-    
+
 }

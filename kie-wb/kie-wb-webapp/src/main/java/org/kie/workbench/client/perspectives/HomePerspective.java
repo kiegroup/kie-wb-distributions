@@ -16,20 +16,19 @@
 package org.kie.workbench.client.perspectives;
 
 import javax.enterprise.context.ApplicationScoped;
+
 import org.uberfire.client.annotations.Perspective;
-
 import org.uberfire.client.annotations.WorkbenchPerspective;
-import org.uberfire.client.workbench.model.PerspectiveDefinition;
-import org.uberfire.client.workbench.model.impl.PartDefinitionImpl;
-import org.uberfire.client.workbench.model.impl.PerspectiveDefinitionImpl;
-import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
-
+import org.uberfire.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.workbench.model.PerspectiveDefinition;
+import org.uberfire.workbench.model.impl.PartDefinitionImpl;
+import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 
 /**
  * A Perspective to show File Explorer
  */
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "Home Perspective", isDefault=true)
+@WorkbenchPerspective(identifier = "Home Perspective", isDefault = true)
 public class HomePerspective {
 
     @Perspective
@@ -37,7 +36,7 @@ public class HomePerspective {
         final PerspectiveDefinition p = new PerspectiveDefinitionImpl();
         p.setName( "Home Perspective" );
         p.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "Home Screen" ) ) );
-        p.setTransient(true);
+        p.setTransient( true );
         return p;
     }
 

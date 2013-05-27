@@ -30,22 +30,22 @@ import org.uberfire.client.annotations.WorkbenchPerspective;
 import org.uberfire.client.annotations.WorkbenchToolBar;
 import org.uberfire.client.editors.repository.clone.CloneRepositoryForm;
 import org.uberfire.client.editors.repository.create.CreateRepositoryForm;
-import org.uberfire.client.mvp.Command;
 import org.uberfire.client.mvp.PlaceManager;
-import org.uberfire.client.workbench.Position;
-import org.uberfire.client.workbench.model.PanelDefinition;
-import org.uberfire.client.workbench.model.PerspectiveDefinition;
-import org.uberfire.client.workbench.model.impl.PanelDefinitionImpl;
-import org.uberfire.client.workbench.model.impl.PartDefinitionImpl;
-import org.uberfire.client.workbench.model.impl.PerspectiveDefinitionImpl;
-import org.uberfire.client.workbench.widgets.menu.MenuFactory;
-import org.uberfire.client.workbench.widgets.menu.Menus;
-import org.uberfire.client.workbench.widgets.toolbar.ToolBar;
-import org.uberfire.client.workbench.widgets.toolbar.impl.DefaultToolBar;
-import org.uberfire.client.workbench.widgets.toolbar.impl.DefaultToolBarItem;
-import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.mvp.Command;
+import org.uberfire.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.workbench.model.PanelDefinition;
+import org.uberfire.workbench.model.PerspectiveDefinition;
+import org.uberfire.workbench.model.Position;
+import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
+import org.uberfire.workbench.model.impl.PartDefinitionImpl;
+import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
+import org.uberfire.workbench.model.menu.MenuFactory;
+import org.uberfire.workbench.model.menu.Menus;
+import org.uberfire.workbench.model.toolbar.ToolBar;
+import org.uberfire.workbench.model.toolbar.impl.DefaultToolBar;
+import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 
-import static org.uberfire.client.workbench.widgets.toolbar.IconType.*;
+import static org.uberfire.workbench.model.toolbar.IconType.*;
 
 /**
  * A Perspective for Administrators
@@ -65,12 +65,12 @@ public class AdministrationPerspective {
     @Inject
     private IOCBeanManager iocManager;
 
-    private Command newRepoCommand   = null;
+    private Command newRepoCommand = null;
     private Command cloneRepoCommand = null;
 
     private PerspectiveDefinition perspective;
-    private Menus                 menus;
-    private ToolBar               toolBar;
+    private Menus menus;
+    private ToolBar toolBar;
 
     @PostConstruct
     public void init() {
@@ -148,29 +148,29 @@ public class AdministrationPerspective {
     private void buildMenuBar() {
         this.menus = MenuFactory
                 .newTopLevelMenu( "Explore" )
-                    .menus()
-                        .menu( "Files" )
-                            .withRoles( PERMISSIONS_ADMIN )
-                            .respondsWith( new Command() {
-                                @Override
-                                public void execute() {
-                                    placeManager.goTo( "FileExplorer" );
-                                }
-                            }  )
-                        .endMenu()
-                    .endMenus()
+                .menus()
+                .menu( "Files" )
+                .withRoles( PERMISSIONS_ADMIN )
+                .respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "FileExplorer" );
+                    }
+                } )
+                .endMenu()
+                .endMenus()
                 .endMenu()
                 .newTopLevelMenu( "Repositories" )
-                    .menus()
-                        .menu( "Clone Repo" )
-                            .withRoles( PERMISSIONS_ADMIN )
-                            .respondsWith( cloneRepoCommand  )
-                        .endMenu()
-                        .menu( "New Repo" )
-                            .withRoles( PERMISSIONS_ADMIN )
-                            .respondsWith( newRepoCommand  )
-                        .endMenu()
-                    .endMenus()
+                .menus()
+                .menu( "Clone Repo" )
+                .withRoles( PERMISSIONS_ADMIN )
+                .respondsWith( cloneRepoCommand )
+                .endMenu()
+                .menu( "New Repo" )
+                .withRoles( PERMISSIONS_ADMIN )
+                .respondsWith( newRepoCommand )
+                .endMenu()
+                .endMenus()
                 .endMenu().build();
     }
 

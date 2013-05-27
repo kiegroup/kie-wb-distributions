@@ -16,7 +16,6 @@
 package org.kie.workbench.client;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,19 +47,19 @@ import org.kie.workbench.common.services.shared.config.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
-import org.uberfire.client.mvp.Command;
 import org.uberfire.client.mvp.PlaceManager;
-import org.uberfire.client.workbench.widgets.menu.MenuFactory;
-import org.uberfire.client.workbench.widgets.menu.MenuItem;
-import org.uberfire.client.workbench.widgets.menu.MenuPosition;
-import org.uberfire.client.workbench.widgets.menu.MenuSearchItem;
-import org.uberfire.client.workbench.widgets.menu.Menus;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
+import org.uberfire.mvp.Command;
+import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.security.Identity;
 import org.uberfire.security.Role;
-import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.workbench.model.menu.MenuFactory;
+import org.uberfire.workbench.model.menu.MenuItem;
+import org.uberfire.workbench.model.menu.MenuPosition;
+import org.uberfire.workbench.model.menu.MenuSearchItem;
+import org.uberfire.workbench.model.menu.Menus;
 
-import static org.uberfire.client.workbench.widgets.menu.MenuFactory.*;
+import static org.uberfire.workbench.model.menu.MenuFactory.*;
 
 /**
  *
@@ -68,8 +67,8 @@ import static org.uberfire.client.workbench.widgets.menu.MenuFactory.*;
 @EntryPoint
 public class KieWorkbenchEntryPoint {
 
-    private Constants constants = GWT.create(Constants.class);
-    
+    private Constants constants = GWT.create( Constants.class );
+
     @Inject
     private PlaceManager placeManager;
 
@@ -93,8 +92,6 @@ public class KieWorkbenchEntryPoint {
     DefaultSuggestionDisplay suggestionDisplay;
     Map<String, String> actions = new HashMap<String, String>();
 
-    
-    
     @AfterInitialization
     public void startApp() {
         loadPreferences();
@@ -107,7 +104,7 @@ public class KieWorkbenchEntryPoint {
         appConfigService.call( new RemoteCallback<Map<String, String>>() {
             @Override
             public void callback( final Map<String, String> response ) {
-                ApplicationPreferences.setUp(response);
+                ApplicationPreferences.setUp( response );
             }
         } ).loadPreferences();
     }
@@ -122,16 +119,16 @@ public class KieWorkbenchEntryPoint {
 
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
 
-        final Menus menus = MenuFactory.newTopLevelMenu(constants.Home()).respondsWith(new Command() {
-                    @Override
-                    public void execute() {
-                        if ( defaultPerspective != null ) {
-                            placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
-                        } else {
-                            Window.alert( "Default perspective not found." );
-                        }
-                    }
-                } )
+        final Menus menus = MenuFactory.newTopLevelMenu( constants.Home() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                if ( defaultPerspective != null ) {
+                    placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
+                } else {
+                    Window.alert( "Default perspective not found." );
+                }
+            }
+        } )
                 .endMenu()
                 .newTopLevelMenu( constants.Views() )
                 .withItems( getPerspectives() )
@@ -166,15 +163,15 @@ public class KieWorkbenchEntryPoint {
                 } )
                 .endMenu()
                 .newTopLevelMenu( identity.getName() )
-                    .position( MenuPosition.RIGHT )
-                    .withItems( getRoles() )
+                .position( MenuPosition.RIGHT )
+                .withItems( getRoles() )
                 .endMenu()
                 .build();
 
         menubar.aggregateWorkbenchMenus( menus );
     }
 
-     private List<? extends MenuItem> getRoles() {
+    private List<? extends MenuItem> getRoles() {
         final List<MenuItem> result = new ArrayList<MenuItem>( identity.getRoles().size() );
         for ( final Role role : identity.getRoles() ) {
             result.add( MenuFactory.newSimpleItem( role.getName() ).endMenu().build().getItems().get( 0 ) );
@@ -182,95 +179,95 @@ public class KieWorkbenchEntryPoint {
 
         return result;
     }
-    
-     private List<? extends MenuItem> getAuthoringViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>(1);
 
-        result.add(MenuFactory.newSimpleItem(constants.Process_Authoring()).respondsWith(new Command() {
+    private List<? extends MenuItem> getAuthoringViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+
+        result.add( MenuFactory.newSimpleItem( constants.Process_Authoring() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo(new DefaultPlaceRequest("Authoring"));
+                placeManager.goTo( new DefaultPlaceRequest( "Authoring" ) );
             }
-        }).endMenu().build().getItems().get(0));
+        } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
 
     private List<? extends MenuItem> getProcessMGMTViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>(2);
+        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
 
-        result.add(MenuFactory.newSimpleItem(constants.Process_Definitions()).respondsWith(new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Process_Definitions() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo(new DefaultPlaceRequest("Process Definitions"));
+                placeManager.goTo( new DefaultPlaceRequest( "Process Definitions" ) );
             }
-        }).endMenu().build().getItems().get(0));
+        } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add(MenuFactory.newSimpleItem(constants.Process_Instances()).respondsWith(new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Process_Instances() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo(new DefaultPlaceRequest("Process Instances"));
+                placeManager.goTo( new DefaultPlaceRequest( "Process Instances" ) );
             }
-        }).endMenu().build().getItems().get(0));
+        } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
 
     private List<? extends MenuItem> getDeploymentViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>(1);
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add(MenuFactory.newSimpleItem(constants.Deployments()).respondsWith(new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Deployments() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo(new DefaultPlaceRequest("Deployments"));
+                placeManager.goTo( new DefaultPlaceRequest( "Deployments" ) );
             }
-        }).endMenu().build().getItems().get(0));
+        } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
 
     private List<? extends MenuItem> getWorkViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>(2);
+        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
 
-        result.add(MenuFactory.newSimpleItem(constants.Tasks_Calendar_View()).respondsWith(new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Tasks_Calendar_View() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo(new DefaultPlaceRequest("Tasks"));
+                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
             }
-        }).endMenu().build().getItems().get(0));
+        } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add(MenuFactory.newSimpleItem(constants.Tasks_Grid_View()).respondsWith(new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Tasks_Grid_View() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo(new DefaultPlaceRequest("Grid Tasks List"));
+                placeManager.goTo( new DefaultPlaceRequest( "Grid Tasks List" ) );
             }
-        }).endMenu().build().getItems().get(0));
+        } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
 
     private List<? extends MenuItem> getBAMViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>(1);
-        result.add(MenuFactory.newSimpleItem(constants.Process_Dashboard()).respondsWith(new Command() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+        result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                Window.open("http://localhost:8080/dashbuilder/workspace/jbpm-dashboard", "_blank", "");
+                Window.open( "http://localhost:8080/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
             }
-        }).endMenu().build().getItems().get(0));
+        } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
-     
+
     private List<? extends MenuItem> getBPMViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( );
-        result.addAll( getAuthoringViews());
-        result.addAll( getDeploymentViews());
-        result.addAll( getWorkViews());
-        result.addAll( getProcessMGMTViews());
-        result.addAll( getBAMViews());
+        final List<MenuItem> result = new ArrayList<MenuItem>();
+        result.addAll( getAuthoringViews() );
+        result.addAll( getDeploymentViews() );
+        result.addAll( getWorkViews() );
+        result.addAll( getProcessMGMTViews() );
+        result.addAll( getBAMViews() );
         return result;
     }
-    
+
     private AbstractWorkbenchPerspectiveActivity getDefaultPerspectiveActivity() {
         AbstractWorkbenchPerspectiveActivity defaultPerspective = null;
         final Collection<IOCBeanDef<AbstractWorkbenchPerspectiveActivity>> perspectives = iocManager.lookupBeans( AbstractWorkbenchPerspectiveActivity.class );

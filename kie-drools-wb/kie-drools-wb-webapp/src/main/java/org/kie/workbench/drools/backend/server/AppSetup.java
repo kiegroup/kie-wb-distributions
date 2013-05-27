@@ -16,21 +16,21 @@
 
 package org.kie.workbench.drools.backend.server;
 
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
-import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
 import org.uberfire.backend.server.config.ConfigGroup;
 import org.uberfire.backend.server.config.ConfigType;
 import org.uberfire.backend.server.config.ConfigurationFactory;
 import org.uberfire.backend.server.config.ConfigurationService;
-import org.uberfire.backend.server.impl.ActiveFileSystemsFactory;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
 //is not deployed to the Application Servers /bin folder. This will be remedied when an
@@ -58,19 +58,18 @@ public class AppSetup {
     @Inject
     private ConfigurationFactory configurationFactory;
 
-    @Inject
-    private ActiveFileSystemsFactory activeFileSystemsFactory;
-
     @PostConstruct
     public void assertPlayground() {
         // TODO in case repo is not defined in system repository so we add default
         final Repository repository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
         if ( repository == null ) {
-            repositoryService.cloneRepository( DROOLS_WB_PLAYGROUND_SCHEME,
-                                               DROOLS_WB_PLAYGROUND_ALIAS,
-                                               DROOLS_WB_PLAYGROUND_ORIGIN,
-                                               DROOLS_WB_PLAYGROUND_UID,
-                                               DROOLS_WB_PLAYGROUND_PWD );
+            repositoryService.createRepository( DROOLS_WB_PLAYGROUND_SCHEME,
+                                                DROOLS_WB_PLAYGROUND_ALIAS,
+                                                new HashMap<String, Object>() {{
+                                                    put( "origin", DROOLS_WB_PLAYGROUND_ORIGIN );
+                                                    put( "username", DROOLS_WB_PLAYGROUND_UID );
+                                                    put( "crypt:password", DROOLS_WB_PLAYGROUND_PWD );
+                                                }} );
         }
 
         //Define mandatory properties
@@ -98,9 +97,6 @@ public class AppSetup {
         if ( !workItemsEditorSettingsDefined ) {
             configurationService.addConfiguration( getWorkItemElementDefinitions() );
         }
-
-        //Ensure FileSystems are loaded
-        activeFileSystemsFactory.fileSystems();
     }
 
     private ConfigGroup getGlobalConfiguration() {
