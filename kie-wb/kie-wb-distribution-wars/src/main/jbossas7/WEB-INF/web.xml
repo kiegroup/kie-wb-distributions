@@ -485,12 +485,10 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </servlet-mapping>
 
     <!-- TAGLIB(S) required by product externalLibs -->
-    <jsp-config>
-      <taglib>
-          <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
-          <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
-      </taglib>
-    </jsp-config>
+    <taglib>
+        <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
+        <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
+    </taglib>
     <!-- end form-modeler -->
 
 
