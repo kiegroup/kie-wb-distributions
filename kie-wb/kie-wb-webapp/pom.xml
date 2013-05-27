@@ -705,7 +705,7 @@
       <artifactId>junit</artifactId>
     </dependency>
 
-    <!-- formModeler dependencies -->
+    <!-- formModeler dependencies 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-app</artifactId>
@@ -743,7 +743,7 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-backend</artifactId>
       <version>6.0.0-SNAPSHOT</version>
-    </dependency>
+    </dependency>-->
 
   </dependencies>
 
@@ -785,11 +785,11 @@
             <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
 
-            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-api</compileSourcesArtifact>
+            <!--compileSourcesArtifact>org.jbpm:jbpm-form-modeler-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-api</compileSourcesArtifact>>
-            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-client</compileSourcesArtifact-->
 
             <!-- Guvnor -->
             <compileSourcesArtifact>org.guvnor:guvnor-inbox-api</compileSourcesArtifact>
@@ -897,7 +897,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
+      <!--plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <packagingExcludes>**/javax/**/*.*,**/client/**/*.class</packagingExcludes>
@@ -935,7 +935,7 @@
             WEB-INF/lib/uberfire-*.jar,
           </dependentWarExcludes>
         </configuration>
-      </plugin>
+      </plugin-->
 
       <!-- Tests are skipped by default because they require additional GWT 
       dependencies. Run mvn with -Pintegration-test to enable testing. -->
