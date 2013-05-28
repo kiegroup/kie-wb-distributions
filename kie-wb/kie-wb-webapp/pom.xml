@@ -113,13 +113,6 @@
       <version>${project.version}</version>
     </dependency>
 
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-process-modeling-client</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
     <!-- kie remote -->
     <dependency>
       <groupId>org.kie.remote</groupId>
@@ -762,7 +755,7 @@
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
           <module>org.kie.workbench.FastCompiledKIEWebapp</module>
-          <logLevel>TRACE</logLevel>
+          <logLevel>INFO</logLevel>
           <compileSourcesArtifacts>
 
             <!-- Home screen -->
@@ -775,7 +768,6 @@
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-business-domain-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-business-domain-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-modeling-client</compileSourcesArtifact>
 
             <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
@@ -892,45 +884,15 @@
           </execution>
         </executions>
       </plugin>
-      <!--plugin>
+      <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <packagingExcludes>**/javax/**/*.*,**/client/**/*.class</packagingExcludes>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
-          <overlays>
-            <overlay>
-              <groupId>org.jbpm</groupId>
-              <artifactId>jbpm-form-modeler-app</artifactId>
-            </overlay>
-          </overlays>
-          <webResources>
-            <resource>
-              <directory>${basedir}/src/main/webapp/WEB-INF</directory>
-              <filtering>true</filtering>
-              <targetPath>WEB-INF</targetPath>
-              <includes>
-                <include>**/web.xml</include>
-              </includes>
-            </resource>
-          </webResources>
-          <dependentWarExcludes>
-            WEB-INF/lib/drools-compiler*.jar,
-            WEB-INF/lib/drools-core*.jar,
-            WEB-INF/lib/drools-workbench-models-commons-*.jar,
-            WEB-INF/lib/guvnor-m2repo-editor-*.jar,
-            WEB-INF/lib/guvnor-project-*.jar,
-            WEB-INF/lib/kie-api*.jar,
-            WEB-INF/lib/kie-ci*.jar,
-            WEB-INF/lib/kie-commons-*.jar,
-            WEB-INF/lib/kie-internal*.jar,
-            WEB-INF/lib/kie-nio2-fs*.jar,
-            WEB-INF/lib/kie-wb-common-*.jar,
-            WEB-INF/lib/uberfire-*.jar,
-          </dependentWarExcludes>
         </configuration>
-      </plugin-->
+      </plugin>
 
       <!-- Tests are skipped by default because they require additional GWT 
       dependencies. Run mvn with -Pintegration-test to enable testing. -->
