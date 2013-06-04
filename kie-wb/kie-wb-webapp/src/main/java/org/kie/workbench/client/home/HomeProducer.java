@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import org.kie.workbench.common.screens.home.client.model.HomeModel;
 import org.kie.workbench.common.screens.home.client.model.ModelUtils;
@@ -25,22 +26,23 @@ public class HomeProducer {
 
     @PostConstruct
     public void init() {
+        final String url = GWT.getModuleBaseURL();
         model = new HomeModel( "The KIE Knowledge Development Cycle" );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Discover",
                                                               "The Business Knowledge to drive your company",
-                                                              "/images/flowers.jpg" ) );
+                                                              url + "/images/flowers.jpg" ) );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Author",
                                                               "Formalize your Business Knowledge",
-                                                              "/images/flowers.jpg" ) );
+                                                              url + "/images/flowers.jpg" ) );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Deploy",
                                                               "Learn how to configure your environment",
-                                                              "/images/flowers.jpg" ) );
+                                                              url + "/images/flowers.jpg" ) );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Work",
                                                               "Reduce the paper work",
-                                                              "/images/flowers.jpg" ) );
+                                                              url + "/images/flowers.jpg" ) );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Improve",
                                                               "Your Business Performance",
-                                                              "/images/flowers.jpg" ) );
+                                                              url + "/images/flowers.jpg" ) );
         final Section s1 = new Section( "Discover and Author:" );
         s1.addEntry( ModelUtils.makeSectionEntry( "Author",
                                                   new Command() {

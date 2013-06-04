@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="css/Forms.css">
     <link rel="stylesheet" href="css/HumanTasks.css">
     <link rel="stylesheet" href="css/ProcessList.css">
-    <link rel="shortcut icon" href="images/drools.gif" type="image/gif"/>
-    <link rel="icon" href="images/drools.gif" type="image/gif"/>
+    <link rel="shortcut icon" href="/images/drools.gif" type="image/gif"/>
+    <link rel="icon" href="/images/drools.gif" type="image/gif"/>
 
 </head>
 <body>
@@ -26,7 +26,7 @@
 <!--add loading indicator while the app is being loaded-->
 <div id="loading">
     <div class="loading-indicator">
-        <img src="images/loading-icon.gif" width="32" height="32" style="margin-right: 8px; float: left; vertical-align: top;"/>
+        <img src="/images/loading-icon.gif" width="32" height="32" style="margin-right: 8px; float: left; vertical-align: top;"/>
         Please wait<br/><span id="loading-msg">Loading application...</span>
     </div>
 </div>
