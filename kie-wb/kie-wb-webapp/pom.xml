@@ -455,6 +455,21 @@
     </dependency>
 
     <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-home-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-home-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-home-backend</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-globals-editor-api</artifactId>
     </dependency>
@@ -668,23 +683,14 @@
       <artifactId>jbpm-designer-backend</artifactId>
     </dependency>
 
-    <!-- KIE Workbench Home screen -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-home-client</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
     <!-- Search -->
     <dependency>
       <groupId>org.kie.commons</groupId>
       <artifactId>kieora-backend-lucene</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.kie.commons</groupId>
       <artifactId>kieora-commons-io</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
     </dependency>
 
     <!--JUnit for Test scenarios -->
@@ -795,6 +801,8 @@
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-explorer-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-data-modeller-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-data-modeller-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-common-ui</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-decorated-grid-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-view-source-widget</compileSourcesArtifact>

@@ -31,7 +31,6 @@
   <description>KIE Workbench</description>
  
   <modules>
-    <module>kie-wb-home</module>
     <module>kie-wb-webapp</module>
     <module>kie-wb-distribution-wars</module>
   </modules>
