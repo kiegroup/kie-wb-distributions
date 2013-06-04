@@ -18,13 +18,14 @@ import org.uberfire.mvp.Command;
 @ApplicationScoped
 public class HomeProducer {
 
-    private HomeModel model = new HomeModel();
+    private HomeModel model;
 
     @Inject
     private PlaceManager placeManager;
 
     @PostConstruct
     public void init() {
+        model = new HomeModel( "The KIE Knowledge Development Cycle" );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Discover",
                                                               "The Business Knowledge to drive your company",
                                                               "/images/flowers.jpg" ) );
