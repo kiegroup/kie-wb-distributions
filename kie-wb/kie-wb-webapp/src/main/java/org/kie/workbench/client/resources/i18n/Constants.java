@@ -34,10 +34,6 @@ public interface Constants
 
     Constants INSTANCE = GWT.create( Constants.class );
 
-    String Tasks_Calendar_View();
-
-    String Tasks_Grid_View();
-
     String Process_Dashboard();
 
     String Process_Authoring();
@@ -69,5 +65,7 @@ public interface Constants
     String BPM();
 
     String Search();
+
+    String Tasks_List();
 
 }

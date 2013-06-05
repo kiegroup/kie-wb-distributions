@@ -229,19 +229,14 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getWorkViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
 
-        result.add( MenuFactory.newSimpleItem( constants.Tasks_Calendar_View() ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.Tasks_Grid_View() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Grid Tasks List" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
+        
 
         return result;
     }
