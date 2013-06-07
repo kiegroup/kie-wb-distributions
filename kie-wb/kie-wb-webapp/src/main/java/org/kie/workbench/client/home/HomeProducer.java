@@ -7,9 +7,9 @@ import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
-import org.kie.workbench.common.screens.home.client.model.HomeModel;
-import org.kie.workbench.common.screens.home.client.model.ModelUtils;
-import org.kie.workbench.common.screens.home.client.model.Section;
+import org.kie.workbench.common.screens.home.model.HomeModel;
+import org.kie.workbench.common.screens.home.model.ModelUtils;
+import org.kie.workbench.common.screens.home.model.Section;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 
