@@ -16,6 +16,8 @@
 
 package org.kie.workbench.drools.backend.server;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -25,6 +27,8 @@ import javax.inject.Inject;
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
+import org.uberfire.backend.group.Group;
+import org.uberfire.backend.group.GroupService;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
 import org.uberfire.backend.server.config.ConfigGroup;
@@ -53,6 +57,9 @@ public class AppSetup {
     private RepositoryService repositoryService;
 
     @Inject
+    private GroupService groupService;
+
+    @Inject
     private ConfigurationService configurationService;
 
     @Inject
@@ -60,16 +67,27 @@ public class AppSetup {
 
     @PostConstruct
     public void assertPlayground() {
+
         // TODO in case repo is not defined in system repository so we add default
-        final Repository repository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
+        Repository repository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
         if ( repository == null ) {
-            repositoryService.createRepository( DROOLS_WB_PLAYGROUND_SCHEME,
-                                                DROOLS_WB_PLAYGROUND_ALIAS,
-                                                new HashMap<String, Object>() {{
-                                                    put( "origin", DROOLS_WB_PLAYGROUND_ORIGIN );
-                                                    put( "username", DROOLS_WB_PLAYGROUND_UID );
-                                                    put( "crypt:password", DROOLS_WB_PLAYGROUND_PWD );
-                                                }} );
+            repository = repositoryService.createRepository( DROOLS_WB_PLAYGROUND_SCHEME,
+                                                             DROOLS_WB_PLAYGROUND_ALIAS,
+                                                             new HashMap<String, Object>() {{
+                                                                 put( "origin", DROOLS_WB_PLAYGROUND_ORIGIN );
+                                                                 put( "username", DROOLS_WB_PLAYGROUND_UID );
+                                                                 put( "crypt:password", DROOLS_WB_PLAYGROUND_PWD );
+                                                             }} );
+        }
+
+        // TODO in case groups are not defined
+        Collection<Group> groups = groupService.getGroups();
+        if ( groups == null || groups.isEmpty() ) {
+            List<Repository> repositories = new ArrayList<Repository>();
+            repositories.add( repository );
+            groupService.createGroup( "demo",
+                                      "demo@jbpm.org",
+                                      repositories );
         }
 
         //Define mandatory properties
