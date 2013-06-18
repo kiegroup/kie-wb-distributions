@@ -479,7 +479,7 @@ profile in pom.xml to use that. -->
     <url-pattern>/stencilset/*</url-pattern>
   </servlet-mapping>
 
-    <!--servlet>
+    <!--<servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
         <load-on-startup>5</load-on-startup>
@@ -487,20 +487,20 @@ profile in pom.xml to use that. -->
             <param-name>base.app.dir</param-name>
             <param-value>${project.basedir}/target/${project.artifactId}-${project.version}</param-value>
         </init-param>
-    </servlet-->
+    </servlet>-->
 
 
     <!-- SERVLET-MAPPINGS(S) required by formModeler -->
-    <servlet-mapping>
+    <!--<servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <!-- TAGLIB(S) required by product externalLibs -->
-    <taglib>
+    <!--<taglib>
         <taglib-uri>http://jakarta.apache.org/taglibs/i18n-1.0</taglib-uri>
         <taglib-location>/WEB-INF/tlds/i18n.tld</taglib-location>
-    </taglib>
+    </taglib-->
 
 
     <!-- the number within the session-timout element must be expressed in

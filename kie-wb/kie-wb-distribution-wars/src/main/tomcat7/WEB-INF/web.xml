@@ -521,18 +521,18 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <!-- end designer -->
 
     <!--start form-modeler -->
-    <servlet>
+    <!--<servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
         <load-on-startup>5</load-on-startup>
-    </servlet>
+    </servlet>-->
 
 
     <!-- SERVLET-MAPPINGS(S) required by formModeler -->
-    <servlet-mapping>
+    <!--<servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <!-- TAGLIB(S) required by product externalLibs -->
     <jsp-config>
