@@ -49,7 +49,7 @@ import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
  * A Perspective for Rule authors
  */
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "org.kie.guvnor.client.perspectives.authoring")
+@WorkbenchPerspective(identifier = "org.kie.workbench.drools.client.perspectives.DroolsAuthoringPerspective")
 public class DroolsAuthoringPerspective {
 
     @Inject

@@ -46,7 +46,7 @@ import org.uberfire.workbench.model.toolbar.impl.DefaultToolBar;
 import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "Authoring")
+@WorkbenchPerspective(identifier = "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective")
 public class DroolsAuthoringPerspective {
 
     @Inject

@@ -49,7 +49,7 @@ public class HomeProducer {
 
                                                       @Override
                                                       public void execute() {
-                                                          placeManager.goTo( "org.drools.workbench.client.perspectives.AuthoringPerspective" );
+                                                          placeManager.goTo( "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective" );
                                                       }
                                                   } ) );
         model.addSection( s1 );
@@ -60,7 +60,7 @@ public class HomeProducer {
 
                                                       @Override
                                                       public void execute() {
-                                                          placeManager.goTo( "org.drools.workbench.client.perspectives.AdministrationPerspective" );
+                                                          placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
                                                       }
                                                   } ) );
         s2.addEntry( ModelUtils.makeSectionEntry( "Assets Repository",
