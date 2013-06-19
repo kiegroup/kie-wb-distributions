@@ -6,6 +6,6 @@
 
 <jboss-web>
 
-  <security-domain>java:/jaas/kie-ide</security-domain>
+  <security-domain>other</security-domain>
 
 </jboss-web>
