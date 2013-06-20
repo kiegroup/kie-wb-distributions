@@ -130,20 +130,16 @@ public class KieWorkbenchEntryPoint {
             }
         } )
                 .endMenu()
-                .newTopLevelMenu( constants.Views() )
-                .withItems( getPerspectives() )
-                .endMenu()
-                .newTopLevelMenu( constants.BPM() )
-                .withItems( getBPMViews() )
-                .endMenu()
-                .newTopLevelMenu( constants.LogOut() )
-                .respondsWith( new Command() {
+                .newTopLevelMenu( constants.Authoring() ).withItems( getAuthoringViews() ).endMenu()
+                .newTopLevelMenu( constants.Deploy() ).withItems( getDeploymentViews() ).endMenu()
+                .newTopLevelMenu( constants.Process_Management() ).withItems( getProcessMGMTViews() ).endMenu()
+                .newTopLevelMenu( constants.Tasks() ).withItems( getTasksViews() ).endMenu().newTopLevelMenu( constants.Dashboards() )
+                .withItems( getDashboradViews() ).endMenu().newTopLevelMenu( constants.LogOut() ).respondsWith( new Command() {
                     @Override
                     public void execute() {
                         redirect( GWT.getModuleBaseURL() + "uf_logout" );
                     }
-                } )
-                .endMenu()
+                } ).endMenu()
                 .newTopLevelMenu( "Find" )
                 .position( MenuPosition.RIGHT )
                 .respondsWith( new Command() {
@@ -183,10 +179,24 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getAuthoringViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.Process_Authoring() ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Project_Authoring() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Authoring" ) );
+                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Asset_repo() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Administration() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.client.perspectives.AdministrationPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
@@ -226,7 +236,7 @@ public class KieWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getWorkViews() {
+    private List<? extends MenuItem> getTasksViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
 
         result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).respondsWith( new Command() {
@@ -241,25 +251,15 @@ public class KieWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getBAMViews() {
+    private List<? extends MenuItem> getDashboradViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
         result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                Window.open( "http://localhost:8080/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
+                Window.open( "/dashbuilder", "_blank", "" );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        return result;
-    }
-
-    private List<? extends MenuItem> getBPMViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>();
-        result.addAll( getAuthoringViews() );
-        result.addAll( getDeploymentViews() );
-        result.addAll( getWorkViews() );
-        result.addAll( getProcessMGMTViews() );
-        result.addAll( getBAMViews() );
         return result;
     }
 
@@ -279,25 +279,6 @@ public class KieWorkbenchEntryPoint {
             }
         }
         return defaultPerspective;
-    }
-
-    private List<MenuItem> getPerspectives() {
-        final List<MenuItem> perspectives = new ArrayList<MenuItem>();
-        for ( final AbstractWorkbenchPerspectiveActivity perspective : getPerspectiveActivities() ) {
-            final String name = perspective.getPerspective().getName();
-            final Command cmd = new Command() {
-
-                @Override
-                public void execute() {
-                    placeManager.goTo( new DefaultPlaceRequest( perspective.getIdentifier() ) );
-                }
-
-            };
-            final MenuItem item = newSimpleItem( name ).respondsWith( cmd ).endMenu().build().getItems().get( 0 );
-            perspectives.add( item );
-        }
-
-        return perspectives;
     }
 
     private List<AbstractWorkbenchPerspectiveActivity> getPerspectiveActivities() {
