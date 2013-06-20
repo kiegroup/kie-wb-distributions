@@ -134,7 +134,7 @@ public class KieWorkbenchEntryPoint {
                 .newTopLevelMenu( constants.Deploy() ).withItems( getDeploymentViews() ).endMenu()
                 .newTopLevelMenu( constants.Process_Management() ).withItems( getProcessMGMTViews() ).endMenu()
                 .newTopLevelMenu( constants.Tasks() ).withItems( getTasksViews() ).endMenu().newTopLevelMenu( constants.Dashboards() )
-                .withItems( getDashboradViews() ).endMenu().newTopLevelMenu( constants.LogOut() ).respondsWith( new Command() {
+                .withItems( getDashboardViews() ).endMenu().newTopLevelMenu( constants.LogOut() ).respondsWith( new Command() {
                     @Override
                     public void execute() {
                         redirect( GWT.getModuleBaseURL() + "uf_logout" );
@@ -251,12 +251,12 @@ public class KieWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getDashboradViews() {
+    private List<? extends MenuItem> getDashboardViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
         result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                Window.open( "/dashbuilder", "_blank", "" );
+                Window.open( "/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 

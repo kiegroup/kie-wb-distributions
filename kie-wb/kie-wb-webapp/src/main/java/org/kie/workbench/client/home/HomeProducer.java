@@ -122,7 +122,7 @@ public class HomeProducer {
                 new Command() {
                     @Override
                     public void execute() {
-                        Window.open( "/dashbuilder", "_blank", "" );
+                        Window.open( "/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
                     }
                 } ) );
         model.addSection( s5 );
