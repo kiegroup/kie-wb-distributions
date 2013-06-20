@@ -98,7 +98,7 @@ public class HomeProducer {
 
                                                       @Override
                                                       public void execute() {
-                                                          Window.open( "http://localhost:8080/bam-app/",
+                                                          Window.open( "/dashbuilder/workspace/jbpm-dashboard",
                                                                        "_blank",
                                                                        "" );
                                                       }

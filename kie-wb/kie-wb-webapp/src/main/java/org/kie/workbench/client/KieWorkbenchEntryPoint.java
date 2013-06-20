@@ -246,7 +246,7 @@ public class KieWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                Window.open( "http://localhost:8080/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
+                Window.open( "/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
