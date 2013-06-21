@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
+import org.kie.workbench.client.resources.i18n.Constants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
@@ -21,13 +22,15 @@ public class HomeProducer {
 
     private HomeModel model;
 
+    private Constants constants = GWT.create( Constants.class );
+
     @Inject
     private PlaceManager placeManager;
 
     @PostConstruct
     public void init() {
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( "The KIE Knowledge Development Cycle" );
+        model = new HomeModel( "The Knowledge Life Cycle" );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Discover",
                                                               "The Business Knowledge to drive your company",
                                                               url + "/images/flowers.jpg" ) );
@@ -43,8 +46,8 @@ public class HomeProducer {
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Improve",
                                                               "Your Business Performance",
                                                               url + "/images/flowers.jpg" ) );
-        final Section s1 = new Section( "Discover and Author:" );
-        s1.addEntry( ModelUtils.makeSectionEntry( "Author",
+        final Section s1 = new Section( constants.Authoring());
+        s1.addEntry( ModelUtils.makeSectionEntry( constants.Project_Authoring(),
                                                   new Command() {
 
                                                       @Override
@@ -52,37 +55,40 @@ public class HomeProducer {
                                                           placeManager.goTo( "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective" );
                                                       }
                                                   } ) );
+
+        s1.addEntry( ModelUtils.makeSectionEntry( constants.Asset_repo(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
+                    }
+                } ) );
+
+        s1.addEntry( ModelUtils.makeSectionEntry( constants.Administration(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
+                    }
+                } ) );
         model.addSection( s1 );
 
-        final Section s2 = new Section( "Deploy:" );
-        s2.addEntry( ModelUtils.makeSectionEntry( "Manage and Deploy Your Assets",
+        final Section s2 = new Section( constants.Deploy() );
+        s2.addEntry( ModelUtils.makeSectionEntry( constants.Deployments(),
                                                   new Command() {
 
                                                       @Override
                                                       public void execute() {
-                                                          placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
+                                                          placeManager.goTo( "Deployments" );
                                                       }
                                                   } ) );
-        s2.addEntry( ModelUtils.makeSectionEntry( "Assets Repository",
-                                                  new Command() {
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
-                                                      }
-                                                  } ) );
         model.addSection( s2 );
 
-        final Section s3 = new Section( "Work:" );
-        s3.addEntry( ModelUtils.makeSectionEntry( "Tasks List",
-                                                  new Command() {
-
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "Tasks List" );
-                                                      }
-                                                  } ) );
-        s3.addEntry( ModelUtils.makeSectionEntry( "Process Management",
+        final Section s3 = new Section(constants.Process_Management());
+        s3.addEntry( ModelUtils.makeSectionEntry(constants.Process_Definitions(),
                                                   new Command() {
 
                                                       @Override
@@ -90,20 +96,36 @@ public class HomeProducer {
                                                           placeManager.goTo( "Process Definitions" );
                                                       }
                                                   } ) );
-        model.addSection( s3 );
-
-        final Section s4 = new Section( "Monitor:" );
-        s4.addEntry( ModelUtils.makeSectionEntry( "Business Activity Monitoring",
+        s3.addEntry( ModelUtils.makeSectionEntry( constants.Process_Instances(),
                                                   new Command() {
 
                                                       @Override
                                                       public void execute() {
-                                                          Window.open( "/dashbuilder/workspace/jbpm-dashboard",
-                                                                       "_blank",
-                                                                       "" );
+                                                          placeManager.goTo( "Process Instances" );
                                                       }
                                                   } ) );
+        model.addSection( s3 );
+
+        final Section s4 = new Section(constants.Tasks());
+        s4.addEntry( ModelUtils.makeSectionEntry( constants.Tasks_List(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "Tasks" );
+                    }
+                } ) );
         model.addSection( s4 );
+
+        final Section s5 = new Section(constants.Dashboards());
+        s5.addEntry( ModelUtils.makeSectionEntry( constants.Process_Dashboard(),
+                new Command() {
+                    @Override
+                    public void execute() {
+                        Window.open( "/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
+                    }
+                } ) );
+        model.addSection( s5 );
     }
 
     @Produces

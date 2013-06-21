@@ -36,15 +36,17 @@ public interface Constants
 
     String Process_Dashboard();
 
-    String Process_Authoring();
+    String Project_Authoring();
+
+    String Administration();
 
     String Authoring();
 
     String Process_Management();
 
-    String Work();
+    String Tasks();
 
-    String BAM();
+    String Asset_repo();
 
     String LogOut();
 
@@ -60,12 +62,10 @@ public interface Constants
 
     String newItem();
 
-    String Views();
-
-    String BPM();
-
     String Search();
 
     String Tasks_List();
+
+    String Dashboards();
 
 }

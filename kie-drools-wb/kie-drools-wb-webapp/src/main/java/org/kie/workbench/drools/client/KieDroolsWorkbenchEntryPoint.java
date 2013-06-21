@@ -39,6 +39,7 @@ import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
 import org.kie.workbench.common.services.shared.config.AppConfigService;
 import org.kie.workbench.common.services.shared.config.ApplicationPreferences;
+import org.kie.workbench.drools.client.resources.i18n.Constants;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
@@ -58,6 +59,8 @@ import static org.uberfire.workbench.model.menu.MenuFactory.*;
  */
 @EntryPoint
 public class KieDroolsWorkbenchEntryPoint {
+
+    private Constants constants = Constants.INSTANCE;
 
     @Inject
     private Caller<AppConfigService> appConfigService;
@@ -94,7 +97,7 @@ public class KieDroolsWorkbenchEntryPoint {
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
 
         final Menus menus = MenuFactory
-                .newTopLevelMenu( "Home" )
+                .newTopLevelMenu( constants.home() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -106,57 +109,74 @@ public class KieDroolsWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( "Perspectives" )
-                .withItems( getPerspectives() )
+                .newTopLevelMenu( constants.authoring() )
+                .withItems(getAuthoringMenuItems())
                 .endMenu()
-                .newTopLevelMenu( "Logout" )
-                .respondsWith( new Command() {
+                .newTopLevelMenu( constants.deployment() )
+                .withItems(getDeploymentMenuItems())
+                .endMenu()
+                .newTopLevelMenu(constants.logout())
+                .respondsWith(new Command() {
                     @Override
                     public void execute() {
-                        redirect( GWT.getModuleBaseURL() + "uf_logout" );
+                        redirect(GWT.getModuleBaseURL() + "uf_logout");
                     }
-                } )
+                })
                 .endMenu()
-                .newTopLevelMenu( "Find" )
-                .position( MenuPosition.RIGHT )
-                .respondsWith( new Command() {
+                .newTopLevelMenu(constants.find())
+                .position(MenuPosition.RIGHT)
+                .respondsWith(new Command() {
                     @Override
                     public void execute() {
-                        placeManager.goTo( "FindForm" );
+                        placeManager.goTo("FindForm");
                     }
-                } )
+                })
                 .endMenu()
-                .newSearchItem( "Search..." )
-                .position( MenuPosition.RIGHT )
-                .respondsWith( new MenuSearchItem.SearchCommand() {
+                .newSearchItem(constants.search())
+                .position(MenuPosition.RIGHT)
+                .respondsWith(new MenuSearchItem.SearchCommand() {
                     @Override
-                    public void execute( final String term ) {
-                        placeManager.goTo( new DefaultPlaceRequest( "FullTextSearchForm" ).addParameter( "term", term ) );
+                    public void execute(final String term) {
+                        placeManager.goTo(new DefaultPlaceRequest("FullTextSearchForm").addParameter("term", term));
                     }
-                } )
+                })
                 .endMenu()
                 .build();
 
         menubar.aggregateWorkbenchMenus( menus );
     }
 
-    private List<MenuItem> getPerspectives() {
-        final List<MenuItem> perspectives = new ArrayList<MenuItem>();
-        for ( final AbstractWorkbenchPerspectiveActivity perspective : getPerspectiveActivities() ) {
-            final String name = perspective.getPerspective().getName();
-            final Command cmd = new Command() {
+    private List<MenuItem> getAuthoringMenuItems() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-                @Override
-                public void execute() {
-                    placeManager.goTo( new DefaultPlaceRequest( perspective.getIdentifier() ) );
-                }
+        result.add( MenuFactory.newSimpleItem( constants.project_authoring() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.DroolsAuthoringPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
 
-            };
-            final MenuItem item = newSimpleItem( name ).respondsWith( cmd ).endMenu().build().getItems().get( 0 );
-            perspectives.add( item );
-        }
+        result.add( MenuFactory.newSimpleItem( constants.administration() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
 
-        return perspectives;
+        return result;
+    }
+
+    private List<MenuItem> getDeploymentMenuItems() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+
+        result.add( MenuFactory.newSimpleItem( constants.asset_repo() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
     }
 
     private AbstractWorkbenchPerspectiveActivity getDefaultPerspectiveActivity() {
