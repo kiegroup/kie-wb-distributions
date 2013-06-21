@@ -34,10 +34,23 @@ public interface Constants
 
     Constants INSTANCE = GWT.create( Constants.class );
 
-    String SignOut();
+    String home();
 
-    String WelcomeUser();
+    String authoring();
+
+    String project_authoring();
+
+    String administration();
+
+    String deployment();
+
+    String asset_repo();
 
     String newItem();
 
+    String logout();
+
+    String find();
+
+    String search();
 }

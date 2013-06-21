@@ -9,6 +9,7 @@ import com.google.gwt.core.client.GWT;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
+import org.kie.workbench.drools.client.resources.i18n.Constants;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 
@@ -18,6 +19,8 @@ import org.uberfire.mvp.Command;
 @ApplicationScoped
 public class HomeProducer {
 
+    private Constants constants = Constants.INSTANCE;
+
     private HomeModel model;
 
     @Inject
@@ -26,15 +29,15 @@ public class HomeProducer {
     @PostConstruct
     public void init() {
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( "The KIE Knowledge Development Cycle" );
+        model = new HomeModel( "The Knowledge Life Cycle" );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Author",
                                                               "Formalize your Business Knowledge",
                                                               url + "/images/flowers.jpg" ) );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Deploy",
                                                               "Learn how to configure your environment",
                                                               url + "/images/flowers.jpg" ) );
-        final Section s1 = new Section( "Discover and Author:" );
-        s1.addEntry( ModelUtils.makeSectionEntry( "Author",
+        final Section s1 = new Section( constants.authoring() );
+        s1.addEntry( ModelUtils.makeSectionEntry(constants.project_authoring(),
                                                   new Command() {
 
                                                       @Override
@@ -42,18 +45,20 @@ public class HomeProducer {
                                                           placeManager.goTo( "org.kie.workbench.drools.client.perspectives.DroolsAuthoringPerspective" );
                                                       }
                                                   } ) );
+
+        s1.addEntry( ModelUtils.makeSectionEntry(constants.administration(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" );
+                    }
+                } ) );
+
         model.addSection( s1 );
 
-        final Section s2 = new Section( "Deploy:" );
-        s2.addEntry( ModelUtils.makeSectionEntry( "Manage and Deploy Your Assets",
-                                                  new Command() {
-
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" );
-                                                      }
-                                                  } ) );
-        s2.addEntry( ModelUtils.makeSectionEntry( "Assets Repository",
+        final Section s2 = new Section( constants.deployment() );
+        s2.addEntry( ModelUtils.makeSectionEntry(constants.asset_repo(),
                                                   new Command() {
 
                                                       @Override
