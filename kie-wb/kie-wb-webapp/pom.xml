@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-wb</artifactId>
-    <version>6.0.0-SNAPSHOT</version>
+    <version>6.0.0.Beta4</version>
   </parent>
 
   <artifactId>kie-wb-webapp</artifactId>
@@ -708,40 +708,40 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-app</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>6.0.0.Beta4</version>
       <type>war</type>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-api</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>6.0.0.Beta4</version>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-client</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>6.0.0.Beta4</version>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>6.0.0.Beta4</version>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-api</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>6.0.0.Beta4</version>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-client</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>6.0.0.Beta4</version>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-backend</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>6.0.0.Beta4</version>
     </dependency>-->
 
   </dependencies>
