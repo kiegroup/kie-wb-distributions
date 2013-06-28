@@ -15,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 
+import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
 import org.jbpm.runtime.manager.impl.DefaultRuntimeEnvironment;
 import org.jbpm.runtime.manager.impl.SimpleRuntimeEnvironment;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
@@ -22,8 +23,9 @@ import org.jbpm.shared.services.cdi.Selectable;
 import org.kie.commons.cluster.ClusterServiceFactory;
 import org.kie.commons.io.IOSearchService;
 import org.kie.commons.io.IOService;
-import org.kie.commons.io.impl.IOServiceDotFileImpl;
+import org.kie.commons.io.attribute.DublinCoreView;
 import org.kie.commons.io.impl.cluster.IOServiceClusterImpl;
+import org.kie.commons.java.nio.base.version.VersionAttributeView;
 import org.kie.internal.runtime.manager.RuntimeEnvironment;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
@@ -38,6 +40,7 @@ import org.kie.kieora.backend.lucene.setups.NIOLuceneSetup;
 import org.kie.kieora.engine.MetaIndexEngine;
 import org.kie.kieora.engine.MetaModelStore;
 import org.kie.kieora.io.IOSearchIndex;
+import org.kie.kieora.io.IOServiceIndexedImpl;
 import org.kie.kieora.search.SearchIndex;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
@@ -76,12 +79,21 @@ public class ApplicationScopedProducer {
                                                                    luceneSetup,
                                                                    new SimpleFieldFactory() );
         final SearchIndex searchIndex = new LuceneSearchIndex( luceneSetup );
+
+        final IOService service = new IOServiceIndexedImpl( indexEngine,
+                                                            DublinCoreView.class,
+                                                            VersionAttributeView.class,
+                                                            OtherMetaView.class );
+
         if ( clusterServiceFactory == null ) {
-            ioService = new IOServiceDotFileImpl();
+            ioService = service;
         } else {
-            ioService = new IOServiceClusterImpl( new IOServiceDotFileImpl(), clusterServiceFactory );
+            ioService = new IOServiceClusterImpl( service,
+                                                  clusterServiceFactory );
         }
-        this.ioSearchService = new IOSearchIndex( searchIndex, this.ioService );
+
+        this.ioSearchService = new IOSearchIndex( searchIndex,
+                                                  ioService );
     }
 
     @PreDestroy

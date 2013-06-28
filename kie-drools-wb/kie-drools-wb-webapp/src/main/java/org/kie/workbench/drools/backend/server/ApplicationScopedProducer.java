@@ -23,6 +23,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
 import org.kie.commons.cluster.ClusterServiceFactory;
 import org.kie.commons.io.IOSearchService;
 import org.kie.commons.io.IOService;
@@ -40,7 +41,6 @@ import org.kie.kieora.engine.MetaModelStore;
 import org.kie.kieora.io.IOSearchIndex;
 import org.kie.kieora.io.IOServiceIndexedImpl;
 import org.kie.kieora.search.SearchIndex;
-import org.kie.workbench.common.services.backend.metadata.attribute.OtherMetaView;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
@@ -50,14 +50,13 @@ import static org.uberfire.backend.server.repositories.SystemRepository.*;
 @ApplicationScoped
 public class ApplicationScopedProducer {
 
+    private IOService ioService;
+    private IOSearchService ioSearchService;
+    private final LuceneSetup luceneSetup = new NIOLuceneSetup();
+
     @Inject
     @Named("clusterServiceFactory")
     private ClusterServiceFactory clusterServiceFactory;
-
-    private final LuceneSetup luceneSetup = new NIOLuceneSetup();
-
-    private IOService ioService;
-    private IOSearchService ioSearchService;
 
     @PostConstruct
     public void setup() {
@@ -78,11 +77,12 @@ public class ApplicationScopedProducer {
         if ( clusterServiceFactory == null ) {
             ioService = service;
         } else {
-            ioService = new IOServiceClusterImpl( service, clusterServiceFactory );
+            ioService = new IOServiceClusterImpl( service,
+                                                  clusterServiceFactory );
         }
 
-        this.ioSearchService = new IOSearchIndex( searchIndex, ioService );
-
+        this.ioSearchService = new IOSearchIndex( searchIndex,
+                                                  ioService );
     }
 
     @PreDestroy
