@@ -120,11 +120,21 @@ public class HomeProducer {
         final Section s5 = new Section(constants.Dashboards());
         s5.addEntry( ModelUtils.makeSectionEntry( constants.Process_Dashboard(),
                 new Command() {
+
                     @Override
                     public void execute() {
-                        Window.open( "/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
+                        placeManager.goTo( "DashboardPerspective" );
                     }
                 } ) );
+
+        s5.addEntry( ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
+                new Command() {
+                    @Override
+                    public void execute() {
+                        Window.open( "/dashbuilder", "_blank", "" );
+                    }
+                } ) );
+
         model.addSection( s5 );
     }
 
