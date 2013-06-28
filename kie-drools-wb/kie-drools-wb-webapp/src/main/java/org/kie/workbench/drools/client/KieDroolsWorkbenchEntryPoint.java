@@ -31,14 +31,14 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
+import org.guvnor.common.services.shared.config.AppConfigService;
+import org.guvnor.common.services.shared.config.ApplicationPreferences;
 import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
-import org.kie.workbench.common.services.shared.config.AppConfigService;
-import org.kie.workbench.common.services.shared.config.ApplicationPreferences;
 import org.kie.workbench.drools.client.resources.i18n.Constants;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
@@ -51,8 +51,6 @@ import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.MenuSearchItem;
 import org.uberfire.workbench.model.menu.Menus;
-
-import static org.uberfire.workbench.model.menu.MenuFactory.*;
 
 /**
  * GWT's Entry-point for kie-drools-wb
