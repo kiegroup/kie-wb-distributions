@@ -36,6 +36,8 @@ public interface Constants
 
     String Process_Dashboard();
 
+    String Business_Dashboard();
+
     String Project_Authoring();
 
     String Administration();

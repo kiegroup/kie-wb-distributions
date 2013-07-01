@@ -193,12 +193,6 @@ public class KieWorkbenchEntryPoint {
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.Administration() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.client.perspectives.AdministrationPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
@@ -254,9 +248,17 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getDashboardViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
         result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() ).respondsWith( new Command() {
+
             @Override
             public void execute() {
-                Window.open( "/dashbuilder/workspace/jbpm-dashboard", "_blank", "" );
+                placeManager.goTo( "DashboardPerspective" );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Business_Dashboard() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                Window.open( "/dashbuilder", "_blank", "" );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 

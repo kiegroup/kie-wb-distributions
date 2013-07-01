@@ -14,7 +14,11 @@
   <inherits name="org.jbpm.console.ng.bd.JbpmConsoleNGBusinessDomainClient"/>
   <inherits name="org.jbpm.console.ng.es.JbpmConsoleNGExecutorServiceClient"/>
 
-  <!-- designer -->
+  <!-- Dashbuilder -->
+  <inherits name="org.jbpm.dashboard.renderer.DashboardRendererApi"/>
+  <inherits name="org.jbpm.dashboard.renderer.client.DashboardRendererClient"/>
+
+    <!-- designer -->
   <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
   <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
 

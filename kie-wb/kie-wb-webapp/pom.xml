@@ -113,7 +113,26 @@
       <version>${project.version}</version>
     </dependency>
 
-    <!-- kie remote -->
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-dashboard-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-dashboard-backend</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-dashboard-client</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+
+      <!-- kie remote -->
     <dependency>
       <groupId>org.kie.remote</groupId>
       <artifactId>kie-services-remote</artifactId>
@@ -789,6 +808,10 @@
             <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
 
+            <!-- jBPM Dashbuilder integration. -->
+            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-dashboard-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-dashboard-client</compileSourcesArtifact>
+
             <!-- form-modeler -->
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-api</compileSourcesArtifact>
@@ -796,7 +819,8 @@
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-api</compileSourcesArtifact>>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-client</compileSourcesArtifact>
 
-            <!-- Guvnor -->
+
+              <!-- Guvnor -->
             <compileSourcesArtifact>org.guvnor:guvnor-inbox-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-inbox-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-m2repo-editor-api</compileSourcesArtifact>
