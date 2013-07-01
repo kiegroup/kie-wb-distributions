@@ -444,6 +444,7 @@ Their default values are shown as example param-values -->
         <servlet-name>StencilSetServiceServlet</servlet-name>
         <url-pattern>/stencilset/*</url-pattern>
     </servlet-mapping>
+
     <!-- the number within the session-timout element must be expressed in
 minutes. it is now 24 hours. -->
     <session-config>
@@ -471,6 +472,18 @@ minutes. it is now 24 hours. -->
         <mime-type>image/x-icon</mime-type>
     </mime-mapping>
     <!-- end designer -->
+
+    <!-- start form-modeler -->
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
+    </servlet-mapping>
+    <!-- end form-modeler-->
 
     <!-- security settings -->
 

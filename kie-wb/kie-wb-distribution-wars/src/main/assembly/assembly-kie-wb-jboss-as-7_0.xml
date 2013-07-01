@@ -138,6 +138,7 @@
           <!-- Form Modeler client related -->
           <exclude>WEB-INF/lib/jbpm-form-modeler-editor-client-*.jar</exclude>
           <exclude>WEB-INF/lib/jbpm-form-modeler-renderer-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/jbpm-form-modeler-app-*.jar</exclude>
 
           <!-- jBPM console & other client related -->
           <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>

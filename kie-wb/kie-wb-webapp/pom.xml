@@ -703,45 +703,55 @@
       <artifactId>junit</artifactId>
     </dependency>
 
-    <!-- formModeler dependencies 
+    <!-- form-modeler dependencies -->
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-app</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-api</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-client</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-api</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-client</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-backend</artifactId>
-      <version>6.0.0-SNAPSHOT</version>
-    </dependency>-->
+      <version>${project.version}</version>
+    </dependency>
+
+      <dependency>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-form-modeler-form-provider</artifactId>
+          <version>${project.version}</version>
+      </dependency>
 
   </dependencies>
 
@@ -779,11 +789,12 @@
             <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
 
-            <!--compileSourcesArtifact>org.jbpm:jbpm-form-modeler-api</compileSourcesArtifact>
+            <!-- form-modeler -->
+            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-api</compileSourcesArtifact>>
-            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-client</compileSourcesArtifact-->
+            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-client</compileSourcesArtifact>
 
             <!-- Guvnor -->
             <compileSourcesArtifact>org.guvnor:guvnor-inbox-api</compileSourcesArtifact>
@@ -900,6 +911,22 @@
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
+          <overlays>
+            <overlay>
+              <groupId>org.jbpm</groupId>
+              <artifactId>jbpm-form-modeler-app</artifactId>
+            </overlay>
+          </overlays>
+          <webResources>
+            <resource>
+              <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+              <filtering>true</filtering>
+              <targetPath>WEB-INF</targetPath>
+              <includes>
+                <include>**/web.xml</include>
+              </includes>
+            </resource>
+          </webResources>
         </configuration>
       </plugin>
 

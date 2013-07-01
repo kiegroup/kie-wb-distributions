@@ -61,9 +61,9 @@
   <inherits name="org.jboss.errai.ui.UI" />
   <inherits name="org.jboss.errai.enterprise.CDI"/>
 
-  <!-- Form-Modelere 
-  <inherits name="org.jbpm.formModeler.editor.FormModelerClient"/>
-  <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>-->
+  <!-- Form-Modeler -->
+  <inherits name="org.jbpm.formModeler.editor.FormModelerEditorClient"/>
+  <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>
 
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/guvnor-showcase.css'/>
