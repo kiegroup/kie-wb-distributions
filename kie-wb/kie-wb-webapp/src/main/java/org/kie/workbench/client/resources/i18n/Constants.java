@@ -70,4 +70,50 @@ public interface Constants
 
     String Dashboards();
 
+    String find();
+
+    String missingDefaultPerspective();
+
+    String explore();
+
+    String files();
+
+    String repositories();
+
+    String cloneRepository();
+
+    String newRepository();
+
+    String projects();
+
+    String inboxIncomingChanges();
+
+    String inboxRecentlyEdited();
+
+    String inboxRecentlyOpened();
+
+    String tools();
+
+    String homeDiscover();
+
+    String homeDiscoverCaption();
+
+    String homeTheKnowledgeLifeCycle();
+
+    String homeAuthor();
+
+    String homeAuthorCaption();
+
+    String homeDeploy();
+
+    String homeDeployCaption();
+
+    String homeWork();
+
+    String homeWorkCaption();
+
+    String homeImprove();
+
+    String homeImproveCaption();
+
 }

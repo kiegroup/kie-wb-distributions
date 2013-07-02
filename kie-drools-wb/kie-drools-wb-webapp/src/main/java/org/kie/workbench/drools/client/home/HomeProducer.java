@@ -29,15 +29,15 @@ public class HomeProducer {
     @PostConstruct
     public void init() {
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( "The Knowledge Life Cycle" );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Author",
-                                                              "Formalize your Business Knowledge",
+        model = new HomeModel( constants.homeTheKnowledgeLifeCycle() );
+        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeAuthor(),
+                                                              constants.homeAuthorCaption(),
                                                               url + "/images/flowers.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Deploy",
-                                                              "Learn how to configure your environment",
+        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeDeploy(),
+                                                              constants.homeDeployCaption(),
                                                               url + "/images/flowers.jpg" ) );
         final Section s1 = new Section( constants.authoring() );
-        s1.addEntry( ModelUtils.makeSectionEntry(constants.project_authoring(),
+        s1.addEntry( ModelUtils.makeSectionEntry( constants.project_authoring(),
                                                   new Command() {
 
                                                       @Override
@@ -46,19 +46,19 @@ public class HomeProducer {
                                                       }
                                                   } ) );
 
-        s1.addEntry( ModelUtils.makeSectionEntry(constants.administration(),
-                new Command() {
+        s1.addEntry( ModelUtils.makeSectionEntry( constants.administration(),
+                                                  new Command() {
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" );
-                    }
-                } ) );
+                                                      @Override
+                                                      public void execute() {
+                                                          placeManager.goTo( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" );
+                                                      }
+                                                  } ) );
 
         model.addSection( s1 );
 
         final Section s2 = new Section( constants.deployment() );
-        s2.addEntry( ModelUtils.makeSectionEntry(constants.asset_repo(),
+        s2.addEntry( ModelUtils.makeSectionEntry( constants.asset_repo(),
                                                   new Command() {
 
                                                       @Override

@@ -102,42 +102,42 @@ public class KieDroolsWorkbenchEntryPoint {
                         if ( defaultPerspective != null ) {
                             placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
                         } else {
-                            Window.alert( "Default perspective not found." );
+                            Window.alert( constants.missingDefaultPerspective() );
                         }
                     }
                 } )
                 .endMenu()
                 .newTopLevelMenu( constants.authoring() )
-                .withItems(getAuthoringMenuItems())
+                .withItems( getAuthoringMenuItems() )
                 .endMenu()
                 .newTopLevelMenu( constants.deployment() )
-                .withItems(getDeploymentMenuItems())
+                .withItems( getDeploymentMenuItems() )
                 .endMenu()
-                .newTopLevelMenu(constants.logout())
-                .respondsWith(new Command() {
+                .newTopLevelMenu( constants.logout() )
+                .respondsWith( new Command() {
                     @Override
                     public void execute() {
-                        redirect(GWT.getModuleBaseURL() + "uf_logout");
+                        redirect( GWT.getModuleBaseURL() + "uf_logout" );
                     }
-                })
+                } )
                 .endMenu()
-                .newTopLevelMenu(constants.find())
-                .position(MenuPosition.RIGHT)
-                .respondsWith(new Command() {
+                .newTopLevelMenu( constants.find() )
+                .position( MenuPosition.RIGHT )
+                .respondsWith( new Command() {
                     @Override
                     public void execute() {
-                        placeManager.goTo("FindForm");
+                        placeManager.goTo( "FindForm" );
                     }
-                })
+                } )
                 .endMenu()
-                .newSearchItem(constants.search())
-                .position(MenuPosition.RIGHT)
-                .respondsWith(new MenuSearchItem.SearchCommand() {
+                .newSearchItem( constants.search() )
+                .position( MenuPosition.RIGHT )
+                .respondsWith( new MenuSearchItem.SearchCommand() {
                     @Override
-                    public void execute(final String term) {
-                        placeManager.goTo(new DefaultPlaceRequest("FullTextSearchForm").addParameter("term", term));
+                    public void execute( final String term ) {
+                        placeManager.goTo( new DefaultPlaceRequest( "FullTextSearchForm" ).addParameter( "term", term ) );
                     }
-                })
+                } )
                 .endMenu()
                 .build();
 

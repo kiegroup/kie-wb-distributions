@@ -23,6 +23,7 @@ import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
+import org.kie.workbench.client.resources.i18n.Constants;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
@@ -55,6 +56,8 @@ import static org.uberfire.workbench.model.toolbar.IconType.*;
 public class AdministrationPerspective {
 
     private static String[] PERMISSIONS_ADMIN = new String[]{ "ADMIN" };
+
+    private Constants constants = Constants.INSTANCE;
 
     @Inject
     private NewResourcePresenter newResourcePresenter;
@@ -133,7 +136,7 @@ public class AdministrationPerspective {
 
     private void buildPerspective() {
         this.perspective = new PerspectiveDefinitionImpl();
-        this.perspective.setName( "Administration" );
+        this.perspective.setName( constants.Administration() );
 
         this.perspective.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "RepositoriesEditor" ) ) );
 
@@ -147,9 +150,9 @@ public class AdministrationPerspective {
 
     private void buildMenuBar() {
         this.menus = MenuFactory
-                .newTopLevelMenu( "Explore" )
+                .newTopLevelMenu( constants.explore() )
                 .menus()
-                .menu( "Files" )
+                .menu( constants.files() )
                 .withRoles( PERMISSIONS_ADMIN )
                 .respondsWith( new Command() {
                     @Override
@@ -160,13 +163,13 @@ public class AdministrationPerspective {
                 .endMenu()
                 .endMenus()
                 .endMenu()
-                .newTopLevelMenu( "Repositories" )
+                .newTopLevelMenu( constants.repositories() )
                 .menus()
-                .menu( "Clone Repo" )
+                .menu( constants.cloneRepository() )
                 .withRoles( PERMISSIONS_ADMIN )
                 .respondsWith( cloneRepoCommand )
                 .endMenu()
-                .menu( "New Repo" )
+                .menu( constants.newRepository() )
                 .withRoles( PERMISSIONS_ADMIN )
                 .respondsWith( newRepoCommand )
                 .endMenu()
@@ -177,10 +180,10 @@ public class AdministrationPerspective {
     private void buildToolBar() {
         this.toolBar = new DefaultToolBar( "file.explorer" );
         final DefaultToolBarItem i1 = new DefaultToolBarItem( FOLDER_CLOSE_ALT,
-                                                              "New Repository",
+                                                              constants.newRepository(),
                                                               newRepoCommand );
         final DefaultToolBarItem i2 = new DefaultToolBarItem( DOWNLOAD_ALT,
-                                                              "Clone Repository",
+                                                              constants.cloneRepository(),
                                                               cloneRepoCommand );
         i1.setRoles( PERMISSIONS_ADMIN );
         i2.setRoles( PERMISSIONS_ADMIN );

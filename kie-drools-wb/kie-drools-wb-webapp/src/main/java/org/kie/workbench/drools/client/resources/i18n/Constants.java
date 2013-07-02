@@ -53,4 +53,37 @@ public interface Constants
     String find();
 
     String search();
+
+    String missingDefaultPerspective();
+
+    String explore();
+
+    String files();
+
+    String repositories();
+
+    String cloneRepository();
+
+    String newRepository();
+
+    String projects();
+
+    String inboxIncomingChanges();
+
+    String inboxRecentlyEdited();
+
+    String inboxRecentlyOpened();
+
+    String tools();
+
+    String homeTheKnowledgeLifeCycle();
+
+    String homeAuthor();
+
+    String homeAuthorCaption();
+
+    String homeDeploy();
+
+    String homeDeployCaption();
+
 }

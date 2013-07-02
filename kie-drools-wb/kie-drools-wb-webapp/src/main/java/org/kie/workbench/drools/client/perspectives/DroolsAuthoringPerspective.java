@@ -52,6 +52,8 @@ import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 @WorkbenchPerspective(identifier = "org.kie.workbench.drools.client.perspectives.DroolsAuthoringPerspective")
 public class DroolsAuthoringPerspective {
 
+    private Constants constants = Constants.INSTANCE;
+
     @Inject
     private NewResourcePresenter newResourcePresenter;
 
@@ -92,7 +94,7 @@ public class DroolsAuthoringPerspective {
 
     private void buildPerspective() {
         this.perspective = new PerspectiveDefinitionImpl();
-        this.perspective.setName( "Author" );
+        this.perspective.setName( constants.project_authoring() );
 
         final PanelDefinition west = new PanelDefinitionImpl();
         west.setWidth( 300 );
@@ -104,9 +106,9 @@ public class DroolsAuthoringPerspective {
 
     private void buildMenuBar() {
         this.menus = MenuFactory
-                .newTopLevelMenu( "Explore" )
+                .newTopLevelMenu( constants.explore() )
                 .menus()
-                .menu( "Projects" )
+                .menu( constants.projects() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -114,7 +116,7 @@ public class DroolsAuthoringPerspective {
                     }
                 } )
                 .endMenu()
-                .menu( "Incoming Changes" )
+                .menu( constants.inboxIncomingChanges() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -124,7 +126,7 @@ public class DroolsAuthoringPerspective {
                     }
                 } )
                 .endMenu()
-                .menu( "Recently Edited" )
+                .menu( constants.inboxRecentlyEdited() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -134,7 +136,7 @@ public class DroolsAuthoringPerspective {
                     }
                 } )
                 .endMenu()
-                .menu( "Recently Opened" )
+                .menu( constants.inboxRecentlyOpened() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -146,10 +148,10 @@ public class DroolsAuthoringPerspective {
                 .endMenu()
                 .endMenus()
                 .endMenu()
-                .newTopLevelMenu( "New" )
+                .newTopLevelMenu( constants.newItem() )
                 .withItems( newResourcesMenu.getMenuItems() )
                 .endMenu()
-                .newTopLevelMenu( "Tools" )
+                .newTopLevelMenu( constants.tools() )
                 .withItems( toolsMenu.getMenuItems() )
                 .endMenu().build();
     }

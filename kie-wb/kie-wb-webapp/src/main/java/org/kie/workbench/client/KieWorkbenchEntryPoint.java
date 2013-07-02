@@ -65,7 +65,7 @@ import org.uberfire.workbench.model.menu.Menus;
 @EntryPoint
 public class KieWorkbenchEntryPoint {
 
-    private Constants constants = GWT.create( Constants.class );
+    private Constants constants = Constants.INSTANCE;
 
     @Inject
     private PlaceManager placeManager;
@@ -123,7 +123,7 @@ public class KieWorkbenchEntryPoint {
                 if ( defaultPerspective != null ) {
                     placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
                 } else {
-                    Window.alert( "Default perspective not found." );
+                    Window.alert( constants.missingDefaultPerspective() );
                 }
             }
         } )
@@ -138,7 +138,7 @@ public class KieWorkbenchEntryPoint {
                         redirect( GWT.getModuleBaseURL() + "uf_logout" );
                     }
                 } ).endMenu()
-                .newTopLevelMenu( "Find" )
+                .newTopLevelMenu( constants.find() )
                 .position( MenuPosition.RIGHT )
                 .respondsWith( new Command() {
                     @Override
@@ -191,7 +191,6 @@ public class KieWorkbenchEntryPoint {
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-
         return result;
     }
 
@@ -237,8 +236,6 @@ public class KieWorkbenchEntryPoint {
                 placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
-
-        
 
         return result;
     }

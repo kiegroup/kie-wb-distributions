@@ -22,7 +22,7 @@ public class HomeProducer {
 
     private HomeModel model;
 
-    private Constants constants = GWT.create( Constants.class );
+    private Constants constants = Constants.INSTANCE;
 
     @Inject
     private PlaceManager placeManager;
@@ -30,23 +30,23 @@ public class HomeProducer {
     @PostConstruct
     public void init() {
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( "The Knowledge Life Cycle" );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Discover",
-                                                              "The Business Knowledge to drive your company",
+        model = new HomeModel( constants.homeTheKnowledgeLifeCycle() );
+        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeDiscover(),
+                                                              constants.homeDiscoverCaption(),
                                                               url + "/images/flowers.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Author",
-                                                              "Formalize your Business Knowledge",
+        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeAuthor(),
+                                                              constants.homeAuthorCaption(),
                                                               url + "/images/flowers.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Deploy",
-                                                              "Learn how to configure your environment",
+        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeDeploy(),
+                                                              constants.homeDeployCaption(),
                                                               url + "/images/flowers.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Work",
-                                                              "Reduce the paper work",
+        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeWork(),
+                                                              constants.homeWorkCaption(),
                                                               url + "/images/flowers.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( "Improve",
-                                                              "Your Business Performance",
+        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeImprove(),
+                                                              constants.homeImproveCaption(),
                                                               url + "/images/flowers.jpg" ) );
-        final Section s1 = new Section( constants.Authoring());
+        final Section s1 = new Section( constants.Authoring() );
         s1.addEntry( ModelUtils.makeSectionEntry( constants.Project_Authoring(),
                                                   new Command() {
 
@@ -57,22 +57,22 @@ public class HomeProducer {
                                                   } ) );
 
         s1.addEntry( ModelUtils.makeSectionEntry( constants.Asset_repo(),
-                new Command() {
+                                                  new Command() {
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
-                    }
-                } ) );
+                                                      @Override
+                                                      public void execute() {
+                                                          placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
+                                                      }
+                                                  } ) );
 
         s1.addEntry( ModelUtils.makeSectionEntry( constants.Administration(),
-                new Command() {
+                                                  new Command() {
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
-                    }
-                } ) );
+                                                      @Override
+                                                      public void execute() {
+                                                          placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
+                                                      }
+                                                  } ) );
         model.addSection( s1 );
 
         final Section s2 = new Section( constants.Deploy() );
@@ -87,8 +87,8 @@ public class HomeProducer {
 
         model.addSection( s2 );
 
-        final Section s3 = new Section(constants.Process_Management());
-        s3.addEntry( ModelUtils.makeSectionEntry(constants.Process_Definitions(),
+        final Section s3 = new Section( constants.Process_Management() );
+        s3.addEntry( ModelUtils.makeSectionEntry( constants.Process_Definitions(),
                                                   new Command() {
 
                                                       @Override
@@ -106,34 +106,34 @@ public class HomeProducer {
                                                   } ) );
         model.addSection( s3 );
 
-        final Section s4 = new Section(constants.Tasks());
+        final Section s4 = new Section( constants.Tasks() );
         s4.addEntry( ModelUtils.makeSectionEntry( constants.Tasks_List(),
-                new Command() {
+                                                  new Command() {
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "Tasks" );
-                    }
-                } ) );
+                                                      @Override
+                                                      public void execute() {
+                                                          placeManager.goTo( "Tasks" );
+                                                      }
+                                                  } ) );
         model.addSection( s4 );
 
-        final Section s5 = new Section(constants.Dashboards());
+        final Section s5 = new Section( constants.Dashboards() );
         s5.addEntry( ModelUtils.makeSectionEntry( constants.Process_Dashboard(),
-                new Command() {
+                                                  new Command() {
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "DashboardPerspective" );
-                    }
-                } ) );
+                                                      @Override
+                                                      public void execute() {
+                                                          placeManager.goTo( "DashboardPerspective" );
+                                                      }
+                                                  } ) );
 
         s5.addEntry( ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
-                new Command() {
-                    @Override
-                    public void execute() {
-                        Window.open( "/dashbuilder", "_blank", "" );
-                    }
-                } ) );
+                                                  new Command() {
+                                                      @Override
+                                                      public void execute() {
+                                                          Window.open( "/dashbuilder", "_blank", "" );
+                                                      }
+                                                  } ) );
 
         model.addSection( s5 );
     }
