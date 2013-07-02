@@ -577,9 +577,8 @@
 
     <!-- guvnor rest api -->
     <dependency>
-      <groupId>org.kie.workbench.services</groupId>
-      <artifactId>kie-wb-common-rest</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-rest</artifactId>
     </dependency>
 
   </dependencies>
