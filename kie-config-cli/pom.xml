@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>kie-wb-distributions</artifactId>
+		<version>6.0.0-SNAPSHOT</version>
+		<groupId>org.kie</groupId>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>kie-config-cli</artifactId>
+	<name>KIE Config command line interface</name>
+	<dependencies>
+
+		<!-- kie commons -->
+		<dependency>
+			<groupId>org.kie.commons</groupId>
+			<artifactId>kie-nio2-jgit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.kie.commons</groupId>
+			<artifactId>kie-nio2-fs</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.kie.commons</groupId>
+			<artifactId>kie-commons-io</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.helix</groupId>
+					<artifactId>helix-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.kie.commons</groupId>
+			<artifactId>kie-commons-data</artifactId>
+		</dependency>
+		<!-- uberfire deps -->
+
+		<dependency>
+			<groupId>org.uberfire</groupId>
+			<artifactId>uberfire-backend-api</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.errai</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.gwt</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.uberfire</groupId>
+			<artifactId>uberfire-backend-server</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.errai</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.errai</groupId>
+			<artifactId>errai-bus</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- weld deps -->
+		<dependency>
+			<groupId>org.jboss.weld.se</groupId>
+			<artifactId>weld-se-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-kie-services</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.solder</groupId>
+			<artifactId>solder-impl</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<finalName>kie-config-cli-${project.version}</finalName>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly-kie-config-cli.xml</descriptor>
+					</descriptors>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
