@@ -51,6 +51,7 @@
   <modules>
     <module>kie-wb</module>
     <module>kie-drools-wb</module>
+    <module>kie-config-cli</module>
   </modules>
 
   <build>
