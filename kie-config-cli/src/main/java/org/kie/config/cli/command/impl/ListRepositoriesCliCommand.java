@@ -44,6 +44,7 @@ public class ListRepositoriesCliCommand implements CliCommand {
 			result.append("\t scheme: " + config.getScheme() + "\n");
 			result.append("\t uri: " + config.getUri() + "\n");
 			result.append("\t environment: " + config.getEnvironment() + "\n");
+			result.append("\t roles: " + config.getRoles() + "\n");
 		}
 		return result.toString();
 	}

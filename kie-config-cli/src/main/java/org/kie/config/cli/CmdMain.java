@@ -18,6 +18,7 @@ package org.kie.config.cli;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Scanner;
 
 import org.kie.config.cli.command.CliCommand;
@@ -36,7 +37,7 @@ public class CmdMain {
         System.out.println("************* Welcome to Kie config CLI ****************\n");
         System.out.println("********************************************************\n");
         System.out.println(">>Please specify location of the parent folder of .niogit");
-        
+
         String niogitPath = scanner.nextLine();
         exitIfRequested(niogitPath);
         
@@ -82,7 +83,15 @@ public class CmdMain {
 	        	}
 	        	System.out.println(">>Please enter command (type help to see available commands): ");
 	        } else {
-	        	System.out.println("No command found for " + commandName);
+	        	List<String> matches = CliCommandRegistry.get().findMatching(commandName);
+	        	if (matches.isEmpty()) {
+	        		System.out.println("No command found for '" + commandName + "'");
+	        	} else {
+	        		System.out.println("Command '" + commandName + "' not found, did you mean:");
+	        		for (String cmd : matches) {
+	        			System.out.println("\t" + cmd);
+	        		}
+	        	}
 	        }
         }
 

@@ -15,7 +15,6 @@
  */
 package org.kie.config.cli.command.impl;
 
-import java.util.Collection;
 import java.util.Scanner;
 
 import org.jboss.weld.environment.se.WeldContainer;
@@ -23,9 +22,6 @@ import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.uberfire.backend.group.Group;
 import org.uberfire.backend.group.GroupService;
-import org.uberfire.backend.server.config.ConfigGroup;
-import org.uberfire.backend.server.config.ConfigType;
-import org.uberfire.backend.server.config.ConfigurationService;
 
 public class RemoveGroupCliCommand implements CliCommand {
 
@@ -40,7 +36,6 @@ public class RemoveGroupCliCommand implements CliCommand {
 		WeldContainer container = context.getContainer();
 
 		GroupService groupService = container.instance().select(GroupService.class).get();
-		ConfigurationService configService = container.instance().select(ConfigurationService.class).get();
 		
 		Scanner input = context.getInput();
 		System.out.print(">>Group name:");
@@ -50,18 +45,9 @@ public class RemoveGroupCliCommand implements CliCommand {
 		if (group == null) {
 			return "No group " + name + " was found, exiting";
 		}
-		// TODO add removeGroup to GroupService to make sure cache is refreshed
-		Collection<ConfigGroup> groups = configService.getConfiguration(ConfigType.GROUP);
-		for (ConfigGroup cgroup : groups) {
-			
-			if (cgroup.getName().equals(name)) {
-			
-				boolean removed = configService.removeConfiguration(cgroup);
-				result.append("Group " + name + " was removed successfully("+removed+")");
-				break;
-			}
+		groupService.removeGroup(name);
+		result.append("Group " + name + " was removed successfully");
 		
-		}
 		return result.toString();
 	}
 

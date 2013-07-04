@@ -43,12 +43,14 @@ public class ListGroupsCliCommand implements CliCommand {
 		for (Group config : groups) {
 			result.append("\tGroup " + config.getName() + "\n");
 			result.append("\towner: " + config.getOwner() + "\n");
+			result.append("\troles: " + config.getRoles() + "\n");
 			result.append("\trepositories: \n");
 			for (Repository repository : config.getRepositories()) {
 				result.append("\t\tRepository " + repository.getAlias() + "\n");
 				result.append("\t\t\t scheme: " + repository.getScheme() + "\n");
 				result.append("\t\t\t uri: " + repository.getUri() + "\n");
 				result.append("\t\t\t environment: " + repository.getEnvironment() + "\n");
+				result.append("\t\t\t repository roles: " + repository.getRoles() + "\n");
 			}
 		}
 		return result.toString();

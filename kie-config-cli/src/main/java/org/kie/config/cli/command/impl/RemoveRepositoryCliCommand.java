@@ -15,7 +15,6 @@
  */
 package org.kie.config.cli.command.impl;
 
-import java.util.Collection;
 import java.util.Scanner;
 
 import org.jboss.weld.environment.se.WeldContainer;
@@ -23,9 +22,6 @@ import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
-import org.uberfire.backend.server.config.ConfigGroup;
-import org.uberfire.backend.server.config.ConfigType;
-import org.uberfire.backend.server.config.ConfigurationService;
 
 public class RemoveRepositoryCliCommand implements CliCommand {
 
@@ -40,7 +36,6 @@ public class RemoveRepositoryCliCommand implements CliCommand {
 		WeldContainer container = context.getContainer();
 
 		RepositoryService repositoryService = container.instance().select(RepositoryService.class).get();
-		ConfigurationService configService = container.instance().select(ConfigurationService.class).get();
 		
 		Scanner input = context.getInput();
 		System.out.print(">>Repository alias:");
@@ -50,18 +45,9 @@ public class RemoveRepositoryCliCommand implements CliCommand {
 		if (repo == null) {
 			return "No repository " + alias + " was found, exiting";
 		}
-		// TODO add removeRepository to RepositoryService to make sure cache is refreshed
-		Collection<ConfigGroup> repositories = configService.getConfiguration(ConfigType.REPOSITORY);
-		for (ConfigGroup cgroup : repositories) {
-			
-			if (cgroup.getName().equals(alias)) {
-			
-				boolean removed = configService.removeConfiguration(cgroup);
-				result.append("Repository " + alias + " was removed successfully("+removed+")");
-				break;
-			}
+		repositoryService.removeRepository(alias);
+		result.append("Repository " + alias + " was removed successfully");
 		
-		}
 		return result.toString();
 	}
 

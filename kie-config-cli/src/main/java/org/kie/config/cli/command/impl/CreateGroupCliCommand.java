@@ -49,7 +49,7 @@ public class CreateGroupCliCommand implements CliCommand {
 		System.out.print(">>Group owner:");
 		String owner = input.nextLine();
 		
-		System.out.print(">>Repositories to add (comma separated list of aliases):");
+		System.out.print(">>Repositories (comma separated list):");
 		String repos = input.nextLine();
 		Collection<Repository> repositories = new ArrayList<Repository>();
 		if (repos != null && repos.trim().length() > 0) {
@@ -63,6 +63,7 @@ public class CreateGroupCliCommand implements CliCommand {
 				}
 			}
 		}
+
 		Group group = groupService.createGroup(name, owner, repositories);
 		result.append("Group " + group.getName() + " successfully created");
 		return result.toString();

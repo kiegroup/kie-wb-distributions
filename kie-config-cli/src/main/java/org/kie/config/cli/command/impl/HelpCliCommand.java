@@ -44,6 +44,10 @@ public class HelpCliCommand implements CliCommand {
 		helpMessage.append("\t remove-repo - remove existing repository from config only\n");
 		helpMessage.append("\t add-repo-group - add repository to the group\n");
 		helpMessage.append("\t remove-repo-group - remove repository from the group\n");
+		helpMessage.append("\t add-role-repo - add role(s) to repository\n");
+		helpMessage.append("\t remove-role-repo - remove role(s) from repository\n");
+		helpMessage.append("\t add-role-group - add role(s) to group\n");
+		helpMessage.append("\t remove-role-group - remove role(s) from group\n");
 		return helpMessage.toString();
 	}
 

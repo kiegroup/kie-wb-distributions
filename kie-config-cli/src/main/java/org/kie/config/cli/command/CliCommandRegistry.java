@@ -15,11 +15,15 @@
  */
 package org.kie.config.cli.command;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.kie.config.cli.command.impl.AddDeploymentConfigCliCommand;
 import org.kie.config.cli.command.impl.AddRepositoryToGroupCliCommand;
+import org.kie.config.cli.command.impl.AddRoleToGroupCliCommand;
+import org.kie.config.cli.command.impl.AddRoleToRepositoryCliCommand;
 import org.kie.config.cli.command.impl.CreateGroupCliCommand;
 import org.kie.config.cli.command.impl.CreateRepositoryCliCommand;
 import org.kie.config.cli.command.impl.ExitCliCommand;
@@ -31,6 +35,8 @@ import org.kie.config.cli.command.impl.RemoveDeploymentConfigCliCommand;
 import org.kie.config.cli.command.impl.RemoveGroupCliCommand;
 import org.kie.config.cli.command.impl.RemoveRepositoryCliCommand;
 import org.kie.config.cli.command.impl.RemoveRepositoryFromGroupCliCommand;
+import org.kie.config.cli.command.impl.RemoveRoleFromGroupCliCommand;
+import org.kie.config.cli.command.impl.RemoveRoleFromRepositoryCliCommand;
 
 public class CliCommandRegistry {
 
@@ -52,6 +58,10 @@ public class CliCommandRegistry {
         commands.put("remove-repo", new RemoveRepositoryCliCommand());
         commands.put("add-repo-group", new AddRepositoryToGroupCliCommand());
         commands.put("remove-repo-group", new RemoveRepositoryFromGroupCliCommand());
+        commands.put("add-role-repo", new AddRoleToRepositoryCliCommand());
+        commands.put("remove-role-repo", new RemoveRoleFromRepositoryCliCommand());
+        commands.put("add-role-group", new AddRoleToGroupCliCommand());
+        commands.put("remove-role-group", new RemoveRoleFromGroupCliCommand());
 	}
 	
 	public static CliCommandRegistry get() {
@@ -65,5 +75,15 @@ public class CliCommandRegistry {
 	public CliCommand getCommand(String name) {
 		
 		return commands.get(name);
+	}
+
+	public List<String> findMatching(String commandName) {
+		List<String> matched = new ArrayList<String>();
+		for (String command : commands.keySet()) {
+			if (command.startsWith(commandName)) {
+				matched.add(command);
+			}
+		}
+		return matched;
 	}
 }
