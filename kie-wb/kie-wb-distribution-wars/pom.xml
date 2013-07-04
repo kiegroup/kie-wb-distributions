@@ -33,6 +33,7 @@
           <descriptors>
             <descriptor>src/main/assembly/assembly-kie-wb-tomcat-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-wb-jboss-as-7_0.xml</descriptor>
+            <descriptor>src/main/assembly/assembly-kie-wb-jboss-eap-6_1.xml</descriptor>
           </descriptors>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
