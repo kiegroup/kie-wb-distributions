@@ -3,10 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>Drools Workbench</title>
+    <title>KIE Drools Workbench</title>
     <link rel="shortcut icon" href="images/drools.gif" type="image/gif"/>
     <link rel="icon" href="images/drools.gif" type="image/gif"/>
-    <link rel="stylesheet" href="css/kie-drools-wb.css">
 
 </head>
 <body>
