@@ -15,11 +15,7 @@
  */
 package org.kie.config.cli;
 
-import static org.uberfire.backend.server.repositories.SystemRepository.SYSTEM_REPO;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
@@ -27,46 +23,58 @@ import javax.inject.Named;
 import org.kie.commons.io.IOService;
 import org.kie.commons.io.impl.IOServiceDotFileImpl;
 import org.uberfire.backend.repositories.Repository;
-import org.uberfire.security.Identity;
+import org.uberfire.security.Resource;
 import org.uberfire.security.Role;
+import org.uberfire.security.Subject;
+import org.uberfire.security.authz.AuthorizationException;
+import org.uberfire.security.authz.AuthorizationManager;
+import org.uberfire.security.authz.RuntimeResource;
+import org.uberfire.security.server.cdi.SecurityFactory;
+
+import static org.uberfire.backend.server.repositories.SystemRepository.*;
 
 @ApplicationScoped
 public class EnvironmentProvider {
 
-	private final IOService ioService = new IOServiceDotFileImpl();
-	
+    private final IOService ioService = new IOServiceDotFileImpl();
+
+    public static final Role ADMIN_ROLE = new Role() {
+        @Override
+        public String getName() {
+            return "ADMIN";
+        }
+    };
+
+    @PostConstruct
+    public void setup() {
+        //Use dummy AuthorizationManager that approves everything
+        SecurityFactory.setAuthzManager( new AuthorizationManager() {
+            @Override
+            public boolean supports( Resource resource ) {
+                if ( resource instanceof RuntimeResource ) {
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean authorize( Resource resource,
+                                      Subject subject ) throws AuthorizationException {
+                return subject.getRoles().contains( ADMIN_ROLE );
+            }
+        } );
+    }
+
     @Produces
     @Named("system")
     public Repository systemRepository() {
         return SYSTEM_REPO;
     }
-    
+
     @Produces
     @Named("ioStrategy")
     public IOService ioService() {
         return ioService;
     }
-    
-//    @Produces
-//    public Identity getIdentity() {
-//    	return new Identity() {
-//
-//			private static final long serialVersionUID = -9178650167557721039L;
-//
-//			@Override
-//			public String getName() {
-//				return System.getProperty("user.name");
-//			}
-//
-//			@Override
-//			public boolean hasRole(Role role) {
-//				return false;
-//			}
-//
-//			@Override
-//			public List<Role> getRoles() {
-//				return new ArrayList<Role>();
-//			}
-//		};
-//    }
+
 }
