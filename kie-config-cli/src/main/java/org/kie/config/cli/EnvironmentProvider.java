@@ -47,26 +47,26 @@ public class EnvironmentProvider {
         return ioService;
     }
     
-    @Produces
-    public Identity getIdentity() {
-    	return new Identity() {
-			
-			private static final long serialVersionUID = -9178650167557721039L;
-
-			@Override
-			public String getName() {
-				return System.getProperty("user.name");
-			}
-			
-			@Override
-			public boolean hasRole(Role role) {
-				return false;
-			}
-			
-			@Override
-			public List<Role> getRoles() {
-				return new ArrayList<Role>();
-			}
-		};
-    }
+//    @Produces
+//    public Identity getIdentity() {
+//    	return new Identity() {
+//
+//			private static final long serialVersionUID = -9178650167557721039L;
+//
+//			@Override
+//			public String getName() {
+//				return System.getProperty("user.name");
+//			}
+//
+//			@Override
+//			public boolean hasRole(Role role) {
+//				return false;
+//			}
+//
+//			@Override
+//			public List<Role> getRoles() {
+//				return new ArrayList<Role>();
+//			}
+//		};
+//    }
 }

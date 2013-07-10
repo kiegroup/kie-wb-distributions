@@ -23,6 +23,7 @@ import java.util.Map;
 import org.kie.config.cli.command.impl.AddDeploymentConfigCliCommand;
 import org.kie.config.cli.command.impl.AddRepositoryToGroupCliCommand;
 import org.kie.config.cli.command.impl.AddRoleToGroupCliCommand;
+import org.kie.config.cli.command.impl.AddRoleToProjectCliCommand;
 import org.kie.config.cli.command.impl.AddRoleToRepositoryCliCommand;
 import org.kie.config.cli.command.impl.CreateGroupCliCommand;
 import org.kie.config.cli.command.impl.CreateRepositoryCliCommand;
@@ -36,6 +37,7 @@ import org.kie.config.cli.command.impl.RemoveGroupCliCommand;
 import org.kie.config.cli.command.impl.RemoveRepositoryCliCommand;
 import org.kie.config.cli.command.impl.RemoveRepositoryFromGroupCliCommand;
 import org.kie.config.cli.command.impl.RemoveRoleFromGroupCliCommand;
+import org.kie.config.cli.command.impl.RemoveRoleFromProjectCliCommand;
 import org.kie.config.cli.command.impl.RemoveRoleFromRepositoryCliCommand;
 
 public class CliCommandRegistry {
@@ -62,6 +64,8 @@ public class CliCommandRegistry {
         commands.put("remove-role-repo", new RemoveRoleFromRepositoryCliCommand());
         commands.put("add-role-group", new AddRoleToGroupCliCommand());
         commands.put("remove-role-group", new RemoveRoleFromGroupCliCommand());
+        commands.put("add-role-project", new AddRoleToProjectCliCommand());
+        commands.put("remove-role-project", new RemoveRoleFromProjectCliCommand());
 	}
 	
 	public static CliCommandRegistry get() {

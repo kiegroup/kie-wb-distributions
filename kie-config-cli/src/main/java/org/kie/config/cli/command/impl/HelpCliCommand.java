@@ -48,6 +48,8 @@ public class HelpCliCommand implements CliCommand {
 		helpMessage.append("\t remove-role-repo - remove role(s) from repository\n");
 		helpMessage.append("\t add-role-group - add role(s) to group\n");
 		helpMessage.append("\t remove-role-group - remove role(s) from group\n");
+        helpMessage.append("\t add-role-project - add role(s) to project\n");
+        helpMessage.append("\t remove-role-project - remove role(s) from project\n");
 		return helpMessage.toString();
 	}
 

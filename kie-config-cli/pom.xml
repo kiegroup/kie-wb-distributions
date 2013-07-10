@@ -37,8 +37,8 @@
 			<groupId>org.kie.commons</groupId>
 			<artifactId>kie-commons-data</artifactId>
 		</dependency>
-		<!-- uberfire deps -->
 
+		<!-- uberfire deps -->
 		<dependency>
 			<groupId>org.uberfire</groupId>
 			<artifactId>uberfire-backend-api</artifactId>
@@ -135,6 +135,26 @@
         </exclusion>
       </exclusions>
 		</dependency>
+
+    <!-- guvnor dependencies -->
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-project-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-project-backend</artifactId>
+    </dependency>
+
+    <!-- kie-wb-common dependencies -->
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-project-explorer-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-project-explorer-backend</artifactId>
+    </dependency>
 
 		<!-- weld deps -->
 		<dependency>
@@ -253,10 +273,6 @@
           <artifactId>slf4j-api</artifactId>
           <groupId>org.slf4j</groupId>
         </exclusion>
-        <exclusion>
-          <artifactId>drools-core</artifactId>
-          <groupId>org.drools</groupId>
-        </exclusion>
       </exclusions>
 		</dependency>
 		<dependency>
@@ -269,10 +285,6 @@
         </exclusion>
         <exclusion>
           <artifactId>kie-api</artifactId>
-          <groupId>org.kie</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>kie-internal</artifactId>
           <groupId>org.kie</groupId>
         </exclusion>
         <exclusion>
@@ -318,6 +330,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -339,6 +352,7 @@
 					</archive>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 </project>
