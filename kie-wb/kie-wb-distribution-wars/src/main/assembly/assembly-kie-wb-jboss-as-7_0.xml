@@ -19,7 +19,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
-  <id>jboss-as7.0</id>
+  <id>jboss-as7</id>
   <formats>
     <format>war</format>
     <format>dir</format>
@@ -144,7 +144,8 @@
           <!-- jBPM console & other client related -->
           <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
 
-
+          <!-- maven files from jbpm-console-form-app -->
+          <exclude>META-INF/maven</exclude>
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
