@@ -1,7 +1,6 @@
 package org.kie.workbench.backend;
 
 import java.util.Properties;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
@@ -147,12 +146,6 @@ public class ApplicationScopedProducer {
         Properties properties = new Properties();
         environment.setUserGroupCallback( new JBossUserGroupCallbackImpl( properties ) );
         return environment;
-    }
-
-    @Produces
-    public Logger createLogger( InjectionPoint injectionPoint ) {
-        return Logger.getLogger( injectionPoint.getMember().getDeclaringClass()
-                                         .getName() );
     }
 
 }
