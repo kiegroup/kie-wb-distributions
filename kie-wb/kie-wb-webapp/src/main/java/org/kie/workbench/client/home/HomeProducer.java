@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
-import org.kie.workbench.client.resources.i18n.Constants;
+import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
@@ -22,7 +22,7 @@ public class HomeProducer {
 
     private HomeModel model;
 
-    private Constants constants = Constants.INSTANCE;
+    private AppConstants constants = AppConstants.INSTANCE;
 
     @Inject
     private PlaceManager placeManager;

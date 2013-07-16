@@ -23,7 +23,7 @@ import org.guvnor.inbox.client.InboxPresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.ToolsMenu;
-import org.kie.workbench.drools.client.resources.i18n.Constants;
+import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -33,6 +33,7 @@ import org.uberfire.mvp.Command;
 import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.PanelDefinition;
+import org.uberfire.workbench.model.PanelType;
 import org.uberfire.workbench.model.PerspectiveDefinition;
 import org.uberfire.workbench.model.Position;
 import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
@@ -52,7 +53,7 @@ import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 @WorkbenchPerspective(identifier = "org.kie.workbench.drools.client.perspectives.DroolsAuthoringPerspective")
 public class DroolsAuthoringPerspective {
 
-    private Constants constants = Constants.INSTANCE;
+    private AppConstants constants = AppConstants.INSTANCE;
 
     @Inject
     private NewResourcePresenter newResourcePresenter;
@@ -93,15 +94,16 @@ public class DroolsAuthoringPerspective {
     }
 
     private void buildPerspective() {
-        this.perspective = new PerspectiveDefinitionImpl();
+        this.perspective = new PerspectiveDefinitionImpl( PanelType.ROOT_LIST );
         this.perspective.setName( constants.project_authoring() );
 
-        final PanelDefinition west = new PanelDefinitionImpl();
+        final PanelDefinition west = new PanelDefinitionImpl( PanelType.MULTI_LIST );
         west.setWidth( 300 );
         west.setMinWidth( 200 );
         west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) ) );
 
-        this.perspective.getRoot().insertChild( Position.WEST, west );
+        this.perspective.getRoot().insertChild( Position.WEST,
+                                                west );
     }
 
     private void buildMenuBar() {
@@ -158,7 +160,7 @@ public class DroolsAuthoringPerspective {
 
     private void buildToolBar() {
         this.toolBar = new DefaultToolBar( "guvnor.new.item" );
-        final String tooltip = Constants.INSTANCE.newItem();
+        final String tooltip = AppConstants.INSTANCE.newItem();
         final Command command = new Command() {
             @Override
             public void execute() {

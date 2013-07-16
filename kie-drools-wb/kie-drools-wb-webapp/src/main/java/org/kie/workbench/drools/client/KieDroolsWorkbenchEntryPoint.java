@@ -39,7 +39,7 @@ import org.jboss.errai.ioc.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
-import org.kie.workbench.drools.client.resources.i18n.Constants;
+import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
@@ -58,7 +58,7 @@ import org.uberfire.workbench.model.menu.Menus;
 @EntryPoint
 public class KieDroolsWorkbenchEntryPoint {
 
-    private Constants constants = Constants.INSTANCE;
+    private AppConstants constants = AppConstants.INSTANCE;
 
     @Inject
     private Caller<AppConfigService> appConfigService;
@@ -141,7 +141,7 @@ public class KieDroolsWorkbenchEntryPoint {
                 .endMenu()
                 .build();
 
-        menubar.aggregateWorkbenchMenus( menus );
+        menubar.addMenus( menus );
     }
 
     private List<MenuItem> getAuthoringMenuItems() {

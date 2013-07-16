@@ -23,7 +23,7 @@ import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
-import org.kie.workbench.client.resources.i18n.Constants;
+import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
@@ -35,6 +35,7 @@ import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.PanelDefinition;
+import org.uberfire.workbench.model.PanelType;
 import org.uberfire.workbench.model.PerspectiveDefinition;
 import org.uberfire.workbench.model.Position;
 import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
@@ -57,7 +58,7 @@ public class AdministrationPerspective {
 
     private static String[] PERMISSIONS_ADMIN = new String[]{ "ADMIN" };
 
-    private Constants constants = Constants.INSTANCE;
+    private AppConstants constants = AppConstants.INSTANCE;
 
     @Inject
     private NewResourcePresenter newResourcePresenter;
@@ -135,17 +136,18 @@ public class AdministrationPerspective {
     }
 
     private void buildPerspective() {
-        this.perspective = new PerspectiveDefinitionImpl();
+        this.perspective = new PerspectiveDefinitionImpl( PanelType.ROOT_LIST );
         this.perspective.setName( constants.Administration() );
 
         this.perspective.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "RepositoriesEditor" ) ) );
 
-        final PanelDefinition west = new PanelDefinitionImpl();
+        final PanelDefinition west = new PanelDefinitionImpl( PanelType.MULTI_LIST );
         west.setWidth( 300 );
         west.setMinWidth( 200 );
         west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "FileExplorer" ) ) );
 
-        this.perspective.getRoot().insertChild( Position.WEST, west );
+        this.perspective.getRoot().insertChild( Position.WEST,
+                                                west );
     }
 
     private void buildMenuBar() {
