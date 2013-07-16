@@ -134,7 +134,7 @@
 
                     <!-- EAP 6.1 alignement -->
                     <exclude>WEB-INF/lib/activation-*.jar</exclude>
-                    <exclude>WEB-INF/lib/antlr-*.jar</exclude>
+                    <exclude>WEB-INF/lib/antlr-2*.jar</exclude>
                     <!-- <exclude>WEB-INF/lib/cdi-api*.jar</exclude> ALREADY EXCLUDED-->
                     <exclude>WEB-INF/lib/commons-cli-*.jar</exclude>
                     <exclude>WEB-INF/lib/commons-collections-*.jar</exclude>
