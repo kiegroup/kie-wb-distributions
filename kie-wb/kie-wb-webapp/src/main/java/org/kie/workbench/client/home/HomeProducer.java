@@ -6,7 +6,9 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
+import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.Constants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
@@ -127,11 +129,12 @@ public class HomeProducer {
                                                       }
                                                   } ) );
 
+        final String dashbuilderURL = DashboardURLBuilder.getDashboardURL("/dashbuilder/workspace", null, LocaleInfo.getCurrentLocale());
         s5.addEntry( ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
                                                   new Command() {
                                                       @Override
                                                       public void execute() {
-                                                          Window.open( "/dashbuilder", "_blank", "" );
+                                                          Window.open( dashbuilderURL, "_blank", "" );
                                                       }
                                                   } ) );
 
