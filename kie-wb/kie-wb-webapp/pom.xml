@@ -743,55 +743,46 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-app</artifactId>
-      <version>${project.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-api</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-client</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-api</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-client</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-editor-backend</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
       <dependency>
           <groupId>org.jbpm</groupId>
           <artifactId>jbpm-form-modeler-form-provider</artifactId>
-          <version>${project.version}</version>
       </dependency>
       <dependency>
           <groupId>org.jbpm</groupId>
           <artifactId>jbpm-form-modeler-data-modeler</artifactId>
-          <version>${project.version}</version>
       </dependency>
 
   </dependencies>
