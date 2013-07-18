@@ -1,7 +1,9 @@
 package org.kie.config.cli;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
@@ -25,7 +27,7 @@ public class CliIdentity implements Identity {
         roles.add( EnvironmentProvider.ADMIN_ROLE );
     }
 
-    @Override
+    //@Override
     public String getName() {
         return System.getProperty( "user.name" );
     }
@@ -38,6 +40,26 @@ public class CliIdentity implements Identity {
     @Override
     public List<Role> getRoles() {
         return roles;
+    }
+
+    @Override
+    public Map<String, String> getProperties() {
+        return Collections.emptyMap();
+    }
+
+    @Override
+    public void aggregateProperty(String name,
+                                  String value) {
+    }
+
+    @Override
+    public void removeProperty(String name) {
+    }
+
+    @Override
+    public String getProperty(String name,
+                              String defaultValue) {
+        return null;
     }
 
 }
