@@ -132,7 +132,7 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/Controller</url-pattern>
     </servlet-mapping>
-cd k
+
     <!-- end form-modeler-->
 
   <servlet>
