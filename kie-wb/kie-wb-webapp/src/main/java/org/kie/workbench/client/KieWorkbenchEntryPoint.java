@@ -30,6 +30,7 @@ import com.google.gwt.animation.client.Animation;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -44,7 +45,7 @@ import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
-import org.kie.workbench.client.resources.i18n.Constants;
+import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
@@ -117,28 +118,28 @@ public class KieWorkbenchEntryPoint {
 
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
 
-        final Menus menus = MenuFactory.newTopLevelMenu( constants.Home() ).respondsWith( new Command() {
+        final Menus menus = MenuFactory.newTopLevelMenu(constants.Home()).respondsWith(new Command() {
             @Override
             public void execute() {
-                if ( defaultPerspective != null ) {
-                    placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
+                if (defaultPerspective != null) {
+                    placeManager.goTo(new DefaultPlaceRequest(defaultPerspective.getIdentifier()));
                 } else {
-                    Window.alert( constants.missingDefaultPerspective() );
+                    Window.alert(constants.missingDefaultPerspective());
                 }
             }
-        } )
+        })
                 .endMenu()
-                .newTopLevelMenu( constants.Authoring() ).withItems( getAuthoringViews() ).endMenu()
-                .newTopLevelMenu( constants.Deploy() ).withItems( getDeploymentViews() ).endMenu()
-                .newTopLevelMenu( constants.Process_Management() ).withItems( getProcessMGMTViews() ).endMenu()
-                .newTopLevelMenu( constants.Tasks() ).withItems( getTasksViews() ).endMenu().newTopLevelMenu( constants.Dashboards() )
-                .withItems( getDashboardViews() ).endMenu().newTopLevelMenu( constants.LogOut() ).respondsWith( new Command() {
+                .newTopLevelMenu(constants.Authoring()).withItems(getAuthoringViews()).endMenu()
+                .newTopLevelMenu(constants.Deploy()).withItems(getDeploymentViews()).endMenu()
+                .newTopLevelMenu(constants.Process_Management()).withItems(getProcessMGMTViews()).endMenu()
+                .newTopLevelMenu(constants.Tasks()).withItems(getTasksViews()).endMenu().newTopLevelMenu(constants.Dashboards())
+                .withItems(getDashboardViews()).endMenu().newTopLevelMenu(constants.LogOut()).respondsWith(new Command() {
                     @Override
                     public void execute() {
-                        redirect( GWT.getModuleBaseURL() + "uf_logout" );
+                        redirect(GWT.getModuleBaseURL() + "uf_logout");
                     }
-                } ).endMenu()
-                .newTopLevelMenu( constants.find() )
+                }).endMenu()
+                .newTopLevelMenu(constants.find())
                 .position( MenuPosition.RIGHT )
                 .respondsWith( new Command() {
                     @Override
@@ -153,7 +154,7 @@ public class KieWorkbenchEntryPoint {
                 .endMenu()
                 .build();
 
-        menubar.addMenus( menus );
+        menubar.addMenus(menus);
     }
 
     private List<? extends MenuItem> getRoles() {
