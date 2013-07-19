@@ -9,7 +9,7 @@ import com.google.gwt.core.client.GWT;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
-import org.kie.workbench.drools.client.resources.i18n.Constants;
+import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 
@@ -19,7 +19,7 @@ import org.uberfire.mvp.Command;
 @ApplicationScoped
 public class HomeProducer {
 
-    private Constants constants = Constants.INSTANCE;
+    private AppConstants constants = AppConstants.INSTANCE;
 
     private HomeModel model;
 

@@ -40,7 +40,7 @@
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
-    </dependencySet> 
+    </dependencySet>
     <dependencySet>
       <includes>
         <include>org.kie:kie-drools-wb-webapp:war</include>
@@ -55,6 +55,7 @@
           <exclude>WEB-INF/classes/users.properties</exclude>
 
           <!-- UF client related -->
+          <exclude>WEB-INF/lib/uberfire-js-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-client-api-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-widget-markdown-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-widgets-core-client-*.jar</exclude>

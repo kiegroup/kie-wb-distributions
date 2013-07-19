@@ -5,6 +5,7 @@
   <inherits name="org.jboss.errai.enterprise.CDI"/>
 
   <!-- Uberfire dependencies -->
+  <inherits name="org.uberfire.UberfireJS"/>
   <inherits name="org.uberfire.security.UberfireSecurityClient"/>
   <inherits name="org.uberfire.UberfireWorkbench"/>
   <inherits name="org.uberfire.UberfireWidgetsCore"/>
@@ -54,7 +55,12 @@
   <inherits name="org.drools.workbench.screens.scorecardxls.DroolsWorkbenchScoreCardXLSEditorClient"/>
   <inherits name="org.drools.workbench.screens.testscenario.DroolsWorkbenchTestScenarioEditorClient"/>
 
-  <!-- Specify the application specific style sheet. -->
+    <!-- Form-Modeler -->
+    <inherits name="org.jbpm.formModeler.editor.FormModelerEditorClient"/>
+    <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>
+
+
+    <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/kie-drools-wb.css'/>
 
   <!-- Specify the paths for translatable code -->

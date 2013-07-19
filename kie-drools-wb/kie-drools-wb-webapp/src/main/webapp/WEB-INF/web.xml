@@ -117,6 +117,24 @@
     <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/uberFireImages/*</url-pattern>
   </servlet-mapping>
 
+    <!-- start form-modeler -->
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
+        <init-param>
+            <param-name>base.app.dir</param-name>
+            <param-value>${project.basedir}/target/${project.artifactId}-${project.version}</param-value>
+        </init-param>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/Controller</url-pattern>
+    </servlet-mapping>
+
+    <!-- end form-modeler-->
+
   <servlet>
     <!-- NOTE: the integration-test profile uses this web.xml. Integration tests only work properly
 with the DefaultBlockingServlet. If you change this setting, make a backup of this web.xml

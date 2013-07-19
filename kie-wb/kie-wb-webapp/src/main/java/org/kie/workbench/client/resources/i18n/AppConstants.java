@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kie.workbench.drools.client.resources.i18n;
+package org.kie.workbench.client.resources.i18n;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.Messages;
@@ -28,31 +28,49 @@ import com.google.gwt.i18n.client.Messages;
  * properties file can still be used on the server). To use this, use
  * <code>GWT.create(Constants.class)</code>.
  */
-public interface Constants
+public interface AppConstants
         extends
         Messages {
 
-    Constants INSTANCE = GWT.create( Constants.class );
+    AppConstants INSTANCE = GWT.create( AppConstants.class );
 
-    String home();
+    String Process_Dashboard();
 
-    String authoring();
+    String Business_Dashboard();
 
-    String project_authoring();
+    String Project_Authoring();
 
-    String administration();
+    String Administration();
 
-    String deployment();
+    String Authoring();
 
-    String asset_repo();
+    String Process_Management();
+
+    String Tasks();
+
+    String Asset_repo();
+
+    String LogOut();
+
+    String Home();
+
+    String Process_Definitions();
+
+    String Process_Instances();
+
+    String Deploy();
+
+    String Deployments();
 
     String newItem();
 
-    String logout();
+    String Search();
+
+    String Tasks_List();
+
+    String Dashboards();
 
     String find();
-
-    String search();
 
     String missingDefaultPerspective();
 
@@ -76,6 +94,10 @@ public interface Constants
 
     String tools();
 
+    String homeDiscover();
+
+    String homeDiscoverCaption();
+
     String homeTheKnowledgeLifeCycle();
 
     String homeAuthor();
@@ -85,5 +107,13 @@ public interface Constants
     String homeDeploy();
 
     String homeDeployCaption();
+
+    String homeWork();
+
+    String homeWorkCaption();
+
+    String homeImprove();
+
+    String homeImproveCaption();
 
 }

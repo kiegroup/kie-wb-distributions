@@ -517,6 +517,11 @@
     <!-- UberFire -->
     <dependency>
       <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-js</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
       <artifactId>uberfire-server</artifactId>
     </dependency>
 
@@ -957,6 +962,7 @@
             <compileSourcesArtifact>org.kie.commons:kie-nio2-model</compileSourcesArtifact>
 
             <!-- UberFire dependencies -->
+            <compileSourcesArtifact>org.uberfire:uberfire-js</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>

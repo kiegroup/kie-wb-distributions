@@ -30,7 +30,6 @@ import com.google.gwt.animation.client.Animation;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -58,7 +57,6 @@ import org.uberfire.security.Role;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.MenuPosition;
-import org.uberfire.workbench.model.menu.MenuSearchItem;
 import org.uberfire.workbench.model.menu.Menus;
 
 /**
@@ -67,7 +65,7 @@ import org.uberfire.workbench.model.menu.Menus;
 @EntryPoint
 public class KieWorkbenchEntryPoint {
 
-    private Constants constants = Constants.INSTANCE;
+    private AppConstants constants = AppConstants.INSTANCE;
 
     @Inject
     private PlaceManager placeManager;
@@ -149,22 +147,13 @@ public class KieWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newSearchItem( constants.Search() )
-                .position( MenuPosition.RIGHT )
-                .respondsWith( new MenuSearchItem.SearchCommand() {
-                    @Override
-                    public void execute( final String term ) {
-                        placeManager.goTo( new DefaultPlaceRequest( "FullTextSearchForm" ).addParameter( "term", term ) );
-                    }
-                } )
-                .endMenu()
                 .newTopLevelMenu( identity.getName() )
                 .position( MenuPosition.RIGHT )
                 .withItems( getRoles() )
                 .endMenu()
                 .build();
 
-        menubar.aggregateWorkbenchMenus( menus );
+        menubar.addMenus( menus );
     }
 
     private List<? extends MenuItem> getRoles() {
@@ -251,7 +240,6 @@ public class KieWorkbenchEntryPoint {
 
     private List<? extends MenuItem> getDashboardViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
-
         result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() ).respondsWith( new Command() {
 
             @Override
