@@ -116,4 +116,8 @@ public interface AppConstants
 
     String homeImproveCaption();
 
+    String User();
+    
+    String Role();
+
 }

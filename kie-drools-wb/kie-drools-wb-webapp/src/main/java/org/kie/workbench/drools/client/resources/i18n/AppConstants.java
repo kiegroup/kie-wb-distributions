@@ -86,4 +86,10 @@ public interface AppConstants
 
     String homeDeployCaption();
 
+    String Role();
+
+    String User();
+
+    String LogOut();
+
 }

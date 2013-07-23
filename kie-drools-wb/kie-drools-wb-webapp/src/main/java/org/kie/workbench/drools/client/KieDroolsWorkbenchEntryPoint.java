@@ -46,6 +46,8 @@ import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.security.Identity;
+import org.uberfire.security.Role;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.MenuPosition;
@@ -73,6 +75,9 @@ public class KieDroolsWorkbenchEntryPoint {
 
     @Inject
     private ActivityManager activityManager;
+    
+    @Inject
+    private Identity identity;
 
     @AfterInitialization
     public void startApp() {
@@ -112,14 +117,6 @@ public class KieDroolsWorkbenchEntryPoint {
                 .newTopLevelMenu( constants.deployment() )
                 .withItems( getDeploymentMenuItems() )
                 .endMenu()
-                .newTopLevelMenu( constants.logout() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        redirect( GWT.getModuleBaseURL() + "uf_logout" );
-                    }
-                } )
-                .endMenu()
                 .newTopLevelMenu( constants.find() )
                 .position( MenuPosition.RIGHT )
                 .respondsWith( new Command() {
@@ -129,9 +126,30 @@ public class KieDroolsWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
+                .newTopLevelMenu( constants.User() +": "+ identity.getName() )
+                .position( MenuPosition.RIGHT )
+                .withItems( getRoles() )
+                .endMenu()
                 .build();
 
         menubar.addMenus( menus );
+    }
+    
+     private List<? extends MenuItem> getRoles() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( identity.getRoles().size() );
+        for ( final Role role : identity.getRoles() ) {
+            if(!role.getName().equals("IS_REMEMBER_ME")){
+                result.add( MenuFactory.newSimpleItem( constants.Role() +": " + role.getName() ).endMenu().build().getItems().get( 0 ) );
+            }
+        }
+        result.add(MenuFactory.newSimpleItem(constants.LogOut()).respondsWith(new Command() {
+                    @Override
+                    public void execute() {
+                        redirect(GWT.getModuleBaseURL() + "uf_logout");
+                    }
+                }).endMenu().build().getItems().get(0));
+
+        return result;
     }
 
     private List<MenuItem> getAuthoringMenuItems() {

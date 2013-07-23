@@ -133,12 +133,7 @@ public class KieWorkbenchEntryPoint {
                 .newTopLevelMenu(constants.Deploy()).withItems(getDeploymentViews()).endMenu()
                 .newTopLevelMenu(constants.Process_Management()).withItems(getProcessMGMTViews()).endMenu()
                 .newTopLevelMenu(constants.Tasks()).withItems(getTasksViews()).endMenu().newTopLevelMenu(constants.Dashboards())
-                .withItems(getDashboardViews()).endMenu().newTopLevelMenu(constants.LogOut()).respondsWith(new Command() {
-                    @Override
-                    public void execute() {
-                        redirect(GWT.getModuleBaseURL() + "uf_logout");
-                    }
-                }).endMenu()
+                .withItems(getDashboardViews()).endMenu()
                 .newTopLevelMenu(constants.find())
                 .position( MenuPosition.RIGHT )
                 .respondsWith( new Command() {
@@ -148,7 +143,7 @@ public class KieWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( identity.getName() )
+                .newTopLevelMenu( constants.User() +": "+ identity.getName() )
                 .position( MenuPosition.RIGHT )
                 .withItems( getRoles() )
                 .endMenu()
@@ -160,8 +155,16 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getRoles() {
         final List<MenuItem> result = new ArrayList<MenuItem>( identity.getRoles().size() );
         for ( final Role role : identity.getRoles() ) {
-            result.add( MenuFactory.newSimpleItem( role.getName() ).endMenu().build().getItems().get( 0 ) );
+            if(!role.getName().equals("IS_REMEMBER_ME")){
+                result.add( MenuFactory.newSimpleItem( constants.Role() +": " + role.getName() ).endMenu().build().getItems().get( 0 ) );
+            }
         }
+        result.add(MenuFactory.newSimpleItem(constants.LogOut()).respondsWith(new Command() {
+                    @Override
+                    public void execute() {
+                        redirect(GWT.getModuleBaseURL() + "uf_logout");
+                    }
+                }).endMenu().build().getItems().get(0));
 
         return result;
     }
