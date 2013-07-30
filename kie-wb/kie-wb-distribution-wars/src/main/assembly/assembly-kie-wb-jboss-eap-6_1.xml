@@ -29,13 +29,6 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/src/main/jbossas7</directory>
-      <outputDirectory>.</outputDirectory>
-      <excludes>
-        <exclude>WEB-INF/jboss-deployment-structure.xml</exclude>
-      </excludes>
-    </fileSet>
-    <fileSet>
       <directory>${project.basedir}/src/main/eap6_1</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
@@ -157,11 +150,16 @@
           <exclude>WEB-INF/lib/commons-cli-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-collections-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-lang-*.jar</exclude>
+          <exclude>WEB-INF/lib/commons-codec-*.jar</exclude>
+          <exclude>WEB-INF/lib/commons-io-*.jar</exclude>
+          <exclude>WEB-INF/lib/jaxb-impl-*.jar</exclude>
+          <exclude>WEB-INF/lib/jaxb-xjc-*.jar</exclude>
+          <exclude>WEB-INF/lib/org.osgi.core-*.jar</exclude>
+          <exclude>WEB-INF/lib/snakeyaml-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-databinding-jaxb-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-frontend-jaxws-*.jar</exclude>
           <exclude>WEB-INF/lib/dom4j-*.jar</exclude>
-          <exclude>WEB-INF/lib/ecj-*.jar</exclude>
-          <!-- this *.jar is not in the AS 7.1.1 -->
+          <exclude>WEB-INF/lib/ecj-*.jar</exclude> <!-- this *.jar is not in the AS 7.1.1 -->
           <exclude>WEB-INF/lib/guava-*.jar</exclude>
           <exclude>WEB-INF/lib/h2-*.jar</exclude>
           <exclude>WEB-INF/lib/hibernate-commons-annotations-*.jar</exclude>
@@ -196,6 +194,39 @@
           <exclude>WEB-INF/lib/wsdl4j-*.jar</exclude>
           <exclude>WEB-INF/lib/xalan-*.jar</exclude>
           <exclude>WEB-INF/lib/xercesImpl-*.jar</exclude>
+
+          <!-- transitive dependencies -->
+          <exclude>WEB-INF/lib/apache-mime4j-*.jar</exclude>
+          <exclude>WEB-INF/lib/commons-configuration-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-rt-bindings-soap-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-rt-bindings-xml-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-rt-core-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-rt-frontend-simple-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-rt-transports-http-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-rt-ws-addr-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-rt-ws-policy-*.jar</exclude>
+          <exclude>WEB-INF/lib/hornetq-commons-*.jar</exclude>
+          <exclude>WEB-INF/lib/hornetq-journal-*.jar</exclude>
+          <exclude>WEB-INF/lib/httpclient-*.jar</exclude>
+          <exclude>WEB-INF/lib/httpcore_*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-ejb-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-jms-api_*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-logging-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-logmanager*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-marshalling-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-remote-naming-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-remoting-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-sasl*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-servlet-api_3.0_spec*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-transaction-api_1.1_spec-*.jar</exclude>
+          <exclude>WEB-INF/lib/jgroups-*.jar</exclude>
+          <exclude>WEB-INF/lib/neethi-*.jar</exclude>
+          <exclude>WEB-INF/lib/serializer*.jar</exclude>
+          <exclude>WEB-INF/lib/validation-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/xml-resolver*.jar</exclude>
+          <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
 
         </excludes>
       </unpackOptions>
