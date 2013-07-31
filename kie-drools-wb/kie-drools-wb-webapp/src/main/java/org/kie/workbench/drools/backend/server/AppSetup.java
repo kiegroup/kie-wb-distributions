@@ -68,28 +68,28 @@ public class AppSetup {
     @PostConstruct
     public void assertPlayground() {
 
-        // TODO in case repo is not defined in system repository so we add default
-        Repository repository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
-        if ( repository == null ) {
-            repository = repositoryService.createRepository( DROOLS_WB_PLAYGROUND_SCHEME,
-                                                             DROOLS_WB_PLAYGROUND_ALIAS,
-                                                             new HashMap<String, Object>() {{
-                                                                 put( "origin", DROOLS_WB_PLAYGROUND_ORIGIN );
-                                                                 put( "username", DROOLS_WB_PLAYGROUND_UID );
-                                                                 put( "crypt:password", DROOLS_WB_PLAYGROUND_PWD );
-                                                             }} );
-        }
+        if ("true".equalsIgnoreCase(System.getProperty("org.kie.droolswb.demo"))) {
+            Repository repository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
+            if ( repository == null ) {
+                repository = repositoryService.createRepository( DROOLS_WB_PLAYGROUND_SCHEME,
+                                                                 DROOLS_WB_PLAYGROUND_ALIAS,
+                                                                 new HashMap<String, Object>() {{
+                                                                     put( "origin", DROOLS_WB_PLAYGROUND_ORIGIN );
+                                                                     put( "username", DROOLS_WB_PLAYGROUND_UID );
+                                                                     put( "crypt:password", DROOLS_WB_PLAYGROUND_PWD );
+                                                                 }} );
+            }
 
-        // TODO in case groups are not defined
-        Collection<Group> groups = groupService.getGroups();
-        if ( groups == null || groups.isEmpty() ) {
-            List<Repository> repositories = new ArrayList<Repository>();
-            repositories.add( repository );
-            groupService.createGroup( "demo",
-                                      "demo@jbpm.org",
-                                      repositories );
+            // TODO in case groups are not defined
+            Collection<Group> groups = groupService.getGroups();
+            if ( groups == null || groups.isEmpty() ) {
+                List<Repository> repositories = new ArrayList<Repository>();
+                repositories.add( repository );
+                groupService.createGroup( "demo",
+                                          "demo@jbpm.org",
+                                          repositories );
+            }
         }
-
         //Define mandatory properties
         List<ConfigGroup> globalConfigGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
         boolean globalSettingsDefined = false;

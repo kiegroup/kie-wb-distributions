@@ -72,12 +72,13 @@ public class AppSetup {
     @PostConstruct
     public void assertPlayground() {
 
-        // TODO Setup default repository for jBPM-Workbench
-        administrationService.bootstrapRepository( JBPM_WB_PLAYGROUND_ALIAS, JBPM_WB_PLAYGROUND_ORIGIN,
-                                                   JBPM_WB_PLAYGROUND_UID, JBPM_WB_PLAYGROUND_PWD );
-        // TODO Setup default repository for Drools-Workbench
-        administrationService.bootstrapRepository( DROOLS_WB_PLAYGROUND_ALIAS, DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                   DROOLS_WB_PLAYGROUND_UID, DROOLS_WB_PLAYGROUND_PWD );
+        if ("true".equalsIgnoreCase(System.getProperty("org.kie.wb.demo"))) {
+            administrationService.bootstrapRepository( JBPM_WB_PLAYGROUND_ALIAS, JBPM_WB_PLAYGROUND_ORIGIN,
+                                                       JBPM_WB_PLAYGROUND_UID, JBPM_WB_PLAYGROUND_PWD );
+
+            administrationService.bootstrapRepository( DROOLS_WB_PLAYGROUND_ALIAS, DROOLS_WB_PLAYGROUND_ORIGIN,
+                                                       DROOLS_WB_PLAYGROUND_UID, DROOLS_WB_PLAYGROUND_PWD );
+        }
 
         // TODO Setup mandatory properties for Drools-Workbench
         List<ConfigGroup> configGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
