@@ -24,6 +24,6 @@ public class AppNavBar
 
     @Override
     public int getOrder() {
-        return MAX_VALUE;
+        return 1;
     }
 }

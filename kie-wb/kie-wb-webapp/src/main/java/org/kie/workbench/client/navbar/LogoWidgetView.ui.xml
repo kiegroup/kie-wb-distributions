@@ -26,6 +26,13 @@
       height: 47px !important;
     }
 
+    .contextBranding {
+        width:100%;
+        height:22px !important;
+        background-color:#3a3f45;
+        border-top: 3px #cb302e solid;
+    }
+
     .logo {
       float: left;
       margin-left: 20px;
@@ -48,14 +55,9 @@
     }
   </ui:style>
 
-  <g:FlowPanel styleName="{style.contextArea} {res.CSS.listbar}">
-    <g:FlowPanel ui:field="contextMenuArea" styleName="{style.contextMenu}"/>
-    <g:FlowPanel addStyleNames="{style.search}">
-      <b:Form type="SEARCH" addStyleNames="{style.searchForm}">
-        <b:TextBox searchQuery="true" placeholder="search..."/>
-      </b:Form>
-    </g:FlowPanel>
-  </g:FlowPanel>
+ <g:FlowPanel addStyleNames="{style.contextBranding}">
+      <g:Image ui:field="logo" styleName="{style.logo}"/>
+ </g:FlowPanel>
 
 
 </ui:UiBinder>

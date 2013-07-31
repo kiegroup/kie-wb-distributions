@@ -16,15 +16,15 @@
 
 package org.kie.workbench.client.navbar;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import org.uberfire.client.workbench.Header;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 @ApplicationScoped
-public class ComplementNavAreaPresenter implements Header {
+public class LogoWidgetPresenter implements Header {
 
     public interface View extends IsWidget {
 
@@ -35,7 +35,7 @@ public class ComplementNavAreaPresenter implements Header {
 
     @Override
     public int getOrder() {
-        return 1;
+        return 3;
     }
 
     @Override
