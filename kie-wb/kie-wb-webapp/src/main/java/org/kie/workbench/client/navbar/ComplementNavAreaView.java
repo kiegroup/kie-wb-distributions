@@ -46,8 +46,6 @@ public class ComplementNavAreaView
 
     private static ViewBinder uiBinder = GWT.create( ViewBinder.class );
 
-    @UiField(provided = true)
-    public Image logo;
 
     @UiField
     public FlowPanel contextMenuArea;
@@ -57,7 +55,6 @@ public class ComplementNavAreaView
 
     @PostConstruct
     public void init() {
-        logo = new Image( AppResource.INSTANCE.images().logo() );
         initWidget( uiBinder.createAndBindUi( this ) );
         contextMenuArea.add( contextMenu.getView() );
     }
