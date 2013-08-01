@@ -2,7 +2,7 @@ Installation notes
 
 1. Install bitronix transaction manager into your tomcat 7
 - copy following libs into TOMCAT_HOME/lib
-    * btm-2.1.2.jar
+    * btm-3.0.0-SNAPSHOT.jar   (needs version 3 due to https://jira.codehaus.org/browse/BTM-126 - and currently only snapshot is available)
     * btm-tomcat55-lifecycle-2.1.2.jar
     * h2-1.3.161.jar
     * jta-1.1.jar
