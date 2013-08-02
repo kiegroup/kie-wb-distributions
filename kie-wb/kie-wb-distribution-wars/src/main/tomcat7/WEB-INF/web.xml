@@ -23,6 +23,13 @@
       <param-name>org.uberfire.cookie.id</param-name>
       <param-value>kie.ide</param-value>
     </init-param>
+    <!-- TOMCAT-JEE-SECURITY -->
+    <!--
+    <init-param>
+      <param-name>org.uberfire.auth.scheme</param-name>
+      <param-value>org.uberfire.security.server.auth.JACCAuthenticationScheme</param-value>
+    </init-param>
+    -->
   </filter>
 
   <filter-mapping>
@@ -538,4 +545,44 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+
+  <!-- TOMCAT-JEE-SECURITY -->
+  <!--
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>console</web-resource-name>
+      <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>kie-user</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>rest</web-resource-name>
+      <url-pattern>/rest/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>kie-user</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/login.jsp</form-login-page>
+      <form-error-page>/login_failed.jsp</form-error-page>
+    </form-login-config>
+  </login-config>
+
+  <security-role>
+    <role-name>kie-user</role-name>
+  </security-role>
+
+  <error-page>
+    <error-code>403</error-code>
+    <location>/not_authorized.jsp</location>
+  </error-page>
+  -->
 </web-app>
