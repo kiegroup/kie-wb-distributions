@@ -52,6 +52,7 @@
     <module>kie-wb</module>
     <module>kie-drools-wb</module>
     <module>kie-config-cli</module>
+    <module>kie-tomcat-integration</module>
   </modules>
 
   <build>
