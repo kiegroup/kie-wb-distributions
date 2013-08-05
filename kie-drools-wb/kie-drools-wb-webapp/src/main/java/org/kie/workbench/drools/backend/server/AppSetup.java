@@ -68,7 +68,7 @@ public class AppSetup {
     @PostConstruct
     public void assertPlayground() {
 
-        if ("true".equalsIgnoreCase(System.getProperty("org.kie.droolswb.demo"))) {
+        if (!"false".equalsIgnoreCase(System.getProperty("org.kie.demo"))) {
             Repository repository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
             if ( repository == null ) {
                 repository = repositoryService.createRepository( DROOLS_WB_PLAYGROUND_SCHEME,
