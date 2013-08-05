@@ -58,6 +58,10 @@
           <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
           <exclude>WEB-INF/classes/users.properties</exclude>
 
+          <!-- remove shared services with btm -->
+          <exclude>WEB-INF/lib/jbpm-shared-services-*-btm.jar</exclude>
+          <exclude>WEB-INF/lib/btm-*.jar</exclude>
+
           <!-- UF client related -->
           <exclude>WEB-INF/lib/uberfire-js-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-client-api-*.jar</exclude>
