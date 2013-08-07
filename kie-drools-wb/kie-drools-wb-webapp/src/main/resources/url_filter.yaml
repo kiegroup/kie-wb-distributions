@@ -4,7 +4,8 @@ filter:
    - pattern: /config/**
      access: ADMIN, USER
    - pattern: /private/**
-
+   - pattern: /rest/**
+   
 exclude:
    - /*.ico
    - /org.kie.workbench.drools.KIEDroolsWebapp/images/**
