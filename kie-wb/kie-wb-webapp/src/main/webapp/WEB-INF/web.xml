@@ -27,7 +27,7 @@
 
   <filter-mapping>
     <filter-name>UberFire Security Filter</filter-name>
-    <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <!-- RESTEasy configurations -->
@@ -45,11 +45,6 @@
   <context-param>
     <param-name>resteasy.injector.factory</param-name>
     <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
-  </context-param>
-
-  <context-param>
-    <param-name>resteasy.providers</param-name>
-    <param-value>org.kie.workbench.common.services.rest.BasicAuthentication</param-value>
   </context-param>
   
   <servlet>
