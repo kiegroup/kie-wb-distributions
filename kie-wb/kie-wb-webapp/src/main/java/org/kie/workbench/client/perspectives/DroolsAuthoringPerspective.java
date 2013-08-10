@@ -94,7 +94,7 @@ public class DroolsAuthoringPerspective {
         this.perspective = new PerspectiveDefinitionImpl( PanelType.ROOT_LIST );
         this.perspective.setName( constants.Project_Authoring() );
 
-        final PanelDefinition west = new PanelDefinitionImpl( PanelType.MULTI_LIST );
+        final PanelDefinition west = new PanelDefinitionImpl( PanelType.SIMPLE );
         west.setWidth( 300 );
         west.setMinWidth( 200 );
         west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) ) );
