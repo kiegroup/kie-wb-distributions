@@ -16,13 +16,14 @@
 package org.kie.workbench.backend;
 
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
-import org.jbpm.console.ng.bd.backend.server.AdministrationService;
+import org.jbpm.console.ng.bd.service.AdministrationService;
 import org.kie.commons.io.IOService;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
