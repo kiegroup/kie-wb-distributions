@@ -32,10 +32,10 @@ public class HomeProducer {
         model = new HomeModel( constants.homeTheKnowledgeLifeCycle() );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeAuthor(),
                                                               constants.homeAuthorCaption(),
-                                                              url + "/images/flowers.jpg" ) );
+                                                              url + "/images/HandHome.jpg" ) );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeDeploy(),
                                                               constants.homeDeployCaption(),
-                                                              url + "/images/flowers.jpg" ) );
+                                                              url + "/images/HandHome.jpg" ) );
         final Section s1 = new Section( constants.authoring() );
         s1.addEntry( ModelUtils.makeSectionEntry( constants.project_authoring(),
                                                   new Command() {
