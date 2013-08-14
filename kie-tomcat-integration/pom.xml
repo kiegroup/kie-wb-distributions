@@ -12,10 +12,12 @@
   	<dependency>
   		<groupId>org.apache.tomcat</groupId>
   		<artifactId>catalina</artifactId>
+      <scope>provided</scope>
   	</dependency>
     <dependency>
       <groupId>javax.security.jacc</groupId>
       <artifactId>javax.security.jacc-api</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>
