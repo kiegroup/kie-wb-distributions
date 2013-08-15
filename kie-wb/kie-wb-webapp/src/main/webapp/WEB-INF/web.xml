@@ -27,7 +27,9 @@
 
   <filter-mapping>
     <filter-name>UberFire Security Filter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/rest/*</url-pattern>
+    <url-pattern>/maven2/*</url-pattern>
+    <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
   </filter-mapping>
 
   <!-- RESTEasy configurations -->
@@ -41,12 +43,12 @@
     <param-value>/rest</param-value>
   </context-param>
 
-  <!-- Note, this configuration needs to be removed with AS7 deployement -->  
+  <!-- Note, this configuration needs to be removed with AS7 deployement -->
   <context-param>
     <param-name>resteasy.injector.factory</param-name>
     <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
   </context-param>
-  
+
   <servlet>
     <servlet-name>Resteasy</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
@@ -57,7 +59,7 @@
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
 
-  
+
   <!-- UberFire servlets -->
   <servlet>
     <servlet-name>UberFireServlet</servlet-name>
@@ -447,8 +449,8 @@ profile in pom.xml to use that. -->
     <url-pattern>/stencilset/*</url-pattern>
   </servlet-mapping>
 
-    <!-- the number within the session-timout element must be expressed in
-  minutes. it is now 24 hours. -->
+  <!-- the number within the session-timout element must be expressed in
+minutes. it is now 24 hours. -->
   <session-config>
     <session-timeout>1440</session-timeout>
   </session-config>
@@ -476,21 +478,21 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <!-- end designer -->
 
   <!-- start form-modeler -->
-    <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
-        <init-param>
-            <param-name>base.app.dir</param-name>
-            <param-value>${project.basedir}/target/${project.artifactId}-${project.version}</param-value>
-        </init-param>
-    </servlet>
+  <servlet>
+    <servlet-name>Controller</servlet-name>
+    <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>base.app.dir</param-name>
+      <param-value>${project.basedir}/target/${project.artifactId}-${project.version}</param-value>
+    </init-param>
+  </servlet>
 
 
-    <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
-    </servlet-mapping>
-    <!-- end form-modeler-->
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
+  </servlet-mapping>
+  <!-- end form-modeler-->
 
   <resource-ref>
     <description>Console DS</description>

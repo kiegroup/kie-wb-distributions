@@ -28,15 +28,11 @@
 
   <filter-mapping>
     <filter-name>UberFire Security Filter</filter-name>
+    <url-pattern>/rest/*</url-pattern>
+    <url-pattern>/maven2/*</url-pattern>
     <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/*</url-pattern>
   </filter-mapping>
-  
-  <!-- RESTEasy configurations -->
-  <context-param>
-    <param-name>resteasy.providers</param-name>
-    <param-value>org.kie.workbench.common.services.rest.BasicAuthentication</param-value>
-  </context-param>
-  
+
   <servlet>
     <servlet-name>UberFireServlet</servlet-name>
     <servlet-class>org.uberfire.server.UberfireServlet</servlet-class>
