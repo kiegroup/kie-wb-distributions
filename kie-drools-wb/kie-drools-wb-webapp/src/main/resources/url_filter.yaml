@@ -1,13 +1,11 @@
 filter:
-   - pattern: /admin/**
-     access: ADMIN
-   - pattern: /config/**
-     access: ADMIN, USER
-   - pattern: /private/**
    - pattern: /rest/**
-   
+   - pattern: /maven2/**
+   - pattern: /org.kie.workbench.drools.KIEDroolsWebapp/**
+
 exclude:
    - /*.ico
    - /org.kie.workbench.drools.KIEDroolsWebapp/images/**
    - /org.kie.workbench.drools.KIEDroolsWebapp/css/**
    - /css/**
+   - /images/**

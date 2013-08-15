@@ -34,17 +34,11 @@
 
   <filter-mapping>
     <filter-name>UberFire Security Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <!-- disable UF security filter until redirect will be moved to forward to preserve http method
-    UF pull request https://github.com/droolsjbpm/uberfire/pull/4
-  -->
-  <!--filter-mapping>
-    <filter-name>UberFire Security Filter</filter-name>
     <url-pattern>/rest/*</url-pattern>
-  </filter-mapping-->
-  
-  
+    <url-pattern>/maven2/*</url-pattern>
+    <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
+  </filter-mapping>
+
   <!-- RESTEasy configurations -->
 
   <context-param>
@@ -61,7 +55,7 @@
     <param-name>resteasy.injector.factory</param-name>
     <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
   </context-param>
-  
+
   <servlet>
     <servlet-name>Resteasy</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
@@ -496,18 +490,18 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <!-- end designer -->
 
   <!--start form-modeler -->
-    <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
-    </servlet>
+  <servlet>
+    <servlet-name>Controller</servlet-name>
+    <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
+  </servlet>
 
-    <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
-    </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
+  </servlet-mapping>
   <!-- end form-modeler -->
 
-    <resource-ref>
+  <resource-ref>
     <description>Console DS</description>
     <res-ref-name>jdbc/jbpm</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
@@ -520,16 +514,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <web-resource-collection>
       <web-resource-name>console</web-resource-name>
       <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>kie-user</role-name>
-    </auth-constraint>
-  </security-constraint>
-
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>rest</web-resource-name>
-      <url-pattern>/rest/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>kie-user</role-name>

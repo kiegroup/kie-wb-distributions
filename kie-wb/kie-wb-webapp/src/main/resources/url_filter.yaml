@@ -1,13 +1,11 @@
 filter:
-   - pattern: /admin/**
-     access: ADMIN
-   - pattern: /config/**
-     access: ADMIN, USER
-   - pattern: /private/**
    - pattern: /rest/**
-   
+   - pattern: /maven2/**
+   - pattern: /org.kie.workbench.KIEWebapp/**
+
 exclude:
    - /*.ico
    - /org.kie.workbench.KIEWebapp/images/**
    - /org.kie.workbench.KIEWebapp/css/**
    - /css/**
+   - /images/**
