@@ -120,4 +120,6 @@ public interface AppConstants
     
     String Role();
 
+    String Jobs();
+
 }
