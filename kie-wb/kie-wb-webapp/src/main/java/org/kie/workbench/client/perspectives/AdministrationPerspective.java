@@ -165,6 +165,19 @@ public class AdministrationPerspective {
                 .endMenu()
                 .endMenus()
                 .endMenu()
+                .newTopLevelMenu( AppConstants.INSTANCE.MenuGroups() )
+                .menus()
+                .menu( AppConstants.INSTANCE.MenuManageGroups() )
+                .withRoles( PERMISSIONS_ADMIN )
+                .respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.kie.workbench.common.screens.group.manager.GroupManager" );
+                    }
+                } )
+                .endMenu()
+                .endMenus()
+                .endMenu()
                 .newTopLevelMenu( constants.repositories() )
                 .menus()
                 .menu( constants.cloneRepository() )

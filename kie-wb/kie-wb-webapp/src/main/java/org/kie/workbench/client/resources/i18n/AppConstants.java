@@ -122,4 +122,8 @@ public interface AppConstants
 
     String Jobs();
 
+    String MenuGroups();
+
+    String MenuManageGroups();
+
 }
