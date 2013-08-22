@@ -92,4 +92,8 @@ public interface AppConstants
 
     String LogOut();
 
+    String MenuGroups();
+
+    String MenuManageGroups();
+
 }
