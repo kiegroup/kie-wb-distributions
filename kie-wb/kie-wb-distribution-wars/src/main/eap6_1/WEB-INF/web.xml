@@ -28,6 +28,10 @@
       <param-name>org.uberfire.auth.rememberme</param-name>
       <param-value>disabled</param-value>
     </init-param>
+    <init-param>
+      <param-name>org.uberfire.auth.force.url</param-name>
+      <param-value>/org.kie.workbench.KIEWebapp/KIEWebapp.html</param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>
@@ -35,6 +39,7 @@
     <url-pattern>/rest/*</url-pattern>
     <url-pattern>/maven2/*</url-pattern>
     <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
+    <url-pattern>*.erraiBus</url-pattern>
   </filter-mapping>
 
   <!-- UberFire servlets -->
