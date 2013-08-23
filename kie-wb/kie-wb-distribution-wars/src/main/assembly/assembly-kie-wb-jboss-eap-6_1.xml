@@ -118,6 +118,7 @@
           <!-- General -->
           <exclude>WEB-INF/lib/*-sources.jar</exclude>
           <exclude>WEB-INF/lib/el-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-el-api_*.jar</exclude>
           <exclude>WEB-INF/lib/xml-apis-*.jar</exclude>
 
           <!-- Errai -->
@@ -129,6 +130,7 @@
           <exclude>WEB-INF/lib/mail-*.jar</exclude>
           <exclude>WEB-INF/lib/geronimo-spec-jta-*.jar</exclude>
           <exclude>WEB-INF/lib/servlet-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-servlet-api_*.jar</exclude>
 
           <exclude>WEB-INF/lib/jcip-annotations-*.jar</exclude>
           <exclude>WEB-INF/lib/cal10n-api-*.jar</exclude>
@@ -181,7 +183,7 @@
           <exclude>WEB-INF/lib/jackson-xc-*.jar</exclude>
           <exclude>WEB-INF/lib/javassist-*.jar</exclude>
           <!-- <exclude>WEB-INF/lib/javax.inject-1*.jar</exclude>  ALREADY EXCLUDED-->
-          <exclude>WEB-INF/lib/jboss-ejb-api_3.1_spec-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-ejb-api_*.jar</exclude>
           <exclude>WEB-INF/lib/jcl-over-slf4j-*.jar</exclude>
           <exclude>WEB-INF/lib/jdom-*.jar</exclude>
           <exclude>WEB-INF/lib/jettison-*.jar</exclude>
@@ -224,7 +226,6 @@
           <exclude>WEB-INF/lib/jboss-remote-naming-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-remoting-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-sasl*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-servlet-api_3.0_spec*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-transaction-api_1.1_spec-*.jar</exclude>
           <exclude>WEB-INF/lib/jgroups-*.jar</exclude>
           <exclude>WEB-INF/lib/neethi-*.jar</exclude>
