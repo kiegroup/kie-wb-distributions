@@ -1,23 +1,8 @@
-<%--
-  ~ Copyright 2012 JBoss Inc
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~       http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Guvnor</title>
+  <title>jBPM Console NG</title>
 
   <style type="text/css">
     * {
@@ -142,11 +127,14 @@
 
 <div id="login-wrapper" class="png_bg">
   <div id="login-top">
-    <img src="<%=request.getContextPath()%>/images/kie-ide.png" alt="Logo" title="Powered By Uberfire"/>
+    <img src="<%=request.getContextPath()%>/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
   </div>
 
   <div id="login-content">
-    <h3><%=request.getParameter("message")==null?"":request.getParameter("message")%></h3>
+    <c:if test="${param.message != null}">
+      <h3><c:out value="${param.message}"/></h3>
+    </c:if>
+
     <form action="j_security_check" method="POST">
       <p>
         <label>Username</label>
@@ -161,8 +149,11 @@
       <br style="clear: both;"/>
 
       <p>
+        <input class="button" type="button" value="Help" onclick="alert('Users: kris/kris, tiho/tiho, salaboy/salaboy, maciej/maciej, marco/marco')"/>
+
         <input class="button" type="submit" value="Sign In"/>
       </p>
+
     </form>
   </div>
 </div>
