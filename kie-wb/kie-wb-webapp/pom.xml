@@ -121,7 +121,7 @@
     </dependency>
 
 
-      <!-- kie remote -->
+    <!-- kie remote -->
     <dependency>
       <groupId>org.kie.remote</groupId>
       <artifactId>kie-services-remote</artifactId>
@@ -305,7 +305,7 @@
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-project-editor-client</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-project-editor-backend</artifactId>
@@ -552,7 +552,7 @@
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-api</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-client-api</artifactId>
@@ -789,14 +789,19 @@
       <artifactId>jbpm-form-modeler-editor-backend</artifactId>
     </dependency>
 
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-form-provider</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-form-modeler-data-modeler</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-form-provider</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-data-modeler</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
 
   </dependencies>
 
@@ -864,7 +869,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
@@ -895,7 +900,7 @@
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-api</compileSourcesArtifact>>
             <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-client</compileSourcesArtifact>
 
-              <!-- Guvnor -->
+            <!-- Guvnor -->
             <compileSourcesArtifact>org.guvnor:guvnor-inbox-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-inbox-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-m2repo-editor-api</compileSourcesArtifact>
@@ -1039,7 +1044,6 @@
         </configuration>
       </plugin>
 
-    
 
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
