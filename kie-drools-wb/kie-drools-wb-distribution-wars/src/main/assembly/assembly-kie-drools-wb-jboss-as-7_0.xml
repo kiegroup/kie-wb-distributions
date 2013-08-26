@@ -121,6 +121,7 @@
           <exclude>WEB-INF/lib/geronimo-spec-jta-*.jar</exclude>
           <exclude>WEB-INF/lib/servlet-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-servlet-api_*.jar</exclude>
+          <exclude>WEB-INF/lib/jstl-*.jar</exclude>
 
           <exclude>WEB-INF/lib/jcip-annotations-*.jar</exclude>
           <exclude>WEB-INF/lib/cal10n-api-*.jar</exclude>
