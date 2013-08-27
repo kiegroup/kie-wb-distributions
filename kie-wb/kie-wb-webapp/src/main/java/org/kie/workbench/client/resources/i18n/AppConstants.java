@@ -122,8 +122,8 @@ public interface AppConstants
 
     String Jobs();
 
-    String MenuGroups();
+    String MenuOrganizationalUnits();
 
-    String MenuManageGroups();
+    String MenuManageOrganizationalUnits();
 
 }
