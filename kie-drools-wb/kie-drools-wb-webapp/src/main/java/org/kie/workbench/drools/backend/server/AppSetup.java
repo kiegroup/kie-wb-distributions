@@ -27,8 +27,8 @@ import javax.inject.Inject;
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
-import org.uberfire.backend.group.Group;
-import org.uberfire.backend.group.GroupService;
+import org.uberfire.backend.organizationalunit.OrganizationalUnit;
+import org.uberfire.backend.organizationalunit.OrganizationalUnitService;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
 import org.uberfire.backend.server.config.ConfigGroup;
@@ -57,7 +57,7 @@ public class AppSetup {
     private RepositoryService repositoryService;
 
     @Inject
-    private GroupService groupService;
+    private OrganizationalUnitService organizationalUnitService;
 
     @Inject
     private ConfigurationService configurationService;
@@ -68,7 +68,7 @@ public class AppSetup {
     @PostConstruct
     public void assertPlayground() {
 
-        if (!"false".equalsIgnoreCase(System.getProperty("org.kie.demo"))) {
+        if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
             Repository repository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
             if ( repository == null ) {
                 repository = repositoryService.createRepository( DROOLS_WB_PLAYGROUND_SCHEME,
@@ -80,14 +80,14 @@ public class AppSetup {
                                                                  }} );
             }
 
-            // TODO in case groups are not defined
-            Collection<Group> groups = groupService.getGroups();
-            if ( groups == null || groups.isEmpty() ) {
+            // TODO in case Organizational Units are not defined
+            Collection<OrganizationalUnit> organizationalUnits = organizationalUnitService.getOrganizationalUnits();
+            if ( organizationalUnits == null || organizationalUnits.isEmpty() ) {
                 List<Repository> repositories = new ArrayList<Repository>();
                 repositories.add( repository );
-                groupService.createGroup( "demo",
-                                          "demo@jbpm.org",
-                                          repositories );
+                organizationalUnitService.createOrganizationalUnit( "demo",
+                                                                    "demo@jbpm.org",
+                                                                    repositories );
             }
         }
         //Define mandatory properties
