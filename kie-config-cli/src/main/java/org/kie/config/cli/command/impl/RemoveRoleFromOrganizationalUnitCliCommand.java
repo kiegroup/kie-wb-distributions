@@ -12,7 +12,7 @@ public class RemoveRoleFromOrganizationalUnitCliCommand implements CliCommand {
 
     @Override
     public String getName() {
-        return "add-role-org-unit";
+        return "remove-role-org-unit";
     }
 
     @Override

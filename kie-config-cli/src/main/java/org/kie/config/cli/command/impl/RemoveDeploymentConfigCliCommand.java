@@ -27,7 +27,7 @@ public class RemoveDeploymentConfigCliCommand implements CliCommand {
 
 	@Override
 	public String getName() {
-		return "add-deployment";
+		return "remove-deployment";
 	}
 
 	@Override
