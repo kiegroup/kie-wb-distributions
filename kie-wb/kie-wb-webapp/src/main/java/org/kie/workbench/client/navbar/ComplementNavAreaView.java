@@ -18,6 +18,7 @@ package org.kie.workbench.client.navbar;
 
 import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.TextBox;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -31,12 +32,17 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RequiresResize;
+
 import javax.enterprise.event.Observes;
+
 import org.kie.workbench.client.resources.AppResource;
 import org.kie.workbench.common.widgets.client.search.ClearSearchEvent;
 import org.kie.workbench.common.widgets.client.search.ContextualSearch;
+import org.kie.workbench.common.widgets.client.search.SearchBehavior;
 import org.kie.workbench.common.widgets.client.search.SetSearchTextEvent;
+import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.widgets.menu.PespectiveContextMenusPresenter;
+import org.uberfire.mvp.impl.DefaultPlaceRequest;
 
 /**
  * A stand-alone (i.e. devoid of Workbench dependencies) View
@@ -56,15 +62,16 @@ public class ComplementNavAreaView
 
     @UiField
     public Button searchButton;
-    
+
     @UiField
     public TextBox searchTextBox;
-   
-    
+
     @Inject
     private ContextualSearch contextualSearch;
-    
-    
+
+    @Inject
+    private PlaceManager placeManager;
+
     @UiField
     public FlowPanel contextMenuArea;
 
@@ -75,6 +82,12 @@ public class ComplementNavAreaView
     public void init() {
         initWidget( uiBinder.createAndBindUi( this ) );
         contextMenuArea.add( contextMenu.getView() );
+        contextualSearch.setDefaultSearchBehavior( new SearchBehavior() {
+            @Override
+            public void execute( final String term ) {
+                placeManager.goTo( new DefaultPlaceRequest( "FullTextSearchForm" ).addParameter( "term", term ) );
+            }
+        } );
     }
 
     @Override
@@ -83,19 +96,18 @@ public class ComplementNavAreaView
         int width = getParent().getOffsetWidth();
 //        panel.setPixelSize( width, height );
     }
-    
-      
+
     @UiHandler("searchButton")
-    public void search(ClickEvent e){
-        contextualSearch.getSearchBehavior().execute(searchTextBox.getText());
+    public void search( ClickEvent e ) {
+        contextualSearch.getSearchBehavior().execute( searchTextBox.getText() );
     }
-    
-    public void onClearSearchBox(@Observes ClearSearchEvent clearSearch){
-        searchTextBox.setText("");
+
+    public void onClearSearchBox( @Observes ClearSearchEvent clearSearch ) {
+        searchTextBox.setText( "" );
     }
-    
-    public void onSetSearchText(@Observes SetSearchTextEvent setSearchText){
-        searchTextBox.setText(setSearchText.getSearchText());
+
+    public void onSetSearchText( @Observes SetSearchTextEvent setSearchText ) {
+        searchTextBox.setText( setSearchText.getSearchText() );
     }
 
 }

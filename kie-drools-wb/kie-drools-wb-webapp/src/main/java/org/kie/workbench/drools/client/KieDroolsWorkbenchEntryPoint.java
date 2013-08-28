@@ -75,7 +75,7 @@ public class KieDroolsWorkbenchEntryPoint {
 
     @Inject
     private ActivityManager activityManager;
-    
+
     @Inject
     private Identity identity;
 
@@ -126,7 +126,7 @@ public class KieDroolsWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( constants.User() +": "+ identity.getName() )
+                .newTopLevelMenu( constants.User() + ": " + identity.getName() )
                 .position( MenuPosition.RIGHT )
                 .withItems( getRoles() )
                 .endMenu()
@@ -134,20 +134,20 @@ public class KieDroolsWorkbenchEntryPoint {
 
         menubar.addMenus( menus );
     }
-    
-     private List<? extends MenuItem> getRoles() {
+
+    private List<? extends MenuItem> getRoles() {
         final List<MenuItem> result = new ArrayList<MenuItem>( identity.getRoles().size() );
         for ( final Role role : identity.getRoles() ) {
-            if(!role.getName().equals("IS_REMEMBER_ME")){
-                result.add( MenuFactory.newSimpleItem( constants.Role() +": " + role.getName() ).endMenu().build().getItems().get( 0 ) );
+            if ( !role.getName().equals( "IS_REMEMBER_ME" ) ) {
+                result.add( MenuFactory.newSimpleItem( constants.Role() + ": " + role.getName() ).endMenu().build().getItems().get( 0 ) );
             }
         }
-        result.add(MenuFactory.newSimpleItem(constants.LogOut()).respondsWith(new Command() {
-                    @Override
-                    public void execute() {
-                        redirect(GWT.getModuleBaseURL() + "uf_logout");
-                    }
-                }).endMenu().build().getItems().get(0));
+        result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                redirect( GWT.getModuleBaseURL() + "uf_logout" );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
