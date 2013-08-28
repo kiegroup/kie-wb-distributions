@@ -22,7 +22,7 @@ import javax.inject.Inject;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
-import org.jboss.errai.ioc.client.container.IOCBeanManager;
+import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.annotations.Perspective;
@@ -67,7 +67,7 @@ public class AdministrationPerspective {
     private PlaceManager placeManager;
 
     @Inject
-    private IOCBeanManager iocManager;
+    private SyncBeanManager iocManager;
 
     private Command newRepoCommand = null;
     private Command cloneRepoCommand = null;
