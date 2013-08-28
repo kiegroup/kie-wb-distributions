@@ -28,26 +28,26 @@ public class HelpCliCommand implements CliCommand {
 	@Override
 	public String execute(CliContext context) {
 		StringBuffer helpMessage = new StringBuffer();
-		helpMessage.append("****************** KIE Cli Help ************************\n");
+		helpMessage.append("****************** KIE CLI Help ************************\n");
 		helpMessage.append("********************************************************\n");
 		helpMessage.append("Available commands:\n");
 		helpMessage.append("\t exit - quits this command line tool\n");
 		helpMessage.append("\t help - prints this message\n");
 		helpMessage.append("\t list-repo - list available repositories\n");
-		helpMessage.append("\t list-group - list available groups\n");
+		helpMessage.append("\t list-org-units - list available organizational units\n");
 		helpMessage.append("\t list-deployment - list available deployments\n");
-		helpMessage.append("\t create-group - creates new group\n");
-		helpMessage.append("\t remove-group - remove existing group\n");
+		helpMessage.append("\t create-org-unit - creates new organizational unit\n");
+		helpMessage.append("\t remove-org-unit - remove existing organizational unit\n");
 		helpMessage.append("\t add-deployment - add new deployment unit\n");
 		helpMessage.append("\t remove-deployment - remove existing deployment\n");
 		helpMessage.append("\t create-repo - creates new git repository\n");
 		helpMessage.append("\t remove-repo - remove existing repository from config only\n");
-		helpMessage.append("\t add-repo-group - add repository to the group\n");
-		helpMessage.append("\t remove-repo-group - remove repository from the group\n");
+		helpMessage.append("\t add-repo-org-unit - add repository to the organizational unit\n");
+		helpMessage.append("\t remove-repo-org-unit - remove repository from the organizational unit\n");
 		helpMessage.append("\t add-role-repo - add role(s) to repository\n");
 		helpMessage.append("\t remove-role-repo - remove role(s) from repository\n");
-		helpMessage.append("\t add-role-group - add role(s) to group\n");
-		helpMessage.append("\t remove-role-group - remove role(s) from group\n");
+		helpMessage.append("\t add-role-org-unit - add role(s) to organizational unit\n");
+		helpMessage.append("\t remove-role-org-unit - remove role(s) from organizational unit\n");
         helpMessage.append("\t add-role-project - add role(s) to project\n");
         helpMessage.append("\t remove-role-project - remove role(s) from project\n");
 		return helpMessage.toString();
