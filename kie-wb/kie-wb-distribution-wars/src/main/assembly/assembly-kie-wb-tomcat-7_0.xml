@@ -25,6 +25,9 @@
         <include>org.jboss.resteasy:jaxrs-api</include>
         <include>org.jboss.resteasy:resteasy-jaxrs</include>
         <include>org.jboss.resteasy:resteasy-cdi</include>
+        <include>org.hibernate:hibernate-entitymanager</include>
+        <include>org.hibernate:hibernate-core</include>
+        <include>org.hibernate:hibernate-validator</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
