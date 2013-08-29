@@ -470,6 +470,16 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </auth-constraint>
   </security-constraint>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>formModeler</web-resource-name>
+            <url-pattern>/formModeler/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>kie-user</role-name>
+        </auth-constraint>
+    </security-constraint>
+
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
