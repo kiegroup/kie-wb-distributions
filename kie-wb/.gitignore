@@ -1,5 +1,6 @@
 /target
 /local
+/overlays
 
 # Eclipse, Netbeans and IntelliJ files
 /.*
