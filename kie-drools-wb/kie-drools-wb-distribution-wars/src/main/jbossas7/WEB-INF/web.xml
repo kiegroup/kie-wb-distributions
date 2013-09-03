@@ -440,6 +440,18 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   </mime-mapping>
   <!-- END DESIGNER -->
 
+    <!-- start form-modeler -->
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/Controller</url-pattern>
+    </servlet-mapping>
+    <!-- end form-modeler-->
+
   <!-- security settings -->
   <security-constraint>
     <web-resource-collection>
@@ -450,6 +462,16 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <role-name>kie-user</role-name>
     </auth-constraint>
   </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>formModeler</web-resource-name>
+            <url-pattern>/formModeler/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>kie-user</role-name>
+        </auth-constraint>
+    </security-constraint>
 
   <login-config>
     <auth-method>FORM</auth-method>
