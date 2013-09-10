@@ -1,0 +1,4 @@
+module.name=org.junit
+module.layer=bpms
+module.type=static
+module.location=org/junit

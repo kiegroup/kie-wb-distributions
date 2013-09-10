@@ -1,0 +1,680 @@
+<!--
+
+ANT JBoss EAP dnyamic module generation file.
+
+Generates the jboss-deployment-structure.xml definition file and the assembly for a dynamic module.
+
+
+INPUT parameters:
+- classpath-ref -> The classpath reference to obtain antcontrib distribution jars.
+- module-name -> The dynamic module name to create all stuff.
+- static-modules-list-file -> The path where generating module.list file is located
+- eap-configuration-file -> The path for the EAP configuration properties.
+- dynamic-modules-source-path -> The source forlder where all module descriptors, module dependencies and modules.list files are located.
+- dynamic-modules-output-path -> The output path where generating all modules stuff.
+- dynamic-module-assembly-war-source -> The source "skinny" war for assembly descriptor.
+- dynamic-module-assembly-output-file -> The path where generating the dynamic module assembly descriptor..
+- templates.path -> The source forlder where all templates are located.
+- patches.path -> The source forlder where all patch files are located.
+
+OUTPUT:
+- Generates a filesystem structure:
+    - <modules-output-path>
+        - <module_name>
+            - <dynamic-module-assembly-output-file>
+            - jboss-deployment-structure.xml
+            - web.xml
+            - META-INF (optional - if CDI extensions patch is enabled)
+-->
+
+<project name="build-dynamic-module" xmlns:ac="net.sf.antcontrib" default="main" basedir="../">
+
+    <!--<property name="project.lib.path" value="${basedir}${file.separator}..${file.separator}..${file.separator}..${file.separator}lib${file.separator}"/>
+    <path id="ant-contrib.path">
+        <fileset dir="${project.lib.path}">
+            <include name="ant-contrib-1.0b3.jar"/>
+        </fileset>
+    </path>
+    <taskdef uri="net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpathref="ant-contrib.path" />-->
+
+
+    <path id="ant-contrib.path">
+        <fileset dir="${antcontrib-classpath}">
+            <include name="ant-contrib-1.0b3.jar"/>
+        </fileset>
+    </path>
+    <taskdef uri="net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpathref="ant-contrib.path" />
+
+    <!-- Common utilities. -->
+    <import file="build-utils.xml"/>
+
+    <!-- EAP configuration utils. -->
+    <import file="build-eap-utils.xml"/>
+
+    <property name="modules.source.path" value="${dynamic-modules-source-path}${file.separator}"/>
+    <property name="modules.list.file.path" value="${static-modules-list-file}"/>
+    <property name="modules.output.path" value="${dynamic-modules-output-path}${file.separator}"/>
+    <property name="module.assembly.output.path" value="${dynamic-module-assembly-output-file}"/>
+    <property name="module.assembly.war.source" value="${dynamic-module-assembly-war-source}"/>
+
+    <property name="module.jboss-deployment-structure.output.path" value="${modules.output.path}${module-name}${file.separator}jboss-deployment-structure.xml"/>
+    <property name="module.web-xml.output.path" value="${modules.output.path}${module-name}${file.separator}web.xml"/>
+
+
+    <property name="templates.source.path" value="${templates.path}"/>
+    <property name="templates.module.assembly.file.path" value="${templates.source.path}${file.separator}assembly-eap-dynamic-module.template"/>
+    <property name="templates.module.assembly-file.file.path" value="${templates.source.path}${file.separator}assembly-file.template"/>
+    <property name="templates.module.jboss-deployment-structure.file.path" value="${templates.source.path}${file.separator}jboss-deployment-structure.template"/>
+    <property name="templates.module.assembly-file-set.file.path" value="${templates.source.path}${file.separator}assembly-file-set.template"/>
+
+    <property name="patches.source.path" value="${patches.path}${file.separator}"/>
+    <property name="patches.cdi-extensions.source.path" value="${patches.source.path}cdi-extensions${file.separator}"/>
+    <property name="patches.webfragments.source.path" value="${patches.source.path}webfragments${file.separator}"/>
+
+
+    <!-- Cleans output path -->
+    <target name="clean">
+        <delete includeemptydirs="true" verbose="false" failonerror="false">
+            <fileset dir="${modules.output.path}${module-name}"/>
+        </delete>
+    </target>
+
+    <!-- Generates the modules stuff. -->
+    <target name="main" depends="clean">
+
+        <!-- Read module definition file. -->
+        <property name="module.file" value="${modules.source.path}${module-name}.module"/>
+        <fail message="Module '${module-name}' definition file not found at path ${module.file}.">
+            <condition>
+                <not>
+                    <available file="${module.file}"/>
+                </not>
+            </condition>
+        </fail>
+        <!-- Read module properties. -->
+        <property file="${module.file}"/>
+
+        <!-- Read EAP version configuration properties. -->
+        <eap-configuration-properties eap-config-file="${eap-configuration-file}">
+            <eap-configuration-property-result>
+                <property name="eap.configuration.modules.list.path" value="@{modules-list-file}"/>
+                <property name="eap.configuration.patch.cdi-extensions" value="@{patch-cdi-extensions}"/>
+                <property name="eap.configuration.patch.webfragments" value="@{patch-webfragments}"/>
+            </eap-configuration-property-result>
+        </eap-configuration-properties>
+
+
+        <ac:if>
+            <ac:equals arg1="${module.type}" arg2="dynamic"/>
+            <ac:then>
+
+                <echo level="info">Creating dynamic module ${module.name}...</echo>
+
+                <!-- Check if there are cdi extensions patches enabled. -->
+                <ac:if>
+                    <and>
+                        <isset property="module.patches.cdi-extensions"/>
+                        <equals arg1="${eap.configuration.patch.cdi-extensions}" arg2="true"/>
+                    </and>
+                    <ac:then>
+                        <property name="module.patches.cdi-extensions.value" value="${module.patches.cdi-extensions}"/>
+                    </ac:then>
+                    <ac:else>
+                        <property name="module.patches.cdi-extensions.value" value=""/>
+                    </ac:else>
+                </ac:if>
+
+                <!-- Check if there are webfragments patches enabled. -->
+                <ac:if>
+                    <and>
+                        <isset property="module.patches.webfragments"/>
+                        <equals arg1="${eap.configuration.patch.webfragments}" arg2="true"/>
+                    </and>
+                    <ac:then>
+                        <property name="module.patches.webfragments.value" value="${module.patches.webfragments}"/>
+                    </ac:then>
+                    <ac:else>
+                        <property name="module.patches.webfragments.value" value=""/>
+                    </ac:else>
+                </ac:if>
+
+                <!-- Check if there are unrequired resources. -->
+                <ac:if>
+                    <isset property="module.resources.unrequired"/>
+                    <ac:then>
+                        <property name="module.resources.unrequired.value" value="${module.resources.unrequired}"/>
+                    </ac:then>
+                    <ac:else>
+                        <property name="module.resources.unrequired.value" value=""/>
+                    </ac:else>
+                </ac:if>
+
+                <!-- Create the temp files.. -->
+                <tempfile destdir="${java.io.tmpdir}"
+                          property="module.assembly.dependency-set.exludes.path" createfile="true" deleteonexit="true" suffix="dependency-set-exludes"/>
+                <tempfile destdir="${java.io.tmpdir}"
+                          property="module.assembly.file-set.includes.path" createfile="true" deleteonexit="true" suffix="file-set-exludes"/>
+                <tempfile destdir="${java.io.tmpdir}"
+                          property="module.assembly.file.includes.path" createfile="true" deleteonexit="true" suffix="file--exludes"/>
+
+                <!-- Clean temp files content. -->
+                <echo file="${module.assembly.dependency-set.exludes.path}"></echo>
+                <echo file="${module.assembly.file-set.includes.path}"></echo>
+                <echo file="${module.assembly.file.includes.path}"></echo>
+
+                <!-- Create the exlusions for dependency-set. -->
+                <antcall target="create-dependency-set-excludes">
+                    <param name="module-name" value="${module.name}"/>
+                    <param name="module-resources-unrequired" value="${module.resources.unrequired.value}"/>
+                    <param name="module-patches-webfragments" value="${module.patches.webfragments.value}"/>
+                    <param name="file-name" value="${module.assembly.dependency-set.exludes.path}"/>
+                </antcall>
+
+                <!--  Generate the cdi-extensions output.-->
+                <antcall target="create-cdi-extensions">
+                    <param name="module-name" value="${module.name}"/>
+                    <param name="module-patches-cdi-extensions" value="${module.patches.cdi-extensions.value}"/>
+                    <param name="file-name" value="${module.assembly.file-set.includes.path}"/>
+                </antcall>
+
+                <!-- Create the cdi extensions inclusions for the generated assembly descripttor. -->
+                <ac:if>
+                    <isset property="module.patches.cdi-extensions"/>
+                    <ac:then>
+                        <antcall target="create-file-set-inclusion">
+                            <param name="file-name" value="${module.assembly.file-set.includes.path}"/>
+                            <param name="directory" value="${modules.output.path}${module.name}${file.separator}META-INF${file.separator}services${file.separator}"/>
+                            <param name="output-directory" value="META-INF/services"/>
+                            <param name="include" value="*"/>
+                        </antcall>
+                    </ac:then>
+                </ac:if>
+
+                <!-- Generate the jboss-deployment-structure descriptor file. -->
+                <antcall target="create-jboss-deployment-structure">
+                    <param name="module-name" value="${module.name}"/>
+                </antcall>
+
+                <!-- Generate the web.xml descriptor file. -->
+                <antcall target="create-deployment-descriptor">
+                    <param name="module-name" value="${module.name}"/>
+                    <param name="module-patches-webfragments" value="${module.patches.webfragments.value}"/>
+                </antcall>
+
+                <!--  Generate the inclusions for other files.-->
+                <antcall target="create-file-includes">
+                    <param name="module-name" value="${module.name}"/>
+                    <param name="module-patches-webfragments" value="${module.patches.webfragments.value}"/>
+                    <param name="file-name" value="${module.assembly.file.includes.path}"/>
+                </antcall>
+
+
+                <!-- Load content from temp files. -->
+                <loadfile property="module.assembly.dependency-set.exludes.content"
+                          srcFile="${module.assembly.dependency-set.exludes.path}"
+                          encoding="UTF-8" quiet="true"/>
+
+                <loadfile property="module.assembly.file-set.includes.content"
+                          srcFile="${module.assembly.file-set.includes.path}"
+                          encoding="UTF-8" quiet="true"/>
+
+                <loadfile property="module.assembly.file.includes.content"
+                          srcFile="${module.assembly.file.includes.path}"
+                          encoding="UTF-8" quiet="true"/>
+
+                <!-- Generate the final assembly descriptor file.. -->
+                <build-from-template-file template-file="${templates.module.assembly.file.path}">
+                    <template-file-params>
+                        <param type="token" name="FILES" value="${module.assembly.file.includes.content}"/>
+                        <param type="token" name="FILE_SETS" value="${module.assembly.file-set.includes.content}"/>
+                        <param type="token" name="DEPENDENCY_SET_EXCLUDES" value="${module.assembly.dependency-set.exludes.content}"/>
+                        <param type="token" name="DEPENDENCY_SET_INCLUDE" value="${module.assembly.war.source}"/>
+                        <param type="token" name="ASSEMBLY_FORMAT" value="war"/>
+                        <param type="token" name="ASSEMBLY_ID" value="${module.name}-eap-modules"/>
+                    </template-file-params>
+                    <template-file-result>
+                        <property name="module.assembly.output.content" value="@{template-content}"/>
+                    </template-file-result>
+                </build-from-template-file>
+
+                <echo file="${module.assembly.output.path}">${module.assembly.output.content}</echo>
+
+            </ac:then>
+            <ac:else>
+                <fail message="Module ${module.name} is not dynamic."/>
+            </ac:else>
+        </ac:if>
+
+    </target>
+
+    <!-- Generate the deployment descriptor (web.xml).
+
+       Input parameteres:
+       - module-name
+       - module-patches-webfragments
+   -->
+    <target name="create-deployment-descriptor">
+
+        <condition property="module-patches-webfragments.is-set">
+            <not>
+                <equals arg1="${module-patches-webfragments}" arg2=""/>
+            </not>
+        </condition>
+        <ac:if>
+            <ac:equals arg1="${module-patches-webfragments.is-set}" arg2="true"/>
+            <ac:then>
+                <copy file="${patches.webfragments.source.path}${module-patches-webfragments}" tofile="${module.web-xml.output.path}"/>
+            </ac:then>
+        </ac:if>
+
+    </target>
+
+    <!-- Generate the jboss-deployment-structure descriptor..
+
+       Input parameteres:
+       - module-name
+   -->
+    <target name="create-jboss-deployment-structure">
+        <!-- Create the temp files.. -->
+        <tempfile destdir="${java.io.tmpdir}"
+                  property="module.jboss-deployment-structure.modules.tmp.path" createfile="true" deleteonexit="true" suffix="jboss-deployment-structure-modules"/>
+
+        <!-- Clean temp files content. -->
+        <echo file="${module.jboss-deployment-structure.modules.tmp.path}"></echo>
+
+
+        <!-- Generated the module dependencies section. -->
+        <property name="module.dependencies.file" value="${modules.source.path}${file.separator}${module-name}.dependencies"/>
+        <fail message="Module '${module-name}' dependencies file not found at path ${module.dependencies.file}.">
+            <condition>
+                <not>
+                    <available file="${module.dependencies.file}"/>
+                </not>
+            </condition>
+        </fail>
+
+        <loadfile property="modules.dependencies.file.content" srcfile="${module.dependencies.file}"/>
+        <ac:for param="dependency" list="${modules.dependencies.file.content}" delimiter="${line.separator}">
+            <ac:sequential>
+                <!-- Generates the modules to include in jboss-deployment-structure. -->
+                <antcall target="create-jboss-deployment-structure-module">
+                    <param name="dependency-name" value="@{dependency}"/>
+                    <param name="dependency-export" value="true"/>
+                    <param name="dependency-meta-inf" value="import"/>
+                    <param name="file-name" value="${module.jboss-deployment-structure.modules.tmp.path}"/>
+                </antcall>
+            </ac:sequential>
+        </ac:for>
+
+        <!-- Generate the final jboss-deployment-structure.xml.. -->
+        <loadfile property="module.jboss-deployment-structure.modules.tmp.content"
+                  srcFile="${module.jboss-deployment-structure.modules.tmp.path}"
+                  encoding="UTF-8" quiet="true"/>
+
+        <build-from-template-file template-file="${templates.module.jboss-deployment-structure.file.path}">
+            <template-file-params>
+                <param type="token" name="DEPENDENCIES" value="${module.jboss-deployment-structure.modules.tmp.content}"/>
+            </template-file-params>
+            <template-file-result>
+                <property name="module.jboss-deployment-structure.output.content" value="@{template-content}"/>
+            </template-file-result>
+        </build-from-template-file>
+
+        <echo file="${module.jboss-deployment-structure.output.path}">${module.jboss-deployment-structure.output.content}</echo>
+
+    </target>
+
+    <!-- Generate the inclusions files sections..
+
+        The necessary inclusions are:
+        - jboss-deployment-structure.xml (Will be re-generated)
+        - web.xml (If webfragments patch is required)
+
+       Input parameteres:
+       - module-name
+       - module-patches-webfragments
+       - file-name
+   -->
+    <target name="create-file-includes">
+
+        <!-- Generate the inclusion for generated jboss-deployment-structure.xml. -->
+        <antcall target="create-file-inclusion">
+            <param name="file-name" value="${file-name}"/>
+            <param name="file-source" value="${module.jboss-deployment-structure.output.path}"/>
+            <param name="file-output-dir" value="WEB-INF"/>
+            <param name="file-dest-name" value="jboss-deployment-structure.xml"/>
+        </antcall>
+
+        <!-- Generate the inclusion for generated web.xml. -->
+        <condition property="module-patches-webfragments.is-set">
+            <not>
+                <equals arg1="${module-patches-webfragments}" arg2=""/>
+            </not>
+        </condition>
+        <ac:if>
+            <ac:equals arg1="${module-patches-webfragments.is-set}" arg2="true"/>
+            <ac:then>
+                <antcall target="create-file-inclusion">
+                    <param name="file-name" value="${file-name}"/>
+                    <param name="file-source" value="${module.web-xml.output.path}"/>
+                    <param name="file-output-dir" value="WEB-INF"/>
+                    <param name="file-dest-name" value="web.xml"/>
+                </antcall>
+            </ac:then>
+        </ac:if>
+
+    </target>
+
+
+    <!-- Generate the CDI extensions output..
+        - Copy the cdi extensions to META-INF/services of the webapp.
+        - Merge all SPI extensions from patches source path into <code>javax.enterprise.inject.spi.Extension</code> file.
+
+       Input parameteres:
+       - module-name
+       - module-patches-cdi-extensions
+       - file-name
+   -->
+    <target name="create-cdi-extensions">
+
+        <condition property="module-patches-cdi-extensions.is-set">
+            <not>
+                <equals arg1="${module-patches-cdi-extensions}" arg2=""/>
+            </not>
+        </condition>
+        <ac:if>
+            <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
+            <ac:then>
+
+                <!-- The path for javax.enterprise.inject.spi.Extension generated file. -->
+                <property name="patches.cdi-extensions.output.path" value="${modules.output.path}${module-name}${file.separator}META-INF${file.separator}services${file.separator}"/>
+                <property name="module.patches.cdi-extensions.spi-file.output.path" value="${patches.cdi-extensions.output.path}javax.enterprise.inject.spi.Extension"/>
+
+                <ac:for param="cdi-extension" list="${module-patches-cdi-extensions}" delimiter=",">
+                    <ac:sequential>
+
+                        <copy todir="${patches.cdi-extensions.output.path}">
+                            <fileset dir="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}">
+                                <exclude name="**/javax.enterprise.inject.spi.Extension"/>
+                            </fileset>
+                        </copy>
+
+
+                        <ac:if>
+                            <available file="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
+                            <ac:then>
+                                <antcall target="append-cdi-extension-spi-file">
+                                    <param name="source-file" value="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
+                                    <param name="dest-file" value="${module.patches.cdi-extensions.spi-file.output.path}"/>
+                                </antcall>
+                            </ac:then>
+                        </ac:if>
+
+                    </ac:sequential>
+                </ac:for>
+            </ac:then>
+        </ac:if>
+
+    </target>
+
+    <!-- Append the content for javax.enterprise.inject.spi.Extension generated file.
+
+      Input parameteres:
+      - source-file
+      - dest-file
+  -->
+    <target name="append-cdi-extension-spi-file">
+
+        <loadfile property="cdi-extension.spi-file.source.content"
+                  srcFile="${source-file}"
+                  encoding="UTF-8" failonerror="true"/>
+
+        <echo file="${dest-file}" append="true">${cdi-extension.spi-file.source.content}</echo>
+        <echo file="${dest-file}" append="true">${line.separator}</echo>
+
+    </target>
+
+
+    <!-- Generate the inclusions for the file-set.
+        This is used when is necessary to fix CDI extension to EAP.
+
+        The necessary inclusions are:
+        - CDI Extensions (if required).
+
+       Input parameteres:
+       - module-name
+       - module-patches-cdi-extensions
+       - directory
+       - output
+       - file-name
+   -->
+    <target name="create-file-set-includes">
+
+        <condition property="module-patches-cdi-extensions.is-set">
+            <not>
+                <equals arg1="${module-patches-cdi-extensions}" arg2=""/>
+            </not>
+        </condition>
+        <ac:if>
+            <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
+            <ac:then>
+                <ac:for param="cdi-extension" list="${module-patches-cdi-extensions}" delimiter=",">
+                    <ac:sequential>
+                        <antcall target="create-file-set-inclusion">
+                            <param name="file-name" value="${file-name}"/>
+                            <param name="directory" value="${directory}"/>
+                            <param name="output-directory" value="${output}"/>
+                            <param name="include" value="*"/>
+                        </antcall>
+                    </ac:sequential>
+                </ac:for>
+            </ac:then>
+        </ac:if>
+
+    </target>
+
+    <!-- Generate the excludes for the skinny war.
+
+        The necessary exclusions for depedency-set are:
+        - Unrequired libs (module.resources.unrequired)
+        - Resources used by static modules.
+        - jboss-deployment-structure.xml (Will be re-generated)
+        - web.xml (If webfragments patch is required)
+
+       Input parameteres:
+       - module-name
+       - module-resources-unrequired
+       - module-patches-webfragments
+       - file-name
+   -->
+    <target name="create-dependency-set-excludes">
+
+        <!-- Create the excludes for unrequired libs. -->
+        <condition property="module-resources-unrequired.is-set">
+            <not>
+                <equals arg1="${module-resources-unrequired}" arg2=""/>
+            </not>
+        </condition>
+        <ac:if>
+            <ac:equals arg1="${module-resources-unrequired.is-set}" arg2="true"/>
+            <ac:then>
+                <ac:for param="resource" list="${module-resources-unrequired}" delimiter=",">
+                    <ac:sequential>
+                        <antcall target="create-dependency-set-exclude">
+                            <param name="resource-name" value="${@{resource}}"/>
+                            <param name="resource-name-preffix" value="WEB-INF${file.separator}lib${file.separator}"/>
+                            <param name="file-name" value="${file-name}"/>
+                        </antcall>
+                    </ac:sequential>
+                </ac:for>
+            </ac:then>
+        </ac:if>
+
+        <!-- Create the excludes for static modules resources. -->
+        <loadfile property="modules.list.file.content" srcfile="${modules.list.file.path}"/>
+        <ac:for param="static-module-name" list="${modules.list.file.content}" delimiter="${line.separator}">
+            <ac:sequential>
+                <antcall target="create-static-module-dependency-set-excludes">
+                    <param name="module-name" value="@{static-module-name}"/>
+                    <param name="file-name" value="${file-name}"/>
+                </antcall>
+            </ac:sequential>
+        </ac:for>
+
+        <!-- Create the exclude for jboss-deployment-structure.xml. -->
+        <antcall target="create-dependency-set-exclude">
+            <param name="resource-name" value="jboss-deployment-structure.xml"/>
+            <param name="resource-name-preffix" value="WEB-INF${file.separator}"/>
+            <param name="file-name" value="${file-name}"/>
+        </antcall>
+
+        <!-- Create the exclude for web.xml. (if is required for patch). -->
+        <condition property="module-patches-webfragments.is-set">
+            <not>
+                <equals arg1="${module-patches-webfragments}" arg2=""/>
+            </not>
+        </condition>
+        <ac:if>
+            <ac:equals arg1="${module-patches-webfragments.is-set}" arg2="true"/>
+            <ac:then>
+                <antcall target="create-dependency-set-exclude">
+                    <param name="resource-name" value="web.xml"/>
+                    <param name="resource-name-preffix" value="WEB-INF${file.separator}"/>
+                    <param name="file-name" value="${file-name}"/>
+                </antcall>
+            </ac:then>
+        </ac:if>
+
+    </target>
+
+    <!-- Generates the resources to exclude for each static module..
+        Input parameteres:
+        - module-name
+        - file-name
+    -->
+    <target name="create-static-module-dependency-set-excludes">
+        <!-- Read module definition file. -->
+        <property name="module.list.file" value="${modules.source.path}${module-name}.module"/>
+
+        <fail message="Module '${module-name}' definition file not found at path ${module.list.file}.">
+            <condition>
+                <not>
+                    <available file="${module.list.file}"/>
+                </not>
+            </condition>
+        </fail>
+        <!-- Read module properties. -->
+        <property file="${module.list.file}" prefix="static."/>
+
+        <!-- Property module-name is required. -->
+        <fail message="Property module.type is missing or has no value.">
+            <condition>
+                <not>
+                    <isset property="static.module.type"/>
+                </not>
+            </condition>
+        </fail>
+
+        <!-- Create the exclusion entry for each module resource. -->
+        <ac:if>
+        <ac:equals arg1="${static.module.type}" arg2="static"/>
+            <ac:then>
+                <loadfile property="module.resources.file.content" srcfile="${modules.source.path}${module-name}.resources" failonerror="true"/>
+                <ac:for param="resource" list="${module.resources.file.content}" delimiter="${line.separator}">
+                    <ac:sequential>
+                        <antcall target="create-dependency-set-exclude">
+                            <param name="resource-name" value="${@{resource}}"/>
+                            <param name="resource-name-preffix" value="WEB-INF${file.separator}lib${file.separator}"/>
+                            <param name="file-name" value="${file-name}"/>
+                        </antcall>
+                    </ac:sequential>
+                </ac:for>
+            </ac:then>
+        </ac:if>
+    </target>
+
+    <!-- Generates file inclusion.
+
+        Input parameteres:
+        - file-name -> The file name where putting the result.
+        - file-source
+        - file-output-dir
+        - file-dest-name
+    -->
+    <target name="create-file-inclusion">
+        <build-from-template-file template-file="${templates.module.assembly-file.file.path}">
+            <template-file-params>
+                <param type="token" name="FILE_SOURCE" value="${file-source}"/>
+                <param type="token" name="FILE_OUTPUT_DIR" value="${file-output-dir}"/>
+                <param type="token" name="FILE_DEST_NAME" value="${file-dest-name}"/>
+            </template-file-params>
+            <template-file-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-file-result>
+        </build-from-template-file>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates file-set inclusion.
+
+        Input parameteres:
+        - file-name -> The file name where putting the result.
+        - directory
+        - output-directory
+        - include
+    -->
+    <target name="create-file-set-inclusion">
+        <build-from-template-file template-file="${templates.module.assembly-file-set.file.path}">
+            <template-file-params>
+                <param type="token" name="FILESET_DIRECTORY" value="${directory}"/>
+                <param type="token" name="FILESET_OUTPUT_DIRECTORY" value="${output-directory}"/>
+                <param type="token" name="FILESET_INCLUDE" value="${include}"/>
+            </template-file-params>
+            <template-file-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-file-result>
+        </build-from-template-file>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates the resource to exclude..
+        Input parameteres:
+        - resource-name
+        - resource-name-preffix
+        - file-name
+    -->
+    <target name="create-dependency-set-exclude">
+        <basename property="resource-file-name" file="${resource-name}"/>
+        <build-from-template-property template-property="dependency-set.exclude">
+            <template-prop-params>
+                <param type="token" name="DEPENDENCY" value="${resource-name-preffix}${resource-file-name}"/>
+            </template-prop-params>
+            <template-prop-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-prop-result>
+        </build-from-template-property>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates the modules to include in jboss-deployment-structure....
+        Input parameteres:
+        - dependency-name
+        - dependency-export
+        - dependency-meta-inf
+        - file-name
+    -->
+    <target name="create-jboss-deployment-structure-module">
+        <build-from-template-property template-property="jboss-deployment-structure-module">
+            <template-prop-params>
+                <param type="token" name="MODULE_NAME" value="${dependency-name}"/>
+                <param type="token" name="EXPORT" value="${dependency-export}"/>
+                <param type="token" name="META-INF" value="${dependency-meta-inf}"/>
+            </template-prop-params>
+            <template-prop-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-prop-result>
+        </build-from-template-property>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+</project>

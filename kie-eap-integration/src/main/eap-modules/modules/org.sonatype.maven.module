@@ -1,0 +1,4 @@
+module.name=org.sonatype.maven
+module.layer=bpms
+module.type=static
+module.location=org/sonatype/maven

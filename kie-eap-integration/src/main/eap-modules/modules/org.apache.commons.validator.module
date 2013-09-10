@@ -1,0 +1,4 @@
+module.name=org.apache.commons.validator
+module.layer=bpms
+module.type=static
+module.location=org/apache/commons/validator

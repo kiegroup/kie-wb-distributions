@@ -1,0 +1,4 @@
+module.name=org.apache.commons.fileupload
+module.layer=bpms
+module.type=static
+module.location=org/apache/commons/fileupload

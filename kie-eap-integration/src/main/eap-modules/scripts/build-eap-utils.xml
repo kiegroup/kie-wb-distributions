@@ -1,0 +1,74 @@
+<!--
+INPUT parameters:
+- classpath-ref -> The classpath reference to obtain antcontrib distribution jars.
+-->
+<project name="build-eap-utils" xmlns:ac="net.sf.antcontrib" basedir="../">
+
+    <!--<path id="classpath">
+        <pathelement path="${classpath-ref}"/>
+    </path>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="classpath"/>-->
+
+    <path id="ant-contrib.path">
+        <fileset dir="${antcontrib-classpath}">
+            <include name="ant-contrib-1.0b3.jar"/>
+        </fileset>
+    </path>
+    <taskdef uri="net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpathref="ant-contrib.path" />
+
+    <!-- Gets aall EAP configuration properties.
+        Input parameters:
+        - eap-config-file
+        - eap-configuration-property-result
+
+        Output properties for <code>eap-configuration-property-result</code> element:
+        - patch-cdi-extensions
+        - patch-webfragments
+        - modules-list-file
+    -->
+    <macrodef name="eap-configuration-properties">
+        <attribute name="eap-config-file" default=""/>
+        <element name="eap-configuration-property-result" optional="yes"/>
+        <sequential>
+
+            <!-- Read eap configuration file. -->
+            <fail message="EAP configuration file not found at path @{eap-config-file}.">
+                <condition>
+                    <not>
+                        <available file="@{eap-config-file}"/>
+                    </not>
+                </condition>
+            </fail>
+
+            <!-- Read eap configuration properties. -->
+            <property file="@{eap-config-file}"/>
+
+            <eap-configuration-property-result-helper patch-cdi-extensions="${patches.cdi-extensions}"  patch-webfragments="${patches.webfragments}" modules-list-file="${modules.list}">
+                <eap-configuration-property-result-helper-element>
+                    <eap-configuration-property-result/>
+                </eap-configuration-property-result-helper-element>
+            </eap-configuration-property-result-helper>
+
+        </sequential>
+    </macrodef>
+
+    <!-- Used to pass patch flags value.
+
+        Input parameters:
+        - patch-cdi-extensions
+        - patch-webfragments
+        - modules-list-file
+        - eap-configuration-property-result-helper-element
+    -->
+    <macrodef name="eap-configuration-property-result-helper">
+        <attribute name="patch-cdi-extensions" default=""/>
+        <attribute name="patch-webfragments" default=""/>
+        <attribute name="modules-list-file" default=""/>
+        <element name="eap-configuration-property-result-helper-element" optional="yes"/>
+        <sequential>
+            <eap-configuration-property-result-helper-element/>
+        </sequential>
+    </macrodef>
+
+</project>

@@ -1,0 +1,4 @@
+module.name=org.apache.ant
+module.layer=bpms
+module.type=static
+module.location=org/apache/ant

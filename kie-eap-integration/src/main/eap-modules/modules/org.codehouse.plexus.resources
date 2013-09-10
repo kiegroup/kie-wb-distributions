@@ -1,0 +1,4 @@
+org.codehaus.plexus:plexus-utils:jar
+org.codehaus.plexus:plexus-classworlds:jar
+org.codehaus.plexus:plexus-component-annotations:jar
+org.codehaus.plexus:plexus-interpolation:jar

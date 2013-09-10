@@ -1,0 +1,16 @@
+org.kie:kie-internal:jar
+org.kie.commons:kieora-commons-io:jar
+org.kie:kie-api:jar
+org.kie.commons:kie-nio2-api:jar
+org.kie.remote:kie-services-client:jar
+org.kie.commons:kie-nio2-fs:jar
+org.kie.commons:kieora-api:jar
+org.kie.commons:kie-commons-cdi:jar
+org.kie:kie-ci:jar
+org.kie.commons:kieora-backend-lucene:jar
+org.kie.commons:kie-commons-regex:jar
+org.kie.commons:kie-nio2-model:jar
+org.kie.commons:kie-commons-io:jar
+org.kie.commons:kie-commons-data:jar
+org.kie.commons:kie-commons-validation:jar
+org.kie.commons:kie-nio2-jgit:jar

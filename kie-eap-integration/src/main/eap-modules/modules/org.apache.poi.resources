@@ -1,0 +1,3 @@
+org.apache.poi:poi-ooxml:jar
+org.apache.poi:poi:jar
+org.apache.poi:poi-ooxml-schemas:jar

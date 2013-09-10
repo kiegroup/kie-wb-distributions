@@ -1,0 +1,5 @@
+module.name=org.kie
+module.dependencies=kie.dependencies
+module.layer=bpms
+module.type=static
+module.location=org/kie

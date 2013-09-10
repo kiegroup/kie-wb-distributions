@@ -1,0 +1,233 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distributions</artifactId>
+        <version>6.1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.kie</groupId>
+    <artifactId>kie-eap-integration</artifactId>
+    <name>KIE JBoss EAP integration</name>
+
+    <dependencies>
+
+        <!-- Internal dependencies -->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-wb-webapp</artifactId>
+            <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-wb-distribution-wars</artifactId>
+            <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
+            <classifier>eap-6_1</classifier>
+            <type>war</type>
+        </dependency>
+
+        <!-- External dependencies -->
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b3</version> <!-- TODO: Remove version and set into kie-parent. -->
+            <exclusions>
+                <exclusion>
+                    <groupId>ant</groupId>
+                    <artifactId>ant</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>ant</groupId>
+            <artifactId>ant-nodeps</artifactId>
+            <version>1.6.5</version> <!-- TODO: Remove version and set into kie-parent. -->
+        </dependency>
+
+    </dependencies>
+
+    <properties>
+        <!-- Source definition files and directories and configuration properties. -->
+        <eap-modules.source.path>${basedir}/src/main/eap-modules/modules</eap-modules.source.path>
+        <eap-modules.templates.path>${basedir}/src/main/eap-modules/templates</eap-modules.templates.path>
+        <eap-modules.patches.path>${basedir}/src/main/eap-modules/patches</eap-modules.patches.path>
+        <eap-modules.static.list.file>${eap-modules.source.path}/modules.list</eap-modules.static.list.file>
+        <eap-modules.dynamic.kie-wb.name>org.kie.kie-wb-webapp</eap-modules.dynamic.kie-wb.name>
+        <eap-modules.dynamic.jbpm-dashbuilder.name>org.jbpm.dashboard.jbpm-dashboard</eap-modules.dynamic.jbpm-dashbuilder.name>
+
+        <!-- Outputs for generated resources (static modules). -->
+        <eap-modules.static.output.path>${project.build.directory}/eap-modules-generated/static-modules</eap-modules.static.output.path>
+        <eap-modules.static.assembly.output.file>${eap-modules.static.output.path}/modules-assembly.xml</eap-modules.static.assembly.output.file>
+
+        <!-- Outputs for generated resources (static modules). -->
+        <eap-modules.dynamic.output.path>${project.build.directory}/eap-modules-generated/dynamic-modules</eap-modules.dynamic.output.path>
+        <eap-modules.dynamic.kie-wb.assembly.output.file>${eap-modules.dynamic.output.path}/kie-wb-modules-assembly.xml</eap-modules.dynamic.kie-wb.assembly.output.file>
+        <eap-modules.dynamic.jbpm-dashbuilder.assembly.output.file>${eap-modules.dynamic.output.path}/jbpm-dashbuilder-modules-assembly.xml</eap-modules.dynamic.jbpm-dashbuilder.assembly.output.file>
+
+        <!-- By default, use EAP 6.1.1 configurations. -->
+        <eap-modules.eap-configuration.path>${basedir}/src/main/eap-modules/eap-configurations/eap-6.1.1/eap-6.1.1-modules-config.properties</eap-modules.eap-configuration.path>
+
+    </properties>
+
+    <profiles>
+
+        <!-- Create modules for EAP version 6.1.0. -->
+        <profile>
+            <id>eap-610</id>
+            <activation>
+                <property>
+                    <name>eap-610</name>
+                </property>
+            </activation>
+            <properties>
+                <eap-modules.eap-configuration.path>${basedir}/src/main/eap-modules/eap-configurations/eap-6.1.0/eap-6.1.0-modules-config.properties</eap-modules.eap-configuration.path>
+            </properties>
+        </profile>
+
+        <!-- Create modules for EAP version 6.1.1. -->
+        <profile>
+            <id>eap-611</id>
+            <activation>
+                <property>
+                    <name>eap-611</name>
+                </property>
+            </activation>
+            <properties>
+                <eap-modules.eap-configuration.path>${basedir}/src/main/eap-modules/eap-configurations/eap-6.1.1/eap-6.1.1-modules-config.properties</eap-modules.eap-configuration.path>
+            </properties>
+        </profile>
+
+    </profiles>
+
+    <build>
+        <plugins>
+            <!-- Generates the modules stuff. -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>ant-generate-static-modules-stuff</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <property name="antcontrib-classpath" value="${basedir}/lib"/>
+                                <property name="static-modules-source-path" value="${eap-modules.source.path}"/>
+                                <property name="static-modules-output-path" value="${eap-modules.static.output.path}"/>
+                                <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
+                                <property name="static-modules-assembly-output-file"
+                                          value="${eap-modules.static.assembly.output.file}"/>
+                                <property name="templates.path" value="${eap-modules.templates.path}"/>
+                                <property name="patches.path" value="${eap-modules.patches.path}"/>
+                                <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
+
+                                <echo>Creating JBoss EAP static modules stuff..</echo>
+
+                                <ant antfile="${basedir}/src/main/eap-modules/scripts/build-static-modules.xml"
+                                     target="main" inheritRefs="true">
+                                    <reference torefid="maven.runtime.classpath" refid="maven.runtime.classpath"/>
+                                </ant>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                         <id>ant-generate-dynamic-module-kie-wb</id>
+                         <phase>package</phase>
+                         <configuration>
+                             <target>
+                                 <property name="antcontrib-classpath" value="${basedir}/lib"/>
+                                 <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
+                                 <property name="dynamic-modules-source-path" value="${eap-modules.source.path}"/>
+                                 <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
+                                 <property name="dynamic-module-assembly-war-source" value="org.kie:kie-wb-distribution-wars:war:eap-6_1"/>
+                                 <property name="dynamic-module-assembly-output-file"
+                                           value="${eap-modules.dynamic.kie-wb.assembly.output.file}"/>
+                                 <property name="templates.path" value="${eap-modules.templates.path}"/>
+                                 <property name="patches.path" value="${eap-modules.patches.path}"/>
+                                 <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
+
+
+                                 <echo>Creating KIE-WB stuff..</echo>
+
+                                 <ant antfile="${basedir}/src/main/eap-modules/scripts/build-dynamic-module.xml"
+                                      target="main" inheritRefs="true">
+                                     <property name="module-name" value="${eap-modules.dynamic.kie-wb.name}"/>
+                                 </ant>
+                             </target>
+                         </configuration>
+                         <goals>
+                             <goal>run</goal>
+                         </goals>
+                     </execution>
+                    <!--<execution>
+                        <id>ant-generate-dynamic-module-jbpm-dashboard</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <property name="antcontrib-classpath" value="${basedir}/lib"/>
+                                <property name="dynamic-modules-source-path" value="${eap-modules.source.path}"/>
+                                <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
+                                <property name="dynamic-module-assembly-output-file"
+                                          value="${eap-modules.dynamic.jbpm-dashbuilder.assembly.output.file}"/>
+                                <property name="templates.path" value="${eap-modules.templates.path}"/>
+                                <property name="patches.path" value="${eap-modules.patches.path}"/>
+                                <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
+                                <echo>Creating jBPM Dashboard stuff..</echo>
+
+                                <ant antfile="${basedir}/src/main/eap-modules/scripts/build-dynamic-module.xml"
+                                     target="main" inheritRefs="true">
+                                    <property name="module-name" value="${eap-modules.dynamic.jbpm-dashbuilder.name}"/>
+                                </ant>
+
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>-->
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptors>
+
+                        <!-- Create the JBoss EAP static modules distribution. -->
+                        <descriptor>${eap-modules.static.assembly.output.file}</descriptor>
+
+                        <!-- Create the JBoss EAP kie-wb (BPMS) dynamic module distributions. -->
+                        <descriptor>${eap-modules.dynamic.kie-wb.assembly.output.file}</descriptor>
+
+                    </descriptors>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+
+</project>

@@ -1,0 +1,4 @@
+module.name=org.apache.batik
+module.layer=bpms
+module.type=static
+module.location=org/apache/batik

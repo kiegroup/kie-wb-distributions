@@ -1,0 +1,4 @@
+module.name=com.opensymphony.quartz
+module.layer=bpms
+module.type=static
+module.location=com/opensymphony/quartz

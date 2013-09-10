@@ -1,0 +1,4 @@
+module.name=org.sonatype.aether
+module.layer=bpms
+module.type=static
+module.location=org/sonatype/aether
