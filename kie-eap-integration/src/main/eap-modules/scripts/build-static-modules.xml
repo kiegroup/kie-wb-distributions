@@ -223,22 +223,23 @@ OUTPUT:
         <loadfile property="module.resources.file.content" srcfile="${module.resources.file}" failonerror="true"/>
         <ac:for param="resource" list="${module.resources.file.content}" delimiter="${line.separator}">
             <ac:sequential>
-                <!-- If resource is not found in dependency tree. fail the build. -->
-                <fail message="Resource @{resource} not found for module ${module.name}.">
-                    <condition>
-                        <contains string="${@{resource}}" substring="$"/>
-                    </condition>
-                </fail>
+                <!-- If resource is not found in dependency tree. do not add it. -->
+                <ac:if>
+                    <contains string="${@{resource}}" substring="$"/>
+                    <ac:then>
+                        <echo>Resource @{resource} not found. Not adding it.</echo>
+                    </ac:then>
+                    <ac:else>
+                        <!-- Copy the resource to the output directory. -->
+                        <copy todir="${modules.output.path}${module.name}${file.separator}" file="${@{resource}}"/>
 
-                <!-- Copy the resource to the output directory. -->
-                <copy todir="${modules.output.path}${module.name}${file.separator}" file="${@{resource}}"/>
-
-                <!-- Create the <resource-root> section for module.xml. -->
-                <antcall target="create-module-xml-resources">
-                    <param name="resource-name" value="${@{resource}}"/>
-                    <param name="file-name" value="${module.xml.tmp.resources.path}"/>
-                </antcall>
-
+                        <!-- Create the <resource-root> section for module.xml. -->
+                        <antcall target="create-module-xml-resources">
+                            <param name="resource-name" value="${@{resource}}"/>
+                            <param name="file-name" value="${module.xml.tmp.resources.path}"/>
+                        </antcall>
+                    </ac:else>
+                </ac:if>
             </ac:sequential>
         </ac:for>
 

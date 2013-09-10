@@ -13,14 +13,6 @@
 
     <dependencies>
 
-        <!-- Internal dependencies -->
-        <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-wb-webapp</artifactId>
-            <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
-            <type>pom</type>
-        </dependency>
-
         <!-- External dependencies -->
         <dependency>
             <groupId>org.apache.ant</groupId>
@@ -110,6 +102,14 @@
                 <eap-modules.dynamic.kie-wb.assembly.source.artifact.classifier>eap-6_1</eap-modules.dynamic.kie-wb.assembly.source.artifact.classifier>
             </properties>
             <dependencies>
+                <!-- This dependency provides for all artifacts. -->
+                <dependency>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-wb-webapp</artifactId>
+                    <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
+                    <type>pom</type>
+                </dependency>
+                <!-- This dependency is used as source artifact for maven assembly. -->
                 <dependency>
                     <groupId>${eap-modules.dynamic.kie-wb.assembly.source.artifact.groupdId}</groupId>
                     <artifactId>${eap-modules.dynamic.kie-wb.assembly.source.artifact.artifactId}</artifactId>
@@ -199,6 +199,14 @@
                 <eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.classifier>eap-6_1</eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.classifier>
             </properties>
             <dependencies>
+                <!-- This dependency provides for all artifacts. -->
+                <dependency>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-drools-wb-webapp</artifactId>
+                    <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
+                    <type>pom</type>
+                </dependency>
+                <!-- This dependency is used as source artifact for maven assembly. -->
                 <dependency>
                     <groupId>${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.groupdId}</groupId>
                     <artifactId>${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.artifactId}</artifactId>
@@ -288,6 +296,14 @@
                 <eap-modules.dynamic.jbpm-dash.assembly.source.artifact.classifier>jboss-as7</eap-modules.dynamic.jbpm-dash.assembly.source.artifact.classifier>
             </properties>
             <dependencies>
+                <!-- This dependency provides for all artifacts. -->
+                <dependency>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-wb-webapp</artifactId>
+                    <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
+                    <type>pom</type>
+                </dependency>
+                <!-- This dependency is used as source artifact for maven assembly. -->
                 <dependency>
                     <groupId>${eap-modules.dynamic.jbpm-dash.assembly.source.artifact.groupdId}</groupId>
                     <artifactId>${eap-modules.dynamic.jbpm-dash.assembly.source.artifact.artifactId}</artifactId>

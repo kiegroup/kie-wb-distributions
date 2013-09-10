@@ -565,11 +565,21 @@ OUTPUT:
                 <loadfile property="module.resources.file.content" srcfile="${modules.source.path}${module-name}.resources" failonerror="true"/>
                 <ac:for param="resource" list="${module.resources.file.content}" delimiter="${line.separator}">
                     <ac:sequential>
-                        <antcall target="create-dependency-set-exclude">
-                            <param name="resource-name" value="${@{resource}}"/>
-                            <param name="resource-name-preffix" value="WEB-INF${file.separator}lib${file.separator}"/>
-                            <param name="file-name" value="${file-name}"/>
-                        </antcall>
+
+                        <!-- If resource is not found in dependency tree. do not exclude it. -->
+                        <ac:if>
+                            <contains string="${@{resource}}" substring="$"/>
+                            <ac:then>
+                                <echo>Resource @{resource} not found. Not excluding it.</echo>
+                            </ac:then>
+                            <ac:else>
+                                <antcall target="create-dependency-set-exclude">
+                                    <param name="resource-name" value="${@{resource}}"/>
+                                    <param name="resource-name-preffix" value="WEB-INF${file.separator}lib${file.separator}"/>
+                                    <param name="file-name" value="${file-name}"/>
+                                </antcall>
+                            </ac:else>
+                        </ac:if>
                     </ac:sequential>
                 </ac:for>
             </ac:then>
