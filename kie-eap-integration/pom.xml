@@ -188,14 +188,81 @@
                     <name>brms</name>
                 </property>
             </activation>
+            <properties>
+                <eap-modules.dynamic.kie-drools-wb.name>org.kie.kie-drools-wb-webapp</eap-modules.dynamic.kie-drools-wb.name>
+                <eap-modules.dynamic.kie-drools-wb.assembly.output.file>${eap-modules.dynamic.output.path}/kie-drools-wb-modules-assembly.xml</eap-modules.dynamic.kie-drools-wb.assembly.output.file>
+                <eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.groupdId>org.kie</eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.groupdId>
+                <eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.artifactId>kie-drools-wb-distribution-wars</eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.artifactId>
+                <eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.type>war</eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.type>
+                <eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.classifier>eap-6_1</eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.groupdId}</groupId>
+                    <artifactId>${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.artifactId}</artifactId>
+                    <version>${project.version}</version> <!-- TODO: Remove version here and set into kie-parent. -->
+                    <classifier>${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.classifier}</classifier>
+                    <type>${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.type}</type>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
-                    <!--<plugin>
+                    <!-- Generates kie-wb stuff and distribution. -->
+                    <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
+                            <execution>
+                                <id>ant-build-dynamic-module-kie-drools-wb</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <target>
+                                        <property name="antcontrib-classpath" value="${basedir}/lib"/>
+                                        <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
+                                        <property name="dynamic-modules-source-path" value="${eap-modules.source.path}"/>
+                                        <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
+                                        <property name="dynamic-module-assembly-output-file"
+                                                  value="${eap-modules.dynamic.kie-drools-wb.assembly.output.file}"/>
+                                        <property name="dynamic-module-assembly-war-source" value="${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.groupdId}:${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.artifactId}:${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.type}:${eap-modules.dynamic.kie-drools-wb.assembly.source.artifact.classifier}"/>
+                                        <property name="templates.path" value="${eap-modules.templates.path}"/>
+                                        <property name="patches.path" value="${eap-modules.patches.path}"/>
+                                        <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
 
+                                        <echo>Creating stuff for module ${eap-modules.dynamic.kie-drools-wb.name}</echo>
+                                        <ant antfile="${basedir}/src/main/eap-modules/scripts/build-dynamic-module.xml"
+                                             target="main" inheritRefs="true">
+                                            <property name="module-name" value="${eap-modules.dynamic.kie-drools-wb.name}"/>
+                                        </ant>
+
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
                         </executions>
-                    </plugin>-->
+                    </plugin>
+                    <!-- Assembly the jbpm-dashboard dynamic module. -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <descriptors combine.children="append">
+                                <descriptor>${eap-modules.dynamic.kie-drools-wb.assembly.output.file}</descriptor>
+                            </descriptors>
+                            <archive>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                            </archive>
+                        </configuration>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
