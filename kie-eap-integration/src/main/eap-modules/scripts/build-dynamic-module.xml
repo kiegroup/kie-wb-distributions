@@ -6,7 +6,6 @@ Generates the jboss-deployment-structure.xml definition file and the assembly fo
 
 
 INPUT parameters:
-- classpath-ref -> The classpath reference to obtain antcontrib distribution jars.
 - module-name -> The dynamic module name to create all stuff.
 - static-modules-list-file -> The path where generating module.list file is located
 - eap-configuration-file -> The path for the EAP configuration properties.
@@ -28,22 +27,6 @@ OUTPUT:
 -->
 
 <project name="build-dynamic-module" xmlns:ac="net.sf.antcontrib" default="main" basedir="../">
-
-    <!--<property name="project.lib.path" value="${basedir}${file.separator}..${file.separator}..${file.separator}..${file.separator}lib${file.separator}"/>
-    <path id="ant-contrib.path">
-        <fileset dir="${project.lib.path}">
-            <include name="ant-contrib-1.0b3.jar"/>
-        </fileset>
-    </path>
-    <taskdef uri="net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpathref="ant-contrib.path" />-->
-
-
-    <path id="ant-contrib.path">
-        <fileset dir="${antcontrib-classpath}">
-            <include name="ant-contrib-1.0b3.jar"/>
-        </fileset>
-    </path>
-    <taskdef uri="net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpathref="ant-contrib.path" />
 
     <!-- Common utilities. -->
     <import file="build-utils.xml"/>

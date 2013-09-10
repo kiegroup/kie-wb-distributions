@@ -1,22 +1,8 @@
 <!--
 INPUT parameters:
-- classpath-ref -> The classpath reference to obtain antcontrib distribution jars.
 - templates.path -> The source forlder where all templates are located.
 -->
 <project name="build-utils" xmlns:ac="net.sf.antcontrib" basedir="../">
-
-    <!--<path id="classpath">
-        <pathelement path="${classpath-ref}"/>
-    </path>
-
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="classpath"/>-->
-
-    <path id="ant-contrib.path">
-        <fileset dir="${antcontrib-classpath}">
-            <include name="ant-contrib-1.0b3.jar"/>
-        </fileset>
-    </path>
-    <taskdef uri="net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpathref="ant-contrib.path" />
 
     <property name="templates.assembly-properties.file.path" value="${templates.path}${file.separator}assembly.properties"/>
 

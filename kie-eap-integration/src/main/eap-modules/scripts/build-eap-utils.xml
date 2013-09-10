@@ -1,21 +1,7 @@
 <!--
 INPUT parameters:
-- classpath-ref -> The classpath reference to obtain antcontrib distribution jars.
 -->
 <project name="build-eap-utils" xmlns:ac="net.sf.antcontrib" basedir="../">
-
-    <!--<path id="classpath">
-        <pathelement path="${classpath-ref}"/>
-    </path>
-
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="classpath"/>-->
-
-    <path id="ant-contrib.path">
-        <fileset dir="${antcontrib-classpath}">
-            <include name="ant-contrib-1.0b3.jar"/>
-        </fileset>
-    </path>
-    <taskdef uri="net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpathref="ant-contrib.path" />
 
     <!-- Gets aall EAP configuration properties.
         Input parameters:
@@ -70,5 +56,50 @@ INPUT parameters:
             <eap-configuration-property-result-helper-element/>
         </sequential>
     </macrodef>
+
+    <!-- Used to deploy static modules distribution file (zip) and some skinny wars.
+        Input parameters:
+        - eap-home -> The path to JBoss EAP home directory-
+        - static-modules-ditro-file -> The zip containing all static modules distribution.
+        - bpms-artifact -> The path for the BPMS (kie-wb) generated skinny war.
+        - brms-artifact -> The path for the BRMS (kie-drools-wb) generated skinny war.
+        - jbpm-dash-artifact -> The path for the jBPM Dashboard generated skinny war.
+    -->
+    <target name="deploy-on-eap">
+        <property name="jboss.home" value="${eap-home}"/>
+        <property name="jboss.deployments" value="${jboss.home}${file.separator}standalone${file.separator}deployments"/>
+
+        <echo level="info">Starting deployment into ${jboss.home}</echo>
+
+        <!-- Copy static modules file.-->
+        <unzip dest="${jboss.home}" src="${static-modules-ditro-file}" overwrite="true"/>
+
+        <!-- Copy the BPMS artifact, if specified, into EAP deployments directory. -->
+        <ac:if>
+            <available file="${bpms-artifact}"/>
+            <ac:then>
+                <copy file="${bpms-artifact}" todir="${jboss.deployments}"/>
+            </ac:then>
+        </ac:if>
+
+        <!-- Copy the BRMS artifact, if specified, into EAP deployments directory. -->
+        <ac:if>
+            <available file="${brms-artifact}"/>
+            <ac:then>
+                <copy file="${brms-artifact}" todir="${jboss.deployments}"/>
+            </ac:then>
+        </ac:if>
+
+        <!-- Copy the jBPM Dashboard artifact, if specified, into EAP deployments directory. -->
+        <ac:if>
+            <available file="${jbpm-dash-artifact}"/>
+            <ac:then>
+                <copy file="${jbpm-dash-artifact}" todir="${jboss.deployments}"/>
+            </ac:then>
+        </ac:if>
+
+        <echo level="info">Deployment into ${jboss.home} finished.</echo>
+
+    </target>
 
 </project>

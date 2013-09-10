@@ -129,7 +129,6 @@
                                 <phase>package</phase>
                                 <configuration>
                                     <target>
-                                        <property name="antcontrib-classpath" value="${basedir}/lib"/>
                                         <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
                                         <property name="dynamic-modules-source-path" value="${eap-modules.source.path}"/>
                                         <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
@@ -139,6 +138,9 @@
                                         <property name="templates.path" value="${eap-modules.templates.path}"/>
                                         <property name="patches.path" value="${eap-modules.patches.path}"/>
                                         <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
+
+                                        <taskdef resource="net/sf/antcontrib/antlib.xml" uri="net.sf.antcontrib"
+                                                 classpathref="maven.compile.classpath" />
 
                                         <echo>Creating stuff for module ${eap-modules.dynamic.kie-wb.name}</echo>
                                         <ant antfile="${basedir}/src/main/eap-modules/scripts/build-dynamic-module.xml"
@@ -212,11 +214,10 @@
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>ant-build-dynamic-module-kie-drools-wb</id>
+                                <id>ant-build-dynamic-module-brms</id>
                                 <phase>package</phase>
                                 <configuration>
                                     <target>
-                                        <property name="antcontrib-classpath" value="${basedir}/lib"/>
                                         <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
                                         <property name="dynamic-modules-source-path" value="${eap-modules.source.path}"/>
                                         <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
@@ -226,6 +227,9 @@
                                         <property name="templates.path" value="${eap-modules.templates.path}"/>
                                         <property name="patches.path" value="${eap-modules.patches.path}"/>
                                         <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
+
+                                        <taskdef resource="net/sf/antcontrib/antlib.xml"  uri="net.sf.antcontrib"
+                                                 classpathref="maven.compile.classpath" />
 
                                         <echo>Creating stuff for module ${eap-modules.dynamic.kie-drools-wb.name}</echo>
                                         <ant antfile="${basedir}/src/main/eap-modules/scripts/build-dynamic-module.xml"
@@ -294,16 +298,15 @@
             </dependencies>
             <build>
                 <plugins>
-                    <!-- Generates kie-wb stuff and distribution. -->
+                    <!-- Generates jbpm-dashboard stuff and distribution. -->
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>ant-build-dynamic-module-kie-wb</id>
+                                <id>ant-build-dynamic-module-jbpm-dashboard</id>
                                 <phase>package</phase>
                                 <configuration>
                                     <target>
-                                        <property name="antcontrib-classpath" value="${basedir}/lib"/>
                                         <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
                                         <property name="dynamic-modules-source-path" value="${eap-modules.source.path}"/>
                                         <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
@@ -313,6 +316,9 @@
                                         <property name="templates.path" value="${eap-modules.templates.path}"/>
                                         <property name="patches.path" value="${eap-modules.patches.path}"/>
                                         <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
+
+                                        <taskdef resource="net/sf/antcontrib/antlib.xml" uri="net.sf.antcontrib"
+                                                 classpathref="maven.compile.classpath" />
 
                                         <echo>Creating stuff for module ${eap-modules.dynamic.jbpm-dash.name}</echo>
                                         <ant antfile="${basedir}/src/main/eap-modules/scripts/build-dynamic-module.xml"
@@ -367,7 +373,6 @@
                         <phase>package</phase>
                         <configuration>
                             <target>
-                                <property name="antcontrib-classpath" value="${basedir}/lib"/>
                                 <property name="static-modules-source-path" value="${eap-modules.source.path}"/>
                                 <property name="static-modules-output-path" value="${eap-modules.static.output.path}"/>
                                 <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
@@ -379,10 +384,11 @@
 
                                 <echo>Creating JBoss EAP static modules stuff..</echo>
 
+                                <taskdef resource="net/sf/antcontrib/antlib.xml"  uri="net.sf.antcontrib"
+                                         classpathref="maven.compile.classpath" />
+
                                 <ant antfile="${basedir}/src/main/eap-modules/scripts/build-static-modules.xml"
-                                     target="main" inheritRefs="true">
-                                    <reference torefid="maven.runtime.classpath" refid="maven.runtime.classpath"/>
-                                </ant>
+                                     target="main" inheritRefs="true"/>
                             </target>
                         </configuration>
                         <goals>
