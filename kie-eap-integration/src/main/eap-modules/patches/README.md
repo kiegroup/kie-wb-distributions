@@ -17,11 +17,9 @@ CDI Extensions
 
 Servlet spec 3.0 - Webfragments
 -------------------------------
-Is known that on both EAP 6.1.0. and 6.1.1 webfragment descriptors located inside custom static modules are not loaded.
-
-So, the patch consist of copy the content of the webfragments from BPMS layer modules inside web deployment descriptor <code>WEB-INF/web.xml</code>.
-
-Currently the patch does not override xml content, the <code>WEB-INF/web.xml</code> for BPMS/BRMS is copyied inside this directory.
+* Is known that on both EAP 6.1.0. and 6.1.1 webfragment descriptors located inside custom static modules are not loaded.
+* The patch consists on creating a new jar on runtime with the web-fragment descriptor to use as a patch. For each web-fragment descriptor a new jar is created and added into WEB-INF/lib of the webapp.
+* This method allows to not modify the original deployment descriptor (web.xml) of the webapp.
 
 Seam transactions
 -----------------
