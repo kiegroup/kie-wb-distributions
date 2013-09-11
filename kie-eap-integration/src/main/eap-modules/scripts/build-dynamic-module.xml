@@ -22,7 +22,7 @@ OUTPUT:
         - <module_name>
             - <dynamic-module-assembly-output-file>
             - jboss-deployment-structure.xml
-            - web.xml
+            - webfragment descriptors to patch
             - META-INF (optional - if CDI extensions patch is enabled)
 -->
 
@@ -41,7 +41,7 @@ OUTPUT:
     <property name="module.assembly.war.source" value="${dynamic-module-assembly-war-source}"/>
 
     <property name="module.jboss-deployment-structure.output.path" value="${modules.output.path}${module-name}${file.separator}jboss-deployment-structure.xml"/>
-    <property name="module.web-xml.output.path" value="${modules.output.path}${module-name}${file.separator}web.xml"/>
+    <property name="module.webfragments.output.path" value="${modules.output.path}${module-name}${file.separator}"/>
 
 
     <property name="templates.source.path" value="${templates.path}"/>
@@ -149,7 +149,6 @@ OUTPUT:
                 <antcall target="create-dependency-set-excludes">
                     <param name="module-name" value="${module.name}"/>
                     <param name="module-resources-unrequired" value="${module.resources.unrequired.value}"/>
-                    <param name="module-patches-webfragments" value="${module.patches.webfragments.value}"/>
                     <param name="file-name" value="${module.assembly.dependency-set.exludes.path}"/>
                 </antcall>
 
@@ -161,8 +160,13 @@ OUTPUT:
                 </antcall>
 
                 <!-- Create the cdi extensions inclusions for the generated assembly descripttor. -->
+                <condition property="module-patches-cdi-extensions.is-set">
+                    <not>
+                        <equals arg1="${module.patches.cdi-extensions.value}" arg2=""/>
+                    </not>
+                </condition>
                 <ac:if>
-                    <isset property="module.patches.cdi-extensions"/>
+                    <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
                     <ac:then>
                         <antcall target="create-file-set-inclusion">
                             <param name="file-name" value="${module.assembly.file-set.includes.path}"/>
@@ -176,21 +180,24 @@ OUTPUT:
                 <!-- Generate the jboss-deployment-structure descriptor file. -->
                 <antcall target="create-jboss-deployment-structure">
                     <param name="module-name" value="${module.name}"/>
+                    <param name="assembly-dependencies-file-name" value="${module.assembly.file.includes.path}"/>
                 </antcall>
 
-                <!-- Generate the web.xml descriptor file. -->
-                <antcall target="create-deployment-descriptor">
-                    <param name="module-name" value="${module.name}"/>
-                    <param name="module-patches-webfragments" value="${module.patches.webfragments.value}"/>
+                <!-- Generate the inclusion for generated jboss-deployment-structure.xml. -->
+                <antcall target="create-file-inclusion">
+                    <param name="file-name" value="${module.assembly.file.includes.path}"/>
+                    <param name="file-source" value="${module.jboss-deployment-structure.output.path}"/>
+                    <param name="file-output-dir" value="WEB-INF"/>
+                    <param name="file-dest-name" value="jboss-deployment-structure.xml"/>
                 </antcall>
 
-                <!--  Generate the inclusions for other files.-->
-                <antcall target="create-file-includes">
+
+                <!--Generate the webfragments jar artifacts. -->
+                <antcall target="create-webfragments-jar">
                     <param name="module-name" value="${module.name}"/>
                     <param name="module-patches-webfragments" value="${module.patches.webfragments.value}"/>
                     <param name="file-name" value="${module.assembly.file.includes.path}"/>
                 </antcall>
-
 
                 <!-- Load content from temp files. -->
                 <loadfile property="module.assembly.dependency-set.exludes.content"
@@ -230,13 +237,14 @@ OUTPUT:
 
     </target>
 
-    <!-- Generate the deployment descriptor (web.xml).
+    <!-- Generate the jar patches for webfragments.
 
        Input parameteres:
        - module-name
        - module-patches-webfragments
+       - file-name
    -->
-    <target name="create-deployment-descriptor">
+    <target name="create-webfragments-jar">
 
         <condition property="module-patches-webfragments.is-set">
             <not>
@@ -246,9 +254,55 @@ OUTPUT:
         <ac:if>
             <ac:equals arg1="${module-patches-webfragments.is-set}" arg2="true"/>
             <ac:then>
-                <copy file="${patches.webfragments.source.path}${module-patches-webfragments}" tofile="${module.web-xml.output.path}"/>
+
+                <ac:for param="webfagment-artifact" list="${module-patches-webfragments}" delimiter=",">
+                    <ac:sequential>
+
+                        <!-- Extract the web-fragment.xml file from the jar to patch and create a new jar artifact. -->
+                        <antcall target="patch-webfragment-jar">
+                            <param name="jar-path" value="${@{webfagment-artifact}}"/>
+                            <param name="webfragment-artifact" value="@{webfagment-artifact}"/>
+                            <param name="output-path" value="${module.webfragments.output.path}"/>
+                            <param name="file-name" value="${file-name}"/>
+                        </antcall>
+
+                    </ac:sequential>
+                </ac:for>
+
             </ac:then>
         </ac:if>
+
+    </target>
+
+    <!-- Extracts the web-fragment.xml from a jar file and creates a new jar with this file..
+
+       Input parameteres:
+       - jar-path
+       - webfragment-artifact
+       - output-path
+       - file-name
+   -->
+    <target name="patch-webfragment-jar">
+
+        <!-- Generate the result name from artifact name. -->
+        <ac:propertyregex property="webfragment-artifact-name" input="${webfragment-artifact}" regexp=":" replace="-" global="true" />
+
+        <property name="webfragment-xml" value="${webfragment-artifact-name}-webfragment.xml"/>
+        <property name="webfragment-jar" value="${webfragment-artifact-name}-webfragment"/>
+
+        <!-- Extract the file. -->
+        <extract-webfragment-jar jar-file-path="${jar-path}" output-path="${output-path}" output-name="${webfragment-xml}"/>
+
+        <!-- Create the jar file. -->
+        <create-webfragment-jar jar-path="${output-path}" jar-name="${webfragment-jar}" webfragment-source-file="${output-path}${webfragment-xml}"/>
+
+        <!-- Create the inclusion for this jar in the assembly descriptor.-->
+        <antcall target="create-file-inclusion">
+            <param name="file-name" value="${file-name}"/>
+            <param name="file-source" value="${output-path}${webfragment-jar}.jar"/>
+            <param name="file-output-dir" value="WEB-INF${file.separator}lib"/>
+            <param name="file-dest-name" value="${webfragment-jar}.jar"/>
+        </antcall>
 
     </target>
 
@@ -256,6 +310,7 @@ OUTPUT:
 
        Input parameteres:
        - module-name
+       - assembly-dependencies-file-name
    -->
     <target name="create-jboss-deployment-structure">
         <!-- Create the temp files.. -->
@@ -284,7 +339,7 @@ OUTPUT:
                     <param name="dependency-name" value="@{dependency}"/>
                     <param name="dependency-export" value="true"/>
                     <param name="dependency-meta-inf" value="import"/>
-                    <param name="file-name" value="${module.jboss-deployment-structure.modules.tmp.path}"/>
+                    <param name="jboss-deployment-structure-file-name" value="${module.jboss-deployment-structure.modules.tmp.path}"/>
                 </antcall>
             </ac:sequential>
         </ac:for>
@@ -306,48 +361,6 @@ OUTPUT:
         <echo file="${module.jboss-deployment-structure.output.path}">${module.jboss-deployment-structure.output.content}</echo>
 
     </target>
-
-    <!-- Generate the inclusions files sections..
-
-        The necessary inclusions are:
-        - jboss-deployment-structure.xml (Will be re-generated)
-        - web.xml (If webfragments patch is required)
-
-       Input parameteres:
-       - module-name
-       - module-patches-webfragments
-       - file-name
-   -->
-    <target name="create-file-includes">
-
-        <!-- Generate the inclusion for generated jboss-deployment-structure.xml. -->
-        <antcall target="create-file-inclusion">
-            <param name="file-name" value="${file-name}"/>
-            <param name="file-source" value="${module.jboss-deployment-structure.output.path}"/>
-            <param name="file-output-dir" value="WEB-INF"/>
-            <param name="file-dest-name" value="jboss-deployment-structure.xml"/>
-        </antcall>
-
-        <!-- Generate the inclusion for generated web.xml. -->
-        <condition property="module-patches-webfragments.is-set">
-            <not>
-                <equals arg1="${module-patches-webfragments}" arg2=""/>
-            </not>
-        </condition>
-        <ac:if>
-            <ac:equals arg1="${module-patches-webfragments.is-set}" arg2="true"/>
-            <ac:then>
-                <antcall target="create-file-inclusion">
-                    <param name="file-name" value="${file-name}"/>
-                    <param name="file-source" value="${module.web-xml.output.path}"/>
-                    <param name="file-output-dir" value="WEB-INF"/>
-                    <param name="file-dest-name" value="web.xml"/>
-                </antcall>
-            </ac:then>
-        </ac:if>
-
-    </target>
-
 
     <!-- Generate the CDI extensions output..
         - Copy the cdi extensions to META-INF/services of the webapp.
@@ -462,12 +475,10 @@ OUTPUT:
         - Unrequired libs (module.resources.unrequired)
         - Resources used by static modules.
         - jboss-deployment-structure.xml (Will be re-generated)
-        - web.xml (If webfragments patch is required)
 
        Input parameteres:
        - module-name
        - module-resources-unrequired
-       - module-patches-webfragments
        - file-name
    -->
     <target name="create-dependency-set-excludes">
@@ -510,23 +521,6 @@ OUTPUT:
             <param name="resource-name-preffix" value="WEB-INF${file.separator}"/>
             <param name="file-name" value="${file-name}"/>
         </antcall>
-
-        <!-- Create the exclude for web.xml. (if is required for patch). -->
-        <condition property="module-patches-webfragments.is-set">
-            <not>
-                <equals arg1="${module-patches-webfragments}" arg2=""/>
-            </not>
-        </condition>
-        <ac:if>
-            <ac:equals arg1="${module-patches-webfragments.is-set}" arg2="true"/>
-            <ac:then>
-                <antcall target="create-dependency-set-exclude">
-                    <param name="resource-name" value="web.xml"/>
-                    <param name="resource-name-preffix" value="WEB-INF${file.separator}"/>
-                    <param name="file-name" value="${file-name}"/>
-                </antcall>
-            </ac:then>
-        </ac:if>
 
     </target>
 
@@ -654,7 +648,7 @@ OUTPUT:
         - dependency-name
         - dependency-export
         - dependency-meta-inf
-        - file-name
+        - jboss-deployment-structure-file-name
     -->
     <target name="create-jboss-deployment-structure-module">
         <build-from-template-property template-property="jboss-deployment-structure-module">
@@ -664,10 +658,10 @@ OUTPUT:
                 <param type="token" name="META-INF" value="${dependency-meta-inf}"/>
             </template-prop-params>
             <template-prop-result>
-                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+                <concat destfile="${jboss-deployment-structure-file-name}" append="true">@{template-content}</concat>
             </template-prop-result>
         </build-from-template-property>
-        <echo file="${file-name}" append="true">${line.separator}</echo>
+        <echo file="${jboss-deployment-structure-file-name}" append="true">${line.separator}</echo>
     </target>
 
 </project>

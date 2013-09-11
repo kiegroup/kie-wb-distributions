@@ -86,7 +86,54 @@ INPUT parameters:
         </sequential>
     </macrodef>
 
+    <!-- Generates a jar artifact with the webfragment descriptor inside META-INF
+            Input parameters:
+            - webfragment-source-file
+            - jar-name
+            - jar-path
+        -->
+    <macrodef name="create-webfragment-jar">
+        <attribute name="webfragment-source-file" default=""/>
+        <attribute name="jar-name" default=""/>
+        <attribute name="jar-path" default=""/>
+        <sequential>
+            <property name="tmp-dir" value="${java.io.tmpdir}${file.separator}webfragment-@{jar-name}"/>
 
+            <!-- Create the temp directory to compress. -->
+            <delete dir="${tmp-dir}" includeemptydirs="true" failonerror="false"/>
+            <mkdir dir="${tmp-dir}"/>
+            <mkdir dir="${tmp-dir}${file.separatore}META-INF"/>
+            <copy file="@{webfragment-source-file}" tofile="${tmp-dir}${file.separator}META-INF${file.separator}web-fragment.xml"/>
+
+            <!-- Jar the temp directory. -->
+            <jar destfile="@{jar-path}${file.separator}@{jar-name}.jar" basedir="${tmp-dir}"/>
+        </sequential>
+    </macrodef>
+
+    <!-- Extracts the web-fragment.xml file from a jar file.
+            Input parameters:
+            - jar-file-path
+            - output-path
+            - output-name
+        -->
+    <macrodef name="extract-webfragment-jar">
+        <attribute name="jar-file-path" default=""/>
+        <attribute name="output-path" default=""/>
+        <attribute name="output-name" default=""/>
+        <sequential>
+            <property name="tmp-dir" value="${java.io.tmpdir}${file.separator}webfragment-extracted"/>
+
+            <!-- Create the temp directory to uncompress. -->
+            <delete dir="${tmp-dir}" includeemptydirs="true" failonerror="false"/>
+
+            <!-- Uncompres the jar. -->
+            <unzip src="@{jar-file-path}" dest="${tmp-dir}"/>
+
+            <!-- Copy the web-fragment.xml to output location. -->
+            <copy file="${tmp-dir}${file.separator}META-INF${file.separator}web-fragment.xml" tofile="@{output-path}${file.separator}@{output-name}" failonerror="true"/>
+
+        </sequential>
+    </macrodef>
 
 
     <!-- For TESTING purposes. -->
