@@ -39,6 +39,7 @@
 
   <!-- Models for Drools Workbench Screens -->
   <inherits name="org.drools.workbench.models.commons.DroolsWorkbenchModelsCommon"/>
+  <inherits name="org.drools.workbench.models.datamodel.DroolsWorkbenchDataModelAPI"/>
 
   <!-- Drools Workbench Screens -->
   <inherits name='org.drools.workbench.screens.categories.DroolsWorkbenchCategoriesEditorClient'/>
