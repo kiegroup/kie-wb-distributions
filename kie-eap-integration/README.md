@@ -74,6 +74,14 @@ Profiles:
 - To generate the JBPM Dashboard distribution, use <code>mvn clean install -Djbpm-dashboard</code> to enable the jbpm-dashboard profile and generate the skinny war.
 - To generate all skinny wars (for BPMS, BRMS and jBPM Dashboard) at same build, use <code>mvn clean install -Dbpms -Dbrms -Djbpm-dashboard</code>
 
+Examples
+-------
+- Generate only the static modules: $# mvn clean install
+- Generate static modules and BPMS distributions: $# mvn clean install -Dbpms
+- Generate static modules and BRMS distributions: $# mvn clean install -Dbrms
+- Generate static modules and jbpm-dashboard distributions: $# mvn clean install -Djbpm-dashboard
+- Generate static modules and BPMS, BRMS and jbpm-dashboard distributions: $# mvn clean install -Dbpms -Dbrms -Djbpm-dashboard
+
 Resulting artifacts
 ---------------------
 * The resulting artifacts are generated into <code>target</code> directory:
