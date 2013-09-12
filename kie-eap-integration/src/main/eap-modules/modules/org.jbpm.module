@@ -1,5 +1,4 @@
 module.name=org.jbpm
-module.layer=bpms
 module.type=static
 module.location=org/jbpm
 module.patches.metainf=jbpm/META-INF

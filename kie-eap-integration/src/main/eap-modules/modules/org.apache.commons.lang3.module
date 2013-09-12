@@ -1,4 +1,3 @@
 module.name=org.apache.commons.lang3
-module.layer=bpms
 module.type=static
 module.location=org/apache/commons/lang3

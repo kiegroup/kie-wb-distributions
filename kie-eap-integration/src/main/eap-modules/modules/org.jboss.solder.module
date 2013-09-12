@@ -1,4 +1,3 @@
 module.name=org.jboss.solder
-module.layer=bpms
 module.type=static
 module.location=org/jboss/solder

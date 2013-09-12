@@ -1,4 +1,3 @@
 module.name=org.apache.lucene
-module.layer=bpms
 module.type=static
 module.location=org/apache/lucene

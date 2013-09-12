@@ -1,4 +1,3 @@
 module.name=org.apache.commons.jxpath
-module.layer=bpms
 module.type=static
 module.location=org/apache/commons/jxpath

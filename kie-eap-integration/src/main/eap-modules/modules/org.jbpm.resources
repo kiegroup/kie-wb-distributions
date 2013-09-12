@@ -11,6 +11,5 @@ org.jbpm:jbpm-flow-builder:jar
 org.jbpm:jbpm-runtime-manager:jar
 org.jbpm:jbpm-audit:jar
 org.jbpm:jbpm-shared-services:jar
-org.jbpm:jbpm-shared-services:jar
 org.jbpm:jbpm-form-services:jar
 org.jbpm:jbpm-flow:jar

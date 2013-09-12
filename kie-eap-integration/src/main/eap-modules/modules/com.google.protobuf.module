@@ -1,4 +1,3 @@
 module.name=com.google.protobuf
-module.layer=bpms
 module.type=static
 module.location=com/google/protobuf

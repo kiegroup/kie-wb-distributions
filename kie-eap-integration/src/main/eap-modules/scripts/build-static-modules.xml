@@ -16,7 +16,9 @@ INPUT parameters:
 - static-modules-list-file -> The path where generating module.list file is located.
 - eap-configuration-file -> The path for the EAP configuration properties.
 - static-modules-output-path -> The output path where generating all modules stuff.
+- static-modules-layer-name -> The name for the generated modules layer.
 - static-modules-assembly-output-file -> The path where generating modules assembly descriptor.
+- static-modules-assembly-id -> The identifier for the resulting assembly.
 - templates.path -> The source forlder where all templates are located.
 - patches.path -> The source forlder where all patch files are located.
 
@@ -24,9 +26,11 @@ OUTPUT:
 - Generates a filesystem structure:
     - <modules-output-path>
         - <static-modules-assembly-output-file>
+        - layers.conf
         - <module-name>  (For each module defined in modules.list file)
             - module.xml
             - assembly-component.xml
+            - <webfragment jars> (If webfragments patch is enabled)
 
 -->
 <project name="build-static-modules" xmlns:ac="net.sf.antcontrib" default="main" basedir="../">
@@ -41,13 +45,15 @@ OUTPUT:
     <property name="modules.output.path" value="${static-modules-output-path}${file.separator}"/>
     <property name="modules.list.file.path" value="${static-modules-list-file}"/>
     <property name="module.assembly.global.output.path" value="${static-modules-assembly-output-file}"/>
+    <property name="module.assembly.id" value="${static-modules-assembly-id}"/>
+    <property name="module.layer.id" value="${static-modules-layer-name}"/>
     <property name="templates.source.path" value="${templates.path}"/>
     <property name="templates.module.xml.file.path" value="${templates.source.path}${file.separator}module.template"/>
     <property name="templates.module.assembly-component.file.path" value="${templates.source.path}${file.separator}assembly-eap-module-component.template"/>
     <property name="templates.module.assembly.modules.file.path" value="${templates.source.path}${file.separator}assembly-eap-static-modules.template"/>
     <property name="templates.module.assembly-file.file.path" value="${templates.source.path}${file.separator}assembly-file.template"/>
     <property name="templates.module.assembly-file-set.file.path" value="${templates.source.path}${file.separator}assembly-file-set.template"/>
-    <property name="templates.layers.conf.file.path" value="${templates.source.path}${file.separator}layers.conf"/>
+    <property name="templates.layers.conf.file.path" value="${templates.source.path}${file.separator}layers.template"/>
 
     <property name="patches.source.path" value="${patches.path}${file.separator}"/>
 
@@ -184,12 +190,37 @@ OUTPUT:
                     <param name="module.patches.metainf" value="${module.patches.metainf.value}"/>
                 </antcall>
 
+                <!-- Create the module layer configuration file.. -->
+                <antcall target="create-module-layer-conf">
+                    <param name="module.name" value="${module.name}"/>
+                    <param name="module.layer" value="${module.layer.id}"/>
+                </antcall>
+
             </ac:then>
         </ac:if>
 
-
-
     </target>
+
+    <!-- Generates the layer.conf file using the <code>module.layer</code> as layer name.
+        Input parameteres:
+        - module.name
+        - module.layer
+        Output:
+        - Generates the layer.conf file at ${modules.output.path}/${module.name}
+    -->
+    <target name="create-module-layer-conf">
+        <build-from-template-file template-file="${templates.layers.conf.file.path}">
+            <template-file-params>
+                <param type="token" name="LAYER_NAME" value="${module.layer}"/>
+            </template-file-params>
+            <template-file-result>
+                <property name="module.layer.content" value="@{template-content}"/>
+            </template-file-result>
+        </build-from-template-file>
+        <echo file="${modules.output.path}${file.separator}layers.conf">${module.layer.content}</echo>
+    </target>
+
+
 
     <!-- Generates the content for this module.xml file.
         Input parameteres:
@@ -347,7 +378,7 @@ OUTPUT:
     -->
     <target name="create-module-assembly-component">
 
-        <property name="module.output.path" value="modules${file.separator}system${file.separator}layers${file.separator}bpms${file.separator}${module.path}${file.separator}main${file.separator}"/>
+        <property name="module.output.path" value="modules${file.separator}system${file.separator}layers${file.separator}${module.layer.id}${file.separator}${module.path}${file.separator}main${file.separator}"/>
         <property name="module.assembly.output.path" value="${modules.output.path}${module.name}${file.separator}assembly-component.xml"/>
 
         <echo level="info">Creating assembly component descriptor for module ${module.name} at ${module.assembly.output.path}...</echo>
@@ -506,7 +537,7 @@ OUTPUT:
     -->
     <target name="create-modules-global-assembly-descriptor">
 
-        <property name="module.output.path" value="modules${file.separator}system${file.separator}layers${file.separator}bpms${file.separator}${module.path}${file.separator}main${file.separator}"/>
+        <property name="module.output.path" value="modules${file.separator}system${file.separator}layers${file.separator}${module.layer.id}${file.separator}${module.path}${file.separator}main${file.separator}"/>
 
         <!-- Create the temp files. -->
         <tempfile destdir="${java.io.tmpdir}"
@@ -533,9 +564,9 @@ OUTPUT:
         <!-- Create the assembly component descriptor. -->
         <build-from-template-file template-file="${templates.module.assembly.modules.file.path}">
             <template-file-params>
-                <param type="token" name="ASSEMBLY_ID" value="eap-static-modules"/>
+                <param type="token" name="ASSEMBLY_ID" value="${module.assembly.id}"/>
                 <param type="token" name="ASSEMBLY_FORMAT" value="zip"/>
-                <param type="token" name="ASSEMBLY_LAYERS_CONF_FILE_PATH" value="${templates.layers.conf.file.path}"/>
+                <param type="token" name="ASSEMBLY_LAYERS_CONF_FILE_PATH" value="${modules.output.path}${file.separator}layers.conf"/>
                 <param type="token" name="ASSEMBLY_COMPONENT_DESCRIPTORS" value="${module.assembly.tmp.global.module-components.content}"/>
             </template-file-params>
             <template-file-result>

@@ -19,6 +19,7 @@
             <artifactId>ant</artifactId>
         </dependency>
 
+        <!-- Ant contrib extensions. -->
         <dependency>
             <groupId>ant-contrib</groupId>
             <artifactId>ant-contrib</artifactId>
@@ -44,10 +45,6 @@
         <eap-modules.templates.path>${basedir}/src/main/eap-modules/templates</eap-modules.templates.path>
         <eap-modules.patches.path>${basedir}/src/main/eap-modules/patches</eap-modules.patches.path>
         <eap-modules.static.list.file>${eap-modules.source.path}/modules.list</eap-modules.static.list.file>
-
-        <!-- Outputs for generated resources (static modules). -->
-        <eap-modules.static.output.path>${project.build.directory}/eap-modules-generated/static-modules</eap-modules.static.output.path>
-        <eap-modules.static.assembly.output.file>${eap-modules.static.output.path}/modules-assembly.xml</eap-modules.static.assembly.output.file>
 
         <!-- Outputs for generated resources (static modules). -->
         <eap-modules.dynamic.output.path>${project.build.directory}/eap-modules-generated/dynamic-modules</eap-modules.dynamic.output.path>
@@ -85,10 +82,193 @@
             </properties>
         </profile>
 
+
+        <!--
+            IMPORTANT NOTE:
+            **************
+            - Each profile has different dependencies, so the resources in the generated modules are diffrerent.
+            - DO NOT build using "bpms-static-layer" and "brms-static-layer" profiles activated in same build.
+        -->
+
+        <!-- Create static layer distribution for BPMS. -->
+        <profile>
+            <id>bpms-static-layer</id>
+            <activation>
+                <activeByDefault>false</activeByDefault> 
+                <property>
+                    <name>bpms-static-layer</name>
+                </property>
+            </activation>
+            <dependencies>
+                <!-- This dependency provides for all artifacts. -->
+                <dependency>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-wb-webapp</artifactId>
+                    <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
+                    <type>pom</type>
+                </dependency>
+            </dependencies>
+            <properties>
+                <eap-modules.bpms.static.output.path>${project.build.directory}/eap-modules-generated/static-modules/bpms</eap-modules.bpms.static.output.path>
+                <eap-modules.bpms.static.assembly.output.file>${eap-modules.bpms.static.output.path}/modules-assembly.xml</eap-modules.bpms.static.assembly.output.file>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- Generates the BPMS static modules stuff. -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>ant-generate-bpms-static-modules-stuff</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <target>
+                                        <property name="static-modules-source-path" value="${eap-modules.source.path}"/>
+                                        <property name="static-modules-output-path" value="${eap-modules.bpms.static.output.path}"/>
+                                        <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
+                                        <property name="static-modules-layer-name" value="bpms"/>
+                                        <property name="static-modules-assembly-id" value="eap-bpms-static-modules"/>
+                                        <property name="static-modules-assembly-output-file"
+                                                  value="${eap-modules.bpms.static.assembly.output.file}"/>
+                                        <property name="templates.path" value="${eap-modules.templates.path}"/>
+                                        <property name="patches.path" value="${eap-modules.patches.path}"/>
+                                        <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
+
+                                        <echo>Creating JBoss EAP BPMS static modules stuff..</echo>
+
+                                        <taskdef resource="net/sf/antcontrib/antlib.xml"  uri="net.sf.antcontrib"
+                                                 classpathref="maven.compile.classpath" />
+
+                                        <ant antfile="${basedir}/src/main/eap-modules/scripts/build-static-modules.xml"
+                                             target="main" inheritRefs="true"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Assembly the BPMS distribution for static modules. -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <descriptors combine.children="append">
+                                <!-- Create the JBoss EAP BPMS static modules distribution. -->
+                                <descriptor>${eap-modules.bpms.static.assembly.output.file}</descriptor>
+                            </descriptors>
+                            <archive>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                            </archive>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Create static layer distribution for BRMS. -->
+        <profile>
+            <id>brms-static-layer</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>brms-static-layer</name>
+                </property>
+            </activation>
+            <dependencies>
+                <!-- This dependency provides for all artifacts. -->
+                <dependency>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-drools-wb-webapp</artifactId>
+                    <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
+                    <type>pom</type>
+                </dependency>
+            </dependencies>
+            <properties>
+                <eap-modules.brms.static.output.path>${project.build.directory}/eap-modules-generated/static-modules/brms</eap-modules.brms.static.output.path>
+                <eap-modules.brms.static.assembly.output.file>${eap-modules.brms.static.output.path}/modules-assembly.xml</eap-modules.brms.static.assembly.output.file>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- Generates the BRMS static modules stuff. -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>ant-generate-brms-static-modules-stuff</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <target>
+                                        <property name="static-modules-source-path" value="${eap-modules.source.path}"/>
+                                        <property name="static-modules-output-path" value="${eap-modules.brms.static.output.path}"/>
+                                        <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
+                                        <property name="static-modules-layer-name" value="brms"/>
+                                        <property name="static-modules-assembly-id" value="eap-brms-static-modules"/>
+                                        <property name="static-modules-assembly-output-file"
+                                                  value="${eap-modules.brms.static.assembly.output.file}"/>
+                                        <property name="templates.path" value="${eap-modules.templates.path}"/>
+                                        <property name="patches.path" value="${eap-modules.patches.path}"/>
+                                        <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
+
+                                        <echo>Creating JBoss EAP BRMS static modules stuff..</echo>
+
+                                        <taskdef resource="net/sf/antcontrib/antlib.xml"  uri="net.sf.antcontrib"
+                                                 classpathref="maven.compile.classpath" />
+
+                                        <ant antfile="${basedir}/src/main/eap-modules/scripts/build-static-modules.xml"
+                                             target="main" inheritRefs="true"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Assembly the BRMS distribution for static modules. -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <descriptors combine.children="append">
+                                <!-- Create the JBoss EAP BRMS static modules distribution. -->
+                                <descriptor>${eap-modules.brms.static.assembly.output.file}</descriptor>
+                            </descriptors>
+                            <archive>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                            </archive>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+
         <!-- Create distribution for BPMS (kie-wb). -->
         <profile>
             <id>bpms</id>
             <activation>
+                <activeByDefault>false</activeByDefault> 
                 <property>
                     <name>bpms</name>
                 </property>
@@ -186,6 +366,7 @@
         <profile>
             <id>brms</id>
             <activation>
+                <activeByDefault>false</activeByDefault> 
                 <property>
                     <name>brms</name>
                 </property>
@@ -283,6 +464,7 @@
         <profile>
             <id>jbpm-dashboard</id>
             <activation>
+                <activeByDefault>false</activeByDefault> 
                 <property>
                     <name>jbpm-dashboard</name>
                 </property>
@@ -377,69 +559,5 @@
         </profile>
 
     </profiles>
-
-    <build>
-        <plugins>
-            <!-- Generates the static modules stuff. -->
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>ant-generate-static-modules-stuff</id>
-                        <phase>package</phase>
-                        <configuration>
-                            <target>
-                                <property name="static-modules-source-path" value="${eap-modules.source.path}"/>
-                                <property name="static-modules-output-path" value="${eap-modules.static.output.path}"/>
-                                <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
-                                <property name="static-modules-assembly-output-file"
-                                          value="${eap-modules.static.assembly.output.file}"/>
-                                <property name="templates.path" value="${eap-modules.templates.path}"/>
-                                <property name="patches.path" value="${eap-modules.patches.path}"/>
-                                <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
-
-                                <echo>Creating JBoss EAP static modules stuff..</echo>
-
-                                <taskdef resource="net/sf/antcontrib/antlib.xml"  uri="net.sf.antcontrib"
-                                         classpathref="maven.compile.classpath" />
-
-                                <ant antfile="${basedir}/src/main/eap-modules/scripts/build-static-modules.xml"
-                                     target="main" inheritRefs="true"/>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Assembly the distribution for static modules. -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <descriptors>
-                        <!-- Create the JBoss EAP static modules distribution. -->
-                        <descriptor>${eap-modules.static.assembly.output.file}</descriptor>
-                    </descriptors>
-                    <archive>
-                        <addMavenDescriptor>false</addMavenDescriptor>
-                    </archive>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
-
-
 
 </project>
