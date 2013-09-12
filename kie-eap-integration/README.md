@@ -4,10 +4,15 @@ Custom distribution for JBoss EAP based on static modules
 BPMS/BRMS application are distributed using skinny WARs for JBoss EAP 6.1, JBoss AS7, etc. But these distributions depend only on JBoss EAP base static modules.
 
 This module allows to create a BPMS/BRMS distribution based on base EAP modules and custom new generated ones. So, this distribution contains:
+
 1.- A new BPMS static modules layer for JBoss EAP (named <code>bpms</code>) - This layer is used when deploying the BPMS skinny war (artifact #3)
+
 2.- A new BRMS static modules layer for JBoss EAP (named <code>brms</code>) - This layer is used when deploying the BRMS skinny war (artifact #4)
+
 3.- Skinny WAR for BPMS
+
 4.- Skinny WAR for BRMS
+
 5.- Skinny WAR for jBPM dashboard
 
 
@@ -80,7 +85,7 @@ Profiles:
 - To generate the BRMS (kie-drools-wb) distribution, use <code>mvn clean install -Dbrms</code> to enable the brms profile and generate the skinny war.
 - To generate the JBPM Dashboard distribution, use <code>mvn clean install -Djbpm-dashboard</code> to enable the jbpm-dashboard profile and generate the skinny war.
 
-IMPORTANT NOTE:
+**IMPORTANT NOTE**:
 * Each profile has different dependencies. If using more than one profile at same build, the dependencies from used profiles are merged.
 * **So, ONLY USE ONE SINGLE PROFILE FOR A BUILD.**
 * If you want to build several artifacts, build them using different maven executions, each one with one profile.
@@ -99,8 +104,11 @@ Deployment on JBoss EAP
 =======================
 
 To deploy the resulting artifacts to a JBoss EAP installation, please follow the steps:
+
 1.- Unzip <code>kie-eap-integration-X.Y.Z-SNAPSHOT-eap-bpms-static-modules.zip</code> or <code>kie-eap-integration-X.Y.Z-SNAPSHOT-eap-brms-static-modules.zip</code> into $JBOSS_HOME.
+
 2.- Copy a generated skinny war (for example <code>kie-eap-integration-X.Y.Z-SNAPSHOT-org.kie.kie-wb-webapp-eap-modules.war</code>) into $JBOSS_HOME/standalone/deployments
+
 3.- Run JBoss EAP
 
-*IMPORTANT NOTE: Please, use a clean JBoss EAP installation for deployment.
+**IMPORTANT NOTE**: Please, use a clean JBoss EAP installation for deployment.
