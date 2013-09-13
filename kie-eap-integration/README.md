@@ -4,14 +4,22 @@ Custom distribution for JBoss EAP based on static modules
 BPMS/BRMS application are distributed using skinny WARs for JBoss EAP 6.1, JBoss AS7, etc. But these distributions depend only on JBoss EAP base static modules.
 
 This module allows to create a BPMS/BRMS distribution based on base EAP modules and custom new generated ones. So, this distribution contains:
-* A new static modules layer for JBoss EAP named <code>bpms</code>
-* Skinny WARS for BPMS/BRMS that depend on base and <code>bpms</code> layer modules.
+
+1.- A new BPMS static modules layer for JBoss EAP (named <code>bpms</code>) - This layer is used when deploying the BPMS skinny war (artifact #3)
+
+2.- A new BRMS static modules layer for JBoss EAP (named <code>brms</code>) - This layer is used when deploying the BRMS skinny war (artifact #4)
+
+3.- Skinny WAR for BPMS
+
+4.- Skinny WAR for BRMS
+
+5.- Skinny WAR for jBPM dashboard
 
 
 BPMS Layer distribution
 -----------------------
 
-The BPMS static modules layer distribution adds the follosing modules:
+The static modules layer distribution adds the follosing modules:
 
 * org.kie.lib
 * org.kie
@@ -48,6 +56,7 @@ The BPMS static modules layer distribution adds the follosing modules:
 * org.junit
 * org.apache.xmlbeans
 
+NOTE: For BPMS and BRMS, the modules list is the same, but the resources that each module contains is not the same.
 
 How to run
 ==========
@@ -68,24 +77,25 @@ $# mvn clean install -Deap-modules Deap-610
 
 Profiles:
 ----------
-- If no profile for building this module is specified, only static modules distribution is generated.
+- If no profile for building this module is specified, NO distributions are generated.
+
+- To generate the BPMS static layer distribution, use <code>mvn clean install -Dbpms-static-layer</code> to enable the bpms-static-layer profile and generate the static layers for BPMS.
+- To generate the BRMS static layer distribution, use <code>mvn clean install -Dbrms-static-layer</code> to enable the brms-static-layer profile and generate the static layers for BRMS.
 - To generate the BPMS (kie-wb) distribution, use <code>mvn clean install -Dbpms</code> to enable the bpms profile and generate the skinny war.
 - To generate the BRMS (kie-drools-wb) distribution, use <code>mvn clean install -Dbrms</code> to enable the brms profile and generate the skinny war.
 - To generate the JBPM Dashboard distribution, use <code>mvn clean install -Djbpm-dashboard</code> to enable the jbpm-dashboard profile and generate the skinny war.
-- To generate all skinny wars (for BPMS, BRMS and jBPM Dashboard) at same build, use <code>mvn clean install -Dbpms -Dbrms -Djbpm-dashboard</code>
 
-Examples
--------
-- Generate only the static modules: $# mvn clean install
-- Generate static modules and BPMS distributions: $# mvn clean install -Dbpms
-- Generate static modules and BRMS distributions: $# mvn clean install -Dbrms
-- Generate static modules and jbpm-dashboard distributions: $# mvn clean install -Djbpm-dashboard
-- Generate static modules and BPMS, BRMS and jbpm-dashboard distributions: $# mvn clean install -Dbpms -Dbrms -Djbpm-dashboard
+**IMPORTANT NOTE**:
+* Each profile has different dependencies. If using more than one profile at same build, the dependencies from used profiles are merged.
+* **So, ONLY USE ONE SINGLE PROFILE FOR A BUILD.**
+* If you want to build several artifacts, build them using different maven executions, each one with one profile.
+
 
 Resulting artifacts
 ---------------------
 * The resulting artifacts are generated into <code>target</code> directory:
-- <code>kie-eap-integration-X.Y.Z-SNAPSHOT-eap-static-modules.zip</code> Contains the static modules zip distribution to deploy on JBoss EAP.
+- <code>kie-eap-integration-X.Y.Z-SNAPSHOT-eap-bpms-static-modules.zip</code> Contains the BPMS static modules zip distribution to deploy on JBoss EAP.
+- <code>kie-eap-integration-X.Y.Z-SNAPSHOT-eap-brms-static-modules.zip</code> Contains the BRMS static modules zip distribution to deploy on JBoss EAP.
 - <code>kie-eap-integration-X.Y.Z-SNAPSHOT-org.kie.kie-wb-webapp-eap-modules.war</code> Contains the skinny war distribution for kie-wb (BPMS) artifact customized on new static bpms modules
 - <code>kie-eap-integration-X.Y.Z-SNAPSHOT-org.kie.kie-drools-wb-webapp-eap-modules.war</code> Contains the skinny war distribution for kie-drools-wb (BRMS) artifact customized on new static bpms modules
 - <code>kie-eap-integration-X.Y.Z-SNAPSHOT-org.jbpm.dashboard.jbpm-dashboard-eap-modules.war</code> Contains the skinny war distribution for jBPM Dashbuilder artifact customized on new static bpms modules
@@ -94,7 +104,11 @@ Deployment on JBoss EAP
 =======================
 
 To deploy the resulting artifacts to a JBoss EAP installation, please follow the steps:
-1.- Unzip <code>kie-eap-integration-X.Y.Z-SNAPSHOT-eap-static-modules.zip</code> into $JBOSS_HOME
+
+1.- Unzip <code>kie-eap-integration-X.Y.Z-SNAPSHOT-eap-bpms-static-modules.zip</code> or <code>kie-eap-integration-X.Y.Z-SNAPSHOT-eap-brms-static-modules.zip</code> into $JBOSS_HOME.
+
 2.- Copy a generated skinny war (for example <code>kie-eap-integration-X.Y.Z-SNAPSHOT-org.kie.kie-wb-webapp-eap-modules.war</code>) into $JBOSS_HOME/standalone/deployments
+
 3.- Run JBoss EAP
-NOTE: Please, use a clean JBoss EAP installation for deployment.
+
+**IMPORTANT NOTE**: Please, use a clean JBoss EAP installation for deployment.

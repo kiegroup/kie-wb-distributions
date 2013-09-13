@@ -47,6 +47,7 @@ import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
+import org.uberfire.client.UberFirePreferences;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
@@ -100,6 +101,7 @@ public class KieWorkbenchEntryPoint {
     }
 
     private void loadPreferences() {
+        UberFirePreferences.setProperty( "org.uberfire.client.workbench.widgets.listbar.context.disable", true );
         appConfigService.call( new RemoteCallback<Map<String, String>>() {
             @Override
             public void callback( final Map<String, String> response ) {

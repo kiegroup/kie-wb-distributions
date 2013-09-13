@@ -1,4 +1,3 @@
 module.name=org.mvel
-module.layer=bpms
 module.type=static
 module.location=org/mvel
