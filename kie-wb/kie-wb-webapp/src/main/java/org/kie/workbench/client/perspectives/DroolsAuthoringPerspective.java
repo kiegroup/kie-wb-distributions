@@ -23,7 +23,7 @@ import org.guvnor.inbox.client.InboxPresenter;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
-import org.kie.workbench.common.widgets.client.menu.ToolsMenu;
+import org.kie.workbench.common.widgets.client.menu.ProjectMenu;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -59,7 +59,7 @@ public class DroolsAuthoringPerspective {
     private NewResourcesMenu newResourcesMenu;
 
     @Inject
-    private ToolsMenu toolsMenu;
+    private ProjectMenu projectMenu;
 
     @Inject
     private PlaceManager placeManager;
@@ -151,7 +151,7 @@ public class DroolsAuthoringPerspective {
                 .withItems( newResourcesMenu.getMenuItems() )
                 .endMenu()
                 .newTopLevelMenu( constants.tools() )
-                .withItems( toolsMenu.getMenuItems() )
+                .withItems( projectMenu.getMenuItems() )
                 .endMenu().build();
     }
 
