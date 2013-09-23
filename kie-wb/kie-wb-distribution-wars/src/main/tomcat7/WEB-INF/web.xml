@@ -516,7 +516,8 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
-      <role-name>kie-user</role-name>
+      <role-name>admin</role-name>
+      <role-name>analyst</role-name>
     </auth-constraint>
   </security-constraint>
 
@@ -529,7 +530,20 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   </login-config>
 
   <security-role>
-    <role-name>kie-user</role-name>
+    <description>Administrator - Administrates the BPMS system. Has full access
+       rights to make any changes necessary. Also has the
+       ability to add and remove users from the system.
+    </description>
+    <role-name>admin</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Analyst - Responsible for creating and designing processes
+       into the system. Creates process flows and handles
+       process change requests. Needs to test processes that
+       they create. Also creates forms and dashboards.
+    </description>
+    <role-name>analyst</role-name>
   </security-role>
 
   <error-page>

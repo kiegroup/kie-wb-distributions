@@ -41,7 +41,7 @@ public class EnvironmentProvider {
     public static final Role ADMIN_ROLE = new Role() {
         @Override
         public String getName() {
-            return "ADMIN";
+            return "admin";
         }
     };
 

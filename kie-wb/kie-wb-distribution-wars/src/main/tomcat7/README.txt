@@ -2,8 +2,8 @@ Installation notes
 
 1. Install bitronix transaction manager into your tomcat 7
 - copy following libs into TOMCAT_HOME/lib
-    * btm-3.0.0-SNAPSHOT.jar   (needs version 3 due to https://jira.codehaus.org/browse/BTM-126 - and currently only snapshot is available)
-    * btm-tomcat55-lifecycle-2.1.2.jar
+    * btm-2.1.4.jar
+    * btm-tomcat55-lifecycle-2.1.4.jar
     * h2-1.3.161.jar
     * jta-1.1.jar
     * slf4j-api-1.7.2.jar
@@ -55,7 +55,7 @@ Configure JEE security for kie-wb on tomcat (with default realm backed by tomcat
 2. Copy jacc lib into TOMCAT_HOME/lib (javax.security.jacc-api in jboss maven repository)
 3. Add valve configuration into TOMCAT_HOME/conf/server.xml inside Host element as last valve definition
 <Valve className="org.kie.integration.tomcat.JACCValve" />
-4. Edit TOMCAT_HOME/conf/tomcat-users.xml to include roles and users, make sure there will be kie-user roles defined as it's required to be authorized to use kie-wb
+4. Edit TOMCAT_HOME/conf/tomcat-users.xml to include roles and users, make sure there will be 'analyst' or 'admin' roles defined as it's required to be authorized to use kie-wb
 5. Edit web.xml and uncomment all entries that are marked with TOMCAT-JEE-SECURITY
 6. Rename org.uberfire.security.auth.AuthenticationSource to org.uberfire.security.auth.AuthenticationSource-ORIGIN and
 rename  org.uberfire.security.auth.AuthenticationSource-TOMCAT-JEE-SECURITY to org.uberfire.security.auth.AuthenticationSource
