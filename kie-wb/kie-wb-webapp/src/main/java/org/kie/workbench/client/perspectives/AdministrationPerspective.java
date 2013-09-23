@@ -56,7 +56,7 @@ import static org.uberfire.workbench.model.toolbar.IconType.*;
 @WorkbenchPerspective(identifier = "org.kie.workbench.client.perspectives.AdministrationPerspective")
 public class AdministrationPerspective {
 
-    private static String[] PERMISSIONS_ADMIN = new String[]{ "ADMIN" };
+    private static String[] PERMISSIONS_ADMIN = new String[]{ "admin" };
 
     private AppConstants constants = AppConstants.INSTANCE;
 
