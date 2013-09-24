@@ -62,6 +62,8 @@ public interface AppConstants
 
     String repositories();
 
+    String listRepositories();
+
     String cloneRepository();
 
     String newRepository();
