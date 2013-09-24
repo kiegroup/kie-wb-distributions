@@ -24,6 +24,7 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.client.resources.i18n.AppConstants;
+import org.kie.workbench.common.services.security.AppRoles;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
@@ -56,7 +57,7 @@ import static org.uberfire.workbench.model.toolbar.IconType.*;
 @WorkbenchPerspective(identifier = "org.kie.workbench.client.perspectives.AdministrationPerspective")
 public class AdministrationPerspective {
 
-    private static String[] PERMISSIONS_ADMIN = new String[]{ "admin" };
+    private static String[] PERMISSIONS_ADMIN = new String[]{ AppRoles.ADMIN.getName() };
 
     private AppConstants constants = AppConstants.INSTANCE;
 
