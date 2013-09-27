@@ -438,18 +438,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   </mime-mapping>
   <!-- END DESIGNER -->
 
-    <!-- start form-modeler -->
-    <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/Controller</url-pattern>
-    </servlet-mapping>
-    <!-- end form-modeler-->
-
   <resource-env-ref>
     <description>Object factory for the CDI Bean Manager</description>
     <resource-env-ref-name>BeanManager</resource-env-ref-name>

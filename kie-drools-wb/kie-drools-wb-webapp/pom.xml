@@ -610,43 +610,12 @@
     <!-- formModeler dependencies -->
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-app</artifactId>
-      <type>war</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-renderer-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-editor-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-editor-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-editor-backend</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-data-modeler</artifactId>
+        <groupId>org.jbpm</groupId>
+        <artifactId>jbpm-form-modeler-service-core</artifactId>
     </dependency>
 
     <dependency>
@@ -770,15 +739,9 @@
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-commons</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-workbench</compileSourcesArtifact>
 
-            <!-- Form-modeler dependences -->
-            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-editor-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-client</compileSourcesArtifact>
-
           </compileSourcesArtifacts>
           <runTarget>org.kie.workbench.drools.KIEDroolsWebapp/KIEDroolsWebapp.html</runTarget>
-          <extraJvmArgs>-Xmx2048m -XX:MaxPermSize=256m -Dorg.kie.demo=true</extraJvmArgs>
+          <extraJvmArgs>-Xmx2048m -XX:MaxPermSize=256m -Dorg.kie.demo=true -Dorg.jbpm.designer.perspective=ruleflow</extraJvmArgs>
           <!--<logLevel>DEBUG</logLevel>-->
           <server>org.jboss.errai.cdi.server.gwt.JettyLauncher</server>
           <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile, see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
@@ -809,12 +772,6 @@
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
-          <overlays>
-            <overlay>
-              <groupId>org.jbpm</groupId>
-              <artifactId>jbpm-form-modeler-app</artifactId>
-            </overlay>
-          </overlays>
           <webResources>
             <resource>
               <directory>${basedir}/src/main/webapp/WEB-INF</directory>
