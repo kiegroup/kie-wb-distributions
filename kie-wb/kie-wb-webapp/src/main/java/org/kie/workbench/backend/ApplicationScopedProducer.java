@@ -42,6 +42,7 @@ import org.kie.kieora.io.IOSearchIndex;
 import org.kie.kieora.io.IOServiceIndexedImpl;
 import org.kie.kieora.search.SearchIndex;
 import org.uberfire.backend.repositories.Repository;
+import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
 
@@ -62,6 +63,9 @@ public class ApplicationScopedProducer {
     @Named("clusterServiceFactory")
     private ClusterServiceFactory clusterServiceFactory;
 
+    @Inject
+    private IOWatchServiceNonDotImpl watchService;
+
     @PersistenceUnit(unitName = "org.jbpm.domain")
     private EntityManagerFactory emf;
 
@@ -79,7 +83,8 @@ public class ApplicationScopedProducer {
                                                                    new SimpleFieldFactory() );
         final SearchIndex searchIndex = new LuceneSearchIndex( luceneSetup );
 
-        final IOService service = new IOServiceIndexedImpl( indexEngine,
+        final IOService service = new IOServiceIndexedImpl( watchService,
+                                                            indexEngine,
                                                             DublinCoreView.class,
                                                             VersionAttributeView.class,
                                                             OtherMetaView.class );
