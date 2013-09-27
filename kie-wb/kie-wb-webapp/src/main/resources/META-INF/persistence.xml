@@ -4,6 +4,7 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>jdbc/jbpmConsoleDS</jta-data-source>
     <mapping-file>META-INF/Taskorm.xml</mapping-file>
+    <mapping-file>META-INF/TaskAuditorm.xml</mapping-file>
     <mapping-file>META-INF/JBPMorm.xml</mapping-file>
     <mapping-file>META-INF/Executor-orm.xml</mapping-file>
     <mapping-file>META-INF/Servicesorm.xml</mapping-file>
@@ -30,6 +31,7 @@
     <class>org.jbpm.services.task.impl.model.UserImpl</class>
     <class>org.jbpm.executor.entities.ErrorInfo</class>
     <class>org.jbpm.executor.entities.RequestInfo</class>
+    <class>org.jbpm.services.task.audit.TaskEventImpl</class>
 
     <!--BAM for task service -->
     <class>org.jbpm.services.task.impl.model.BAMTaskSummaryImpl</class>
