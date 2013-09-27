@@ -60,3 +60,4 @@ Configure JEE security for kie-wb on tomcat (with default realm backed by tomcat
 6. Rename org.uberfire.security.auth.AuthenticationSource to org.uberfire.security.auth.AuthenticationSource-ORIGIN and
 rename  org.uberfire.security.auth.AuthenticationSource-TOMCAT-JEE-SECURITY to org.uberfire.security.auth.AuthenticationSource
 inside WEB-INF/classes/META-INF/services
+7. edit beans.xml file in WEB-INF and uncomment JAASUserGroupCallback and remove MvelUserGroupCallbackImpl

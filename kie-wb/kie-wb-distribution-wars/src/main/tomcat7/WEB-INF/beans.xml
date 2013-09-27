@@ -24,6 +24,8 @@
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://docs.jboss.org/cdi/beans_1_0.xsd">
 
   <alternatives>
+    <!-- uncomment JAASUserGroupCallbackImpl when using JEE security on Tomcat -->
+    <!--class>org.jbpm.services.task.identity.JAASUserGroupCallbackImpl</class-->
     <class>org.jbpm.services.task.identity.MvelUserGroupCallbackImpl</class>
     <!--class>org.jbpm.task.impl.CommandBasedTaskInstanceServiceImpl</class-->
   </alternatives>
