@@ -83,7 +83,8 @@ public class ApplicationScopedProducer {
             ioService = service;
         } else {
             ioService = new IOServiceClusterImpl( service,
-                                                  clusterServiceFactory );
+                                                  clusterServiceFactory,
+                                                  false );
         }
 
         this.ioSearchService = new IOSearchIndex( searchIndex,

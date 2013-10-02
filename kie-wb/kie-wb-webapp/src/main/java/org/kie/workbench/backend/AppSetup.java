@@ -24,7 +24,9 @@ import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
+import org.kie.commons.io.IOClusteredService;
 import org.kie.commons.io.IOService;
+import org.kie.commons.io.impl.cluster.IOServiceClusterImpl;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
 import org.uberfire.backend.repositories.RepositoryService;
@@ -113,6 +115,11 @@ public class AppSetup {
         // rest of jbpm wb bootstrap
         administrationService.bootstrapConfig();
         administrationService.bootstrapDeployments();
+
+        // notify cluster service that bootstrap is completed to start synchronization
+        if (ioService instanceof IOClusteredService) {
+            ((IOClusteredService) ioService).start();
+        }
 
     }
 
