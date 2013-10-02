@@ -23,8 +23,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
+import org.kie.commons.io.IOService;
+import org.kie.commons.io.IOClusteredService;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
 import org.uberfire.backend.organizationalunit.OrganizationalUnit;
@@ -52,6 +55,10 @@ public class AppSetup {
 
     private static final String GLOBAL_SETTINGS = "settings";
     // default repository section - end
+
+    @Inject
+    @Named("ioStrategy")
+    private IOService ioService;
 
     @Inject
     private RepositoryService repositoryService;
@@ -114,6 +121,11 @@ public class AppSetup {
         }
         if ( !workItemsEditorSettingsDefined ) {
             configurationService.addConfiguration( getWorkItemElementDefinitions() );
+        }
+
+        // notify cluster service that bootstrap is completed to start synchronization
+        if (ioService instanceof IOClusteredService) {
+            ((IOClusteredService) ioService).start();
         }
     }
 
