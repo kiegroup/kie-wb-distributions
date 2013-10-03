@@ -82,8 +82,8 @@ public class AppSetup {
             administrationService.bootstrapRepository( "demo", DROOLS_WB_PLAYGROUND_ALIAS, DROOLS_WB_PLAYGROUND_ORIGIN,
                                                        DROOLS_WB_PLAYGROUND_UID, DROOLS_WB_PLAYGROUND_PWD );
         } else if ("true".equalsIgnoreCase(System.getProperty("org.kie.example"))) {
-            administrationService.bootstrapRepository( "example", "example-repository", null, "", "" );
-            administrationService.bootstrapProject("example-repository", "org.kie.example", "example-project", "1.0.0-SNAPSHOT");
+            administrationService.bootstrapRepository( "example", "repository1", null, "", "" );
+            administrationService.bootstrapProject("repository1", "org.kie.example", "project1", "1.0.0-SNAPSHOT");
         }
 
         // TODO Setup mandatory properties for Drools-Workbench
