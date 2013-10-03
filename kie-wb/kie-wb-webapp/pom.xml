@@ -78,6 +78,7 @@
     <dependency>
         <groupId>org.jbpm</groupId>
         <artifactId>jbpm-human-task-audit</artifactId>
+        <version>${project.version}</version>
     </dependency>
 
     <dependency>
