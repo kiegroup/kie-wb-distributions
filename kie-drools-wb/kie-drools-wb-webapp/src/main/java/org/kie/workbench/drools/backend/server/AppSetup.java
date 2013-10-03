@@ -26,10 +26,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
+import org.guvnor.common.services.project.model.GAV;
+import org.guvnor.common.services.project.model.POM;
+import org.guvnor.common.services.project.service.ProjectService;
 import org.kie.commons.io.IOService;
 import org.kie.commons.io.IOClusteredService;
 import org.kie.commons.services.cdi.Startup;
 import org.kie.commons.services.cdi.StartupType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.uberfire.backend.organizationalunit.OrganizationalUnit;
 import org.uberfire.backend.organizationalunit.OrganizationalUnitService;
 import org.uberfire.backend.repositories.Repository;
@@ -45,6 +50,8 @@ import org.uberfire.backend.server.config.ConfigurationService;
 @Startup(StartupType.BOOTSTRAP)
 @ApplicationScoped
 public class AppSetup {
+
+    private static final Logger logger = LoggerFactory.getLogger(AppSetup.class);
 
     // default repository section - start
     private static final String DROOLS_WB_PLAYGROUND_SCHEME = "git";
@@ -72,31 +79,27 @@ public class AppSetup {
     @Inject
     private ConfigurationFactory configurationFactory;
 
+    @Inject
+    private ProjectService projectService;
+
     @PostConstruct
     public void assertPlayground() {
 
         if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-            Repository repository = repositoryService.getRepository( DROOLS_WB_PLAYGROUND_ALIAS );
-            if ( repository == null ) {
-                repository = repositoryService.createRepository( DROOLS_WB_PLAYGROUND_SCHEME,
-                                                                 DROOLS_WB_PLAYGROUND_ALIAS,
-                                                                 new HashMap<String, Object>() {{
-                                                                     put( "origin", DROOLS_WB_PLAYGROUND_ORIGIN );
-                                                                     put( "username", DROOLS_WB_PLAYGROUND_UID );
-                                                                     put( "crypt:password", DROOLS_WB_PLAYGROUND_PWD );
-                                                                 }} );
-            }
+            Repository repository = createRepository ( DROOLS_WB_PLAYGROUND_ALIAS,
+                                                        DROOLS_WB_PLAYGROUND_SCHEME,
+                                                        DROOLS_WB_PLAYGROUND_ORIGIN,
+                                                        DROOLS_WB_PLAYGROUND_UID,
+                                                        DROOLS_WB_PLAYGROUND_PWD);
+            createOU(repository, "demo", "demo@demo.org");
 
-            // TODO in case Organizational Units are not defined
-            Collection<OrganizationalUnit> organizationalUnits = organizationalUnitService.getOrganizationalUnits();
-            if ( organizationalUnits == null || organizationalUnits.isEmpty() ) {
-                List<Repository> repositories = new ArrayList<Repository>();
-                repositories.add( repository );
-                organizationalUnitService.createOrganizationalUnit( "demo",
-                                                                    "demo@jbpm.org",
-                                                                    repositories );
-            }
+        }  else if ("true".equalsIgnoreCase(System.getProperty("org.kie.example"))) {
+
+            Repository exampleRepo = createRepository ( "repository1", "git", null, "", "" );
+            createOU(exampleRepo, "example", "");
+            createProject(exampleRepo, "org.kie.example", "project1", "1.0.0-SNAPSHOT");
         }
+
         //Define mandatory properties
         List<ConfigGroup> globalConfigGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
         boolean globalSettingsDefined = false;
@@ -181,6 +184,47 @@ public class AppSetup {
         group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_DISPLAY_NAME,
                                                                  "\"displayName\" : \"My Task|\"" ) );
         return group;
+    }
+
+    private Repository createRepository(String alias, String scheme, final String origin, final String user, final String password) {
+        Repository repository = repositoryService.getRepository( alias );
+        if ( repository == null ) {
+            repository = repositoryService.createRepository( scheme,
+                    alias,
+                    new HashMap<String, Object>() {{
+                        if (origin != null) {
+                            put( "origin", origin );
+                        }
+                        put( "username", user );
+                        put( "crypt:password", password );
+                    }} );
+        }
+        return repository;
+    }
+
+    private OrganizationalUnit createOU(Repository repository, String ouName, String ouOwner) {
+        OrganizationalUnit ou = organizationalUnitService.getOrganizationalUnit(ouName);;
+        if (ou == null) {
+            List<Repository> repositories = new ArrayList<Repository>();
+            repositories.add( repository );
+            organizationalUnitService.createOrganizationalUnit( ouName,
+                    ouOwner,
+                    repositories );
+        }
+        return ou;
+    }
+
+    private void createProject(Repository repository, String group, String artifact, String version) {
+        GAV gav = new GAV(group, artifact, version);
+        try {
+            if (repository != null) {
+                projectService.newProject(repository, artifact, new POM(gav), "/");
+            } else {
+                logger.error("Repository was not found (is null), cannot add project");
+            }
+        } catch (Exception e) {
+            logger.error("Unable to bootstrap project {} in repository {}", gav, repository.getAlias(), e);
+        }
     }
 
 }
