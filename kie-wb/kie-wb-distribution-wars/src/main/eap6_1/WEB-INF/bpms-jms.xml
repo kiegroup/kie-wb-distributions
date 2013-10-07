@@ -42,6 +42,11 @@
         <entry name="java:jboss/exported/jms/queue/KIE.RESPONSE.DOMAIN.EXAMPLE" />
       </jms-queue>
       -->
+      <!-- JMS queue for audit -->
+      <jms-queue name="KIE.AUDIT">
+        <entry name="queue/KIE.AUDIT.ALL" />
+        <entry name="java:jboss/exported/jms/queue/KIE.AUDIT" />
+      </jms-queue>
     </jms-destinations>
   </hornetq-server>
 </messaging-deployment>
