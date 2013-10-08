@@ -28,7 +28,7 @@ public class CmdMain {
 
     public static void main(String[] args) {
         // most important settings driven by jvm system properties
-        System.setProperty("org.kie.nio.git.deamon.enabled", "false");
+        System.setProperty("org.kie.nio.git.daemon.enabled", "false");
         System.setProperty("java.awt.headless", "true");
         // use scanner to read user input
         Scanner scanner = new Scanner(new InputStreamReader(System.in));
@@ -78,7 +78,7 @@ public class CmdMain {
 		        	System.out.println(result);
 		        	System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	        	} catch (Throwable e) {
-	        		System.err.println("Unglanded exception caught while executing command " + commandName + " error: " + e.getMessage());
+	        		System.err.println("Unhandled exception caught while executing command " + commandName + " error: " + e.getMessage());
 	        		e.printStackTrace();
 	        	}
 	        	System.out.println(">>Please enter command (type help to see available commands): ");
