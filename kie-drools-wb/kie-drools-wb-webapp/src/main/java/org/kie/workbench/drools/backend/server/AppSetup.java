@@ -16,6 +16,7 @@
 
 package org.kie.workbench.drools.backend.server;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -218,7 +219,11 @@ public class AppSetup {
         GAV gav = new GAV(group, artifact, version);
         try {
             if (repository != null) {
-                projectService.newProject(repository, artifact, new POM(gav), "/");
+
+                String projectLocation = repository.getUri() + ioService.getFileSystem(URI.create(repository.getUri())).getSeparator() + artifact;
+                if (!ioService.exists(ioService.get(URI.create(projectLocation)))) {
+                    projectService.newProject(repository, artifact, new POM(gav), "/");
+                }
             } else {
                 logger.error("Repository was not found (is null), cannot add project");
             }
