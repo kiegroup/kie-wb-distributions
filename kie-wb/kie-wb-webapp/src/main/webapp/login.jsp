@@ -14,19 +14,16 @@
     <div id="login-wrapper" class="png_bg">
 
         <div id="login-top">
-
             <%--<img src="<%=request.getContextPath()%>/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>--%>
-
         </div>
 
         <div id="login-content" class="png_bg">
-            <c:if test="${param.message != null}">
-                <h3><c:out value="${param.message}"/></h3>
-            </c:if>
-
             <form action="j_security_check" method="POST">
                 <fieldset>
                     <legend><img src="<%=request.getContextPath()%>/images/RH_JBoss_BPMS_Logo.png" alt="RED HAT JBOSS BPM SUITE" title="RED HAT JBOSS BPM SUITE"/></legend>
+                    <c:if test="${param.message != null}">
+                      <h3><c:out value="${param.message}"/></h3>
+                    </c:if>
                     <label>Username</label><input value="" name="j_username" class="text-input" type="text" autofocus/>
                     <br style="clear: both;"/>
                     <label>Password</label><input name="j_password" class="text-input" type="password"/>
