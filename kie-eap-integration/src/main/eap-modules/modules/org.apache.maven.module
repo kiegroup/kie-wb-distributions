@@ -1,0 +1,3 @@
+module.name=org.apache.maven
+module.type=static
+module.location=org/apache/maven

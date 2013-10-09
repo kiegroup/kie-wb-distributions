@@ -1,0 +1,10 @@
+org.apache.maven:maven-settings:jar
+org.apache.maven:maven-model-builder:jar
+org.apache.maven:maven-repository-metadata:jar
+org.apache.maven:maven-model:jar
+org.apache.maven:maven-compat:jar
+org.apache.maven:maven-artifact:jar
+org.apache.maven:maven-aether-provider:jar
+org.apache.maven:maven-plugin-api:jar
+org.apache.maven:maven-settings-builder:jar
+org.apache.maven:maven-core:jar

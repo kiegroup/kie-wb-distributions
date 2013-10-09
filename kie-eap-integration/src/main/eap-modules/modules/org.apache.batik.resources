@@ -1,0 +1,15 @@
+batik:batik-dom:jar
+batik:batik-css:jar
+batik:batik-script:jar
+batik:batik-extension:jar
+batik:batik-svg-dom:jar
+batik:batik-svggen:jar
+batik:batik-transcoder:jar
+batik:batik-xml:jar
+batik:batik-util:jar
+batik:batik-awt-util:jar
+batik:batik-bridge:jar
+batik:batik-gvt:jar
+batik:batik-ext:jar
+batik:batik-gui-util:jar
+batik:batik-parser:jar

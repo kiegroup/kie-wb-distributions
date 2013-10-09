@@ -1,0 +1,7 @@
+<fileSet>
+    <directory>@FILESET_DIRECTORY@</directory>
+    <outputDirectory>@FILESET_OUTPUT_DIRECTORY@</outputDirectory>
+    <includes>
+        <include>@FILESET_INCLUDE@</include>
+    </includes>
+</fileSet>

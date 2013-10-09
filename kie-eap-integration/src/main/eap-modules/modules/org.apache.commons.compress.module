@@ -1,0 +1,3 @@
+module.name=org.apache.commons.compress
+module.type=static
+module.location=org/apache/commons/compress

@@ -1,0 +1,15 @@
+org.jbpm:jbpm-executor:jar
+org.jbpm:jbpm-persistence-jpa:jar
+org.jbpm:jbpm-human-task-core:jar
+org.jbpm:jbpm-bpmn2-emfextmodel:jar
+org.jbpm:jbpm-workitems:jar
+org.jbpm:jbpm-human-task-workitems:jar
+org.drools:jbpm-simulation:jar
+org.jbpm:jbpm-kie-services:jar
+org.jbpm:jbpm-bpmn2:jar
+org.jbpm:jbpm-flow-builder:jar
+org.jbpm:jbpm-runtime-manager:jar
+org.jbpm:jbpm-audit:jar
+org.jbpm:jbpm-shared-services:jar
+org.jbpm:jbpm-form-services:jar
+org.jbpm:jbpm-flow:jar

@@ -1,0 +1,5 @@
+org.kie.lib
+javax.enterprise.api
+org.apache.ant
+org.jaxen
+javax.api

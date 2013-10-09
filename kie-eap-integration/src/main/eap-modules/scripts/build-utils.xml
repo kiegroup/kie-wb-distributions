@@ -1,0 +1,194 @@
+<!--
+INPUT parameters:
+- templates.path -> The source forlder where all templates are located.
+-->
+<project name="build-utils" xmlns:ac="net.sf.antcontrib" basedir="../">
+
+    <property name="templates.assembly-properties.file.path" value="${templates.path}${file.separator}assembly.properties"/>
+
+    <!-- Load assembly properties. -->
+    <property file="${templates.assembly-properties.file.path}"/>
+
+    <!-- Generates content from a template property..
+            Input parameters:
+            - template-property -> The template file to use.
+            - template-prop-params -> Macrodef element to set template parameters.
+            - template-prop-result -> Macrodef element that set the result into @teamplated-content attribute.
+        -->
+    <macrodef name="build-from-template-property">
+        <attribute name="template-property" default=""/>
+        <element name="template-prop-params" optional="yes"/>
+        <element name="template-prop-result" optional="yes"/>
+
+        <sequential>
+            <tempfile destdir="${java.io.tmpdir}"
+                      property="temp2.file" createfile="true" deleteonexit="true" suffix="template-property"/>
+            <echo file="${temp2.file}">${assembly.eap-modules.@{template-property}}</echo>
+
+            <build-from-template-file template-file="${temp2.file}">
+                <template-file-params>
+                    <template-prop-params/>
+                </template-file-params>
+                <template-file-result>
+                    <template-prop-result/>
+                </template-file-result>
+            </build-from-template-file>
+
+        </sequential>
+    </macrodef>
+
+    <!-- Generates content from a template file..
+        Input parameters:
+        - template-file -> The template file to use.
+        - template-file-params -> Macrodef element to set template parameters.
+        - template-file-result -> Macrodef element that set the result into @teamplated-content attribute.
+    -->
+    <macrodef name="build-from-template-file">
+        <attribute name="template-file" default=""/>
+        <element name="template-file-params" optional="yes"/>
+        <element name="template-file-result" optional="yes"/>
+
+        <sequential>
+            <tempfile destdir="${java.io.tmpdir}"
+                    property="temp.file" createfile="true" deleteonexit="true" suffix="template-file"/>
+
+            <concat destfile="${temp.file}" append="true">
+                <fileset file="@{template-file}"/>
+                <filterchain>
+                    <filterreader classname="org.apache.tools.ant.filters.ReplaceTokens">
+                        <template-file-params/>
+                    </filterreader>
+                </filterchain>
+            </concat>
+            <loadfile property="template.result"
+                      srcFile="${temp.file}"
+                      encoding="UTF-8" quiet="true"/>
+            <template-result-helper template-content="${template.result}">
+                <template-result-element>
+                    <template-file-result/>
+                </template-result-element>
+            </template-result-helper>
+
+
+        </sequential>
+    </macrodef>
+
+    <!-- Used to pass the template result content to a macrodef element...
+        Input parameters:
+        - template-content -> The template content.
+        - template-result-element -> Macrodef element to set template content to the element.
+    -->
+    <macrodef name="template-result-helper">
+        <attribute name="template-content" default=""/>
+        <element name="template-result-element" optional="yes"/>
+        <sequential>
+            <template-result-element/>
+        </sequential>
+    </macrodef>
+
+    <!-- Generates a jar artifact with the webfragment descriptor inside META-INF
+            Input parameters:
+            - webfragment-source-file
+            - jar-name
+            - jar-path
+        -->
+    <macrodef name="create-webfragment-jar">
+        <attribute name="webfragment-source-file" default=""/>
+        <attribute name="jar-name" default=""/>
+        <attribute name="jar-path" default=""/>
+        <sequential>
+            <property name="tmp-dir" value="${java.io.tmpdir}${file.separator}webfragment-@{jar-name}"/>
+
+            <!-- Create the temp directory to compress. -->
+            <delete dir="${tmp-dir}" includeemptydirs="true" failonerror="false"/>
+            <mkdir dir="${tmp-dir}"/>
+            <mkdir dir="${tmp-dir}${file.separatore}META-INF"/>
+            <copy file="@{webfragment-source-file}" tofile="${tmp-dir}${file.separator}META-INF${file.separator}web-fragment.xml"/>
+
+            <!-- Jar the temp directory. -->
+            <jar destfile="@{jar-path}${file.separator}@{jar-name}.jar" basedir="${tmp-dir}"/>
+        </sequential>
+    </macrodef>
+
+    <!-- Extracts the web-fragment.xml file from a jar file.
+            Input parameters:
+            - jar-file-path
+            - output-path
+            - output-name
+        -->
+    <macrodef name="extract-webfragment-jar">
+        <attribute name="jar-file-path" default=""/>
+        <attribute name="output-path" default=""/>
+        <attribute name="output-name" default=""/>
+        <sequential>
+            <property name="tmp-dir" value="${java.io.tmpdir}${file.separator}webfragment-extracted"/>
+
+            <!-- Create the temp directory to uncompress. -->
+            <delete dir="${tmp-dir}" includeemptydirs="true" failonerror="false"/>
+
+            <!-- Uncompres the jar. -->
+            <unzip src="@{jar-file-path}" dest="${tmp-dir}"/>
+
+            <!-- Copy the web-fragment.xml to output location. -->
+            <copy file="${tmp-dir}${file.separator}META-INF${file.separator}web-fragment.xml" tofile="@{output-path}${file.separator}@{output-name}" failonerror="true"/>
+
+        </sequential>
+    </macrodef>
+
+
+    <!-- For TESTING purposes. -->
+    <target name="test-template-file">
+        <property name="templates.assembly-eap-module.file.result.path" value="/home/romartin/development/temp/kie-wb-distributions-romartin/kie-wb/kie-wb-distribution-wars/src/main/eap-6_1-modules/result/result.txt"/>
+        <build-from-template-file template-file="${templates.assembly-eap-modules.file.path}">
+            <template-file-params>
+                <param type="token" name="COMPONENT_DESCRIPTORS" value="prva"/>
+            </template-file-params>
+            <template-file-result>
+                <property name="result" value="@{template-content}"/>
+            </template-file-result>
+        </build-from-template-file>
+        <echo>Result: ${result}</echo>
+    </target>
+
+    <!-- For TESTING purposes. -->
+    <target name="test-template-property">
+
+        <build-from-template-property template-property="dependency-set.exclude">
+            <template-prop-params>
+                <param type="token" name="DEPENDENCY" value="prva"/>
+            </template-prop-params>
+            <template-prop-result>
+                <property name="result" value="@{template-content}"/>
+            </template-prop-result>
+        </build-from-template-property>
+
+        <echo>Result: ${result}</echo>
+    </target>
+
+    <!-- For TESTING purposes. -->
+    <target name="test-template-dependency-set">
+        <antcall target="test-template-dependency-set-include-inc"/>
+        <antcall target="test-template-dependency-set-include-exc"/>
+    </target>
+
+    <!-- For TESTING purposes. -->
+    <target name="test-template-dependency-set-include-inc">
+        <template-dependency-set-include dependency="INC">
+            <template-dependency-set-include-result>
+                <property name="result-include" value="@{template-content}"/>
+            </template-dependency-set-include-result>
+        </template-dependency-set-include>
+        <echo>Include: ${result-include}</echo>
+    </target>
+
+    <!-- For TESTING purposes. -->
+    <target name="test-template-dependency-set-include-exc">
+        <template-dependency-set-exclude dependency="EXC">
+            <template-dependency-set-exclude-result>
+                <property name="result-exclude" value="@{template-content}"/>
+            </template-dependency-set-exclude-result>
+        </template-dependency-set-exclude>
+        <echo>Exclude: ${result-exclude}</echo>
+    </target>
+
+</project>

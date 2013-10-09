@@ -1,0 +1,3 @@
+module.name=org.sonatype.plexus
+module.type=static
+module.location=org/sonatype/plexus
