@@ -87,8 +87,16 @@ Profiles:
 
 **IMPORTANT NOTE**:
 * Each profile has different dependencies. If using more than one profile at same build, the dependencies from used profiles are merged.
-* **So, ONLY USE ONE SINGLE PROFILE FOR A BUILD.**
-* If you want to build several artifacts, build them using different maven executions, each one with one profile.
+* **So, DO NOT USE BPMS / BRMS PROFILES IN SAME BUILD.**
+* For example:
+* Generate BPMS artifacts
+** run <code>mvn clean install -Dbpms-static-layer -Dbpms -Djbpm-dashboard</code>
+** Artifacts generated: modules ZIP for BPMS, skinny kie-wb WAR, skinny jBPM-dashboard WAR
+* Generate BRMS artifacts
+** run <code>mvn clean install -Dbrms-static-layer -Dbrms</code>
+** Artifacts generated: modules ZIP for BRMS, skinny kie-drools-wb WAR
+** But do **NOT** run  <code>mvn clean install -Dbpms-static-layer -Dbpms -Dbrms-static-layer -Dbrms</code>
+
 
 
 Resulting artifacts
