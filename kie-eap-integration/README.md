@@ -95,7 +95,7 @@ Profiles:
 * Generate BRMS artifacts
 ** run <code>mvn clean install -Dbrms-static-layer -Dbrms</code>
 ** Artifacts generated: modules ZIP for BRMS, skinny kie-drools-wb WAR
-** But do **NOT** run  <code>mvn clean install -Dbpms-static-layer -Dbpms -Dbrms-static-layer -Dbrms</code>
+* But do **NOT** run  <code>mvn clean install -Dbpms-static-layer -Dbpms -Dbrms-static-layer -Dbrms</code>
 
 
 
