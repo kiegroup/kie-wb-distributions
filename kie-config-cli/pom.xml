@@ -254,10 +254,6 @@
           <groupId>org.jbpm</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>jbpm-form-services</artifactId>
-          <groupId>org.jbpm</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>kie-ci</artifactId>
           <groupId>org.kie</groupId>
         </exclusion>
