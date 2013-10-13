@@ -24,11 +24,10 @@ import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
-import org.kie.commons.io.IOClusteredService;
-import org.kie.commons.io.IOService;
-import org.kie.commons.io.impl.cluster.IOServiceClusterImpl;
-import org.kie.commons.services.cdi.Startup;
-import org.kie.commons.services.cdi.StartupType;
+import org.uberfire.io.IOClusteredService;
+import org.uberfire.io.IOService;
+import org.uberfire.commons.services.cdi.Startup;
+import org.uberfire.commons.services.cdi.StartupType;
 import org.uberfire.backend.repositories.RepositoryService;
 import org.uberfire.backend.server.config.ConfigGroup;
 import org.uberfire.backend.server.config.ConfigType;

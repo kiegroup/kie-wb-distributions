@@ -14,18 +14,18 @@
 
 		<!-- kie commons -->
 		<dependency>
-			<groupId>org.kie.commons</groupId>
-			<artifactId>kie-nio2-jgit</artifactId>
+			<groupId>org.uberfire</groupId>
+			<artifactId>uberfire-nio2-jgit</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.kie.commons</groupId>
-			<artifactId>kie-nio2-fs</artifactId>
+			<groupId>org.uberfire</groupId>
+			<artifactId>uberfire-nio2-fs</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.kie.commons</groupId>
-			<artifactId>kie-commons-io</artifactId>
+			<groupId>org.uberfire</groupId>
+      <artifactId>uberfire-io</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.helix</groupId>
@@ -34,8 +34,8 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.kie.commons</groupId>
-			<artifactId>kie-commons-data</artifactId>
+			<groupId>org.uberfire</groupId>
+      <artifactId>uberfire-commons</artifactId>
 		</dependency>
 
 		<!-- uberfire deps -->
@@ -168,12 +168,12 @@
           <artifactId>errai-bus</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.kie.commons</groupId>
-          <artifactId>kie-commons-io</artifactId>
+          <groupId>org.uberfire</groupId>
+          <artifactId>uberfire-io</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.kie.commons</groupId>
-          <artifactId>kie-nio2-api</artifactId>
+          <groupId>org.uberfire</groupId>
+          <artifactId>uberfire-nio2-api</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.uberfire</groupId>
@@ -266,16 +266,16 @@
           <groupId>org.kie</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>kie-commons-io</artifactId>
-          <groupId>org.kie.commons</groupId>
+          <artifactId>uberfire-io</artifactId>
+          <groupId>org.uberfire</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>kie-commons-cdi</artifactId>
-          <groupId>org.kie.commons</groupId>
+          <artifactId>uberfire-commons</artifactId>
+          <groupId>org.uberfire</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>kie-nio2-model</artifactId>
-          <groupId>org.kie.commons</groupId>
+          <artifactId>uberfire-nio2-model</artifactId>
+          <groupId>org.uberfire</groupId>
         </exclusion>
         <exclusion>
           <artifactId>seam-transaction</artifactId>
