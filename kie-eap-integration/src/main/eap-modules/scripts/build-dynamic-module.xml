@@ -51,7 +51,7 @@ OUTPUT:
     <property name="templates.module.assembly-file-set.file.path" value="${templates.source.path}${file.separator}assembly-file-set.template"/>
 
     <property name="patches.source.path" value="${patches.path}${file.separator}"/>
-    <property name="patches.cdi-extensions.source.path" value="${patches.source.path}cdi-extensions${file.separator}"/>
+    <property name="patches.org.uberfire.commons.services.cdi-extensions.source.path" value="${patches.source.path}org.uberfire.commons.services.cdi-extensions${file.separator}"/>
     <property name="patches.webfragments.source.path" value="${patches.source.path}webfragments${file.separator}"/>
 
 
@@ -81,7 +81,7 @@ OUTPUT:
         <eap-configuration-properties eap-config-file="${eap-configuration-file}">
             <eap-configuration-property-result>
                 <property name="eap.configuration.modules.list.path" value="@{modules-list-file}"/>
-                <property name="eap.configuration.patch.cdi-extensions" value="@{patch-cdi-extensions}"/>
+                <property name="eap.configuration.patch.org.uberfire.commons.services.cdi-extensions" value="@{patch-org.uberfire.commons.services.cdi-extensions}"/>
                 <property name="eap.configuration.patch.webfragments" value="@{patch-webfragments}"/>
             </eap-configuration-property-result>
         </eap-configuration-properties>
@@ -93,17 +93,17 @@ OUTPUT:
 
                 <echo level="info">Creating dynamic module ${module.name}...</echo>
 
-                <!-- Check if there are cdi extensions patches enabled. -->
+                <!-- Check if there are org.uberfire.commons.services.cdi extensions patches enabled. -->
                 <ac:if>
                     <and>
-                        <isset property="module.patches.cdi-extensions"/>
-                        <equals arg1="${eap.configuration.patch.cdi-extensions}" arg2="true"/>
+                        <isset property="module.patches.org.uberfire.commons.services.cdi-extensions"/>
+                        <equals arg1="${eap.configuration.patch.org.uberfire.commons.services.cdi-extensions}" arg2="true"/>
                     </and>
                     <ac:then>
-                        <property name="module.patches.cdi-extensions.value" value="${module.patches.cdi-extensions}"/>
+                        <property name="module.patches.org.uberfire.commons.services.cdi-extensions.value" value="${module.patches.org.uberfire.commons.services.cdi-extensions}"/>
                     </ac:then>
                     <ac:else>
-                        <property name="module.patches.cdi-extensions.value" value=""/>
+                        <property name="module.patches.org.uberfire.commons.services.cdi-extensions.value" value=""/>
                     </ac:else>
                 </ac:if>
 
@@ -152,21 +152,21 @@ OUTPUT:
                     <param name="file-name" value="${module.assembly.dependency-set.exludes.path}"/>
                 </antcall>
 
-                <!--  Generate the cdi-extensions output.-->
-                <antcall target="create-cdi-extensions">
+                <!--  Generate the org.uberfire.commons.services.cdi-extensions output.-->
+                <antcall target="create-org.uberfire.commons.services.cdi-extensions">
                     <param name="module-name" value="${module.name}"/>
-                    <param name="module-patches-cdi-extensions" value="${module.patches.cdi-extensions.value}"/>
+                    <param name="module-patches-org.uberfire.commons.services.cdi-extensions" value="${module.patches.org.uberfire.commons.services.cdi-extensions.value}"/>
                     <param name="file-name" value="${module.assembly.file-set.includes.path}"/>
                 </antcall>
 
-                <!-- Create the cdi extensions inclusions for the generated assembly descripttor. -->
-                <condition property="module-patches-cdi-extensions.is-set">
+                <!-- Create the org.uberfire.commons.services.cdi extensions inclusions for the generated assembly descripttor. -->
+                <condition property="module-patches-org.uberfire.commons.services.cdi-extensions.is-set">
                     <not>
-                        <equals arg1="${module.patches.cdi-extensions.value}" arg2=""/>
+                        <equals arg1="${module.patches.org.uberfire.commons.services.cdi-extensions.value}" arg2=""/>
                     </not>
                 </condition>
                 <ac:if>
-                    <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
+                    <ac:equals arg1="${module-patches-org.uberfire.commons.services.cdi-extensions.is-set}" arg2="true"/>
                     <ac:then>
                         <antcall target="create-file-set-inclusion">
                             <param name="file-name" value="${module.assembly.file-set.includes.path}"/>
@@ -363,45 +363,45 @@ OUTPUT:
     </target>
 
     <!-- Generate the CDI extensions output..
-        - Copy the cdi extensions to META-INF/services of the webapp.
+        - Copy the org.uberfire.commons.services.cdi extensions to META-INF/services of the webapp.
         - Merge all SPI extensions from patches source path into <code>javax.enterprise.inject.spi.Extension</code> file.
 
        Input parameteres:
        - module-name
-       - module-patches-cdi-extensions
+       - module-patches-org.uberfire.commons.services.cdi-extensions
        - file-name
    -->
-    <target name="create-cdi-extensions">
+    <target name="create-org.uberfire.commons.services.cdi-extensions">
 
-        <condition property="module-patches-cdi-extensions.is-set">
+        <condition property="module-patches-org.uberfire.commons.services.cdi-extensions.is-set">
             <not>
-                <equals arg1="${module-patches-cdi-extensions}" arg2=""/>
+                <equals arg1="${module-patches-org.uberfire.commons.services.cdi-extensions}" arg2=""/>
             </not>
         </condition>
         <ac:if>
-            <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
+            <ac:equals arg1="${module-patches-org.uberfire.commons.services.cdi-extensions.is-set}" arg2="true"/>
             <ac:then>
 
                 <!-- The path for javax.enterprise.inject.spi.Extension generated file. -->
-                <property name="patches.cdi-extensions.output.path" value="${modules.output.path}${module-name}${file.separator}META-INF${file.separator}services${file.separator}"/>
-                <property name="module.patches.cdi-extensions.spi-file.output.path" value="${patches.cdi-extensions.output.path}javax.enterprise.inject.spi.Extension"/>
+                <property name="patches.org.uberfire.commons.services.cdi-extensions.output.path" value="${modules.output.path}${module-name}${file.separator}META-INF${file.separator}services${file.separator}"/>
+                <property name="module.patches.org.uberfire.commons.services.cdi-extensions.spi-file.output.path" value="${patches.org.uberfire.commons.services.cdi-extensions.output.path}javax.enterprise.inject.spi.Extension"/>
 
-                <ac:for param="cdi-extension" list="${module-patches-cdi-extensions}" delimiter=",">
+                <ac:for param="org.uberfire.commons.services.cdi-extension" list="${module-patches-org.uberfire.commons.services.cdi-extensions}" delimiter=",">
                     <ac:sequential>
 
-                        <copy todir="${patches.cdi-extensions.output.path}">
-                            <fileset dir="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}">
+                        <copy todir="${patches.org.uberfire.commons.services.cdi-extensions.output.path}">
+                            <fileset dir="${patches.org.uberfire.commons.services.cdi-extensions.source.path}@{org.uberfire.commons.services.cdi-extension}${file.separator}">
                                 <exclude name="**/javax.enterprise.inject.spi.Extension"/>
                             </fileset>
                         </copy>
 
 
                         <ac:if>
-                            <available file="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
+                            <available file="${patches.org.uberfire.commons.services.cdi-extensions.source.path}@{org.uberfire.commons.services.cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
                             <ac:then>
-                                <antcall target="append-cdi-extension-spi-file">
-                                    <param name="source-file" value="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
-                                    <param name="dest-file" value="${module.patches.cdi-extensions.spi-file.output.path}"/>
+                                <antcall target="append-org.uberfire.commons.services.cdi-extension-spi-file">
+                                    <param name="source-file" value="${patches.org.uberfire.commons.services.cdi-extensions.source.path}@{org.uberfire.commons.services.cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
+                                    <param name="dest-file" value="${module.patches.org.uberfire.commons.services.cdi-extensions.spi-file.output.path}"/>
                                 </antcall>
                             </ac:then>
                         </ac:if>
@@ -419,13 +419,13 @@ OUTPUT:
       - source-file
       - dest-file
   -->
-    <target name="append-cdi-extension-spi-file">
+    <target name="append-org.uberfire.commons.services.cdi-extension-spi-file">
 
-        <loadfile property="cdi-extension.spi-file.source.content"
+        <loadfile property="org.uberfire.commons.services.cdi-extension.spi-file.source.content"
                   srcFile="${source-file}"
                   encoding="UTF-8" failonerror="true"/>
 
-        <echo file="${dest-file}" append="true">${cdi-extension.spi-file.source.content}</echo>
+        <echo file="${dest-file}" append="true">${org.uberfire.commons.services.cdi-extension.spi-file.source.content}</echo>
         <echo file="${dest-file}" append="true">${line.separator}</echo>
 
     </target>
@@ -439,22 +439,22 @@ OUTPUT:
 
        Input parameteres:
        - module-name
-       - module-patches-cdi-extensions
+       - module-patches-org.uberfire.commons.services.cdi-extensions
        - directory
        - output
        - file-name
    -->
     <target name="create-file-set-includes">
 
-        <condition property="module-patches-cdi-extensions.is-set">
+        <condition property="module-patches-org.uberfire.commons.services.cdi-extensions.is-set">
             <not>
-                <equals arg1="${module-patches-cdi-extensions}" arg2=""/>
+                <equals arg1="${module-patches-org.uberfire.commons.services.cdi-extensions}" arg2=""/>
             </not>
         </condition>
         <ac:if>
-            <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
+            <ac:equals arg1="${module-patches-org.uberfire.commons.services.cdi-extensions.is-set}" arg2="true"/>
             <ac:then>
-                <ac:for param="cdi-extension" list="${module-patches-cdi-extensions}" delimiter=",">
+                <ac:for param="org.uberfire.commons.services.cdi-extension" list="${module-patches-org.uberfire.commons.services.cdi-extensions}" delimiter=",">
                     <ac:sequential>
                         <antcall target="create-file-set-inclusion">
                             <param name="file-name" value="${file-name}"/>
