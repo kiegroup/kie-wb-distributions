@@ -9,7 +9,7 @@ INPUT parameters:
         - eap-configuration-property-result
 
         Output properties for <code>eap-configuration-property-result</code> element:
-        - patch-org.uberfire.commons.services.cdi-extensions
+        - patch-cdi-extensions
         - patch-webfragments
         - modules-list-file
     -->
@@ -30,7 +30,7 @@ INPUT parameters:
             <!-- Read eap configuration properties. -->
             <property file="@{eap-config-file}"/>
 
-            <eap-configuration-property-result-helper patch-org.uberfire.commons.services.cdi-extensions="${patches.org.uberfire.commons.services.cdi-extensions}"  patch-webfragments="${patches.webfragments}" modules-list-file="${modules.list}">
+            <eap-configuration-property-result-helper patch-cdi-extensions="${patches.cdi-extensions}"  patch-webfragments="${patches.webfragments}" modules-list-file="${modules.list}">
                 <eap-configuration-property-result-helper-element>
                     <eap-configuration-property-result/>
                 </eap-configuration-property-result-helper-element>
@@ -42,13 +42,13 @@ INPUT parameters:
     <!-- Used to pass patch flags value.
 
         Input parameters:
-        - patch-org.uberfire.commons.services.cdi-extensions
+        - patch-cdi-extensions
         - patch-webfragments
         - modules-list-file
         - eap-configuration-property-result-helper-element
     -->
     <macrodef name="eap-configuration-property-result-helper">
-        <attribute name="patch-org.uberfire.commons.services.cdi-extensions" default=""/>
+        <attribute name="patch-cdi-extensions" default=""/>
         <attribute name="patch-webfragments" default=""/>
         <attribute name="modules-list-file" default=""/>
         <element name="eap-configuration-property-result-helper-element" optional="yes"/>
