@@ -246,13 +246,6 @@ public class KieWorkbenchEntryPoint {
             public void execute() {
                 placeManager.goTo(new DefaultPlaceRequest("Deployments"));
             }
-        }).endMenu().build().getItems().get(0));
-        
-        result.add( MenuFactory.newSimpleItem( constants.Jobs() ).withRoles(kieACL.getGrantedRoles(F_JOBS)).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Jobs" ) );
-            }
         } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
