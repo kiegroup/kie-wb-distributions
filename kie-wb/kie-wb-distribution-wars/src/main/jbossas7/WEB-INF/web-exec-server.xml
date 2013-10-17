@@ -96,6 +96,9 @@ Their default values are shown as example param-values -->
         <auth-constraint>
           <role-name>admin</role-name>
           <role-name>analyst</role-name>
+          <role-name>developer</role-name>
+          <role-name>user</role-name>
+          <role-name>manager</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -120,4 +123,27 @@ Their default values are shown as example param-values -->
     <role-name>analyst</role-name>
   </security-role>
 
+  <security-role>
+    <description>Developer - Implements code required for process to work. Mostly uses
+      the JBDS connection to view processes, but may use the
+      web tool occasionally.
+    </description>
+    <role-name>developer</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Business user - Daily user of the system to take actions on business tasks
+      that are required for the processes to continue forward. Works
+      primarily with the task lists.
+    </description>
+    <role-name>user</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Manager/Viewer-only User - Viewer of the system that is interested in statistics
+      around the  business processes and their performance, business indicators, and other
+      reporting of the system and people who interact with the system.
+    </description>
+    <role-name>manager</role-name>
+  </security-role>
 </web-app>
