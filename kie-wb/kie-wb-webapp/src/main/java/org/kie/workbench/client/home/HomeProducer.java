@@ -10,11 +10,14 @@ import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.AppConstants;
+import org.kie.workbench.client.security.KieWorkbenchSecurity;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
+
+import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
 
 /**
  * Producer method for the Home Page content
@@ -29,7 +32,9 @@ public class HomeProducer {
     @Inject
     private PlaceManager placeManager;
 
-    @PostConstruct
+    @Inject
+    private KieWorkbenchSecurity kieSecurity;
+
     public void init() {
         final String url = GWT.getModuleBaseURL();
         model = new HomeModel( constants.homeTheKnowledgeLifeCycle() );
@@ -75,6 +80,7 @@ public class HomeProducer {
                                                           placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
                                                       }
                                                   } ) );
+        s1.setRoles(kieSecurity.getRoles(G_AUTHORING));
         model.addSection( s1 );
 
         final Section s2 = new Section( constants.Deploy() );
@@ -87,6 +93,7 @@ public class HomeProducer {
                                                       }
                                                   } ) );
 
+        s2.setRoles(kieSecurity.getRoles(G_DEPLOY));
         model.addSection( s2 );
 
         final Section s3 = new Section( constants.Process_Management() );
@@ -106,6 +113,7 @@ public class HomeProducer {
                                                           placeManager.goTo( "Process Instances" );
                                                       }
                                                   } ) );
+        s3.setRoles(kieSecurity.getRoles(G_PROCESS_MANAGEMENT));
         model.addSection( s3 );
 
         final Section s4 = new Section( constants.Tasks() );
@@ -117,6 +125,7 @@ public class HomeProducer {
                                                           placeManager.goTo( "Tasks" );
                                                       }
                                                   } ) );
+        s4.setRoles(kieSecurity.getRoles(G_TASKS));
         model.addSection( s4 );
 
         final Section s5 = new Section( constants.Dashboards() );
@@ -138,6 +147,7 @@ public class HomeProducer {
                                                       }
                                                   } ) );
 
+        s5.setRoles(kieSecurity.getRoles(G_DASHBOARDS));
         model.addSection( s5 );
     }
 
