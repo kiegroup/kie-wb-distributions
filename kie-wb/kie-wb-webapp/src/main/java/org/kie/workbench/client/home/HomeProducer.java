@@ -1,6 +1,5 @@
 package org.kie.workbench.client.home;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -10,10 +9,11 @@ import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.AppConstants;
-import org.kie.workbench.client.security.KieWorkbenchSecurity;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
+import org.kie.workbench.common.screens.home.model.SectionEntry;
+import org.kie.workbench.common.services.security.KieWorkbenchACL;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 
@@ -33,7 +33,7 @@ public class HomeProducer {
     private PlaceManager placeManager;
 
     @Inject
-    private KieWorkbenchSecurity kieSecurity;
+    private KieWorkbenchACL kieACL;
 
     public void init() {
         final String url = GWT.getModuleBaseURL();
@@ -54,101 +54,145 @@ public class HomeProducer {
                                                               constants.homeImproveCaption(),
                                                               url + "/images/HandHome.jpg" ) );
         final Section s1 = new Section( constants.Authoring() );
-        s1.addEntry( ModelUtils.makeSectionEntry( constants.Project_Authoring(),
-                                                  new Command() {
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective" );
-                                                      }
-                                                  } ) );
+        SectionEntry s1_a = ModelUtils.makeSectionEntry( constants.Project_Authoring(),
+                new Command() {
 
-        s1.addEntry( ModelUtils.makeSectionEntry( constants.Asset_repo(),
-                                                  new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective" );
+                    }
+                } );
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
-                                                      }
-                                                  } ) );
+        SectionEntry s1_b = ModelUtils.makeSectionEntry( constants.Asset_repo(),
+                new Command() {
 
-        s1.addEntry( ModelUtils.makeSectionEntry( constants.Administration(),
-                                                  new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
+                    }
+                } );
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
-                                                      }
-                                                  } ) );
-        s1.setRoles(kieSecurity.getRoles(G_AUTHORING));
-        model.addSection( s1 );
+        SectionEntry s1_c = ModelUtils.makeSectionEntry( constants.Administration(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
+                    }
+                } );
 
         final Section s2 = new Section( constants.Deploy() );
-        s2.addEntry( ModelUtils.makeSectionEntry( constants.Deployments(),
-                                                  new Command() {
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "Deployments" );
-                                                      }
-                                                  } ) );
+        SectionEntry s2_a = ModelUtils.makeSectionEntry( constants.Deployments(),
+                new Command() {
 
-        s2.setRoles(kieSecurity.getRoles(G_DEPLOY));
-        model.addSection( s2 );
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "Deployments" );
+                    }
+                } );
+
+        SectionEntry s2_b = ModelUtils.makeSectionEntry( constants.Jobs(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "Jobs" );
+                    }
+                } );
 
         final Section s3 = new Section( constants.Process_Management() );
-        s3.addEntry( ModelUtils.makeSectionEntry( constants.Process_Definitions(),
-                                                  new Command() {
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "Process Definitions" );
-                                                      }
-                                                  } ) );
-        s3.addEntry( ModelUtils.makeSectionEntry( constants.Process_Instances(),
-                                                  new Command() {
+        SectionEntry s3_a = ModelUtils.makeSectionEntry( constants.Process_Definitions(),
+                new Command() {
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "Process Instances" );
-                                                      }
-                                                  } ) );
-        s3.setRoles(kieSecurity.getRoles(G_PROCESS_MANAGEMENT));
-        model.addSection( s3 );
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "Process Definitions" );
+                    }
+                } );
+
+        SectionEntry s3_b = ModelUtils.makeSectionEntry( constants.Process_Instances(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "Process Instances" );
+                    }
+                } );
 
         final Section s4 = new Section( constants.Tasks() );
-        s4.addEntry( ModelUtils.makeSectionEntry( constants.Tasks_List(),
-                                                  new Command() {
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "Tasks" );
-                                                      }
-                                                  } ) );
-        s4.setRoles(kieSecurity.getRoles(G_TASKS));
-        model.addSection( s4 );
+        SectionEntry s4_a = ModelUtils.makeSectionEntry(constants.Tasks_List(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo("Tasks");
+                    }
+                } );
 
         final Section s5 = new Section( constants.Dashboards() );
-        s5.addEntry( ModelUtils.makeSectionEntry( constants.Process_Dashboard(),
-                                                  new Command() {
 
-                                                      @Override
-                                                      public void execute() {
-                                                          placeManager.goTo( "DashboardPerspective" );
-                                                      }
-                                                  } ) );
+        SectionEntry s5_a =  ModelUtils.makeSectionEntry( constants.Process_Dashboard(),
+                new Command() {
+
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "DashboardPerspective" );
+                    }
+                } );
 
         final String dashbuilderURL = DashboardURLBuilder.getDashboardURL("/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale());
-        s5.addEntry( ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
-                                                  new Command() {
-                                                      @Override
-                                                      public void execute() {
-                                                          Window.open( dashbuilderURL, "_blank", "" );
-                                                      }
-                                                  } ) );
+        SectionEntry s5_b = ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
+                new Command() {
+                    @Override
+                    public void execute() {
+                        Window.open( dashbuilderURL, "_blank", "" );
+                    }
+                } );
 
-        s5.setRoles(kieSecurity.getRoles(G_DASHBOARDS));
-        model.addSection( s5 );
+        s1.setRoles(kieACL.getGrantedRoles(G_AUTHORING));
+        s1_a.setRoles(kieACL.getGrantedRoles(F_PROJECT_AUTHORING));
+        s1_b.setRoles(kieACL.getGrantedRoles(F_ASSET_REPO));
+        s1_c.setRoles(kieACL.getGrantedRoles(F_ADMINISTRATION));
+
+        s2.setRoles(kieACL.getGrantedRoles(G_DEPLOY));
+        s2_a.setRoles(kieACL.getGrantedRoles(F_DEPLOYMENTS));
+        s2_b.setRoles(kieACL.getGrantedRoles(F_JOBS));
+
+        s3.setRoles(kieACL.getGrantedRoles(G_PROCESS_MANAGEMENT));
+        s3_a.setRoles(kieACL.getGrantedRoles(F_PROCESS_DEFINITIONS));
+        s3_b.setRoles(kieACL.getGrantedRoles(F_PROCESS_INSTANCES));
+
+        s4.setRoles(kieACL.getGrantedRoles(G_TASKS));
+        s4_a.setRoles(kieACL.getGrantedRoles(F_TASKS));
+
+        s5.setRoles(kieACL.getGrantedRoles(G_DASHBOARDS));
+        s5_a.setRoles(kieACL.getGrantedRoles(F_PROCESS_DASHBOARD));
+        s5_b.setRoles(kieACL.getGrantedRoles(F_DASHBOARD_BUILDER));
+
+        s1.addEntry(s1_a);
+        s1.addEntry(s1_b);
+        s1.addEntry(s1_c);
+
+        s2.addEntry(s2_a);
+        s2.addEntry(s2_b);
+
+        s3.addEntry(s3_a);
+        s3.addEntry(s3_b);
+
+        s4.addEntry(s4_a);
+
+        s5.addEntry(s5_a);
+        s5.addEntry(s5_b);
+
+        model.addSection(s1);
+        model.addSection(s2);
+        model.addSection(s3);
+        model.addSection(s4);
+        model.addSection(s5);
     }
 
     @Produces
