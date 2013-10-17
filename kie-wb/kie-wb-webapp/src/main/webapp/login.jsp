@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/styles/base.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/styles/forms.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/styles/login-screen.css">
-    <title>Red Hat BPMS :: Business Central</title>
+    <title>Red Hat JBoss BPM Suite :: Business central</title>
 </head>
 <body id="login">
 <div id="rcue-login-screen">
