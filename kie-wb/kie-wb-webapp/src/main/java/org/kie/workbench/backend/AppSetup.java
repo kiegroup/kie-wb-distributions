@@ -16,7 +16,6 @@
 package org.kie.workbench.backend;
 
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,15 +23,15 @@ import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
-import org.uberfire.io.IOClusteredService;
-import org.uberfire.io.IOService;
-import org.uberfire.commons.services.cdi.Startup;
-import org.uberfire.commons.services.cdi.StartupType;
 import org.uberfire.backend.repositories.RepositoryService;
 import org.uberfire.backend.server.config.ConfigGroup;
 import org.uberfire.backend.server.config.ConfigType;
 import org.uberfire.backend.server.config.ConfigurationFactory;
 import org.uberfire.backend.server.config.ConfigurationService;
+import org.uberfire.commons.services.cdi.Startup;
+import org.uberfire.commons.services.cdi.StartupType;
+import org.uberfire.io.IOClusteredService;
+import org.uberfire.io.IOService;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
 //is not deployed to the Application Servers /bin folder. This will be remedied when an
@@ -74,15 +73,15 @@ public class AppSetup {
     @PostConstruct
     public void assertPlayground() {
 
-        if (!"false".equalsIgnoreCase(System.getProperty("org.kie.demo"))) {
+        if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
             administrationService.bootstrapRepository( "demo", JBPM_WB_PLAYGROUND_ALIAS, JBPM_WB_PLAYGROUND_ORIGIN,
                                                        JBPM_WB_PLAYGROUND_UID, JBPM_WB_PLAYGROUND_PWD );
 
             administrationService.bootstrapRepository( "demo", DROOLS_WB_PLAYGROUND_ALIAS, DROOLS_WB_PLAYGROUND_ORIGIN,
                                                        DROOLS_WB_PLAYGROUND_UID, DROOLS_WB_PLAYGROUND_PWD );
-        } else if ("true".equalsIgnoreCase(System.getProperty("org.kie.example"))) {
+        } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
             administrationService.bootstrapRepository( "example", "repository1", null, "", "" );
-            administrationService.bootstrapProject("repository1", "org.kie.example", "project1", "1.0.0-SNAPSHOT");
+            administrationService.bootstrapProject( "repository1", "org.kie.example", "project1", "1.0.0-SNAPSHOT" );
         }
 
         // TODO Setup mandatory properties for Drools-Workbench
@@ -116,8 +115,8 @@ public class AppSetup {
         administrationService.bootstrapDeployments();
 
         // notify cluster service that bootstrap is completed to start synchronization
-        if (ioService instanceof IOClusteredService) {
-            ((IOClusteredService) ioService).start();
+        if ( ioService instanceof IOClusteredService ) {
+            ( (IOClusteredService) ioService ).start();
         }
 
     }
@@ -159,7 +158,11 @@ public class AppSetup {
                                                                        WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS,
                                                                        "" );
         group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_DEFINITION,
-                                                                 "[\n" +
+                                                                 "import org.drools.core.process.core.datatype.impl.type.StringDataType;\n" +
+                                                                         "import org.drools.core.process.core.datatype.impl.type.ObjectDataType;\n" +
+                                                                         "\n" +
+                                                                         "[\n" +
+                                                                         "  [\n" +
                                                                          "    \"name\" : \"MyTask|\", \n" +
                                                                          "    \"parameters\" : [ \n" +
                                                                          "        \"MyFirstParam\" : new StringDataType(), \n" +
@@ -171,6 +174,7 @@ public class AppSetup {
                                                                          "    ], \n" +
                                                                          "    \"displayName\" : \"My Task\", \n" +
                                                                          "    \"icon\" : \"\" \n" +
+                                                                         "  ]\n" +
                                                                          "]" ) );
         group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_PARAMETER,
                                                                  "\"MyParam|\" : new StringDataType()" ) );

@@ -51,7 +51,7 @@ import org.uberfire.backend.server.config.ConfigurationService;
 @ApplicationScoped
 public class AppSetup {
 
-    private static final Logger logger = LoggerFactory.getLogger(AppSetup.class);
+    private static final Logger logger = LoggerFactory.getLogger( AppSetup.class );
 
     // default repository section - start
     private static final String DROOLS_WB_PLAYGROUND_SCHEME = "git";
@@ -86,18 +86,18 @@ public class AppSetup {
     public void assertPlayground() {
 
         if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-            Repository repository = createRepository ( DROOLS_WB_PLAYGROUND_ALIAS,
-                                                        DROOLS_WB_PLAYGROUND_SCHEME,
-                                                        DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                        DROOLS_WB_PLAYGROUND_UID,
-                                                        DROOLS_WB_PLAYGROUND_PWD);
-            createOU(repository, "demo", "demo@demo.org");
+            Repository repository = createRepository( DROOLS_WB_PLAYGROUND_ALIAS,
+                                                      DROOLS_WB_PLAYGROUND_SCHEME,
+                                                      DROOLS_WB_PLAYGROUND_ORIGIN,
+                                                      DROOLS_WB_PLAYGROUND_UID,
+                                                      DROOLS_WB_PLAYGROUND_PWD );
+            createOU( repository, "demo", "demo@demo.org" );
 
-        }  else if ("true".equalsIgnoreCase(System.getProperty("org.kie.example"))) {
+        } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
 
-            Repository exampleRepo = createRepository ( "repository1", "git", null, "", "" );
-            createOU(exampleRepo, "example", "");
-            createProject(exampleRepo, "org.kie.example", "project1", "1.0.0-SNAPSHOT");
+            Repository exampleRepo = createRepository( "repository1", "git", null, "", "" );
+            createOU( exampleRepo, "example", "" );
+            createProject( exampleRepo, "org.kie.example", "project1", "1.0.0-SNAPSHOT" );
         }
 
         //Define mandatory properties
@@ -127,8 +127,8 @@ public class AppSetup {
         }
 
         // notify cluster service that bootstrap is completed to start synchronization
-        if (ioService instanceof IOClusteredService) {
-            ((IOClusteredService) ioService).start();
+        if ( ioService instanceof IOClusteredService ) {
+            ( (IOClusteredService) ioService ).start();
         }
     }
 
@@ -164,7 +164,11 @@ public class AppSetup {
                                                                        WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS,
                                                                        "" );
         group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_DEFINITION,
-                                                                 "[\n" +
+                                                                 "import org.drools.core.process.core.datatype.impl.type.StringDataType;\n" +
+                                                                         "import org.drools.core.process.core.datatype.impl.type.ObjectDataType;\n" +
+                                                                         "\n" +
+                                                                         "[\n" +
+                                                                         "  [\n" +
                                                                          "    \"name\" : \"MyTask|\", \n" +
                                                                          "    \"parameters\" : [ \n" +
                                                                          "        \"MyFirstParam\" : new StringDataType(), \n" +
@@ -176,6 +180,7 @@ public class AppSetup {
                                                                          "    ], \n" +
                                                                          "    \"displayName\" : \"My Task\", \n" +
                                                                          "    \"icon\" : \"\" \n" +
+                                                                         "  ]\n" +
                                                                          "]" ) );
         group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_PARAMETER,
                                                                  "\"MyParam|\" : new StringDataType()" ) );
@@ -186,48 +191,58 @@ public class AppSetup {
         return group;
     }
 
-    private Repository createRepository(String alias, String scheme, final String origin, final String user, final String password) {
+    private Repository createRepository( String alias,
+                                         String scheme,
+                                         final String origin,
+                                         final String user,
+                                         final String password ) {
         Repository repository = repositoryService.getRepository( alias );
         if ( repository == null ) {
             repository = repositoryService.createRepository( scheme,
-                    alias,
-                    new HashMap<String, Object>() {{
-                        if (origin != null) {
-                            put( "origin", origin );
-                        }
-                        put( "username", user );
-                        put( "crypt:password", password );
-                    }} );
+                                                             alias,
+                                                             new HashMap<String, Object>() {{
+                                                                 if ( origin != null ) {
+                                                                     put( "origin", origin );
+                                                                 }
+                                                                 put( "username", user );
+                                                                 put( "crypt:password", password );
+                                                             }} );
         }
         return repository;
     }
 
-    private OrganizationalUnit createOU(Repository repository, String ouName, String ouOwner) {
-        OrganizationalUnit ou = organizationalUnitService.getOrganizationalUnit(ouName);;
-        if (ou == null) {
+    private OrganizationalUnit createOU( Repository repository,
+                                         String ouName,
+                                         String ouOwner ) {
+        OrganizationalUnit ou = organizationalUnitService.getOrganizationalUnit( ouName );
+        ;
+        if ( ou == null ) {
             List<Repository> repositories = new ArrayList<Repository>();
             repositories.add( repository );
             organizationalUnitService.createOrganizationalUnit( ouName,
-                    ouOwner,
-                    repositories );
+                                                                ouOwner,
+                                                                repositories );
         }
         return ou;
     }
 
-    private void createProject(Repository repository, String group, String artifact, String version) {
-        GAV gav = new GAV(group, artifact, version);
+    private void createProject( Repository repository,
+                                String group,
+                                String artifact,
+                                String version ) {
+        GAV gav = new GAV( group, artifact, version );
         try {
-            if (repository != null) {
+            if ( repository != null ) {
 
-                String projectLocation = repository.getUri() + ioService.getFileSystem(URI.create(repository.getUri())).getSeparator() + artifact;
-                if (!ioService.exists(ioService.get(URI.create(projectLocation)))) {
-                    projectService.newProject(repository, artifact, new POM(gav), "/");
+                String projectLocation = repository.getUri() + ioService.getFileSystem( URI.create( repository.getUri() ) ).getSeparator() + artifact;
+                if ( !ioService.exists( ioService.get( URI.create( projectLocation ) ) ) ) {
+                    projectService.newProject( repository, artifact, new POM( gav ), "/" );
                 }
             } else {
-                logger.error("Repository was not found (is null), cannot add project");
+                logger.error( "Repository was not found (is null), cannot add project" );
             }
-        } catch (Exception e) {
-            logger.error("Unable to bootstrap project {} in repository {}", gav, repository.getAlias(), e);
+        } catch ( Exception e ) {
+            logger.error( "Unable to bootstrap project {} in repository {}", gav, repository.getAlias(), e );
         }
     }
 
