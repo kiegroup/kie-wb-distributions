@@ -47,7 +47,9 @@ import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.resources.i18n.AppConstants;
-import org.kie.workbench.client.security.KieWorkbenchSecurity;
+import org.kie.workbench.common.services.security.KieWorkbenchACL;
+import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
+import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.UberFirePreferences;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
@@ -95,7 +97,10 @@ public class KieWorkbenchEntryPoint {
     private HomeProducer homeProducer;
 
     @Inject
-    private KieWorkbenchSecurity kieSecurity;
+    private KieWorkbenchACL kieACL;
+
+    @Inject
+    private Caller<KieWorkbenchSecurityService> kieSecurityService;
 
     private SuggestBox actionText;
     private TextBox textSuggestBox;
@@ -104,16 +109,17 @@ public class KieWorkbenchEntryPoint {
 
     @AfterInitialization
     public void startApp() {
-        initSecurity();
-        loadPreferences();
-        loadStyles();
-        setupMenu();
-        hideLoadingPopup();
-        homeProducer.init();
-    }
-
-    private void initSecurity() {
-        kieSecurity.init();
+        kieSecurityService.call(new RemoteCallback<String>() {
+            public void callback(final String str) {
+                KieWorkbenchPolicy policy = new KieWorkbenchPolicy(str);
+                kieACL.activatePolicy(policy);
+                loadPreferences();
+                loadStyles();
+                setupMenu();
+                hideLoadingPopup();
+                homeProducer.init();
+            }
+        }).loadPolicy();
     }
 
     private void loadPreferences() {
@@ -147,12 +153,12 @@ public class KieWorkbenchEntryPoint {
             }
         })
                 .endMenu()
-                .newTopLevelMenu(constants.Authoring()).withRoles(kieSecurity.getRoles(G_AUTHORING)).withItems(getAuthoringViews()).endMenu()
-                .newTopLevelMenu(constants.Deploy()).withRoles(kieSecurity.getRoles(G_DEPLOY)).withItems(getDeploymentViews()).endMenu()
-                .newTopLevelMenu(constants.Process_Management()).withRoles(kieSecurity.getRoles(G_PROCESS_MANAGEMENT)).withItems(getProcessMGMTViews()).endMenu()
-                .newTopLevelMenu(constants.Tasks()).withRoles(kieSecurity.getRoles(G_TASKS)).withItems(getTasksViews()).endMenu()
-                .newTopLevelMenu(constants.Dashboards()).withRoles(kieSecurity.getRoles(G_DASHBOARDS)).withItems(getDashboardViews()).endMenu()
-                .newTopLevelMenu(constants.find()).withRoles(kieSecurity.getRoles(F_SEARCH)).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                .newTopLevelMenu(constants.Authoring()).withRoles(kieACL.getGrantedRoles(G_AUTHORING)).withItems(getAuthoringViews()).endMenu()
+                .newTopLevelMenu(constants.Deploy()).withRoles(kieACL.getGrantedRoles(G_DEPLOY)).withItems(getDeploymentViews()).endMenu()
+                .newTopLevelMenu(constants.Process_Management()).withRoles(kieACL.getGrantedRoles(G_PROCESS_MANAGEMENT)).withItems(getProcessMGMTViews()).endMenu()
+                .newTopLevelMenu(constants.Tasks()).withRoles(kieACL.getGrantedRoles(G_TASKS)).withItems(getTasksViews()).endMenu()
+                .newTopLevelMenu(constants.Dashboards()).withRoles(kieACL.getGrantedRoles(G_DASHBOARDS)).withItems(getDashboardViews()).endMenu()
+                .newTopLevelMenu(constants.find()).withRoles(kieACL.getGrantedRoles(F_SEARCH)).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                     @Override
                     public void execute() {
                         placeManager.goTo( "FindForm" );
@@ -188,26 +194,26 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getAuthoringViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add(MenuFactory.newSimpleItem(constants.Project_Authoring()).withRoles(kieSecurity.getRoles(F_PROJECT_AUTHORING)).respondsWith(new Command() {
+        result.add(MenuFactory.newSimpleItem(constants.Project_Authoring()).withRoles(kieACL.getGrantedRoles(F_PROJECT_AUTHORING)).respondsWith(new Command() {
             @Override
             public void execute() {
                 placeManager.goTo(new DefaultPlaceRequest("org.kie.workbench.client.perspectives.DroolsAuthoringPerspective"));
             }
         }).endMenu().build().getItems().get(0));
 
-        result.add( MenuFactory.newSimpleItem( constants.Asset_repo() ).withRoles(kieSecurity.getRoles(F_ASSET_REPO)).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Asset_repo() ).withRoles(kieACL.getGrantedRoles(F_ASSET_REPO)).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.Administration() ).withRoles(kieSecurity.getRoles(F_ADMINISTRATION)).respondsWith( new Command() {
+        result.add(MenuFactory.newSimpleItem(constants.Administration()).withRoles(kieACL.getGrantedRoles(F_ADMINISTRATION)).respondsWith(new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.client.perspectives.AdministrationPerspective" ) );
+                placeManager.goTo(new DefaultPlaceRequest("org.kie.workbench.client.perspectives.AdministrationPerspective"));
             }
-        } ).endMenu().build().getItems().get( 0 ) );
+        }).endMenu().build().getItems().get(0));
 
         return result;
     }
@@ -215,14 +221,14 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getProcessMGMTViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
 
-        result.add( MenuFactory.newSimpleItem( constants.Process_Definitions() ).withRoles(kieSecurity.getRoles(F_PROCESS_DEFINITIONS)).respondsWith( new Command() {
+        result.add(MenuFactory.newSimpleItem(constants.Process_Definitions()).withRoles(kieACL.getGrantedRoles(F_PROCESS_DEFINITIONS)).respondsWith(new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Process Definitions" ) );
+                placeManager.goTo(new DefaultPlaceRequest("Process Definitions"));
             }
-        } ).endMenu().build().getItems().get( 0 ) );
+        }).endMenu().build().getItems().get(0));
 
-        result.add( MenuFactory.newSimpleItem( constants.Process_Instances() ).withRoles(kieSecurity.getRoles(F_PROCESS_INSTANCES)).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Process_Instances() ).withRoles(kieACL.getGrantedRoles(F_PROCESS_INSTANCES)).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "Process Instances" ) );
@@ -235,14 +241,14 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getDeploymentViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.Deployments() ).withRoles(kieSecurity.getRoles(F_DEPLOYMENTS)).respondsWith( new Command() {
+        result.add(MenuFactory.newSimpleItem(constants.Deployments()).withRoles(kieACL.getGrantedRoles(F_DEPLOYMENTS)).respondsWith(new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Deployments" ) );
+                placeManager.goTo(new DefaultPlaceRequest("Deployments"));
             }
-        } ).endMenu().build().getItems().get( 0 ) );
+        }).endMenu().build().getItems().get(0));
         
-        result.add( MenuFactory.newSimpleItem( constants.Jobs() ).withRoles(kieSecurity.getRoles(F_JOBS)).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Jobs() ).withRoles(kieACL.getGrantedRoles(F_JOBS)).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "Jobs" ) );
@@ -255,28 +261,28 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getTasksViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
 
-        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).withRoles(kieSecurity.getRoles(F_TASKS)).respondsWith( new Command() {
+        result.add(MenuFactory.newSimpleItem(constants.Tasks_List()).withRoles(kieACL.getGrantedRoles(F_TASKS)).respondsWith(new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
+                placeManager.goTo(new DefaultPlaceRequest("Tasks"));
             }
-        } ).endMenu().build().getItems().get( 0 ) );
+        }).endMenu().build().getItems().get(0));
 
         return result;
     }
 
     private List<? extends MenuItem> getDashboardViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
-        result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() ).withRoles(kieSecurity.getRoles(F_PROCESS_DASHBOARD)).respondsWith( new Command() {
+        result.add(MenuFactory.newSimpleItem(constants.Process_Dashboard()).withRoles(kieACL.getGrantedRoles(F_PROCESS_DASHBOARD)).respondsWith(new Command() {
 
             @Override
             public void execute() {
-                placeManager.goTo( "DashboardPerspective" );
+                placeManager.goTo("DashboardPerspective");
             }
-        } ).endMenu().build().getItems().get( 0 ) );
+        }).endMenu().build().getItems().get(0));
 
         final String dashbuilderURL = DashboardURLBuilder.getDashboardURL("/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale());
-        result.add( MenuFactory.newSimpleItem( constants.Business_Dashboard() ).withRoles(kieSecurity.getRoles(F_DASHBOARD_BUILDER)).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Business_Dashboard() ).withRoles(kieACL.getGrantedRoles(F_DASHBOARD_BUILDER)).respondsWith( new Command() {
             @Override
             public void execute() {
                 Window.open( dashbuilderURL , "_blank", "" );
