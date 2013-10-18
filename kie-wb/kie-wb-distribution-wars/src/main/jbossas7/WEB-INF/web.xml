@@ -137,6 +137,11 @@ profile in pom.xml to use that. -->
     <param-value>/WEB-INF/users.properties</param-value>
   </context-param>
 
+  <context-param>
+    <param-name>org.jboss.seam.transaction.disableListener</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

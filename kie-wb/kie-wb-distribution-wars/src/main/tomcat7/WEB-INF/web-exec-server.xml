@@ -136,6 +136,11 @@
     <param-value>true</param-value>
   </context-param>
 
+  <context-param>
+    <param-name>org.jboss.seam.transaction.disableListener</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
   <welcome-file-list>
     <welcome-file>rest-api.jsp</welcome-file>
   </welcome-file-list>

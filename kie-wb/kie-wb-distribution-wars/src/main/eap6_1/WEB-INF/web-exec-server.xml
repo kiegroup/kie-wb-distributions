@@ -64,6 +64,11 @@ Their default values are shown as example param-values -->
         <param-value>/asynch/jobs</param-value>
     </context-param>
 
+    <context-param>
+      <param-name>org.jboss.seam.transaction.disableListener</param-name>
+      <param-value>true</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>FileDownloadServlet</servlet-name>
         <servlet-class>org.guvnor.m2repo.backend.server.FileDownloadServlet</servlet-class>
