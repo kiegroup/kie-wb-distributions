@@ -23,6 +23,8 @@ import javax.inject.Named;
 import org.uberfire.io.IOService;
 import org.uberfire.io.impl.IOServiceDotFileImpl;
 import org.uberfire.backend.repositories.Repository;
+import org.uberfire.rpc.SessionInfo;
+import org.uberfire.rpc.impl.SessionInfoImpl;
 import org.uberfire.security.Resource;
 import org.uberfire.security.Role;
 import org.uberfire.security.Subject;
@@ -77,4 +79,9 @@ public class EnvironmentProvider {
         return ioService;
     }
 
+    @Produces
+    public SessionInfo getSessionInfo() {
+        CliIdentity identity = new CliIdentity();
+        return new SessionInfoImpl(identity.getName(), identity);
+    }
 }
