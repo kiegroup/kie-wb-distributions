@@ -1,6 +1,8 @@
 package org.kie.config.cli.command.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 import org.guvnor.common.services.project.model.Project;
@@ -8,7 +10,10 @@ import org.guvnor.common.services.project.service.ProjectService;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
+import org.kie.workbench.common.screens.explorer.model.ProjectExplorerContent;
 import org.kie.workbench.common.screens.explorer.service.ExplorerService;
+import org.uberfire.backend.organizationalunit.OrganizationalUnit;
+import org.uberfire.backend.organizationalunit.OrganizationalUnitService;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
 
@@ -24,6 +29,7 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
         StringBuffer result = new StringBuffer();
         WeldContainer container = context.getContainer();
 
+        OrganizationalUnitService organizationalUnitService = container.instance().select( OrganizationalUnitService.class ).get();
         RepositoryService repositoryService = container.instance().select( RepositoryService.class ).get();
         ExplorerService projectExplorerService = container.instance().select( ExplorerService.class ).get();
         ProjectService projectService = container.instance().select( ProjectService.class ).get();
@@ -36,9 +42,17 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
         if ( repo == null ) {
             return "No repository " + alias + " was found";
         }
-
+        OrganizationalUnit ou = null;
+        Collection<OrganizationalUnit> units = organizationalUnitService.getOrganizationalUnits();
+        for (OrganizationalUnit unit : units) {
+            if (unit.getRepositories().contains(repo)) {
+                ou = unit;
+                break;
+            }
+        }
         ArrayList<Project> projects = new ArrayList<Project>();
-        projects.addAll( projectExplorerService.getProjects( repo ) );
+        ProjectExplorerContent content = projectExplorerService.getContent(ou, repo, null, null, null, Collections.EMPTY_SET);
+        projects.addAll( content.getProjects() );
         if ( projects.size() == 0 ) {
             return "No projects found in repository " + alias;
         }
