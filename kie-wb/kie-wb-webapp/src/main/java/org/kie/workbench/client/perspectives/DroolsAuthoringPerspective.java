@@ -94,9 +94,9 @@ public class DroolsAuthoringPerspective {
         this.perspective = new PerspectiveDefinitionImpl( PanelType.ROOT_LIST );
         this.perspective.setName( constants.Project_Authoring() );
 
-        final PanelDefinition west = new PanelDefinitionImpl( PanelType.MULTI_LIST );
-        west.setWidth( 300 );
-        west.setMinWidth( 200 );
+        final PanelDefinition west = new PanelDefinitionImpl( PanelType.SIMPLE );
+        west.setWidth( 400 );
+        west.setMinWidth( 370 );
         west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) ) );
 
         this.perspective.getRoot().insertChild( Position.WEST,
@@ -107,14 +107,6 @@ public class DroolsAuthoringPerspective {
         this.menus = MenuFactory
                 .newTopLevelMenu( constants.explore() )
                 .menus()
-                .menu( constants.projects() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.kie.guvnor.explorer" );
-                    }
-                } )
-                .endMenu()
                 .menu( constants.inboxIncomingChanges() )
                 .respondsWith( new Command() {
                     @Override
