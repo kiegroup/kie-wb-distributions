@@ -142,7 +142,7 @@ public class AdministrationPerspective {
 
         this.perspective.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "RepositoriesEditor" ) ) );
 
-        final PanelDefinition west = new PanelDefinitionImpl( PanelType.MULTI_LIST );
+        final PanelDefinition west = new PanelDefinitionImpl( PanelType.SIMPLE );
         west.setWidth( 300 );
         west.setMinWidth( 200 );
         west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "FileExplorer" ) ) );
@@ -153,19 +153,6 @@ public class AdministrationPerspective {
 
     private void buildMenuBar() {
         this.menus = MenuFactory
-                .newTopLevelMenu( constants.explore() )
-                .menus()
-                .menu( constants.files() )
-                .withRoles( PERMISSIONS_ADMIN )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "FileExplorer" );
-                    }
-                } )
-                .endMenu()
-                .endMenus()
-                .endMenu()
                 .newTopLevelMenu( AppConstants.INSTANCE.MenuOrganizationalUnits() )
                 .menus()
                 .menu( AppConstants.INSTANCE.MenuManageOrganizationalUnits() )
