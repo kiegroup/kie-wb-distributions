@@ -18,17 +18,18 @@ import org.jbpm.runtime.manager.impl.DefaultRuntimeEnvironment;
 import org.jbpm.runtime.manager.impl.SimpleRuntimeEnvironment;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
 import org.jbpm.shared.services.cdi.Selectable;
+import org.kie.internal.runtime.manager.RuntimeEnvironment;
+import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
+import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
+import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
+import org.kie.internal.task.api.UserGroupCallback;
+import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.commons.cluster.ClusterServiceFactory;
 import org.uberfire.io.IOSearchService;
 import org.uberfire.io.IOService;
 import org.uberfire.io.attribute.DublinCoreView;
 import org.uberfire.io.impl.cluster.IOServiceClusterImpl;
 import org.uberfire.java.nio.base.version.VersionAttributeView;
-import org.kie.internal.runtime.manager.RuntimeEnvironment;
-import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
-import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
-import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
-import org.kie.internal.task.api.UserGroupCallback;
 import org.uberfire.metadata.backend.lucene.LuceneIndexEngine;
 import org.uberfire.metadata.backend.lucene.LuceneSearchIndex;
 import org.uberfire.metadata.backend.lucene.LuceneSetup;
@@ -40,12 +41,8 @@ import org.uberfire.metadata.engine.MetaModelStore;
 import org.uberfire.metadata.io.IOSearchIndex;
 import org.uberfire.metadata.io.IOServiceIndexedImpl;
 import org.uberfire.metadata.search.SearchIndex;
-import org.uberfire.backend.repositories.Repository;
-import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
-
-import static org.uberfire.backend.server.repositories.SystemRepository.*;
 
 /**
  * This class should contain all ApplicationScoped producers
@@ -104,12 +101,6 @@ public class ApplicationScopedProducer {
     private void cleanup() {
         luceneSetup.dispose();
         ioService.dispose();
-    }
-
-    @Produces
-    @Named("system")
-    public Repository systemRepository() {
-        return SYSTEM_REPO;
     }
 
     @Produces

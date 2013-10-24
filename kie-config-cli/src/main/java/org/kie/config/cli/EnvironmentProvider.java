@@ -22,7 +22,6 @@ import javax.inject.Named;
 
 import org.uberfire.io.IOService;
 import org.uberfire.io.impl.IOServiceDotFileImpl;
-import org.uberfire.backend.repositories.Repository;
 import org.uberfire.rpc.SessionInfo;
 import org.uberfire.rpc.impl.SessionInfoImpl;
 import org.uberfire.security.Resource;
@@ -32,8 +31,6 @@ import org.uberfire.security.authz.AuthorizationException;
 import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.security.authz.RuntimeResource;
 import org.uberfire.security.server.cdi.SecurityFactory;
-
-import static org.uberfire.backend.server.repositories.SystemRepository.*;
 
 @ApplicationScoped
 public class EnvironmentProvider {
@@ -65,12 +62,6 @@ public class EnvironmentProvider {
                 return subject.getRoles().contains( ADMIN_ROLE );
             }
         } );
-    }
-
-    @Produces
-    @Named("system")
-    public Repository systemRepository() {
-        return SYSTEM_REPO;
     }
 
     @Produces
