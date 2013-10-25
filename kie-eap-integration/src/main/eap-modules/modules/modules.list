@@ -1,5 +1,6 @@
 org.kie.lib
 org.kie
+org.uberfire
 org.sonatype.aether
 org.apache.ant
 org.apache.camel
