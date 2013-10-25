@@ -4,7 +4,6 @@ org.jbpm:jbpm-human-task-core:jar
 org.jbpm:jbpm-bpmn2-emfextmodel:jar
 org.jbpm:jbpm-workitems:jar
 org.jbpm:jbpm-human-task-workitems:jar
-org.drools:jbpm-simulation:jar
 org.jbpm:jbpm-kie-services:jar
 org.jbpm:jbpm-bpmn2:jar
 org.jbpm:jbpm-flow-builder:jar
