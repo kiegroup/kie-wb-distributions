@@ -23,6 +23,7 @@ The static modules layer distribution adds the follosing modules:
 
 * org.kie.lib
 * org.kie
+* org.uberfire
 * org.sonatype.aether
 * org.apache.ant
 * org.apache.camel
