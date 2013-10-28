@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -29,6 +30,7 @@ import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.guvnor.common.services.project.model.GAV;
 import org.guvnor.common.services.project.model.POM;
 import org.guvnor.common.services.project.service.ProjectService;
+import org.uberfire.commons.services.cdi.ApplicationStarted;
 import org.uberfire.io.IOService;
 import org.uberfire.io.IOClusteredService;
 import org.uberfire.commons.services.cdi.Startup;
@@ -82,6 +84,9 @@ public class AppSetup {
     @Inject
     private ProjectService projectService;
 
+    @Inject
+    private Event<ApplicationStarted> applicationStartedEvent;
+
     @PostConstruct
     public void assertPlayground() {
 
@@ -127,9 +132,7 @@ public class AppSetup {
         }
 
         // notify cluster service that bootstrap is completed to start synchronization
-        if ( ioService instanceof IOClusteredService ) {
-            ( (IOClusteredService) ioService ).start();
-        }
+        applicationStartedEvent.fire(new ApplicationStarted());
     }
 
     private ConfigGroup getGlobalConfiguration() {
