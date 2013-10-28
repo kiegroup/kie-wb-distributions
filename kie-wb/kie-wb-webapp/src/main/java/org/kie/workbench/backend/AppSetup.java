@@ -20,7 +20,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
@@ -32,7 +31,6 @@ import org.uberfire.backend.server.config.ConfigurationService;
 import org.uberfire.commons.services.cdi.ApplicationStarted;
 import org.uberfire.commons.services.cdi.Startup;
 import org.uberfire.commons.services.cdi.StartupType;
-import org.uberfire.io.IOService;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
 //is not deployed to the Application Servers /bin folder. This will be remedied when an
@@ -54,14 +52,6 @@ public class AppSetup {
 
     private static final String GLOBAL_SETTINGS = "settings";
     // default repository section - end
-
-    @Inject
-    @Named("ioStrategy")
-    private IOService ioService;
-
-    @Inject
-    @Named("configIO")
-    private IOService configIOService;
 
     @Inject
     private RepositoryService repositoryService;
