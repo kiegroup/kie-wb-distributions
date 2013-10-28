@@ -11,4 +11,3 @@ org.drools:drools-workbench-models-commons:jar
 org.drools:drools-workbench-models-guided-template:jar
 org.drools:drools-workbench-models-test-scenarios:jar
 org.drools:drools-workbench-models-guided-scorecard:jar
-org.drools:jbpm-simulation:jar

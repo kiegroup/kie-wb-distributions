@@ -1,5 +1,5 @@
 com.sun.codemodel
 org.apache.poi
-org.kie.lib
+org.jbpm
 org.mvel
 org.sonatype.maven

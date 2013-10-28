@@ -13,3 +13,4 @@ org.jbpm:jbpm-shared-services:jar
 org.jbpm:jbpm-form-services:jar
 org.jbpm:jbpm-flow:jar
 org.jbpm.jbpm5:jbpmmigration:jar
+org.drools:jbpm-simulation:jar
