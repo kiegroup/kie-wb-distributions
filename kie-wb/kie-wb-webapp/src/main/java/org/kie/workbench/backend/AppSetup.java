@@ -18,6 +18,7 @@ package org.kie.workbench.backend;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -28,9 +29,9 @@ import org.uberfire.backend.server.config.ConfigGroup;
 import org.uberfire.backend.server.config.ConfigType;
 import org.uberfire.backend.server.config.ConfigurationFactory;
 import org.uberfire.backend.server.config.ConfigurationService;
+import org.uberfire.commons.services.cdi.ApplicationStarted;
 import org.uberfire.commons.services.cdi.Startup;
 import org.uberfire.commons.services.cdi.StartupType;
-import org.uberfire.io.IOClusteredService;
 import org.uberfire.io.IOService;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
@@ -59,6 +60,10 @@ public class AppSetup {
     private IOService ioService;
 
     @Inject
+    @Named("configIO")
+    private IOService configIOService;
+
+    @Inject
     private RepositoryService repositoryService;
 
     @Inject
@@ -69,6 +74,9 @@ public class AppSetup {
 
     @Inject
     private AdministrationService administrationService;
+
+    @Inject
+    private Event<ApplicationStarted> applicationStartedEvent;
 
     @PostConstruct
     public void assertPlayground() {
@@ -115,10 +123,7 @@ public class AppSetup {
         administrationService.bootstrapDeployments();
 
         // notify cluster service that bootstrap is completed to start synchronization
-        if ( ioService instanceof IOClusteredService ) {
-            ( (IOClusteredService) ioService ).start();
-        }
-
+        applicationStartedEvent.fire(new ApplicationStarted());
     }
 
     private ConfigGroup getGlobalConfiguration() {
