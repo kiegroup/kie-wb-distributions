@@ -8,4 +8,3 @@ org.drools
 org.jboss.weld.core
 org.mvel
 org.sonatype.maven
-org.uberfire
