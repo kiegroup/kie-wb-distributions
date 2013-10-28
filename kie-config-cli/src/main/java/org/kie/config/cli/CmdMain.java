@@ -28,7 +28,7 @@ public class CmdMain {
 
     public static void main(String[] args) {
         // most important settings driven by jvm system properties
-        System.setProperty("org.kie.nio.git.daemon.enabled", "false");
+        System.setProperty("org.uberfire.nio.git.daemon.enabled", "false");
         System.setProperty("java.awt.headless", "true");
         // use scanner to read user input
         Scanner scanner = new Scanner(new InputStreamReader(System.in));
@@ -50,7 +50,7 @@ public class CmdMain {
 	        	System.out.println(".niogit folder not found: Try again[1] or continue to create new one[2]?:");
 	            String answer = scanner.nextLine();
 	            if ("2".equalsIgnoreCase(answer)) {
-	            	System.setProperty("org.kie.nio.git.dir", niogitPath);
+	            	System.setProperty("org.uberfire.nio.git.dir", niogitPath);
 		        	foundFolder = true;
 	            } else {
 		            System.out.println(">>Please specify location of the parent folder of .niogit");
@@ -58,7 +58,7 @@ public class CmdMain {
 	            	exitIfRequested(niogitPath);
 	            }
 	        }else {
-	        	System.setProperty("org.kie.nio.git.dir", niogitPath);
+	        	System.setProperty("org.uberfire.nio.git.dir", niogitPath);
 	        	foundFolder = true;
 	        }
         }
