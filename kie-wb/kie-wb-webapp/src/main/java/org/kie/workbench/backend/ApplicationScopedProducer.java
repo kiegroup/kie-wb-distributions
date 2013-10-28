@@ -69,6 +69,7 @@ public class ApplicationScopedProducer {
     @Selectable
     private UserGroupCallback userGroupCallback;
 
+
     @PostConstruct
     public void setup() {
         SecurityFactory.setAuthzManager( new RuntimeAuthorizationManager() );
