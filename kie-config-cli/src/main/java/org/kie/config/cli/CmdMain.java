@@ -23,6 +23,7 @@ import java.util.Scanner;
 
 import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.command.CliCommandRegistry;
+import org.kie.config.cli.command.impl.CloneGitRepositoryCliCommand;
 
 public class CmdMain {
 
@@ -36,35 +37,49 @@ public class CmdMain {
         System.out.println("********************************************************\n");
         System.out.println("************* Welcome to Kie config CLI ****************\n");
         System.out.println("********************************************************\n");
-        System.out.println(">>Please specify location of the parent folder of .niogit");
+        CliContext context = null;
 
-        String niogitPath = scanner.nextLine();
-        exitIfRequested(niogitPath);
-        
-        
-        boolean foundFolder = false;
-        while (!foundFolder) {
-	        File niogitParent = new File(niogitPath);
-	        if (!niogitParent.exists() || !niogitParent.isDirectory() || !isNiogitDir(niogitParent)){
-	        	
-	        	System.out.println(".niogit folder not found: Try again[1] or continue to create new one[2]?:");
-	            String answer = scanner.nextLine();
-	            if ("2".equalsIgnoreCase(answer)) {
-	            	System.setProperty("org.uberfire.nio.git.dir", niogitPath);
-		        	foundFolder = true;
-	            } else {
-		            System.out.println(">>Please specify location of the parent folder of .niogit");
-	            	niogitPath = scanner.nextLine();
-	            	exitIfRequested(niogitPath);
-	            }
-	        }else {
-	        	System.setProperty("org.uberfire.nio.git.dir", niogitPath);
-	        	foundFolder = true;
-	        }
+        if (args != null && args.length > 0 && "offline".equalsIgnoreCase(args[0])) {
+            // use kie-config-cli in offline mode - server that owns the .niogit is down
+            //  to avoid conflicts on concurrent updates
+            System.out.println(">>Please specify location of the parent folder of .niogit");
+
+            String niogitPath = scanner.nextLine();
+            exitIfRequested(niogitPath);
+
+
+            boolean foundFolder = false;
+            while (!foundFolder) {
+                File niogitParent = new File(niogitPath);
+                if (!niogitParent.exists() || !niogitParent.isDirectory() || !isNiogitDir(niogitParent)){
+
+                    System.out.println(".niogit folder not found: Try again[1] or continue to create new one[2]?:");
+                    String answer = scanner.nextLine();
+                    if ("2".equalsIgnoreCase(answer)) {
+                        System.setProperty("org.uberfire.nio.git.dir", niogitPath);
+                        foundFolder = true;
+                    } else {
+                        System.out.println(">>Please specify location of the parent folder of .niogit");
+                        niogitPath = scanner.nextLine();
+                        exitIfRequested(niogitPath);
+                    }
+                }else {
+                    System.setProperty("org.uberfire.nio.git.dir", niogitPath);
+                    foundFolder = true;
+                }
+            }
+            context = CliContext.buildContext(scanner);
+        } else {
+            // use temp folder for clone of repository
+            String niogitPath = System.getProperty("java.io.tmpdir") + File.separator + "kie-tmp-repo";
+            new File(niogitPath).mkdir();
+            System.setProperty("org.uberfire.nio.git.dir", niogitPath);
+            context = CliContext.buildContext(scanner);
+            context.addParameter("tmp-dir", niogitPath);
+            CliCommand command = new CloneGitRepositoryCliCommand();
+            command.execute(context);
         }
-        
-        CliContext context = CliContext.buildContext(scanner);
-        
+
         System.out.println(">>Please enter command (type help to see available commands): ");
         
         while(scanner.hasNext()) {

@@ -27,11 +27,13 @@ import org.kie.config.cli.command.impl.AddRoleToProjectCliCommand;
 import org.kie.config.cli.command.impl.AddRoleToRepositoryCliCommand;
 import org.kie.config.cli.command.impl.CreateOrganizationalUnitCliCommand;
 import org.kie.config.cli.command.impl.CreateRepositoryCliCommand;
+import org.kie.config.cli.command.impl.DiscardCliCommand;
 import org.kie.config.cli.command.impl.ExitCliCommand;
 import org.kie.config.cli.command.impl.HelpCliCommand;
 import org.kie.config.cli.command.impl.ListDeploymentsCliCommand;
 import org.kie.config.cli.command.impl.ListOrganizationalUnitCliCommand;
 import org.kie.config.cli.command.impl.ListRepositoriesCliCommand;
+import org.kie.config.cli.command.impl.PushGitRepositoryCliCommand;
 import org.kie.config.cli.command.impl.RemoveDeploymentConfigCliCommand;
 import org.kie.config.cli.command.impl.RemoveOrganizationalUnitCliCommand;
 import org.kie.config.cli.command.impl.RemoveRepositoryCliCommand;
@@ -48,6 +50,7 @@ public class CliCommandRegistry {
 	
 	private CliCommandRegistry() {
 		commands.put("exit", new ExitCliCommand());
+        commands.put("discard", new DiscardCliCommand());
         commands.put("help", new HelpCliCommand());
         commands.put("list-deployment", new ListDeploymentsCliCommand());
         commands.put("list-repo", new ListRepositoriesCliCommand());
@@ -66,6 +69,7 @@ public class CliCommandRegistry {
         commands.put("remove-role-org-unit", new RemoveRoleFromOrganizationalUnitCliCommand());
         commands.put("add-role-project", new AddRoleToProjectCliCommand());
         commands.put("remove-role-project", new RemoveRoleFromProjectCliCommand());
+        commands.put("push-changes", new PushGitRepositoryCliCommand());
 	}
 	
 	public static CliCommandRegistry get() {
