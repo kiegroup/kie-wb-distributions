@@ -8,7 +8,7 @@
     <message-driven>
       <ejb-name>KieSessionRequesMessageBean</ejb-name>
       <ejb-class>org.kie.services.remote.jms.RequestMessageBean</ejb-class>
-      <transaction-type>Container</transaction-type>
+      <transaction-type>Bean</transaction-type>
       <activation-config>
         <activation-config-property>
           <activation-config-property-name>destinationType</activation-config-property-name>
@@ -23,7 +23,7 @@
     <message-driven>
       <ejb-name>TaskServiceRequesMessageBean</ejb-name>
       <ejb-class>org.kie.services.remote.jms.RequestMessageBean</ejb-class>
-      <transaction-type>Container</transaction-type>
+      <transaction-type>Bean</transaction-type>
       <activation-config>
         <activation-config-property>
           <activation-config-property-name>destinationType</activation-config-property-name>
