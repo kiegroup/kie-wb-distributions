@@ -17,4 +17,4 @@ MAIN_JAR=${artifactId}-${version}.jar
 CLASSPATH=$CLASSPATH$MAIN_JAR
 
 #run the program
-java $JVM_PARAMS $JAVA_PARAMS -cp $CLASSPATH org.kie.config.cli.CmdMain 
+java $JVM_PARAMS $JAVA_PARAMS -cp $CLASSPATH org.kie.config.cli.CmdMain "$@"

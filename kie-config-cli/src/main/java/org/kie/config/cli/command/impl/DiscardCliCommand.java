@@ -20,19 +20,16 @@ import java.io.File;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 
-public class ExitCliCommand extends PushGitRepositoryCliCommand {
+public class DiscardCliCommand implements CliCommand {
 	
 	@Override
 	public String getName() {
 		
-		return "exit";
+		return "discard";
 	}
 
 	@Override
 	public String execute(CliContext context) {
-        if (context.getParameter("git-upstream") != null && context.getParameter("git-local") != null) {
-            super.execute(context);
-        }
         cleanup(context.getParameter("tmp-dir"));
 		context.getWeld().shutdown();
 		

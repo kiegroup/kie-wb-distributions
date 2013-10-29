@@ -15,6 +15,8 @@
  */
 package org.kie.config.cli;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.jboss.weld.environment.se.Weld;
@@ -25,6 +27,7 @@ public class CliContext {
 	private Weld weld;
 	private WeldContainer container;
 	private Scanner input;
+    private Map<String, String> parameters = new HashMap<String, String>();
 	
 	protected CliContext(Weld weld, WeldContainer container, Scanner input) {
 		this.weld = weld;
@@ -59,5 +62,13 @@ public class CliContext {
 		
 		return context;
 	}
+
+    public String getParameter(String name) {
+        return this.parameters.get(name);
+    }
+
+    public void addParameter(String name, String value) {
+        this.parameters.put(name, value);
+    }
 	
 }

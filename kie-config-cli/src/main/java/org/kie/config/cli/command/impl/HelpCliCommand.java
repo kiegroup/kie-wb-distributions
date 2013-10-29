@@ -31,7 +31,8 @@ public class HelpCliCommand implements CliCommand {
 		helpMessage.append("****************** KIE CLI Help ************************\n");
 		helpMessage.append("********************************************************\n");
 		helpMessage.append("Available commands:\n");
-		helpMessage.append("\t exit - quits this command line tool\n");
+		helpMessage.append("\t exit - publishes any work, cleans up temporary directories and quits this command line tool\n");
+        helpMessage.append("\t discard - won't publishes local changes, cleans up temporary directories and quits this command line tool\n");
 		helpMessage.append("\t help - prints this message\n");
 		helpMessage.append("\t list-repo - list available repositories\n");
 		helpMessage.append("\t list-org-units - list available organizational units\n");
@@ -50,6 +51,7 @@ public class HelpCliCommand implements CliCommand {
 		helpMessage.append("\t remove-role-org-unit - remove role(s) from organizational unit\n");
         helpMessage.append("\t add-role-project - add role(s) to project\n");
         helpMessage.append("\t remove-role-project - remove role(s) from project\n");
+        helpMessage.append("\t push-changes - pushes changes to upstream repository (only online mode)");
 		return helpMessage.toString();
 	}
 
