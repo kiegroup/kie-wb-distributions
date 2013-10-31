@@ -52,6 +52,7 @@ import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
 import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.UberFirePreferences;
+import org.uberfire.client.menu.CustomSplashHelp;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
@@ -168,6 +169,8 @@ public class KieWorkbenchEntryPoint {
                 .newTopLevelMenu(constants.User() + ": " + identity.getName())
                 .position(MenuPosition.RIGHT)
                 .withItems(getRoles())
+                .endMenu()
+                .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
                 .endMenu()
                 .build();
 
