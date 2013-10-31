@@ -41,6 +41,7 @@ import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.UberFirePreferences;
+import org.uberfire.client.menu.CustomSplashHelp;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
@@ -131,6 +132,8 @@ public class KieDroolsWorkbenchEntryPoint {
                 .newTopLevelMenu( constants.User() + ": " + identity.getName() )
                 .position( MenuPosition.RIGHT )
                 .withItems( getRoles() )
+                .endMenu()
+                .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
                 .endMenu()
                 .build();
 
