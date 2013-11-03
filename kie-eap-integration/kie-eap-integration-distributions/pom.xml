@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-eap-integration</artifactId>
-    <version>6.1.0-SNAPSHOT</version>
+    <version>6.0.0-SNAPSHOT</version>
   </parent>
 
   <groupId>org.kie</groupId>
@@ -48,7 +48,7 @@
     <eap-modules.eap-configuration.path>${eap-modules.core.output.path}/eap-modules/eap-configurations/eap-6.1.1/eap-6.1.1-modules-config.properties</eap-modules.eap-configuration.path>
 
     <!-- Assemby final name for artifacts. -->
-    <eap-modules.assembly.name>eap-modules-distrbutions-${project.version}</eap-modules.assembly.name>
+    <eap-modules.assembly.name>eap-modules-distributions-${project.version}</eap-modules.assembly.name>
   </properties>
 
   <build>
