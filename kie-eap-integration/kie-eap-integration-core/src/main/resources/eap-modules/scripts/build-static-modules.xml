@@ -33,7 +33,7 @@ OUTPUT:
             - <webfragment jars> (If webfragments patch is enabled)
 
 -->
-<project name="build-static-modules" xmlns:ac="net.sf.antcontrib" default="main" basedir="../">
+<project name="build-static-modules" xmlns:ac="net.sf.antcontrib" default="main" basedir="../..//">
 
     <!-- Common utilities. -->
     <import file="build-utils.xml"/>
