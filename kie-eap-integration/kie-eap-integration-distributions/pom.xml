@@ -48,7 +48,7 @@
     <eap-modules.eap-configuration.path>${eap-modules.core.output.path}/eap-modules/eap-configurations/eap-6.1.1/eap-6.1.1-modules-config.properties</eap-modules.eap-configuration.path>
 
     <!-- Assemby final name for artifacts. -->
-    <eap-modules.assembly.name>eap-modules-distrbutions-${project.version}</eap-modules.assembly.name>
+    <eap-modules.assembly.name>eap-modules-distributions-${project.version}</eap-modules.assembly.name>
   </properties>
 
   <build>
