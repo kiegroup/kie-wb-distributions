@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.kie</groupId>
+    <artifactId>kie-eap-integration</artifactId>
+    <version>6.1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.kie</groupId>
+  <artifactId>kie-eap-integration-distributions</artifactId>
+  <packaging>pom</packaging>
+  <name>KIE JBoss EAP integration - Distributions</name>
+
+  <dependencies>
+
+    <!-- Core jar files. -->
+    <!-- Sub-modules will need this definition files extracted in order to generate the distributions. -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-eap-integration-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <modules>
+    <module>kie-eap-integration-bpms</module>
+    <module>kie-eap-integration-brms</module>
+  </modules>
+
+  <!-- Common properties that will be inhertied to the sub-modules. -->
+  <properties>
+
+    <!-- location to extract kie-eap-integration-core jar. -->
+    <eap-modules.core.output.path>${project.build.directory}/eap-modules-core</eap-modules.core.output.path>
+
+    <!-- Source definition files and directories and configuration properties. -->
+    <eap-modules.source.path>${eap-modules.core.output.path}/eap-modules/modules</eap-modules.source.path>
+    <eap-modules.templates.path>${eap-modules.core.output.path}/eap-modules/templates</eap-modules.templates.path>
+    <eap-modules.patches.path>${eap-modules.core.output.path}/eap-modules/patches</eap-modules.patches.path>
+    <eap-modules.static.list.file>${eap-modules.source.path}/modules.list</eap-modules.static.list.file>
+
+    <!-- Outputs for generated resources (static modules). -->
+    <eap-modules.dynamic.output.path>${project.build.directory}/eap-modules-generated/dynamic-modules</eap-modules.dynamic.output.path>
+
+    <!-- Default EAP configuration versions. -->
+    <eap-modules.eap-configuration.path>${eap-modules.core.output.path}/eap-modules/eap-configurations/eap-6.1.1/eap-6.1.1-modules-config.properties</eap-modules.eap-configuration.path>
+
+    <!-- Assemby final name for artifacts. -->
+    <eap-modules.assembly.name>eap-modules-distrbutions-${project.version}</eap-modules.assembly.name>
+  </properties>
+
+  <build>
+    <plugins>
+      <!-- Extact kie-eap-integration-core jar contents. -->
+      <!-- Sub-modules will need this definition files extracted in order to generate the distributions. -->
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ant-extract-core-files</id>
+            <phase>package</phase>
+            <configuration>
+              <target>
+                <delete includeemptydirs="true" verbose="false" failonerror="false">
+                  <fileset dir="${eap-modules.core.output.path}"/>
+                </delete>
+                <echo>Extracting core file ${org.kie:kie-eap-integration-core:jar}</echo>
+                <unzip src="${org.kie:kie-eap-integration-core:jar}" dest="${eap-modules.core.output.path}"/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <profiles>
+    <!-- Create modules for EAP version 6.1.0. -->
+    <profile>
+      <id>eap-610</id>
+      <activation>
+        <property>
+          <name>eap-610</name>
+        </property>
+      </activation>
+      <properties>
+        <eap-modules.eap-configuration.path>${eap-modules.core.output.path}/eap-modules/eap-configurations/eap-6.1.0/eap-6.1.0-modules-config.properties</eap-modules.eap-configuration.path>
+      </properties>
+    </profile>
+
+    <!-- Create modules for EAP version 6.1.1. -->
+    <profile>
+      <id>eap-611</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+        <property>
+          <name>eap-611</name>
+        </property>
+      </activation>
+      <properties>
+        <eap-modules.eap-configuration.path>${eap-modules.core.output.path}/eap-modules/eap-configurations/eap-6.1.1/eap-6.1.1-modules-config.properties</eap-modules.eap-configuration.path>
+      </properties>
+    </profile>
+
+  </profiles>
+
+</project>

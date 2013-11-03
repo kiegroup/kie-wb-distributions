@@ -13,7 +13,7 @@ CDI Extensions
 * In EAP 6.1.0.GA the CDI Extensions declared in JARs from the BPMS layer are not loaded.
 * This bug is already reported and fixed for EAP 6.1.1.
    See https://bugzilla.redhat.com/show_bug.cgi?id=988093
-* The patch consist of copying the resources from jars inside <code>META-INF/servicesc/code> directory of the webapp.
+* The patch consist of copying the resources from jars inside <code>META-INF/services</code> directory of the webapp.
 
 Servlet spec 3.0 - Webfragments
 -------------------------------

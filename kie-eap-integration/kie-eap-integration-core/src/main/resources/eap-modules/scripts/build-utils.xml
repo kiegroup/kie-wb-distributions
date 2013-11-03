@@ -135,6 +135,54 @@ INPUT parameters:
         </sequential>
     </macrodef>
 
+    <!-- Deploys the generated artifacts into a JBoss EAP installation.
+          Input parameters:
+          - eap-path: Filesystem path where JBoss EAP is installed.
+          - dynamic-modules-paths: Comma separated path for dynamic modules to deploy in EAP.
+          - static-module-path: Path for the ZIP artifact that contain the EAP static layer to deploy.
+      -->
+    <target name="deploy-on-eap">
+
+      <!-- Property eap-path is required. -->
+      <fail message="Property eap-path is missing.">
+        <condition>
+          <not>
+            <isset property="eap-path"/>
+          </not>
+        </condition>
+      </fail>
+
+      <property name="eap-deployments-path" value="${eap-path}/standalone/deployments"/>
+
+      <!-- Copy the static module ZIP artifact into EAP. -->
+      <ac:if>
+        <available file="${static-module-path}"/>
+        <ac:then>
+          <echo level="info">Unzipping ${static-module-path} into ${eap-path}</echo>
+          <unzip src="${static-module-path}" dest="${eap-path}" overwrite="true"/>
+        </ac:then>
+        <ac:else>
+          <echo level="info">No static layer distribution found at path ${static-module-path}</echo>
+        </ac:else>
+      </ac:if>
+
+      <!-- Deploy each dynamic module into EAP. -->
+      <ac:for param="dynamic-module" list="${dynamic-modules-paths}" delimiter=",">
+        <ac:sequential>
+          <ac:if>
+            <available file="@{dynamic-module}"/>
+            <ac:then>
+              <echo level="info">Copying @{dynamic-module} into ${eap-deployments-path}</echo>
+              <copy file="@{dynamic-module}" todir="${eap-deployments-path}" failonerror="true"/>
+            </ac:then>
+            <ac:else>
+              <echo level="info">No dynamic module found at path @{dynamic-module}</echo>
+            </ac:else>
+          </ac:if>
+        </ac:sequential>
+      </ac:for>
+
+    </target>
 
     <!-- For TESTING purposes. -->
     <target name="test-template-file">
