@@ -23,6 +23,7 @@ import org.guvnor.inbox.client.InboxPresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.ProjectMenu;
+import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
@@ -66,6 +67,9 @@ public class DroolsAuthoringPerspective {
 
     @Inject
     private PlaceManager placeManager;
+
+    @Inject
+    private RepositoryMenu repositoryMenu;
 
     private PerspectiveDefinition perspective;
     private Menus menus;
@@ -111,42 +115,45 @@ public class DroolsAuthoringPerspective {
                 .newTopLevelMenu( constants.explore() )
                 .menus()
                 .menu( constants.inboxIncomingChanges() )
-                .respondsWith( new Command() {
+                .respondsWith(new Command() {
                     @Override
                     public void execute() {
                         //PlaceRequest p = new PathPlaceRequest("Inbox");
                         //p.addParameter("inboxname", InboxPresenter.INCOMING_ID);
-                        placeManager.goTo( "Inbox" );
+                        placeManager.goTo("Inbox");
                     }
-                } )
+                })
                 .endMenu()
-                .menu( constants.inboxRecentlyEdited() )
-                .respondsWith( new Command() {
+                .menu(constants.inboxRecentlyEdited())
+                .respondsWith(new Command() {
                     @Override
                     public void execute() {
-                        PlaceRequest p = new DefaultPlaceRequest( "Inbox" );
-                        p.addParameter( "inboxname", InboxPresenter.RECENT_EDITED_ID );
-                        placeManager.goTo( p );
+                        PlaceRequest p = new DefaultPlaceRequest("Inbox");
+                        p.addParameter("inboxname", InboxPresenter.RECENT_EDITED_ID);
+                        placeManager.goTo(p);
                     }
-                } )
+                })
                 .endMenu()
-                .menu( constants.inboxRecentlyOpened() )
-                .respondsWith( new Command() {
+                .menu(constants.inboxRecentlyOpened())
+                .respondsWith(new Command() {
                     @Override
                     public void execute() {
-                        PlaceRequest p = new DefaultPlaceRequest( "Inbox" );
-                        p.addParameter( "inboxname", InboxPresenter.RECENT_VIEWED_ID );
-                        placeManager.goTo( p );
+                        PlaceRequest p = new DefaultPlaceRequest("Inbox");
+                        p.addParameter("inboxname", InboxPresenter.RECENT_VIEWED_ID);
+                        placeManager.goTo(p);
                     }
-                } )
+                })
                 .endMenu()
                 .endMenus()
                 .endMenu()
-                .newTopLevelMenu( constants.newItem() )
-                .withItems( newResourcesMenu.getMenuItems() )
+                .newTopLevelMenu(constants.newItem())
+                .withItems(newResourcesMenu.getMenuItems())
                 .endMenu()
-                .newTopLevelMenu( constants.tools() )
-                .withItems( projectMenu.getMenuItems() )
+                .newTopLevelMenu(constants.tools())
+                .withItems(projectMenu.getMenuItems())
+                .endMenu()
+                .newTopLevelMenu(AppConstants.INSTANCE.Repository())
+                .withItems(repositoryMenu.getMenuItems())
                 .endMenu().build();
     }
 

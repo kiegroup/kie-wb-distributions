@@ -98,4 +98,5 @@ public interface AppConstants
 
     String MenuManageOrganizationalUnits();
 
+    String Repository();
 }
