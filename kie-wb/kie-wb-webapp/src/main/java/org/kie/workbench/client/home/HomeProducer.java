@@ -64,7 +64,7 @@ public class HomeProducer {
                     }
                 } );
 
-        SectionEntry s1_b = ModelUtils.makeSectionEntry( constants.Asset_repo(),
+        SectionEntry s1_b = ModelUtils.makeSectionEntry( constants.artifactRepository(),
                 new Command() {
 
                     @Override
@@ -155,7 +155,7 @@ public class HomeProducer {
 
         s1.setRoles(kieACL.getGrantedRoles(G_AUTHORING));
         s1_a.setRoles(kieACL.getGrantedRoles(F_PROJECT_AUTHORING));
-        s1_b.setRoles(kieACL.getGrantedRoles(F_ASSET_REPO));
+        s1_b.setRoles(kieACL.getGrantedRoles( F_ARTIFACT_REPO ));
         s1_c.setRoles(kieACL.getGrantedRoles(F_ADMINISTRATION));
 
         s2.setRoles(kieACL.getGrantedRoles(G_DEPLOY));
