@@ -57,6 +57,13 @@
 
   <build>
     <plugins>
+
+      <!--Fix translations from Zanata -->
+      <plugin>
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>replacer</artifactId>
+      </plugin>
+      
       <!-- Zanata - translations -->
       <plugin>
         <groupId>org.zanata</groupId>
