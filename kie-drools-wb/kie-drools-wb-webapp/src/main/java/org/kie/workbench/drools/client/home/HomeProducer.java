@@ -58,7 +58,7 @@ public class HomeProducer {
         model.addSection( s1 );
 
         final Section s2 = new Section( constants.deployment() );
-        s2.addEntry( ModelUtils.makeSectionEntry( constants.asset_repo(),
+        s2.addEntry( ModelUtils.makeSectionEntry( constants.artifactRepository(),
                                                   new Command() {
 
                                                       @Override

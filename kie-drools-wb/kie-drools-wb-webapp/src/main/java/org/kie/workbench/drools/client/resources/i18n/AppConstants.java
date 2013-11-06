@@ -44,7 +44,7 @@ public interface AppConstants
 
     String deployment();
 
-    String asset_repo();
+    String artifactRepository();
 
     String newItem();
 

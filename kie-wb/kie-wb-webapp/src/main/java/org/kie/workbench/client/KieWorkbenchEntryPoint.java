@@ -17,13 +17,10 @@ package org.kie.workbench.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
@@ -204,7 +201,7 @@ public class KieWorkbenchEntryPoint {
             }
         }).endMenu().build().getItems().get(0));
 
-        result.add( MenuFactory.newSimpleItem( constants.Asset_repo() ).withRoles(kieACL.getGrantedRoles(F_ASSET_REPO)).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles(kieACL.getGrantedRoles( F_ARTIFACT_REPO )).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
@@ -313,26 +310,8 @@ public class KieWorkbenchEntryPoint {
         return defaultPerspective;
     }
 
-    private List<AbstractWorkbenchPerspectiveActivity> getPerspectiveActivities() {
 
-        //Get Perspective Providers
-        final Set<AbstractWorkbenchPerspectiveActivity> activities = activityManager.getActivities( AbstractWorkbenchPerspectiveActivity.class );
-
-        //Sort Perspective Providers so they're always in the same sequence!
-        List<AbstractWorkbenchPerspectiveActivity> sortedActivities = new ArrayList<AbstractWorkbenchPerspectiveActivity>( activities );
-        Collections.sort( sortedActivities,
-                          new Comparator<AbstractWorkbenchPerspectiveActivity>() {
-                              @Override
-                              public int compare( AbstractWorkbenchPerspectiveActivity o1,
-                                                  AbstractWorkbenchPerspectiveActivity o2 ) {
-                                  return o1.getPerspective().getName().compareTo( o2.getPerspective().getName() );
-                              }
-                          } );
-
-        return sortedActivities;
-    }
     //Fade out the "Loading application" pop-up
-
     private void hideLoadingPopup() {
         final Element e = RootPanel.get( "loading" ).getElement();
 

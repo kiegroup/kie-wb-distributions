@@ -23,7 +23,7 @@ public class KieWorkbenchFeatures {
     // Top level menu entries plus Home menu sections
 
     public static final String F_PROJECT_AUTHORING = "wb_project_authoring";
-    public static final String F_ASSET_REPO = "wb_asset_repository";
+    public static final String F_ARTIFACT_REPO = "wb_artifact_repository";
     public static final String F_ADMINISTRATION = "wb_administration";
     public static final String F_PROCESS_DEFINITIONS = "wb_process_definitions";
     public static final String F_PROCESS_INSTANCES = "wb_process_instances";

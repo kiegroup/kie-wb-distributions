@@ -48,7 +48,7 @@ public interface AppConstants
 
     String Tasks();
 
-    String Asset_repo();
+    String artifactRepository();
 
     String LogOut();
 

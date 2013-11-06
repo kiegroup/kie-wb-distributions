@@ -17,12 +17,9 @@ package org.kie.workbench.drools.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
@@ -180,7 +177,7 @@ public class KieDroolsWorkbenchEntryPoint {
     private List<MenuItem> getDeploymentMenuItems() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.asset_repo() ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
@@ -206,27 +203,6 @@ public class KieDroolsWorkbenchEntryPoint {
             }
         }
         return defaultPerspective;
-    }
-
-    private List<AbstractWorkbenchPerspectiveActivity> getPerspectiveActivities() {
-
-        //Get Perspective Providers
-        final Set<AbstractWorkbenchPerspectiveActivity> activities = activityManager.getActivities( AbstractWorkbenchPerspectiveActivity.class );
-
-        //Sort Perspective Providers so they're always in the same sequence!
-        List<AbstractWorkbenchPerspectiveActivity> sortedActivities = new ArrayList<AbstractWorkbenchPerspectiveActivity>( activities );
-        Collections.sort( sortedActivities,
-                          new Comparator<AbstractWorkbenchPerspectiveActivity>() {
-
-                              @Override
-                              public int compare( AbstractWorkbenchPerspectiveActivity o1,
-                                                  AbstractWorkbenchPerspectiveActivity o2 ) {
-                                  return o1.getPerspective().getName().compareTo( o2.getPerspective().getName() );
-                              }
-
-                          } );
-
-        return sortedActivities;
     }
 
     //Fade out the "Loading application" pop-up
