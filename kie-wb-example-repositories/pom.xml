@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.kie</groupId>
+    <artifactId>kie-wb-distributions</artifactId>
+    <version>6.1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.kie</groupId>
+  <artifactId>kie-wb-example-repositories</artifactId>
+
+  <packaging>pom</packaging>
+  <name>KIE Workbench - Example Repositories</name>
+  <description>KIE Workbench - Example Repositories</description>
+
+  <build>
+
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}</directory>
+              <includes>
+                <include>example-repositories/**</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <target>
+
+                <macrodef name = "git">
+                  <attribute name = "command" />
+                  <attribute name = "dir" default = "" />
+                  <element name = "args" optional = "true" />
+                  <sequential>
+                    <echo message = "git @{command}" />
+                    <exec executable = "git" dir = "@{dir}">
+                      <arg value = "@{command}" />
+                      <args/>
+                    </exec>
+                  </sequential>
+                </macrodef>
+
+                <git command = "clone">
+                  <args>
+                    <arg value = "https://github.com/guvnorngtestuser1/guvnorng-playground.git" />
+                    <arg value = "${project.basedir}/example-repositories/uf-playground" />
+                  </args>
+                </git>
+
+                <git command = "clone">
+                  <args>
+                    <arg value = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground-kjar.git" />
+                    <arg value = "${project.basedir}/example-repositories/jbpm-playground" />
+                  </args>
+                </git>
+
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <finalName>kie-wb-${project.version}</finalName>
+          <descriptors>
+            <descriptor>src/main/assembly/assembly-kie-wb-example-repositories.xml</descriptor>
+          </descriptors>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+          </archive>
+        </configuration>
+      </plugin>
+
+    </plugins>
+
+  </build>
+
+</project>
