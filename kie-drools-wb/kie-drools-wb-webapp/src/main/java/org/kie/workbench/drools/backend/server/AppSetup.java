@@ -16,6 +16,8 @@
 
 package org.kie.workbench.drools.backend.server;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,11 +32,6 @@ import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.guvnor.common.services.project.model.GAV;
 import org.guvnor.common.services.project.model.POM;
 import org.guvnor.common.services.project.service.ProjectService;
-import org.uberfire.commons.services.cdi.ApplicationStarted;
-import org.uberfire.io.IOService;
-import org.uberfire.io.IOClusteredService;
-import org.uberfire.commons.services.cdi.Startup;
-import org.uberfire.commons.services.cdi.StartupType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.uberfire.backend.organizationalunit.OrganizationalUnit;
@@ -45,6 +42,10 @@ import org.uberfire.backend.server.config.ConfigGroup;
 import org.uberfire.backend.server.config.ConfigType;
 import org.uberfire.backend.server.config.ConfigurationFactory;
 import org.uberfire.backend.server.config.ConfigurationService;
+import org.uberfire.commons.services.cdi.ApplicationStarted;
+import org.uberfire.commons.services.cdi.Startup;
+import org.uberfire.commons.services.cdi.StartupType;
+import org.uberfire.io.IOService;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
 //is not deployed to the Application Servers /bin folder. This will be remedied when an
@@ -56,6 +57,9 @@ public class AppSetup {
     private static final Logger logger = LoggerFactory.getLogger( AppSetup.class );
 
     // default repository section - start
+    private static final String OU_NAME = "demo";
+    private static final String OU_OWNER = "demo@demo.org";
+
     private static final String DROOLS_WB_PLAYGROUND_SCHEME = "git";
     private static final String DROOLS_WB_PLAYGROUND_ALIAS = "uf-playground";
     private static final String DROOLS_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
@@ -89,20 +93,32 @@ public class AppSetup {
 
     @PostConstruct
     public void assertPlayground() {
+        final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
+        if ( !"".equalsIgnoreCase( exampleRepositoriesRoot ) ) {
+            loadExampleRepositories( exampleRepositoriesRoot );
 
-        if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
+        } else if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
             Repository repository = createRepository( DROOLS_WB_PLAYGROUND_ALIAS,
                                                       DROOLS_WB_PLAYGROUND_SCHEME,
                                                       DROOLS_WB_PLAYGROUND_ORIGIN,
                                                       DROOLS_WB_PLAYGROUND_UID,
                                                       DROOLS_WB_PLAYGROUND_PWD );
-            createOU( repository, "demo", "demo@demo.org" );
+            createOU( repository, OU_NAME, OU_OWNER );
 
         } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
 
-            Repository exampleRepo = createRepository( "repository1", "git", null, "", "" );
-            createOU( exampleRepo, "example", "" );
-            createProject( exampleRepo, "org.kie.example", "project1", "1.0.0-SNAPSHOT" );
+            Repository exampleRepo = createRepository( "repository1",
+                                                       "git",
+                                                       null,
+                                                       "",
+                                                       "" );
+            createOU( exampleRepo,
+                      "example",
+                      "" );
+            createProject( exampleRepo,
+                           "org.kie.example",
+                           "project1",
+                           "1.0.0-SNAPSHOT" );
         }
 
         //Define mandatory properties
@@ -132,7 +148,61 @@ public class AppSetup {
         }
 
         // notify cluster service that bootstrap is completed to start synchronization
-        applicationStartedEvent.fire(new ApplicationStarted());
+        applicationStartedEvent.fire( new ApplicationStarted() );
+    }
+
+    private void loadExampleRepositories( final String exampleRepositoriesRoot ) {
+        final File root = new File( exampleRepositoriesRoot );
+        if ( !root.isDirectory() ) {
+            logger.error( "System Property 'org.kie.example.repositories' does not point to a folder." );
+
+        } else {
+            //Create a new Organizational Unit
+            logger.info( "Creating Organizational Unit '" + OU_NAME + "'." );
+            OrganizationalUnit organizationalUnit = organizationalUnitService.getOrganizationalUnit( OU_NAME );
+            if ( organizationalUnit == null ) {
+                final List<Repository> repositories = new ArrayList<Repository>();
+                organizationalUnit = organizationalUnitService.createOrganizationalUnit( OU_NAME,
+                                                                                         OU_OWNER,
+                                                                                         repositories );
+                logger.info( "Created Organizational Unit '" + OU_NAME + "'." );
+
+            } else {
+                logger.info( "Organizational Unit '" + OU_NAME + "' already exists." );
+            }
+
+            final FileFilter filter = new FileFilter() {
+                @Override
+                public boolean accept( final File pathName ) {
+                    return pathName.isDirectory();
+                }
+            };
+
+            logger.info( "Cloning Example Repositories." );
+            for ( File child : root.listFiles( filter ) ) {
+                final String repositoryAlias = child.getName();
+                final String repositoryOrigin = child.getAbsolutePath();
+                logger.info( "Cloning Repository '" + repositoryAlias + "' from '" + repositoryOrigin + "'." );
+                Repository repository = repositoryService.getRepository( repositoryAlias );
+                if ( repository == null ) {
+                    try {
+                        repository = repositoryService.createRepository( "git",
+                                                                         repositoryAlias,
+                                                                         new HashMap<String, Object>() {{
+                                                                             put( "origin", repositoryOrigin );
+                                                                         }} );
+                        organizationalUnitService.addRepository( organizationalUnit,
+                                                                 repository );
+                    } catch ( Exception e ) {
+                        logger.error( "Failed to clone Repository '" + repositoryAlias + "'",
+                                      e );
+                    }
+                } else {
+                    logger.info( "Repository '" + repositoryAlias + "' already exists." );
+                }
+            }
+            logger.info( "Example Repositories cloned." );
+        }
     }
 
     private ConfigGroup getGlobalConfiguration() {
