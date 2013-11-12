@@ -7,9 +7,9 @@ BPMS distribution contains:
 
 * The BPMS statis modules layer (BPMS layer).
 
-* The BPMS web application artifact that runs over BPMS layer (kie-wb-webapp).
+* The BPMS web application artifact that runs with BPMS layer (kie-wb-webapp).
 
-* The jBPM Dashboard web application artifact that runs over BPMS layer (jbpm-dashboard).
+* The jBPM Dashboard web application artifact that runs with BPMS layer (jbpm-dashboard).
 
 Table of contents
 ------------------
@@ -33,9 +33,9 @@ To generate only some of the resulting distribution artifacts, use the following
 
 * <code>bpms-static-layer</code>: Generates the BPMS static modules layer (BPMS layer).
 
-* <code>bpms</code>: Generates the BPMS web application artifact that runs over BPMS layer (kie-wb-webapp).
+* <code>bpms</code>: Generates the BPMS web application artifact that runs with BPMS layer (kie-wb-webapp).
 
-* <code>jbpm-dashboard</code>: Generates the jBPM Dashboard web application artifact that runs over BPMS layer (jbpm-dashboard).
+* <code>jbpm-dashboard</code>: Generates the jBPM Dashboard web application artifact that runs with BPMS layer (jbpm-dashboard).
 
 
 Resulting artifacts
@@ -45,9 +45,9 @@ Resulting artifacts for BPMS distributions are:
 
 * BPMS static modules layer (BPMS layer) - <code>eap-modules-distributions-X.Y.Z-bpms-layer.zip</code>
 
-* BPMS web application artifact that runs over BPMS layer (kie-wb-webapp) - <code>eap-modules-distributions-X.Y.Z-org.kie.kie-wb-webapp.war</code>
+* BPMS web application artifact that runs with BPMS layer (kie-wb-webapp) - <code>eap-modules-distributions-X.Y.Z-org.kie.kie-wb-webapp.war</code>
 
-* jBPM Dashboard web application artifact that runs over BPMS layer (jbpm-dashboard) - <code>eap-modules-distributions-X.Y.Z-org.jbpm.dashboard.jbpm-dashboard.war</code>
+* jBPM Dashboard web application artifact that runs with BPMS layer (jbpm-dashboard) - <code>eap-modules-distributions-X.Y.Z-org.jbpm.dashboard.jbpm-dashboard.war</code>
 
 Deployment on JBoss EAP/AS
 --------------------------

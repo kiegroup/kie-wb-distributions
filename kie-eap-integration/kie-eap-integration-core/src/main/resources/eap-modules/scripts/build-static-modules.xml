@@ -302,14 +302,19 @@ OUTPUT:
             <available file="${module.dependencies.file}"/>
             <ac:then>
                 <loadfile property="modules.dependencies.file.content" srcfile="${module.dependencies.file}"/>
-                <ac:for param="dependency" list="${modules.dependencies.file.content}" delimiter="${line.separator}">
-                    <ac:sequential>
+                <ac:if>
+                  <isset property="modules.dependencies.file.content"/>
+                  <ac:then>
+                    <ac:for param="dependency" list="${modules.dependencies.file.content}" delimiter="${line.separator}">
+                      <ac:sequential>
                         <antcall target="create-module-xml-dependency">
-                            <param name="dependency-name" value="@{dependency}"/>
-                            <param name="file-name" value="${module.xml.tmp.dependencies.path}"/>
+                          <param name="dependency-name" value="@{dependency}"/>
+                          <param name="file-name" value="${module.xml.tmp.dependencies.path}"/>
                         </antcall>
-                    </ac:sequential>
-                </ac:for>
+                      </ac:sequential>
+                    </ac:for>
+                  </ac:then>
+                </ac:if>
             </ac:then>
         </ac:if>
 

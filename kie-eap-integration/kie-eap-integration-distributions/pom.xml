@@ -32,6 +32,9 @@
   <!-- Common properties that will be inhertied to the sub-modules. -->
   <properties>
 
+    <!-- location for each distribution additional modules. -->
+    <eap-modules.core.input.path>${project.basedir}/src/main/eap-modules/modules</eap-modules.core.input.path>
+
     <!-- location to extract kie-eap-integration-core jar. -->
     <eap-modules.core.output.path>${project.build.directory}/eap-modules-core</eap-modules.core.output.path>
 
@@ -63,11 +66,24 @@
             <phase>package</phase>
             <configuration>
               <target>
+                <!-- Extract core common files. -->
                 <delete includeemptydirs="true" verbose="false" failonerror="false">
                   <fileset dir="${eap-modules.core.output.path}"/>
                 </delete>
                 <echo>Extracting core file ${org.kie:kie-eap-integration-core:jar}</echo>
                 <unzip src="${org.kie:kie-eap-integration-core:jar}" dest="${eap-modules.core.output.path}"/>
+
+                <!-- Add custom current distribution module descriptor to the generated modules source directory. -->
+                <!-- This descriptor will override the default ones from kie-eap-integration-core. -->
+                <copy todir="${eap-modules.source.path}" overwrite="true" failonerror="false">
+                  <fileset dir="${eap-modules.core.input.path}">
+                    <include name="**/*.list"/>
+                    <include name="**/*.module"/>
+                    <include name="**/*.dependencies"/>
+                    <include name="**/*.resources"/>
+                  </fileset>
+                </copy>
+
               </target>
             </configuration>
             <goals>

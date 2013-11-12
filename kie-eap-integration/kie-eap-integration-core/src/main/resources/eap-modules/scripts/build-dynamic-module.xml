@@ -10,7 +10,6 @@ INPUT parameters:
 - static-modules-source-path -> The source folder where all module descriptors, module dependencies and modules.list files are located.
 - static-modules-list-file -> The path where generating module.list file is located
 - eap-configuration-file -> The path for the EAP configuration properties.
-- dynamic-modules-source-path -> The source forlder where all dynamic module descriptors and module dependencies files are located.
 - dynamic-modules-output-path -> The output path where generating all modules stuff.
 - dynamic-module-assembly-id -> The ID for the generated assembly descriptor.
 - dynamic-module-assembly-war-source -> The source "skinny" war for assembly descriptor.
@@ -37,7 +36,6 @@ OUTPUT:
     <import file="build-eap-utils.xml"/>
 
     <property name="modules.static.source.path" value="${static-modules-source-path}${file.separator}"/>
-    <property name="modules.dynamic.source.path" value="${dynamic-modules-source-path}${file.separator}"/>
     <property name="modules.list.file.path" value="${static-modules-list-file}"/>
     <property name="modules.output.path" value="${dynamic-modules-output-path}${file.separator}"/>
     <property name="module.assembly.output.path" value="${dynamic-module-assembly-output-file}"/>
@@ -70,7 +68,7 @@ OUTPUT:
     <target name="main" depends="clean">
 
         <!-- Read module definition file. -->
-        <property name="module.file" value="${modules.dynamic.source.path}${module-name}.module"/>
+        <property name="module.file" value="${modules.static.source.path}${module-name}.module"/>
         <fail message="Module '${module-name}' definition file not found at path ${module.file}.">
             <condition>
                 <not>
@@ -326,7 +324,7 @@ OUTPUT:
 
 
         <!-- Generated the module dependencies section. -->
-        <property name="module.dependencies.file" value="${modules.dynamic.source.path}${module-name}.dependencies"/>
+        <property name="module.dependencies.file" value="${modules.static.source.path}${module-name}.dependencies"/>
         <fail message="Module '${module-name}' dependencies file not found at path ${module.dependencies.file}.">
             <condition>
                 <not>
@@ -336,17 +334,22 @@ OUTPUT:
         </fail>
 
         <loadfile property="modules.dependencies.file.content" srcfile="${module.dependencies.file}"/>
-        <ac:for param="dependency" list="${modules.dependencies.file.content}" delimiter="${line.separator}">
-            <ac:sequential>
+        <ac:if>
+          <isset property="modules.dependencies.file.content"/>
+          <ac:then>
+            <ac:for param="dependency" list="${modules.dependencies.file.content}" delimiter="${line.separator}">
+              <ac:sequential>
                 <!-- Generates the modules to include in jboss-deployment-structure. -->
                 <antcall target="create-jboss-deployment-structure-module">
-                    <param name="dependency-name" value="@{dependency}"/>
-                    <param name="dependency-export" value="true"/>
-                    <param name="dependency-meta-inf" value="import"/>
-                    <param name="jboss-deployment-structure-file-name" value="${module.jboss-deployment-structure.modules.tmp.path}"/>
+                  <param name="dependency-name" value="@{dependency}"/>
+                  <param name="dependency-export" value="true"/>
+                  <param name="dependency-meta-inf" value="import"/>
+                  <param name="jboss-deployment-structure-file-name" value="${module.jboss-deployment-structure.modules.tmp.path}"/>
                 </antcall>
-            </ac:sequential>
-        </ac:for>
+              </ac:sequential>
+            </ac:for>
+          </ac:then>
+        </ac:if>
 
         <!-- Generate the final jboss-deployment-structure.xml.. -->
         <loadfile property="module.jboss-deployment-structure.modules.tmp.content"

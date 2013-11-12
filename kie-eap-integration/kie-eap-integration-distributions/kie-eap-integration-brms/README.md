@@ -7,7 +7,7 @@ BRMS distribution contains:
 
 * The BRMS statis modules layer (BRMS layer).
 
-* The BRMS web application artifact that runs over BRMS layer (kie-drools-wb-webapp).
+* The BRMS web application artifact that runs with BRMS layer (kie-drools-wb-webapp).
 
 Table of contents
 ------------------
@@ -31,7 +31,7 @@ To generate only some of the resulting distribution artifacts, use the following
 
 * <code>brms-static-layer</code>: Generates the BRMS static modules layer (BRMS layer).
 
-* <code>brms</code>: Generates the BRMS web application artifact that runs over BRMS layer (kie-drools-wb-webapp).
+* <code>brms</code>: Generates the BRMS web application artifact that runs with BRMS layer (kie-drools-wb-webapp).
 
 
 Resulting artifacts
@@ -41,7 +41,7 @@ Resulting artifacts for BRMS distributions are:
 
 * BRMS static modules layer (BRMS layer) - <code>eap-modules-distributions-X.Y.Z-brms-layer.zip</code>
 
-* BRMS web application artifact that runs over BRMS layer (kie-drools-wb-webapp) - <code>eap-modules-distributions-X.Y.Z-org.kie.kie-drools-wb-webapp.war</code>
+* BRMS web application artifact that runs with BRMS layer (kie-drools-wb-webapp) - <code>eap-modules-distributions-X.Y.Z-org.kie.kie-drools-wb-webapp.war</code>
 
 Deployment on JBoss EAP/AS
 --------------------------

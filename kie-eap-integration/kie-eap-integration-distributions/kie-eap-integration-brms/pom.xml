@@ -35,7 +35,7 @@
       PROFILES:
       ========
         - brms-static-layer ==> Generates the static brms layer for EAP in a ZIP format.
-        - brms ==> Generates the kie-drools-wb WAR (BRMS) that runs over the brms layer.
+        - brms ==> Generates the kie-drools-wb WAR (BRMS) that runs with the brms layer.
 
         - **NOTE**: All profiles are enabled by default.
   -->
@@ -168,7 +168,6 @@
                   <target>
                     <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
                     <property name="static-modules-source-path" value="${eap-modules.source.path}"/>
-                    <property name="dynamic-modules-source-path" value="${basedir}/src/main/eap-modules/modules"/>
                     <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
                     <property name="dynamic-module-assembly-output-file"
                               value="${eap-modules.dynamic.kie-drools-wb.assembly.output.file}"/>
