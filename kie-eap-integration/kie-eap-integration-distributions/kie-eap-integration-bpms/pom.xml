@@ -35,8 +35,8 @@
       PROFILES:
       ========
         - bpms-static-layer ==> Generates the static bpms layer for EAP in a ZIP format.
-        - bpms ==> Generates the kie-wb WAR (BPMS) that runs over the bpms layer.
-        - jbpm-dashboard ==> Generates the jbpm-dashboard WAR that runs over the bpms layer.
+        - bpms ==> Generates the kie-wb WAR (BPMS) that runs with the bpms layer.
+        - jbpm-dashboard ==> Generates the jbpm-dashboard WAR that runs with the bpms layer.
 
         - **NOTE**: All profiles are enabled by default.
   -->
@@ -161,7 +161,6 @@
                   <target>
                     <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
                     <property name="static-modules-source-path" value="${eap-modules.source.path}"/>
-                    <property name="dynamic-modules-source-path" value="${basedir}/src/main/eap-modules/modules"/>
                     <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
                     <property name="dynamic-module-assembly-output-file"
                               value="${eap-modules.dynamic.kie-wb.assembly.output.file}"/>
@@ -257,7 +256,6 @@
                   <target>
                     <property name="static-modules-list-file" value="${eap-modules.static.list.file}"/>
                     <property name="static-modules-source-path" value="${eap-modules.source.path}"/>
-                    <property name="dynamic-modules-source-path" value="${basedir}/src/main/eap-modules/modules"/>
                     <property name="dynamic-modules-output-path" value="${eap-modules.dynamic.output.path}"/>
                     <property name="dynamic-module-assembly-output-file"
                               value="${eap-modules.dynamic.jbpm-dash.assembly.output.file}"/>

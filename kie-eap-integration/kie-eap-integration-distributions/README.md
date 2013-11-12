@@ -11,11 +11,11 @@ This distribution generates:
 
 2.- A BRMS static modules layer for JBoss EAP/AS (named <code>brms</code>) - This layer is used when deploying the BRMS skinny war (artifact #5)
 
-3.- Skinny WAR for BPMS that runs over <code>bpms</code> layer.
+3.- Skinny WAR for BPMS that runs with <code>bpms</code> layer.
 
-4.- Skinny WAR for jBPM dashboard that runs over <code>bpms</code> layer.
+4.- Skinny WAR for jBPM dashboard that runs with <code>bpms</code> layer.
 
-5.- Skinny WAR for BRMS that runs over <code>brms</code> layer.
+5.- Skinny WAR for BRMS that runs with <code>brms</code> layer.
 
 
 
