@@ -89,7 +89,7 @@ public class AppSetup {
     public void assertPlayground() {
 
         final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
-        if ( !"".equalsIgnoreCase( exampleRepositoriesRoot ) ) {
+        if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
             loadExampleRepositories( exampleRepositoriesRoot );
 
         } else if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
