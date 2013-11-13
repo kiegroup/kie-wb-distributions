@@ -54,16 +54,6 @@ public class AppSetup {
     private static final String OU_NAME = "demo";
     private static final String OU_OWNER = "demo@demo.org";
 
-    private static final String JBPM_WB_PLAYGROUND_ALIAS = "jbpm-playground";
-    private static final String JBPM_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground-kjar.git";
-    private static final String JBPM_WB_PLAYGROUND_UID = "guvnorngtestuser1";
-    private static final String JBPM_WB_PLAYGROUND_PWD = "test1234";
-
-    private static final String DROOLS_WB_PLAYGROUND_ALIAS = "uf-playground";
-    private static final String DROOLS_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
-    private static final String DROOLS_WB_PLAYGROUND_UID = "guvnorngtestuser1";
-    private static final String DROOLS_WB_PLAYGROUND_PWD = "test1234";
-
     private static final String GLOBAL_SETTINGS = "settings";
     // default repository section - end
 
@@ -91,19 +81,6 @@ public class AppSetup {
         final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
         if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
             loadExampleRepositories( exampleRepositoriesRoot );
-
-        } else if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-            administrationService.bootstrapRepository( OU_NAME,
-                                                       JBPM_WB_PLAYGROUND_ALIAS,
-                                                       JBPM_WB_PLAYGROUND_ORIGIN,
-                                                       JBPM_WB_PLAYGROUND_UID,
-                                                       JBPM_WB_PLAYGROUND_PWD );
-
-            administrationService.bootstrapRepository( OU_NAME,
-                                                       DROOLS_WB_PLAYGROUND_ALIAS,
-                                                       DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                       DROOLS_WB_PLAYGROUND_UID,
-                                                       DROOLS_WB_PLAYGROUND_PWD );
 
         } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
             administrationService.bootstrapRepository( "example",
