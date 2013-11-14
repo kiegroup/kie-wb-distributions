@@ -107,3 +107,4 @@ org.sonatype.aether
 org.sonatype.plexus
 org.sonatype.sisu
 org.yaml.snakeyaml
+sun.jdk
