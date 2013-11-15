@@ -40,8 +40,6 @@ org.eclipse:org.eclipse.bpmn2:jar
 org.freemarker:freemarker:jar
 org.hamcrest:hamcrest-core:jar
 org.jasypt:jasypt:jar
-org.jboss.errai.io.netty:netty:jar
-org.jboss.errai.reflections:reflections:jar
 org.jboss.netty:netty:jar
 org.jboss.seam.transaction:seam-transaction-api:jar
 org.json:json:jar
