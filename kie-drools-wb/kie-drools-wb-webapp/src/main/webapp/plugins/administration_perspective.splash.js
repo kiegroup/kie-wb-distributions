@@ -5,5 +5,5 @@ $registerSplashScreen({
         return "Help";
     },
     display_next_time: true,
-    interception_points: ["org.kie.workbench.drools.client.perspectives.AdministrationPerspective"]
+    interception_points: ["org.drools.workbench.client.perspectives.AdministrationPerspective"]
 });
