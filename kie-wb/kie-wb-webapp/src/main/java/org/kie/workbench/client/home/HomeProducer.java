@@ -6,16 +6,14 @@ import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.LocaleInfo;
-import com.google.gwt.user.client.Window;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.AppConstants;
+import org.kie.workbench.common.screens.home.client.resources.i18n.HomeConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
-import org.kie.workbench.common.screens.home.model.ModelUtils;
+
 import org.kie.workbench.common.screens.home.model.Section;
-import org.kie.workbench.common.screens.home.model.SectionEntry;
 import org.kie.workbench.common.services.security.KieWorkbenchACL;
 import org.uberfire.client.mvp.PlaceManager;
-import org.uberfire.mvp.Command;
 
 import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
 
@@ -28,6 +26,7 @@ public class HomeProducer {
     private HomeModel model;
 
     private AppConstants constants = AppConstants.INSTANCE;
+    private HomeConstants homeConstants = HomeConstants.INSTANCE;
 
     @Inject
     private PlaceManager placeManager;
@@ -37,156 +36,41 @@ public class HomeProducer {
 
     public void init() {
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( constants.homeTheKnowledgeLifeCycle() );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeDiscover(),
-                                                              constants.homeDiscoverCaption(),
-                                                              url + "/images/HandHome.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeAuthor(),
-                                                              constants.homeAuthorCaption(),
-                                                              url + "/images/HandHome.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeDeploy(),
-                                                              constants.homeDeployCaption(),
-                                                              url + "/images/HandHome.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeWork(),
-                                                              constants.homeWorkCaption(),
-                                                              url + "/images/HandHome.jpg" ) );
-        model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeImprove(),
-                                                              constants.homeImproveCaption(),
-                                                              url + "/images/HandHome.jpg" ) );
-        final Section s1 = new Section( constants.Authoring() );
 
-        SectionEntry s1_a = ModelUtils.makeSectionEntry( constants.Project_Authoring(),
-                new Command() {
+        model = new HomeModel( homeConstants.home_title(),homeConstants.home_subtitle());
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective" );
-                    }
-                } );
 
-        SectionEntry s1_b = ModelUtils.makeSectionEntry( constants.artifactRepository(),
-                new Command() {
+        final Section s1 = new Section( homeConstants.authoring_header(),
+                homeConstants.authoring_paragraph(),
+                url + homeConstants.authoring_image());
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
-                    }
-                } );
+        final Section s2 = new Section( homeConstants.deploy_header(),
+                homeConstants.deploy_paragraph(),
+                url + homeConstants.deploy_image());
 
-        SectionEntry s1_c = ModelUtils.makeSectionEntry( constants.Administration(),
-                new Command() {
+        final Section s3 = new Section( homeConstants.process_Management_header(),
+                homeConstants.process_Management_paragraph(),
+                url + homeConstants.process_Management_image());
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.kie.workbench.client.perspectives.AdministrationPerspective" );
-                    }
-                } );
+        final Section s4 = new Section( homeConstants.tasks_header(),
+                homeConstants.tasks_paragraph(),
+                url + homeConstants.tasks_image());
 
-        final Section s2 = new Section( constants.Deploy() );
-
-        SectionEntry s2_a = ModelUtils.makeSectionEntry( constants.Deployments(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "Deployments" );
-                    }
-                } );
-
-        SectionEntry s2_b = ModelUtils.makeSectionEntry( constants.Jobs(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "Jobs" );
-                    }
-                } );
-
-        final Section s3 = new Section( constants.Process_Management() );
-
-        SectionEntry s3_a = ModelUtils.makeSectionEntry( constants.Process_Definitions(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "Process Definitions" );
-                    }
-                } );
-
-        SectionEntry s3_b = ModelUtils.makeSectionEntry( constants.Process_Instances(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "Process Instances" );
-                    }
-                } );
-
-        final Section s4 = new Section( constants.Tasks() );
-
-        SectionEntry s4_a = ModelUtils.makeSectionEntry(constants.Tasks_List(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo("Tasks");
-                    }
-                } );
-
-        final Section s5 = new Section( constants.Dashboards() );
-
-        SectionEntry s5_a =  ModelUtils.makeSectionEntry( constants.Process_Dashboard(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "DashboardPerspective" );
-                    }
-                } );
+        final Section s5 = new Section( homeConstants.dashboards_header(),
+                homeConstants.dashboards_paragraph(),
+                url + homeConstants.dashboards_image());
 
         final String dashbuilderURL = DashboardURLBuilder.getDashboardURL("/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale());
-        SectionEntry s5_b = ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
-                new Command() {
-                    @Override
-                    public void execute() {
-                        Window.open( dashbuilderURL, "_blank", "" );
-                    }
-                } );
 
         s1.setRoles(kieACL.getGrantedRoles(G_AUTHORING));
-        s1_a.setRoles(kieACL.getGrantedRoles(F_PROJECT_AUTHORING));
-        s1_b.setRoles(kieACL.getGrantedRoles( F_ARTIFACT_REPO ));
-        s1_c.setRoles(kieACL.getGrantedRoles(F_ADMINISTRATION));
 
         s2.setRoles(kieACL.getGrantedRoles(G_DEPLOY));
-        s2_a.setRoles(kieACL.getGrantedRoles(F_DEPLOYMENTS));
-        s2_b.setRoles(kieACL.getGrantedRoles(F_JOBS));
 
         s3.setRoles(kieACL.getGrantedRoles(G_PROCESS_MANAGEMENT));
-        s3_a.setRoles(kieACL.getGrantedRoles(F_PROCESS_DEFINITIONS));
-        s3_b.setRoles(kieACL.getGrantedRoles(F_PROCESS_INSTANCES));
 
         s4.setRoles(kieACL.getGrantedRoles(G_TASKS));
-        s4_a.setRoles(kieACL.getGrantedRoles(F_TASKS));
 
         s5.setRoles(kieACL.getGrantedRoles(G_DASHBOARDS));
-        s5_a.setRoles(kieACL.getGrantedRoles(F_PROCESS_DASHBOARD));
-        s5_b.setRoles(kieACL.getGrantedRoles(F_DASHBOARD_BUILDER));
-
-        s1.addEntry(s1_a);
-        s1.addEntry(s1_b);
-        s1.addEntry(s1_c);
-
-        s2.addEntry(s2_a);
-        s2.addEntry(s2_b);
-
-        s3.addEntry(s3_a);
-        s3.addEntry(s3_b);
-
-        s4.addEntry(s4_a);
-
-        s5.addEntry(s5_a);
-        s5.addEntry(s5_b);
 
         model.addSection(s1);
         model.addSection(s2);

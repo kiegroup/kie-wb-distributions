@@ -493,13 +493,15 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-home-api</artifactId>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-home-api</artifactId>
+        <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-home-client</artifactId>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-home-client</artifactId>
+        <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -895,8 +897,8 @@
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-java-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-data-modeller-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-data-modeller-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie:kie-wb-distribution-home-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie:kie-wb-distribution-home-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-organizationalunit-manager</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-common-ui</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-decorated-grid-widget</compileSourcesArtifact>
