@@ -16,6 +16,7 @@ INPUT parameters:
 - dynamic-module-assembly-output-file -> The path where generating the dynamic module assembly descriptor..
 - templates.path -> The source forlder where all templates are located.
 - patches.path -> The source forlder where all patch files are located.
+- temp.path -> Path for temporal files
 
 OUTPUT:
 - Generates a filesystem structure:
@@ -54,7 +55,8 @@ OUTPUT:
     <property name="patches.source.path" value="${patches.path}${file.separator}"/>
     <property name="patches.cdi-extensions.source.path" value="${patches.source.path}cdi-extensions${file.separator}"/>
 
-  <property name="patches.webfragments.source.path" value="${patches.source.path}webfragments${file.separator}"/>
+    <property name="patches.webfragments.source.path" value="${patches.source.path}webfragments${file.separator}"/>
+    <property name="modules.temp.path" value="${temp.path}${file.separator}"/>
 
 
     <!-- Cleans output path -->
@@ -62,6 +64,7 @@ OUTPUT:
         <delete includeemptydirs="true" verbose="false" failonerror="false">
             <fileset dir="${modules.output.path}${module-name}"/>
         </delete>
+        <clean dir="${modules.temp.path}"/>
     </target>
 
     <!-- Generates the modules stuff. -->
@@ -135,11 +138,11 @@ OUTPUT:
                 </ac:if>
 
                 <!-- Create the temp files.. -->
-                <tempfile destdir="${java.io.tmpdir}"
+                <tempfile destdir="${modules.temp.path}"
                           property="module.assembly.dependency-set.exludes.path" createfile="true" deleteonexit="true" suffix="dependency-set-exludes"/>
-                <tempfile destdir="${java.io.tmpdir}"
+                <tempfile destdir="${modules.temp.path}"
                           property="module.assembly.file-set.includes.path" createfile="true" deleteonexit="true" suffix="file-set-exludes"/>
-                <tempfile destdir="${java.io.tmpdir}"
+                <tempfile destdir="${modules.temp.path}"
                           property="module.assembly.file.includes.path" createfile="true" deleteonexit="true" suffix="file--exludes"/>
 
                 <!-- Clean temp files content. -->
@@ -215,7 +218,8 @@ OUTPUT:
                           encoding="UTF-8" quiet="true"/>
 
                 <!-- Generate the final assembly descriptor file.. -->
-                <build-from-template-file template-file="${templates.module.assembly.file.path}">
+                <build-from-template-file template-file="${templates.module.assembly.file.path}"
+                                          temp-path="${modules.temp.path}">
                     <template-file-params>
                         <param type="token" name="FILES" value="${module.assembly.file.includes.content}"/>
                         <param type="token" name="FILE_SETS" value="${module.assembly.file-set.includes.content}"/>
@@ -293,10 +297,14 @@ OUTPUT:
         <property name="webfragment-jar" value="${webfragment-artifact-name}-webfragment"/>
 
         <!-- Extract the file. -->
-        <extract-webfragment-jar jar-file-path="${jar-path}" output-path="${output-path}" output-name="${webfragment-xml}"/>
+        <extract-webfragment-jar jar-file-path="${jar-path}" output-path="${output-path}"
+                                 output-name="${webfragment-xml}"
+                                 temp-path="${modules.temp.path}"/>
 
         <!-- Create the jar file. -->
-        <create-webfragment-jar jar-path="${output-path}" jar-name="${webfragment-jar}" webfragment-source-file="${output-path}${webfragment-xml}"/>
+        <create-webfragment-jar jar-path="${output-path}" jar-name="${webfragment-jar}"
+                                webfragment-source-file="${output-path}${webfragment-xml}"
+                                temp-path="${modules.temp.path}"/>
 
         <!-- Create the inclusion for this jar in the assembly descriptor.-->
         <antcall target="create-file-inclusion">
@@ -316,7 +324,7 @@ OUTPUT:
    -->
     <target name="create-jboss-deployment-structure">
         <!-- Create the temp files.. -->
-        <tempfile destdir="${java.io.tmpdir}"
+        <tempfile destdir="${modules.temp.path}"
                   property="module.jboss-deployment-structure.modules.tmp.path" createfile="true" deleteonexit="true" suffix="jboss-deployment-structure-modules"/>
 
         <!-- Clean temp files content. -->
@@ -356,7 +364,8 @@ OUTPUT:
                   srcFile="${module.jboss-deployment-structure.modules.tmp.path}"
                   encoding="UTF-8" quiet="true"/>
 
-        <build-from-template-file template-file="${templates.module.jboss-deployment-structure.file.path}">
+        <build-from-template-file template-file="${templates.module.jboss-deployment-structure.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="DEPENDENCIES" value="${module.jboss-deployment-structure.modules.tmp.content}"/>
             </template-file-params>
@@ -596,7 +605,8 @@ OUTPUT:
         - file-dest-name
     -->
     <target name="create-file-inclusion">
-        <build-from-template-file template-file="${templates.module.assembly-file.file.path}">
+        <build-from-template-file template-file="${templates.module.assembly-file.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="FILE_SOURCE" value="${file-source}"/>
                 <param type="token" name="FILE_OUTPUT_DIR" value="${file-output-dir}"/>
@@ -618,7 +628,8 @@ OUTPUT:
         - include
     -->
     <target name="create-file-set-inclusion">
-        <build-from-template-file template-file="${templates.module.assembly-file-set.file.path}">
+        <build-from-template-file template-file="${templates.module.assembly-file-set.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="FILESET_DIRECTORY" value="${directory}"/>
                 <param type="token" name="FILESET_OUTPUT_DIRECTORY" value="${output-directory}"/>
@@ -639,7 +650,8 @@ OUTPUT:
     -->
     <target name="create-dependency-set-exclude">
         <basename property="resource-file-name" file="${resource-name}"/>
-        <build-from-template-property template-property="dependency-set.exclude">
+        <build-from-template-property template-property="dependency-set.exclude"
+                                      temp-path="${modules.temp.path}">
             <template-prop-params>
                 <param type="token" name="DEPENDENCY" value="${resource-name-preffix}${resource-file-name}"/>
             </template-prop-params>
@@ -658,7 +670,8 @@ OUTPUT:
         - jboss-deployment-structure-file-name
     -->
     <target name="create-jboss-deployment-structure-module">
-        <build-from-template-property template-property="jboss-deployment-structure-module">
+        <build-from-template-property template-property="jboss-deployment-structure-module"
+                                      temp-path="${modules.temp.path}">
             <template-prop-params>
                 <param type="token" name="MODULE_NAME" value="${dependency-name}"/>
                 <param type="token" name="EXPORT" value="${dependency-export}"/>

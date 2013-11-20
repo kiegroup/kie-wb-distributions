@@ -38,6 +38,13 @@
     <!-- location to extract kie-eap-integration-core jar. -->
     <eap-modules.core.output.path>${project.build.directory}/eap-modules-core</eap-modules.core.output.path>
 
+    <!-- location for temporary files.
+      NOTE: Do nou use the default java.io.temp directory. In some installation, java.io.temp directory is shared between all user
+            and can cause file permission problems.
+            The best approach is using a directory inside each maven module build directory.
+     -->
+    <eap-modules.temp.path>${project.build.directory}/eap-modules-core-temp</eap-modules.temp.path>
+
     <!-- Source definition files and directories and configuration properties. -->
     <eap-modules.source.path>${eap-modules.core.output.path}/eap-modules/modules</eap-modules.source.path>
     <eap-modules.templates.path>${eap-modules.core.output.path}/eap-modules/templates</eap-modules.templates.path>

@@ -21,6 +21,7 @@ INPUT parameters:
 - static-modules-assembly-id -> The identifier for the resulting assembly.
 - templates.path -> The source forlder where all templates are located.
 - patches.path -> The source forlder where all patch files are located.
+- temp.path -> Path for temporal files
 
 OUTPUT:
 - Generates a filesystem structure:
@@ -56,12 +57,14 @@ OUTPUT:
     <property name="templates.layers.conf.file.path" value="${templates.source.path}${file.separator}layers.template"/>
 
     <property name="patches.source.path" value="${patches.path}${file.separator}"/>
+    <property name="modules.temp.path" value="${temp.path}${file.separator}"/>
 
     <!-- Cleans output path -->
     <target name="clean">
         <delete includeemptydirs="true" verbose="false" failonerror="false">
             <fileset dir="${modules.output.path}"/>
         </delete>
+        <clean dir="${modules.temp.path}"/>
     </target>
 
     <!-- Generates the modules stuff. -->
@@ -209,7 +212,8 @@ OUTPUT:
         - Generates the layer.conf file at ${modules.output.path}/${module.name}
     -->
     <target name="create-module-layer-conf">
-        <build-from-template-file template-file="${templates.layers.conf.file.path}">
+        <build-from-template-file template-file="${templates.layers.conf.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="LAYER_NAME" value="${module.layer}"/>
             </template-file-params>
@@ -236,11 +240,11 @@ OUTPUT:
 
         <property name="module.xml.tmp.component.path" value="${modules.output.path}${module.name}${file.separator}module.xml"/>
 
-        <tempfile destdir="${java.io.tmpdir}"
+        <tempfile destdir="${modules.temp.path}"
                   property="module.xml.tmp.component.path" createfile="true" deleteonexit="true" suffix="module-component"/>
-        <tempfile destdir="${java.io.tmpdir}"
+        <tempfile destdir="${modules.temp.path}"
                   property="module.xml.tmp.dependencies.path" createfile="true" deleteonexit="true" suffix="module-deps"/>
-        <tempfile destdir="${java.io.tmpdir}"
+        <tempfile destdir="${modules.temp.path}"
                   property="module.xml.tmp.resources.path" createfile="true" deleteonexit="true" suffix="module-resources"/>
 
         <!-- Clean temp files content. -->
@@ -322,7 +326,8 @@ OUTPUT:
                   srcFile="${module.xml.tmp.dependencies.path}"
                   encoding="UTF-8" quiet="true"/>
 
-        <build-from-template-file template-file="${templates.module.xml.file.path}">
+        <build-from-template-file template-file="${templates.module.xml.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="NAME" value="${module.name}"/>
                 <param type="token" name="RESOURCES" value="${module.xml.resources}"/>
@@ -344,7 +349,8 @@ OUTPUT:
     -->
     <target name="create-module-xml-resources">
         <basename property="resource-file-name" file="${resource-name}"/>
-        <build-from-template-property template-property="module.resource">
+        <build-from-template-property template-property="module.resource"
+                                      temp-path="${modules.temp.path}">
             <template-prop-params>
                 <param type="token" name="RESOURCE" value="${resource-file-name}"/>
             </template-prop-params>
@@ -361,7 +367,8 @@ OUTPUT:
         - file-name
     -->
     <target name="create-module-xml-dependency">
-        <build-from-template-property template-property="module.dependency">
+        <build-from-template-property template-property="module.dependency"
+                                      temp-path="${modules.temp.path}">
             <template-prop-params>
                 <param type="token" name="DEPENDENCY" value="${dependency-name}"/>
                 <param type="token" name="EXPORT" value="true"/>
@@ -389,11 +396,11 @@ OUTPUT:
         <echo level="info">Creating assembly component descriptor for module ${module.name} at ${module.assembly.output.path}...</echo>
 
         <!-- Create the temp files. -->
-        <tempfile destdir="${java.io.tmpdir}"
+        <tempfile destdir="${modules.temp.path}"
                   property="module.assembly.tmp.module-xml.path" createfile="true" deleteonexit="true" suffix="module-assembly-xml"/>
-        <tempfile destdir="${java.io.tmpdir}"
+        <tempfile destdir="${modules.temp.path}"
                   property="module.assembly.tmp.module-meta-inf.path" createfile="true" deleteonexit="true" suffix="module-assembly-meta-inf"/>
-        <tempfile destdir="${java.io.tmpdir}"
+        <tempfile destdir="${modules.temp.path}"
                   property="module.assembly.tmp.module-dependency-includes.path" createfile="true" deleteonexit="true" suffix="module-assembly-dep-includes"/>
 
         <!-- Clean temp files content. -->
@@ -462,7 +469,8 @@ OUTPUT:
                   encoding="UTF-8" quiet="true"/>
 
         <!-- Create the assembly component descriptor. -->
-        <build-from-template-file template-file="${templates.module.assembly-component.file.path}">
+        <build-from-template-file template-file="${templates.module.assembly-component.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="ASSEMBLY_COMPONENT_FILESETS" value="${module.assembly.tmp.module-meta-inf.content}"/>
                 <param type="token" name="ASSEMBLY_COMPONENT_FILES" value="${module.assembly.tmp.module-xml.content}"/>
@@ -486,7 +494,8 @@ OUTPUT:
        - file-dest-name
    -->
     <target name="create-module-assembly-component-file">
-        <build-from-template-file template-file="${templates.module.assembly-file.file.path}">
+        <build-from-template-file template-file="${templates.module.assembly-file.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="FILE_SOURCE" value="${file-source}"/>
                 <param type="token" name="FILE_OUTPUT_DIR" value="${file-output-dir}"/>
@@ -507,7 +516,8 @@ OUTPUT:
        - file-set-include
    -->
     <target name="create-module-assembly-component-file-set">
-        <build-from-template-file template-file="${templates.module.assembly-file-set.file.path}">
+        <build-from-template-file template-file="${templates.module.assembly-file-set.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="FILESET_DIRECTORY" value="${file-set-dir}"/>
                 <param type="token" name="FILESET_OUTPUT_DIRECTORY" value="${file-set-output-dir}"/>
@@ -526,7 +536,8 @@ OUTPUT:
        - dependency
    -->
     <target name="create-module-assembly-dependency-set-includes">
-        <build-from-template-property template-property="dependency-set.include">
+        <build-from-template-property template-property="dependency-set.include"
+                                      temp-path="${modules.temp.path}">
             <template-prop-params>
                 <param type="token" name="DEPENDENCY" value="${dependency}"/>
             </template-prop-params>
@@ -545,7 +556,7 @@ OUTPUT:
         <property name="module.output.path" value="modules${file.separator}system${file.separator}layers${file.separator}${module.layer.id}${file.separator}${module.path}${file.separator}main${file.separator}"/>
 
         <!-- Create the temp files. -->
-        <tempfile destdir="${java.io.tmpdir}"
+        <tempfile destdir="${modules.temp.path}"
                   property="module.assembly.tmp.global.module-components.path" createfile="true" deleteonexit="true" suffix="module-assembly-components"/>
 
         <!-- Clean temp files content. -->
@@ -567,7 +578,8 @@ OUTPUT:
                   encoding="UTF-8" quiet="true"/>
 
         <!-- Create the assembly component descriptor. -->
-        <build-from-template-file template-file="${templates.module.assembly.modules.file.path}">
+        <build-from-template-file template-file="${templates.module.assembly.modules.file.path}"
+                                  temp-path="${modules.temp.path}">
             <template-file-params>
                 <param type="token" name="ASSEMBLY_ID" value="${module.assembly.id}"/>
                 <param type="token" name="ASSEMBLY_FORMAT" value="zip"/>
@@ -589,7 +601,8 @@ OUTPUT:
       - component-file-path
   -->
     <target name="create-modules-global-assembly-descriptor-components">
-        <build-from-template-property template-property="component-descriptor">
+        <build-from-template-property template-property="component-descriptor"
+                                      temp-path="${modules.temp.path}">
             <template-prop-params>
                 <param type="token" name="COMPONENT" value="${component-file-path}"/>
             </template-prop-params>
