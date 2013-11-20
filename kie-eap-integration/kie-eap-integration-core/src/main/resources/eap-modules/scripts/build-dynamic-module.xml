@@ -26,6 +26,23 @@ OUTPUT:
             - jboss-deployment-structure.xml
             - webfragment descriptors to patch
             - META-INF (optional - if CDI extensions patch is enabled)
+
+NOTE about property inheritance:
+===============================
+This project tasks are coded to allow running without inheriting all properties from caller/parent tasks, so the antcall tasks should be
+coded using inheritAll="false".
+
+But the locations for the project dependencies are provided by the maven antrun plugin:
+  - ex: ${junit:junit:jar} has as a value the location for the junit.jar artifact in local maven repo.
+  - see http://maven.apache.org/plugins/maven-antrun-plugin/examples/classpaths.html
+So if the antrun plugin does an antcall to a task in this project using inheritAll="false",
+these locations are not available in this project tasks, which currently are required.
+So, by the moment all antcall tasks are inheriting parent task properties.
+
+In the future, if you want to fix it and do not inherit properties, a solution could be creating a properties file with all
+artifacts and its locations in the maven antrun plugin, where all dependency location are available as properties.
+Then, this ant project should receive the property file location and read artifact locations that it contains.
+
 -->
 
 <project name="build-dynamic-module" xmlns:ac="net.sf.antcontrib" default="main" basedir="../..//">
