@@ -24,6 +24,8 @@ import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
 import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
 import org.kie.internal.task.api.UserGroupCallback;
 import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
+import org.uberfire.backend.server.io.IOSecurityAuth;
+import org.uberfire.backend.server.io.IOSecurityAuthz;
 import org.uberfire.commons.cluster.ClusterServiceFactory;
 import org.uberfire.io.IOSearchService;
 import org.uberfire.io.IOService;
@@ -41,6 +43,8 @@ import org.uberfire.metadata.engine.MetaModelStore;
 import org.uberfire.metadata.io.IOSearchIndex;
 import org.uberfire.metadata.io.IOServiceIndexedImpl;
 import org.uberfire.metadata.search.SearchIndex;
+import org.uberfire.security.auth.AuthenticationManager;
+import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
 
@@ -50,6 +54,15 @@ import org.uberfire.security.server.cdi.SecurityFactory;
  */
 @ApplicationScoped
 public class ApplicationScopedProducer {
+
+    @Inject
+    @IOSecurityAuth
+    private AuthenticationManager authenticationManager;
+
+    @Inject
+    @IOSecurityAuthz
+    private AuthorizationManager authorizationManager;
+
 
     private IOService ioService;
     private IOSearchService ioSearchService;
@@ -93,6 +106,9 @@ public class ApplicationScopedProducer {
                                                   clusterServiceFactory,
                                                   false);
         }
+
+        ioService.setAuthenticationManager( authenticationManager );
+        ioService.setAuthorizationManager( authorizationManager );
 
         this.ioSearchService = new IOSearchIndex( searchIndex,
                                                   ioService );
