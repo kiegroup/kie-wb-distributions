@@ -52,3 +52,4 @@ rhino:js:jar
 rome:rome:jar
 xmlpull:xmlpull:jar
 xpp3:xpp3_min:jar
+org.apache.sshd:sshd-core:jar
