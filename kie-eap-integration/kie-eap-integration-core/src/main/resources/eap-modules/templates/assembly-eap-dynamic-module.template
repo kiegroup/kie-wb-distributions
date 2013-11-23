@@ -44,7 +44,6 @@
         </dependencySet>
     </dependencySets>
 
-    <!-- CDI Extension patches. (For EAP 6.1.0.GA). -->
     <fileSets>
         @FILE_SETS@
     </fileSets>

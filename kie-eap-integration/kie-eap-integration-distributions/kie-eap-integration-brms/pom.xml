@@ -77,6 +77,7 @@
                     <property name="patches.path" value="${eap-modules.patches.path}"/>
                     <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
                     <property name="temp.path" value="${eap-modules.temp.path}"/>
+                    <property name="scripts.path" value="${eap-modules.scripts.path}"/>
 
                     <echo>Creating JBoss EAP BRMS static modules stuff..</echo>
 
@@ -179,6 +180,7 @@
                     <property name="patches.path" value="${eap-modules.patches.path}"/>
                     <property name="eap-configuration-file" value="${eap-modules.eap-configuration.path}"/>
                     <property name="temp.path" value="${eap-modules.temp.path}"/>
+                    <property name="scripts.path" value="${eap-modules.scripts.path}"/>
 
                     <taskdef resource="net/sf/antcontrib/antlib.xml" uri="net.sf.antcontrib"
                              classpathref="maven.compile.classpath"/>

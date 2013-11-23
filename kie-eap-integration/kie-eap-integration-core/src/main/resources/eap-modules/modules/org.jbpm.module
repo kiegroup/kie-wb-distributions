@@ -1,4 +1,4 @@
 module.name=org.jbpm
 module.type=static
 module.location=org/jbpm
-module.patches.metainf=jbpm/META-INF
+module.patch.static-module-patch-metainf=org.jbpm

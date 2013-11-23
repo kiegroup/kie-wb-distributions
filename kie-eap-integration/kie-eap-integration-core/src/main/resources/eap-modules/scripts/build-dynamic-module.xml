@@ -17,6 +17,7 @@ INPUT parameters:
 - templates.path -> The source forlder where all templates are located.
 - patches.path -> The source forlder where all patch files are located.
 - temp.path -> Path for temporal files
+- scripts.path -> The source folder for ant build scripts.
 
 OUTPUT:
 - Generates a filesystem structure:
@@ -45,7 +46,7 @@ Then, this ant project should receive the property file location and read artifa
 
 -->
 
-<project name="build-dynamic-module" xmlns:ac="net.sf.antcontrib" default="main" basedir="../..//">
+<project name="build-dynamic-module" xmlns:ac="net.sf.antcontrib" default="main" basedir="../../">
 
     <!-- Common utilities. -->
     <import file="build-utils.xml"/>
@@ -60,8 +61,6 @@ Then, this ant project should receive the property file location and read artifa
     <property name="module.assembly.war.source" value="${dynamic-module-assembly-war-source}"/>
     <property name="module.assembly.id" value="${dynamic-module-assembly-id}"/>
     <property name="module.jboss-deployment-structure.output.path" value="${modules.output.path}${module-name}${file.separator}jboss-deployment-structure.xml"/>
-    <property name="module.webfragments.output.path" value="${modules.output.path}${module-name}${file.separator}"/>
-
 
     <property name="templates.source.path" value="${templates.path}"/>
     <property name="templates.module.assembly.file.path" value="${templates.source.path}${file.separator}assembly-eap-dynamic-module.template"/>
@@ -70,10 +69,8 @@ Then, this ant project should receive the property file location and read artifa
     <property name="templates.module.assembly-file-set.file.path" value="${templates.source.path}${file.separator}assembly-file-set.template"/>
 
     <property name="patches.source.path" value="${patches.path}${file.separator}"/>
-    <property name="patches.cdi-extensions.source.path" value="${patches.source.path}cdi-extensions${file.separator}"/>
-
-    <property name="patches.webfragments.source.path" value="${patches.source.path}webfragments${file.separator}"/>
     <property name="modules.temp.path" value="${temp.path}${file.separator}"/>
+    <property name="scripts.source.path" value="${scripts.path}${file.separator}"/>
 
 
     <!-- Cleans output path -->
@@ -99,49 +96,11 @@ Then, this ant project should receive the property file location and read artifa
         <!-- Read module properties. -->
         <property file="${module.file}"/>
 
-        <!-- Read EAP version configuration properties. -->
-        <eap-configuration-properties eap-config-file="${eap-configuration-file}">
-            <eap-configuration-property-result>
-                <property name="eap.configuration.modules.list.path" value="@{modules-list-file}"/>
-              <property name="eap.configuration.patch.cdi-extensions" value="@{patch-cdi-extensions}"/>
-                <property name="eap.configuration.patch.webfragments" value="@{patch-webfragments}"/>
-            </eap-configuration-property-result>
-        </eap-configuration-properties>
-
-
         <ac:if>
             <ac:equals arg1="${module.type}" arg2="dynamic"/>
             <ac:then>
 
                 <echo level="info">Creating dynamic module ${module.name}...</echo>
-
-                <!-- Check if there are cdi extensions patches enabled. -->
-                <ac:if>
-                    <and>
-                        <isset property="module.patches.cdi-extensions"/>
-                        <equals arg1="${eap.configuration.patch.cdi-extensions}" arg2="true"/>
-                    </and>
-                    <ac:then>
-                        <property name="module.patches.cdi-extensions.value" value="${module.patches.cdi-extensions}"/>
-                    </ac:then>
-                    <ac:else>
-                        <property name="module.patches.cdi-extensions.value" value=""/>
-                    </ac:else>
-                </ac:if>
-
-                <!-- Check if there are webfragments patches enabled. -->
-                <ac:if>
-                    <and>
-                        <isset property="module.patches.webfragments"/>
-                        <equals arg1="${eap.configuration.patch.webfragments}" arg2="true"/>
-                    </and>
-                    <ac:then>
-                        <property name="module.patches.webfragments.value" value="${module.patches.webfragments}"/>
-                    </ac:then>
-                    <ac:else>
-                        <property name="module.patches.webfragments.value" value=""/>
-                    </ac:else>
-                </ac:if>
 
                 <!-- Check if there are unrequired resources. -->
                 <ac:if>
@@ -174,31 +133,6 @@ Then, this ant project should receive the property file location and read artifa
                     <param name="file-name" value="${module.assembly.dependency-set.exludes.path}"/>
                 </antcall>
 
-                <!--  Generate the cdi-extensions output.-->
-                <antcall target="create-cdi-extensions">
-                    <param name="module-name" value="${module.name}"/>
-                    <param name="module-patches-cdi-extensions" value="${module.patches.cdi-extensions.value}"/>
-                    <param name="file-name" value="${module.assembly.file-set.includes.path}"/>
-                </antcall>
-
-                <!-- Create the cdi extensions inclusions for the generated assembly descripttor. -->
-                <condition property="module-patches-cdi-extensions.is-set">
-                    <not>
-                        <equals arg1="${module.patches.cdi-extensions.value}" arg2=""/>
-                    </not>
-                </condition>
-                <ac:if>
-                    <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
-                    <ac:then>
-                        <antcall target="create-file-set-inclusion">
-                            <param name="file-name" value="${module.assembly.file-set.includes.path}"/>
-                            <param name="directory" value="${modules.output.path}${module.name}${file.separator}META-INF${file.separator}services${file.separator}"/>
-                            <param name="output-directory" value="META-INF/services"/>
-                            <param name="include" value="*"/>
-                        </antcall>
-                    </ac:then>
-                </ac:if>
-
                 <!-- Generate the jboss-deployment-structure descriptor file. -->
                 <antcall target="create-jboss-deployment-structure">
                     <param name="module-name" value="${module.name}"/>
@@ -214,12 +148,46 @@ Then, this ant project should receive the property file location and read artifa
                 </antcall>
 
 
-                <!--Generate the webfragments jar artifacts. -->
-                <antcall target="create-webfragments-jar">
-                    <param name="module-name" value="${module.name}"/>
-                    <param name="module-patches-webfragments" value="${module.patches.webfragments.value}"/>
-                    <param name="file-name" value="${module.assembly.file.includes.path}"/>
-                </antcall>
+                <!-- *********************** -->
+                <!-- Apply patch/es, if any. -->
+                <!-- *********************** -->
+
+                <!-- Iterate over all patches for this module and apply each one -->
+                <ac:propertyselector property="patches" match="module\.patch\.(.*)" select="\1"/>   <!-- ex: static-module-patch-metainf=org.jbpm -->
+                <echo>[DEBUG]: $${patches} - ${patches}</echo>
+                <ac:if>
+                  <isset property="patches"/>
+                  <ac:then>
+                    <ac:for list="${patches}" param="patch">
+                      <ac:sequential>
+                        <echo>[DEBUG]: $${patch} - @{patch}</echo>
+
+                        <!-- Check if the patch apply for the eap version to deploy the modules layer. -->
+                        <eap-configuration-property eap-config-file="${eap-configuration-file}" eap-config-property="patch.@{patch}">
+                          <eap-configuration-property-result>
+                            <echo>[DEBUG]: $${eap-configuration-file} - ${eap-configuration-file}</echo>
+                            <echo>[DEBUG]: $${property-value} - @{property-value}</echo>
+                            <ac:if>
+                              <ac:equals arg1="@{property-value}" arg2="true"/>
+                              <ac:then>
+                                <antcall target="patch-module">
+                                  <param name="patch-definition" value="@{patch}=${module.patch.@{patch}}"/>
+                                  <param name="module-name" value="${module.name}"/>
+                                  <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+                                  <param name="module-target-path" value=""/>  <!-- The target path is the root of the generated webapp. -->
+                                  <param name="assembly-dependencysets-exclusion" value="${module.assembly.dependency-set.exludes.path}"/>
+                                  <param name="assembly-filesets" value="${module.assembly.file-set.includes.path}"/>
+                                  <param name="assembly-files" value="${module.assembly.file.includes.path}"/>
+                                </antcall>
+                              </ac:then>
+                            </ac:if>
+                          </eap-configuration-property-result>
+                        </eap-configuration-property>
+                      </ac:sequential>
+                    </ac:for>
+                  </ac:then>
+                </ac:if>
+
 
                 <!-- Load content from temp files. -->
                 <loadfile property="module.assembly.dependency-set.exludes.content"
@@ -260,76 +228,38 @@ Then, this ant project should receive the property file location and read artifa
 
     </target>
 
-    <!-- Generate the jar patches for webfragments.
+    <!-- Apply a given patch for the dynamic mdule.
+          Input parameteres:
+          - patch-definition
+          - module-name
+          - module-output-path
+          - module-target-path
+          - assembly-dependencysets-exclusion
+          - assembly-filesets
+          - assembly-files
+      -->
+    <target name="patch-module">
 
-       Input parameteres:
-       - module-name
-       - module-patches-webfragments
-       - file-name
-   -->
-    <target name="create-webfragments-jar">
+      <echo>[DEBUG]: $${patch-definition} - ${patch-definition}</echo>
 
-        <condition property="module-patches-webfragments.is-set">
-            <not>
-                <equals arg1="${module-patches-webfragments}" arg2=""/>
-            </not>
-        </condition>
-        <ac:if>
-            <ac:equals arg1="${module-patches-webfragments.is-set}" arg2="true"/>
-            <ac:then>
+      <ac:propertyregex property="patch-id"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\1"
+                        casesensitive="false" />
 
-                <ac:for param="webfagment-artifact" list="${module-patches-webfragments}" delimiter=",">
-                    <ac:sequential>
+      <ac:propertyregex property="patch-value"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\2"
+                        casesensitive="false" />
 
-                        <!-- Extract the web-fragment.xml file from the jar to patch and create a new jar artifact. -->
-                        <antcall target="patch-webfragment-jar">
-                            <param name="jar-path" value="${@{webfagment-artifact}}"/>
-                            <param name="webfragment-artifact" value="@{webfagment-artifact}"/>
-                            <param name="output-path" value="${module.webfragments.output.path}"/>
-                            <param name="file-name" value="${file-name}"/>
-                        </antcall>
+      <echo>[DEBUG]: $${patch-id} - ${patch-id}</echo>
+      <echo>[DEBUG]: $${patch-value} - ${patch-value}</echo>
 
-                    </ac:sequential>
-                </ac:for>
-
-            </ac:then>
-        </ac:if>
-
-    </target>
-
-    <!-- Extracts the web-fragment.xml from a jar file and creates a new jar with this file..
-
-       Input parameteres:
-       - jar-path
-       - webfragment-artifact
-       - output-path
-       - file-name
-   -->
-    <target name="patch-webfragment-jar">
-
-        <!-- Generate the result name from artifact name. -->
-        <ac:propertyregex property="webfragment-artifact-name" input="${webfragment-artifact}" regexp=":" replace="-" global="true" />
-
-        <property name="webfragment-xml" value="${webfragment-artifact-name}-webfragment.xml"/>
-        <property name="webfragment-jar" value="${webfragment-artifact-name}-webfragment"/>
-
-        <!-- Extract the file. -->
-        <extract-webfragment-jar jar-file-path="${jar-path}" output-path="${output-path}"
-                                 output-name="${webfragment-xml}"
-                                 temp-path="${modules.temp.path}"/>
-
-        <!-- Create the jar file. -->
-        <create-webfragment-jar jar-path="${output-path}" jar-name="${webfragment-jar}"
-                                webfragment-source-file="${output-path}${webfragment-xml}"
-                                temp-path="${modules.temp.path}"/>
-
-        <!-- Create the inclusion for this jar in the assembly descriptor.-->
-        <antcall target="create-file-inclusion">
-            <param name="file-name" value="${file-name}"/>
-            <param name="file-source" value="${output-path}${webfragment-jar}.jar"/>
-            <param name="file-output-dir" value="WEB-INF${file.separator}lib"/>
-            <param name="file-dest-name" value="${webfragment-jar}.jar"/>
-        </antcall>
+      <!-- NOTE: Use inheritAll=true to have all dependencies from antrun plugin in scope. -->
+      <ant antfile="${patches.source.path}${patch-id}${file.separator}${patch-id}.xml"
+           target="create-module-assembly" inheritRefs="true" inheritall="true"/>
 
     </target>
 
@@ -392,113 +322,6 @@ Then, this ant project should receive the property file location and read artifa
         </build-from-template-file>
 
         <echo file="${module.jboss-deployment-structure.output.path}">${module.jboss-deployment-structure.output.content}</echo>
-
-    </target>
-
-    <!-- Generate the CDI extensions output..
-        - Copy the cdi extensions to META-INF/services of the webapp.
-        - Merge all SPI extensions from patches source path into <code>javax.enterprise.inject.spi.Extension</code> file.
-
-       Input parameteres:
-       - module-name
-       - module-patches-cdi-extensions
-       - file-name
-   -->
-    <target name="create-cdi-extensions">
-
-        <condition property="module-patches-cdi-extensions.is-set">
-            <not>
-                <equals arg1="${module-patches-cdi-extensions}" arg2=""/>
-            </not>
-        </condition>
-        <ac:if>
-            <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
-            <ac:then>
-
-                <!-- The path for javax.enterprise.inject.spi.Extension generated file. -->
-                <property name="patches.cdi-extensions.output.path" value="${modules.output.path}${module-name}${file.separator}META-INF${file.separator}services${file.separator}"/>
-                <property name="module.patches.cdi-extensions.spi-file.output.path" value="${patches.cdi-extensions.output.path}javax.enterprise.inject.spi.Extension"/>
-
-                <ac:for param="cdi-extension" list="${module-patches-cdi-extensions}" delimiter=",">
-                    <ac:sequential>
-
-                        <copy todir="${patches.cdi-extensions.output.path}">
-                            <fileset dir="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}">
-                                <exclude name="**/javax.enterprise.inject.spi.Extension"/>
-                            </fileset>
-                        </copy>
-
-
-                        <ac:if>
-                            <available file="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
-                            <ac:then>
-                                <antcall target="append-cdi-extension-spi-file">
-                                    <param name="source-file" value="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
-                                    <param name="dest-file" value="${module.patches.cdi-extensions.spi-file.output.path}"/>
-                                </antcall>
-                            </ac:then>
-                        </ac:if>
-
-                    </ac:sequential>
-                </ac:for>
-            </ac:then>
-        </ac:if>
-
-    </target>
-
-    <!-- Append the content for javax.enterprise.inject.spi.Extension generated file.
-
-      Input parameteres:
-      - source-file
-      - dest-file
-  -->
-    <target name="append-cdi-extension-spi-file">
-
-        <loadfile property="cdi-extension.spi-file.source.content"
-                  srcFile="${source-file}"
-                  encoding="UTF-8" failonerror="true"/>
-
-        <echo file="${dest-file}" append="true">${cdi-extension.spi-file.source.content}</echo>
-        <echo file="${dest-file}" append="true">${line.separator}</echo>
-
-    </target>
-
-
-    <!-- Generate the inclusions for the file-set.
-        This is used when is necessary to fix CDI extension to EAP.
-
-        The necessary inclusions are:
-        - CDI Extensions (if required).
-
-       Input parameteres:
-       - module-name
-       - module-patches-cdi-extensions
-       - directory
-       - output
-       - file-name
-   -->
-    <target name="create-file-set-includes">
-
-        <condition property="module-patches-cdi-extensions.is-set">
-            <not>
-                <equals arg1="${module-patches-cdi-extensions}" arg2=""/>
-            </not>
-        </condition>
-        <ac:if>
-            <ac:equals arg1="${module-patches-cdi-extensions.is-set}" arg2="true"/>
-            <ac:then>
-                <ac:for param="cdi-extension" list="${module-patches-cdi-extensions}" delimiter=",">
-                    <ac:sequential>
-                        <antcall target="create-file-set-inclusion">
-                            <param name="file-name" value="${file-name}"/>
-                            <param name="directory" value="${directory}"/>
-                            <param name="output-directory" value="${output}"/>
-                            <param name="include" value="*"/>
-                        </antcall>
-                    </ac:sequential>
-                </ac:for>
-            </ac:then>
-        </ac:if>
 
     </target>
 

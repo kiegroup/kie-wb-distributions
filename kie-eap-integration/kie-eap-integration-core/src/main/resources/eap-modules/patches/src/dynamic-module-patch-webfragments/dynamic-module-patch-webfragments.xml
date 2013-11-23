@@ -1,0 +1,148 @@
+<!--
+    Webfragment descriptor patch.
+
+    If any of the static module created contains a webfragment descriptor file, it is not loaded as EAP only loads the
+    webfragments.xml files located inside WEB-INF/lib of the WAR file.
+
+    - Patch id: dynamic-module-patch-webfragments
+
+    - Global Input properties
+      - modules.source.path
+      - modules.output.path
+      - patches.source.path
+      - scripts.source.path
+      - modules.temp.path
+
+    - LifeCycle
+      - init
+        - module-name
+        - module-output-path
+
+      - create-module-assembly
+        - module-name
+        - module-output-path
+        - module-target-path
+        - assembly-dependencysets-exclusion
+        - assembly-filesets
+        - assembly-files
+        - patch-value
+
+      - finish
+        - module-name
+        - module-output-path
+
+-->
+
+<project name="dynamic-module-patch-webfragments" xmlns:ac="net.sf.antcontrib" basedir="../../../../">
+
+  <!-- Dynamic modules tasks available for the patch. -->
+  <import file="${scripts.source.path}build-dynamic-module.xml"/>
+
+  <!-- Patch Init lifecycle task.
+
+        Input parameteres:
+        - module-name
+        - module-output-path
+    -->
+  <target name="init">
+
+  </target>
+
+  <!-- Patch lifecycle task when creating the assembly descriptor for the dynamic module.
+
+        Input parameteres:
+        - module-name
+        - module-output-path
+        - module-target-path
+        - assembly-dependencysets-exclusion
+        - assembly-filesets
+        - assembly-files
+        - patch-value
+    -->
+  <target name="create-module-assembly">
+
+    <echo>Executing patch dynamic-module-patch-webfragments for module ${module-name} </echo>
+
+    <!--Generate the webfragments jar artifacts. -->
+    <antcall target="create-webfragments-jar">
+      <param name="module-name" value="${module-name}"/>
+      <param name="module-patches-webfragments" value="${patch-value}"/>
+      <param name="output-path" value="${module-output-path}"/>
+      <param name="file-name" value="${assembly-files}"/>
+    </antcall>
+
+  </target>
+
+  <!-- Generate the jar patches for webfragments.
+
+       Input parameteres:
+       - module-name
+       - output-path
+       - module-patches-webfragments
+       - file-name
+   -->
+  <target name="create-webfragments-jar">
+
+    <ac:for param="webfagment-artifact" list="${module-patches-webfragments}" delimiter=",">
+      <ac:sequential>
+
+        <!-- Extract the web-fragment.xml file from the jar to patch and create a new jar artifact. -->
+        <antcall target="patch-webfragment-jar">
+          <param name="jar-path" value="${@{webfagment-artifact}}"/>
+          <param name="webfragment-artifact" value="@{webfagment-artifact}"/>
+          <param name="output-path" value="${output-path}"/>
+          <param name="file-name" value="${file-name}"/>
+        </antcall>
+
+      </ac:sequential>
+    </ac:for>
+
+  </target>
+
+  <!-- Extracts the web-fragment.xml from a jar file and creates a new jar with this file..
+
+     Input parameteres:
+     - jar-path
+     - webfragment-artifact
+     - output-path
+     - file-name
+ -->
+  <target name="patch-webfragment-jar">
+
+    <!-- Generate the result name from artifact name. -->
+    <ac:propertyregex property="webfragment-artifact-name" input="${webfragment-artifact}" regexp=":" replace="-" global="true" />
+
+    <property name="webfragment-xml" value="${webfragment-artifact-name}-webfragment.xml"/>
+    <property name="webfragment-jar" value="${webfragment-artifact-name}-webfragment"/>
+
+    <!-- Extract the file. -->
+    <extract-webfragment-jar jar-file-path="${jar-path}" output-path="${output-path}"
+                             output-name="${webfragment-xml}"
+                             temp-path="${modules.temp.path}"/>
+
+    <!-- Create the jar file. -->
+    <create-webfragment-jar jar-path="${output-path}" jar-name="${webfragment-jar}"
+                            webfragment-source-file="${output-path}${webfragment-xml}"
+                            temp-path="${modules.temp.path}"/>
+
+    <!-- Create the inclusion for this jar in the assembly descriptor.-->
+    <antcall target="create-file-inclusion">
+      <param name="file-name" value="${file-name}"/>
+      <param name="file-source" value="${output-path}${webfragment-jar}.jar"/>
+      <param name="file-output-dir" value="WEB-INF${file.separator}lib"/>
+      <param name="file-dest-name" value="${webfragment-jar}.jar"/>
+    </antcall>
+
+  </target>
+
+  <!-- Patch finish lifecycle task.
+
+        Input parameteres:
+        - module-name
+        - module-output-path
+    -->
+  <target name="finish">
+
+  </target>
+
+</project>
