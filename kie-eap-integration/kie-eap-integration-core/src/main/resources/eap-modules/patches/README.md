@@ -42,3 +42,11 @@ REST services
 -------------
 As seam transactions, if the jar containing kie remote REST services <code>kie-common-services-6-X</code> is located outside webapp lib, for example inside a EAP static module, the services are not running.
 This behaviour should be analyzed with EAP team.
+
+How to create a patch
+=====================
+
+1,- The name of the build file for the patch will be considered as the patch identifier
+2.- There exist a patch lifecycle.
+3.- Use the template files to create new patches.
+TODO

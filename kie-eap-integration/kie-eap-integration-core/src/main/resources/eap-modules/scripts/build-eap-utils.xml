@@ -3,18 +3,18 @@ INPUT parameters:
 -->
 <project name="build-eap-utils" xmlns:ac="net.sf.antcontrib" basedir="../">
 
-    <!-- Gets aall EAP configuration properties.
+    <!-- Returns the value for an EAP configuration property.
         Input parameters:
         - eap-config-file
+        - eap-config-property
         - eap-configuration-property-result
 
         Output properties for <code>eap-configuration-property-result</code> element:
-        - patch-cdi-extensions
-        - patch-webfragments
-        - modules-list-file
+        - property-value
     -->
-    <macrodef name="eap-configuration-properties">
+    <macrodef name="eap-configuration-property">
         <attribute name="eap-config-file" default=""/>
+        <attribute name="eap-config-property" default=""/>
         <element name="eap-configuration-property-result" optional="yes"/>
         <sequential>
 
@@ -30,7 +30,7 @@ INPUT parameters:
             <!-- Read eap configuration properties. -->
             <property file="@{eap-config-file}"/>
 
-            <eap-configuration-property-result-helper patch-cdi-extensions="${patches.cdi-extensions}"  patch-webfragments="${patches.webfragments}" modules-list-file="${modules.list}">
+            <eap-configuration-property-result-helper property-value="${@{eap-config-property}}" >
                 <eap-configuration-property-result-helper-element>
                     <eap-configuration-property-result/>
                 </eap-configuration-property-result-helper-element>
@@ -42,15 +42,11 @@ INPUT parameters:
     <!-- Used to pass patch flags value.
 
         Input parameters:
-        - patch-cdi-extensions
-        - patch-webfragments
-        - modules-list-file
+        - property-value
         - eap-configuration-property-result-helper-element
     -->
     <macrodef name="eap-configuration-property-result-helper">
-        <attribute name="patch-cdi-extensions" default=""/>
-        <attribute name="patch-webfragments" default=""/>
-        <attribute name="modules-list-file" default=""/>
+        <attribute name="property-value" default=""/>
         <element name="eap-configuration-property-result-helper-element" optional="yes"/>
         <sequential>
             <eap-configuration-property-result-helper-element/>

@@ -48,7 +48,8 @@
     <!-- Source definition files and directories and configuration properties. -->
     <eap-modules.source.path>${eap-modules.core.output.path}/eap-modules/modules</eap-modules.source.path>
     <eap-modules.templates.path>${eap-modules.core.output.path}/eap-modules/templates</eap-modules.templates.path>
-    <eap-modules.patches.path>${eap-modules.core.output.path}/eap-modules/patches</eap-modules.patches.path>
+    <eap-modules.patches.path>${eap-modules.core.output.path}/eap-modules/patches/src</eap-modules.patches.path>
+    <eap-modules.scripts.path>${eap-modules.core.output.path}/eap-modules/scripts</eap-modules.scripts.path>
     <eap-modules.static.list.file>${eap-modules.source.path}/modules.list</eap-modules.static.list.file>
 
     <!-- Outputs for generated resources (static modules). -->
