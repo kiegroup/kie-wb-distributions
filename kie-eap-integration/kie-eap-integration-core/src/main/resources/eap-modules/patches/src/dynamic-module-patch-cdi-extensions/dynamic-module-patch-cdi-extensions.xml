@@ -39,6 +39,10 @@
   <!-- Dynamic modules tasks available for the patch. -->
   <import file="${scripts.source.path}build-dynamic-module.xml"/>
 
+  <!-- Global inmutable properties, -->
+  <property name="spi-extension-filename" value="javax.enterprise.inject.spi.Extension"/>
+
+
   <!-- Patch Init lifecycle task.
 
         Input parameteres:
@@ -68,7 +72,8 @@
     <antcall target="create-cdi-extensions">
       <param name="module-name" value="${module-name}"/>
       <param name="module-patches-cdi-extensions" value="${patch-value}"/>
-      <param name="file-name" value="${assembly-filesets}"/>
+      <param name="temp-path" value="${modules.temp.path}"/>
+      <param name="output-path" value="${module-output-path}"/>
     </antcall>
 
     <!-- Create the cdi extensions inclusions for the generated assembly descripttor. -->
@@ -81,42 +86,69 @@
 
   </target>
 
-  <!-- Generate the CDI extensions output..
+  <!-- Generate the CDI extensions output.
+        - Extract the CDI extensions from the jar artifacts.
         - Copy the cdi extensions to META-INF/services of the webapp.
         - Merge all SPI extensions from patches source path into <code>javax.enterprise.inject.spi.Extension</code> file.
 
        Input parameteres:
        - module-name
        - module-patches-cdi-extensions
-       - file-name
+       - temp-path -> Temp directory to extract jar contents.
+       - output-path -> Final directory where CDI extension files will be stored, and the resulting assembly will copy to the webapp.
    -->
   <target name="create-cdi-extensions">
 
     <!-- The path for javax.enterprise.inject.spi.Extension generated file. -->
-    <property name="patches.cdi-extensions.output.path" value="${modules.output.path}${module-name}${file.separator}META-INF${file.separator}services${file.separator}"/>
-    <property name="module.patches.cdi-extensions.spi-file.output.path" value="${patches.cdi-extensions.output.path}javax.enterprise.inject.spi.Extension"/>
-    <property name="patches.cdi-extensions.source.path" value="${patches.source.path}dynamic-module-patch-cdi-extensions${file.separator}cdi-extensions${file.separator}"/>
+    <property name="patches.cdi-extensions.output.path" value="${output-path}META-INF${file.separator}services${file.separator}"/>
+    <property name="module.patches.cdi-extensions.spi-file.output.path" value="${patches.cdi-extensions.output.path}${spi-extension-filename}"/>
 
-    <ac:for param="cdi-extension" list="${module-patches-cdi-extensions}" delimiter=",">
+    <ac:for param="cdi-extension-jar" list="${module-patches-cdi-extensions}" delimiter=",">
       <ac:sequential>
 
-        <copy todir="${patches.cdi-extensions.output.path}">
-          <fileset dir="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}">
-            <exclude name="**/javax.enterprise.inject.spi.Extension"/>
-          </fileset>
-        </copy>
-
-
         <ac:if>
-          <available file="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
+          <contains string="${@{cdi-extension-jar}}" substring="$"/>
           <ac:then>
-            <antcall target="append-cdi-extension-spi-file">
-              <param name="source-file" value="${patches.cdi-extensions.source.path}@{cdi-extension}${file.separator}javax.enterprise.inject.spi.Extension"/>
-              <param name="dest-file" value="${module.patches.cdi-extensions.spi-file.output.path}"/>
-            </antcall>
+            <echo>Resource @{cdi-extension-jar} not found. Not adding the CDI extensions from this artifact.</echo>
           </ac:then>
-        </ac:if>
+          <ac:else>
 
+            <echo>Extracting CDI extensions from artifact @{cdi-extension-jar}.</echo>
+
+            <!-- Create a temp dir to extract CDI extensions files from the jar artifact. -->
+            <property name="tmp-dir" value="${temp-path}${file.separator}cdi-extensions-patch-${module-name}"/>
+
+            <!-- Create the temp directory to uncompress. -->
+            <delete dir="${tmp-dir}" includeemptydirs="true" failonerror="false"/>
+
+            <!-- Uncompres the jar. -->
+            <unzip src="${@{cdi-extension-jar}}" dest="${tmp-dir}"/>
+
+            <property name="tmp-extensions-dir" value="${tmp-dir}${file.separator}META-INF${file.separator}services"/>
+
+            <!-- Copy the extensions from the jar to the output dir.
+                NOTE: Exclude javax.enterprise.inject.spi.Extension file, as it must be composited using all files
+                in each jar artifact. -->
+            <copy todir="${patches.cdi-extensions.output.path}">
+              <fileset dir="${tmp-extensions-dir}">
+                <exclude name="**/${spi-extension-filename}"/>
+              </fileset>
+            </copy>
+
+            <!-- Generate the javax.enterprise.inject.spi.Extension file using all javax.enterprise.inject.spi.Extension files
+            from all artifacts. -->
+            <ac:if>
+              <available file="${tmp-extensions-dir}${file.separator}${spi-extension-filename}"/>
+              <ac:then>
+                <antcall target="append-cdi-extension-spi-file">
+                  <param name="source-file" value="${tmp-extensions-dir}${file.separator}${spi-extension-filename}"/>
+                  <param name="dest-file" value="${module.patches.cdi-extensions.spi-file.output.path}"/>
+                </antcall>
+              </ac:then>
+            </ac:if>
+
+          </ac:else>
+        </ac:if>
       </ac:sequential>
     </ac:for>
 

@@ -92,19 +92,124 @@ INPUT parameters:
     </macrodef>
 
     <!-- Used to pass the template result content to a macrodef element...
-        Input parameters:
-        - template-content -> The template content.
-        - template-result-element -> Macrodef element to set template content to the element.
-    -->
+          Input parameters:
+          - template-content -> The template content.
+          - template-result-element -> Macrodef element to set template content to the element.
+      -->
     <macrodef name="template-result-helper">
-        <attribute name="template-content" default=""/>
-        <element name="template-result-element" optional="yes"/>
-        <sequential>
-            <template-result-element/>
-        </sequential>
+      <attribute name="template-content" default=""/>
+      <element name="template-result-element" optional="yes"/>
+      <sequential>
+        <template-result-element/>
+      </sequential>
     </macrodef>
 
 
+    <!-- Iterate over all patches, if the patch apply for the given JBoss EAP version, for a given module.
+        Input parameters:
+        - module-name
+        - module-file
+        - eap-configuration-file
+        Output:
+          - Macro element: module-patch-iterator-result
+            - Output property: patch-definition
+    -->
+    <macrodef name="module-patch-iterator">
+        <attribute name="module-name" default=""/>
+        <attribute name="module-file" default=""/>
+        <attribute name="eap-configuration-file" default=""/>
+        <element name="module-patch-iterator-result" optional="yes"/>
+        <sequential>
+
+            <!-- Read module properties. -->
+            <property file="@{module-file}"/>
+
+            <!-- Iterate over all patches for this module. -->
+            <ac:propertyselector property="patches" match="module\.patch\.(.*)" select="\1"/>
+            <ac:if>
+              <isset property="patches"/>
+              <ac:then>
+                <ac:for list="${patches}" param="patch">
+                  <ac:sequential>
+
+                    <!-- Check if the patch apply for the eap version to deploy the modules layer. -->
+                    <eap-configuration-property eap-config-file="@{eap-configuration-file}" eap-config-property="patch.@{patch}">
+                      <eap-configuration-property-result>
+                        <ac:if>
+                          <ac:equals arg1="@{property-value}" arg2="true"/>
+                          <ac:then>
+                            <module-patch-iterator-helper patch-definition="@{patch}">
+                              <module-patch-iterator-element>
+                                <module-patch-iterator-result/>
+                              </module-patch-iterator-element>
+                            </module-patch-iterator-helper>
+                          </ac:then>
+                        </ac:if>
+                      </eap-configuration-property-result>
+                    </eap-configuration-property>
+                  </ac:sequential>
+                </ac:for>
+              </ac:then>
+            </ac:if>
+        </sequential>
+    </macrodef>
+
+    <!-- Used to pass the patch to a macrodef element...
+          Input parameters:
+          - patch-definition -> The module definition for the patch.
+          - module-patch-iterator-element -> Macrodef element to set the patch definition to the element.
+      -->
+    <macrodef name="module-patch-iterator-helper">
+      <attribute name="patch-definition" default=""/>
+      <element name="module-patch-iterator-element" optional="yes"/>
+      <sequential>
+        <module-patch-iterator-element/>
+      </sequential>
+    </macrodef>
+
+    <!-- Calls the init patch lifecycle method.
+                  Input parameteres:
+                  - patch-definition
+                  - module-name
+                  - module-output-path
+                  - patches.source.path
+              -->
+    <target name="patch-init">
+
+      <!-- Extract the patch identitifer from path definition. -->
+      <ac:propertyregex property="patch-id"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\1"
+                        casesensitive="false" />
+
+      <!-- NOTE: Use inheritAll=true to have all dependencies from antrun plugin in scope. -->
+      <ant antfile="${patches.source.path}${patch-id}${file.separator}${patch-id}.xml"
+           target="init" inheritRefs="true" inheritall="true"/>
+
+    </target>
+
+    <!-- Calls the finish patch lifecycle method.
+                  Input parameteres:
+                  - patch-definition
+                  - module-name
+                  - module-output-path
+                  - patches.source.path
+              -->
+    <target name="patch-finish">
+
+      <!-- Extract the patch identitifer from path definition. -->
+      <ac:propertyregex property="patch-id"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\1"
+                        casesensitive="false" />
+
+      <!-- NOTE: Use inheritAll=true to have all dependencies from antrun plugin in scope. -->
+      <ant antfile="${patches.source.path}${patch-id}${file.separator}${patch-id}.xml"
+           target="finish" inheritRefs="true" inheritall="true"/>
+
+    </target>
 
     <!-- Deploys the generated artifacts into a JBoss EAP installation.
           Input parameters:

@@ -151,42 +151,38 @@ Then, this ant project should receive the property file location and read artifa
                 <!-- *********************** -->
                 <!-- Apply patch/es, if any. -->
                 <!-- *********************** -->
+                <module-patch-iterator module-name="${module.name}" module-file="${module.file}" eap-configuration-file="${eap-configuration-file}">
+                  <module-patch-iterator-result>
 
-                <!-- Iterate over all patches for this module and apply each one -->
-                <ac:propertyselector property="patches" match="module\.patch\.(.*)" select="\1"/>   <!-- ex: static-module-patch-metainf=org.jbpm -->
-                <echo>[DEBUG]: $${patches} - ${patches}</echo>
-                <ac:if>
-                  <isset property="patches"/>
-                  <ac:then>
-                    <ac:for list="${patches}" param="patch">
-                      <ac:sequential>
-                        <echo>[DEBUG]: $${patch} - @{patch}</echo>
+                    <!-- The path init lifecycle method. -->
+                    <antcall target="patch-init">
+                      <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+                      <param name="module-name" value="${module.name}"/>
+                      <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+                      <param name="patches.source.path" value="${patches.source.path}"/>
+                    </antcall>
 
-                        <!-- Check if the patch apply for the eap version to deploy the modules layer. -->
-                        <eap-configuration-property eap-config-file="${eap-configuration-file}" eap-config-property="patch.@{patch}">
-                          <eap-configuration-property-result>
-                            <echo>[DEBUG]: $${eap-configuration-file} - ${eap-configuration-file}</echo>
-                            <echo>[DEBUG]: $${property-value} - @{property-value}</echo>
-                            <ac:if>
-                              <ac:equals arg1="@{property-value}" arg2="true"/>
-                              <ac:then>
-                                <antcall target="patch-module">
-                                  <param name="patch-definition" value="@{patch}=${module.patch.@{patch}}"/>
-                                  <param name="module-name" value="${module.name}"/>
-                                  <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
-                                  <param name="module-target-path" value=""/>  <!-- The target path is the root of the generated webapp. -->
-                                  <param name="assembly-dependencysets-exclusion" value="${module.assembly.dependency-set.exludes.path}"/>
-                                  <param name="assembly-filesets" value="${module.assembly.file-set.includes.path}"/>
-                                  <param name="assembly-files" value="${module.assembly.file.includes.path}"/>
-                                </antcall>
-                              </ac:then>
-                            </ac:if>
-                          </eap-configuration-property-result>
-                        </eap-configuration-property>
-                      </ac:sequential>
-                    </ac:for>
-                  </ac:then>
-                </ac:if>
+                    <!-- The path create-module-assembly lifecycle method. -->
+                    <antcall target="patch-module">
+                      <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+                      <param name="module-name" value="${module.name}"/>
+                      <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+                      <param name="module-target-path" value=""/>  <!-- The target path is the root of the generated webapp. -->
+                      <param name="assembly-dependencysets-exclusion" value="${module.assembly.dependency-set.exludes.path}"/>
+                      <param name="assembly-filesets" value="${module.assembly.file-set.includes.path}"/>
+                      <param name="assembly-files" value="${module.assembly.file.includes.path}"/>
+                    </antcall>
+
+                    <!-- The path init lifecycle method. -->
+                    <antcall target="patch-finish">
+                      <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+                      <param name="module-name" value="${module.name}"/>
+                      <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+                      <param name="patches.source.path" value="${patches.source.path}"/>
+                    </antcall>
+
+                  </module-patch-iterator-result>
+                </module-patch-iterator>
 
 
                 <!-- Load content from temp files. -->
@@ -240,22 +236,19 @@ Then, this ant project should receive the property file location and read artifa
       -->
     <target name="patch-module">
 
-      <echo>[DEBUG]: $${patch-definition} - ${patch-definition}</echo>
-
+      <!-- Extract the patch identitifer from path definition. -->
       <ac:propertyregex property="patch-id"
                         input="${patch-definition}"
                         regexp="(.*)=(.*)"
                         select="\1"
                         casesensitive="false" />
 
+      <!-- Extract the patch value from path definition. -->
       <ac:propertyregex property="patch-value"
                         input="${patch-definition}"
                         regexp="(.*)=(.*)"
                         select="\2"
                         casesensitive="false" />
-
-      <echo>[DEBUG]: $${patch-id} - ${patch-id}</echo>
-      <echo>[DEBUG]: $${patch-value} - ${patch-value}</echo>
 
       <!-- NOTE: Use inheritAll=true to have all dependencies from antrun plugin in scope. -->
       <ant antfile="${patches.source.path}${patch-id}${file.separator}${patch-id}.xml"
