@@ -153,7 +153,7 @@
       <!-- Create the temp directory to compress. -->
       <delete dir="${tmp-dir}" includeemptydirs="true" failonerror="false"/>
       <mkdir dir="${tmp-dir}"/>
-      <mkdir dir="${tmp-dir}${file.separatore}META-INF"/>
+      <mkdir dir="${tmp-dir}${file.separator}META-INF"/>
       <copy file="@{webfragment-source-file}" tofile="${tmp-dir}${file.separator}META-INF${file.separator}web-fragment.xml"/>
 
       <!-- Jar the temp directory. -->
