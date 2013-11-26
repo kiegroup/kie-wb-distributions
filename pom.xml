@@ -49,12 +49,12 @@
   </repositories>
 
     <modules>
+    <module>kie-wb-distribution-home</module>
     <module>kie-wb</module>
     <module>kie-drools-wb</module>
     <module>kie-config-cli</module>
     <module>kie-tomcat-integration</module>
     <module>kie-wb-example-repositories</module>
-    <module>kie-wb-distribution-home</module>
   </modules>
 
 
