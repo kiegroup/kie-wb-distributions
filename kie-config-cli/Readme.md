@@ -40,8 +40,10 @@ How to use it
 -------------------------------------
 after it is successfully built/downloaded there will be distribution package available: kie-config-cli-${version}-dist.zip
 it's enough to unzip it and execute kie-config-cli.sh script. By default it will start it in online mode so it will ask
-for the location of git url it shall connect to - be default it's git://localhost/system. To connect to remote server replace
-host and port with appropriate values e.g. git://kie-wb-host:9148/system.
+for the location of ssh url it shall connect to - be default it's ssh://localhost:8001/system. To connect to remote server replace
+host and port with appropriate values e.g. ssh://kie-wb-host:8001/system. It requires authentication and by default uses
+user account name that the cli tool is executed with. To specify different user add it to the URL string e.g.
+ssh://myuser@kie-wb-host:8001/system. It will ask for password as well to fulfill security needs for push operation.
 To start online mode use:
 ./kie-config-cli.sh
 

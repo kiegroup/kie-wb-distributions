@@ -1,5 +1,6 @@
 package org.kie.config.cli.command.impl;
 
+import java.io.Console;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ import org.uberfire.java.nio.file.FileSystemAlreadyExistsException;
 public class CloneGitRepositoryCliCommand implements CliCommand {
 
     private static final String GIT_LOCAL = "git://system";
-    private static final String GIT_DEFAULT_UPSTREAM = "git://localhost/system";
+    private static final String GIT_DEFAULT_UPSTREAM = "ssh://localhost:8001/system";
 
     @Override
     public String getName() {
@@ -27,11 +28,22 @@ public class CloneGitRepositoryCliCommand implements CliCommand {
         WeldContainer container = context.getContainer();
 
         IOService ioService = container.instance().select(IOService.class, new NamedLiteral("configIO")).get();
-        System.out.println(">>Please specify location of remote git system repository [git://localhost/system]");
+        System.out.println(">>Please specify location of remote git system repository [" + GIT_DEFAULT_UPSTREAM + "]");
 
         String systemGitRepoUrl = context.getInput().nextLine();
         if (systemGitRepoUrl == null || "".equals(systemGitRepoUrl.trim())) {
             systemGitRepoUrl = GIT_DEFAULT_UPSTREAM;
+        }
+        String password = "";
+        System.out.println(">>Please specify password");
+        Console console = System.console();
+        if (console != null) {
+            password = new String(console.readPassword());
+        } else {
+            password = context.getInput().nextLine();
+        }
+        if (password == null || "".equals(password.trim())) {
+            password = "";
         }
 
         context.addParameter("git-upstream", systemGitRepoUrl);
@@ -39,8 +51,8 @@ public class CloneGitRepositoryCliCommand implements CliCommand {
 
         Map<String, String> env = new HashMap<String, String>();
         env.put("origin", systemGitRepoUrl);
-        env.put("username", System.getProperty("git.user", System.getProperty("user.name")));
-        env.put("password", System.getProperty("git.password", ""));
+        env.put("username", System.getProperty("git.user", System.getProperty( "user.name" )));
+        env.put("password", System.getProperty("git.password", password));
         env.put("init", "true");
         try {
             ioService.newFileSystem(URI.create(GIT_LOCAL), env);
