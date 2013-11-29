@@ -16,6 +16,7 @@ javax.ws.rs.api
 javax.xml.bind.api
 javax.xml.stream.api
 org.apache.commons.beanutils
+org.apache.commons.codec
 org.apache.commons.collections
 org.apache.commons.configuration
 org.apache.commons.fileupload
@@ -28,13 +29,17 @@ org.apache.commons.pool
 org.apache.commons.vfs
 org.apache.poi
 org.apache.xerces
+org.dom4j
 org.hibernate
 org.jboss.as.transactions
 org.jboss.as.web
+org.jboss.ironjacamar.jdbcadapters
 org.jboss.jboss-transaction-spi
 org.jboss.logging
 org.jboss.vfs
 org.jboss.weld.api
 org.jboss.weld.core
 org.jboss.weld.spi
+org.jdom
 org.osgi.core
+org.slf4j
