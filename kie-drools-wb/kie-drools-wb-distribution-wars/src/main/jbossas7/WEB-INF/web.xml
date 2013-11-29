@@ -475,6 +475,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <web-resource-collection>
       <web-resource-name>console</web-resource-name>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/*</url-pattern>
+      <url-pattern>*.erraiBus</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
