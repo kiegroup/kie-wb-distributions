@@ -32,6 +32,7 @@
   <filter-mapping>
     <filter-name>UberFire Security Filter</filter-name>
     <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
+    <url-pattern>*.erraiBus</url-pattern>
   </filter-mapping>
 
 

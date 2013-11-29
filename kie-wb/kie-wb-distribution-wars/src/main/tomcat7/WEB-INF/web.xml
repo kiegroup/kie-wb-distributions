@@ -34,6 +34,7 @@
 
   <filter-mapping>
     <filter-name>UberFire Security Filter</filter-name>
+    <url-pattern>*.erraiBus</url-pattern>
     <url-pattern>/rest/*</url-pattern>
     <url-pattern>/maven2/*</url-pattern>
     <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
