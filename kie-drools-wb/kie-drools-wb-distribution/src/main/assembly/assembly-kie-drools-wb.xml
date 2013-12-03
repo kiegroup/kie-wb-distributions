@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+  <id>assembly-kie-drools-wb</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+
+  <includeBaseDirectory>false</includeBaseDirectory>
+
+  <dependencySets>
+    <!-- Web application -->
+    <dependencySet>
+      <includes>
+        <include>org.kie:kie-drools-wb-distribution-wars:war</include>
+      </includes>
+      <outputDirectory>binaries</outputDirectory>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+
+    <!-- Example repositories -->
+    <dependencySet>
+      <includes>
+        <include>org.kie:kie-wb-example-repositories:zip</include>
+      </includes>
+      <outputDirectory>repositories</outputDirectory>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+
+    <!-- Configuration tool -->
+    <dependencySet>
+      <includes>
+        <include>org.kie:kie-config-cli:zip</include>
+      </includes>
+      <outputDirectory>configuration</outputDirectory>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+
+    <!-- Migration tool -->    
+    <dependencySet>
+      <includes>
+        <include>org.drools:drools-wb-jcr2vfs-migration-core:zip</include>
+      </includes>
+      <outputDirectory>migration</outputDirectory>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+
+  </dependencySets>
+
+</assembly>

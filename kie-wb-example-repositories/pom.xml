@@ -99,6 +99,7 @@
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
+          <appendAssemblyId>false</appendAssemblyId>
         </configuration>
       </plugin>
 
