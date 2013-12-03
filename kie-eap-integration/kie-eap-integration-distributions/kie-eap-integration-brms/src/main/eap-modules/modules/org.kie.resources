@@ -1,0 +1,4 @@
+org.kie:kie-internal:jar
+org.kie:kie-api:jar
+org.kie.remote:kie-services-client:jar
+org.kie:kie-ci:jar

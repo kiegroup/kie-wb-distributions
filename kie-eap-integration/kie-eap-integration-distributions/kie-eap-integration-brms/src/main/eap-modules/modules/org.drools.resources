@@ -1,0 +1,13 @@
+org.drools:drools-templates:jar
+org.drools:drools-decisiontables:jar
+org.drools:drools-scorecards:jar
+org.drools:drools-core:jar
+org.drools:drools-persistence-jpa:jar
+org.drools:drools-simulator:jar
+org.drools:drools-compiler:jar
+org.drools:drools-workbench-models-guided-dtable:jar
+org.drools:drools-workbench-models-datamodel-api:jar
+org.drools:drools-workbench-models-commons:jar
+org.drools:drools-workbench-models-guided-template:jar
+org.drools:drools-workbench-models-test-scenarios:jar
+org.drools:drools-workbench-models-guided-scorecard:jar
