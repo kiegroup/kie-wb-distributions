@@ -21,6 +21,27 @@
       <type>pom</type>
     </dependency>
 
+    <!--
+      BZ-1035414: In order to generate same content for some modules (same resources), some artifacts
+      are not provided by the org.kie:kie-drools-wb-webapp:war, so these ones must be included here manually.
+    -->
+    <dependency> <!-- Provides the dependency for commons-logging:-logging-api:jar -->
+      <groupId>org.jboss.errai</groupId>
+      <artifactId>errai-ui</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-persistence-jpa</artifactId>
+    </dependency>
+    <dependency> <!-- Provides the dependency for org.jboss.seam.seam-transaction-api:jar -->
+      <groupId>org.kie.remote</groupId>
+      <artifactId>kie-services-remote</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.remote</groupId>
+      <artifactId>kie-services-client</artifactId>
+    </dependency>
+
   </dependencies>
 
   <properties>

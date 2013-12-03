@@ -1,0 +1,3 @@
+module.name=org.kie.lib
+module.type=static
+module.location=org/kie/lib

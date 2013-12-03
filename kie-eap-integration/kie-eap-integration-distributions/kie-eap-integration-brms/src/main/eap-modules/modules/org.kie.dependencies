@@ -1,0 +1,6 @@
+org.apache.camel
+org.apache.helix
+org.drools
+org.eclipse.jgit
+org.mvel
+org.sonatype.maven

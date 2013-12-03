@@ -1,0 +1,5 @@
+com.sun.codemodel
+org.apache.poi
+org.jbpm-minimal
+org.mvel
+org.sonatype.maven

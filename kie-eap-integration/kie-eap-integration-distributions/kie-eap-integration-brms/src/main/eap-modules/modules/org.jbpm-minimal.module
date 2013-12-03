@@ -1,0 +1,4 @@
+module.name=org.jbpm-minimal
+module.type=static
+module.location=org/jbpm-minimal
+module.patch.static-module-patch-metainf=org.jbpm
