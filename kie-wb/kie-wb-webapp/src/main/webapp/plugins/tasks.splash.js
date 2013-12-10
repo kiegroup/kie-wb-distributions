@@ -1,9 +1,8 @@
 $registerSplashScreen({
     id: 'tasks.splash',
     templateUrl: 'tasks.splash.html',
-    title: function () {
-        return 'Task Management';
-    },
+    body_height: 391,
+    title: 'Task Management',
     display_next_time: true,
     interception_points: ['Tasks']
 });
