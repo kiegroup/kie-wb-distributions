@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 
 import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
+import org.jbpm.kie.services.cdi.producer.UserGroupInfoProducer;
 import org.jbpm.runtime.manager.impl.DefaultRuntimeEnvironment;
 import org.jbpm.runtime.manager.impl.SimpleRuntimeEnvironment;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
@@ -23,6 +24,7 @@ import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
 import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
 import org.kie.internal.task.api.UserGroupCallback;
+import org.kie.internal.task.api.UserInfo;
 import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.backend.server.io.IOSecurityAuth;
 import org.uberfire.backend.server.io.IOSecurityAuthz;
@@ -80,7 +82,7 @@ public class ApplicationScopedProducer {
 
     @Inject
     @Selectable
-    private UserGroupCallback userGroupCallback;
+    private UserGroupInfoProducer userGroupInfoProducer;
 
 
     @PostConstruct
@@ -133,9 +135,15 @@ public class ApplicationScopedProducer {
     }
 
     @Produces
-    public UserGroupCallback produceSelectedUserGroupCallback() {
-        return userGroupCallback;
+    public org.kie.api.task.UserGroupCallback produceSelectedUserGroupCalback() {
+        return userGroupInfoProducer.produceCallback();
     }
+
+    @Produces
+    public UserInfo produceUserInfo() {
+        return userGroupInfoProducer.produceUserInfo();
+    }
+
 
     @Produces
     public EntityManagerFactory getEntityManagerFactory() {
