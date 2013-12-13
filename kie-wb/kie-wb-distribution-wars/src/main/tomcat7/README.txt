@@ -61,4 +61,4 @@ roles defined as it's required to be authorized to use kie-wb
 6. Rename org.uberfire.security.auth.AuthenticationSource to org.uberfire.security.auth.AuthenticationSource-ORIGIN and
 rename  org.uberfire.security.auth.AuthenticationSource-TOMCAT-JEE-SECURITY to org.uberfire.security.auth.AuthenticationSource
 inside WEB-INF/classes/META-INF/services
-7. edit beans.xml file in WEB-INF and uncomment JAASUserGroupCallback and remove MvelUserGroupCallbackImpl
+7. edit beans.xml file in WEB-INF and uncomment JAASUserGroupInfoProducer
