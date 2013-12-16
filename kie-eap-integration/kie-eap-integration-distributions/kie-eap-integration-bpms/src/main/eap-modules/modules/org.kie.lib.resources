@@ -17,7 +17,6 @@ com.thoughtworks.xstream:xstream:jar
 jakarta-regexp:jakarta-regexp:jar
 javax.ws.rs:jsr311-api:jar
 jivesoftware:smack:jar
-jline:jline:jar
 logkit:logkit:jar
 net.sf.josql:gentlyweb-utils:jar
 net.sf.josql:josql:jar
