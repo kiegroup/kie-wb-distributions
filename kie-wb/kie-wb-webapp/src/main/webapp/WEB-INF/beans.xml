@@ -21,8 +21,11 @@
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://docs.jboss.org/cdi/beans_1_0.xsd
                       http://jboss.org/schema/weld/beans http://jboss.org/schema/weld/beans_1_1.xsd">
 
-    <interceptors>
-        <class>org.uberfire.security.server.authz.cdi.RolesInterceptor</class>
-        <class>org.uberfire.security.server.authz.cdi.TraitInterceptor</class>
-    </interceptors>
+  <alternatives>
+    <class>org.jbpm.kie.services.cdi.producer.DefaultUserGroupInfoProducer</class>
+  </alternatives>
+  <interceptors>
+    <class>org.uberfire.security.server.authz.cdi.RolesInterceptor</class>
+    <class>org.uberfire.security.server.authz.cdi.TraitInterceptor</class>
+  </interceptors>
 </beans>
