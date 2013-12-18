@@ -100,23 +100,19 @@ public class DroolsAuthoringPerspective {
 
         final PanelDefinition west = new PanelDefinitionImpl( PanelType.SIMPLE );
         west.setWidth( 400 );
-        west.setMinWidth( 370 );
         west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) ) );
 
-        this.perspective.getRoot().insertChild( Position.WEST,
-                                                west );
+        this.perspective.getRoot().insertChild( Position.WEST, west );
     }
 
     private void buildMenuBar() {
         this.menus = MenuFactory
-                .newTopLevelMenu(constants.explore())
+                .newTopLevelMenu( constants.explore() )
                 .menus()
                 .menu( constants.inboxIncomingChanges() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
-                        //PlaceRequest p = new PathPlaceRequest("Inbox");
-                        //p.addParameter("inboxname", InboxPresenter.INCOMING_ID);
                         placeManager.goTo( "Inbox" );
                     }
                 } )
@@ -131,15 +127,15 @@ public class DroolsAuthoringPerspective {
                     }
                 } )
                 .endMenu()
-                .menu(constants.inboxRecentlyOpened())
-                .respondsWith(new Command() {
+                .menu( constants.inboxRecentlyOpened() )
+                .respondsWith( new Command() {
                     @Override
                     public void execute() {
-                        PlaceRequest p = new DefaultPlaceRequest("Inbox");
-                        p.addParameter("inboxname", InboxPresenter.RECENT_VIEWED_ID);
-                        placeManager.goTo(p);
+                        PlaceRequest p = new DefaultPlaceRequest( "Inbox" );
+                        p.addParameter( "inboxname", InboxPresenter.RECENT_VIEWED_ID );
+                        placeManager.goTo( p );
                     }
-                })
+                } )
                 .endMenu()
                 .endMenus()
                 .endMenu()
@@ -149,8 +145,8 @@ public class DroolsAuthoringPerspective {
                 .newTopLevelMenu( constants.tools() )
                 .withItems( projectMenu.getMenuItems() )
                 .endMenu()
-                .newTopLevelMenu(AppConstants.INSTANCE.Repository())
-                .withItems(repositoryMenu.getMenuItems())
+                .newTopLevelMenu( AppConstants.INSTANCE.Repository() )
+                .withItems( repositoryMenu.getMenuItems() )
                 .endMenu().build();
     }
 
