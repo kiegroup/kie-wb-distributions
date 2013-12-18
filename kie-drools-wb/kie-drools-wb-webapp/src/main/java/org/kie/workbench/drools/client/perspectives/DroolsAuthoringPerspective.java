@@ -103,7 +103,6 @@ public class DroolsAuthoringPerspective {
 
         final PanelDefinition west = new PanelDefinitionImpl( PanelType.SIMPLE );
         west.setWidth( 400 );
-        west.setMinWidth( 370 );
         west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) ) );
 
         this.perspective.getRoot().insertChild( Position.WEST,
@@ -118,8 +117,6 @@ public class DroolsAuthoringPerspective {
                 .respondsWith(new Command() {
                     @Override
                     public void execute() {
-                        //PlaceRequest p = new PathPlaceRequest("Inbox");
-                        //p.addParameter("inboxname", InboxPresenter.INCOMING_ID);
                         placeManager.goTo("Inbox");
                     }
                 })

@@ -76,8 +76,6 @@
 
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/kie-wb.css'/>
-  <stylesheet src='css/chome-override.css'/>
-  <stylesheet src='css/console.css'/>
 
   <inherits name="com.google.gwt.xml.XML" />
 
