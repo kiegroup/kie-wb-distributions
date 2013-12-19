@@ -16,32 +16,7 @@
         <entry name="queue/KIE.RESPONSE.ALL" />
         <entry name="java:jboss/exported/jms/queue/KIE.RESPONSE" />
       </jms-queue>
-      
-      <!-- wildcard session, task, response -->
-      <jms-queue name="KIE.SESSION.#">
-        <entry name="queue/KIE.SESSION" />
-      </jms-queue>
-      <jms-queue name="KIE.TASK.#">
-        <entry name="queue/KIE.TASK" />
-      </jms-queue>
-      <jms-queue name="KIE.RESPONSE.#">
-        <entry name="queue/KIE.RESPONSE" />
-      </jms-queue>
-      
-      <!-- queues for domain "example": sessions, task, response 
-      <jms-queue name="KIE.SESSION.DOMAIN.EXAMPLE">
-        <entry name="queue/KIE.SESSION.DOMAIN" />
-        <entry name="java:jboss/exported/jms/queue/KIE.SESSION.DOMAIN.EXAMPLE" />
-      </jms-queue>
-      <jms-queue name="KIE.TASK.DOMAIN.EXAMPLE">
-        <entry name="queue/KIE.TASK.DOMAIN.EXAMPLE" />
-        <entry name="java:jboss/exported/jms/queue/KIE.TASK.DOMAIN.EXAMPLE" />
-      </jms-queue>
-      <jms-queue name="KIE.RESPONSE.DOMAIN.EXAMPLE">
-        <entry name="queue/KIE.RESPONSE.DOMAIN.EXAMPLE" />
-        <entry name="java:jboss/exported/jms/queue/KIE.RESPONSE.DOMAIN.EXAMPLE" />
-      </jms-queue>
-      -->
+
       <!-- JMS queue for audit -->
       <jms-queue name="KIE.AUDIT">
         <entry name="queue/KIE.AUDIT.ALL" />
