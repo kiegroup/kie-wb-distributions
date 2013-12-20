@@ -17,7 +17,10 @@ import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
 import org.jbpm.kie.services.cdi.producer.UserGroupInfoProducer;
 import org.jbpm.runtime.manager.impl.DefaultRuntimeEnvironment;
 import org.jbpm.runtime.manager.impl.SimpleRuntimeEnvironment;
+import org.jbpm.services.task.audit.JPATaskLifeCycleEventListener;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
+import org.jbpm.services.task.lifecycle.listeners.BAMTaskEventListener;
+import org.jbpm.services.task.lifecycle.listeners.TaskLifeCycleEventListener;
 import org.jbpm.shared.services.cdi.Selectable;
 import org.kie.internal.runtime.manager.RuntimeEnvironment;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
@@ -168,6 +171,18 @@ public class ApplicationScopedProducer {
         Properties properties = new Properties();
         environment.setUserGroupCallback( new JBossUserGroupCallbackImpl( properties ) );
         return environment;
+    }
+
+    @Produces
+    @ApplicationScoped
+    public TaskLifeCycleEventListener produceBAMListener() {
+        return new BAMTaskEventListener();
+    }
+
+    @Produces
+    @ApplicationScoped
+    public TaskLifeCycleEventListener produceTaskAuditListener() {
+        return new JPATaskLifeCycleEventListener();
     }
 
 }
