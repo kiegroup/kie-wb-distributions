@@ -76,8 +76,8 @@
     </dependency>
 
     <dependency>
-        <groupId>org.jbpm</groupId>
-        <artifactId>jbpm-human-task-audit</artifactId>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-human-task-audit</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -845,6 +845,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
+          <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
           <module>org.kie.workbench.FastCompiledKIEWebapp</module>
           <logLevel>INFO</logLevel>
           <compileSourcesArtifacts>
