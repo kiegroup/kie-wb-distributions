@@ -8,3 +8,4 @@ org.uberfire:uberfire-nio2-fs:jar
 org.uberfire:uberfire-nio2-jgit:jar
 org.uberfire:uberfire-metadata-backend-lucene:jar
 org.uberfire:uberfire-security-api:jar
+org.uberfire:uberfire-security-server:jar
