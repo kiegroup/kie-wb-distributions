@@ -75,6 +75,12 @@ public class ApplicationScopedProducer {
     @Named("clusterServiceFactory")
     private ClusterServiceFactory clusterServiceFactory;
 
+    public ApplicationScopedProducer() {
+        if (System.getProperty("org.uberfire.watcher.autostart") == null) {
+            System.setProperty("org.uberfire.watcher.autostart", "false");
+        }
+    }
+
     @PostConstruct
     public void setup() {
         SecurityFactory.setAuthzManager( new RuntimeAuthorizationManager() );
