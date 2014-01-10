@@ -147,7 +147,7 @@ public class AppSetup {
             configurationService.addConfiguration( getWorkItemElementDefinitions() );
         }
 
-        // notify cluster service that bootstrap is completed to start synchronization
+        // notify components that bootstrap is completed to start post setups
         applicationStartedEvent.fire( new ApplicationStarted() );
     }
 
