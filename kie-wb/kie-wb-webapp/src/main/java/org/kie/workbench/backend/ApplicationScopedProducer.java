@@ -87,6 +87,12 @@ public class ApplicationScopedProducer {
     @Selectable
     private UserGroupInfoProducer userGroupInfoProducer;
 
+    public ApplicationScopedProducer() {
+        if (System.getProperty("org.uberfire.watcher.autostart") == null) {
+            System.setProperty("org.uberfire.watcher.autostart", "false");
+        }
+    }
+
 
     @PostConstruct
     public void setup() {

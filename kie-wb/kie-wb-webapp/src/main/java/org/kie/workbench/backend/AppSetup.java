@@ -147,7 +147,7 @@ public class AppSetup {
         administrationService.bootstrapConfig();
         administrationService.bootstrapDeployments();
 
-        // notify cluster service that bootstrap is completed to start synchronization
+        // notify components that bootstrap is completed to start post setups
         applicationStartedEvent.fire( new ApplicationStarted() );
     }
 
