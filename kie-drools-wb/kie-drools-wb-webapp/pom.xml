@@ -740,7 +740,7 @@
 
           </compileSourcesArtifacts>
           <runTarget>org.kie.workbench.drools.KIEDroolsWebapp/KIEDroolsWebapp.html</runTarget>
-          <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms2048m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.jbpm.designer.perspective=ruleflow</extraJvmArgs>
+          <extraJvmArgs>-Xmx2048m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.jbpm.designer.perspective=ruleflow</extraJvmArgs>
           <!--<logLevel>DEBUG</logLevel>-->
           <server>org.jboss.errai.cdi.server.gwt.JettyLauncher</server>
           <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile, see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
@@ -833,6 +833,7 @@
               <!-- Build all GWT permutations and optimize them -->
               <module>org.kie.workbench.drools.KIEDroolsWebapp</module>
               <draftCompile>false</draftCompile>
+              <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms2048m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.jbpm.designer.perspective=ruleflow</extraJvmArgs>
             </configuration>
           </plugin>
         </plugins>
