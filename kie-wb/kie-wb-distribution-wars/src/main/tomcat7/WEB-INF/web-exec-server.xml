@@ -35,6 +35,7 @@
   <filter-mapping>
     <filter-name>UberFire Security Filter</filter-name>
     <url-pattern>/rest/*</url-pattern>
+    <url-pattern>/maven2/*</url-pattern>
   </filter-mapping>
   
   
