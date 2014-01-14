@@ -27,6 +27,7 @@
     <url-pattern>*.erraiBus</url-pattern>
     <url-pattern>/resourceList</url-pattern>
     <url-pattern>/editor</url-pattern>
+    <url-pattern>/editor/*</url-pattern>
     <url-pattern>/menuconnector/*</url-pattern>
     <url-pattern>/menu/*</url-pattern>
     <url-pattern>/uuidRepository</url-pattern>
