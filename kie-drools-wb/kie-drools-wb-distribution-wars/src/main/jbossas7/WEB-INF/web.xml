@@ -511,10 +511,8 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   </security-role>
 
   <security-role>
-    <description>Analyst - Responsible for creating and designing processes
-      into the system. Creates process flows and handles
-      process change requests. Needs to test processes that
-      they create. Also creates forms and dashboards.
+    <description>Analyst - Responsible for authoring rules within the system and
+      authoring tests for those rules.
     </description>
     <role-name>analyst</role-name>
   </security-role>
