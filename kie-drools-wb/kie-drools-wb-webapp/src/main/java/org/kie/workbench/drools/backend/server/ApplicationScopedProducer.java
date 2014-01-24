@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
+import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.backend.server.io.IOSecurityAuth;
 import org.uberfire.backend.server.io.IOSecurityAuthz;
 import org.uberfire.commons.cluster.ClusterServiceFactory;
@@ -32,25 +33,14 @@ import org.uberfire.io.IOService;
 import org.uberfire.io.attribute.DublinCoreView;
 import org.uberfire.io.impl.cluster.IOServiceClusterImpl;
 import org.uberfire.java.nio.base.version.VersionAttributeView;
-import org.uberfire.metadata.backend.lucene.LuceneIndexEngine;
-import org.uberfire.metadata.backend.lucene.LuceneSearchIndex;
-import org.uberfire.metadata.backend.lucene.LuceneSetup;
-import org.uberfire.metadata.backend.lucene.fields.SimpleFieldFactory;
-import org.uberfire.metadata.backend.lucene.metamodels.InMemoryMetaModelStore;
-import org.uberfire.metadata.backend.lucene.setups.NIOLuceneSetup;
-import org.uberfire.metadata.engine.MetaIndexEngine;
-import org.uberfire.metadata.engine.MetaModelStore;
+import org.uberfire.metadata.backend.lucene.LuceneConfig;
+import org.uberfire.metadata.backend.lucene.LuceneConfigBuilder;
 import org.uberfire.metadata.io.IOSearchIndex;
 import org.uberfire.metadata.io.IOServiceIndexedImpl;
-import org.uberfire.metadata.search.SearchIndex;
-import org.uberfire.backend.repositories.Repository;
-import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.security.auth.AuthenticationManager;
 import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
-
-import static org.uberfire.backend.server.repositories.SystemRepository.*;
 
 @ApplicationScoped
 public class ApplicationScopedProducer {
@@ -63,10 +53,9 @@ public class ApplicationScopedProducer {
     @IOSecurityAuthz
     private AuthorizationManager authorizationManager;
 
-
     private IOService ioService;
     private IOSearchService ioSearchService;
-    private final LuceneSetup luceneSetup = new NIOLuceneSetup();
+    private LuceneConfig config;
 
     @Inject
     private IOWatchServiceNonDotImpl watchService;
@@ -76,8 +65,8 @@ public class ApplicationScopedProducer {
     private ClusterServiceFactory clusterServiceFactory;
 
     public ApplicationScopedProducer() {
-        if (System.getProperty("org.uberfire.watcher.autostart") == null) {
-            System.setProperty("org.uberfire.watcher.autostart", "false");
+        if ( System.getProperty( "org.uberfire.watcher.autostart" ) == null ) {
+            System.setProperty( "org.uberfire.watcher.autostart", "false" );
         }
     }
 
@@ -85,15 +74,13 @@ public class ApplicationScopedProducer {
     public void setup() {
         SecurityFactory.setAuthzManager( new RuntimeAuthorizationManager() );
 
-        final MetaModelStore metaModelStore = new InMemoryMetaModelStore();
-        final MetaIndexEngine indexEngine = new LuceneIndexEngine( metaModelStore,
-                                                                   luceneSetup,
-                                                                   new SimpleFieldFactory() );
-
-        final SearchIndex searchIndex = new LuceneSearchIndex( luceneSetup );
+        this.config = new LuceneConfigBuilder().withInMemoryMetaModelStore()
+                .useDirectoryBasedIndex()
+                .useNIODirectory()
+                .build();
 
         final IOService service = new IOServiceIndexedImpl( watchService,
-                                                            indexEngine,
+                                                            config.getIndexEngine(),
                                                             DublinCoreView.class,
                                                             VersionAttributeView.class,
                                                             OtherMetaView.class );
@@ -109,13 +96,13 @@ public class ApplicationScopedProducer {
         ioService.setAuthenticationManager( authenticationManager );
         ioService.setAuthorizationManager( authorizationManager );
 
-        this.ioSearchService = new IOSearchIndex( searchIndex,
+        this.ioSearchService = new IOSearchIndex( config.getSearchIndex(),
                                                   ioService );
     }
 
     @PreDestroy
     private void cleanup() {
-        luceneSetup.dispose();
+        config.dispose();
         ioService.dispose();
     }
 
