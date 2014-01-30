@@ -17,22 +17,20 @@ package org.kie.config.cli;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Scanner;
 
 import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.command.CliCommandRegistry;
 import org.kie.config.cli.command.impl.CloneGitRepositoryCliCommand;
+import org.kie.config.cli.support.ConfigurationManager;
+import org.kie.config.cli.support.History;
+import org.kie.config.cli.support.InputReader;
 
 public class CmdMain {
 
     public static void main(String[] args) {
-        // most important settings driven by jvm system properties
-        System.setProperty("org.uberfire.nio.git.daemon.enabled", "false");
-        System.setProperty("java.awt.headless", "true");
-        // use scanner to read user input
-        Scanner scanner = new Scanner(new InputStreamReader(System.in));
+        InputReader reader = ConfigurationManager.configure();
+
         // ask for niogit parent folder so it will operate on the right system repo
         System.out.println("********************************************************\n");
         System.out.println("************* Welcome to Kie config CLI ****************\n");
@@ -44,7 +42,7 @@ public class CmdMain {
             //  to avoid conflicts on concurrent updates
             System.out.println(">>Please specify location of the parent folder of .niogit");
 
-            String niogitPath = scanner.nextLine();
+            String niogitPath = reader.nextLine();
             exitIfRequested(niogitPath);
 
 
@@ -54,13 +52,13 @@ public class CmdMain {
                 if (!niogitParent.exists() || !niogitParent.isDirectory() || !isNiogitDir(niogitParent)){
 
                     System.out.println(".niogit folder not found: Try again[1] or continue to create new one[2]?:");
-                    String answer = scanner.nextLine();
+                    String answer = reader.nextLine();
                     if ("2".equalsIgnoreCase(answer)) {
                         System.setProperty("org.uberfire.nio.git.dir", niogitPath);
                         foundFolder = true;
                     } else {
                         System.out.println(">>Please specify location of the parent folder of .niogit");
-                        niogitPath = scanner.nextLine();
+                        niogitPath = reader.nextLine();
                         exitIfRequested(niogitPath);
                     }
                 }else {
@@ -68,27 +66,28 @@ public class CmdMain {
                     foundFolder = true;
                 }
             }
-            context = CliContext.buildContext(scanner);
+            context = CliContext.buildContext(reader);
         } else {
             // use temp folder for clone of repository
             String niogitPath = System.getProperty("java.io.tmpdir") + File.separator + "kie-tmp-repo";
             new File(niogitPath).mkdir();
             System.setProperty("org.uberfire.nio.git.dir", niogitPath);
-            context = CliContext.buildContext(scanner);
+            context = CliContext.buildContext(reader);
             context.addParameter("tmp-dir", niogitPath);
             CliCommand command = new CloneGitRepositoryCliCommand();
             command.execute(context);
         }
 
         System.out.println(">>Please enter command (type help to see available commands): ");
-        
-        while(scanner.hasNext()) {
-	        String commandName = scanner.nextLine();
-	        
+
+        String commandName = null;
+        while((commandName = reader.nextLine(true, true)) != null) {
+
 	        CliCommand command = CliCommandRegistry.get().getCommand(commandName);
 	        if (command != null) {
 	        	try {
-	        	Object result = command.execute(context);
+                    History.addToHistory(commandName);
+	        	    Object result = command.execute(context);
 		        	System.out.println("Result:");
 		        	System.out.println(result);
 		        	System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -139,4 +138,6 @@ public class CmdMain {
     	
     	return false;
     }
+
+
 }

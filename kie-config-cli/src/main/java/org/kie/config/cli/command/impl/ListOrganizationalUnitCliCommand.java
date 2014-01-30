@@ -24,7 +24,7 @@ import org.uberfire.backend.organizationalunit.OrganizationalUnit;
 import org.uberfire.backend.organizationalunit.OrganizationalUnitService;
 import org.uberfire.backend.repositories.Repository;
 
-public class ListOrganizationalUnitCliCommand implements CliCommand {
+public class ListOrganizationalUnitCliCommand extends AbstractCliCommand {
 
     @Override
     public String getName() {
@@ -49,7 +49,7 @@ public class ListOrganizationalUnitCliCommand implements CliCommand {
                 result.append( "\t\tRepository " + repository.getAlias() + "\n" );
                 result.append( "\t\t\t scheme: " + repository.getScheme() + "\n" );
                 result.append( "\t\t\t uri: " + repository.getUri() + "\n" );
-                result.append( "\t\t\t environment: " + repository.getEnvironment() + "\n" );
+                result.append( "\t\t\t environment: " + printEnvironment(repository.getEnvironment()) + "\n" );
                 result.append( "\t\t\t repository roles: " + repository.getRoles() + "\n" );
             }
         }

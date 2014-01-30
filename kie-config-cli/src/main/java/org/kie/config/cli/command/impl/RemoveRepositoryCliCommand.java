@@ -15,11 +15,10 @@
  */
 package org.kie.config.cli.command.impl;
 
-import java.util.Scanner;
-
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
+import org.kie.config.cli.support.InputReader;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
 
@@ -36,8 +35,8 @@ public class RemoveRepositoryCliCommand implements CliCommand {
 		WeldContainer container = context.getContainer();
 
 		RepositoryService repositoryService = container.instance().select(RepositoryService.class).get();
-		
-		Scanner input = context.getInput();
+
+        InputReader input = context.getInput();
 		System.out.print(">>Repository alias:");
 		String alias = input.nextLine();
 		

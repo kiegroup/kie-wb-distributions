@@ -15,12 +15,11 @@
  */
 package org.kie.config.cli.command.impl;
 
-import java.util.Scanner;
-
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
+import org.kie.config.cli.support.InputReader;
 import org.uberfire.backend.deployment.DeploymentConfigService;
 
 public class AddDeploymentConfigCliCommand implements CliCommand {
@@ -37,7 +36,7 @@ public class AddDeploymentConfigCliCommand implements CliCommand {
 
 		DeploymentConfigService deploymentConfigService = container.instance().select(DeploymentConfigService.class).get();
 		
-		Scanner input = context.getInput();
+		InputReader input = context.getInput();
 		System.out.print(">>GroupId:");
 		String groupId = input.nextLine();
 		

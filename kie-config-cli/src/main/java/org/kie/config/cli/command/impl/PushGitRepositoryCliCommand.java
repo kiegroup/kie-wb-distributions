@@ -31,7 +31,7 @@ public class PushGitRepositoryCliCommand implements CliCommand {
             return "No upstream ("+upstream+") or no local ("+gitlocal+") git repository info available";
         }
 
-        ioService.getFileSystem(URI.create(gitlocal+"?push="+upstream+"&force"));
+        ioService.getFileSystem(URI.create(gitlocal+"?push="+upstream));
         return "Pushed successfully";
     }
 }

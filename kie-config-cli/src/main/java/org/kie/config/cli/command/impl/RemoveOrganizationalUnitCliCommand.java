@@ -15,11 +15,10 @@
  */
 package org.kie.config.cli.command.impl;
 
-import java.util.Scanner;
-
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
+import org.kie.config.cli.support.InputReader;
 import org.uberfire.backend.organizationalunit.OrganizationalUnit;
 import org.uberfire.backend.organizationalunit.OrganizationalUnitService;
 
@@ -37,7 +36,7 @@ public class RemoveOrganizationalUnitCliCommand implements CliCommand {
 
         OrganizationalUnitService organizationalUnitService = container.instance().select( OrganizationalUnitService.class ).get();
 
-        Scanner input = context.getInput();
+        InputReader input = context.getInput();
         System.out.print( ">>Organizational Unit name:" );
         String name = input.nextLine();
 

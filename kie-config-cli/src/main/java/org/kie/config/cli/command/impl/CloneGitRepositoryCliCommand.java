@@ -1,14 +1,15 @@
 package org.kie.config.cli.command.impl;
 
-import java.io.Console;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jboss.weld.literal.NamedLiteral;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
+import org.kie.config.cli.support.InteractiveUsernamePasswordCredentialsProvider;
 import org.uberfire.io.IOService;
 import org.uberfire.java.nio.file.FileSystemAlreadyExistsException;
 
@@ -34,14 +35,17 @@ public class CloneGitRepositoryCliCommand implements CliCommand {
         if (systemGitRepoUrl == null || "".equals(systemGitRepoUrl.trim())) {
             systemGitRepoUrl = GIT_DEFAULT_UPSTREAM;
         }
-        String password = "";
-        System.out.println(">>Please specify password");
-        Console console = System.console();
-        if (console != null) {
-            password = new String(console.readPassword());
-        } else {
-            password = context.getInput().nextLine();
+
+        System.out.println(">>Please enter username:");
+        String user = context.getInput().nextLine();
+
+        URI gitUri = URI.create(systemGitRepoUrl);
+        if (gitUri.getScheme().equalsIgnoreCase("ssh")) {
+            systemGitRepoUrl = gitUri.getScheme()+"://"+user+"@"+gitUri.getHost()+":"+ gitUri.getPort()+gitUri.getPath();
         }
+        String password = "";
+        System.out.println(">>Please enter password:");
+        password = context.getInput().nextLineNoEcho();
         if (password == null || "".equals(password.trim())) {
             password = "";
         }
@@ -50,10 +54,16 @@ public class CloneGitRepositoryCliCommand implements CliCommand {
         context.addParameter("git-local", GIT_LOCAL);
 
         Map<String, String> env = new HashMap<String, String>();
-        env.put("origin", systemGitRepoUrl);
-        env.put("username", System.getProperty("git.user", System.getProperty( "user.name" )));
-        env.put("password", System.getProperty("git.password", password));
         env.put("init", "true");
+        env.put("origin", systemGitRepoUrl);
+
+        if (gitUri.getScheme().equalsIgnoreCase("ssh")) {
+            // use special credential provider to support prompt for SSH connections to unknown hosts
+            CredentialsProvider.setDefault(new InteractiveUsernamePasswordCredentialsProvider(user, password, context.getInput()));
+        } else {
+            env.put("username", System.getProperty("git.user", user));
+            env.put("password", System.getProperty("git.password", password));
+        }
         try {
             ioService.newFileSystem(URI.create(GIT_LOCAL), env);
         } catch (FileSystemAlreadyExistsException e) {
