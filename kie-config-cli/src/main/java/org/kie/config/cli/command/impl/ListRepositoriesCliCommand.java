@@ -16,6 +16,7 @@
 package org.kie.config.cli.command.impl;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
@@ -23,7 +24,7 @@ import org.kie.config.cli.command.CliCommand;
 import org.uberfire.backend.repositories.Repository;
 import org.uberfire.backend.repositories.RepositoryService;
 
-public class ListRepositoriesCliCommand implements CliCommand {
+public class ListRepositoriesCliCommand extends AbstractCliCommand {
 
 	@Override
 	public String getName() {
@@ -43,7 +44,7 @@ public class ListRepositoriesCliCommand implements CliCommand {
 			result.append("\tRepository " + config.getAlias() + "\n");
 			result.append("\t scheme: " + config.getScheme() + "\n");
 			result.append("\t uri: " + config.getUri() + "\n");
-			result.append("\t environment: " + config.getEnvironment() + "\n");
+			result.append("\t environment: " + printEnvironment(config.getEnvironment()) + "\n");
 			result.append("\t roles: " + config.getRoles() + "\n");
 		}
 		return result.toString();

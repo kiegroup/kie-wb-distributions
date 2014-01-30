@@ -3,13 +3,13 @@ package org.kie.config.cli.command.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Scanner;
 
 import org.guvnor.common.services.project.model.Project;
 import org.guvnor.common.services.project.service.ProjectService;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
+import org.kie.config.cli.support.InputReader;
 import org.kie.workbench.common.screens.explorer.model.ProjectExplorerContent;
 import org.kie.workbench.common.screens.explorer.service.ExplorerService;
 import org.uberfire.backend.organizationalunit.OrganizationalUnit;
@@ -34,7 +34,7 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
         ExplorerService projectExplorerService = container.instance().select( ExplorerService.class ).get();
         ProjectService projectService = container.instance().select( ProjectService.class ).get();
 
-        Scanner input = context.getInput();
+        InputReader input = context.getInput();
         System.out.print( ">>Repository alias:" );
         String alias = input.nextLine();
 

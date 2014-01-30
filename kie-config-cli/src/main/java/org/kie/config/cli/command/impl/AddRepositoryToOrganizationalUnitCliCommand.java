@@ -15,11 +15,11 @@
  */
 package org.kie.config.cli.command.impl;
 
-import java.util.Scanner;
 
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
+import org.kie.config.cli.support.InputReader;
 import org.uberfire.backend.organizationalunit.OrganizationalUnit;
 import org.uberfire.backend.organizationalunit.OrganizationalUnitService;
 import org.uberfire.backend.repositories.Repository;
@@ -40,7 +40,7 @@ public class AddRepositoryToOrganizationalUnitCliCommand implements CliCommand {
         OrganizationalUnitService organizationalUnitService = container.instance().select( OrganizationalUnitService.class ).get();
         RepositoryService repositoryService = container.instance().select( RepositoryService.class ).get();
 
-        Scanner input = context.getInput();
+        InputReader input = context.getInput();
         System.out.print( ">>Organizational Unit name:" );
         String name = input.nextLine();
 
@@ -55,6 +55,10 @@ public class AddRepositoryToOrganizationalUnitCliCommand implements CliCommand {
         Repository repo = repositoryService.getRepository( alias );
         if ( repo == null ) {
             return "No repository " + alias + " was found";
+        }
+
+        if (organizationalUnit.getRepositories().contains(repo)) {
+            return "Repository " + alias + " is already added to " + name;
         }
 
         organizationalUnitService.addRepository( organizationalUnit, repo );

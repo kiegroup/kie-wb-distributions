@@ -17,19 +17,19 @@ package org.kie.config.cli;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
+import org.kie.config.cli.support.InputReader;
 
 public class CliContext {
 
 	private Weld weld;
 	private WeldContainer container;
-	private Scanner input;
+	private InputReader input;
     private Map<String, String> parameters = new HashMap<String, String>();
 	
-	protected CliContext(Weld weld, WeldContainer container, Scanner input) {
+	protected CliContext(Weld weld, WeldContainer container, InputReader input) {
 		this.weld = weld;
 		this.container = container;
 		this.input = input;
@@ -46,14 +46,14 @@ public class CliContext {
 	public void setContainer(WeldContainer container) {
 		this.container = container;
 	}
-	public Scanner getInput() {
+	public InputReader getInput() {
 		return input;
 	}
-	public void setInput(Scanner input) {
+	public void setInput(InputReader input) {
 		this.input = input;
 	}
 	
-	public static CliContext buildContext(Scanner input) {
+	public static CliContext buildContext(InputReader input) {
 		
 		Weld weld = new Weld();
 		WeldContainer container = weld.initialize();
@@ -70,5 +70,5 @@ public class CliContext {
     public void addParameter(String name, String value) {
         this.parameters.put(name, value);
     }
-	
+
 }
