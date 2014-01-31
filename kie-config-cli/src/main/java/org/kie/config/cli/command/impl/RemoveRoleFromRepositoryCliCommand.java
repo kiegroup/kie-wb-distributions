@@ -29,6 +29,9 @@ public class RemoveRoleFromRepositoryCliCommand implements CliCommand {
 		if (repo == null) {
 			return "No repository " + alias + " was found";
 		}
+        if (repo.getRoles() == null || repo.getRoles().isEmpty()) {
+            return "No roles defined for repository " + alias;
+        }
 		System.out.print(">>Security roles (comma separated list):");
 		String rolesIn = input.nextLine();
 		if (rolesIn.trim().length() > 0) {
