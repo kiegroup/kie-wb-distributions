@@ -74,6 +74,9 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
             }
         }
         Project project = projects.get( projectIndex - 1 );
+        if (project.getRoles() == null || project.getRoles().isEmpty()) {
+            return "No roles defined for project " + project.getProjectName();
+        }
 
         System.out.print( ">>Security roles (comma separated list):" );
         String rolesIn = input.nextLine();
@@ -81,7 +84,7 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
             String[] roles = rolesIn.split( "," );
             for ( String role : roles ) {
                 projectService.removeRole( project, role );
-                result.append( "Role " + role + " removed successfully to project " + project.getProjectName() + "\n" );
+                result.append( "Role " + role + " removed successfully from project " + project.getProjectName() + "\n" );
             }
         }
 
