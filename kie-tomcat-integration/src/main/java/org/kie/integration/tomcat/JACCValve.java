@@ -31,19 +31,26 @@ import javax.security.jacc.PolicyContext;
 import javax.security.jacc.PolicyContextException;
 import javax.security.jacc.PolicyContextHandler;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletRequestListener;
 
+import org.apache.catalina.Context;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.realm.GenericPrincipal;
 import org.apache.catalina.users.AbstractRole;
 import org.apache.catalina.users.AbstractUser;
 import org.apache.catalina.valves.ValveBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Custom Tomcat valve that allows JACC access to principal to simplify integration with UberFire authentication mechanism.
  */
 public class JACCValve extends ValveBase {
-	
+
+    private static final Logger logger = LoggerFactory.getLogger(JACCValve.class);
+
 	private static ThreadLocal<Request> currentRequest = new ThreadLocal<Request>();
 	
 	public JACCValve() {
@@ -89,6 +96,7 @@ public class JACCValve extends ValveBase {
 	public void invoke(Request request, Response response) throws IOException,
 			ServletException {
 	    currentRequest.set(request);
+        wrapListeners(request);
 	    try {
 	        getNext().invoke(request, response);
 	    } finally {
@@ -145,5 +153,47 @@ public class JACCValve extends ValveBase {
         }
         
         return group;
+    }
+
+    protected void wrapListeners(Request request) {
+        Context context = request.getContext();
+
+        Object[] listeners = context.getApplicationEventListeners();
+        for (int i = 0; i < listeners.length; i++) {
+            if (listeners[i] instanceof ServletRequestListener && !(listeners[i] instanceof WrappedServletRequestListener)) {
+                listeners[i] = new WrappedServletRequestListener((ServletRequestListener)listeners[i]);
+            }
+        }
+    }
+
+    /**
+     * Wrapper for ServletRequestListener to overcome bug in WELD on tomcat that causes
+     * NPE when request is destroyed, until it gets fixed let's catch the exception as
+     * it does not cause any harm as request was already completed and once cleaned.
+     */
+    private static class WrappedServletRequestListener implements ServletRequestListener {
+        private ServletRequestListener delegate;
+
+        WrappedServletRequestListener(ServletRequestListener delegate) {
+            this.delegate = delegate;
+        }
+        @Override
+        public void requestDestroyed(ServletRequestEvent servletRequestEvent) {
+            try {
+                delegate.requestDestroyed(servletRequestEvent);
+            } catch (Exception e) {
+                logger.debug("Exception at request destroy {}", e.getMessage(), e);
+            }
+        }
+
+        @Override
+        public void requestInitialized(ServletRequestEvent servletRequestEvent) {
+
+            try {
+                delegate.requestInitialized(servletRequestEvent);
+            } catch (Exception e) {
+                logger.debug("Exception at request initialization {}", e.getMessage(), e);
+            }
+        }
     }
 }
