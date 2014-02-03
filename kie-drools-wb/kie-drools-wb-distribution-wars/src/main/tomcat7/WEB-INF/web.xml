@@ -23,6 +23,21 @@
       <param-name>org.uberfire.cookie.id</param-name>
       <param-value>guvnor.app</param-value>
     </init-param>
+    <init-param>
+      <param-name>org.uberfire.auth.rememberme</param-name>
+      <param-value>disabled</param-value>
+    </init-param>
+    <init-param>
+      <param-name>org.uberfire.auth.force.url</param-name>
+      <param-value>/org.kie.workbench.drools.KIEDroolsWebapp/KIEDroolsWebapp.html</param-value>
+    </init-param>
+    <!-- TOMCAT-JEE-SECURITY -->
+    <!--
+    <init-param>
+      <param-name>org.uberfire.auth.scheme</param-name>
+      <param-value>org.uberfire.security.server.auth.JACCAuthenticationScheme</param-value>
+    </init-param>
+    -->
   </filter>
 
   <filter-mapping>
@@ -499,4 +514,74 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <!-- TOMCAT-JEE-SECURITY -->
+  <!--
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>console</web-resource-name>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>analyst</role-name>
+      <role-name>developer</role-name>
+      <role-name>user</role-name>
+      <role-name>manager</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/login.jsp</form-login-page>
+      <form-error-page>/login.jsp?message=Login failed: Invalid UserName or Password</form-error-page>
+    </form-login-config>
+  </login-config>
+
+  <security-role>
+    <description>Administrator - Administrates the BPMS system. Has full access
+       rights to make any changes necessary. Also has the
+       ability to add and remove users from the system.
+    </description>
+    <role-name>admin</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Analyst - Responsible for creating and designing processes
+       into the system. Creates process flows and handles
+       process change requests. Needs to test processes that
+       they create. Also creates forms and dashboards.
+    </description>
+    <role-name>analyst</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Developer - Implements code required for process to work. Mostly uses
+      the JBDS connection to view processes, but may use the
+      web tool occasionally.
+    </description>
+    <role-name>developer</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Business user - Daily user of the system to take actions on business tasks
+      that are required for the processes to continue forward. Works
+      primarily with the task lists.
+    </description>
+    <role-name>user</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Manager/Viewer-only User - Viewer of the system that is interested in statistics
+      around the  business processes and their performance, business indicators, and other
+      reporting of the system and people who interact with the system.
+    </description>
+    <role-name>manager</role-name>
+  </security-role>
+
+  <error-page>
+    <error-code>403</error-code>
+    <location>/not_authorized.jsp</location>
+  </error-page>
+  -->
 </web-app>
