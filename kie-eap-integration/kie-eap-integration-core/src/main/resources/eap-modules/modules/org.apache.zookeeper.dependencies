@@ -1,2 +1,4 @@
-org.kie.lib
-org.jboss.log4j.logmanager
+org.apache.log4j
+org.apache.commons.lang
+org.apache.xerces
+org.apache.commons.collections

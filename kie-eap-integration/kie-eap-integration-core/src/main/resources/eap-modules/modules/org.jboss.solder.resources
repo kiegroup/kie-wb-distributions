@@ -1,3 +1,2 @@
 org.jboss.solder:solder-api:jar
 org.jboss.solder:solder-logging:jar
-org.jboss.solder:solder-impl:jar

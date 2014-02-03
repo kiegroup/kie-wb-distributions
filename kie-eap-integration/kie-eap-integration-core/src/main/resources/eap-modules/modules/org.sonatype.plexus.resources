@@ -1,1 +1,2 @@
 org.sonatype.plexus:plexus-cipher:jar
+org.sonatype.plexus:plexus-sec-dispatcher:jar

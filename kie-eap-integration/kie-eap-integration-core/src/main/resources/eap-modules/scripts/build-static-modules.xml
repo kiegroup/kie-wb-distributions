@@ -393,7 +393,7 @@ Then, this ant project should receive the property file location and read artifa
                                       temp-path="${modules.temp.path}">
             <template-prop-params>
                 <param type="token" name="DEPENDENCY" value="${dependency-name}"/>
-                <param type="token" name="EXPORT" value="true"/>
+                <param type="token" name="EXPORT" value="false"/>
             </template-prop-params>
             <template-prop-result>
                 <concat destfile="${file-name}" append="true">@{template-content}</concat>

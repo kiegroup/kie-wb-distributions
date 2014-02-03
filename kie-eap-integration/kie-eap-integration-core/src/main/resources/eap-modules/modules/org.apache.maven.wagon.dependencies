@@ -1,2 +1,4 @@
 org.codehouse.plexus
-org.apache.commons.httpclient
+org.apache.httpcomponents
+org.apache.commons.logging
+org.apache.commons.io

@@ -1,2 +1,4 @@
 org.apache.camel:camel-josql:jar
 org.apache.camel:camel-core:jar
+org.apache.camel:apt:jar
+org.apache.camel:spi-annotations:jar

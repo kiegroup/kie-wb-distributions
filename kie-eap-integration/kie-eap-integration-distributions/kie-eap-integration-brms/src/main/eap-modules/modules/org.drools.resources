@@ -3,7 +3,6 @@ org.drools:drools-decisiontables:jar
 org.drools:drools-scorecards:jar
 org.drools:drools-core:jar
 org.drools:drools-persistence-jpa:jar
-org.drools:drools-simulator:jar
 org.drools:drools-compiler:jar
 org.drools:drools-workbench-models-guided-dtable:jar
 org.drools:drools-workbench-models-datamodel-api:jar

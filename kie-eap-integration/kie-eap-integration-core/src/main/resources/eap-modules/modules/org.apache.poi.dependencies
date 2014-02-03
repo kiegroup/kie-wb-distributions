@@ -6,3 +6,4 @@ org.apache.xmlbeans
 org.dom4j
 org.jaxen
 org.junit
+javax.api

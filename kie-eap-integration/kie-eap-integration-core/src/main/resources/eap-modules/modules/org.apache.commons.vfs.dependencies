@@ -1,9 +1,6 @@
 org.kie.lib
-org.slf4j.jcl-over-slf4j
-org.apache.commons.logging
 org.apache.commons.collections
-org.apache.xmlbeans
-org.apache.ant
-org.jaxen
-org.apache.commons.net
 org.apache.commons.httpclient
+org.apache.commons.logging
+org.apache.commons.net
+org.jdom

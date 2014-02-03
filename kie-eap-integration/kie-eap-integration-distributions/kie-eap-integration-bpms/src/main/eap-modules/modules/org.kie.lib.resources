@@ -7,17 +7,13 @@ ch.qos.logback:logback-core:jar
 com.github.sgroschupf:zkclient:jar
 com.google.code.findbugs:jsr305:jar
 com.google.code.gson:gson:jar
-com.google.inject:guice:jar
-com.google.javascript:closure-compiler:jar
 com.googlecode.jarjar:jarjar:jar
 com.jcraft:jsch:jar
 com.ning:async-http-client:jar
-com.noelios.restlet:com.noelios.restlet:jar
 com.thoughtworks.xstream:xstream:jar
 jakarta-regexp:jakarta-regexp:jar
 javax.ws.rs:jsr311-api:jar
 jivesoftware:smack:jar
-logkit:logkit:jar
 net.sf.josql:gentlyweb-utils:jar
 net.sf.josql:josql:jar
 net.sf.opencsv:opencsv:jar
@@ -28,7 +24,6 @@ org.apache.avalon.framework:avalon-framework-api:jar
 org.apache.geronimo.specs:geronimo-activation_1.0.2_spec:jar
 org.apache.geronimo.specs:geronimo-javamail_1.4_spec:jar
 org.apache.httpcomponents:httpcore:jar
-org.apache.mina:mina-core:jar
 org.apache.xmlgraphics:fop:jar
 org.apache.xmlgraphics:xmlgraphics-commons:jar
 org.beanshell:bsh:jar
@@ -45,9 +40,7 @@ org.jboss.seam.transaction:seam-transaction-api:jar
 org.json:json:jar
 org.ocpsoft.prettytime:prettytime:jar
 org.osgi:org.osgi.compendium:jar
-org.restlet:org.restlet:jar
 org.scannotation:scannotation:jar
-org.sonatype.plexus:plexus-sec-dispatcher:jar
 rhino:js:jar
 rome:rome:jar
 xmlpull:xmlpull:jar
