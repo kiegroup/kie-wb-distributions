@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <delete includeemptydirs="true" verbose="false" failonerror="false">
+    <fileset dir="/Users/porcelli/Sources/droolsjbpm/kie-wb-distributions/kie-eap-integration/kie-eap-integration-distributions/target/eap-modules-core"/>
+  </delete>
+  <echo>Extracting core file ${org.kie:kie-eap-integration-core:jar}</echo>
+  <unzip dest="/Users/porcelli/Sources/droolsjbpm/kie-wb-distributions/kie-eap-integration/kie-eap-integration-distributions/target/eap-modules-core" src="${org.kie:kie-eap-integration-core:jar}"/>
+  <copy todir="/Users/porcelli/Sources/droolsjbpm/kie-wb-distributions/kie-eap-integration/kie-eap-integration-distributions/target/eap-modules-core/eap-modules/modules" overwrite="true" failonerror="false">
+    <fileset dir="/Users/porcelli/Sources/droolsjbpm/kie-wb-distributions/kie-eap-integration/kie-eap-integration-distributions/src/main/eap-modules/modules">
+      <include name="**/*.list"/>
+      <include name="**/*.module"/>
+      <include name="**/*.dependencies"/>
+      <include name="**/*.resources"/>
+    </fileset>
+  </copy>
+</target>
+</project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+
+    <fileSets>
+        @ASSEMBLY_COMPONENT_FILESETS@
+    </fileSets>
+
+    <files>
+        @ASSEMBLY_COMPONENT_FILES@
+    </files>
+
+    <!-- <dependencySets>
+        <dependencySet>
+            <includes>
+                @ASSEMBLY_COMPONENT_DEPENDECY_INCLUDES@
+            </includes>
+            <outputDirectory>@ASSEMBLY_COMPONENT_DEPENDECY_OUTPUT_DIR@</outputDirectory>
+            <unpack>false</unpack>
+            <useProjectArtifact>false</useProjectArtifact>
+        </dependencySet>
+    </dependencySets> -->
+
+</component>

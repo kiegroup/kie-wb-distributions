@@ -281,7 +281,7 @@ public class KieWorkbenchEntryPoint {
             }
         }).endMenu().build().getItems().get(0));
 
-        final String dashbuilderURL = DashboardURLBuilder.getDashboardURL("/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale());
+        final String dashbuilderURL = DashboardURLBuilder.getDashboardURL("/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName());
         result.add( MenuFactory.newSimpleItem( constants.Business_Dashboard() ).withRoles(kieACL.getGrantedRoles(F_DASHBOARD_BUILDER)).respondsWith( new Command() {
             @Override
             public void execute() {

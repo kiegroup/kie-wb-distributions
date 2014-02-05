@@ -1,0 +1,3 @@
+module.name=org.apache.commons.fileupload
+module.type=static
+module.location=org/apache/commons/fileupload

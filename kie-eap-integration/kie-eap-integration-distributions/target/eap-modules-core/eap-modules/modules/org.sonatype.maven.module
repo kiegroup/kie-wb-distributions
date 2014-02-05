@@ -1,0 +1,3 @@
+module.name=org.sonatype.maven
+module.type=static
+module.location=org/sonatype/maven

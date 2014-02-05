@@ -1,0 +1,3 @@
+module.name=org.eclipse.jgit
+module.type=static
+module.location=org/eclipse/jgit

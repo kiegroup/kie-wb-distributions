@@ -1,0 +1,3 @@
+module.name=org.apache.poi
+module.type=static
+module.location=org/apache/poi

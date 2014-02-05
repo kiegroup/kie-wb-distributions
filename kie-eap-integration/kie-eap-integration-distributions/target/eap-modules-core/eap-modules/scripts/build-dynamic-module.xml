@@ -1,0 +1,520 @@
+<!--
+
+ANT JBoss EAP dnyamic module generation file.
+
+Generates the jboss-deployment-structure.xml definition file and the assembly for a dynamic module.
+
+
+INPUT parameters:
+- module-name -> The dynamic module name to create all stuff.
+- static-modules-source-path -> The source folder where all module descriptors, module dependencies and modules.list files are located.
+- static-modules-list-file -> The path where generating module.list file is located
+- eap-configuration-file -> The path for the EAP configuration properties.
+- dynamic-modules-output-path -> The output path where generating all modules stuff.
+- dynamic-module-assembly-id -> The ID for the generated assembly descriptor.
+- dynamic-module-assembly-war-source -> The source "skinny" war for assembly descriptor.
+- dynamic-module-assembly-output-file -> The path where generating the dynamic module assembly descriptor..
+- templates.path -> The source forlder where all templates are located.
+- patches.path -> The source forlder where all patch files are located.
+- temp.path -> Path for temporal files
+- scripts.path -> The source folder for ant build scripts.
+
+OUTPUT:
+- Generates a filesystem structure:
+    - <modules-output-path>
+        - <module_name>
+            - <dynamic-module-assembly-output-file>
+            - jboss-deployment-structure.xml
+            - webfragment descriptors to patch
+            - META-INF (optional - if CDI extensions patch is enabled)
+
+NOTE about property inheritance:
+===============================
+This project tasks are coded to allow running without inheriting all properties from caller/parent tasks, so the antcall tasks should be
+coded using inheritAll="false".
+
+But the locations for the project dependencies are provided by the maven antrun plugin:
+  - ex: ${junit:junit:jar} has as a value the location for the junit.jar artifact in local maven repo.
+  - see http://maven.apache.org/plugins/maven-antrun-plugin/examples/classpaths.html
+So if the antrun plugin does an antcall to a task in this project using inheritAll="false",
+these locations are not available in this project tasks, which currently are required.
+So, by the moment all antcall tasks are inheriting parent task properties.
+
+In the future, if you want to fix it and do not inherit properties, a solution could be creating a properties file with all
+artifacts and its locations in the maven antrun plugin, where all dependency location are available as properties.
+Then, this ant project should receive the property file location and read artifact locations that it contains.
+
+-->
+
+<project name="build-dynamic-module" xmlns:ac="net.sf.antcontrib" default="main" basedir="../../">
+
+    <!-- Common utilities. -->
+    <import file="build-utils.xml"/>
+
+    <!-- EAP configuration utils. -->
+    <import file="build-eap-utils.xml"/>
+
+    <property name="modules.static.source.path" value="${static-modules-source-path}${file.separator}"/>
+    <property name="modules.list.file.path" value="${static-modules-list-file}"/>
+    <property name="modules.output.path" value="${dynamic-modules-output-path}${file.separator}"/>
+    <property name="module.assembly.output.path" value="${dynamic-module-assembly-output-file}"/>
+    <property name="module.assembly.war.source" value="${dynamic-module-assembly-war-source}"/>
+    <property name="module.assembly.id" value="${dynamic-module-assembly-id}"/>
+    <property name="module.jboss-deployment-structure.output.path" value="${modules.output.path}${module-name}${file.separator}jboss-deployment-structure.xml"/>
+
+    <property name="templates.source.path" value="${templates.path}"/>
+    <property name="templates.module.assembly.file.path" value="${templates.source.path}${file.separator}assembly-eap-dynamic-module.template"/>
+    <property name="templates.module.assembly-file.file.path" value="${templates.source.path}${file.separator}assembly-file.template"/>
+    <property name="templates.module.jboss-deployment-structure.file.path" value="${templates.source.path}${file.separator}jboss-deployment-structure.template"/>
+    <property name="templates.module.assembly-file-set.file.path" value="${templates.source.path}${file.separator}assembly-file-set.template"/>
+
+    <property name="patches.source.path" value="${patches.path}${file.separator}"/>
+    <property name="modules.temp.path" value="${temp.path}${file.separator}"/>
+    <property name="scripts.source.path" value="${scripts.path}${file.separator}"/>
+
+
+    <!-- Cleans output path -->
+    <target name="clean">
+        <delete includeemptydirs="true" verbose="false" failonerror="false">
+            <fileset dir="${modules.output.path}${module-name}"/>
+        </delete>
+        <clean dir="${modules.temp.path}"/>
+    </target>
+
+    <!-- Generates the modules stuff. -->
+    <target name="main" depends="clean">
+
+        <!-- Read module definition file. -->
+        <property name="module.file" value="${modules.static.source.path}${module-name}.module"/>
+        <fail message="Module '${module-name}' definition file not found at path ${module.file}.">
+            <condition>
+                <not>
+                    <available file="${module.file}"/>
+                </not>
+            </condition>
+        </fail>
+        <!-- Read module properties. -->
+        <property file="${module.file}"/>
+
+        <ac:if>
+            <ac:equals arg1="${module.type}" arg2="dynamic"/>
+            <ac:then>
+
+                <echo level="info">Creating dynamic module ${module.name}...</echo>
+
+                <!-- Check if there are unrequired resources. -->
+                <ac:if>
+                    <isset property="module.resources.unrequired"/>
+                    <ac:then>
+                        <property name="module.resources.unrequired.value" value="${module.resources.unrequired}"/>
+                    </ac:then>
+                    <ac:else>
+                        <property name="module.resources.unrequired.value" value=""/>
+                    </ac:else>
+                </ac:if>
+
+                <!-- Create the temp files.. -->
+                <tempfile destdir="${modules.temp.path}"
+                          property="module.assembly.dependency-set.exludes.path" createfile="true" deleteonexit="true" suffix="dependency-set-exludes"/>
+                <tempfile destdir="${modules.temp.path}"
+                          property="module.assembly.file-set.includes.path" createfile="true" deleteonexit="true" suffix="file-set-exludes"/>
+                <tempfile destdir="${modules.temp.path}"
+                          property="module.assembly.file.includes.path" createfile="true" deleteonexit="true" suffix="file--exludes"/>
+
+                <!-- Clean temp files content. -->
+                <echo file="${module.assembly.dependency-set.exludes.path}"></echo>
+                <echo file="${module.assembly.file-set.includes.path}"></echo>
+                <echo file="${module.assembly.file.includes.path}"></echo>
+
+                <!-- Create the exlusions for dependency-set. -->
+                <antcall target="create-dependency-set-excludes">
+                    <param name="module-name" value="${module.name}"/>
+                    <param name="module-resources-unrequired" value="${module.resources.unrequired.value}"/>
+                    <param name="file-name" value="${module.assembly.dependency-set.exludes.path}"/>
+                </antcall>
+
+                <!-- Generate the jboss-deployment-structure descriptor file. -->
+                <antcall target="create-jboss-deployment-structure">
+                    <param name="module-name" value="${module.name}"/>
+                    <param name="assembly-dependencies-file-name" value="${module.assembly.file.includes.path}"/>
+                </antcall>
+
+                <!-- Generate the inclusion for generated jboss-deployment-structure.xml. -->
+                <antcall target="create-file-inclusion">
+                    <param name="file-name" value="${module.assembly.file.includes.path}"/>
+                    <param name="file-source" value="${module.jboss-deployment-structure.output.path}"/>
+                    <param name="file-output-dir" value="WEB-INF"/>
+                    <param name="file-dest-name" value="jboss-deployment-structure.xml"/>
+                </antcall>
+
+
+                <!-- *********************** -->
+                <!-- Apply patch/es, if any. -->
+                <!-- *********************** -->
+                <module-patch-iterator module-name="${module.name}" module-file="${module.file}" eap-configuration-file="${eap-configuration-file}">
+                  <module-patch-iterator-result>
+
+                    <!-- The path init lifecycle method. -->
+                    <antcall target="patch-init">
+                      <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+                      <param name="module-name" value="${module.name}"/>
+                      <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+                      <param name="patches.source.path" value="${patches.source.path}"/>
+                    </antcall>
+
+                    <!-- The path create-module-assembly lifecycle method. -->
+                    <antcall target="patch-module">
+                      <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+                      <param name="module-name" value="${module.name}"/>
+                      <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+                      <param name="module-target-path" value=""/>  <!-- The target path is the root of the generated webapp. -->
+                      <param name="assembly-dependencysets-exclusion" value="${module.assembly.dependency-set.exludes.path}"/>
+                      <param name="assembly-filesets" value="${module.assembly.file-set.includes.path}"/>
+                      <param name="assembly-files" value="${module.assembly.file.includes.path}"/>
+                    </antcall>
+
+                    <!-- The path init lifecycle method. -->
+                    <antcall target="patch-finish">
+                      <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+                      <param name="module-name" value="${module.name}"/>
+                      <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+                      <param name="patches.source.path" value="${patches.source.path}"/>
+                    </antcall>
+
+                  </module-patch-iterator-result>
+                </module-patch-iterator>
+
+
+                <!-- Load content from temp files. -->
+                <loadfile property="module.assembly.dependency-set.exludes.content"
+                          srcFile="${module.assembly.dependency-set.exludes.path}"
+                          encoding="UTF-8" quiet="true"/>
+
+                <loadfile property="module.assembly.file-set.includes.content"
+                          srcFile="${module.assembly.file-set.includes.path}"
+                          encoding="UTF-8" quiet="true"/>
+
+                <loadfile property="module.assembly.file.includes.content"
+                          srcFile="${module.assembly.file.includes.path}"
+                          encoding="UTF-8" quiet="true"/>
+
+                <!-- Generate the final assembly descriptor file.. -->
+                <build-from-template-file template-file="${templates.module.assembly.file.path}"
+                                          temp-path="${modules.temp.path}">
+                    <template-file-params>
+                        <param type="token" name="FILES" value="${module.assembly.file.includes.content}"/>
+                        <param type="token" name="FILE_SETS" value="${module.assembly.file-set.includes.content}"/>
+                        <param type="token" name="DEPENDENCY_SET_EXCLUDES" value="${module.assembly.dependency-set.exludes.content}"/>
+                        <param type="token" name="DEPENDENCY_SET_INCLUDE" value="${module.assembly.war.source}"/>
+                        <param type="token" name="ASSEMBLY_FORMAT" value="war"/>
+                        <param type="token" name="ASSEMBLY_ID" value="${module.assembly.id}"/>
+                    </template-file-params>
+                    <template-file-result>
+                        <property name="module.assembly.output.content" value="@{template-content}"/>
+                    </template-file-result>
+                </build-from-template-file>
+
+                <echo file="${module.assembly.output.path}">${module.assembly.output.content}</echo>
+
+            </ac:then>
+            <ac:else>
+                <fail message="Module ${module.name} is not dynamic."/>
+            </ac:else>
+        </ac:if>
+
+    </target>
+
+    <!-- Apply a given patch for the dynamic mdule.
+          Input parameteres:
+          - patch-definition
+          - module-name
+          - module-output-path
+          - module-target-path
+          - assembly-dependencysets-exclusion
+          - assembly-filesets
+          - assembly-files
+      -->
+    <target name="patch-module">
+
+      <!-- Extract the patch identitifer from path definition. -->
+      <ac:propertyregex property="patch-id"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\1"
+                        casesensitive="false" />
+
+      <!-- Extract the patch value from path definition. -->
+      <ac:propertyregex property="patch-value"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\2"
+                        casesensitive="false" />
+
+      <!-- NOTE: Use inheritAll=true to have all dependencies from antrun plugin in scope. -->
+      <ant antfile="${patches.source.path}${patch-id}${file.separator}${patch-id}.xml"
+           target="create-module-assembly" inheritRefs="true" inheritall="true"/>
+
+    </target>
+
+    <!-- Generate the jboss-deployment-structure descriptor..
+
+       Input parameteres:
+       - module-name
+       - assembly-dependencies-file-name
+   -->
+    <target name="create-jboss-deployment-structure">
+        <!-- Create the temp files.. -->
+        <tempfile destdir="${modules.temp.path}"
+                  property="module.jboss-deployment-structure.modules.tmp.path" createfile="true" deleteonexit="true" suffix="jboss-deployment-structure-modules"/>
+
+        <!-- Clean temp files content. -->
+        <echo file="${module.jboss-deployment-structure.modules.tmp.path}"></echo>
+
+
+        <!-- Generated the module dependencies section. -->
+        <property name="module.dependencies.file" value="${modules.static.source.path}${module-name}.dependencies"/>
+        <fail message="Module '${module-name}' dependencies file not found at path ${module.dependencies.file}.">
+            <condition>
+                <not>
+                    <available file="${module.dependencies.file}"/>
+                </not>
+            </condition>
+        </fail>
+
+        <loadfile property="modules.dependencies.file.content" srcfile="${module.dependencies.file}"/>
+        <ac:if>
+          <isset property="modules.dependencies.file.content"/>
+          <ac:then>
+            <ac:for param="dependency" list="${modules.dependencies.file.content}" delimiter="${line.separator}">
+              <ac:sequential>
+                <!-- Generates the modules to include in jboss-deployment-structure. -->
+                <antcall target="create-jboss-deployment-structure-module">
+                  <param name="dependency-name" value="@{dependency}"/>
+                  <param name="dependency-export" value="true"/>
+                  <param name="dependency-meta-inf" value="import"/>
+                  <param name="jboss-deployment-structure-file-name" value="${module.jboss-deployment-structure.modules.tmp.path}"/>
+                </antcall>
+              </ac:sequential>
+            </ac:for>
+          </ac:then>
+        </ac:if>
+
+        <!-- Generate the final jboss-deployment-structure.xml.. -->
+        <loadfile property="module.jboss-deployment-structure.modules.tmp.content"
+                  srcFile="${module.jboss-deployment-structure.modules.tmp.path}"
+                  encoding="UTF-8" quiet="true"/>
+
+        <build-from-template-file template-file="${templates.module.jboss-deployment-structure.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="DEPENDENCIES" value="${module.jboss-deployment-structure.modules.tmp.content}"/>
+            </template-file-params>
+            <template-file-result>
+                <property name="module.jboss-deployment-structure.output.content" value="@{template-content}"/>
+            </template-file-result>
+        </build-from-template-file>
+
+        <echo file="${module.jboss-deployment-structure.output.path}">${module.jboss-deployment-structure.output.content}</echo>
+
+    </target>
+
+    <!-- Generate the excludes for the skinny war.
+
+        The necessary exclusions for depedency-set are:
+        - Unrequired libs (module.resources.unrequired)
+        - Resources used by static modules.
+        - jboss-deployment-structure.xml (Will be re-generated)
+
+       Input parameteres:
+       - module-name
+       - module-resources-unrequired
+       - file-name
+   -->
+    <target name="create-dependency-set-excludes">
+
+        <!-- Create the excludes for unrequired libs. -->
+        <condition property="module-resources-unrequired.is-set">
+            <not>
+                <equals arg1="${module-resources-unrequired}" arg2=""/>
+            </not>
+        </condition>
+        <ac:if>
+            <ac:equals arg1="${module-resources-unrequired.is-set}" arg2="true"/>
+            <ac:then>
+                <ac:for param="resource" list="${module-resources-unrequired}" delimiter=",">
+                    <ac:sequential>
+                        <antcall target="create-dependency-set-exclude">
+                            <param name="resource-name" value="${@{resource}}"/>
+                            <param name="resource-name-preffix" value="WEB-INF${file.separator}lib${file.separator}"/>
+                            <param name="file-name" value="${file-name}"/>
+                        </antcall>
+                    </ac:sequential>
+                </ac:for>
+            </ac:then>
+        </ac:if>
+
+        <!-- Create the excludes for static modules resources. -->
+        <loadfile property="modules.list.file.content" srcfile="${modules.list.file.path}"/>
+        <ac:for param="static-module-name" list="${modules.list.file.content}" delimiter="${line.separator}">
+            <ac:sequential>
+                <antcall target="create-static-module-dependency-set-excludes">
+                    <param name="module-name" value="@{static-module-name}"/>
+                    <param name="file-name" value="${file-name}"/>
+                </antcall>
+            </ac:sequential>
+        </ac:for>
+
+        <!-- Create the exclude for jboss-deployment-structure.xml. -->
+        <antcall target="create-dependency-set-exclude">
+            <param name="resource-name" value="jboss-deployment-structure.xml"/>
+            <param name="resource-name-preffix" value="WEB-INF${file.separator}"/>
+            <param name="file-name" value="${file-name}"/>
+        </antcall>
+
+    </target>
+
+    <!-- Generates the resources to exclude for each static module..
+        Input parameteres:
+        - module-name
+        - file-name
+    -->
+    <target name="create-static-module-dependency-set-excludes">
+        <!-- Read module definition file. -->
+        <property name="module.list.file" value="${modules.static.source.path}${module-name}.module"/>
+
+        <fail message="Module '${module-name}' definition file not found at path ${module.list.file}.">
+            <condition>
+                <not>
+                    <available file="${module.list.file}"/>
+                </not>
+            </condition>
+        </fail>
+        <!-- Read module properties. -->
+        <property file="${module.list.file}" prefix="static."/>
+
+        <!-- Property module-name is required. -->
+        <fail message="Property module.type is missing or has no value.">
+            <condition>
+                <not>
+                    <isset property="static.module.type"/>
+                </not>
+            </condition>
+        </fail>
+
+        <!-- Create the exclusion entry for each module resource. -->
+        <ac:if>
+        <ac:equals arg1="${static.module.type}" arg2="static"/>
+            <ac:then>
+                <loadfile property="module.resources.file.content" srcfile="${modules.static.source.path}${module-name}.resources" failonerror="true"/>
+                <ac:for param="resource" list="${module.resources.file.content}" delimiter="${line.separator}">
+                    <ac:sequential>
+
+                        <!-- If resource is not found in dependency tree. do not exclude it. -->
+                        <ac:if>
+                            <contains string="${@{resource}}" substring="$"/>
+                            <ac:then>
+                                <echo>Resource @{resource} not found. Not excluding it.</echo>
+                            </ac:then>
+                            <ac:else>
+                                <antcall target="create-dependency-set-exclude">
+                                    <param name="resource-name" value="${@{resource}}"/>
+                                    <param name="resource-name-preffix" value="WEB-INF${file.separator}lib${file.separator}"/>
+                                    <param name="file-name" value="${file-name}"/>
+                                </antcall>
+                            </ac:else>
+                        </ac:if>
+                    </ac:sequential>
+                </ac:for>
+            </ac:then>
+        </ac:if>
+    </target>
+
+    <!-- Generates file inclusion.
+
+        Input parameteres:
+        - file-name -> The file name where putting the result.
+        - file-source
+        - file-output-dir
+        - file-dest-name
+    -->
+    <target name="create-file-inclusion">
+        <build-from-template-file template-file="${templates.module.assembly-file.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="FILE_SOURCE" value="${file-source}"/>
+                <param type="token" name="FILE_OUTPUT_DIR" value="${file-output-dir}"/>
+                <param type="token" name="FILE_DEST_NAME" value="${file-dest-name}"/>
+            </template-file-params>
+            <template-file-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-file-result>
+        </build-from-template-file>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates file-set inclusion.
+
+        Input parameteres:
+        - file-name -> The file name where putting the result.
+        - directory
+        - output-directory
+        - include
+    -->
+    <target name="create-file-set-inclusion">
+        <build-from-template-file template-file="${templates.module.assembly-file-set.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="FILESET_DIRECTORY" value="${directory}"/>
+                <param type="token" name="FILESET_OUTPUT_DIRECTORY" value="${output-directory}"/>
+                <param type="token" name="FILESET_INCLUDE" value="${include}"/>
+            </template-file-params>
+            <template-file-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-file-result>
+        </build-from-template-file>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates the resource to exclude..
+        Input parameteres:
+        - resource-name
+        - resource-name-preffix
+        - file-name
+    -->
+    <target name="create-dependency-set-exclude">
+        <basename property="resource-file-name" file="${resource-name}"/>
+        <build-from-template-property template-property="dependency-set.exclude"
+                                      temp-path="${modules.temp.path}">
+            <template-prop-params>
+                <param type="token" name="DEPENDENCY" value="${resource-name-preffix}${resource-file-name}"/>
+            </template-prop-params>
+            <template-prop-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-prop-result>
+        </build-from-template-property>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates the modules to include in jboss-deployment-structure....
+        Input parameteres:
+        - dependency-name
+        - dependency-export
+        - dependency-meta-inf
+        - jboss-deployment-structure-file-name
+    -->
+    <target name="create-jboss-deployment-structure-module">
+        <build-from-template-property template-property="jboss-deployment-structure-module"
+                                      temp-path="${modules.temp.path}">
+            <template-prop-params>
+                <param type="token" name="MODULE_NAME" value="${dependency-name}"/>
+                <param type="token" name="EXPORT" value="${dependency-export}"/>
+                <param type="token" name="META-INF" value="${dependency-meta-inf}"/>
+            </template-prop-params>
+            <template-prop-result>
+                <concat destfile="${jboss-deployment-structure-file-name}" append="true">@{template-content}</concat>
+            </template-prop-result>
+        </build-from-template-property>
+        <echo file="${jboss-deployment-structure-file-name}" append="true">${line.separator}</echo>
+    </target>
+
+</project>

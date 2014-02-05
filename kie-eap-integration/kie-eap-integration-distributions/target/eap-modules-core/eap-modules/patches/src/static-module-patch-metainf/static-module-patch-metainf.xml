@@ -1,0 +1,93 @@
+<!--
+    This patch apply for static modules and consist of adding a "META-INF" directory as a resource in the module.xml.
+    Then, all files contained in META-INF directory will be available to module classloader.
+
+    - Global Input properties
+      - modules.source.path
+      - modules.output.path
+      - patches.source.path
+      - scripts.source.path
+
+    - Patch id: static-module-patch-metainf
+    - LifeCycle
+      - init
+        - DO NOTHING
+
+      - create-module-xml
+        - Add a META-INF directory as a resource in the module.xml
+
+      - create-module-assembly-component
+        - Create a fileset to include the desired files into META-INF
+
+      - finish
+        - DO NOTHING
+
+-->
+
+<project name="static-module-patch-metainf" xmlns:ac="net.sf.antcontrib" basedir="../../../../">
+
+  <!-- Static modules tasks available for the patch. -->
+  <import file="${scripts.source.path}build-static-modules.xml"/>
+
+  <!-- Patch Init lifecycle task.
+
+        Input parameteres:
+        - module-name
+        - module-output-path
+    -->
+  <target name="init">
+
+  </target>
+
+  <!-- Patch lifecycle task when creating the module.xml descriptor
+
+        Input parameteres:
+        - module-name
+        - module-output-path
+        - module-xml-resources
+        - module-xml-dependencies
+        - patch-value
+    -->
+  <target name="create-module-xml">
+    <echo>Executing patch static-module-patch-metainf for module ${module-name} </echo>
+    <echo level="info">Adding META-INF patch for module ${module-name}</echo>
+    <antcall target="create-module-xml-resources">
+      <param name="resource-name" value="META-INF"/>
+      <param name="file-name" value="${module-xml-resources}"/>
+    </antcall>
+  </target>
+
+  <!-- Patch lifecycle task when creating the assembly component descriptor
+
+        Input parameteres:
+        - module-name
+        - module-output-path
+        - module-target-path
+        - assembly-filesets
+        - assembly-files
+        - assembly-dependencysets-inclusion
+        - patch-value
+    -->
+  <target name="create-module-assembly-component">
+    <echo>Executing patch static-module-patch-metainf for module ${module-name} </echo>
+    <echo level="info">Adding META-INF assembly component patch for module ${module-name}</echo>
+    <antcall target="create-module-assembly-component-file-set">
+      <param name="file-name" value="${assembly-filesets}"/>
+      <param name="file-set-dir" value="${patch-value}"/>
+      <param name="file-set-output-dir" value="${module-target-path}META-INF"/>
+      <param name="file-set-include" value="*"/>
+    </antcall>
+
+  </target>
+
+  <!-- Patch finish lifecycle task.
+
+        Input parameteres:
+        - module-name
+        - module-output-path
+    -->
+  <target name="finish">
+
+  </target>
+
+</project>

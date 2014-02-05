@@ -1,0 +1,22 @@
+JarIndex-Version: 1.0
+
+kie-eap-integration-core-6.0.2-SNAPSHOT.jar
+META-INF
+META-INF/maven
+META-INF/maven/org.kie
+META-INF/maven/org.kie/kie-eap-integration-core
+eap-modules
+eap-modules/eap-configurations
+eap-modules/eap-configurations/eap-6.1.0
+eap-modules/eap-configurations/eap-6.1.1
+eap-modules/modules
+eap-modules/patches
+eap-modules/patches/src
+eap-modules/patches/src/dynamic-module-patch-cdi-extensions
+eap-modules/patches/src/dynamic-module-patch-webfragments
+eap-modules/patches/src/static-module-patch-metainf
+eap-modules/patches/src/static-module-patch-metainf/org.jbpm
+eap-modules/patches/templates
+eap-modules/scripts
+eap-modules/templates
+

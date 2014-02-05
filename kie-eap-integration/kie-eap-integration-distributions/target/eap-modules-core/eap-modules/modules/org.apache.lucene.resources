@@ -1,0 +1,6 @@
+org.apache.lucene:lucene-queries:jar
+org.apache.lucene:lucene-sandbox:jar
+org.apache.lucene:lucene-queryparser:jar
+org.apache.lucene:lucene-analyzers-common:jar
+org.apache.lucene:lucene-codecs:jar
+org.apache.lucene:lucene-core:jar

@@ -1,0 +1,723 @@
+<!--
+
+ANT JBoss EAP static module generation file.
+
+Generates the module.xml and assembly component descriptos for each module defined in modules.list based on each module descriptor file (.module).
+1.- Iterate over modules.list defined modules.
+2.- Create module.xml definition file for each module
+    - Generate resource-root elements
+    - Generate dependency elements
+3.- Generate the assembly descriptor for rach module.
+4.- Copy module.xml and assembly descriptor to an output directory for each module.
+
+
+INPUT parameters:
+- static-modules-source-path -> The source forlder where all module descriptors, module dependencies and modules.list files are located.
+- static-modules-list-file -> The path where generating module.list file is located.
+- eap-configuration-file -> The path for the EAP configuration properties.
+- static-modules-output-path -> The output path where generating all modules stuff.
+- static-modules-layer-name -> The name for the generated modules layer.
+- static-modules-assembly-output-file -> The path where generating modules assembly descriptor.
+- static-modules-assembly-id -> The identifier for the resulting assembly.
+- templates.path -> The source forlder where all templates are located.
+- patches.path -> The source forlder where all patch file definitions are located.
+- temp.path -> Path for temporal files
+- scripts.path -> The source folder for ant build scripts.
+
+OUTPUT:
+- Generates a filesystem structure:
+    - <modules-output-path>
+        - <static-modules-assembly-output-file>
+        - layers.conf
+        - <module-name>  (For each module defined in modules.list file)
+            - module.xml
+            - assembly-component.xml
+            - <webfragment jars> (If webfragments patch is enabled)
+
+NOTE about property inheritance:
+===============================
+This project tasks are coded to allow running without inheriting all properties from caller/parent tasks, so the antcall tasks should be
+coded using inheritAll="false".
+
+But the locations for the project dependencies are provided by the maven antrun plugin:
+  - ex: ${junit:junit:jar} has as a value the location for the junit.jar artifact in local maven repo.
+  - see http://maven.apache.org/plugins/maven-antrun-plugin/examples/classpaths.html
+So if the antrun plugin does an antcall to a task in this project using inheritAll="false",
+these locations are not available in this project tasks, which currently are required.
+So, by the moment all antcall tasks are inheriting parent task properties.
+
+In the future, if you want to fix it and do not inherit properties, a solution could be creating a properties file with all
+artifacts and its locations in the maven antrun plugin, where all dependency location are available as properties.
+Then, this ant project should receive the property file location and read artifact locations that it contains.
+
+-->
+<project name="build-static-modules" xmlns:ac="net.sf.antcontrib" default="main" basedir="../../">
+
+    <!-- Common utilities. -->
+    <import file="build-utils.xml"/>
+
+    <!-- EAP configuration utils. -->
+    <import file="build-eap-utils.xml"/>
+
+    <property name="modules.source.path" value="${static-modules-source-path}${file.separator}"/>
+    <property name="modules.output.path" value="${static-modules-output-path}${file.separator}"/>
+    <property name="modules.list.file.path" value="${static-modules-list-file}"/>
+    <property name="module.assembly.global.output.path" value="${static-modules-assembly-output-file}"/>
+    <property name="module.assembly.id" value="${static-modules-assembly-id}"/>
+    <property name="module.layer.id" value="${static-modules-layer-name}"/>
+    <property name="templates.source.path" value="${templates.path}"/>
+    <property name="templates.module.xml.file.path" value="${templates.source.path}${file.separator}module.template"/>
+    <property name="templates.module.assembly-component.file.path" value="${templates.source.path}${file.separator}assembly-eap-module-component.template"/>
+    <property name="templates.module.assembly.modules.file.path" value="${templates.source.path}${file.separator}assembly-eap-static-modules.template"/>
+    <property name="templates.module.assembly-file.file.path" value="${templates.source.path}${file.separator}assembly-file.template"/>
+    <property name="templates.module.assembly-file-set.file.path" value="${templates.source.path}${file.separator}assembly-file-set.template"/>
+    <property name="templates.layers.conf.file.path" value="${templates.source.path}${file.separator}layers.template"/>
+
+    <property name="patches.source.path" value="${patches.path}${file.separator}"/>
+    <property name="modules.temp.path" value="${temp.path}${file.separator}"/>
+    <property name="scripts.source.path" value="${scripts.path}${file.separator}"/>
+
+    <!-- Cleans output path -->
+    <target name="clean">
+        <delete includeemptydirs="true" verbose="false" failonerror="false">
+            <fileset dir="${modules.output.path}"/>
+        </delete>
+        <clean dir="${modules.temp.path}"/>
+    </target>
+
+    <!-- Generates the modules stuff. -->
+    <target name="main" depends="clean">
+
+        <!-- Iterate over modules defined in modules list file and creates the statics module stuff. -->
+        <loadfile property="modules.list.file.content" srcfile="${modules.list.file.path}"/>
+        <ac:for param="module" list="${modules.list.file.content}" delimiter="${line.separator}">
+            <ac:sequential>
+
+                <condition property="module.is-set">
+                    <not>
+                        <equals arg1="@{module}" arg2=""/>
+                    </not>
+                </condition>
+                <ac:if>
+                <ac:equals arg1="${module.is-set}" arg2="true"/>
+                    <ac:then>
+                        <!-- Creates the static modules stuff. -->
+                        <antcall target="create-module">
+                            <param name="module-name" value="@{module}"/>
+                        </antcall>
+                    </ac:then>
+                </ac:if>
+
+            </ac:sequential>
+        </ac:for>
+
+        <!-- Creaate the global assembly descriptor for all modules. -->
+        <antcall target="create-modules-global-assembly-descriptor"/>
+
+    </target>
+
+    <!-- Generate a single module stuff.
+        Input parameteres:
+        - module-name
+    -->
+    <target name="create-module">
+
+        <!-- Property module-name is required. -->
+        <fail message="Property module-name is missing.">
+            <condition>
+                <not>
+                    <isset property="module-name"/>
+                </not>
+            </condition>
+        </fail>
+
+        <!-- Read module definition file. -->
+        <property name="module.file" value="${modules.source.path}${module-name}.module"/>
+        <fail message="Module '${module-name}' definition file not found at path ${module.file}.">
+            <condition>
+                <not>
+                    <available file="${module.file}"/>
+                </not>
+            </condition>
+        </fail>
+        <!-- Read module properties. -->
+        <property file="${module.file}"/>
+
+        <!-- Property module-name is required. -->
+        <fail message="Property module.type is missing or has no value.">
+            <condition>
+                <not>
+                    <isset property="module.type"/>
+                </not>
+            </condition>
+        </fail>
+
+        <ac:if>
+            <ac:equals arg1="${module.type}" arg2="static"/>
+            <ac:then>
+
+                <echo level="info">Creating static module ${module.name}...</echo>
+
+                <!-- Property module-name is required. -->
+                <fail message="Property module.name is missing or has no value. Module: ${module-name}">
+                    <condition>
+                        <not>
+                            <isset property="module.name"/>
+                        </not>
+                    </condition>
+                </fail>
+
+                <!-- Property module-name is required. -->
+                <fail message="Property module.location is missing or has no value. Module: ${module.name}">
+                    <condition>
+                        <not>
+                            <isset property="module.location"/>
+                        </not>
+                    </condition>
+                </fail>
+
+                <!-- Create the module.xml content.. -->
+                <antcall target="create-module-xml">
+                    <param name="module.name" value="${module.name}"/>
+                    <param name="module.file" value="${module.file}"/>
+                </antcall>
+
+                <!-- Create the module.xml content.. -->
+                <antcall target="create-module-assembly-component">
+                    <param name="module.name" value="${module.name}"/>
+                    <param name="module.file" value="${module.file}"/>
+                </antcall>
+
+                <!-- Create the module layer configuration file.. -->
+                <antcall target="create-module-layer-conf">
+                    <param name="module.name" value="${module.name}"/>
+                    <param name="module.layer" value="${module.layer.id}"/>
+                </antcall>
+
+            </ac:then>
+        </ac:if>
+
+    </target>
+
+    <!-- Generates the layer.conf file using the <code>module.layer</code> as layer name.
+        Input parameteres:
+        - module.name
+        - module.layer
+        Output:
+        - Generates the layer.conf file at ${modules.output.path}/${module.name}
+    -->
+    <target name="create-module-layer-conf">
+        <build-from-template-file template-file="${templates.layers.conf.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="LAYER_NAME" value="${module.layer}"/>
+            </template-file-params>
+            <template-file-result>
+                <property name="module.layer.content" value="@{template-content}"/>
+            </template-file-result>
+        </build-from-template-file>
+        <echo file="${modules.output.path}${file.separator}layers.conf">${module.layer.content}</echo>
+    </target>
+
+
+
+    <!-- Generates the content for this module.xml file.
+        Input parameteres:
+        - module.name
+        - module.file -> The module definition file.
+        Output:
+        - Generates the module.xml file at ${modules.output.path}/${module.name}/module.xml
+    -->
+    <target name="create-module-xml">
+
+        <!-- Read module properties. -->
+        <property file="${module.file}"/>
+
+        <property name="module.xml.output.path" value="${modules.output.path}${module.name}${file.separator}module.xml"/>
+        <echo level="info">Creating module.xml for module ${module.name} at ${module.xml.output.path}...</echo>
+
+        <property name="module.xml.tmp.component.path" value="${modules.output.path}${module.name}${file.separator}module.xml"/>
+
+        <tempfile destdir="${modules.temp.path}"
+                  property="module.xml.tmp.component.path" createfile="true" deleteonexit="true" suffix="module-component"/>
+        <tempfile destdir="${modules.temp.path}"
+                  property="module.xml.tmp.dependencies.path" createfile="true" deleteonexit="true" suffix="module-deps"/>
+        <tempfile destdir="${modules.temp.path}"
+                  property="module.xml.tmp.resources.path" createfile="true" deleteonexit="true" suffix="module-resources"/>
+
+        <!-- Clean temp files content. -->
+        <echo file="${module.xml.tmp.component.path}"></echo>
+        <echo file="${module.xml.tmp.dependencies.path}"></echo>
+        <echo file="${module.xml.tmp.resources.path}"></echo>
+
+
+        <!-- ******************************* -->
+        <!-- Generate the resources section. -->
+        <!-- ******************************* -->
+        <property name="module.resources.file" value="${modules.source.path}${module.name}.resources"/>
+        <loadfile property="module.resources.file.content" srcfile="${module.resources.file}" failonerror="true"/>
+        <ac:for param="resource" list="${module.resources.file.content}" delimiter="${line.separator}">
+            <ac:sequential>
+                <!-- If resource is not found in dependency tree. do not add it. -->
+                <ac:if>
+                    <contains string="${@{resource}}" substring="$"/>
+                    <ac:then>
+                        <echo>Resource @{resource} not found. Not adding it.</echo>
+                    </ac:then>
+                    <ac:else>
+                        <!-- Copy the resource to the output directory. -->
+                        <copy todir="${modules.output.path}${module.name}${file.separator}" file="${@{resource}}"/>
+
+                        <!-- Create the <resource-root> section for module.xml. -->
+                        <antcall target="create-module-xml-resources">
+                            <param name="resource-name" value="${@{resource}}"/>
+                            <param name="file-name" value="${module.xml.tmp.resources.path}"/>
+                        </antcall>
+                    </ac:else>
+                </ac:if>
+            </ac:sequential>
+        </ac:for>
+
+        <!-- *********************************** -->
+        <!-- Generated the dependencies section. -->
+        <!-- *********************************** -->
+        <property name="module.dependencies.file" value="${modules.source.path}${module.name}.dependencies"/>
+        <ac:if>
+            <available file="${module.dependencies.file}"/>
+            <ac:then>
+                <loadfile property="modules.dependencies.file.content" srcfile="${module.dependencies.file}"/>
+                <ac:if>
+                  <isset property="modules.dependencies.file.content"/>
+                  <ac:then>
+                    <ac:for param="dependency" list="${modules.dependencies.file.content}" delimiter="${line.separator}">
+                      <ac:sequential>
+                        <antcall target="create-module-xml-dependency">
+                          <param name="dependency-name" value="@{dependency}"/>
+                          <param name="file-name" value="${module.xml.tmp.dependencies.path}"/>
+                        </antcall>
+                      </ac:sequential>
+                    </ac:for>
+                  </ac:then>
+                </ac:if>
+            </ac:then>
+        </ac:if>
+
+
+
+        <!-- ************************************** -->
+        <!-- Apply patch/es for module.xml, if any. -->
+        <!-- ************************************** -->
+
+        <module-patch-iterator module-name="${module.name}" module-file="${module.file}" eap-configuration-file="${eap-configuration-file}">
+          <module-patch-iterator-result>
+
+            <!-- The path init lifecycle method. -->
+            <antcall target="patch-init">
+              <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+              <param name="module-name" value="${module.name}"/>
+              <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+              <param name="patches.source.path" value="${patches.source.path}"/>
+            </antcall>
+
+            <!-- The path create-module-xml lifecycle method. -->
+            <antcall target="patch-module-xml">
+              <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+              <param name="module-name" value="${module.name}"/>
+              <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+              <param name="module-xml-resources" value="${module.xml.tmp.resources.path}"/>
+              <param name="module-xml-dependencies" value="${module.xml.tmp.dependencies.path}"/>
+            </antcall>
+
+            <!-- The path finish lifecycle method. -->
+            <antcall target="patch-finish">
+              <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+              <param name="module-name" value="${module.name}"/>
+              <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+              <param name="patches.source.path" value="${patches.source.path}"/>
+            </antcall>
+
+          </module-patch-iterator-result>
+        </module-patch-iterator>
+
+        <!-- Create the module.xml file. -->
+        <loadfile property="module.xml.resources"
+                  srcFile="${module.xml.tmp.resources.path}"
+                  encoding="UTF-8" quiet="true"/>
+
+        <loadfile property="modules.xml.dependencies"
+                  srcFile="${module.xml.tmp.dependencies.path}"
+                  encoding="UTF-8" quiet="true"/>
+
+        <build-from-template-file template-file="${templates.module.xml.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="NAME" value="${module.name}"/>
+                <param type="token" name="RESOURCES" value="${module.xml.resources}"/>
+                <param type="token" name="DEPENDENCIES" value="${modules.xml.dependencies}"/>
+            </template-file-params>
+            <template-file-result>
+                <property name="module.xml.output.content" value="@{template-content}"/>
+            </template-file-result>
+        </build-from-template-file>
+
+        <echo file="${module.xml.output.path}">${module.xml.output.content}</echo>
+
+    </target>
+
+    <!-- Generates the resources content for module.xml.
+        Input parameteres:
+        - resource-name
+        - file-name
+    -->
+    <target name="create-module-xml-resources">
+        <basename property="resource-file-name" file="${resource-name}"/>
+        <build-from-template-property template-property="module.resource"
+                                      temp-path="${modules.temp.path}">
+            <template-prop-params>
+                <param type="token" name="RESOURCE" value="${resource-file-name}"/>
+            </template-prop-params>
+            <template-prop-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-prop-result>
+        </build-from-template-property>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates the dependency content for module.xml.
+        Input parameteres:
+        - dependency-name
+        - file-name
+    -->
+    <target name="create-module-xml-dependency">
+        <build-from-template-property template-property="module.dependency"
+                                      temp-path="${modules.temp.path}">
+            <template-prop-params>
+                <param type="token" name="DEPENDENCY" value="${dependency-name}"/>
+                <param type="token" name="EXPORT" value="true"/>
+            </template-prop-params>
+            <template-prop-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-prop-result>
+        </build-from-template-property>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+
+    <!-- Apply a given patch for the module.xml generated file.
+          Input parameteres:
+          - patch-definition
+          - module-name
+          - module-output-path
+          - module-xml-resources
+          - module-xml-dependencies
+      -->
+    <target name="patch-module-xml">
+
+      <!-- Extract the patch identitifer from path definition. -->
+      <ac:propertyregex property="patch-id"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\1"
+                        casesensitive="false" />
+
+      <!-- Extract the patch value from path definition. -->
+      <ac:propertyregex property="patch-value"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\2"
+                        casesensitive="false" />
+
+      <!-- NOTE: Use inheritAll=true to have all dependencies from antrun plugin in scope. -->
+      <ant antfile="${patches.source.path}${patch-id}${file.separator}${patch-id}.xml"
+           target="create-module-xml" inheritRefs="true" inheritall="true"/>
+
+    </target>
+
+
+    <!-- Generates the content for this module assembly component definition file.
+        Input parameteres:
+        - module.name
+        - module.file -> The module definition file.
+        Output:
+        - Generates the module assembly descriptor file at ${modules.output.path}/${module.name}/assembly-component.xml
+    -->
+    <target name="create-module-assembly-component">
+
+        <!-- Read module properties. -->
+        <property file="${module.file}"/>
+
+        <property name="module.output.path" value="modules${file.separator}system${file.separator}layers${file.separator}${module.layer.id}${file.separator}${module.location}${file.separator}main${file.separator}"/>
+        <property name="module.assembly.output.path" value="${modules.output.path}${module.name}${file.separator}assembly-component.xml"/>
+
+        <echo level="info">Creating assembly component descriptor for module ${module.name} at ${module.assembly.output.path}...</echo>
+
+        <!-- Create the temp files. -->
+        <tempfile destdir="${modules.temp.path}"
+                  property="module.assembly-component.tmp.files-section.path" createfile="true" deleteonexit="true" suffix="module-assembly-xml"/>
+        <tempfile destdir="${modules.temp.path}"
+                  property="module.assembly-component.tmp.filesets-section.path" createfile="true" deleteonexit="true" suffix="module-assembly-meta-inf"/>
+        <tempfile destdir="${modules.temp.path}"
+                  property="module.assembly-component.tmp.dependencysets-section.path" createfile="true" deleteonexit="true" suffix="module-assembly-dep-includes"/>
+
+        <!-- Clean temp files content. -->
+        <echo file="${module.assembly-component.tmp.files-section.path}"></echo>
+        <echo file="${module.assembly-component.tmp.filesets-section.path}"></echo>
+        <echo file="${module.assembly-component.tmp.dependencysets-section.path}"></echo>
+
+
+        <!-- Assembly the module.xml file. -->
+        <antcall target="create-module-assembly-component-file">
+            <param name="file-name" value="${module.assembly-component.tmp.files-section.path}"/>
+            <param name="file-source" value="${modules.output.path}${module.name}${file.separator}module.xml"/>
+            <param name="file-output-dir" value="${module.output.path}"/>
+            <param name="file-dest-name" value="module.xml"/>
+        </antcall>
+
+
+        <!-- Create the fileSet inclusion for all module resources. -->
+        <antcall target="create-module-assembly-component-file-set">
+            <param name="file-name" value="${module.assembly-component.tmp.filesets-section.path}"/>
+            <param name="file-set-dir" value="${modules.output.path}${module.name}${file.separator}"/>
+            <param name="file-set-output-dir" value="${module.output.path}"/>
+            <param name="file-set-include" value="*.jar"/>
+        </antcall>
+
+        <!-- Generate the dependencies to copy (jars) into the module root folder. -->
+        <property name="module.resources.file" value="${modules.source.path}${module.name}.resources"/>
+        <loadfile property="module.resources.file.content" srcfile="${module.resources.file}" failonerror="true"/>
+        <ac:for param="resource" list="${module.resources.file.content}" delimiter="${line.separator}">
+            <ac:sequential>
+                <antcall target="create-module-assembly-dependency-set-includes">
+                    <param name="file-name" value="${module.assembly-component.tmp.dependencysets-section.path}"/>
+                    <param name="dependency" value="@{resource}"/>
+                </antcall>
+            </ac:sequential>
+        </ac:for>
+
+        <!-- ********************************************************* -->
+        <!-- Apply patch/es for assembly component descriptor, if any. -->
+        <!-- ********************************************************* -->
+
+        <module-patch-iterator module-name="${module.name}" module-file="${module.file}" eap-configuration-file="${eap-configuration-file}">
+          <module-patch-iterator-result>
+
+            <!-- The path init lifecycle method. -->
+            <antcall target="patch-init">
+              <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+              <param name="module-name" value="${module.name}"/>
+              <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+              <param name="patches.source.path" value="${patches.source.path}"/>
+            </antcall>
+
+            <!-- The path create-module-assembly-component lifecycle method. -->
+            <antcall target="patch-module-assembly-component">
+              <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+              <param name="module-name" value="${module.name}"/>
+              <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+              <param name="module-target-path" value="${module.output.path}"/>
+              <param name="assembly-filesets" value="${module.assembly-component.tmp.filesets-section.path}"/>
+              <param name="assembly-files" value="${module.assembly-component.tmp.files-section.path}"/>
+              <param name="assembly-dependencysets-inclusion" value="${module.assembly-component.tmp.dependencysets-section.path}"/>
+            </antcall>
+
+            <!-- The path finish lifecycle method. -->
+            <antcall target="patch-finish">
+              <param name="patch-definition" value="@{patch-definition}=${module.patch.@{patch-definition}}"/>
+              <param name="module-name" value="${module.name}"/>
+              <param name="module-output-path" value="${modules.output.path}${module.name}${file.separator}"/>
+              <param name="patches.source.path" value="${patches.source.path}"/>
+            </antcall>
+
+          </module-patch-iterator-result>
+        </module-patch-iterator>
+
+        <!-- Load temp files content. -->
+        <loadfile property="module.assembly.tmp.module-xml.content"
+                  srcFile="${module.assembly-component.tmp.files-section.path}"
+                  encoding="UTF-8" quiet="true"/>
+        <loadfile property="module.assembly.tmp.module-meta-inf.content"
+                  srcFile="${module.assembly-component.tmp.filesets-section.path}"
+                  encoding="UTF-8" quiet="true"/>
+        <loadfile property="module.assembly.tmp.module-dependency-includes.content"
+                  srcFile="${module.assembly-component.tmp.dependencysets-section.path}"
+                  encoding="UTF-8" quiet="true"/>
+
+        <!-- Create the assembly component descriptor. -->
+        <build-from-template-file template-file="${templates.module.assembly-component.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="ASSEMBLY_COMPONENT_FILESETS" value="${module.assembly.tmp.module-meta-inf.content}"/>
+                <param type="token" name="ASSEMBLY_COMPONENT_FILES" value="${module.assembly.tmp.module-xml.content}"/>
+                <param type="token" name="ASSEMBLY_COMPONENT_DEPENDECY_INCLUDES" value="${module.assembly.tmp.module-dependency-includes.content}"/>
+                <param type="token" name="ASSEMBLY_COMPONENT_DEPENDECY_OUTPUT_DIR" value="${module.output.path}"/>
+            </template-file-params>
+            <template-file-result>
+                <property name="module.assembly.output.content" value="@{template-content}"/>
+            </template-file-result>
+        </build-from-template-file>
+
+        <echo file="${module.assembly.output.path}">${module.assembly.output.content}</echo>
+
+    </target>
+
+
+    <!-- Apply a given patch for the assembly component descriptor generated file.
+            Input parameteres:
+            - patch-definition
+            - module-name
+            - assembly-filesets
+            - assembly-files
+            - assembly-dependencysets-inclusion
+        -->
+    <target name="patch-module-assembly-component">
+
+      <!-- Extract the patch identitifer from path definition. -->
+      <ac:propertyregex property="patch-id"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\1"
+                        casesensitive="false" />
+
+      <!-- Extract the patch value from path definition. -->
+      <ac:propertyregex property="patch-raw-value"
+                        input="${patch-definition}"
+                        regexp="(.*)=(.*)"
+                        select="\2"
+                        casesensitive="false" />
+
+      <property name="patch-value" value="${patches.source.path}${patch-id}${file.separator}${patch-raw-value}"/>
+
+      <!-- NOTE: Use inheritAll=true to have all dependencies from antrun plugin in scope. -->
+      <ant antfile="${patches.source.path}${patch-id}${file.separator}${patch-id}.xml"
+           target="create-module-assembly-component" inheritRefs="true" inheritall="true"/>
+
+    </target>
+
+    <!-- Generates the tag file for a module assembly component definition file.
+       Input parameteres:
+       - file-name -> The file name where putting the result.
+       - file-source
+       - file-output-dir
+       - file-dest-name
+   -->
+    <target name="create-module-assembly-component-file">
+        <build-from-template-file template-file="${templates.module.assembly-file.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="FILE_SOURCE" value="${file-source}"/>
+                <param type="token" name="FILE_OUTPUT_DIR" value="${file-output-dir}"/>
+                <param type="token" name="FILE_DEST_NAME" value="${file-dest-name}"/>
+            </template-file-params>
+            <template-file-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-file-result>
+        </build-from-template-file>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates the tag file for a module assembly component definition file.
+       Input parameteres:
+       - file-name -> The file name where putting the result.
+       - file-set-dir
+       - file-set-output-dir
+       - file-set-include
+   -->
+    <target name="create-module-assembly-component-file-set">
+        <build-from-template-file template-file="${templates.module.assembly-file-set.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="FILESET_DIRECTORY" value="${file-set-dir}"/>
+                <param type="token" name="FILESET_OUTPUT_DIRECTORY" value="${file-set-output-dir}"/>
+                <param type="token" name="FILESET_INCLUDE" value="${file-set-include}"/>
+            </template-file-params>
+            <template-file-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-file-result>
+        </build-from-template-file>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates the tag include for a module assembly component definition file.
+       Input parameteres:
+       - file-name -> The file name where putting the result.
+       - dependency
+   -->
+    <target name="create-module-assembly-dependency-set-includes">
+        <build-from-template-property template-property="dependency-set.include"
+                                      temp-path="${modules.temp.path}">
+            <template-prop-params>
+                <param type="token" name="DEPENDENCY" value="${dependency}"/>
+            </template-prop-params>
+            <template-prop-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-prop-result>
+        </build-from-template-property>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+    <!-- Generates global assembly descreiptor file.
+         This assembly uses each assembly component descriptor previously genereated.
+    -->
+    <target name="create-modules-global-assembly-descriptor">
+
+        <property name="module.output.path" value="modules${file.separator}system${file.separator}layers${file.separator}${module.layer.id}${file.separator}${module.path}${file.separator}main${file.separator}"/>
+
+        <!-- Create the temp files. -->
+        <tempfile destdir="${modules.temp.path}"
+                  property="module.assembly.tmp.global.module-components.path" createfile="true" deleteonexit="true" suffix="module-assembly-components"/>
+
+        <!-- Clean temp files content. -->
+        <echo file="${module.assembly.tmp.global.module-components.path}"></echo>
+
+        <!-- Create the components list for all modules. -->
+        <loadfile property="modules.list.file.content" srcfile="${modules.list.file.path}"/>
+        <ac:for param="module" list="${modules.list.file.content}" delimiter="${line.separator}">
+            <ac:sequential>
+                <antcall target="create-modules-global-assembly-descriptor-components">
+                    <param name="file-name" value="${module.assembly.tmp.global.module-components.path}"/>
+                    <param name="component-file-path" value="${modules.output.path}@{module}${file.separator}assembly-component.xml"/>
+                </antcall>
+            </ac:sequential>
+        </ac:for>
+
+        <loadfile property="module.assembly.tmp.global.module-components.content"
+                  srcFile="${module.assembly.tmp.global.module-components.path}"
+                  encoding="UTF-8" quiet="true"/>
+
+        <!-- Create the assembly component descriptor. -->
+        <build-from-template-file template-file="${templates.module.assembly.modules.file.path}"
+                                  temp-path="${modules.temp.path}">
+            <template-file-params>
+                <param type="token" name="ASSEMBLY_ID" value="${module.assembly.id}"/>
+                <param type="token" name="ASSEMBLY_FORMAT" value="zip"/>
+                <param type="token" name="ASSEMBLY_LAYERS_CONF_FILE_PATH" value="${modules.output.path}${file.separator}layers.conf"/>
+                <param type="token" name="ASSEMBLY_COMPONENT_DESCRIPTORS" value="${module.assembly.tmp.global.module-components.content}"/>
+            </template-file-params>
+            <template-file-result>
+                <property name="module.assembly.output.content" value="@{template-content}"/>
+            </template-file-result>
+        </build-from-template-file>
+
+        <echo file="${module.assembly.global.output.path}">${module.assembly.output.content}</echo>
+
+    </target>
+
+    <!-- Generates the tag components for a module assembly descriptor file.
+      Input parameteres:
+      - file-name -> The file name where putting the result.
+      - component-file-path
+  -->
+    <target name="create-modules-global-assembly-descriptor-components">
+        <build-from-template-property template-property="component-descriptor"
+                                      temp-path="${modules.temp.path}">
+            <template-prop-params>
+                <param type="token" name="COMPONENT" value="${component-file-path}"/>
+            </template-prop-params>
+            <template-prop-result>
+                <concat destfile="${file-name}" append="true">@{template-content}</concat>
+            </template-prop-result>
+        </build-from-template-property>
+        <echo file="${file-name}" append="true">${line.separator}</echo>
+    </target>
+
+</project>

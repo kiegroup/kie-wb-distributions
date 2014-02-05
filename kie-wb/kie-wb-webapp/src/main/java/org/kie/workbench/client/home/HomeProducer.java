@@ -144,7 +144,7 @@ public class HomeProducer {
                     }
                 } );
 
-        final String dashbuilderURL = DashboardURLBuilder.getDashboardURL("/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale());
+        final String dashbuilderURL = DashboardURLBuilder.getDashboardURL("/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName());
         SectionEntry s5_b = ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
                 new Command() {
                     @Override

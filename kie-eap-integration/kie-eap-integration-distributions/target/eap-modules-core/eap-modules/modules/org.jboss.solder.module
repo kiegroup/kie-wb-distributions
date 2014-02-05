@@ -1,0 +1,3 @@
+module.name=org.jboss.solder
+module.type=static
+module.location=org/jboss/solder

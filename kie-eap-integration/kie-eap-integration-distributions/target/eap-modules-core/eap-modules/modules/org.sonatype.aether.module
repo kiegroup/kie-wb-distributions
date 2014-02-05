@@ -1,0 +1,3 @@
+module.name=org.sonatype.aether
+module.type=static
+module.location=org/sonatype/aether
