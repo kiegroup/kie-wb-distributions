@@ -1,6 +1,0 @@
-org.sonatype.aether:aether-impl:jar
-org.sonatype.aether:aether-connector-file:jar
-org.sonatype.aether:aether-util:jar
-org.sonatype.aether:aether-connector-wagon:jar
-org.sonatype.aether:aether-spi:jar
-org.sonatype.aether:aether-api:jar
