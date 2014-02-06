@@ -11,3 +11,4 @@ org.antlr
 org.javassist
 org.apache.log4j
 javax.inject.api
+sun.jdk
