@@ -6,4 +6,4 @@ org.slf4j
 org.drools
 org.kie.lib
 javax.api
-
+org.mvel

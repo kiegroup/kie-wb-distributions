@@ -1,7 +1,5 @@
 javax.mail.api
-org.apache.commons.pool
 javax.jms.api
-org.apache.log4j
 javax.activation.api
 org.jboss.as.osgi.jta
 org.slf4j

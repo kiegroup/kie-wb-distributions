@@ -1,4 +1,3 @@
-org.osgi.core
 org.slf4j
 com.sun.xml.bind
 org.kie.lib

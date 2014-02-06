@@ -1,6 +1,1 @@
-org.kie.lib
-org.apache.commons.collections
-org.apache.commons.httpclient
 org.apache.commons.logging
-org.apache.commons.net
-org.jdom
