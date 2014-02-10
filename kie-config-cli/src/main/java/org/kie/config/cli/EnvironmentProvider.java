@@ -30,6 +30,7 @@ import org.uberfire.security.Subject;
 import org.uberfire.security.authz.AuthorizationException;
 import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.security.authz.RuntimeResource;
+import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
 
 @ApplicationScoped
@@ -47,7 +48,7 @@ public class EnvironmentProvider {
     @PostConstruct
     public void setup() {
         //Use dummy AuthorizationManager that approves everything
-        SecurityFactory.setAuthzManager( new AuthorizationManager() {
+        SecurityFactory.setAuthzManager( new RuntimeAuthorizationManager() {
             @Override
             public boolean supports( Resource resource ) {
                 if ( resource instanceof RuntimeResource ) {
