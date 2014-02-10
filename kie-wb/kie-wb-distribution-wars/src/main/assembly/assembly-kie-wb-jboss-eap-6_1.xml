@@ -236,6 +236,9 @@
           <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
 
+          <!-- exclude UF form-based login.jsp -->
+          <exclude>login.jsp</exclude>
+
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>

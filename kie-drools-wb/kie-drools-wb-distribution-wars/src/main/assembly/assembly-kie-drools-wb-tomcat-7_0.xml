@@ -108,6 +108,10 @@
           <exclude>WEB-INF/lib/jboss-servlet-api_*.jar</exclude>
           <exclude>WEB-INF/lib/jsp-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-jsp-api_*.jar</exclude>
+
+          <!-- exclude UF form-based login.jsp -->
+          <exclude>login.jsp</exclude>
+
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>

@@ -155,6 +155,10 @@
 
           <!-- maven files from jbpm-console-form-app -->
           <exclude>META-INF/maven</exclude>
+
+          <!-- exclude UF form-based login.jsp -->
+          <exclude>login.jsp</exclude>
+
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>

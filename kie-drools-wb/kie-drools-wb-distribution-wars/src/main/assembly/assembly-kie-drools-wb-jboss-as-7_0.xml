@@ -135,6 +135,9 @@
           <!-- Netty-->
           <exclude>WEB-INF/lib/netty-3*.jar</exclude>
 
+          <!-- exclude UF form-based login.jsp -->
+          <exclude>login.jsp</exclude>
+
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
