@@ -19,9 +19,10 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:b="urn:import:com.github.gwtbootstrap.client.ui">
 
-  <ui:with field="res" type="org.uberfire.client.resources.WorkbenchResources"/>
+    <ui:with field="res" type="org.uberfire.client.resources.WorkbenchResources"/>
+    <ui:with field="i18n" type="org.kie.workbench.client.resources.i18n.AppConstants"/>
 
-  <ui:style>
+    <ui:style>
     .contextArea {
       height: 47px !important;
     }
@@ -51,7 +52,7 @@
   <g:FlowPanel styleName="{style.contextArea} {res.CSS.listbar}">
     <g:FlowPanel ui:field="contextMenuArea" styleName="{style.contextMenu}"/>
     <g:FlowPanel addStyleNames="{style.search} input-append">
-        <b:TextBox alternateSize="XLARGE" ui:field="searchTextBox" placeholder="search..."/>
+        <b:TextBox alternateSize="XLARGE" ui:field="searchTextBox" placeholder="{i18n.Search}"/>
         <b:Button icon="SEARCH" ui:field="searchButton" ></b:Button>
     </g:FlowPanel>  
   </g:FlowPanel>
