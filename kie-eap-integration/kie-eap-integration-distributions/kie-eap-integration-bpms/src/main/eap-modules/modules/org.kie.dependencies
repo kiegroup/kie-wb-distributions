@@ -19,3 +19,4 @@ org.codehouse.plexus
 org.jbpm
 org.apache.ant
 javax.api
+javax.inject.api

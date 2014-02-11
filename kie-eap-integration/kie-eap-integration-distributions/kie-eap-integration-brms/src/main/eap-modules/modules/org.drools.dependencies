@@ -22,3 +22,4 @@ javax.xml.bind.api
 org.slf4j
 org.jboss.vfs
 javax.api
+javax.inject.api:true

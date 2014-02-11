@@ -389,11 +389,33 @@ Then, this ant project should receive the property file location and read artifa
         - file-name
     -->
     <target name="create-module-xml-dependency">
+      <!-- By default, the export attribute vale is false. Check if this dependency entry uses true as a value.
+            If a custom depedency entry export value is set, then the entry syntax is <dep-name>:<export> -->
+      <ac:if>
+        <contains string="${dependency-name}" substring=":"/>
+        <ac:then>
+          <ac:propertyregex property="dependency-value"
+                            input="${dependency-name}"
+                            regexp="(.*):(.*)"
+                            select="\1"
+                            casesensitive="false" />
+          <ac:propertyregex property="dependency-export"
+                            input="${dependency-name}"
+                            regexp="(.*):(.*)"
+                            select="\2"
+                            casesensitive="false" />
+        </ac:then>
+        <ac:else>
+          <property name="dependency-value" value="${dependency-name}"/>
+          <property name="dependency-export" value="false"/>
+        </ac:else>
+      </ac:if>
+
         <build-from-template-property template-property="module.dependency"
                                       temp-path="${modules.temp.path}">
-            <template-prop-params>
-                <param type="token" name="DEPENDENCY" value="${dependency-name}"/>
-                <param type="token" name="EXPORT" value="false"/>
+          <template-prop-params>
+                <param type="token" name="DEPENDENCY" value="${dependency-value}"/>
+                <param type="token" name="EXPORT" value="${dependency-export}"/>
             </template-prop-params>
             <template-prop-result>
                 <concat destfile="${file-name}" append="true">@{template-content}</concat>

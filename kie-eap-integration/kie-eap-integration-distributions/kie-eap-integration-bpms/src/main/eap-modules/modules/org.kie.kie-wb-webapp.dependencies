@@ -92,3 +92,4 @@ org.apache.xalan
 javax.validation.api
 org.apache.xml-resolver
 org.jboss.xnio
+javax.inject.api
