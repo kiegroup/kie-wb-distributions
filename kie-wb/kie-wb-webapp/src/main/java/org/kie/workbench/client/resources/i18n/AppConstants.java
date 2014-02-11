@@ -129,4 +129,10 @@ public interface AppConstants
     String MenuManageOrganizationalUnits();
 
     String Repository();
+
+    String UserName();
+    String Password();
+    String SignIn();
+    String LoginTitle();
+
 }
