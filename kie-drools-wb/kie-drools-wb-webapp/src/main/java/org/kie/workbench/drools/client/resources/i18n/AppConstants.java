@@ -107,4 +107,8 @@ public interface AppConstants
     String SignIn();
 
     String LoginTitle();
+
+    String Upload();
+
+    String Refresh();
 }
