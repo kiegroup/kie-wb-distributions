@@ -112,6 +112,9 @@
           <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
           <exclude>WEB-INF/lib/netty-4.0.0.*.errai.*.jar</exclude>
 
+          <!-- Weld -->
+          <exclude>WEB-INF/lib/weld-*.jar</exclude>
+
           <!-- Jetty -->
           <exclude>WEB-INF/lib/jetty-*.jar</exclude>
           <!-- mail.jar is needed by tomcat-->
