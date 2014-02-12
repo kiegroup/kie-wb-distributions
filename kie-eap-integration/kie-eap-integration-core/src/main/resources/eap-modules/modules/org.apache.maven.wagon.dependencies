@@ -2,3 +2,5 @@ org.codehouse.plexus
 org.apache.httpcomponents
 org.apache.commons.logging
 org.apache.commons.io
+sun.jdk
+javax.api

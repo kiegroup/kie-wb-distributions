@@ -24,6 +24,7 @@ org.apache.avalon.framework:avalon-framework-api:jar
 org.apache.geronimo.specs:geronimo-activation_1.0.2_spec:jar
 org.apache.geronimo.specs:geronimo-javamail_1.4_spec:jar
 org.apache.httpcomponents:httpcore:jar
+org.apache.mina:mina-core:jar
 org.apache.xmlgraphics:fop:jar
 org.apache.xmlgraphics:xmlgraphics-commons:jar
 org.beanshell:bsh:jar
