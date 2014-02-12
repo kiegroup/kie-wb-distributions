@@ -28,6 +28,7 @@ import org.guvnor.m2repo.client.event.M2RepoRefreshEvent;
 import org.guvnor.m2repo.client.event.M2RepoSearchEvent;
 import org.guvnor.m2repo.client.upload.UploadForm;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
+import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.search.ContextualSearch;
 import org.kie.workbench.common.widgets.client.search.SearchBehavior;
 import org.uberfire.client.annotations.Perspective;
@@ -106,7 +107,7 @@ public class M2RepoPerspective {
     }
 
     private void buildMenuBar() {
-        this.menus = MenuFactory.newTopLevelMenu( "Upload" )
+        this.menus = MenuFactory.newTopLevelMenu(AppConstants.INSTANCE.Upload() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -124,7 +125,7 @@ public class M2RepoPerspective {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( "Refresh" )
+                .newTopLevelMenu( AppConstants.INSTANCE.Refresh() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
