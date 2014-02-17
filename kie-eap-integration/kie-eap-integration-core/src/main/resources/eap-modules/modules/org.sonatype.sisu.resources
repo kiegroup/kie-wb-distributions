@@ -1,3 +1,0 @@
-org.sonatype.sisu:sisu-inject-bean:jar
-org.sonatype.sisu:sisu-inject-plexus:jar
-org.sonatype.sisu:sisu-guice:jar:no_aop

@@ -1,5 +1,0 @@
-<file>
-    <source>@FILE_SOURCE@</source>
-    <outputDirectory>@FILE_OUTPUT_DIR@</outputDirectory>
-    <destName>@FILE_DEST_NAME@</destName>
-</file>

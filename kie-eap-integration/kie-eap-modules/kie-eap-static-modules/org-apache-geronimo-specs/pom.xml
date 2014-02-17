@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.kie.modules</groupId>
+    <artifactId>kie-eap-static-modules</artifactId>
+    <version>6.1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.kie.modules</groupId>
+  <artifactId>org-apache-geronimo-specs</artifactId>
+  <name>KIE EAP - org-apache-geronimo-specs static module</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <module.name>org.apache.geronimo.specs</module.name>
+    <module.type>static</module.type>
+    <module.location>org/apache/geronimo/specs</module.location>
+    <module.slot>${project.version}</module.slot>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-activation_1.0.2_spec</artifactId>
+      <version>1.1</version>
+      <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.geronimo.specs</groupId>
+          <artifactId>geronimo-activation_1.1_spec</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.geronimo.specs</groupId>
+          <artifactId>geronimo-osgi-locator</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-javamail_1.4_spec</artifactId>
+      <version>1.7.1</version>
+      <type>jar</type>
+    </dependency>
+
+  </dependencies>
+</project>

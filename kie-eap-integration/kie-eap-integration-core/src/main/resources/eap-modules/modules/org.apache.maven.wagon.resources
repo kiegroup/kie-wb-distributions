@@ -1,3 +1,0 @@
-org.apache.maven.wagon:wagon-provider-api:jar
-org.apache.maven.wagon:wagon-http:jar
-org.apache.maven.wagon:wagon-http-shared4:jar

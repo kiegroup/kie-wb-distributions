@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.kie.modules</groupId>
+    <artifactId>kie-eap-static-modules</artifactId>
+    <version>6.1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.kie.modules</groupId>
+  <artifactId>org-sonatype-plexus</artifactId>
+  <name>KIE EAP - org-sonatype-plexus static module</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <module.name>org.sonatype.plexus</module.name>
+    <module.type>static</module.type>
+    <module.location>org/sonatype/plexus</module.location>
+    <module.slot>${project.version}</module.slot>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.sonatype.plexus</groupId>
+      <artifactId>plexus-cipher</artifactId>
+      <version>1.4</version>
+      <type>jar</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.plexus</groupId>
+      <artifactId>plexus-sec-dispatcher</artifactId>
+      <version>1.3</version>
+      <type>jar</type>
+    </dependency>
+
+  </dependencies>
+</project>

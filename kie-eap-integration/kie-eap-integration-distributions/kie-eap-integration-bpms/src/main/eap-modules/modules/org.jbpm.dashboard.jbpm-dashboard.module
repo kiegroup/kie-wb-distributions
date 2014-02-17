@@ -1,3 +1,0 @@
-module.name=org.jbpm.dashboard.jbpm-dashboard
-module.type=dynamic
-module.resources.unrequired=javax.el:el-api:jar,com.google.guava:guava:jar,org.jboss.weld:weld-api:jar,org.jboss.weld:weld-core:jar

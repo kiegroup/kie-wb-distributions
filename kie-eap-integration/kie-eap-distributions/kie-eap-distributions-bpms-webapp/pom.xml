@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>kie-eap-distributions</artifactId>
+    <groupId>org.kie</groupId>
+    <version>6.1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>kie-eap-distributions-bpms-webapp</artifactId>
+  <name>KIE EAP - BPMS Webapp</name>
+
+  <properties>
+    <modules.distribution.name>bpms-webapp</modules.distribution.name>
+    <modules.tmp.path>${project.build.directory}/generated</modules.tmp.path>
+  </properties>
+
+  <!-- The BPMS distributions dependencies. -->
+  <dependencies>
+
+    <!-- The kie-wb dynamic module definition. -->
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-kie-wb-webapp</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+
+    <!-- The jBPM Dashbuilder dynamic module definition. -->
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-jbpm-dashbuilder-webapp</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+
+    <plugins>
+
+      <!-- Create the module templates and assembly files. -->
+      <plugin>
+        <groupId>org.kie</groupId>
+        <artifactId>jboss-modules</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+          <distributionName>${modules.distribution.name}</distributionName>
+          <!-- The output path for the assembly file. -->
+          <outputPath>${modules.tmp.path}</outputPath>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>build-dynamic</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Generate the jboss-all.xml because jbpm-dashbuilder depends on kie-wb on startup. -->
+      <!--<plugin>
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>replacer</artifactId>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>replace</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <file>${project.basedir}/src/main/resources/jbpm-dashbuilder/META-INF/jboss-all.txt</file>
+          <outputFile>${project.basedir}/prova.txt</outputFile>
+          <regex>true</regex>
+          <replacements>
+            <replacement>
+              <token>DEPENDENCY-NAME</token>
+              <value>kie-wb-distribution-wars-${project.version}-${modules.distribution.name}.war</value>
+            </replacement>
+          </replacements>
+        </configuration>
+      </plugin>-->
+
+      <!-- Assembly the kie-wb and dashbuilder distributions. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <!-- Assembly the kie-wb WAR distribution. -->
+          <execution>
+            <id>assembly-kie-wb</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>kie-wb-distribution-wars-${project.version}-${modules.distribution.name}</finalName>
+              <descriptors>
+                <!-- Assembly the kie-wb WAR. -->
+                <descriptor>${modules.tmp.path}/dynamic-modules/${modules.distribution.name}/org-kie-wb-webapp-assembly.xml</descriptor>
+              </descriptors>
+              <archive>
+                <addMavenDescriptor>false</addMavenDescriptor>
+              </archive>
+              <appendAssemblyId>false</appendAssemblyId>
+            </configuration>
+          </execution>
+
+          <!-- Assembly the dashbuilder WAR distribution. -->
+          <execution>
+            <id>assembly-dashbuilder</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>jbpm-dashboard-distributions-${project.version}-${modules.distribution.name}</finalName>
+              <descriptors>
+                <!-- Assembly the dashbuilder WAR. -->
+                <descriptor>${modules.tmp.path}/dynamic-modules/${modules.distribution.name}/org-jbpm-dashbuilder-webapp-assembly.xml</descriptor>
+              </descriptors>
+              <archive>
+                <addMavenDescriptor>false</addMavenDescriptor>
+              </archive>
+              <appendAssemblyId>false</appendAssemblyId>
+            </configuration>
+          </execution>
+
+        </executions>
+
+      </plugin>
+
+    </plugins>
+
+  </build>
+
+</project>
