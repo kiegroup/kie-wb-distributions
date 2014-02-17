@@ -1,5 +1,4 @@
 - TODOS
-    - Test BPMS/BRMS distros and push it. -> mail to bsig / use related BZ
     - Remove artifact versions from module pom's
     - Use plexus components for:
         - scanner service
