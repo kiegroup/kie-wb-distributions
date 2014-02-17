@@ -27,15 +27,4 @@ public class EAPModulesDependencyBuilderException extends Exception {
         super(message);
     }
 
-    public EAPModulesDependencyBuilderException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public EAPModulesDependencyBuilderException(Throwable cause) {
-        super(cause);
-    }
-
-    public EAPModulesDependencyBuilderException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

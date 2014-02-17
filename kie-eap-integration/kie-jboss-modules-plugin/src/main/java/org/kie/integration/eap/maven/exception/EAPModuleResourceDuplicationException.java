@@ -24,27 +24,8 @@ public class EAPModuleResourceDuplicationException extends Exception {
     private String name;
 
 
-    public EAPModuleResourceDuplicationException(String name) {
-        this.name = name;
-    }
-
     public EAPModuleResourceDuplicationException(String message, String name) {
         super(message);
-        this.name = name;
-    }
-
-    public EAPModuleResourceDuplicationException(String message, Throwable cause, String name) {
-        super(message, cause);
-        this.name = name;
-    }
-
-    public EAPModuleResourceDuplicationException(Throwable cause, String name) {
-        super(cause);
-        this.name = name;
-    }
-
-    public EAPModuleResourceDuplicationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, String name) {
-        super(message, cause, enableSuppression, writableStackTrace);
         this.name = name;
     }
 
