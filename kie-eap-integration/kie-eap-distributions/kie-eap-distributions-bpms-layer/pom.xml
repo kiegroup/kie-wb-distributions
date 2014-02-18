@@ -527,19 +527,7 @@
 
   </dependencies>
 
-  <repositories>
-    <!-- Disable jaspersoft repository as its private and produces a build failure.-->
-    <repository>
-      <id>jaspersoft</id>
-      <url>http://www.jasperforge.org/</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
+
 
   <build>
     <plugins>

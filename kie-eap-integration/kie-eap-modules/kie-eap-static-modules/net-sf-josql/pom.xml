@@ -21,24 +21,18 @@
 
   <dependencies>
 
-    <!-- TODO: This dependency is not resolvable in jboss nexus public repository. -->
     <dependency>
       <groupId>net.sf.josql</groupId>
       <artifactId>gentlyweb-utils</artifactId>
       <version>1.5</version>
       <type>jar</type>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/lib/gentlyweb-utils-1.5.jar</systemPath>
     </dependency>
 
-    <!-- TODO: This dependency is not resolvable in jboss nexus public repository. -->
     <dependency>
       <groupId>net.sf.josql</groupId>
       <artifactId>josql</artifactId>
       <version>1.5</version>
       <type>jar</type>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/lib/josql-1.5.jar</systemPath>
     </dependency>
 
   </dependencies>

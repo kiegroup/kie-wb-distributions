@@ -13,10 +13,29 @@
   <name>KIE EAP - Distributions</name>
   <packaging>pom</packaging>
 
-  <dependencies>
+  <repositories>
 
+    <!-- Disable jaspersoft repository as its private and produces a build failure.-->
+    <repository>
+      <id>jaspersoft</id>
+      <url>http://www.jasperforge.org/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
 
-  </dependencies>
+    <!-- net.sf.josql:josql:jar:1.5 & net.sf.josql:gentlyweb-utils:jar:1.5 are not resolvable in jboss nexus public repository. -->
+    <repository>
+      <id>repo.fusesource.com</id>
+      <name>repo.fusesource.com</name>
+      <url>http://repo.fusesource.com/maven2-legacy/</url>
+      <layout>default</layout>
+    </repository>
+
+  </repositories>
 
   <modules>
     <module>kie-eap-distributions-bpms-layer</module>

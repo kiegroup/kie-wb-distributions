@@ -67,7 +67,7 @@ public class EAPBaseModulesDescriptorGenerationMojo extends AbstractMojo {
     /**
      * The project's remote repositories to use for the resolution of plugins and their dependencies.
      *
-     * @parameter default-value="${project.remotePluginRepositories}"
+     * @parameter default-value="${project.remoteProjectRepositories}"
      * @readonly
      */
     private List<RemoteRepository> remoteRepos;
