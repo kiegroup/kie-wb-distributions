@@ -133,47 +133,49 @@ Usage
 
 This section contains information about:
 
+* Profiles
 * Distributions generation
 * Adding static module definitions
 * Adding new JBoss EAP/AS versions to support.
 * Adding other static layer definitions.
+* How to change the target JBoss EAP/AS version
 
-How to generate a static layer distribution
---------------------------------------------
+Profiles
+--------
 
-When you have defined the maven modules that represent the JBoss static modules to generated for the layer, next step is to run the plugin
-and generate ZIP file (for that layer) that will be deployed in the container.
+* <code>eap-base-modules</code>: Used to build only the JBoss EAP base module descriptors. Think that these descriptors are unusually changed from the initial definition, so this module should not be constantly build.   
+* <code>bpms-layer</code>: Used to generate the BPMS layer distribution. It results in the BPMS static layer generated in a ZIP file.   
+* <code>bpms-webapp</code>: Used to generate the BPMS webapp skinny WAR that works using the BPMS layer.   
+* <code>brms-layer</code>: Used to generate the BRMS layer distribution. It results in the BRMS static layer generated in a ZIP file.   
+* <code>brms-webapp</code>: Used to generate the BRMS webapp skinny WAR that works using the BRMS layer.   
 
-So previously to the static layer generation:
+Distributions generation
+------------------------
 
-* You must have installed the <code>kie-eap-static-modules</code> artifact.
-* You must have installed the <code>jboss-eap-6.1.1</code> artifact, if you want to generate the layer for JBoss EAP 6.1.1
+* **Generate ALL distributions** (No profile)   
+If no profile enabled via profile identifier or via property, ALL modules and distributions are generated.   
+Run <code>mvn clean install</code>   
 
-NOTE: This example is based on generating the BPMS layer distribution: <code>kie-eap-distributions/kie-eap-distributions-bpms-layer</code>.
+* **Generate BPMS Layer**
+Generates the BPMS layer ZIP   
+Run <code>mvn clean install -Dbpms-layer</code>   
 
-To generate the BPMS layer:
+* **Generate BPMS Layer and BPMS webapp**
+Generates the BPMS layer ZIP and the skinny WAR files for kie-wb-webapp and jbpm-dashbuilder web applications.   
+Run <code>mvn clean install -Dbpms-layer -Dbpms-webapp</code>   
 
-    1.- cd kie-eap-distributions/kie-eap-distributions-bpms-layer
+* **Generate BRMS Layer**
+Generates the BRMS layer ZIP   
+Run <code>mvn clean install -Dbrms-layer</code>   
 
-    2.- mvn clean install -DskipTests
+* **Generate BRMS Layer and BRMS webapp**
+Generates the BPMS layer ZIP and the skinny WAR file for kie-drools-wb-webapp web application.   
+Run <code>mvn clean install -Dbrms-layer -Dbrms-webapp</code>   
 
-The result of this execution will generate:
-
-* A static modules dependency graph in the system output.
-
-    It's quite important to understand and review this generated graph.
-    It contain information about each static module to generate:
-      - The module resources
-      - The module dependencies
-* A ZIP file that contains all static modules for this layer.
-
-    This ZIP file is ready to be deployed in a JBoss EAP/AS container.
-
-
-How to generate a webapp distribution
---------------------------------------
-
-TODO
+* **Generate the Base JBoss EAP/AS module descriptors**
+Generates the base module definitions for all JBoss EAP/AS versions included.    
+Think that these descriptors are unusually changed from the initial definition, so this module should not be constantly build.    
+Run <code>mvn clean install -Deap-base-modules</code>   
 
 How to add static dependencies
 ------------------------------
@@ -226,4 +228,4 @@ Limitations
 ===========
 * The plugin only supports the generation of a single static layer.
 * Maven 3.0.X - Aether API from Maven 3.0.X to Maven 3.1.X has been changed. This plugin version only supports Maven 3.0.X
-* The current plugin graph implementation generates the static modules by NOT exporting the dependencies (see <code>export</code> attribute for JBoss module descriptors).
+* The current plugin graph implementation type (currently only FLAT) generates the static modules by NOT exporting the dependencies (see <code>export</code> attribute for JBoss module descriptors).

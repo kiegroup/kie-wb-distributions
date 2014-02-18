@@ -37,11 +37,64 @@
 
   </repositories>
 
-  <modules>
-    <module>kie-eap-distributions-bpms-layer</module>
-    <module>kie-eap-distributions-bpms-webapp</module>
-    <module>kie-eap-distributions-brms-layer</module>
-    <module>kie-eap-distributions-brms-webapp</module>
-  </modules>
+  <profiles>
+
+    <!-- Profile for BPMS layer. -->
+    <profile>
+      <id>bpms-layer</id>
+      <activation>
+        <property>
+          <name>bpms-layer</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>kie-eap-distributions-bpms-layer</module>
+      </modules>
+    </profile>
+
+    <!-- Profile for BPMS webapp. -->
+    <profile>
+      <id>bpms-webapp</id>
+      <activation>
+        <property>
+          <name>bpms-webapp</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>kie-eap-distributions-bpms-webapp</module>
+      </modules>
+    </profile>
+
+    <!-- Profile for BRMS layer. -->
+    <profile>
+      <id>brms-layer</id>
+      <activation>
+        <property>
+          <name>brms-layer</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>kie-eap-distributions-brms-layer</module>
+      </modules>
+    </profile>
+
+    <!-- Profile for BRMS webapp. -->
+    <profile>
+      <id>brms-webapp</id>
+      <activation>
+        <property>
+          <name>brms-webapp</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>kie-eap-distributions-brms-webapp</module>
+      </modules>
+    </profile>
+
+  </profiles>
 
 </project>

@@ -24,22 +24,78 @@
     </repository>
   </repositories>
 
-  <modules>
-    <module>kie-jboss-eap-base-modules</module>
-    <module>kie-eap-static-modules</module>
-    <module>kie-eap-dynamic-modules</module>
-  </modules>
+  <profiles>
 
-  <!--<profiles>
+    <!-- Profile for EAP base modules. -->
     <profile>
-      <id>kie-jboss-eap-base-modules</id>
+      <id>eap-base-modules</id>
       <activation>
-        <activeByDefault>false</activeByDefault>
+        <property>
+          <name>eap-base-modules</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
         <module>kie-jboss-eap-base-modules</module>
       </modules>
     </profile>
-  </profiles>-->
+
+    <!-- Profile for static modules in bpms-layer. -->
+    <profile>
+      <id>static-modules-bpms</id>
+      <activation>
+        <property>
+          <name>bpms-layer</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>kie-eap-static-modules</module>
+      </modules>
+    </profile>
+
+    <!-- Profile for static modules in brms-layer. -->
+    <profile>
+      <id>static-modules-brms</id>
+      <activation>
+        <property>
+          <name>brms-layer</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>kie-eap-static-modules</module>
+      </modules>
+    </profile>
+
+    <!-- Profile for dynamic (webapp) modules in bpms layer. -->
+    <profile>
+      <id>dynamic-modules-bpms</id>
+      <activation>
+        <property>
+          <name>bpms-webapp</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>kie-eap-dynamic-modules</module>
+      </modules>
+    </profile>
+
+    <!-- Profile for dynamic (webapp) modules in brms layer. -->
+    <profile>
+      <id>dynamic-modules-brms</id>
+      <activation>
+        <property>
+          <name>brms-webapp</name>
+        </property>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>kie-eap-dynamic-modules</module>
+      </modules>
+    </profile>
+
+  </profiles>
 
 </project>
