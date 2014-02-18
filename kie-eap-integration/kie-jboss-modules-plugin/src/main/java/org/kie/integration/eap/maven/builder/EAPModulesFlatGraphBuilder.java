@@ -15,10 +15,12 @@
  */
 package org.kie.integration.eap.maven.builder;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
 import org.kie.integration.eap.maven.model.graph.flat.EAPModulesFlatGraph;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 
+@Component( role = EAPModulesGraphBuilder.class, hint = "flat")
 public class EAPModulesFlatGraphBuilder implements EAPModulesGraphBuilder {
 
     @Override

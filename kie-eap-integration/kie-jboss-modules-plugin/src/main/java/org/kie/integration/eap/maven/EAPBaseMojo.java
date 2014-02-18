@@ -107,13 +107,6 @@ public abstract class EAPBaseMojo extends AbstractMojo {
     protected EAPConfigurationArtifact baseModule;
 
     /**
-     * The graph to generate.
-     *
-     * @parameter default-value="flat"
-     */
-    protected String graphMode;
-
-    /**
      * The file to print the graph.
      *
      * @parameter default-value=""
@@ -141,19 +134,38 @@ public abstract class EAPBaseMojo extends AbstractMojo {
      */
     protected Boolean includeOptionalDependencies;
 
+    /**
+     * The scanner for static modules.
+     * @component role-hint='static'
+     */
     protected EAPModulesScanner staticModulesScanner;
 
+    /**
+     * The scanner for base modules.
+     * @component role-hint='base'
+     */
     protected EAPModulesScanner baseModulesScanner;
 
+    /**
+     * The scanner for base modules.
+     * @component role-hint='default'
+     */
     protected EAPModulesDependencyBuilder modulesDependencyBuilder;
 
+    /**
+     * The scanner for base modules.
+     * @component role-hint='flat'
+     */
     protected EAPModulesGraphBuilder modulesGraphBuilder;
+
+    /**
+     * The scanner for base modules.
+     * @component role-hint='default'
+     */
+    protected EAPLayerDistributionManager distributionManager;
 
     /** Collection to store all resources and its modules. Usefull to check if a resource has been duplicated. **/
     protected transient EAPArtifactsHolder artifactsHolder;
-
-    protected EAPLayerDistributionManager distributionManager;
-
 
     /**
      * The static module layer.
@@ -347,23 +359,14 @@ public abstract class EAPBaseMojo extends AbstractMojo {
         if (baseModule == null) throw new MojoFailureException("Base module configuration parameter is not set.");
     }
 
-    // TODO: Replace using plexus container.
     protected void initServices() {
 
-        // The module scanner for static modules.
-        staticModulesScanner = new EAPStaticModulesScanner();
+        // Configure the module scanner for static modules.
         ((EAPStaticModulesScanner)staticModulesScanner).setLogger(getLog());
 
-        // The module scanner for base modules.
-        baseModulesScanner = new EAPBaseModulesScanner();
+        // Configure the module scanner for base modules.
         ((EAPBaseModulesScanner)baseModulesScanner).setLogger(getLog());
 
-        modulesDependencyBuilder = new EAPStaticModulesDependencyBuilderImpl();
-
-        // TODO: Check graphMode config parameter.
-        modulesGraphBuilder = new EAPModulesFlatGraphBuilder();
-
-        distributionManager = new EAPXMLLayerDistribution();
     }
 
     /**

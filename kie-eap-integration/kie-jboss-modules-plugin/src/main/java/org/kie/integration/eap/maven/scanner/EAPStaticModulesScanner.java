@@ -19,6 +19,7 @@ import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Exclusion;
 import org.apache.maven.model.Model;
 import org.apache.maven.plugin.logging.Log;
+import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModuleResourceDuplicationException;
@@ -41,6 +42,7 @@ import org.sonatype.aether.resolution.ArtifactResolutionException;
 import java.io.IOException;
 import java.util.*;
 
+@Component( role = EAPModulesScanner.class, hint="static" )
 public class EAPStaticModulesScanner implements EAPModulesScanner {
 
     protected EAPArtifactsHolder artifactsHolder;

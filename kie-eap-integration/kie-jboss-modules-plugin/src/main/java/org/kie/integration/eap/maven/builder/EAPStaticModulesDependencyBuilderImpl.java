@@ -15,6 +15,7 @@
  */
 package org.kie.integration.eap.maven.builder;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.exception.EAPModulesDependencyBuilderException;
 import org.kie.integration.eap.maven.model.dependency.EAPCustomModuleDependency;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleDependency;
@@ -31,6 +32,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+@Component( role = EAPModulesDependencyBuilder.class )
 public class EAPStaticModulesDependencyBuilderImpl implements EAPModulesDependencyBuilder {
 
     protected EAPLayer layer;

@@ -132,9 +132,22 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
      */
     protected String assemblyFormats;
 
-    // Services.
+    /**
+     * The scanner for static modules.
+     * @component role-hint='velocity'
+     */
     private EAPTemplateBuilder templateBuilder;
+
+    /**
+     * The scanner for static modules.
+     * @component role-hint='default'
+     */
     protected EAPLayerDistributionManager distributionManager;
+
+    /**
+     * The scanner for static modules.
+     * @component role-hint='static'
+     */
     private EAPModulesScanner staticModulesScanner;
 
     // Class members.
@@ -377,14 +390,13 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
         if (outputPath == null || outputPath.trim().length() == 0) throw new MojoFailureException("Output path configuration parameter cannot be null or empty.");
     }
 
-    // TODO: Replace using plexus container.
     protected void initServices() {
-        templateBuilder = new EAPVelocityTemplateBuilder();
-        distributionManager = new EAPXMLLayerDistribution();
-        staticModulesScanner = new EAPStaticModulesScanner();
+        // Configure static resources.
         staticModulesScanner.setScanResources(true);
         staticModulesScanner.setScanStaticDependencies(false);
         ((EAPStaticModulesScanner)staticModulesScanner).setArtifactTreeResolved(false);
+
+        // Configure the artifacts holder.
         artifactsHolder = new EAPArtifactsHolder(repoSystem, repoSession, remoteRepos);
     }
 

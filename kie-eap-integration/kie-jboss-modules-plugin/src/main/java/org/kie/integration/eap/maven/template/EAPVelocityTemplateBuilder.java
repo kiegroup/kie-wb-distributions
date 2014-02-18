@@ -21,6 +21,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.tools.generic.SortTool;
+import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
@@ -30,6 +31,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+@Component( role = EAPTemplateBuilder.class, hint = "velocity" )
 public class EAPVelocityTemplateBuilder implements EAPTemplateBuilder {
 
     private static final String TEMPLATES_STATIC_PATH = "/org/kie/integration/eap/maven/assembly/templates/static/";

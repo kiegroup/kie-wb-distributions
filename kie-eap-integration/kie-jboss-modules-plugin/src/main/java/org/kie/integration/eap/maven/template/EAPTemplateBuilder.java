@@ -15,12 +15,14 @@
  */
 package org.kie.integration.eap.maven.template;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
 
 import java.util.Collection;
 
+@Component( role = EAPTemplateBuilder.class )
 public interface EAPTemplateBuilder {
 
     /**

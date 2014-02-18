@@ -15,6 +15,9 @@
  */
 package org.kie.integration.eap.maven.distribution;
 
+import org.codehaus.plexus.component.annotations.Component;
+
+@Component( role = EAPLayerDistributionManager.class )
 public interface EAPLayerDistributionManager {
 
     /**

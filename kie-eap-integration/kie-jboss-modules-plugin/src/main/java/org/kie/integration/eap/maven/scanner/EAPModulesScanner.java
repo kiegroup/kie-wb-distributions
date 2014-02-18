@@ -24,6 +24,7 @@ import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
 
+@Component( role = EAPModulesScanner.class )
 public interface EAPModulesScanner {
 
     /**

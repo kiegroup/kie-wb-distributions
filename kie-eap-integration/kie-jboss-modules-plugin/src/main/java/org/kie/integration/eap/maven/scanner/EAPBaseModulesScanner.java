@@ -18,6 +18,7 @@ package org.kie.integration.eap.maven.scanner;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.plugin.logging.Log;
+import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModuleResourceDuplicationException;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
@@ -32,6 +33,7 @@ import org.sonatype.aether.resolution.ArtifactResolutionException;
 import java.util.Collection;
 import java.util.Properties;
 
+@Component( role = EAPModulesScanner.class, hint="base" )
 public class EAPBaseModulesScanner extends EAPStaticModulesScanner {
 
     protected EAPModule createModuleInstance(Artifact artifact, String moduleName, String moduleLocation, String moduleSlot) {

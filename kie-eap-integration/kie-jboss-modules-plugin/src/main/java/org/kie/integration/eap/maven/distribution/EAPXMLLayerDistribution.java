@@ -16,6 +16,7 @@
 package org.kie.integration.eap.maven.distribution;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
@@ -47,6 +48,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // TODO: Add persistence new distribution properties.
+@Component( role = EAPLayerDistributionManager.class )
 public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
 
     private static final String ELEMENT_STATIC_LAYER = "staticLayer";

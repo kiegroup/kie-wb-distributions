@@ -15,9 +15,11 @@
  */
 package org.kie.integration.eap.maven.builder;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 
+@Component( role = EAPModulesGraphBuilder.class )
 public interface EAPModulesGraphBuilder {
 
     /**

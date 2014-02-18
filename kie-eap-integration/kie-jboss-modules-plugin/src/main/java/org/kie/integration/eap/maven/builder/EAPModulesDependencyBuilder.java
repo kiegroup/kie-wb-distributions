@@ -15,11 +15,13 @@
  */
 package org.kie.integration.eap.maven.builder;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.exception.EAPModulesDependencyBuilderException;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.util.EAPArtifactsHolder;
 import org.sonatype.aether.graph.DependencyNode;
 
+@Component( role = EAPModulesDependencyBuilder.class )
 public interface EAPModulesDependencyBuilder {
 
     /**
