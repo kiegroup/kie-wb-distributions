@@ -16,6 +16,8 @@
     <module.name>org.apache.camel</module.name>
     <module.type>static</module.type>
     <module.location>org/apache/camel</module.location>
+    <!-- TODO: This dependencies are not resolvable in jboss nexus public repository, so the static dependency manually. -->
+    <module.dependencies>net.sf.josql:${project.version}</module.dependencies>
     <module.slot>${project.version}</module.slot>
   </properties>
 
@@ -26,6 +28,17 @@
       <artifactId>camel-josql</artifactId>
       <version>2.12.1</version>
       <type>jar</type>
+      <!-- TODO: This dependencies are not resolvable in jboss nexus public repository. -->
+      <exclusions>
+        <exclusion>
+          <groupId>net.sf.josql</groupId>
+          <artifactId>gentlyweb-utils</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.sf.josql</groupId>
+          <artifactId>josql</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
 
