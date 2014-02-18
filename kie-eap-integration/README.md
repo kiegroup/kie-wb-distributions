@@ -142,6 +142,7 @@ This section contains information about:
 
 Profiles
 --------
+These are the available profiles:   
 
 * <code>eap-base-modules</code>: Used to build only the JBoss EAP base module descriptors. Think that these descriptors are unusually changed from the initial definition, so this module should not be constantly build.   
 * <code>bpms-layer</code>: Used to generate the BPMS layer distribution. It results in the BPMS static layer generated in a ZIP file.   
@@ -151,6 +152,7 @@ Profiles
 
 Distributions generation
 ------------------------
+This section describes how to generate the distributions.   
 
 * **Generate ALL distributions** (No profile)   
 If no profile enabled via profile identifier or via property, ALL modules and distributions are generated.   
@@ -176,6 +178,9 @@ Run <code>mvn clean install -Dbrms-layer -Dbrms-webapp</code>
 Generates the base module definitions for all JBoss EAP/AS versions included.    
 Think that these descriptors are unusually changed from the initial definition, so this module should not be constantly build.    
 Run <code>mvn clean install -Deap-base-modules</code>   
+
+* NOTE: All these commands must be run from <code>kie-eap-integration</code> root directory.   
+* NOTE: This <code>kie-eap-integration</code> module is not build by default for <code>kie-wb-distributions</code> module build. To enable it, active the profile <code>eap-modules</code>.   
 
 How to add static dependencies
 ------------------------------

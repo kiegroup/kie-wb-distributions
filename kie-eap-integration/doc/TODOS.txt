@@ -17,7 +17,6 @@
     - BZs
         - https://bugzilla.redhat.com/show_bug.cgi?id=1063949 (ORM files - David Ward)
         - https://bugzilla.redhat.com/show_bug.cgi?id=1039716 -> Modules refactor (maven plugin)
-        - https://bugzilla.redhat.com/show_bug.cgi?id=1037733 (EAP modules built too late)
     - Dynamic module inter-dependencies - Dashbuilder must depend on kie-wb
     - Review dependencies
         - Why the static dependencies applied? Are pom references to these artifacts missing?
