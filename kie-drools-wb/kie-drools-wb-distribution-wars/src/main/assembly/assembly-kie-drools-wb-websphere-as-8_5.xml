@@ -31,6 +31,10 @@
       <directory>${project.basedir}/src/main/was8</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}/lib</directory>
+      <outputDirectory>WEB-INF/lib</outputDirectory>
+    </fileSet>
   </fileSets>
   <dependencySets>
     <!-- Add ANT dependency excluded in WAR pom that runs on Hosted Mode -->
@@ -218,6 +222,16 @@
           <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
           <exclude>WEB-INF/lib/jaxb-*.jar</exclude>
+
+          <exclude>WEB-INF/lib/sisu-inject-bean*.jar</exclude>
+          <exclude>WEB-INF/lib/jaxrs-*.jar</exclude>
+          <exclude>WEB-INF/lib/jsr-*.jar</exclude>
+          <exclude>WEB-INF/lib/jsr311-*.jar</exclude>
+          <exclude>WEB-INF/lib/jsr305-*.jar</exclude>
+          <exclude>WEB-INF/lib/jstl-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-interceptors-*.jar</exclude>
+          <exclude>WEB-INF/lib/stax-*.jar</exclude>
+          <exclude>WEB-INF/lib/stax2-*.jar</exclude>
 
         </excludes>
       </unpackOptions>
