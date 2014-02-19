@@ -6,6 +6,8 @@
             - Do not add all third party library versions there
             - If an artifact version is present, but not the desired one, override it in the kie-parent-with-dependencies.
             - Split the pull requests in several ones...
+            - Slot for modules of 3rd party jars should use it's own version, not the project one. (David Ward) - Can use properties defined in IP BOM as module.slot value.
+            - https://bugzilla.redhat.com/show_bug.cgi?id=1063602 - keep it in your vision - it's likely xstream will be upgrades very fast, including it's transitive deps xpp3 etc. Make sure your fork doesn't undo that later. (geoffrey)
     - Modules integration with other frameworks
         - Should use a common modules repository? Several frameworks have same modules..
         - All third party jars should be in a single module?
@@ -17,12 +19,10 @@
     - BZs
         - https://bugzilla.redhat.com/show_bug.cgi?id=1063949 (ORM files - David Ward)
         - https://bugzilla.redhat.com/show_bug.cgi?id=1039716 -> Modules refactor (maven plugin)
-    - Dynamic module inter-dependencies - Dashbuilder must depend on kie-wb
     - Review dependencies
         - Why the static dependencies applied? Are pom references to these artifacts missing?
-        - Duplicated module? org.osgi:6.1.0-SNAPSHOT (STATIC) / org.osgi.core:main (EAP)
-    - Slot for modules of 3rd party jars should use it's own version, not the project one. (David Ward)
-
+    - Unit tests for Mojo classes
+    
 - Other TODOS
     - Dependency builder issues
         - Base modules: The current impl considers that all base dependencies are not exported, but some of them are exported (export=true)
@@ -30,7 +30,5 @@
     - Maven 3.1.X support
     - Change module dependencies from optional=true to scope=provided in static modules definitions??
     - README.md's
-    - Plugin -> Deploy goal
-    - Report generation -> mvn site.
 
 

@@ -43,6 +43,7 @@ public class EAPVelocityTemplateBuilder implements EAPTemplateBuilder {
     private static final String TEMPLATE_ASSEMBLY_COMPONENT = "assembly-component.vm";
     private static final String TEMPLATE_ASSEMBLY = "assembly.vm";
     private static final String TEMPLATE_JBOSS_DEP_STRUCTURE = "jboss-deployment-structure.vm";
+    private static final String TEMPLATE_JBOSS_ALL = "jboss-all.vm";
     private static final String VM_CONTEXT_NODE = "node";
     private static final String VM_CONTEXT_MODULE_PATH = "moduleDescriptorPath";
     private static final String VM_CONTEXT_OUTPUT_PATH = "outputDir";
@@ -54,7 +55,7 @@ public class EAPVelocityTemplateBuilder implements EAPTemplateBuilder {
     private static final String VM_CONTEXT_LAYER_COMPONENTS = "components";
     private static final String VM_CONTEXT_INCLUDE = "include";
     private static final String VM_CONTEXT_EXCLUSIONS = "exclusions";
-    private static final String VM_CONTEXT_JBOSS_DEP_STRUCTURE_PATH = "jbossDepStructureFilePath";
+    private static final String VM_CONTEXT_FILES = "files";
     private static final String VM_CONTEXT_ARTIFACT_ID = "artifactId";
     private static final String VM_CONTEXT_GROUP_ID = "groupId";
     private static final String VM_CONTEXT_VERSION = "version";
@@ -72,6 +73,7 @@ public class EAPVelocityTemplateBuilder implements EAPTemplateBuilder {
     private static Template assemblyTemplate;
     private static Template jBossDepStructureTemplate;
     private static Template assemblyDynamicTemplate;
+    private static Template jbossAllTemplate;
 
     static {
         init(velocityEngine);
@@ -142,7 +144,7 @@ public class EAPVelocityTemplateBuilder implements EAPTemplateBuilder {
     }
 
     @Override
-    public String buildDynamicModuleAssembly(String id, String[] formats, String include, Collection<String> exclusions, String jbossDepStructureFilePath) {
+    public String buildDynamicModuleAssembly(String id, String[] formats, String include, Collection<String> exclusions, Collection<EAPAssemblyTemplateFile> files) {
         VelocityContext context = createContext();
         StringWriter writer = new StringWriter();
 
@@ -150,8 +152,19 @@ public class EAPVelocityTemplateBuilder implements EAPTemplateBuilder {
         context.put(VM_CONTEXT_LAYER_FORMATS, formats);
         context.put(VM_CONTEXT_INCLUDE, include);
         context.put(VM_CONTEXT_EXCLUSIONS, exclusions);
-        context.put(VM_CONTEXT_JBOSS_DEP_STRUCTURE_PATH, jbossDepStructureFilePath);
+        context.put(VM_CONTEXT_FILES, files);
         assemblyDynamicTemplate.merge(context, writer);
+
+        return writer.toString();
+    }
+
+    @Override
+    public String buildDynamicModuleDependency(String name) {
+        VelocityContext context = createContext();
+        StringWriter writer = new StringWriter();
+
+        context.put(VM_CONTEXT_NAME, name);
+        jbossAllTemplate.merge(context, writer);
 
         return writer.toString();
     }
@@ -194,6 +207,7 @@ public class EAPVelocityTemplateBuilder implements EAPTemplateBuilder {
         if (assemblyTemplate == null) assemblyTemplate = getTemplate(TEMPLATE_ASSEMBLY, TEMPLATES_STATIC_PATH);
         if (jBossDepStructureTemplate == null) jBossDepStructureTemplate = getTemplate(TEMPLATE_JBOSS_DEP_STRUCTURE, TEMPLATES_DYNAMIC_PATH);
         if (assemblyDynamicTemplate == null) assemblyDynamicTemplate = getTemplate(TEMPLATE_ASSEMBLY, TEMPLATES_DYNAMIC_PATH);
+        if (jbossAllTemplate == null) jbossAllTemplate = getTemplate(TEMPLATE_JBOSS_ALL, TEMPLATES_DYNAMIC_PATH);
     }
 
     protected static Template getTemplate(String name, String path) {

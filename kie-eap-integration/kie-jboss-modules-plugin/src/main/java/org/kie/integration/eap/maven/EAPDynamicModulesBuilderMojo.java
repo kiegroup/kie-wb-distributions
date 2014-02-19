@@ -68,10 +68,12 @@ import java.util.zip.ZipFile;
 public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
 
     private static final String JBOSS_DEP_STRUCTURE_NAME = "jboss-deployment-structure";
+    private static final String JBOSS_ALL_NAME = "jboss-all";
     private static final String EXTENSION_XML = ".xml";
     private static final String JBOSS_DEP_STRUCTURE_ZIP_ENTRY_NAME = "WEB-INF/jboss-deployment-structure.xml";
     private static final String ASSEMBLY_DESCRIPTOR_NAME = "-assembly.xml";
     private static final String EXCLUSIONS_PATH = "WEB-INF/lib/";
+    private static final String JBOSS_ALL_DEPENDENCY_NAME_PREFFIX = "jboss-all-";
 
     /** The path where modules will be deployed in EAP. Corresponds to modules/system/layers. **/
     private static final String ASSEMBLY_OUTPUT_PATH = new StringBuilder("modules").append(File.separator).
@@ -226,7 +228,6 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                     Collection<EAPModuleResource> resources = module.getResources();
                     if (resources != null && !resources.isEmpty()) {
                         for (EAPModuleResource resource : resources) {
-                            Artifact artifact = (Artifact) resource.getResource();
                             staticModuleResourceNames.add(EXCLUSIONS_PATH + resource.getFileName());
                         }
                     }
@@ -237,6 +238,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             ZipFile war = null;
             EAPWarResources warResources = null;
             String jbossDeploymentStructure = null;
+            String jbossAll = null;
             String warArtifactCoordinates = EAPArtifactUtils.getArtifactCoordinates(dynamicModule.getWarFile());
             try {
                 war = getWarFile(dynamicModule);
@@ -247,6 +249,12 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             } catch (ArtifactResolutionException e) {
                 throw new MojoExecutionException("Cannot resolve WAR dependency.", e);
             }
+            
+            // Generate the jboss-all descriptor is the dynamic module depends on another one.
+            if (dynamicModule.isAddJbossAll()) {
+                String jbossAllPropertyName = new StringBuilder(JBOSS_ALL_DEPENDENCY_NAME_PREFFIX).append(dynamicModule.getName()).toString();
+                jbossAll = templateBuilder.buildDynamicModuleDependency(jbossAllPropertyName);
+            }
 
             // Generate the assembly file.
             try {
@@ -255,7 +263,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                 exclusions.add(JBOSS_DEP_STRUCTURE_ZIP_ENTRY_NAME);
 
                 //Generate the assembly descriptor content.
-                String assembly = generateAssemblyDescriptor(dynamicModule.getName(), warArtifactCoordinates,jbossDeploymentStructure, exclusions);
+                String assembly = generateAssemblyDescriptor(dynamicModule.getName(), warArtifactCoordinates,jbossDeploymentStructure, jbossAll, exclusions);
 
                 // Write the generated assembly descriptor.
                 File out = EAPFileUtils.writeFile(new File(distroOutputPath),dynamicModule.getArtifact().getArtifactId() + ASSEMBLY_DESCRIPTOR_NAME, assembly);
@@ -334,7 +342,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             Model moduleModel = EAPArtifactUtils.generateModel(artifact);
             String moduleName = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_NAME));
             String moduleType = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_TYPE));
-            // String moduleDependenciesRaw = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_DEPENDENCIES));
+            String module_addJbossAll = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_ADD_JBOSS_ALL));
 
             // Obtain module properties.
             if (moduleName == null || moduleName.trim().length() == 0)
@@ -346,10 +354,17 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
 
             EAPDynamicModule result = new EAPDynamicModule(moduleName);
             result.setArtifact(artifact);
-
-            // Add the static module dependencies.
-            // TODO: addStaticDependencies();
-
+            if (module_addJbossAll != null && module_addJbossAll.trim().length() > 0) {
+                // For this dynamic module, add the jboss-all.xml descriptor.
+                // Check if the property is available in current project.
+                String jbossAllPropertyName = new StringBuilder(JBOSS_ALL_DEPENDENCY_NAME_PREFFIX).append(moduleName).toString();
+                String jbossAllPropertyValue = (String) project.getProperties().get(jbossAllPropertyName);
+                if (jbossAllPropertyValue == null || jbossAllPropertyValue.trim().length() == 0) throw new EAPModuleDefinitionException(moduleName, "This module contains the jboss-all.xml descriptor " +
+                        "but no project property named '" + jbossAllPropertyName+ "' is found. Please, set this property in current project using the name of the dependant webapp file as the value.");
+                
+                result.setAddJbossAll(Boolean.valueOf(module_addJbossAll));
+            }
+            
             // Obtain module resources.
             List<Dependency> moduleDependencies = moduleModel.getDependencies();
             if (moduleDependencies != null && !moduleDependencies.isEmpty()) {
@@ -473,13 +488,71 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
         return templateBuilder.buildJbossDeploymentStructure(dependencies);
     }
 
-    private String generateAssemblyDescriptor(String layerId, String inputWarCoordinates, String jbossDeploymentStructureContent, Collection<String> exclusions) throws MojoExecutionException, IOException {
+    private String generateAssemblyDescriptor(String layerId, String inputWarCoordinates, String jbossDeploymentStructureContent, String jbossAllContent, Collection<String> exclusions) throws MojoExecutionException, IOException {
+        Collection<EAPTemplateBuilder.EAPAssemblyTemplateFile> assemblyFiles = new LinkedList<EAPTemplateBuilder.EAPAssemblyTemplateFile>();
+        
         // Write the jboss-deployment-structure content into a temp path.
         String jbossDepStuctureName = new StringBuilder(layerId).append("-").append(JBOSS_DEP_STRUCTURE_NAME).append(EXTENSION_XML).toString();
+        final File out = EAPFileUtils.writeFile(new File(distroOutputPath), jbossDepStuctureName, jbossDeploymentStructureContent);
 
-        File out = EAPFileUtils.writeFile(new File(distroOutputPath), jbossDepStuctureName, jbossDeploymentStructureContent);
+        EAPTemplateBuilder.EAPAssemblyTemplateFile jbossDepStructureFile = new EAPTemplateBuilder.EAPAssemblyTemplateFile() {
+
+            @Override
+            public String getSource() {
+                return out.getAbsolutePath();
+            }
+
+            @Override
+            public String getOutputDirectory() {
+                return EAPConstants.WEB_INF;
+            }
+
+            @Override
+            public String getFinalName() {
+                return new StringBuilder(JBOSS_DEP_STRUCTURE_NAME).append(EXTENSION_XML).toString();
+            }
+
+            @Override
+            public boolean isFiltered() {
+                return false;
+            }
+        };
+
+        assemblyFiles.add(jbossDepStructureFile);
+        
+        if (jbossAllContent != null) {
+            String jbossAllName = new StringBuilder(layerId).append("-").append(JBOSS_ALL_NAME).append(EXTENSION_XML).toString();
+            final File out2 = EAPFileUtils.writeFile(new File(distroOutputPath), jbossAllName, jbossAllContent);
+            
+            EAPTemplateBuilder.EAPAssemblyTemplateFile jbossAllFile = new EAPTemplateBuilder.EAPAssemblyTemplateFile() {
+
+                @Override
+                public String getSource() {
+                    return out2.getAbsolutePath();
+                }
+
+                @Override
+                public String getOutputDirectory() {
+                    return EAPConstants.META_INF;
+                }
+
+                @Override
+                public String getFinalName() {
+                    return new StringBuilder(JBOSS_ALL_NAME).append(EXTENSION_XML).toString();
+                }
+
+                @Override
+                public boolean isFiltered() {
+                    return true;
+                }
+            };
+
+            assemblyFiles.add(jbossAllFile);
+        }
+        
+        
         // Build the content.
-        return templateBuilder.buildDynamicModuleAssembly(layerId, assemblyFormats.split(","), inputWarCoordinates ,exclusions, out.getAbsolutePath());
+        return templateBuilder.buildDynamicModuleAssembly(layerId, assemblyFormats.split(","), inputWarCoordinates ,exclusions, assemblyFiles);
     }
 
     private Collection<EAPModuleGraphNodeDependency> mergeDependencies(Collection<EAPModuleNodeGraphDependency> staticModuleDependencies, Collection<EAPModuleNodeGraphDependency> actualDependencies, ZipFile war) {

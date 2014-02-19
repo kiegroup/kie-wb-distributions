@@ -13,9 +13,12 @@
   <name>KIE EAP - BRMS Webapp</name>
 
   <properties>
+    <!-- The distribution name. -->
     <modules.distribution.name>brms-webapp</modules.distribution.name>
+    <!-- The output path where descriptors and assemblies will be placed. -->
     <modules.tmp.path>${project.build.directory}/generated</modules.tmp.path>
-    <modules.assembly.finalName>kie-drools-wb-distribution-wars-${project.version}-${modules.distribution.name}</modules.assembly.finalName>
+    <!-- The final name for the assembled webapp. -->
+    <modules.kie-drools-wb.finalName>kie-drools-wb-distribution-wars-${project.version}-${modules.distribution.name}</modules.kie-drools-wb.finalName>
   </properties>
 
   <!-- The BRMS distributions dependencies. -->
@@ -67,7 +70,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>kie-drools-wb-distribution-wars-${project.version}-${modules.distribution.name}</finalName>
+              <finalName>${modules.kie-drools-wb.finalName}</finalName>
               <descriptors>
                 <!-- Assembly the kie-drools-wb WAR. -->
                 <descriptor>${modules.tmp.path}/dynamic-modules/${modules.distribution.name}/org-kie-drools-wb-webapp-assembly.xml</descriptor>
@@ -82,30 +85,6 @@
         </executions>
 
       </plugin>
-
-      <!-- TODO: For testing.
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <finalName>${modules.assembly.finalName}</finalName>
-          <descriptors>
-            <descriptor>${project.basedir}/proves/prova-assembly.xml</descriptor>
-          </descriptors>
-          <appendAssemblyId>false</appendAssemblyId>
-          <archive>
-            <addMavenDescriptor>false</addMavenDescriptor>
-          </archive>
-        </configuration>
-      </plugin> -->
 
     </plugins>
 

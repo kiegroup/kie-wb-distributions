@@ -29,6 +29,7 @@ public class EAPDynamicModule implements EAPModule {
     private Artifact artifact;
     private Collection<EAPModuleDependency> dependencies;
     private Artifact warFile;
+    private boolean addJbossAll;
 
     public EAPDynamicModule(String name) {
         this.name = name;
@@ -113,4 +114,11 @@ public class EAPDynamicModule implements EAPModule {
         this.warFile = warFile;
     }
 
+    public boolean isAddJbossAll() {
+        return addJbossAll;
+    }
+
+    public void setAddJbossAll(boolean addJbossAll) {
+        this.addJbossAll = addJbossAll;
+    }
 }

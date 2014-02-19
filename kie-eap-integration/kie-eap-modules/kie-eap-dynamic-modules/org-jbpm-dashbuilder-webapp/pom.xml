@@ -14,6 +14,9 @@
   <properties>
     <module.name>org.jbpm.dashbuilder</module.name>
     <module.type>dynamic</module.type>
+    <!-- The jBPM Dashbuilder webapp depends on kie-wb-webapp.
+        So this module should add the jboss-all.xml descriptor.-->
+    <module.add-jboss-all>true</module.add-jboss-all>
   </properties>
 
   <dependencies>

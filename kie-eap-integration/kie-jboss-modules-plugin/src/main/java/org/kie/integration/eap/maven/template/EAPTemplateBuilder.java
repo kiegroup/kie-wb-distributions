@@ -71,9 +71,25 @@ public interface EAPTemplateBuilder {
      * @param formats The assembly formats.
      * @param include The source artifact to include.
      * @param exclusions The exclusions to exclude from the source artifact.
-     * @param jbossDepStructureFilePath The path for the descriptor file.
+     * @param files The files to include in the assembly descriptor..
      * @return The assembly descriptor file for a given dynamic module.
      */
-    String buildDynamicModuleAssembly(String id, String[] formats, String include, Collection<String> exclusions, String jbossDepStructureFilePath);
+    String buildDynamicModuleAssembly(String id, String[] formats, String include, Collection<String> exclusions, Collection<EAPAssemblyTemplateFile> files);
 
+    /**
+     * Build the jboss-all.xml descriptor to add a dependency from a dynamic module to another one.
+     * @param name The dependant module name.
+     * @return the jboss-all.xml descriptor content.
+     */
+    String buildDynamicModuleDependency(String name);
+
+    /**
+     * Represents an assembly file tag.
+     */
+    public interface EAPAssemblyTemplateFile {
+        String getSource();
+        String getOutputDirectory();
+        String getFinalName();
+        boolean isFiltered();
+    }
 }

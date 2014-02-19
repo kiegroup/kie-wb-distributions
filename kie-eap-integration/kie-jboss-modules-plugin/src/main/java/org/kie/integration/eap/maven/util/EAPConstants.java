@@ -52,8 +52,11 @@ public class EAPConstants {
     /** The property for the module slot in a pom's module artifact. **/
     public static final String MODULE_SLOT = "module.slot";
 
-    /** The property for the module dependencies in a pom's module artifact. **/
+    /** The property for the static module dependencies in a pom's module artifact. **/
     public static final String MODULE_DEPENDENCIES = "module.dependencies";
+
+    /** The property for the dynamic module dependency in a pom's module artifact. **/
+    public static final String MODULE_ADD_JBOSS_ALL= "module.add-jboss-all";
 
     public static final String MODULE_TYPE_STATIC = "static";
 
@@ -71,6 +74,9 @@ public class EAPConstants {
 
     public static final String DISTRO_PACKAGE_FILE_NAME = "distribution.xml";
 
+    public static final String WEB_INF = "WEB-INF";
+
+    public static final String META_INF = "META-INF";
 
     public static final String NEW_LINE = "\n";
 }

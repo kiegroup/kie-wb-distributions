@@ -105,19 +105,19 @@ To generate a distribution, the plugin requires some inputs:
 
 Using these inputs, the plugin:
 
-1.- *Scans for static module definitions*
+1. *Scans for static module definitions*
     Read module names, slots, resources and other meta-information.
 
-2.- *Scans for base module definitions*
+2. *Scans for base module definitions*
     Read module names, slots, resources and other meta-information.
 
-3.- *Generates the dependency graph for the modules*
+3. *Generates the dependency graph for the modules*
 
-4.- *Resolve the module that contains each node in the dependency graph, then adds a dependency to this module*
+4. *Resolve the module that contains each node in the dependency graph, then adds a dependency to this module*
 
-5.- *Generates the static modules graph with all resolutions performed*
+5. *Generates the static modules graph with all resolutions performed*
 
-6.- *Generates the assembly descriptors for the layer to generate, based on the previous static module graph resolved*
+6. *Generates the assembly descriptors for the layer to generate, based on the previous static module graph resolved*
 
 Goals
 -----
@@ -135,9 +135,9 @@ This section contains information about:
 
 * Profiles
 * Distributions generation
-* Adding static module definitions
-* Adding new JBoss EAP/AS versions to support.
-* Adding other static layer definitions.
+* Adding static module dependencies
+* Adding new JBoss EAP/AS versions to support
+* Adding other static layer definitions
 * How to change the target JBoss EAP/AS version
 
 Profiles
@@ -185,17 +185,34 @@ Run <code>mvn clean install -Deap-base-modules</code>
 How to add static dependencies
 ------------------------------
 
-You can add specific custom inter-module dependencies if Maven do not resolve them for any reason.
+You can add custom module dependencies for a given static or dynamic module if Maven do not resolve them for any reason.
 
-This example adds a static dependency from module <code>org.jbpm</code> to module <code>org.drools</code>:
+**Adding a dependency from a static module to another static module**   
+This example adds a static dependency from module <code>org.jbpm</code> to module <code>org.drools</code>:   
 
-1.- Edit the pom file for the <code>org.jbpm</code> module, located at <code>kie-eap-modules/kie-eap-static-modules/org-jbpm</code>
-2.- Add a new maven property:
-    - Named <code>module.dependencies</code>
-    - The value is a comma separated names of modules to depend on, in format <code>module:slot</code>. You can use maven properties as <code>${project.version}</code>
-    In this example: <code><module.dependencies>org.drools:${project.version}</module.dependencies></code>
-3.- Build and install the <code>org.jbpm</code> maven module.
-4.- Build and install the static layer distribution and the web application distribution, if necessary.
+1. Edit the pom file for the <code>org.jbpm</code> module, located at <code>kie-eap-modules/kie-eap-static-modules/org-jbpm</code>   
+2. Add a new maven property:    
+    - Named <code>module.dependencies</code>    
+    - The value is a comma separated names of modules to depend on, in format <code>module:slot</code>. You can use maven properties as <code>${project.version}</code>    
+    In this example: <code>&lt;module.dependencies&gt;org.drools:${project.version}&lt;/module.dependencies&gt;</code>    
+3. Build and install the <code>org.jbpm</code> maven module.    
+4. Build and install the static layer distribution and the web application distribution, if necessary.    
+
+**Adding a dependency from a dynamic module to another dynamic module**    
+Dynamic modules (EAR/WAR) can have dependencies to another dynamic modules too, by adding a <code>jboss-all.xml</code> descriptor file.        
+
+This example adds a dependency from dynamic module <code>org.jbpm.dashbuilder</code> to module <code>org-kie-wb-webapp</code>:    
+
+1. Edit the pom file for the <code>org.jbpm.dashbuilder</code> module, located at <code>kie-eap-modules/kie-eap-dynamic-modules/org-jbpm-dashbuilder-webapp</code>    
+2. Add a new maven property:    
+    - Named <code>module.add-jboss-all</code>    
+    - Use <code>true</code> as value if you want to add the <code>jboss-all.xml</code> file in the generated webapp.   
+    In this example: <code>&lt;module.add-jboss-all&gt;true&lt;/module.add-jboss-all&gt;</code>    
+3. In the project that build these dynamic modules, add a maven property named <code>jboss-all-<dynamic_module_name></code>. The value for this property must be the name for the final assembled dependant webapp. In this example:        
+    - Consider the final assembled skinny kie-wb-webapp will be named <code>kie-wb-webapp-modules.war</code>,   
+    - Then, you must add a maven property as: <code>&lt;jboss-all-org.jbpm.dashbuilder&gt;kie-wb-webapp-modules.war&lt;/jboss-all-org.jbpm.dashbuilder&gt;</code>   
+3. Build and install the <code>org.jbpm.dashbuilder</code> maven module.    
+4. Build and install the dynamic layer distribution of this web application distribution.   
 
 How to create a static module definition
 ----------------------------------------
