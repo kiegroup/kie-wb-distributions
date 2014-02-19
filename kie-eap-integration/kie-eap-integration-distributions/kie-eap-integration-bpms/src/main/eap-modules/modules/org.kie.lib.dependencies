@@ -5,6 +5,7 @@ javax.persistence.api
 org.antlr
 org.apache.commons.codec
 org.apache.commons.io
+org.apache.helix
 org.apache.log4j
 org.apache.xalan
 org.apache.zookeeper
