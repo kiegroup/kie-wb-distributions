@@ -1,0 +1,3 @@
+org.drools.compiler.cdi.KieCDIExtension
+org.uberfire.commons.services.cdi.StartupBeanExtension
+org.uberfire.security.server.cdi.SecurityExtension
