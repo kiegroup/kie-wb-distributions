@@ -16,6 +16,7 @@
     <module.name>org.sonatype.plexus</module.name>
     <module.type>static</module.type>
     <module.location>org/sonatype/plexus</module.location>
+    <module.dependencies>javax.api:main</module.dependencies>
     <module.slot>${project.version}</module.slot>
   </properties>
 
