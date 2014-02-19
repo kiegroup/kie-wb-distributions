@@ -233,6 +233,9 @@
           <exclude>WEB-INF/lib/stax-*.jar</exclude>
           <exclude>WEB-INF/lib/stax2-*.jar</exclude>
 
+          <!-- exclude UF form-based login.jsp -->
+          <exclude>login.jsp</exclude>
+
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
