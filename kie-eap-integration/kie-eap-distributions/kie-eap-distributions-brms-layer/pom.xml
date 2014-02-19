@@ -545,7 +545,7 @@
             <version>${project.version}</version>
             <type>pom</type>
             <exclusions>
-              <!-- Do not use these base modules as they resources are provided by the BPMS static layer (using newer resource versions). -->
+              <!-- Do not use these base modules as they resources are provided by the BRMS static layer (using newer resource versions). -->
               <exclusion>
                 <groupId>org.kie.modules</groupId>
                 <artifactId>org-antlr-main</artifactId>
@@ -560,6 +560,8 @@
           <failOnMissingDependency>true</failOnMissingDependency>
           <!-- Print the generated modules graph to a file. -->
           <!--<graphOutputFile>${project.basedir}/../../doc/brms-graph.txt</graphOutputFile>-->
+          <!-- Do not include the dependencies marked as optional. -->
+          <includeOptionalDependencies>false</includeOptionalDependencies>
         </configuration>
         <executions>
           <execution>

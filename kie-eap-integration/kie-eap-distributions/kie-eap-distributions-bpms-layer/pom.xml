@@ -589,6 +589,8 @@
           <failOnMissingDependency>true</failOnMissingDependency>
           <!-- Print the generated modules graph to a file. -->
           <!--<graphOutputFile>${project.basedir}/../../doc/bpms-graph.txt</graphOutputFile>-->
+          <!-- Do not include the dependencies marked as optional. -->
+          <includeOptionalDependencies>false</includeOptionalDependencies>
         </configuration>
         <executions>
           <execution>
