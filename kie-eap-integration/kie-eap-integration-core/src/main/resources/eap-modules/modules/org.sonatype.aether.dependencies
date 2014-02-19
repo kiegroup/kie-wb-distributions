@@ -1,4 +1,4 @@
-org.sonatype.sisu
-org.codehouse.plexus
 org.apache.maven.wagon
+org.codehouse.plexus
+org.sonatype.sisu
 org.slf4j

@@ -1,5 +1,5 @@
 org.apache.maven.wagon
-org.sonatype.sisu
 org.codehouse.plexus
-org.sonatype.plexus
 org.sonatype.aether
+org.sonatype.plexus
+org.sonatype.sisu

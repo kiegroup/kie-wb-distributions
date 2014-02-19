@@ -1,9 +1,9 @@
 com.google.protobuf
+javax.api
+org.drools
 org.joda.time
 org.kie
+org.kie.lib
+org.mvel
 org.osgi.core
 org.slf4j
-org.drools
-org.kie.lib
-javax.api
-org.mvel

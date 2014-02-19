@@ -1,2 +1,3 @@
-org.sonatype.sisu
+javax.api
 org.codehouse.plexus
+org.sonatype.sisu
