@@ -176,10 +176,6 @@
           <exclude>WEB-INF/lib/jettison-*.jar</exclude>
           <!--<exclude>WEB-INF/lib/joda-time-*.jar</exclude>-->
           <exclude>WEB-INF/lib/jsf-api-*.jar</exclude>
-          <!-- <exclude>WEB-INF/lib/mail-*.jar</exclude>  ALREADY EXCLUDED-->
-          <!-- <exclude>WEB-INF/lib/resteasy-jaxb-provider*.jar</exclude> -->
-          <!-- <exclude>WEB-INF/lib/resteasy-jaxrs-*.jar</exclude> -->
-          <!-- <exclude>WEB-INF/lib/resteasy-multipart-provider-*.jar</exclude>  ALREADY EXCLUDED-->
           <!--<exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>-->
           <!--<exclude>WEB-INF/lib/slf4j-ext-*.jar</exclude>-->
           <!--<exclude>WEB-INF/lib/velocity-*.jar</exclude>-->

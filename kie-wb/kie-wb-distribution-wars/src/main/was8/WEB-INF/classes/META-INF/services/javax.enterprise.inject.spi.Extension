@@ -1,3 +1,4 @@
+org.drools.compiler.cdi.KieCDIExtension
 org.jbpm.shared.services.cdi.BootOnLoadExtension
 org.jbpm.console.ng.bd.backend.server.profile.ProfileManagerExtension
 org.uberfire.commons.services.cdi.StartupBeanExtension

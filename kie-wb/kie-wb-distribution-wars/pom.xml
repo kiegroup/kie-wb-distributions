@@ -17,6 +17,37 @@
 
   <build>
     <plugins>
+      <!-- special handling for WAS8.5 as sisu-inject-bean:2.2.3 contains javax.inject classes which conflicts with WAS-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <outputFile>${project.build.directory}/lib/nojavax-sisu-inject-bean.jar</outputFile>
+          <artifactSet>
+            <includes>
+              <include>org.sonatype.sisu:sisu-inject-bean</include>
+            </includes>
+          </artifactSet>
+          <filters>
+            <filter>
+              <artifact>org.sonatype.sisu:sisu-inject-bean</artifact>
+              <excludes>
+                <exclude>javax/**</exclude>
+              </excludes>
+            </filter>
+          </filters>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- end of WAS 8.5 specific handling -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -38,6 +69,11 @@
           </descriptors>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
+            <!-- special manifest entries to disable JAX-WS engine on WebSphere and to allow usage of CXF -->
+            <manifestEntries>
+              <DisableIBMJAXWSEngine>true</DisableIBMJAXWSEngine>
+              <Ignore-Scanning-Archives>cxf-api-${version.org.apache.cxf}.jar,cxf-rt-bindings-soap-${version.org.apache.cxf}.jar,cxf-rt-bindings-xml-${version.org.apache.cxf}.jar,cxf-rt-core-${version.org.apache.cxf}.jar,cxf-rt-databinding-jaxb-${version.org.apache.cxf}.jar,cxf-rt-frontend-jaxws-${version.org.apache.cxf}.jar,cxf-rt-frontend-simple-${version.org.apache.cxf}.jar,cxf-rt-transports-http-${version.org.apache.cxf}.jar,cxf-rt-ws-addr-${version.org.apache.cxf}.jar,cxf-rt-ws-policy-${version.org.apache.cxf}.jar</Ignore-Scanning-Archives>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
@@ -78,6 +114,16 @@
       <artifactId>hibernate-core</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.hibernate.common</groupId>
+      <artifactId>hibernate-commons-annotations</artifactId>
+      <version>4.0.1.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>antlr</groupId>
+      <artifactId>antlr</artifactId>
+      <version>2.7.7</version>
+    </dependency>
+    <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
     </dependency>
@@ -91,6 +137,18 @@
       <version>3.1.1</version>
       <!-- We specifically need the 3.1.1 version, and NOT HIGHER! (thus not 3.5) -->
       <!-- (need the "antlr.RecognitionExeption" class, among others) -->
+    </dependency>
+ <!-- For WAS8 shading -->
+    <dependency>
+      <groupId>org.sonatype.sisu</groupId>
+      <artifactId>sisu-inject-bean</artifactId>
+      <version>2.2.3</version>
+    </dependency>
+    <!-- WAS8 requires JUL -->
+    <dependency>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-jdk14</artifactId>
+     <version>${version.org.slf4j}</version>
     </dependency>
   </dependencies>
 

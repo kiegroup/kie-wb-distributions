@@ -7,26 +7,16 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceUnit;
 
 import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
-import org.jbpm.kie.services.cdi.producer.UserGroupInfoProducer;
 import org.jbpm.runtime.manager.impl.DefaultRuntimeEnvironment;
 import org.jbpm.runtime.manager.impl.SimpleRuntimeEnvironment;
-import org.jbpm.services.task.audit.JPATaskLifeCycleEventListener;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
-import org.jbpm.services.task.lifecycle.listeners.BAMTaskEventListener;
-import org.kie.api.task.TaskLifeCycleEventListener;
-import org.jbpm.shared.services.cdi.Selectable;
 import org.kie.internal.runtime.manager.RuntimeEnvironment;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
 import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
-import org.kie.internal.task.api.UserInfo;
 import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.backend.server.io.IOSecurityAuth;
 import org.uberfire.backend.server.io.IOSecurityAuthz;
@@ -71,12 +61,8 @@ public class ApplicationScopedProducer {
     @Inject
     private IOWatchServiceNonDotImpl watchService;
 
-    @PersistenceUnit(unitName = "org.jbpm.domain")
-    private EntityManagerFactory emf;
 
-    @Inject
-    @Selectable
-    private UserGroupInfoProducer userGroupInfoProducer;
+
 
     public ApplicationScopedProducer() {
         if ( System.getProperty( "org.uberfire.watcher.autostart" ) == null ) {
@@ -132,29 +118,7 @@ public class ApplicationScopedProducer {
         return ioSearchService;
     }
 
-    @Produces
-    public org.kie.api.task.UserGroupCallback produceSelectedUserGroupCalback() {
-        return userGroupInfoProducer.produceCallback();
-    }
 
-    @Produces
-    public UserInfo produceUserInfo() {
-        return userGroupInfoProducer.produceUserInfo();
-    }
-
-    @Produces
-    public EntityManagerFactory getEntityManagerFactory() {
-        if ( this.emf == null ) {
-            // this needs to be here for non EE containers
-            try {
-                this.emf = InitialContext.doLookup( "jBPMEMF" );
-            } catch ( NamingException e ) {
-                this.emf = Persistence.createEntityManagerFactory( "org.jbpm.domain" );
-            }
-
-        }
-        return this.emf;
-    }
 
     @Produces
     @Singleton
@@ -167,16 +131,6 @@ public class ApplicationScopedProducer {
         return environment;
     }
 
-    @Produces
-    @ApplicationScoped
-    public TaskLifeCycleEventListener produceBAMListener() {
-        return new BAMTaskEventListener();
-    }
 
-    @Produces
-    @ApplicationScoped
-    public TaskLifeCycleEventListener produceTaskAuditListener() {
-        return new JPATaskLifeCycleEventListener();
-    }
 
 }
