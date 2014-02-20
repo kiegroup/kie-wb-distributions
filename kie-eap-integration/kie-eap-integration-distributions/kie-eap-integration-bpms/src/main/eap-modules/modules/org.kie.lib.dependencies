@@ -1,3 +1,4 @@
+com.opensymphony.quartz
 javax.ejb.api
 javax.enterprise.api
 javax.inject.api

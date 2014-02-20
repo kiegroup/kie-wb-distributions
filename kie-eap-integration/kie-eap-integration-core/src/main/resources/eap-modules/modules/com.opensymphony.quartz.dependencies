@@ -1,4 +1,5 @@
 javax.activation.api
+javax.api
 javax.jms.api
 javax.mail.api
 javax.servlet.api
