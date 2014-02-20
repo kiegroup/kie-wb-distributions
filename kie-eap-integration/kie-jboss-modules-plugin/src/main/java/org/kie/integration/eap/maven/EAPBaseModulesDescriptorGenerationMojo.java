@@ -96,14 +96,14 @@ public class EAPBaseModulesDescriptorGenerationMojo extends AbstractMojo {
     /**
      * The name of the JBoss application server.
      *
-     * @parameter default-value="unnamed"
+     * @parameter default-value=""
      */
     private String eapName;
 
     /**
      * The version for the maven modules to generate.
      *
-     * @parameter default-value="unnamed"
+     * @parameter default-value=""
      */
     private String mavenModulesVersion;
 
@@ -112,7 +112,13 @@ public class EAPBaseModulesDescriptorGenerationMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (eapRootPath == null || eapRootPath.trim().length() == 0) throw new MojoFailureException("EAP root path is not set.");
         if (outputFilePath == null || outputFilePath.trim().length() == 0) throw new MojoFailureException("Output file path is not set.");
+        if (eapName == null || eapName.trim().length() == 0) throw new MojoFailureException("The resulting distributio JBoss EAP/AS name is not set.");
 
+        if (mavenModulesVersion == null || mavenModulesVersion.trim().length() == 0) {
+            getLog().warn("No mavenModulesVersion goal property set. By default the current project version will be used.");
+            mavenModulesVersion = project.getVersion();
+        }
+        
         getLog().info("Starting the generation of base EAP static modules present in path " + eapRootPath);
         EAPFileSystemBaseModulesScanner generator = new EAPFileSystemBaseModulesScanner(eapRootPath, eapName, mavenModulesVersion, outputFilePath);
         generator.setLogger(getLog());

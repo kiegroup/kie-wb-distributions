@@ -122,11 +122,252 @@ Using these inputs, the plugin:
 Goals
 -----
 
-TODO
+These are the plugin goals:
 
-* <code>generate-eap-distribution</code>
-* <code>build-static</code>
-* <code>build-dynamic</code>
+* **generate-eap-base-module-descriptors**   
+    - Description
+        - When a new JBoss EAP/AS version is released, this goal is used to generate the module definitions for all its base layer modules.
+        - It takes the <code>EAP_ROOT</code> path as argument and scans for all <code>module.xml </code>inside <code>modules/system/layers/base</code> directory.   
+        - For each resource defined in the <code>module.xml</code>, if the resource is type jar, scan the jar file in oder to look up for a <code>pom.xml</code> maven resource descriptor.    
+            - If the resource contains a <code>pom.xml</code>, its parsed and used to generate the module definition.
+            - If the resource does not contains a <code>pom.xml</code>, its filename parsed and used to generate the module definition.    
+    - Configuration parameters
+        <table border="1">
+            <tr>
+                <th>Parameter</th>
+                <th>Allowed values</th>
+                <th>Default value</th>
+                <th>Required</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>eapRootPath</td>
+                <td>Any string</td>
+                <td></td>
+                <td>true</td>
+                <td>The root path for the JBoss EAP/AS installation to scan</td>
+            </tr>
+            <tr>
+                <td>outputFilePath</td>
+                <td>Any string</td>
+                <td></td>
+                <td>true</td>
+                <td>The full path for the generated output resources file</td>
+            </tr>
+            <tr>
+                <td>eapName</td>
+                <td>Any string</td>
+                <td></td>
+                <td>true</td>
+                <td>The name of the JBoss application server</td>
+            </tr>
+            <tr>
+                <td>tempPath</td>
+                <td>Any string</td>
+                <td>java.io.tmpdir</td>
+                <td>false</td>
+                <td>The full path for the temporary files. If not set, the java.io.tmpdir will be used as default</td>
+            </tr>
+            <tr>
+                <td>mavenModulesVersion</td>
+                <td>Any string</td>
+                <td>The current project version</td>
+                <td>false</td>
+                <td>The version for the maven modules to generate</td>
+            </tr>
+        </table>
+    - Result   
+        - A multi-module maven structure will be generated in directory as specified by <code>outputFilePath</code> property.
+
+* **static-layer-graph**   
+    - Description
+        - This goal is used to generate and print the distribution graph for the static module layer specified.
+        - All static module definitions (pom type artifacts) to add in the generated layer graph must be added as current project dependencies.   
+        - This distribution graph is generated for a given JBoss EAP/AS version, so the base module descriptors for the target version must be specified using plugin configuration parameter.      
+    - Configuration parameters
+        <table border="1">
+            <tr>
+                <th>Parameter</th>
+                <th>Allowed values</th>
+                <th>Default value</th>
+                <th>Required</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>distributionName</td>
+                <td>Any string</td>
+                <td></td>
+                <td>true</td>
+                <td>The name of the JBoss EAP layer distrubtion to geneate</td>
+            </tr>
+            <tr>
+                <td>baseModule</td>
+                <td>A base module dependency</td>
+                <td></td>
+                <td>true</td>
+                <td>The maven module that contains all base EAP/AS modules for a given version. It can contain exclusions</td>
+            </tr>
+            <tr>
+                <td>graphOutputFile</td>
+                <td>Any string</td>
+                <td></td>
+                <td>false</td>
+                <td>The file to print the generated distribution graph</td>
+            </tr>
+            <tr>
+                <td>includeOptionalDependencies</td>
+                <td>Boolean value</td>
+                <td>false</td>
+                <td>false</td>
+                <td>The flag that indicates if the optional dependencies must be scanned in the current project dependency tree</td>
+            </tr>
+            <tr>
+                <td>failOnMissingDependency</td>
+                <td>Boolean value</td>
+                <td>true</td>
+                <td>false</td>
+                <td>The flag that indicates if the build must fail when a dependency to a module resource is not satisfied</td>
+            </tr>
+            <tr>
+                <td>failOnUnresolvableResource</td>
+                <td>Boolean value</td>
+                <td>true</td>
+                <td>false</td>
+                <td>The flag that indicates if the build must fail when a module resource cannot be resolved in current project dependency tree</td>
+            </tr>
+            <tr>
+                <td>failOnVersionMismatchedResource</td>
+                <td>Boolean value</td>
+                <td>false</td>
+                <td>false</td>
+                <td>The flag that indicates if the build must fail when a module version for a resource is not resolvable in current project dependencies</td>
+            </tr>
+        </table>
+    - Result   
+        - The distribution graph for the static module layer specified is printed in system output and in the file specified in property <code>graphOutputFile</code>, if any.   
+
+* **build-static-layer**   
+    - Description
+        - This goal is used to generate the distribution ZIP file for the static module layer specified.
+        - All static module definitions (pom type artifacts) to add in the generated layer must be added as current project dependencies.   
+        - This distribution is generated for a given JBoss EAP/AS version, so the base module descriptors for the target version must be specified using plugin configuration parameter.      
+    - Configuration parameters
+        <table border="1">
+            <tr>
+                <th>Parameter</th>
+                <th>Allowed values</th>
+                <th>Default value</th>
+                <th>Required</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>distributionName</td>
+                <td>Any string</td>
+                <td></td>
+                <td>true</td>
+                <td>The name of the JBoss EAP layer distrubtion to geneate</td>
+            </tr>
+            <tr>
+                <td>baseModule</td>
+                <td>A base module dependency</td>
+                <td></td>
+                <td>true</td>
+                <td>The maven module that contains all base EAP/AS modules for a given version. It can contain exclusions</td>
+            </tr>
+            <tr>
+                <td>graphOutputFile</td>
+                <td>Any string</td>
+                <td></td>
+                <td>false</td>
+                <td>The file to print the generated distribution graph</td>
+            </tr>
+            <tr>
+                <td>includeOptionalDependencies</td>
+                <td>Boolean value</td>
+                <td>false</td>
+                <td>false</td>
+                <td>The flag that indicates if the optional dependencies must be scanned in the current project dependency tree</td>
+            </tr>
+            <tr>
+                <td>failOnMissingDependency</td>
+                <td>Boolean value</td>
+                <td>true</td>
+                <td>false</td>
+                <td>The flag that indicates if the build must fail when a dependency to a module resource is not satisfied</td>
+            </tr>
+            <tr>
+                <td>failOnUnresolvableResource</td>
+                <td>Boolean value</td>
+                <td>true</td>
+                <td>false</td>
+                <td>The flag that indicates if the build must fail when a module resource cannot be resolved in current project dependency tree</td>
+            </tr>
+            <tr>
+                <td>failOnVersionMismatchedResource</td>
+                <td>Boolean value</td>
+                <td>false</td>
+                <td>false</td>
+                <td>The flag that indicates if the build must fail when a module version for a resource is not resolvable in current project dependencies</td>
+            </tr>
+            <tr>
+                <td>outputPath</td>
+                <td>Any string</td>
+                <td></td>
+                <td>true</td>
+                <td>The output path for the genrated module descriptor and assembly files. The resulting assembly descriptor file will be created in this path</td>
+            </tr>
+            <tr>
+                <td>assemblyFormats</td>
+                <td>Comma separated assembly formats</td>
+                <td>dir,zip</td>
+                <td>false</td>
+                <td>The output formats for assembly descriptor. Use comma-separated values</td>
+            </tr>
+        </table>
+    - Result   
+        - The distribution graph for the static module layer specified is printed in system output and in the file specified in property <code>graphOutputFile</code>, if any.
+        - The resulting distribution files and resources, such as <code>module.xml</code> descriptors or module jars, are generated in the directory specified in property <code>outputPath</code>.
+        - Inside this directory, the assembly descriptor for this distribution is generated in the following file path: <code>static-modules/${distributionName}/${distributionName}-assembly.xml</code>    
+
+* **build-dynamic-modules**   
+    - Description
+        - This goal is used to generate the skinny WAR files for a given static layer distribution. 
+        - All the static module resources that the web application depends are excluded from the skinny generated artifact and the modules added as dependencies in the <code>jboss-deployment-descriptor.xml</code> file.      
+        - If the web application depends on another web application, the <code>jboss-all.xml</code> is added into the generated skinny artifact.      
+    - Configuration parameters
+        <table border="1">
+            <tr>
+                <th>Parameter</th>
+                <th>Allowed values</th>
+                <th>Default value</th>
+                <th>Required</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>distributionName</td>
+                <td>Any string</td>
+                <td></td>
+                <td>true</td>
+                <td>The name of the dynamic distrubtion to geneate</td>
+            </tr>
+            <tr>
+                <td>outputPath</td>
+                <td>Any string</td>
+                <td></td>
+                <td>true</td>
+                <td>The output path for the generated artifacts and assembly files. The resulting assembly.xml file will be created inside this path</td>
+            </tr>
+            <tr>
+                <td>assemblyFormats</td>
+                <td>Comma separated assembly formats</td>
+                <td>dir,war</td>
+                <td>false</td>
+                <td>The output formats for assembly descriptor. Use comma-separated values</td>
+            </tr>
+        </table>
+    - Result   
+        - The resulting web applications are generated in the directory specified in property <code>outputPath</code>.
+        - Inside this directory, the assembly descriptor for each web application is generated in the following file path: <code>dynamic-modules/${distributionName}/${dynamnic-module-name}-assembly.xml</code>
 
 Usage
 =====

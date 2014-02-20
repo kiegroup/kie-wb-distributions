@@ -51,7 +51,7 @@
           <execution>
             <phase>package</phase>
             <goals>
-              <goal>build-dynamic</goal>
+              <goal>build-dynamic-modules</goal>
             </goals>
           </execution>
         </executions>

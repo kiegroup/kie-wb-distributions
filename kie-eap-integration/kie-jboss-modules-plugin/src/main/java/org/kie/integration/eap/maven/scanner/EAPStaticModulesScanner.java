@@ -33,6 +33,7 @@ import org.kie.integration.eap.maven.model.module.EAPStaticModule;
 import org.kie.integration.eap.maven.model.resource.EAPArtifactOptionalResource;
 import org.kie.integration.eap.maven.model.resource.EAPArtifactResource;
 import org.kie.integration.eap.maven.model.resource.EAPUnresolvableArtifactResource;
+import org.kie.integration.eap.maven.model.resource.EAPVersionMismatchedArtifactResource;
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPArtifactsHolder;
 import org.kie.integration.eap.maven.util.EAPConstants;
@@ -255,9 +256,24 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
                 result = moduleDependency.isOptional() ? EAPArtifactOptionalResource.create(resolved) : EAPArtifactResource.create(resolved);
                 artifactsHolder.setModule(resolvedArtifact, module);
             } else {
-                if (logger != null)
-                    logger.warn("Artifact " + moduleResourceArtifact.toString() + " is not resolvable in current project. Will be not added as module resource.");
-                result = EAPUnresolvableArtifactResource.create(moduleResourceArtifact);
+                
+                // Same artifact coordinates have not been resolved in current project dependency tree.
+                // Check if another version for artifact has been resolved.
+                resolvedArtifact = artifactsHolder.contains(depGroupId, depArtifactId, depType);
+                if (resolvedArtifact != null) {
+                    // There exist another version resolved for this artifact.
+                    if (logger != null)
+                        logger.warn("The artifact " + moduleResourceArtifact.toString() + " is resolvable in current project but using another version: '" + resolvedArtifact.getVersion() + "'.");
+                    resolvedArtifact = artifactsHolder.resolveArtifact(resolvedArtifact);
+                    result = EAPVersionMismatchedArtifactResource.create(resolvedArtifact, depVersion);
+                    // Add the resolved artifact with different version as module resource.
+                    moduleResourceArtifact = resolvedArtifact;
+                } else {
+                    // Artifact is not resolvable in current project.
+                    if (logger != null)
+                        logger.warn("Artifact " + moduleResourceArtifact.toString() + " is not resolvable in current project. Will be not added as module resource.");
+                    result = EAPUnresolvableArtifactResource.create(moduleResourceArtifact);
+                }
 
                 // The artifact is not resolvable in current artifacts holder because it's not resolvable in current project dependencies.
                 // Add the dymmy created artifact instance.

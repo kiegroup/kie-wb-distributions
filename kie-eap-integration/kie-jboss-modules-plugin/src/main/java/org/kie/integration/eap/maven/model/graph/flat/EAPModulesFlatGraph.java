@@ -23,6 +23,7 @@ import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.model.resource.EAPArtifactOptionalResource;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
 import org.kie.integration.eap.maven.model.resource.EAPUnresolvableArtifactResource;
+import org.kie.integration.eap.maven.model.resource.EAPVersionMismatchedArtifactResource;
 import org.kie.integration.eap.maven.util.EAPConstants;
 
 import java.util.*;
@@ -50,6 +51,7 @@ public class EAPModulesFlatGraph implements EAPModulesGraph {
     private static int missingOptionalDependencies;
     private static int eapDependencies;
     private static int optionalDependencies;
+    private static int versionMismatchedResources;
     
     public EAPModulesFlatGraph(String distributionName, EAPLayer layer) {
         this.distributionName = distributionName;
@@ -160,6 +162,7 @@ public class EAPModulesFlatGraph implements EAPModulesGraph {
         result.append("Total modules: ").append(nodes.size()).append(EAPConstants.NEW_LINE);
         result.append("Total resources: ").append(totalResources).append(EAPConstants.NEW_LINE);
         result.append("Total unresolvable resources: ").append(unresolvableResources).append(EAPConstants.NEW_LINE);
+        result.append("Total version mismatched resources: ").append(versionMismatchedResources).append(EAPConstants.NEW_LINE);
         result.append("Total dependencies: ").append(totalDependencies).append(EAPConstants.NEW_LINE);
         result.append("Total static dependencies: ").append(staticDependencies).append(EAPConstants.NEW_LINE);
         result.append("Total missing dependencies: ").append(missingDependencies).append(EAPConstants.NEW_LINE);
@@ -211,6 +214,9 @@ public class EAPModulesFlatGraph implements EAPModulesGraph {
         if (resource instanceof EAPUnresolvableArtifactResource) {
             result.append(" (UNRESOLVABLE) ");
             unresolvableResources++;
+        } if (resource instanceof EAPVersionMismatchedArtifactResource) {
+            result.append(" (VERSION MISMATCH from '" +  ((EAPVersionMismatchedArtifactResource)resource).getVersion() + "') ");
+            versionMismatchedResources++;
         } else if (resource instanceof EAPArtifactOptionalResource) {
             result.append(" (OPTIONAL) ");
         }

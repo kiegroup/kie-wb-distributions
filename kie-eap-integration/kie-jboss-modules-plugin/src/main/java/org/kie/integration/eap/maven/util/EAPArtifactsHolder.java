@@ -174,4 +174,19 @@ public class EAPArtifactsHolder {
 
         return result;
     }
+    
+    public Artifact contains(String groupId, String artifactId, String type) {
+        if (artifactId == null || artifactId.trim().length() == 0 ||
+                type == null || type.trim().length() == 0 ||
+                groupId == null || groupId.trim().length() == 0) return null;
+        
+        for (Map.Entry<String, Object[]> entry : artifactAllCoordinatesMap.entrySet()) {
+            Object[] entryValue = entry.getValue();
+            Artifact artifact = (Artifact) entryValue[1];
+            if (groupId.equals(artifact.getGroupId()) && artifactId.equals(artifact.getArtifactId())
+                    && type.equals(artifact.getExtension())) return artifact;
+        }
+        
+        return null;
+    }
 }

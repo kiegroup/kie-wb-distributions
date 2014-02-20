@@ -22,13 +22,10 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kie.integration.eap.maven.builder.EAPModulesDependencyBuilder;
-import org.kie.integration.eap.maven.builder.EAPModulesFlatGraphBuilder;
 import org.kie.integration.eap.maven.builder.EAPModulesGraphBuilder;
-import org.kie.integration.eap.maven.builder.EAPStaticModulesDependencyBuilderImpl;
 import org.kie.integration.eap.maven.configuration.EAPConfigurationArtifact;
 import org.kie.integration.eap.maven.distribution.EAPLayerDistributionManager;
 import org.kie.integration.eap.maven.distribution.EAPStaticLayerDistribution;
-import org.kie.integration.eap.maven.distribution.EAPXMLLayerDistribution;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModulesDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModulesDependencyBuilderException;
@@ -39,6 +36,7 @@ import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
 import org.kie.integration.eap.maven.model.resource.EAPUnresolvableArtifactResource;
+import org.kie.integration.eap.maven.model.resource.EAPVersionMismatchedArtifactResource;
 import org.kie.integration.eap.maven.scanner.EAPBaseModulesScanner;
 import org.kie.integration.eap.maven.scanner.EAPModulesScanner;
 import org.kie.integration.eap.maven.scanner.EAPStaticModulesScanner;
@@ -107,28 +105,35 @@ public abstract class EAPBaseMojo extends AbstractMojo {
     protected EAPConfigurationArtifact baseModule;
 
     /**
-     * The file to print the graph.
+     * The file to print the generated distribution graph.
      *
      * @parameter default-value=""
      */
     protected String graphOutputFile;
 
     /**
-     * The flag that indicates if the build must fail when a dependency is not satisfied.
+     * The flag that indicates if the build must fail when a dependency to a module resource is not satisfied.
      *
      * @parameter
      */
     protected Boolean failOnMissingDependency;
 
     /**
-     * The flag that indicates if the build must fail when a module resource cannot be resolved.
+     * The flag that indicates if the build must fail when a module resource cannot be resolved in current project dependency tree.
      *
      * @parameter
      */
     protected Boolean failOnUnresolvableResource;
 
     /**
-     * The flag that indicates if the optional dependencies must be added as module depedencies too..
+     * The flag that indicates if the build must fail when a module version for a resource is not resolvable in current project dependencies.
+     *
+     * @parameter
+     */
+    protected Boolean failOnVersionMismatchedResource;
+
+    /**
+     * The flag that indicates if the optional dependencies must be scanned in the current project dependency tree.
      *
      * @parameter
      */
@@ -187,6 +192,7 @@ public abstract class EAPBaseMojo extends AbstractMojo {
         failOnMissingDependency = true;
         failOnUnresolvableResource = true;
         includeOptionalDependencies = false;
+        failOnVersionMismatchedResource = false;
     }
 
     @Override
@@ -231,8 +237,8 @@ public abstract class EAPBaseMojo extends AbstractMojo {
             throw new MojoExecutionException("Error loading module.", e);
         }
 
-        // If there are unresolvable resources, check if the build must be failed.
-        if (failOnUnresolvableResource) checkUnresolvableResources();
+        // Check resources.
+        checkResources();
 
         try {
             // Generate the modules dependencies.
@@ -265,8 +271,12 @@ public abstract class EAPBaseMojo extends AbstractMojo {
 
     }
 
-    protected void checkUnresolvableResources() throws MojoExecutionException {
+    protected void checkResources() throws MojoExecutionException {
+        // If checks are not enabled, do nothing.
+        if (!failOnUnresolvableResource && !failOnVersionMismatchedResource) return;
+        
         Collection<Object[]> unresolvableResources = new LinkedHashSet<Object[]>();
+        Collection<Object[]> versionMismatchResources = new LinkedHashSet<Object[]>();
 
         if (staticModulesLayer != null) {
             Collection<EAPModule>  modules = staticModulesLayer.getModules();
@@ -275,6 +285,8 @@ public abstract class EAPBaseMojo extends AbstractMojo {
                     Collection<EAPModuleResource> resources = module.getResources();
                     if (resources != null && !resources.isEmpty()) {
                         for (EAPModuleResource resource : resources) {
+                            
+                            // Check if the resource if unresolvable.
                             try {
                                 EAPUnresolvableArtifactResource missingResource = (EAPUnresolvableArtifactResource) resource;
                                 Object [] missingRes = new Object[] {module, missingResource};
@@ -282,12 +294,22 @@ public abstract class EAPBaseMojo extends AbstractMojo {
                             } catch (Exception e) {
                                 // If not missing, continue.
                             }
+
+                            // Check if the resource version mismatches.
+                            try {
+                                EAPVersionMismatchedArtifactResource missingResource = (EAPVersionMismatchedArtifactResource) resource;
+                                Object [] missingRes = new Object[] {module, missingResource};
+                                versionMismatchResources.add(missingRes);
+                            } catch (Exception e) {
+                                // If not version mismatching, continue.
+                            }
                         }
                     }
                 }
 
                 if (!unresolvableResources.isEmpty()) {
                     getLog().info("********************* Unresolvable resources ******************************");
+                    getLog().info("************* Module name <-> Unresolvable resource ***********************");
                     for (Object[] obj : unresolvableResources) {
                         EAPModule module = (EAPModule) obj[0];
                         EAPUnresolvableArtifactResource resource = (EAPUnresolvableArtifactResource) obj[1];
@@ -295,7 +317,20 @@ public abstract class EAPBaseMojo extends AbstractMojo {
                     }
                     getLog().info("*************************************************************************");
 
-                    throw new MojoExecutionException("There are unresolved resources.");
+                    if (failOnUnresolvableResource) throw new MojoExecutionException("There are unresolved resources.");
+                }
+
+                if (!versionMismatchResources.isEmpty()) {
+                    getLog().info("********************************* Version mismatch resources ******************************************");
+                    getLog().info("************** Module name <-> Resource resolved <-> Version defined in module definition *************");
+                    for (Object[] obj : versionMismatchResources) {
+                        EAPModule module = (EAPModule) obj[0];
+                        EAPVersionMismatchedArtifactResource resource = (EAPVersionMismatchedArtifactResource) obj[1];
+                        getLog().info(module.getUniqueId() + " <-> " + resource.getName() + " <-> " + resource.getVersion());
+                    }
+                    getLog().info("********************************************************************************************************");
+
+                    if (failOnVersionMismatchedResource) throw new MojoExecutionException("There are version mismatched resources.");
                 }
             }
         }

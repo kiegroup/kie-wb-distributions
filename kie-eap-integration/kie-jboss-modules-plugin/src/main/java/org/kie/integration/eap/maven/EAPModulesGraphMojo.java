@@ -21,7 +21,7 @@ import org.apache.maven.plugin.MojoFailureException;
 /**
  * This plugin mojo prints a static layer graph definition.
  *
- * @goal graph
+ * @goal static-layer-graph
  * @requiresProject true
  */
 public class EAPModulesGraphMojo extends EAPBaseMojo {

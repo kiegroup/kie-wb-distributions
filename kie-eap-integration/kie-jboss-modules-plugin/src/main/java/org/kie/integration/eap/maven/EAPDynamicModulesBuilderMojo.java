@@ -62,7 +62,7 @@ import java.util.zip.ZipFile;
 /**
  * This plugin mojo generates a dynamic module (webapp) definition and the assembly files to assemble it.
  *
- * @goal build-dynamic
+ * @goal build-dynamic-modules
  * @requiresProject true
  */
 public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
@@ -120,8 +120,8 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
     protected String distributionName;
 
     /**
-     * The output path for the genrated module descriptor and assembly files.
-     * The resulting global assembly.xml file will be created in this path.
+     * The output path for the generated artifacts and assembly files.
+     * The resulting assembly.xml file will be created inside this path.
      *
      * @parameter default-value=""
      */

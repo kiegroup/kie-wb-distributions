@@ -536,8 +536,10 @@
         <artifactId>jboss-modules</artifactId>
         <version>${project.version}</version>
         <configuration>
+
           <!-- The name of the JBoss EAP layer distrubtion to geneate. -->
           <distributionName>${modules.distribution.name}</distributionName>
+
           <!-- The maven module that contains all base EAP/AS modules for a given version.-->
           <baseModule>
             <groupId>org.kie.modules</groupId>
@@ -554,20 +556,28 @@
               </exclusion>
             </exclusions>
           </baseModule>
+
           <!-- The output path for the genrated module descriptor and assembly files. The resulting global assembly.xml file will be created in this path. -->
           <outputPath>${modules.tmp.path}</outputPath>
+
           <!-- The flag that indicates if the build must fail when a dependency is not satisfied. -->
           <failOnMissingDependency>true</failOnMissingDependency>
+
+          <!-- Do not fail when a version for a resource is not resolvable in current project dependencies. -->
+          <failOnVersionMismatchedResource>false</failOnVersionMismatchedResource>
+          
           <!-- Print the generated modules graph to a file. -->
           <!--<graphOutputFile>${project.basedir}/../../doc/brms-graph.txt</graphOutputFile>-->
+
           <!-- Do not include the dependencies marked as optional. -->
           <includeOptionalDependencies>false</includeOptionalDependencies>
+
         </configuration>
         <executions>
           <execution>
             <phase>prepare-package</phase>
             <goals>
-              <goal>build-static</goal>
+              <goal>build-static-layer</goal>
             </goals>
           </execution>
         </executions>

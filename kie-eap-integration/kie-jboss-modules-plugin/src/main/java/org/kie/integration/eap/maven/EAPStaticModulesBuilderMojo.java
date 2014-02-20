@@ -29,7 +29,7 @@ import java.io.IOException;
 /**
  * This plugin mojo generates a static layer definition and the assembly files to assemble it.
  *
- * @goal build-static
+ * @goal build-static-layer
  * @requiresProject true
  */
 public class EAPStaticModulesBuilderMojo extends EAPBaseMojo {
@@ -46,15 +46,14 @@ public class EAPStaticModulesBuilderMojo extends EAPBaseMojo {
             append("system").append(File.separator).append("layers").toString();
 
     /**
-     * The template builder to use.
-     *
-     * @parameter default-value="org.kie.integration.eap.maven.template.EAPVelocityTemplateBuilder"
+     * The scanner for static modules.
+     * @component role-hint='velocity'
      */
-    protected String templateBuilderClass;
+    private EAPTemplateBuilder templateBuilder;
 
     /**
      * The output path for the genrated module descriptor and assembly files.
-     * The resulting global assembly.xml file will be created in this path.
+     * The resulting assembly descriptor file will be created in this path.
      *
      * @parameter default-value=""
      */
@@ -66,12 +65,6 @@ public class EAPStaticModulesBuilderMojo extends EAPBaseMojo {
      * @parameter default-value="dir,zip"
      */
     protected String assemblyFormats;
-
-    private EAPTemplateBuilder templateBuilder;
-
-    private void initTemplateBuilder() throws ClassNotFoundException, IllegalAccessException, InstantiationException, ClassCastException {
-        templateBuilder = (EAPTemplateBuilder) Class.forName(templateBuilderClass).newInstance();
-    }
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -93,16 +86,6 @@ public class EAPStaticModulesBuilderMojo extends EAPBaseMojo {
         File distroOutputPathFile = new File(distroOutputPath);
         outputPathFile.mkdirs();
         distroOutputPathFile.mkdirs();
-
-        try {
-            initTemplateBuilder();
-        } catch (ClassNotFoundException e) {
-            throw new MojoFailureException("Template builder class '" + templateBuilderClass + "' not found.", e);
-        } catch (IllegalAccessException e) {
-            throw new MojoFailureException("Template builder class '" + templateBuilderClass + "' cannot be instantiated.", e);
-        } catch (InstantiationException e) {
-            throw new MojoFailureException("Template builder class '" + templateBuilderClass + "' cannot be instantiated.", e);
-        }
 
         // The output path for assembled elements. Corresponds to modules/system/layers/bpms (for bpms distro)
         StringBuilder outputAssemblyDistroPath = new StringBuilder(ASSEMBLY_OUTPUT_PATH).append(File.separator).
