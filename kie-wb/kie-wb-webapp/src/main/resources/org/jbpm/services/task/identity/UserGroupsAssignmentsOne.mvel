@@ -7,8 +7,8 @@ usersgroups = [
                 new User('john') : [new Group( "Accounting" )],          
                 new User('katy') : [new Group( "HR" )],
                 new User('jack') : [new Group( "IT" )],
-                new User('admin') : [new Group( "IT" ), new Group( "Adminitrators" )],
-                new User('Administrator') : [new Group( "Adminitrators" )],
+                new User('admin') : [new Group( "IT" ), new Group( "Administrators" )],
+                new User('Administrator') : [new Group( "Administrators" )],
                 
                 
               ];       
