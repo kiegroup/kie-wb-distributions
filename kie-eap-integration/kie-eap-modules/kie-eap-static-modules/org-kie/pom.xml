@@ -40,14 +40,6 @@
     </dependency>
 
 
-    <!--<dependency>
-<groupId>org.kie.remote</groupId>
-<artifactId>kie-services-client</artifactId>
-<version>${kie.version}</version>
-<type>jar</type>
-</dependency>-->
-
-
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-ci</artifactId>
