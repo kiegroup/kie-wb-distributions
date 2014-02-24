@@ -39,7 +39,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie.remote</groupId>
-      <artifactId>kie-services-jaxb</artifactId>
+      <artifactId>kie-services-client</artifactId>
     </dependency>
 
   </dependencies>
