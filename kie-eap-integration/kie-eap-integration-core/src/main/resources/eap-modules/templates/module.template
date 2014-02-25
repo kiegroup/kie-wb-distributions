@@ -5,5 +5,6 @@
   </resources>
   <dependencies>
 @DEPENDENCIES@
+<module name="javax.api" export="false"/>
   </dependencies>
 </module>

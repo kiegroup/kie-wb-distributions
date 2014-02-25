@@ -1,7 +1,6 @@
 com.opensymphony.quartz
 com.sun.xml.bind
 javax.activation.api
-javax.api
 javax.enterprise.api
 javax.inject.api
 javax.jms.api

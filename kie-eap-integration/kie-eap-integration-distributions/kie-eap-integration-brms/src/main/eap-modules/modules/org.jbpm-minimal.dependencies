@@ -1,6 +1,6 @@
 com.google.protobuf
-javax.api
 org.drools
+org.jboss.solder
 org.joda.time
 org.kie
 org.kie.lib

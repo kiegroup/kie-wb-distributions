@@ -1,7 +1,6 @@
 com.google.protobuf
 com.sun.xml.bind
 javax.activation.api
-javax.api
 javax.enterprise.api
 javax.inject.api:true
 javax.persistence.api

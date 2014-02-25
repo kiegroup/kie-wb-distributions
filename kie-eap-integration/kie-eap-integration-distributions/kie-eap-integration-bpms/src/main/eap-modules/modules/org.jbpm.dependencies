@@ -4,7 +4,6 @@ com.sun.xml.bind
 javaee.api
 javax.activation.api
 javax.annotation.api
-javax.api
 javax.el.api
 javax.enterprise.api
 javax.inject.api

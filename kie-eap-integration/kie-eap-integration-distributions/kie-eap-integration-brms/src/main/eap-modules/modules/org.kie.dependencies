@@ -17,5 +17,4 @@ org.sonatype.plexus
 org.codehouse.plexus
 org.jbpm-minimal
 org.apache.ant
-javax.api
 javax.inject.api

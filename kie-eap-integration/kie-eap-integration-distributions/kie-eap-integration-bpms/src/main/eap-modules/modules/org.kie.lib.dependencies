@@ -4,8 +4,10 @@ javax.enterprise.api
 javax.inject.api
 javax.persistence.api
 org.antlr
+org.apache.batik
 org.apache.commons.codec
 org.apache.commons.io
+org.apache.commons.logging
 org.apache.helix
 org.apache.log4j
 org.apache.xalan
