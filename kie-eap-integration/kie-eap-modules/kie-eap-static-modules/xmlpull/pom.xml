@@ -16,8 +16,8 @@
     <module.name>xmlpull</module.name>
     <module.type>static</module.type>
     <module.location>xmlpull</module.location>
-    <module.dependencies>xpp3:${project.version}</module.dependencies>
-    <module.slot>${project.version}</module.slot>
+    <module.dependencies>xpp3:main</module.dependencies>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

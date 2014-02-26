@@ -16,7 +16,7 @@
     <module.name>javax.ws.rs</module.name>
     <module.type>static</module.type>
     <module.location>javax/ws/rs</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

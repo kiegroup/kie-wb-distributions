@@ -17,7 +17,7 @@
     <module.type>static</module.type>
     <module.location>org/apache/maven/wagon</module.location>
     <module.dependencies>javax.api:main,sun.jdk:main</module.dependencies>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

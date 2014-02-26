@@ -17,7 +17,7 @@
     <module.type>static</module.type>
     <module.location>org/apache/commons/fileupload</module.location>
     <module.dependencies>org.apache.commons.io:main</module.dependencies>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

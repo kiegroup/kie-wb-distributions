@@ -16,7 +16,7 @@
     <module.name>org.beanshell</module.name>
     <module.type>static</module.type>
     <module.location>org/beanshell</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

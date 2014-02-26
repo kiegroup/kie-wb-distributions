@@ -16,7 +16,7 @@
     <module.name>org.junit</module.name>
     <module.type>static</module.type>
     <module.location>org/junit</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

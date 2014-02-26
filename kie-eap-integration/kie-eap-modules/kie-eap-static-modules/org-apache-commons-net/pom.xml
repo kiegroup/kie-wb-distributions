@@ -16,7 +16,7 @@
     <module.name>org.apache.commons.net</module.name>
     <module.type>static</module.type>
     <module.location>org/apache/commons/net</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

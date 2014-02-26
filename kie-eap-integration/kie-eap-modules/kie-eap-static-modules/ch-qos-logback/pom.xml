@@ -16,7 +16,7 @@
     <module.name>ch.qos.logback</module.name>
     <module.type>static</module.type>
     <module.location>ch/qos/logback</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

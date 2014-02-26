@@ -16,11 +16,11 @@
     <module.name>org.drools</module.name>
     <module.type>static</module.type>
     <module.location>org/drools</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
     <!-- Added hibernate and transaction-api due to runtime dependency with EAP. -->
     <!-- Added dependency to jbpm module as drools core requires some jbpm resources (xsd,etc). -->
     <!-- Export the javax.inject.api: https://bugzilla.redhat.com/show_bug.cgi?id=1061887 -->
-    <module.dependencies>org.hibernate:main,org.jboss.vfs:main,javax.transaction.api:main,org.jbpm:${project.version},org.jbpm-minimal:${project.version},javax.api:main,javax.inject.api:main:true</module.dependencies>
+    <module.dependencies>org.hibernate:main,org.jboss.vfs:main,javax.transaction.api:main,org.jbpm:main,org.jbpm-minimal:main,javax.api:main,javax.inject.api:main:true</module.dependencies>
     <drools.version>6.1.0-SNAPSHOT</drools.version>
   </properties>
 

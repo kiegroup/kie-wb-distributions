@@ -16,9 +16,9 @@
     <module.name>org.kie</module.name>
     <module.type>static</module.type>
     <module.location>org/kie</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
     <!-- Added due to runtime dependency with EAP. -->
-    <module.dependencies>org.sonatype.sisu:${project.version},org.codehouse.plexus:${project.version},org.sonatype.plexus:${project.version},org.jbpm:${project.version},org.jbpm-minimal:${project.version},javax.api:main,javax.inject.api:main</module.dependencies>
+    <module.dependencies>org.sonatype.sisu:main,org.codehouse.plexus:main,org.sonatype.plexus:main,org.jbpm:main,org.jbpm-minimal:main,javax.api:main,javax.inject.api:main</module.dependencies>
     <kie.version>6.1.0-SNAPSHOT</kie.version>
   </properties>
 

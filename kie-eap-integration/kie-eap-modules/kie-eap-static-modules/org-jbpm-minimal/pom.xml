@@ -16,9 +16,9 @@
     <module.name>org.jbpm-minimal</module.name>
     <module.type>static</module.type>
     <module.location>org/jbpm-minimal</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
     <!-- Added due to jbpm-persistence-jpa runtime hibernate dependency with EAP. -->
-    <module.dependencies>org.hibernate:main,javax.api:main,javaee.api:main,org.mvel:${project.version}</module.dependencies>
+    <module.dependencies>org.hibernate:main,javax.api:main,javaee.api:main,org.mvel:main</module.dependencies>
     <jbpm.version>6.1.0-SNAPSHOT</jbpm.version>
   </properties>
 

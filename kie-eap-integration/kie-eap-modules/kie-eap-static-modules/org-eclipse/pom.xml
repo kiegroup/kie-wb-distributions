@@ -16,8 +16,8 @@
     <module.name>org.eclipse</module.name>
     <module.type>static</module.type>
     <module.location>org/eclipse</module.location>
-    <module.dependencies>org.eclipse.emf:${project.version},javax.api:main</module.dependencies>
-    <module.slot>${project.version}</module.slot>
+    <module.dependencies>org.eclipse.emf:main,javax.api:main</module.dependencies>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

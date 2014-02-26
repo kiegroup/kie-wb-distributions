@@ -13,10 +13,13 @@
   <packaging>pom</packaging>
 
   <properties>
-    <module.name>org.antlr</module.name>
+    <!-- Antlr is provided by eap too, but using version 2.7.
+      The ideal should be to rename the module slot to 3.5 and leave org.antlr as module name, but some other projects
+      require the "main" value for slot.--> 
+    <module.name>org.antlr3</module.name>
     <module.type>static</module.type>
-    <module.location>org/antlr</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.location>org/antlr3</module.location>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

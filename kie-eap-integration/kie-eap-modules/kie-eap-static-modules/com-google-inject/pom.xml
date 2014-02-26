@@ -16,7 +16,7 @@
     <module.name>com.google.inject</module.name>
     <module.type>static</module.type>
     <module.location>com/google/inject</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>

@@ -16,7 +16,7 @@
     <module.name>jakarta.regexp</module.name>
     <module.type>static</module.type>
     <module.location>jakarta/regexp</module.location>
-    <module.slot>${project.version}</module.slot>
+    <module.slot>main</module.slot>
   </properties>
 
   <dependencies>
