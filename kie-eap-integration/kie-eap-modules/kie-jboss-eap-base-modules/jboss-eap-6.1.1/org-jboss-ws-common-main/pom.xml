@@ -11,7 +11,7 @@
     <groupId>org.kie.modules</groupId>
     <artifactId>org-jboss-ws-common-main</artifactId>
     <name>EAP Base Module org.jboss.ws.common:main</name>
-    <version>6.1.0-SNAPSHOT</version>
+    
     <packaging>pom</packaging>
 
         <properties>

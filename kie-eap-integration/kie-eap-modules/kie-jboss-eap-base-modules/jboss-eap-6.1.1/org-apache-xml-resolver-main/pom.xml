@@ -11,7 +11,7 @@
     <groupId>org.kie.modules</groupId>
     <artifactId>org-apache-xml-resolver-main</artifactId>
     <name>EAP Base Module org.apache.xml-resolver:main</name>
-    <version>6.1.0-SNAPSHOT</version>
+    
     <packaging>pom</packaging>
 
         <properties>

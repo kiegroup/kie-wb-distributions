@@ -11,7 +11,7 @@
     <groupId>org.kie.modules</groupId>
     <artifactId>javax-faces-api-1.2</artifactId>
     <name>EAP Base Module javax.faces.api:1.2</name>
-    <version>6.1.0-SNAPSHOT</version>
+    
     <packaging>pom</packaging>
 
         <properties>

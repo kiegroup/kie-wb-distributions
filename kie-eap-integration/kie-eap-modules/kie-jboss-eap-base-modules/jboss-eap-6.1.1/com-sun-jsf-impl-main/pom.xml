@@ -11,7 +11,7 @@
     <groupId>org.kie.modules</groupId>
     <artifactId>com-sun-jsf-impl-main</artifactId>
     <name>EAP Base Module com.sun.jsf-impl:main</name>
-    <version>6.1.0-SNAPSHOT</version>
+    
     <packaging>pom</packaging>
 
         <properties>

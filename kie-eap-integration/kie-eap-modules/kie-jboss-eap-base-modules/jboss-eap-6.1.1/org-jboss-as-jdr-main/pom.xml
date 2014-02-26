@@ -11,7 +11,7 @@
     <groupId>org.kie.modules</groupId>
     <artifactId>org-jboss-as-jdr-main</artifactId>
     <name>EAP Base Module org.jboss.as.jdr:main</name>
-    <version>6.1.0-SNAPSHOT</version>
+    
     <packaging>pom</packaging>
 
         <properties>

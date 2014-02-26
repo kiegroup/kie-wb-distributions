@@ -11,7 +11,7 @@
   <groupId>org.kie.modules</groupId>
   <artifactId>org-apache-commons-io-main</artifactId>
   <name>EAP Base Module org.apache.commons.io:main</name>
-  <version>6.1.0-SNAPSHOT</version>
+  
   <packaging>pom</packaging>
 
   <properties>

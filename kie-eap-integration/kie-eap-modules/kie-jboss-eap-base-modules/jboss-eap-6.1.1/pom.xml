@@ -11,7 +11,6 @@
   <groupId>org.kie.modules</groupId>
   <artifactId>jboss-eap-6.1.1</artifactId>
   <name>KIE EAP - JBoss EAP 6.1.1 base module definitions</name>
-  <version>6.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>

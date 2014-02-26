@@ -11,7 +11,7 @@
     <groupId>org.kie.modules</groupId>
     <artifactId>com-sun-xsom-main</artifactId>
     <name>EAP Base Module com.sun.xsom:main</name>
-    <version>6.1.0-SNAPSHOT</version>
+    
     <packaging>pom</packaging>
 
         <properties>
