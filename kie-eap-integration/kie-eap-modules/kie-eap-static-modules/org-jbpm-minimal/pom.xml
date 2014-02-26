@@ -19,7 +19,7 @@
     <module.slot>main</module.slot>
     <!-- Added due to jbpm-persistence-jpa runtime hibernate dependency with EAP. -->
     <module.dependencies>org.hibernate:main,javax.api:main,javaee.api:main,org.mvel:main</module.dependencies>
-    <jbpm.version>6.1.0-SNAPSHOT</jbpm.version>
+    <jbpm.version>${project.version}</jbpm.version>
   </properties>
 
   <dependencies>

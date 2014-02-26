@@ -19,7 +19,7 @@
     <module.slot>main</module.slot>
     <!-- Added due to runtime dependency with EAP. -->
     <module.dependencies>org.sonatype.sisu:main,org.codehouse.plexus:main,org.sonatype.plexus:main,org.jbpm:main,org.jbpm-minimal:main,javax.api:main,javax.inject.api:main</module.dependencies>
-    <kie.version>6.1.0-SNAPSHOT</kie.version>
+    <kie.version>${project.version}</kie.version>
   </properties>
 
   <dependencies>
