@@ -29,6 +29,7 @@
         <include>org.hibernate:hibernate-core</include>
         <include>org.hibernate:hibernate-validator</include>
         <include>org.hibernate:hibernate-commons-annotations</include>
+        <include>org.antlr:antlr</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
