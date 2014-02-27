@@ -1,0 +1,8 @@
+javax.mail.api
+javax.jms.api
+javax.activation.api
+org.jboss.as.osgi.jta
+org.slf4j
+javax.servlet.api
+org.jbpm
+org.drools

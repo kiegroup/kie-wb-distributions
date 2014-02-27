@@ -1,6 +1,0 @@
-javax.activation.api
-javax.jms.api
-javax.mail.api
-javax.servlet.api
-org.jboss.as.osgi.jta
-org.slf4j
