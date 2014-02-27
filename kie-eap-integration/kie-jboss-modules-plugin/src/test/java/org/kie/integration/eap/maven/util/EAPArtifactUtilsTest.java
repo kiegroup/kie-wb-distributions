@@ -154,6 +154,20 @@ public class EAPArtifactUtilsTest extends EAPBaseTest {
     }
 
     @Test
+    public void testMavenModelPropertyValueCustomPropsParser() throws Exception {
+        Model mavenModel = mock(Model.class);
+        Properties modeProperties = new Properties();
+        modeProperties.put("drools.name","${project.name}");
+        modeProperties.put("project.name","drools");
+        when(mavenModel.getProperties()).thenReturn(modeProperties);
+
+        String result = tested.getPropertyValue(mavenModel, "org-kie:${drools.name}");
+        assertNotNull(result);
+        assertEquals(result, "org-kie:drools");
+
+    }
+
+    @Test
     public void testParseFileName() throws Exception {
         String[] result = tested.parseFileName("slf4j-jboss-logmanager-1.0.2.GA-redhat-1.jar");
         assertNotNull(result);

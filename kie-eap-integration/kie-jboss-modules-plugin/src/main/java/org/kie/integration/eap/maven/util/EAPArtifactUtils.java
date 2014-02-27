@@ -341,8 +341,12 @@ public class EAPArtifactUtils {
             String pValue = null;
             if (EAPConstants.PROPERTY_PROJECT_VERSION.equals(pName)) pValue = model.getParent().getVersion();
             else pValue = (String) model.getProperties().get(pName);
-
+            
             if (pValue == null) throw new IllegalArgumentException("Cannot resolve the property " + pName + " in project properties.");
+
+            // Custom pom properties.
+            if (PROPERTY_PATTERN.matcher(pValue).matches()) pValue = getPropertyValue(model, pValue);
+                
             m.appendReplacement(sb, Matcher.quoteReplacement(pValue));
         }
         m.appendTail(sb);
