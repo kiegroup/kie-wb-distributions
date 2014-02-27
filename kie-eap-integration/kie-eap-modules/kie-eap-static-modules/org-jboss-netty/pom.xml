@@ -16,7 +16,7 @@
     <module.name>org.jboss.netty</module.name>
     <module.type>static</module.type>
     <module.location>org/jboss/netty</module.location>
-    <module.slot>main</module.slot>
+    <module.slot>3.2.6Final</module.slot>
   </properties>
 
   <dependencies>

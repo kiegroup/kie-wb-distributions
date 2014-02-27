@@ -128,7 +128,12 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
             String moduleType = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_TYPE));
             String moduleSlot = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_SLOT));
             String moduleDependenciesRaw = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_DEPENDENCIES));
-
+            
+            // Check same module does not exist in base layer.
+            if (moduleName != null && moduleSlot != null) {
+                String moduleUID = new StringBuilder(moduleName).append(EAPConstants.ARTIFACT_SEPARATOR).append(moduleSlot).toString();
+                if (baseModulesLayer != null && baseModulesLayer.getModule(moduleUID) != null) throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The already module exist in JBoss EAP/AS base layer.");
+            }
 
             // Check module properties.
             Properties moduleProperties = new Properties();

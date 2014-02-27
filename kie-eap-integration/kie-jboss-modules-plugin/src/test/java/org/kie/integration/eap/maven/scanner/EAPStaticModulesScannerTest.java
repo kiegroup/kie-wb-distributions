@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +45,7 @@ public class EAPStaticModulesScannerTest extends EAPBaseLayerTest {
     private static final String MODULES_STATIC_ORG_DROOLS_STATIC_MODULE_POM_NOMODULENSLOT_XML = "/modules/static/drools/org.drools-static-module-pom-nomoduleslot.xml";
     private static final String MODULES_STATIC_ORG_DROOLS_STATIC_MODULE_POM_NOMODULENLOCATION_XML = "/modules/static/drools/org.drools-static-module-pom-nomodulelocation.xml";
     private static final String MODULES_STATIC_ORG_DROOLS_STATIC_MODULE_POM_XML_FORCE_EXPORTS = "/modules/static/drools/org.drools-static-module-pom-forceexports.xml";
-
+    private static final String MODULES_STATIC_DUPLICATED_MODULE_NAME_POM_XML = "/modules/static/duplicated-module-pom.xml";
     @Mock
     private Artifact droolsStaticModulePom;
 
@@ -107,6 +108,44 @@ public class EAPStaticModulesScannerTest extends EAPBaseLayerTest {
         EAPLayer droolsLayer = tested.scan(layerName, moduleArtifacts, null, artifactsHolder);
         assertDroolsLayer(droolsLayer, layerName, true, EAPArtifactResource.class, true);
     }
+
+    /**
+     * Test with these scanner using a module duplicated in module base layer.
+     * @throws Exception
+     */
+    @Test
+    public void testScanLayerDuplicatedModuleInBaeLayer() throws Exception {
+        // Configure the tested instance.
+        String layerName = "droolsLayer";
+
+        Artifact duplicatedModuleArtifact = mock(Artifact.class);
+        initMockArtifact(duplicatedModuleArtifact, "org.kie", "org-duplicated-module", "1.0", "pom", null, MODULES_STATIC_DUPLICATED_MODULE_NAME_POM_XML);
+
+        Collection<Artifact> moduleArtifacts = new ArrayList<Artifact>(1);
+        moduleArtifacts.add(droolsStaticModulePom);
+        moduleArtifacts.add(duplicatedModuleArtifact);
+        
+        tested.setScanStaticDependencies(true);
+        tested.setScanResources(true);
+        tested.setArtifactTreeResolved(true);
+        tested.setBaseModulesLayer(baseModuleLayer);
+
+        // Add the module dependencies in artifacts holder.
+        addArtifactIntoHolder(droolsTemplatesDependency);
+        addArtifactIntoHolder(droolsDecisionTablesDependency);
+
+        Exception result = null;
+        try {
+            EAPLayer droolsLayer = tested.scan(layerName, moduleArtifacts, null, artifactsHolder);
+        } catch (Exception e) {
+            result = e;
+        }
+
+        assertNotNull(result);
+        assertEquals(result.getClass(), EAPModuleDefinitionException.class);
+    }
+
+
 
     /**
      * Test with these scanner options:

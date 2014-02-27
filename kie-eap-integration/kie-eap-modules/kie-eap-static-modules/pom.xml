@@ -46,7 +46,6 @@
     <module>org-apache-commons-httpclient</module>
     <module>org-apache-commons-fileupload</module>
     <module>org-apache-commons-jxpath</module>
-    <module>org-apache-commons-logging</module>
     <module>com-opensymphony-quartz</module>
     <module>org-junit</module>
     <module>org-apache-xmlbeans</module>
@@ -75,7 +74,6 @@
     <module>org-apache-geronimo-specs</module>
     <module>org-apache-xmlgraphics</module>
     <module>org-beanshell</module>
-    <module>org-codehaus-woodstox</module>
     <module>org-eclipse-emf</module>
     <module>org-eclipse</module>
     <module>org-freemarker</module>

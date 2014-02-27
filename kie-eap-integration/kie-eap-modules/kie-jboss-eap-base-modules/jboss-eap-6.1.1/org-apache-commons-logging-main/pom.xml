@@ -1,26 +1,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>org.kie.modules</groupId>
-    <artifactId>kie-eap-static-modules</artifactId>
+    <artifactId>jboss-eap-6.1.1</artifactId>
     <version>6.1.0-SNAPSHOT</version>
   </parent>
 
   <groupId>org.kie.modules</groupId>
-  <artifactId>org-apache-commons-logging</artifactId>
-  <name>KIE EAP - org-apache-commons-logging static module</name>
+  <artifactId>org-apache-commons-logging-main</artifactId>
+  <name>EAP Base Module org.apache.commons.logging:main</name>
+
   <packaging>pom</packaging>
 
   <properties>
-    <module.name>org.apache.commons.logging</module.name>
-    <module.type>static</module.type>
-    <module.location>org/apache/commons/logging</module.location>
+    <module.type>base</module.type>
     <module.slot>main</module.slot>
+    <module.name>org.apache.commons.logging</module.name>
   </properties>
 
-  <dependencies>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.2-redhat-1</version>
+      <type>pom</type>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/jcl-over-slf4j-1.7.2-redhat-1.jar-pom.xml</systemPath>
+    </dependency>
+    
+    <!-- Custom dependencies. -->
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging-api</artifactId>
@@ -35,7 +46,8 @@
       <version>1.1.1</version>
       <type>jar</type>
     </dependency>
-
-
+    
   </dependencies>
+
+
 </project>

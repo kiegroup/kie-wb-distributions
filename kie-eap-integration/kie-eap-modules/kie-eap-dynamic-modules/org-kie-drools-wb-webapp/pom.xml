@@ -234,13 +234,6 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-logging</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>com-opensymphony-quartz</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
@@ -402,12 +395,6 @@
     <dependency>
       <groupId>org.kie.modules</groupId>
       <artifactId>org-beanshell</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-codehaus-woodstox</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>

@@ -26,7 +26,9 @@
     <module>org-infinispan-cachestore-jdbc-main</module>
     <module>org-infinispan-client-hotrod-main</module>
     <module>org-antlr-main</module>
-    <module>org-slf4j-jcl-over-slf4j-main</module>
+    <!-- The module org-apache-commons-logging-main is an alias for module org-slf4j-jcl-over-slf4j-main.
+    Do not add this module, if not, a resource duplication exception will be thrown.
+    <module>org-slf4j-jcl-over-slf4j-main</module>-->
     <module>org-slf4j-impl-main</module>
     <module>org-slf4j-main</module>
     <module>org-slf4j-ext-main</module>
@@ -54,9 +56,7 @@
     <module>org-apache-commons-io-main</module>
     <module>org-apache-commons-pool-main</module>
     <module>org-apache-commons-lang-main</module>
-    <!-- The module org-apache-commons-logging-main is an alias for module org-slf4j-jcl-over-slf4j-main.
-        Do not add this module, if not, a resource duplication exception will be thrown.
-    <module>org-apache-commons-logging-main</module> -->
+    <module>org-apache-commons-logging-main</module>
     <module>org-apache-commons-configuration-main</module>
     <module>org-apache-neethi-main</module>
     <module>org-apache-ws-xmlschema-main</module>

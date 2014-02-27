@@ -58,6 +58,12 @@
       <version>1.2.0</version>
       <type>jar</type>
     </dependency>
+    <dependency>
+      <groupId>org.codehaus.woodstox</groupId>
+      <artifactId>stax2-api</artifactId>
+      <version>3.1.1</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
 
 
