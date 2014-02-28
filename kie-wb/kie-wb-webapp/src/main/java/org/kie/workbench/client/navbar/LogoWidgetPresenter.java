@@ -34,6 +34,11 @@ public class LogoWidgetPresenter implements Header {
     public View view;
 
     @Override
+    public String getId() {
+        return "LogoWidget";
+    }
+
+    @Override
     public int getOrder() {
         return 3;
     }
