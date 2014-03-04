@@ -1,11 +1,24 @@
-<%
-  request.getSession().invalidate();
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ page import="java.util.Locale" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
+<%
+    request.getSession().invalidate();
+    Locale locale= null;
+    try{
+        locale = new Locale(request.getParameter("locale"));
+    } catch(Exception e){
+        locale= request.getLocale();
+    }
+%>
+<i18n:bundle id="bundle" baseName="org.kie.workbench.client.resources.i18n.LoginConstants"
+             locale='<%= locale%>' />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>jBPM Console NG</title>
+  <title><i18n:message key="LoginTitle">jBPM Console NG</i18n:message></title>
 
   <style type="text/css">
     * {
@@ -135,13 +148,13 @@
 
   <div id="login-content">
 
-    <h3>Login failed: Not Authorized</h3>
-    <form action="<%=request.getContextPath()%>/org.kie.workbench.KIEWebapp/KIEWebapp.html" method="GET">
-      <p>
-        <input class="button" type="submit" value="Login as another user"/>
-      </p>
+      <h3><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></h3>
+      <form action="<%=request.getContextPath()%>/org.kie.workbench.drools.KIEDroolsWebapp/KIEDroolsWebapp.html" method="GET">
+          <p>
+              <input class="button" type="submit" value='<i18n:message key="loginAsAnotherUser">Login as another user</i18n:message>'value=""/>
+          </p>
 
-    </form>
+      </form>
   </div>
 </div>
 <div id="dummy"></div>

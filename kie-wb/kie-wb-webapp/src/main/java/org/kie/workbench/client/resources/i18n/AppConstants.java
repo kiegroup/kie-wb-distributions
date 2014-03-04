@@ -130,11 +130,6 @@ public interface AppConstants
 
     String Repository();
 
-    String UserName();
-    String Password();
-    String SignIn();
-    String LoginTitle();
-
     String Upload();
 
     String Refresh();
