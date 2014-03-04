@@ -1,6 +1,5 @@
 - TODOS
     - From 6.0.x
-        - https://bugzilla.redhat.com/show_bug.cgi?id=1070930
         - solder-impl 
             - jar inside the solder module -> IllegalAccessException trying to acces package protected class methods from jars in different classloaders (solder module & webapp)
             - generate webfragment jar?? -> Generate an alert
