@@ -13,6 +13,7 @@
             - Slot for modules of 3rd party jars should use it's own version, not the project one. (David Ward) - Can use properties defined in IP BOM as module.slot value.
             - https://bugzilla.redhat.com/show_bug.cgi?id=1063602 - keep it in your vision - it's likely xstream will be upgrades very fast, including it's transitive deps xpp3 etc. Make sure your fork doesn't undo that later. (geoffrey)
     - Modules integration with other frameworks
+        - Define dependencies at distribution level, not only at module level. For example, add dependency on drools,jbpm,kie for module quartz, but only for both bpms/brms distros.
         - Should use a common modules repository? Several frameworks have same modules..
         - All third party jars should be in a single module?
             - for example, we can use xmlpull:xmlpull:jar and xpp3:xpp3_min:jar in same static module.
