@@ -6,3 +6,4 @@ org.slf4j
 javax.servlet.api
 org.jbpm
 org.drools
+org.kie
