@@ -22,6 +22,7 @@ import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
 import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
+import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -37,6 +38,8 @@ public class EAPModuleGraphFlatNode implements EAPModuleGraphNode {
     private List<EAPModuleGraphNodeResource> resources;
 
     private List<EAPModuleGraphNodeDependency> dependencies;
+    
+    private Artifact moduleArtifact;
 
     public EAPModuleGraphFlatNode(EAPModule module) {
         this.module = module;
@@ -46,7 +49,9 @@ public class EAPModuleGraphFlatNode implements EAPModuleGraphNode {
     private void init() {
         Collection<EAPModuleResource> resources = module.getResources();
         Collection<EAPModuleDependency> dependencies = module.getDependencies();
-
+        
+        this.moduleArtifact = module.getArtifact();
+        
         if (resources != null && !resources.isEmpty()) {
             this.resources = new LinkedList<EAPModuleGraphNodeResource>();
             for ( EAPModuleResource resource : resources ) {
@@ -80,6 +85,11 @@ public class EAPModuleGraphFlatNode implements EAPModuleGraphNode {
     @Override
     public String getSlot() {
         return module.getSlot();
+    }
+
+    @Override
+    public Artifact getArtifact() {
+        return moduleArtifact;
     }
 
     @Override

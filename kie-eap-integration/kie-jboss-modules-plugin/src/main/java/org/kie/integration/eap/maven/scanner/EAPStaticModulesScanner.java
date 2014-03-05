@@ -147,7 +147,7 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
             result = createModuleInstance(moduleArtifact, moduleName, moduleLocation, moduleSlot);
 
             // Add the static module dependencies.
-            if (scanStaticDependencies) addStaticDependencies(result, moduleModel, moduleArtifactCoordinates, moduleDependenciesRaw, exclusions);
+            if (scanStaticDependencies) addStaticDependencies(result, moduleModel, moduleDependenciesRaw, exclusions);
 
 
             // Obtain module resources.
@@ -221,21 +221,10 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
         return false;
     }
 
-    protected void addStaticDependencies(EAPModule module, Model moduleModel, String moduleArtifactCoordinates, String moduleDependenciesRaw, Collection<Artifact> exclusions) throws EAPModuleDefinitionException {
-        if (moduleDependenciesRaw != null && moduleDependenciesRaw.trim().length() > 0) {
-            String[] _moduleDependenciesRaw = moduleDependenciesRaw.split(",");
-            for (String moduleDep : _moduleDependenciesRaw) {
-                String[] _moduleDep = moduleDep.split(":");
-                if (_moduleDep == null || _moduleDep.length < 2)
-                    throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The static dependency '" + _moduleDep + "' syntax is not correct.");
-                String moduleName = EAPArtifactUtils.getPropertyValue(moduleModel, _moduleDep[0]);
-                String moduleSlot = EAPArtifactUtils.getPropertyValue(moduleModel, _moduleDep[1]);
-                boolean export = false;
-                if (_moduleDep.length == 3) export = Boolean.valueOf(_moduleDep[2]);
-                EAPStaticModuleDependency dep = new EAPStaticModuleDependency(moduleName);
-                dep.setSlot(moduleSlot);
-                dep.setOptional(false);
-                dep.setExport(export);
+    protected void addStaticDependencies(EAPModule module, Model moduleModel, String moduleDependenciesRaw, Collection<Artifact> exclusions) throws EAPModuleDefinitionException {
+        Collection<EAPStaticModuleDependency> moduleStaticDependencies = EAPArtifactUtils.getStaticDependencies(module.getArtifact(), moduleModel, moduleDependenciesRaw);
+        if (moduleStaticDependencies != null) {
+            for (EAPStaticModuleDependency dep : moduleStaticDependencies) {
                 module.addDependency(dep);
             }
         }

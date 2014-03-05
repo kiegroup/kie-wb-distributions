@@ -3,6 +3,7 @@
         - solder-impl 
             - jar inside the solder module -> IllegalAccessException trying to acces package protected class methods from jars in different classloaders (solder module & webapp)
             - generate webfragment jar?? -> Generate an alert
+        - add javax.api dependency to all modules? 
     - Remove artifact versions from module pom's
         - IP BOM
             - Review the dependency list -> not all should be added... (e.g. com.google.code.findbugs:jsr305:jar)
@@ -22,7 +23,6 @@
             - Ask who can help me
         - SW -> Horia Chierean / David Ward
     - BZs
-        - https://bugzilla.redhat.com/show_bug.cgi?id=1063949 (ORM files - David Ward)
         - https://bugzilla.redhat.com/show_bug.cgi?id=1039716 -> Modules refactor (maven plugin)
     - Review dependencies
         - Why the static dependencies applied? Are pom references to these artifacts missing?
@@ -34,6 +34,5 @@
         - If a static module definition contains an exported (forced export=true) dependency, flat dependency builder impl must detect it and do not re-export it in parent dependant modules.
     - Maven 3.1.X support
     - Change module dependencies from optional=true to scope=provided in static modules definitions??
-    - README.md's
 
 

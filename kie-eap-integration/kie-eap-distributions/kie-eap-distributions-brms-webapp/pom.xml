@@ -46,6 +46,13 @@
           <distributionName>${modules.distribution.name}</distributionName>
           <!-- The output path for the assembly file. -->
           <outputPath>${modules.tmp.path}</outputPath>
+          <!-- The static layer definition artifact. -->
+          <staticLayerArtifact>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-eap-distributions-brms-layer</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+          </staticLayerArtifact>
         </configuration>
         <executions>
           <execution>

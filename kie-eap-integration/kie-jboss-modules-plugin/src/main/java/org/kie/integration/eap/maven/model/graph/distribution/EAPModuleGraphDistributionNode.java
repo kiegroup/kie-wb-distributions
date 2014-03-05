@@ -21,6 +21,7 @@ import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
 import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.util.EAPConstants;
+import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -33,7 +34,7 @@ public class EAPModuleGraphDistributionNode implements EAPModuleGraphNode {
     private String slot;
     private List<EAPModuleGraphNodeResource> resources;
     private List<EAPModuleGraphNodeDependency> dependencies;
-
+    private Artifact moduleArtifact;
 
     public EAPModuleGraphDistributionNode(String name, String location, String slot) {
         this.name = name;
@@ -94,5 +95,13 @@ public class EAPModuleGraphDistributionNode implements EAPModuleGraphNode {
     public int compareTo(Object o) {
         EAPModuleGraphNode other = (EAPModuleGraphNode) o;
         return getName().compareTo(other.getName());
+    }
+
+    public Artifact getArtifact() {
+        return moduleArtifact;
+    }
+
+    public void setModuleArtifact(Artifact moduleArtifact) {
+        this.moduleArtifact = moduleArtifact;
     }
 }

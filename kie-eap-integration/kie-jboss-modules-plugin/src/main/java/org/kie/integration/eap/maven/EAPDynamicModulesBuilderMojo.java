@@ -22,14 +22,19 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.kie.integration.eap.maven.configuration.EAPConfigurationArtifact;
 import org.kie.integration.eap.maven.distribution.EAPLayerDistributionManager;
+import org.kie.integration.eap.maven.distribution.EAPStaticLayerDistribution;
 import org.kie.integration.eap.maven.distribution.EAPXMLLayerDistribution;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModuleResourceDuplicationException;
 import org.kie.integration.eap.maven.exception.EAPModulesDefinitionException;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleDependency;
 import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
+import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
+import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
+import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
 import org.kie.integration.eap.maven.model.graph.distribution.EAPModuleNodeGraphDependency;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.layer.EAPLayerImpl;
@@ -74,6 +79,8 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
     private static final String ASSEMBLY_DESCRIPTOR_NAME = "-assembly.xml";
     private static final String EXCLUSIONS_PATH = "WEB-INF/lib/";
     private static final String JBOSS_ALL_DEPENDENCY_NAME_PREFFIX = "jboss-all-";
+    private static final String DISTRO_XML_ENTRY_PATH = new StringBuilder(EAPConstants.DISTRIBUTION_PROPERTIES_PACKAGE.
+            replaceAll("\\.","/")).append("/").append(EAPConstants.DISTRO_PACKAGE_FILE_NAME).toString();
 
     /** The path where modules will be deployed in EAP. Corresponds to modules/system/layers. **/
     private static final String ASSEMBLY_OUTPUT_PATH = new StringBuilder("modules").append(File.separator).
@@ -135,6 +142,13 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
     protected String assemblyFormats;
 
     /**
+     * The static layer artifact than contains all the modules and properties for the layer.
+     *
+     * @parameter default-value=""
+     */
+    protected EAPConfigurationArtifact staticLayerArtifact;
+
+    /**
      * The scanner for static modules.
      * @component role-hint='velocity'
      */
@@ -146,18 +160,12 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
      */
     protected EAPLayerDistributionManager distributionManager;
 
-    /**
-     * The scanner for static modules.
-     * @component role-hint='static'
-     */
-    private EAPModulesScanner staticModulesScanner;
-
     // Class members.
     private Collection<Artifact> dynamicModuleArtifacts = null;
-    private Collection<Artifact> staticModuleArtifacts = null;
     private Collection<EAPDynamicModule> dynamicModules;
-    private EAPLayer staticLayer;
+    private EAPModulesGraph staticLayerGraph;
     private EAPArtifactsHolder artifactsHolder;
+    private Map<Artifact, EAPModuleGraphNode> staticModulesGraphArtifacts;
     private String distroOutputPath = null;
 
     @Override
@@ -176,9 +184,14 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             dynamicModuleArtifacts = scanPomDependencies();
             if (dynamicModuleArtifacts == null || dynamicModuleArtifacts.isEmpty()) throw new EAPModulesDefinitionException("No dynamic modules found in project dependency artifacts.");
             getLog().info("Found " + dynamicModuleArtifacts.size() + " POM dependency artifacts.");
+           
+            // Obtain the static layer descriptor artifact.
+            Artifact moduleResolvedArtifact = artifactsHolder.resolveArtifact(staticLayerArtifact.getArtifact());
+            EAPStaticLayerDistribution staticLayerDistribution = distributionManager.read(getStaticDistributionXMLAsString(moduleResolvedArtifact));
+            staticLayerGraph = staticLayerDistribution.getGraph();
 
+            // Load the dynamic modules.
             dynamicModules = new ArrayList<EAPDynamicModule>();
-            staticModuleArtifacts = new LinkedHashSet<Artifact>();
 
             // Create the model.
             for (Artifact dynamicModuleArtifact : dynamicModuleArtifacts) {
@@ -186,28 +199,24 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                 dynamicModules.add(dynamicModule);
             }
 
-            // Scan the static layer.
-            if (staticModuleArtifacts.isEmpty()) throw new EAPModulesDefinitionException("No static modules found in project dependency artifacts.");
-            staticLayer = staticModulesScanner.scan("staticLayer", staticModuleArtifacts, null, artifactsHolder);
-
-
-            // Fill artifacts holder with static layer modules.
-            EAPLayer layer = new EAPLayerImpl(distributionName);
-            Collection<EAPModule> staticModules = staticLayer.getModules();
-            for (EAPModule staticModule : staticModules) {
+            // Fill the artifact-modulegraph holder Map.
+            staticModulesGraphArtifacts = new LinkedHashMap<Artifact, EAPModuleGraphNode>(staticLayerGraph.getNodes().size());
+            List<EAPModuleGraphNode> staticModules = staticLayerGraph.getNodes();
+            for (EAPModuleGraphNode staticModule : staticModules) {
                 fixDynamicModuleDependency(staticModule);
-                artifactsHolder.add(staticModule.getArtifact(), staticModule);
-                layer.addModule(staticModule);
+                staticModulesGraphArtifacts.put(staticModule.getArtifact(), staticModule);
             }
 
         } catch (ArtifactResolutionException e) {
-            throw new MojoExecutionException("Cannot resolve a WAR dependency. ", e);
+            throw new MojoExecutionException("Cannot resolve the dependency. ", e);
         } catch (EAPModulesDefinitionException e) {
             throw new MojoExecutionException("Cannot resolve module definitions. ", e);
         } catch (EAPModuleDefinitionException e) {
             throw new MojoExecutionException("cannot resolve a module definition. ", e);
         } catch (EAPModuleResourceDuplicationException e) {
             throw new MojoExecutionException("Resource is duplicated. ", e);
+        } catch (Exception e) {
+            throw new MojoExecutionException("Cannot read static layer distribution.", e);
         }
 
 
@@ -224,8 +233,9 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                     EAPModuleNodeGraphDependency dep = new EAPModuleNodeGraphDependency(dependency.getName(), dependency.getSlot(), false);
                     staticModuleDependencies.add(dep);
 
-                    EAPModule module = artifactsHolder.getModule(((EAPStaticModuleDependency)dependency).getArtifacts().iterator().next());
-                    Collection<EAPModuleResource> resources = module.getResources();
+                    EAPModuleGraphNode node = staticModulesGraphArtifacts.get(((EAPStaticModuleDependency)dependency).getArtifacts().iterator().next());
+                    
+                    List<EAPModuleGraphNodeResource> resources = node.getResources();
                     if (resources != null && !resources.isEmpty()) {
                         for (EAPModuleResource resource : resources) {
                             staticModuleResourceNames.add(EXCLUSIONS_PATH + resource.getFileName());
@@ -276,6 +286,25 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
         }
 
     }
+    
+    private String getStaticDistributionXMLAsString(Artifact moduleResolvedArtifact) throws MojoExecutionException {
+        String result = null;
+        try {
+            ZipFile zipFile = new ZipFile(moduleResolvedArtifact.getFile(), ZipFile.OPEN_READ);
+            for (Enumeration e = zipFile.entries(); e.hasMoreElements();) {
+                ZipEntry entry = (ZipEntry) e.nextElement();
+
+                if (entry.getName().equals(DISTRO_XML_ENTRY_PATH)) {
+                    InputStream in = zipFile.getInputStream(entry);
+                    result = EAPFileUtils.getStringFromInputStream(in);
+                }
+            }
+        } catch (Exception e) {
+            throw new MojoExecutionException("Cannot read the distribution descriptor file.", e);
+        }
+        
+        return result;
+    } 
 
     private Collection<String> generateWarExclusions(Collection<String> staticModuleResourceNames, Collection<String> warLibs) {
         if (warLibs == null || warLibs.isEmpty()) return null;
@@ -315,7 +344,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
         return exclusions;
     }
 
-    private void fixDynamicModuleDependency(EAPModule module) {
+    private void fixDynamicModuleDependency(EAPModuleGraphNode module) {
         for (EAPDynamicModule dynModule : dynamicModules) {
             Collection<EAPModuleDependency>  dependencies = dynModule.getDependencies();
             if (dependencies != null && !dependencies.isEmpty()) {
@@ -342,6 +371,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             Model moduleModel = EAPArtifactUtils.generateModel(artifact);
             String moduleName = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_NAME));
             String moduleType = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_TYPE));
+            String moduleDependenciesRaw = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_DEPENDENCIES));
             String module_addJbossAll = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_ADD_JBOSS_ALL));
 
             // Obtain module properties.
@@ -378,11 +408,29 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
 
                     Artifact artifact1 = EAPArtifactUtils.createArtifact(groupId, artifactId, version, type, classifier);
                     if (moduleDependency.getType().equals(EAPConstants.WAR)) result.setWarFile(artifact1);
-                    else if (moduleDependency.getType().equals(EAPConstants.POM)) {
-                        EAPStaticModuleDependency dep = new EAPStaticModuleDependency(moduleDependency.getArtifactId());
-                        dep.setArtifacts(Arrays.asList(new Artifact[] {artifact1}));
+                }
+            }
+            
+            // Module dependencies.
+            Collection<EAPStaticModuleDependency> moduleStaticDependencies = EAPArtifactUtils.getStaticDependencies(artifact, moduleModel, moduleDependenciesRaw);
+            if (moduleStaticDependencies != null) {
+                // If module pom descriptor file contains dependencies, add these ones.
+                for (EAPStaticModuleDependency dep : moduleStaticDependencies) {
+                    String moduleUID = new StringBuilder(dep.getName()).append(EAPConstants.ARTIFACT_SEPARATOR).append(dep.getSlot()).toString();
+                    EAPModuleGraphNode node = staticLayerGraph.getNode(moduleUID);
+                    if (node == null) throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The module contains a dependency to a missing module in the static layer.");
+                    dep.addArtifact(node.getArtifact());
+                    result.addDependency(dep);
+                }
+            } else {
+                // If module pom descriptor file does not contain dependencies, add all modules included in the staticLayer as module dependencies.
+                List<EAPModuleGraphNode> modules = staticLayerGraph.getNodes();
+                if (modules != null && !modules.isEmpty()) {
+                    for (EAPModuleGraphNode module : modules) {
+                        Artifact moduleArtifact = module.getArtifact();
+                        EAPStaticModuleDependency dep = new EAPStaticModuleDependency(moduleArtifact.getArtifactId());
+                        dep.setArtifacts(Arrays.asList(new Artifact[] {moduleArtifact}));
                         result.addDependency(dep);
-                        staticModuleArtifacts.add(artifactsHolder.resolveArtifact(artifact1));
                     }
                 }
             }
@@ -395,22 +443,16 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The artifact's pom cannot be pared.", e);
         } catch (IOException e) {
             throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The artifact's pom cannot be read.", e);
-        } catch (ArtifactResolutionException e) {
-            throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The artifact cannot be resolved.", e);
-        }
+        } 
     }
 
     protected void checkConfiguration() throws MojoFailureException {
         if (distributionName == null || distributionName.trim().length() == 0) throw new MojoFailureException("Distribution name configuration parameter cannot be null or empty.");
         if (outputPath == null || outputPath.trim().length() == 0) throw new MojoFailureException("Output path configuration parameter cannot be null or empty.");
+        if (staticLayerArtifact == null) throw new MojoFailureException("Static layer artifact is not set.");
     }
 
     protected void initServices() {
-        // Configure static resources.
-        staticModulesScanner.setScanResources(true);
-        staticModulesScanner.setScanStaticDependencies(false);
-        ((EAPStaticModulesScanner)staticModulesScanner).setArtifactTreeResolved(false);
-
         // Configure the artifacts holder.
         artifactsHolder = new EAPArtifactsHolder(repoSystem, repoSession, remoteRepos);
     }

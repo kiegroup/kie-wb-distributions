@@ -14,6 +14,10 @@
   <properties>
     <module.name>org.jbpm.dashbuilder</module.name>
     <module.type>dynamic</module.type>
+  
+    <!-- jBPM Dashbuilder does not depend on all bpms-layer modules, it only depends on some of them.. --> 
+    <module.dependencies>org.apache.commons.math:main,org.apache.commons.compress:main,org.apache.commons.exec:main,org.apache.lucene:main,org.apache.maven:main,org.apache.commons.net:main,org.apache.poi:main,org.apache.commons.httpclient:main,org.apache.commons.fileupload:main,org.apache.commons.jxpath:main,com.opensymphony.quartz:main,org.junit:main,org.apache.xmlbeans:main,org.apache.commons.lang3:main</module.dependencies>
+    
     <!-- The jBPM Dashbuilder webapp depends on kie-wb-webapp.
         So this module should add the jboss-all.xml descriptor.-->
     <module.add-jboss-all>true</module.add-jboss-all>
@@ -28,106 +32,6 @@
       <version>${project.version}</version>
       <type>war</type>
       <classifier>jboss-as7</classifier>
-    </dependency>
-
-    <!-- The static modules dependencies. -->
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-math</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-compress</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-exec</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-lucene</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-maven</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-net</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-poi</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-httpclient</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-fileupload</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-jxpath</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>com-opensymphony-quartz</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-junit</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-xmlbeans</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-lang3</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
     </dependency>
 
   </dependencies>

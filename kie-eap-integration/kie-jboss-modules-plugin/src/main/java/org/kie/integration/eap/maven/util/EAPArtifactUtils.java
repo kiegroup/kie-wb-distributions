@@ -19,6 +19,8 @@ import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
@@ -53,6 +55,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -516,5 +519,32 @@ public class EAPArtifactUtils {
         }
 
         return false;
+    }
+    
+    public static Collection<EAPStaticModuleDependency> getStaticDependencies(Artifact moduleArtifact, Model moduleModel ,String moduleDependenciesRaw) throws EAPModuleDefinitionException {
+        Collection<EAPStaticModuleDependency> result = null;
+        if (moduleDependenciesRaw != null && moduleDependenciesRaw.trim().length() > 0) {
+            String moduleArtifactCoordinates = getArtifactCoordinates(moduleArtifact);
+            result = new LinkedList<EAPStaticModuleDependency>();
+            
+            // If module pom descriptor file contains dependencies, add these ones.
+            String[] _moduleDependenciesRaw = moduleDependenciesRaw.split(",");
+            for (String moduleDep : _moduleDependenciesRaw) {
+                String[] _moduleDep = moduleDep.split(":");
+                if (_moduleDep == null || _moduleDep.length < 2)
+                    throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The static dependency '" + _moduleDep + "' syntax is not correct.");
+                String moduleName = EAPArtifactUtils.getPropertyValue(moduleModel, _moduleDep[0]);
+                String moduleSlot = EAPArtifactUtils.getPropertyValue(moduleModel, _moduleDep[1]);
+                boolean export = false;
+                if (_moduleDep.length == 3) export = Boolean.valueOf(_moduleDep[2]);
+                EAPStaticModuleDependency dep = new EAPStaticModuleDependency(moduleName);
+                dep.setSlot(moduleSlot);
+                dep.setOptional(false);
+                dep.setExport(export);
+                result.add(dep);
+            }
+        }
+        
+        return result;
     }
 }

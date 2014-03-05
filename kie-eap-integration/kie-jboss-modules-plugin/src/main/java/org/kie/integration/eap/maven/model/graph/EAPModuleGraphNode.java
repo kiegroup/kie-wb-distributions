@@ -16,6 +16,7 @@
 package org.kie.integration.eap.maven.model.graph;
 
 import org.kie.integration.eap.maven.model.common.PathFilter;
+import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +41,12 @@ public interface EAPModuleGraphNode extends Comparable {
      * @return The module slot.
      */
     String getSlot();
+
+    /**
+     * The module definition pom artifact.
+     * @return module definition pom artifact.
+     */
+    Artifact getArtifact();
 
     /**
      * Obtain a unique ID for the module graph represented.

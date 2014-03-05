@@ -71,6 +71,14 @@ public class EAPModulesFlatGraph implements EAPModulesGraph {
         return nodes;
     }
 
+    @Override
+    public EAPModuleGraphNode getNode(String nodeUID) {
+        for (EAPModuleGraphNode node : nodes) {
+            if (node.getUniqueId().equals(nodeUID)) return node;
+        }
+        return null;
+    }
+
     public String getDistributionName() {
         return distributionName;
     }

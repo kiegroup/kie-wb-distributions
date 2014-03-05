@@ -74,6 +74,8 @@ public class EAPConstants {
 
     public static final String DISTRO_PACKAGE_FILE_NAME = "distribution.xml";
 
+    public static final String DISTRIBUTION_PROPERTIES_PACKAGE = "org.kie.integration.eap.maven.distributions";
+    
     public static final String WEB_INF = "WEB-INF";
 
     public static final String META_INF = "META-INF";

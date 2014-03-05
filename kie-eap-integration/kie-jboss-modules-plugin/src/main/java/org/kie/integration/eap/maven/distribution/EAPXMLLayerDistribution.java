@@ -55,6 +55,7 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
     private static final String ATTR_STATIC_LAYER_NAME = "name";
     private static final String ELEMENT_MODULES = "modules";
     private static final String ELEMENT_MODULE = "module";
+    private static final String ELEMENT_MODULE_ARTIFACT = "module-artifact";
     private static final String ATTR_MODULE_NAME = "name";
     private static final String ATTR_MODULE_SLOT = "slot";
     private static final String ELEMENT_RESOURCES= "resources";
@@ -84,7 +85,7 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
         try {
             xmlContent = (String) input;
         } catch (Exception e) {
-            throw  new UnsupportedOperationException("Only String input allowed for this manager.");
+            throw  new IllegalArgumentException("Only String input allowed for this manager class implementation.");
         }
 
         if (xmlContent != null) {
@@ -95,7 +96,7 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
             EAPXMLUtils eapxmlUtils = new EAPXMLUtils(is);
             Document doc = eapxmlUtils.getDocument();
 
-            String distroName = EAPXMLUtils.getAttributeValue(doc, ATTR_STATIC_LAYER_NAME);
+            String distroName = EAPXMLUtils.getAttributeValue(doc.getElementsByTagName(ELEMENT_STATIC_LAYER).item(0), ATTR_STATIC_LAYER_NAME);
             result = new EAPModulesDistributionGraph(distroName);
 
             NodeList modulesNodes = doc.getElementsByTagName(ELEMENT_MODULE);
@@ -121,6 +122,10 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
         // Create the node instance for this module.
         EAPModuleGraphDistributionNode result = new EAPModuleGraphDistributionNode(moduleName, moduleLocation, moduleSlot);
 
+        // Parse module artifact.
+        Artifact moduleArtifact = parseModuleArtifact(element.getElementsByTagName(ELEMENT_MODULE_ARTIFACT).item(0));
+        result.setModuleArtifact(moduleArtifact);
+        
         // Parse resources.
         NodeList resourcesNodes = element.getElementsByTagName(ELEMENT_RESOURCE);
         if (resourcesNodes != null) {
@@ -166,6 +171,23 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
         result.setArtifact(artifact);
 
         return result;
+    }
+
+    protected Artifact parseModuleArtifact(Node node) {
+        Element element = (Element) node;
+        
+        // Parse artifact.
+        NodeList artifactIdNodeList = element.getElementsByTagName(ELEMENT_ARTIFACT_ID);
+        NodeList groupIdNodeList = element.getElementsByTagName(ELEMENT_GROUP_ID);
+        NodeList versionNodeList = element.getElementsByTagName(ELEMENT_VERSION);
+        NodeList typeNodeList = element.getElementsByTagName(ELEMENT_TYPE);
+
+        String artifactId = artifactIdNodeList.item(0).getFirstChild().getNodeValue();
+        String groupId = groupIdNodeList.item(0).getFirstChild().getNodeValue();
+        String version = versionNodeList.item(0).getFirstChild().getNodeValue();
+        String type = typeNodeList.item(0).getFirstChild().getNodeValue();
+
+        return EAPArtifactUtils.createArtifact(groupId, artifactId, version, type);
     }
 
     protected EAPModuleGraphNodeDependency parseDependency(Node node) {
@@ -223,8 +245,20 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
                     statiModuleProperties.put(ATTR_MODULE_NAME, node.getName());
                     statiModuleProperties.put(ATTR_MODULE_SLOT, node.getSlot());
                     Element moduleElement = eapxmlUtils.createElement(ELEMENT_MODULE, statiModuleProperties, modulesElement);
+                    
+                    // Create the module-artifact element.
+                    Artifact moduleArtifact = node.getArtifact();
+                    Element moduleArtifactElement = eapxmlUtils.createElement(ELEMENT_MODULE_ARTIFACT, null, moduleElement);
+                    Element groupIdElement = eapxmlUtils.createElement(ELEMENT_GROUP_ID, null, moduleArtifactElement);
+                    groupIdElement.appendChild(doc.createTextNode(moduleArtifact.getGroupId()));
+                    Element artifactIdElement = eapxmlUtils.createElement(ELEMENT_ARTIFACT_ID, null, moduleArtifactElement);
+                    artifactIdElement.appendChild(doc.createTextNode(moduleArtifact.getArtifactId()));
+                    Element versionElement = eapxmlUtils.createElement(ELEMENT_VERSION, null, moduleArtifactElement);
+                    versionElement.appendChild(doc.createTextNode(moduleArtifact.getVersion()));
+                    Element typeElement = eapxmlUtils.createElement(ELEMENT_TYPE, null, moduleArtifactElement);
+                    typeElement.appendChild(doc.createTextNode(moduleArtifact.getExtension()));
 
-                    // Cretae the resources elements.
+                    // Create the resources elements.
                     Collection<EAPModuleGraphNodeResource> resources = node.getResources();
                     if (resources != null && !resources.isEmpty()) {
                         Element resourcesElement = eapxmlUtils.createElement(ELEMENT_RESOURCES, null, moduleElement);

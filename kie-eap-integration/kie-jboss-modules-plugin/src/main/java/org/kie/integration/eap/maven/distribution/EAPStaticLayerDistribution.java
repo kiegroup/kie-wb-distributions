@@ -34,8 +34,6 @@ public class EAPStaticLayerDistribution {
 
     public EAPStaticLayerDistribution(String distributionName, EAPModulesGraph graph) {
         this.distributionName = distributionName;
-        this.staticLayer = staticLayer;
-        this.baseLayer = baseLayer;
         this.graph = graph;
         this.includedOptionalDependencies = null;
     }

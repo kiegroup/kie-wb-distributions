@@ -39,7 +39,7 @@ public class EAPStaticModulesBuilderMojo extends EAPBaseMojo {
     private static final String MODULE_ASSEMBLY_NAME = "component.xml";
     private static final String LAYERS_DESCRIPTOR_NAME = "layers.conf";
     private static final String GLOBAL_ASSEMBLY__DESCRIPTOR_NAME = "-assembly.xml";
-    public static final String DISTRIBUTION_PROPERTIES_PACKAGE = "org.kie.integration.eap.maven.distributions";
+    
 
     /** The path where modules will be deployed in EAP. Corresponds to modules/system/layers. **/
     private static final String ASSEMBLY_OUTPUT_PATH = new StringBuilder("modules").append(File.separator).
@@ -154,7 +154,7 @@ public class EAPStaticModulesBuilderMojo extends EAPBaseMojo {
         if (distribution.getGraph() != null) {
 
             // Package root path where generated distribution properties will be placed (relative to build output dir).
-            String[] _distroPackage = DISTRIBUTION_PROPERTIES_PACKAGE.split("\\.");
+            String[] _distroPackage = EAPConstants.DISTRIBUTION_PROPERTIES_PACKAGE.split("\\.");
             StringBuilder distroPath = new StringBuilder(project.getBuild().getOutputDirectory());
             for (String dp : _distroPackage) {
                 distroPath.append(File.separator).append(dp);

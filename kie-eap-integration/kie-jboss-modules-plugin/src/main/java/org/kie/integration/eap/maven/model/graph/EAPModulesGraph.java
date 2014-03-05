@@ -32,6 +32,13 @@ public interface EAPModulesGraph {
     List<EAPModuleGraphNode> getNodes();
 
     /**
+     * Get a module node by node UID.
+     * @param nodeUID The node UID.
+     * @return The module node.
+     */
+    EAPModuleGraphNode getNode(String nodeUID);
+
+    /**
      * Prints the graph model for all modules as text output.
      * @return The printed graph model for all modules.
      */

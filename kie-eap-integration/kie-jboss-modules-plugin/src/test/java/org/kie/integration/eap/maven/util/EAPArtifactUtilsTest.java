@@ -20,12 +20,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.integration.eap.maven.EAPBaseTest;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.mockito.Mock;
 import org.sonatype.aether.artifact.Artifact;
 
+import java.util.Collection;
 import java.util.Properties;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -41,10 +44,10 @@ import static org.mockito.Mockito.when;
  * - toSnaphostVersion(org.apache.maven.artifact.Artifact artifact)
  * - getPropertyValue(Model model, String propertyValue)
  * - parseFileName(String fileName)
+ * - getStaticDependencies(Artifact moduleArtifact, Model moduleModel ,String moduleDependenciesRaw)
  */
 public class EAPArtifactUtilsTest extends EAPBaseTest {
 
-    @Mock
     private EAPArtifactUtils tested;
 
     @Mock
@@ -173,6 +176,23 @@ public class EAPArtifactUtilsTest extends EAPBaseTest {
         assertNotNull(result);
         assertEquals(result[0], "slf4j-jboss-logmanager");
         assertEquals(result[1], "1.0.2.GA-redhat-1");
+    }
+
+    @Test
+    public void testGetStaticDependencies() throws Exception {
+        Model mavenModel = mock(Model.class);
+        Properties modeProperties = new Properties();
+        when(mavenModel.getProperties()).thenReturn(modeProperties);
+        Collection<EAPStaticModuleDependency> result = tested.getStaticDependencies(null, mavenModel, "org.jbpm:main,org.drools:main");
+
+        assertNotNull(result);
+        assertTrue(result.size() == 2);
+        EAPStaticModuleDependency dep1 = (EAPStaticModuleDependency) result.toArray()[0];
+        assertEquals("org.jbpm", dep1.getName());
+        assertEquals("main", dep1.getSlot());
+        EAPStaticModuleDependency dep2 = (EAPStaticModuleDependency) result.toArray()[1];
+        assertEquals("org.drools", dep2.getName());
+        assertEquals("main", dep2.getSlot());
     }
 
     @After

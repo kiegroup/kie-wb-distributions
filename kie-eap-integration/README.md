@@ -358,6 +358,13 @@ These are the plugin goals:
                 <td>The output path for the generated artifacts and assembly files. The resulting assembly.xml file will be created inside this path</td>
             </tr>
             <tr>
+                <td>staticLayerArtifact</td>
+                <td>The static layer JAR artifact</td>
+                <td></td>
+                <td>true</td>
+                <td>The static layer artifact than contains all the modules and properties for the layer</td>
+            </tr>
+            <tr>
                 <td>assemblyFormats</td>
                 <td>Comma separated assembly formats</td>
                 <td>dir,war</td>
