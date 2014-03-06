@@ -153,7 +153,7 @@
     <h3><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></h3>
     <form action="<%=request.getContextPath()%>/org.kie.workbench.drools.KIEDroolsWebapp/KIEDroolsWebapp.html" method="GET">
       <p>
-        <input class="button" type="submit" value='<i18n:message key="loginAsAnotherUser">Login as another user</i18n:message>'value=""/>
+        <input class="button" type="submit" value='<i18n:message key="loginAsAnotherUser">Login as another user</i18n:message>'/>
       </p>
 
     </form>
