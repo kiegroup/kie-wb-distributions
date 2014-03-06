@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.services.security.AppRoles;
+import org.kie.workbench.common.services.security.KieWorkbenchACL;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
@@ -49,6 +50,7 @@ import org.uberfire.workbench.model.toolbar.impl.DefaultToolBar;
 import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 
 import static org.uberfire.workbench.model.toolbar.IconType.*;
+import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
 
 /**
  * A Perspective for Administrators
@@ -69,6 +71,9 @@ public class AdministrationPerspective {
 
     @Inject
     private SyncBeanManager iocManager;
+
+    @Inject
+    private KieWorkbenchACL kieACL;
 
     private Command newRepoCommand = null;
     private Command cloneRepoCommand = null;
@@ -154,9 +159,9 @@ public class AdministrationPerspective {
     private void buildMenuBar() {
         this.menus = MenuFactory
                 .newTopLevelMenu( AppConstants.INSTANCE.MenuOrganizationalUnits() )
+                .withRoles( kieACL.getGrantedRoles(G_AUTHORING) )
                 .menus()
                 .menu( AppConstants.INSTANCE.MenuManageOrganizationalUnits() )
-                .withRoles( PERMISSIONS_ADMIN )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -167,9 +172,9 @@ public class AdministrationPerspective {
                 .endMenus()
                 .endMenu()
                 .newTopLevelMenu( constants.repositories() )
+                .withRoles( kieACL.getGrantedRoles(G_AUTHORING) )
                 .menus()
                 .menu( AppConstants.INSTANCE.listRepositories() )
-                .withRoles( PERMISSIONS_ADMIN )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -178,11 +183,9 @@ public class AdministrationPerspective {
                 } )
                 .endMenu()
                 .menu( constants.cloneRepository() )
-                .withRoles( PERMISSIONS_ADMIN )
                 .respondsWith( cloneRepoCommand )
                 .endMenu()
                 .menu( constants.newRepository() )
-                .withRoles( PERMISSIONS_ADMIN )
                 .respondsWith( newRepoCommand )
                 .endMenu()
                 .endMenus()
