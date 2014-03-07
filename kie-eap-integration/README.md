@@ -502,7 +502,7 @@ Example:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;slot&gt;ALL&lt;/slot&gt;   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependencies&gt;javax.api:main&lt;/dependencies&gt;   
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/staticDependency&gt;   
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;Add&nbsp;a&nbsp;dependency&nbsp;to&nbsp;javax.api:main&nbsp;module&nbsp;for&nbsp;all&nbsp;static&nbsp;modules&nbsp;in&nbsp;this&nbsp;layer.&nbsp;--&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;Add&nbsp;a&nbsp;dependency&nbsp;to&nbsp;org.jbpm:main,org.drools:main&nbsp;modules&nbsp;for&nbsp;com.opensymphony.quartz&nbsp;static&nbsp;module&nbsp;in&nbsp;this&nbsp;layer.&nbsp;--&gt;   
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;staticDependency&gt;   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;com.opensymphony.quartz&lt;/name&gt;   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;slot&gt;main&lt;/slot&gt;   
