@@ -544,6 +544,28 @@
             </exclusions>
           </baseModule>
 
+          <!-- The static dependencies for this distribution modules. -->
+          <staticDependencies>
+            <!-- Add a dependency to javax.api:main module for all static modules in this layer. -->
+            <staticDependency>
+              <name>ALL</name>
+              <slot>ALL</slot>
+              <dependencies>javax.api:main</dependencies>
+            </staticDependency>
+            <!-- Protobuf depedencies on org.jbpm-minimal -->
+            <staticDependency>
+              <name>com.google.protobuf</name>
+              <slot>main</slot>
+              <dependencies>org.jbpm-minimal:main</dependencies>
+            </staticDependency>
+            <!-- Protobuf depedencies on org.jbpm-minimal, org.drools and org.kie -->
+            <staticDependency>
+              <name>com.opensymphony.quartz</name>
+              <slot>main</slot>
+              <dependencies>org.jbpm-minimal:main,org.drools:main,org.kie:main</dependencies>
+            </staticDependency>
+          </staticDependencies>
+          
           <!-- The output path for the genrated module descriptor and assembly files. The resulting global assembly.xml file will be created in this path. -->
           <outputPath>${modules.tmp.path}</outputPath>
 

@@ -43,6 +43,7 @@ The use of this plugin has several advantages:
     * Detect resource duplications in module definitions (including EAP base ones)
 * Customization
     * Support for static (not automatically resolved) dependencies.
+    * Support for static dependencies only when is building a given distribution.
     * Easy to add new distributions, just creating a pom file for each module
 
 Strategy
@@ -208,6 +209,13 @@ These are the plugin goals:
                 <td>The maven module that contains all base EAP/AS modules for a given version. It can contain exclusions</td>
             </tr>
             <tr>
+                <td>staticDependencies</td>
+                <td>A collection of static dependencies only for this distribution</td>
+                <td></td>
+                <td>false</td>
+                <td>The static dependencies for this distribution modules</td>
+            </tr>
+            <tr>
                 <td>graphOutputFile</td>
                 <td>Any string</td>
                 <td></td>
@@ -273,6 +281,13 @@ These are the plugin goals:
                 <td></td>
                 <td>true</td>
                 <td>The maven module that contains all base EAP/AS modules for a given version. It can contain exclusions</td>
+            </tr>
+            <tr>
+                <td>staticDependencies</td>
+                <td>A collection of static dependencies only for this distribution</td>
+                <td></td>
+                <td>false</td>
+                <td>The static dependencies for this distribution modules</td>
             </tr>
             <tr>
                 <td>graphOutputFile</td>
@@ -384,6 +399,7 @@ This section contains information about:
 * Profiles
 * Distributions generation
 * Adding static module dependencies
+* Adding static dependencies only in a certain distribution
 * Adding new JBoss EAP/AS versions to support
 * Adding other static layer definitions
 * How to change the target JBoss EAP/AS version
@@ -461,6 +477,38 @@ This example adds a dependency from dynamic module <code>org.jbpm.dashbuilder</c
     - Then, you must add a maven property as: <code>&lt;jboss-all-org.jbpm.dashbuilder&gt;kie-wb-webapp-modules.war&lt;/jboss-all-org.jbpm.dashbuilder&gt;</code>   
 3. Build and install the <code>org.jbpm.dashbuilder</code> maven module.    
 4. Build and install the dynamic layer distribution of this web application distribution.   
+
+How to add static dependencies only in a certain distribution
+-------------------------------------------------------------
+
+If you define some static module dependencies in a module descriptor pom file, these static dependencies will be added for the module when building any distribution.    
+
+There are some special cases where the user does not want to define the static dependency for the module descriptor itself, only when the module is added for a specific distribution.    
+
+For example: imagine that module <code>com.opensymphony.quartz</code> must depend on <code>javax.api</code> (for any distribution) and on <code>org.jbpm</code> and <code>org.drools</code> (only when building the BPMS distribution).    
+
+In this example, the user should add a static module dependency on <code>javax.api</code> in the <code>com.opensymphony.quartz</code> module descriptor pom file, and <code>org.jbpm</code> and <code>org.drools</code> static dependencies in the BPMS distribution pom file.    
+
+In order to add static dependencies only for a given distribution:   
+1. Edit the pom file for the distribution to build.    
+2. Add a <code>staticDependency</code> tag for each module dependency you wanna add in the kie-jboss-modules plugin configuration section.   
+   NOTE: If you want to add a dependency for ALL the modules in the distribuion, you can use the special keyword <code>ALL</code> for both <code>name</code> and <code>slot</code> tag values.   
+
+Example:    
+&lt;staticDependencies&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;Add&nbsp;a&nbsp;dependency&nbsp;to&nbsp;javax.api:main&nbsp;module&nbsp;for&nbsp;all&nbsp;static&nbsp;modules&nbsp;in&nbsp;this&nbsp;layer.&nbsp;--&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;staticDependency&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;ALL&lt;/name&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;slot&gt;ALL&lt;/slot&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependencies&gt;javax.api:main&lt;/dependencies&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/staticDependency&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;Add&nbsp;a&nbsp;dependency&nbsp;to&nbsp;javax.api:main&nbsp;module&nbsp;for&nbsp;all&nbsp;static&nbsp;modules&nbsp;in&nbsp;this&nbsp;layer.&nbsp;--&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;staticDependency&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;com.opensymphony.quartz&lt;/name&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;slot&gt;main&lt;/slot&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependencies&gt;org.jbpm:main,org.drools:main&lt;/dependencies&gt;   
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/staticDependency&gt;   
+&lt;staticDependencies&gt;   
 
 How to create a static module definition
 ----------------------------------------

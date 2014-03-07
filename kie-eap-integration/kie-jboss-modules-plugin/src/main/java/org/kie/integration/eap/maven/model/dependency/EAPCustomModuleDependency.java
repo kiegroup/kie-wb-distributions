@@ -16,6 +16,7 @@
 package org.kie.integration.eap.maven.model.dependency;
 
 import org.kie.integration.eap.maven.model.module.EAPModule;
+import org.kie.integration.eap.maven.util.EAPConstants;
 import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
@@ -48,7 +49,7 @@ public class EAPCustomModuleDependency implements EAPModuleDependency {
     }
 
     public String getSlot() {
-        if (slot == null || slot.trim().length() == 0) return EAPModule.MAIN_SLOT;
+        if (slot == null || slot.trim().length() == 0) return EAPConstants.SLOT_MAIN;
         return slot;
     }
 

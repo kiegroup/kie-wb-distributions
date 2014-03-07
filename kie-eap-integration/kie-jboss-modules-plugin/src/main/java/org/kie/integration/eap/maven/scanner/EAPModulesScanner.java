@@ -18,6 +18,8 @@ package org.kie.integration.eap.maven.scanner;
 import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModulesDefinitionException;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticDistributionModuleDependency;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.util.EAPArtifactsHolder;
 import org.sonatype.aether.artifact.Artifact;
@@ -60,4 +62,10 @@ public interface EAPModulesScanner {
      * @param scanStaticDependencies if static dependency properties must be scanned.
      */
     void setScanStaticDependencies(boolean scanStaticDependencies);
+
+    /**
+     * Set the static dependencies at distribution level.
+     * @param dependencies The static dependencies for this distribution.
+     */
+    void setDistributionStaticDependencies(Collection<EAPStaticDistributionModuleDependency> dependencies);
 }

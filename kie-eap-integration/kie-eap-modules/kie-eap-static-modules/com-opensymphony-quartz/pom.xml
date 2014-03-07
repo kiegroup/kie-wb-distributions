@@ -16,7 +16,7 @@
     <module.name>com.opensymphony.quartz</module.name>
     <module.type>static</module.type>
     <module.location>com/opensymphony/quartz</module.location>
-    <module.dependencies>javax.api:main,org.jbpm:main,org.jbpm-minimal:main,org.drools:main,org.kie:main</module.dependencies>
+    <module.dependencies>javax.api:main</module.dependencies>
     <module.slot>main</module.slot>
   </properties>
 

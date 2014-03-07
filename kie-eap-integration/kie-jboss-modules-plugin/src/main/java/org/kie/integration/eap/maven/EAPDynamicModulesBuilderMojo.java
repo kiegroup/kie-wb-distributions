@@ -294,7 +294,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             for (Enumeration e = zipFile.entries(); e.hasMoreElements();) {
                 ZipEntry entry = (ZipEntry) e.nextElement();
 
-                if (entry.getName().equals(DISTRO_XML_ENTRY_PATH)) {
+                if (entry.getName().equalsIgnoreCase(DISTRO_XML_ENTRY_PATH)) {
                     InputStream in = zipFile.getInputStream(entry);
                     result = EAPFileUtils.getStringFromInputStream(in);
                 }
@@ -335,7 +335,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             String staticResourceVersion = staticResourceCoords.get(warResourceArtId);
             if (staticResourceVersion != null) {
 
-                if (warResourceVersion != null && !warResourceVersion.equals(staticResourceVersion)) {
+                if (warResourceVersion != null && !warResourceVersion.equalsIgnoreCase(staticResourceVersion)) {
                     getLog().warn("Excluded " + warResourceArtId + ":" + warResourceVersion + " from war but the version defined in static module is " + staticResourceVersion);
                 }
                 exclusions.add(warResourceArtId_fileName.get(warResourceArtId));
@@ -407,7 +407,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                     String classifier = EAPArtifactUtils.getPropertyValue(moduleModel, moduleDependency.getClassifier());
 
                     Artifact artifact1 = EAPArtifactUtils.createArtifact(groupId, artifactId, version, type, classifier);
-                    if (moduleDependency.getType().equals(EAPConstants.WAR)) result.setWarFile(artifact1);
+                    if (moduleDependency.getType().equalsIgnoreCase(EAPConstants.WAR)) result.setWarFile(artifact1);
                 }
             }
             
@@ -416,7 +416,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             if (moduleStaticDependencies != null) {
                 // If module pom descriptor file contains dependencies, add these ones.
                 for (EAPStaticModuleDependency dep : moduleStaticDependencies) {
-                    String moduleUID = new StringBuilder(dep.getName()).append(EAPConstants.ARTIFACT_SEPARATOR).append(dep.getSlot()).toString();
+                    String moduleUID = EAPArtifactUtils.getUID(dep.getName(), dep.getSlot());
                     EAPModuleGraphNode node = staticLayerGraph.getNode(moduleUID);
                     if (node == null) throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The module contains a dependency to a missing module in the static layer.");
                     dep.addArtifact(node.getArtifact());
@@ -464,7 +464,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
         if (artifacts != null) {
             result = new LinkedList<Artifact>();
             for (org.apache.maven.artifact.Artifact artifact : artifacts) {
-                if (EAPConstants.POM.equals(artifact.getType())) {
+                if (EAPConstants.POM.equalsIgnoreCase(artifact.getType())) {
                     Artifact resolved = EAPArtifactUtils.resolveArtifact(artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion(), artifact.getType(), artifact.getClassifier(), repoSystem, repoSession, remoteRepos);
                     result.add(resolved);
                 }
@@ -489,7 +489,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             for (Enumeration e = war.entries(); e.hasMoreElements();) {
                 ZipEntry entry = (ZipEntry) e.nextElement();
 
-                if (entry.getName().equals(JBOSS_DEP_STRUCTURE_ZIP_ENTRY_NAME)) {
+                if (entry.getName().equalsIgnoreCase(JBOSS_DEP_STRUCTURE_ZIP_ENTRY_NAME)) {
                     InputStream in = war.getInputStream(entry);
                     EAPXMLUtils xmlUtils = new EAPXMLUtils(in);
                     currentJbossDepStructureDoc = xmlUtils.getDocument();

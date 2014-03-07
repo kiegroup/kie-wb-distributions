@@ -16,8 +16,6 @@
     <module.name>com.google.protobuf</module.name>
     <module.type>static</module.type>
     <module.location>com/google/protobuf</module.location>
-    <!-- Added due to marshalling runtime dependencies between jbpm and protobuf. -->
-    <module.dependencies>org.jbpm:main,org.jbpm-minimal:main</module.dependencies>
     <module.slot>main</module.slot>
   </properties>
 

@@ -18,6 +18,7 @@ package org.kie.integration.eap.maven.model.module;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleDependency;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
+import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
@@ -82,11 +83,11 @@ public class EAPDynamicModule implements EAPModule {
     }
 
     @Override
-    public EAPModuleDependency getDependency(String name) {
-        if (name == null || name.trim().length() == 0) return null;
+    public EAPModuleDependency getDependency(String uid) {
+        if (uid == null || uid.trim().length() == 0) return null;
 
         for (EAPModuleDependency dependency : dependencies) {
-            if (dependency.getName().equals(name)) return dependency;
+            if (uid.equalsIgnoreCase(EAPArtifactUtils.getUID(dependency.getName(), dependency.getSlot()))) return dependency;
         }
         return null;
     }

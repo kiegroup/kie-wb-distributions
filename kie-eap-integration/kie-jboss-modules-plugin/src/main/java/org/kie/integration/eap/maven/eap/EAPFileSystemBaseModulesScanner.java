@@ -19,6 +19,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.template.EAPVelocityTemplateBuilder;
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
+import org.kie.integration.eap.maven.util.EAPConstants;
 import org.kie.integration.eap.maven.util.EAPFileUtils;
 import org.kie.integration.eap.maven.util.EAPXMLUtils;
 import org.sonatype.aether.artifact.Artifact;
@@ -207,7 +208,7 @@ public class EAPFileSystemBaseModulesScanner {
     private EAPBaseModule getModule(Collection<EAPBaseModule> modules, String name, String slot) {
         if (modules != null) {
             for (EAPBaseModule module : modules) {
-                if (name.equals(module.getName()) && slot.equals(module.getSlot())) return module;
+                if (name.equalsIgnoreCase(module.getName()) && slot.equalsIgnoreCase(module.getSlot())) return module;
             }
         }
         return null;
@@ -219,7 +220,7 @@ public class EAPFileSystemBaseModulesScanner {
             if (child.isDirectory()) {
                 scan(child, result);
             }
-            else if (child.isFile() && child.getName().equals(MODULE_XML_NAME)) {
+            else if (child.isFile() && child.getName().equalsIgnoreCase(MODULE_XML_NAME)) {
                 EAPBaseModule m = scanModule(directory, child);
                 result.add(m);
             }
@@ -423,7 +424,7 @@ public class EAPFileSystemBaseModulesScanner {
         }
 
         private String getSlot() {
-            if (slot == null || slot.trim().length() == 0) return EAPModule.MAIN_SLOT;
+            if (slot == null || slot.trim().length() == 0) return EAPConstants.SLOT_MAIN;
             return slot;
         }
 

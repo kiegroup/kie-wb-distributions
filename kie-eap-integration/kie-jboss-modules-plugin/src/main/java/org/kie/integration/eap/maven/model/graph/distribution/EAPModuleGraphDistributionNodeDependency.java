@@ -18,6 +18,7 @@ package org.kie.integration.eap.maven.model.graph.distribution;
 import org.kie.integration.eap.maven.model.common.PathFilter;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.module.EAPModule;
+import org.kie.integration.eap.maven.util.EAPConstants;
 
 import java.util.Collection;
 
@@ -46,7 +47,7 @@ public class EAPModuleGraphDistributionNodeDependency implements EAPModuleGraphN
     }
 
     public String getSlot() {
-        if (slot == null || slot.trim().length() == 0) return EAPModule.MAIN_SLOT;
+        if (slot == null || slot.trim().length() == 0) return EAPConstants.SLOT_MAIN;
         return slot;
     }
 

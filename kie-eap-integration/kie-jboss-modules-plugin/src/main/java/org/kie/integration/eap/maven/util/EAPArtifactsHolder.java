@@ -85,7 +85,7 @@ public class EAPArtifactsHolder {
 
         if (obj[0] != null) {
             EAPModule m = (EAPModule) obj[0];
-            if (!module.getName().equals(m.getName())) throw new EAPModuleResourceDuplicationException("The artifact has been already added in module " + obj[0], artifactCoordinates);
+            if (!module.getName().equalsIgnoreCase(m.getName())) throw new EAPModuleResourceDuplicationException("The artifact has been already added in module " + obj[0], artifactCoordinates);
         }
         obj[0] = module;
 
@@ -99,7 +99,7 @@ public class EAPArtifactsHolder {
             String entryKey = entry.getKey();
             Object[] entryValue = entry.getValue();
 
-            if (entryKey != null && entryKey.startsWith(shortCoords) && !entryKey.equals(artifactCoordinates)) {
+            if (entryKey != null && entryKey.startsWith(shortCoords) && !entryKey.equalsIgnoreCase(artifactCoordinates)) {
                 entryValue[0] = module;
                 artifactCoordinatesMapping.put(module.getName(), artifactCoordinates);
             }
@@ -183,8 +183,8 @@ public class EAPArtifactsHolder {
         for (Map.Entry<String, Object[]> entry : artifactAllCoordinatesMap.entrySet()) {
             Object[] entryValue = entry.getValue();
             Artifact artifact = (Artifact) entryValue[1];
-            if (groupId.equals(artifact.getGroupId()) && artifactId.equals(artifact.getArtifactId())
-                    && type.equals(artifact.getExtension())) return artifact;
+            if (groupId.equalsIgnoreCase(artifact.getGroupId()) && artifactId.equalsIgnoreCase(artifact.getArtifactId())
+                    && type.equalsIgnoreCase(artifact.getExtension())) return artifact;
         }
         
         return null;

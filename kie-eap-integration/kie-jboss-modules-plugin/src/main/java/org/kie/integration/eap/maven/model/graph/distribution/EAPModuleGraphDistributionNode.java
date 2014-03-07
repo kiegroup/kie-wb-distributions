@@ -20,6 +20,7 @@ import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
 import org.kie.integration.eap.maven.model.module.EAPModule;
+import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPConstants;
 import org.sonatype.aether.artifact.Artifact;
 
@@ -61,13 +62,13 @@ public class EAPModuleGraphDistributionNode implements EAPModuleGraphNode {
     }
 
     public String getSlot() {
-        if (slot == null || slot.trim().length() == 0) return EAPModule.MAIN_SLOT;
+        if (slot == null || slot.trim().length() == 0) return EAPConstants.SLOT_MAIN;
         return slot;
     }
 
     @Override
     public String getUniqueId() {
-        return new StringBuilder(getName()).append(EAPConstants.ARTIFACT_SEPARATOR).append(getSlot()).toString();
+        return EAPArtifactUtils.getUID(getName(), getSlot());
     }
 
     @Override

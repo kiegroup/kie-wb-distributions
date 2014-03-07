@@ -24,7 +24,6 @@ import java.util.Collection;
 
 public interface EAPModule {
 
-    static final String MAIN_SLOT = "main";
     /**
      * The module layer.
      *
@@ -95,10 +94,10 @@ public interface EAPModule {
     /**
      * Returns a dependency for a given name.
      *
-     * @param name The dependency name.
+     * @param uid The module UID of the dependency.
      * @return The dependency object.
      */
-    EAPModuleDependency getDependency(String name);
+    EAPModuleDependency getDependency(String uid);
 
     /**
      * Returns a dependency instance for this kind of module.

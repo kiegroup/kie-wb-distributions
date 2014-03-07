@@ -56,7 +56,7 @@ public class EAPModulesDistributionGraph implements EAPModulesGraph {
     @Override
     public EAPModuleGraphNode getNode(String nodeUID) {
         for (EAPModuleGraphNode node : nodes) {
-            if (node.getUniqueId().equals(nodeUID)) return node;
+            if (node.getUniqueId().equalsIgnoreCase(nodeUID)) return node;
         }
         return null;
     }

@@ -18,6 +18,7 @@ package org.kie.integration.eap.maven.model.module;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleDependency;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
+import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPConstants;
 import org.sonatype.aether.artifact.Artifact;
 
@@ -61,7 +62,7 @@ public abstract class EAPAbstractModule implements  EAPModule {
     }
 
     public String getSlot() {
-        if (slot == null || slot.trim().length() == 0) return MAIN_SLOT;
+        if (slot == null || slot.trim().length() == 0) return EAPConstants.SLOT_MAIN;
         return slot;
     }
 
@@ -95,10 +96,10 @@ public abstract class EAPAbstractModule implements  EAPModule {
     }
 
     @Override
-    public EAPModuleDependency getDependency(String name) {
-        if (name != null) {
+    public EAPModuleDependency getDependency(String uid) {
+        if (uid != null) {
             for (EAPModuleDependency dep : dependencies) {
-                if (name.equals(dep.getName())) return dep;
+                if (uid.equalsIgnoreCase(EAPArtifactUtils.getUID(dep.getName(), dep.getSlot()))) return dep;
             }
         }
         return null;
@@ -109,7 +110,7 @@ public abstract class EAPAbstractModule implements  EAPModule {
         if (obj == null) return false;
         try {
             EAPModule mod = (EAPModule) obj;
-            return mod.getName().equals(getName());
+            return mod.getName().equalsIgnoreCase(getName());
         } catch (ClassCastException e) {
             return false;
         }
@@ -127,7 +128,7 @@ public abstract class EAPAbstractModule implements  EAPModule {
 
     @Override
     public String getUniqueId() {
-        return new StringBuilder(name).append(EAPConstants.ARTIFACT_SEPARATOR).append(getSlot()).toString();
+        return EAPArtifactUtils.getUID(getName(), getSlot());
     }
 
     public Artifact getArtifact() {

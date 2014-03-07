@@ -40,7 +40,7 @@ public class EAPModuleNodeGraphDependency implements EAPModuleGraphNodeDependenc
     public boolean equals(Object obj) {
         try {
             EAPModuleNodeGraphDependency other = (EAPModuleNodeGraphDependency) obj;
-            if (getName().equals(other.getName())) return true;
+            if (getName().equalsIgnoreCase(other.getName())) return true;
             return false;
         } catch (ClassCastException e) {
             return false;

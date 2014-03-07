@@ -334,6 +334,7 @@ public class EAPArtifactUtils {
      * @return
      */
     public static String getPropertyValue(Model model, String propertyValue) {
+        if (model == null && propertyValue != null) return propertyValue;
         if (model == null || propertyValue == null) return null;
         StringBuffer sb = new StringBuffer(propertyValue.length());
 
@@ -342,7 +343,7 @@ public class EAPArtifactUtils {
         while (m.find()) {
             String pName = m.group(1);
             String pValue = null;
-            if (EAPConstants.PROPERTY_PROJECT_VERSION.equals(pName)) pValue = model.getParent().getVersion();
+            if (EAPConstants.PROPERTY_PROJECT_VERSION.equalsIgnoreCase(pName)) pValue = model.getParent().getVersion();
             else pValue = (String) model.getProperties().get(pName);
             
             if (pValue == null) throw new IllegalArgumentException("Cannot resolve the property " + pName + " in project properties.");
@@ -456,6 +457,16 @@ public class EAPArtifactUtils {
                 project.getArtifactId(), project.getVersion(),
                 project.getPackaging());
     }
+    
+    public static String getUID(String name, String slot) {
+        if (name == null) return null;
+        StringBuilder result = new StringBuilder(name);
+        if (slot != null && slot.trim().length() > 0) {
+            result.append(EAPConstants.ARTIFACT_SEPARATOR).append(slot);
+        }
+        
+        return result.toString();
+    }
 
 
     public static EAPModuleGraphNode getNodeWithResource(Artifact artifact, EAPModulesGraph graph) {
@@ -512,7 +523,7 @@ public class EAPArtifactUtils {
                 if (exclusions != null && !exclusions.isEmpty()) {
                     for (Exclusion exclusion : exclusions) {
                         // TODO: Check classfifer and type too for exclusion artifacts?.
-                        if (exclusion.getGroupId().equals(artifact.getGroupId()) && exclusion.getArtifactId().equals(artifact.getArtifactId())) return true;
+                        if (exclusion.getGroupId().equalsIgnoreCase(artifact.getGroupId()) && exclusion.getArtifactId().equalsIgnoreCase(artifact.getArtifactId())) return true;
                     }
                 }
             }

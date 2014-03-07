@@ -21,6 +21,8 @@ import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModuleResourceDuplicationException;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticDistributionModuleDependency;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.module.EAPBaseModule;
 import org.kie.integration.eap.maven.model.module.EAPModule;
@@ -95,6 +97,11 @@ public class EAPBaseModulesScanner extends EAPStaticModulesScanner {
     }
 
     public void setScanStaticDependencies(boolean scanStaticDependencies) {
+        throw new UnsupportedOperationException("Base modules definitions does not support static dependencies.");
+    }
+
+    @Override
+    public void setDistributionStaticDependencies(Collection<EAPStaticDistributionModuleDependency> dependencies) {
         throw new UnsupportedOperationException("Base modules definitions does not support static dependencies.");
     }
 }

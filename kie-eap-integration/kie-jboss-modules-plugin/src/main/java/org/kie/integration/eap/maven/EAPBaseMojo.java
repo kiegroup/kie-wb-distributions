@@ -24,6 +24,7 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kie.integration.eap.maven.builder.EAPModulesDependencyBuilder;
 import org.kie.integration.eap.maven.builder.EAPModulesGraphBuilder;
 import org.kie.integration.eap.maven.configuration.EAPConfigurationArtifact;
+import org.kie.integration.eap.maven.configuration.EAPConfigurationModuleDependency;
 import org.kie.integration.eap.maven.distribution.EAPLayerDistributionManager;
 import org.kie.integration.eap.maven.distribution.EAPStaticLayerDistribution;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
@@ -31,6 +32,8 @@ import org.kie.integration.eap.maven.exception.EAPModulesDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModulesDependencyBuilderException;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleDependency;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleMissingDependency;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticDistributionModuleDependency;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.module.EAPModule;
@@ -104,6 +107,13 @@ public abstract class EAPBaseMojo extends AbstractMojo {
      */
     protected EAPConfigurationArtifact baseModule;
 
+    /**
+     * The static dependencies for this distribution modules.
+     *
+     * @parameter default-value=""
+     */
+    protected List<EAPConfigurationModuleDependency> staticDependencies;
+    
     /**
      * The file to print the generated distribution graph.
      *
@@ -374,7 +384,7 @@ public abstract class EAPBaseMojo extends AbstractMojo {
                         }
                         StringBuilder log = new StringBuilder();
                         log.append("Module/s [").append(parentsNames).append("] require [").append(dependencyCoords).append("]").append(" and this depedency is not present in any module. This artifact should be added or excluded");
-                        if (!parentsNames.toString().trim().equals(module.getUniqueId())) {
+                        if (!parentsNames.toString().trim().equalsIgnoreCase(module.getUniqueId())) {
                             log.append(" in module " + module.getUniqueId());
                         }
 
@@ -423,6 +433,23 @@ public abstract class EAPBaseMojo extends AbstractMojo {
     protected Artifact getBaseModulesArtifact() {
         return baseModule.getArtifact();
     }
+    
+    protected Collection<EAPStaticDistributionModuleDependency> getStaticDistributionDependencies() throws EAPModuleDefinitionException {
+        Collection<EAPStaticDistributionModuleDependency> result = null;
+        if (staticDependencies != null && !staticDependencies.isEmpty()) {
+            result = new LinkedList<EAPStaticDistributionModuleDependency>();
+            for (EAPConfigurationModuleDependency dependency : staticDependencies) {
+                String moduleDependenciesRaw = dependency.getDependencies();
+                Collection<EAPStaticModuleDependency> _moduleStaticDependencies = EAPArtifactUtils.getStaticDependencies(null, project.getModel(), moduleDependenciesRaw);
+                for (EAPStaticModuleDependency dep : _moduleStaticDependencies) {
+                    EAPStaticDistributionModuleDependency newDep = new EAPStaticDistributionModuleDependency(EAPArtifactUtils.getUID(dependency.getName(), dependency.getSlot()),dep);
+                    result.add(newDep);
+                }
+            }
+        }
+        
+        return result;
+    }
 
     protected EAPArtifactsHolder collectArtifacts(DependencyNode rootNode) {
         // Fill the project resolved artifacts cache.
@@ -438,7 +465,7 @@ public abstract class EAPBaseMojo extends AbstractMojo {
         if (artifacts != null) {
             modules = new LinkedList<Artifact>();
             for (org.apache.maven.artifact.Artifact artifact : artifacts) {
-                if (EAPConstants.POM.equals(artifact.getType())) {
+                if (EAPConstants.POM.equalsIgnoreCase(artifact.getType())) {
                     Artifact resolved = null;
                     try {
                         resolved = EAPArtifactUtils.resolveArtifact(artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion(), artifact.getType(), artifact.getClassifier(), repoSystem, repoSession, remoteRepos);
@@ -452,6 +479,11 @@ public abstract class EAPBaseMojo extends AbstractMojo {
         if (modules == null || modules.isEmpty()) throw new EAPModulesDefinitionException("No static module definitions found in project dependencies.");
 
         ((EAPStaticModulesScanner)staticModulesScanner).setBaseModulesLayer(baseModulesLayer);
+
+        // Static distribution dependencies.
+        Collection<EAPStaticDistributionModuleDependency> staticDistroDeps = getStaticDistributionDependencies();
+        staticModulesScanner.setDistributionStaticDependencies(staticDistroDeps);
+
         return staticModulesScanner.scan(distributionName, modules, null, artifactsHolder);
     }
 

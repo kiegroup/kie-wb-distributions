@@ -24,6 +24,7 @@ import org.kie.integration.eap.maven.model.resource.EAPArtifactOptionalResource;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
 import org.kie.integration.eap.maven.model.resource.EAPUnresolvableArtifactResource;
 import org.kie.integration.eap.maven.model.resource.EAPVersionMismatchedArtifactResource;
+import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPConstants;
 
 import java.util.*;
@@ -74,7 +75,7 @@ public class EAPModulesFlatGraph implements EAPModulesGraph {
     @Override
     public EAPModuleGraphNode getNode(String nodeUID) {
         for (EAPModuleGraphNode node : nodes) {
-            if (node.getUniqueId().equals(nodeUID)) return node;
+            if (node.getUniqueId().equalsIgnoreCase(nodeUID)) return node;
         }
         return null;
     }
@@ -236,16 +237,18 @@ public class EAPModulesFlatGraph implements EAPModulesGraph {
 
     public static String print(EAPModuleDependency dependency) {
         StringBuilder result = new StringBuilder("| +-> ");
-        result.append(dependency.getName()).append(EAPConstants.ARTIFACT_SEPARATOR).append(dependency.getSlot());
-
+        result.append(EAPArtifactUtils.getUID(dependency.getName(), dependency.getSlot()));
+        
         String isOptional = dependency.isOptional() ? ",OPTIONAL" : "";
         String isExported = dependency.isExport() ? ",EXPORTED" : "";
-
+        
         if (dependency instanceof EAPBaseModuleDependency) {
             result.append(" (EAP").append(isExported).append(isOptional).append(")");
             eapDependencies++;
+        } else if (dependency instanceof EAPStaticDistributionModuleDependency) {
+            result.append(" (DISTIBUTION-STATIC").append(isExported).append(isOptional).append(")");
+            staticDependencies++;
         } else if (dependency instanceof EAPStaticModuleDependency) {
-
             result.append(" (STATIC").append(isExported).append(isOptional).append(")");
             staticDependencies++;
         } else if (dependency instanceof EAPModuleMissingDependency) {

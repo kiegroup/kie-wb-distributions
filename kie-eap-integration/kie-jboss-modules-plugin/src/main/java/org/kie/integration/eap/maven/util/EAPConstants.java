@@ -81,4 +81,8 @@ public class EAPConstants {
     public static final String META_INF = "META-INF";
 
     public static final String NEW_LINE = "\n";
+
+    public static final String ALL = "ALL";
+
+    public static final String SLOT_MAIN = "main";
 }

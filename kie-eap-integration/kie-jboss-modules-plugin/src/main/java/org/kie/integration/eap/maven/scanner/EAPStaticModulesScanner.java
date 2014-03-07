@@ -25,6 +25,7 @@ import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModuleResourceDuplicationException;
 import org.kie.integration.eap.maven.exception.EAPModulesDefinitionException;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleDependency;
+import org.kie.integration.eap.maven.model.dependency.EAPStaticDistributionModuleDependency;
 import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.layer.EAPLayerImpl;
@@ -51,6 +52,7 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
     private EAPLayer baseModulesLayer;
     protected Log logger;
     Collection<String> exclusions;
+    Collection<EAPStaticDistributionModuleDependency> staticDistributionDependencies;
 
     // Other custom flags.
     protected boolean scanResources = true;
@@ -94,8 +96,7 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
                 Iterator<EAPModuleDependency> dependencyIterator = dependencies.iterator();
                 while (dependencyIterator.hasNext()) {
                     EAPModuleDependency dependency = dependencyIterator.next();
-                    String depName = new StringBuilder(dependency.getName()).
-                            append(EAPConstants.ARTIFACT_SEPARATOR).append(dependency.getSlot()).toString();
+                    String depName = EAPArtifactUtils.getUID(dependency.getName(), dependency.getSlot());
                     if (layer.getModule(depName) == null && (baseModulesLayer == null || baseModulesLayer.getModule(depName) == null)) {
                         dependencyIterator.remove();
                     }
@@ -110,8 +111,7 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
         String moduleName = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_NAME));
         String moduleSlot = EAPArtifactUtils.getPropertyValue(moduleModel, (String) moduleModel.getProperties().get(EAPConstants.MODULE_SLOT));
 
-        return new StringBuilder(moduleName).
-                append(EAPConstants.ARTIFACT_SEPARATOR).append(moduleSlot).toString();
+        return EAPArtifactUtils.getUID(moduleName, moduleSlot);
     }
 
 
@@ -131,7 +131,7 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
             
             // Check same module does not exist in base layer.
             if (moduleName != null && moduleSlot != null) {
-                String moduleUID = new StringBuilder(moduleName).append(EAPConstants.ARTIFACT_SEPARATOR).append(moduleSlot).toString();
+                String moduleUID = EAPArtifactUtils.getUID(moduleName, moduleSlot);
                 if (baseModulesLayer != null && baseModulesLayer.getModule(moduleUID) != null) throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The already module exist in JBoss EAP/AS base layer.");
             }
 
@@ -147,7 +147,10 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
             result = createModuleInstance(moduleArtifact, moduleName, moduleLocation, moduleSlot);
 
             // Add the static module dependencies.
-            if (scanStaticDependencies) addStaticDependencies(result, moduleModel, moduleDependenciesRaw, exclusions);
+            if (scanStaticDependencies) {
+                addStaticDependencies(result, moduleModel, moduleDependenciesRaw, exclusions);
+                addStaticDistributionDependencies(result);
+            }
 
 
             // Obtain module resources.
@@ -174,6 +177,21 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
         }
 
         return result;
+    }
+
+    protected  void addStaticDistributionDependencies(EAPModule result) {
+        if (staticDistributionDependencies != null && !staticDistributionDependencies.isEmpty()) {
+            for (EAPStaticDistributionModuleDependency dependency : staticDistributionDependencies) {
+                String moduleUID = dependency.getModuleUID();
+                
+                // Handle the special ALL case. ALL = Apply to all modules.
+                boolean isForAllModules = EAPStaticDistributionModuleDependency.DISTRO_DEPEPDENCY_FOR_ALL_MODULES.equalsIgnoreCase(moduleUID) ? true : false;
+                if ((isForAllModules || result.getUniqueId().equalsIgnoreCase(moduleUID)) && 
+                        result.getDependency(EAPArtifactUtils.getUID(dependency.getName(), dependency.getSlot())) == null) {
+                    result.addDependency(dependency);
+                }
+            }
+        }
     }
 
     protected void checkModuleProperties(Properties moduleProperties, String moduleArtifactCoordinates) throws EAPModuleDefinitionException {
@@ -326,5 +344,10 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
 
     public void setScanStaticDependencies(boolean scanStaticDependencies) {
         this.scanStaticDependencies = scanStaticDependencies;
+    }
+
+    @Override
+    public void setDistributionStaticDependencies(Collection<EAPStaticDistributionModuleDependency> dependencies) {
+        this.staticDistributionDependencies = dependencies;
     }
 }

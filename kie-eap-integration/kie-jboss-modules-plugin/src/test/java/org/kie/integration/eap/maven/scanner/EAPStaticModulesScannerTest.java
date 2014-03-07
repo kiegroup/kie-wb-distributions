@@ -349,8 +349,8 @@ public class EAPStaticModulesScannerTest extends EAPBaseLayerTest {
         assertNotNull(droolsModule);
         assertNotNull(droolsModule.getDependencies());
         assertTrue(droolsModule.getDependencies().size() == 2);
-        EAPModuleDependency hibernateDependency = droolsModule.getDependency("org.hibernate");
-        EAPModuleDependency javaxApiDependency = droolsModule.getDependency("javax.api");
+        EAPModuleDependency hibernateDependency = droolsModule.getDependency("org.hibernate:main");
+        EAPModuleDependency javaxApiDependency = droolsModule.getDependency("javax.api:main");
 
 
         assertNotNull(hibernateDependency);
@@ -447,7 +447,7 @@ public class EAPStaticModulesScannerTest extends EAPBaseLayerTest {
         if (assertStaticDependencies) {
             assertNotNull(droolsModule.getDependencies());
             assertTrue(droolsModule.getDependencies().size() > 0);
-            EAPModuleDependency hibernateDependency = droolsModule.getDependency("org.hibernate");
+            EAPModuleDependency hibernateDependency = droolsModule.getDependency("org.hibernate:main");
             assertNotNull(hibernateDependency);
             assertTrue(hibernateDependency instanceof EAPStaticModuleDependency);
             assertEquals(hibernateDependency.getName(), "org.hibernate");

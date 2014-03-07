@@ -45,6 +45,7 @@ import static org.mockito.Mockito.when;
  * - getPropertyValue(Model model, String propertyValue)
  * - parseFileName(String fileName)
  * - getStaticDependencies(Artifact moduleArtifact, Model moduleModel ,String moduleDependenciesRaw)
+ * - getUID(String name, String slot)
  */
 public class EAPArtifactUtilsTest extends EAPBaseTest {
 
@@ -195,6 +196,14 @@ public class EAPArtifactUtilsTest extends EAPBaseTest {
         assertEquals("main", dep2.getSlot());
     }
 
+    @Test
+    public void testGetUID() throws Exception {
+        String uid = tested.getUID("org.drools","main");
+        assertEquals(uid, "org.drools:main");
+        uid = tested.getUID("org.jbpm","6.1.0");
+        assertEquals(uid, "org.jbpm:6.1.0");
+    }
+    
     @After
     public void tearDown() throws Exception {
 

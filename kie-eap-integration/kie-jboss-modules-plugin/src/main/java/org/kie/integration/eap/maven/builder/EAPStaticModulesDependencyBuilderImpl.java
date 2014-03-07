@@ -149,7 +149,7 @@ public class EAPStaticModulesDependencyBuilderImpl implements EAPModulesDependen
 
         // Check if the dependency to the module is already present.
         if (parent != null) {
-            dep = (EAPCustomModuleDependency) parent.getDependency(module.getName());
+            dep = (EAPCustomModuleDependency) parent.getDependency(module.getUniqueId());
         }
 
         // No existing dependency to this module, create it.
