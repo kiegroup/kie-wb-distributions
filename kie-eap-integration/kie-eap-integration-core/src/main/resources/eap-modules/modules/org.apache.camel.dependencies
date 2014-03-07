@@ -1,3 +1,4 @@
+javax.xml.bind.api
 com.sun.xml.bind
 org.kie.lib
 org.slf4j
