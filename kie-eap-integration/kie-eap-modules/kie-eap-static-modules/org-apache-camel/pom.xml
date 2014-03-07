@@ -16,6 +16,7 @@
     <module.name>org.apache.camel</module.name>
     <module.type>static</module.type>
     <module.location>org/apache/camel</module.location>
+    <module.dependencies>javax.xml.bind.api:main</module.dependencies>
     <module.slot>main</module.slot>
   </properties>
 
