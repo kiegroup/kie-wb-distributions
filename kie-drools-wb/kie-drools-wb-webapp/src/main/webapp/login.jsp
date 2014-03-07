@@ -152,24 +152,14 @@
 
     <form action="j_security_check" method="POST">
       <p>
-<<<<<<< HEAD
-        <label><i18n:message key="UserName">Username</i18n:message></label>
-        <input value="" name="j_username" class="text-input" type="text"/>
-=======
-        <label style="white-space: nowrap;"><i18n:message key="UserName">Username</i18n:message></label>
-        <input value="" name="uf_username" class="text-input" type="text"/>
->>>>>>> f64caed... BZ:1070083 - Login page is not localized.
+          <label style="white-space: nowrap;"><i18n:message key="UserName">Username</i18n:message></label>
+          <input value="" name="j_username" class="text-input" type="text"/>
       </p>
       <br style="clear: both;"/>
 
       <p>
-<<<<<<< HEAD
-        <label><i18n:message key="Password">Password</i18n:message></label>
-        <input name="j_password" class="text-input" type="password"/>
-=======
-        <label style="white-space: nowrap;"><i18n:message key="Password">Password</i18n:message></label>
-        <input name="uf_password" class="text-input" type="password"/>
->>>>>>> f64caed... BZ:1070083 - Login page is not localized.
+          <label style="white-space: nowrap;"><i18n:message key="Password">Password</i18n:message></label>
+          <input name="j_password" class="text-input" type="password"/>
       </p>
       <br style="clear: both;"/>
 
