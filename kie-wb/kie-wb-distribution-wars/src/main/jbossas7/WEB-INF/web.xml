@@ -585,4 +585,10 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <error-code>403</error-code>
     <location>/not_authorized.jsp</location>
   </error-page>
+  
+  <context-param>
+    <param-name>resteasy.document.expand.entity.references</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  
 </web-app>
