@@ -24,7 +24,6 @@
     <dependency>
       <groupId>rome</groupId>
       <artifactId>rome</artifactId>
-      <version>1.0</version>
       <type>jar</type>
     </dependency>
 

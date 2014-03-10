@@ -15,11 +15,17 @@
  */
 package org.kie.integration.eap.maven.distribution;
 
+import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
+import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
+import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPArtifactsHolder;
 import org.kie.integration.eap.maven.util.EAPConstants;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 
 public class EAPStaticLayerDistribution {
@@ -54,7 +60,11 @@ public class EAPStaticLayerDistribution {
 
         if (graph != null) result.append(graph.print());
         // if (artifactsHolder != null) result.append(printArtifactResolutionModulesMapping());
-
+        
+        // Unreferenced modules
+        String unreferencendModules = printUnreferencedModules();
+        if (unreferencendModules != null) result.append(unreferencendModules);
+        
         return printedDistro = result.toString();
     }
 
@@ -75,6 +85,52 @@ public class EAPStaticLayerDistribution {
         }
 
         return result.toString();
+    }
+    
+    protected Collection<String> getReferencedModuleUIDs() {
+        Collection<String> result = null;
+        List<EAPModuleGraphNode> nodes = graph.getNodes();
+        if (nodes != null && !nodes.isEmpty()) {
+            result = new LinkedHashSet<String>();
+            for (EAPModuleGraphNode node: nodes) {
+                List<EAPModuleGraphNodeDependency> dependencies = node.getDependencies();
+                if (dependencies != null && !dependencies.isEmpty()) {
+                    for (EAPModuleGraphNodeDependency dependency : dependencies) {
+                        String depModuleUID = EAPArtifactUtils.getUID(dependency.getName(), dependency.getSlot());
+                        result.add(depModuleUID);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    
+    protected String printUnreferencedModules() {
+        StringBuilder result = null;
+
+        Collection<String> referencedModuleUIDs = getReferencedModuleUIDs();
+        if (referencedModuleUIDs != null && !referencedModuleUIDs.isEmpty()) {
+            List<EAPModuleGraphNode> nodes = graph.getNodes();
+            Collection<EAPModuleGraphNode> unreferencedModules = new LinkedHashSet<EAPModuleGraphNode>();
+            for (String referencedNodeUID : referencedModuleUIDs) {
+                for (EAPModuleGraphNode node: nodes) {
+                    String moduleUID = node.getUniqueId();
+                    if (!referencedModuleUIDs.contains(moduleUID)) unreferencedModules.add(node);
+                }
+            }
+
+            if (!unreferencedModules.isEmpty()) {
+                result = new StringBuilder();
+                result.append("****************************************************************************************").append(EAPConstants.NEW_LINE);
+                result.append("+++++++++++ Unreferenced modules ++++++++++++++++++++").append(EAPConstants.NEW_LINE);
+                for (EAPModuleGraphNode node: unreferencedModules) {
+                    result.append(node.getUniqueId()).append(EAPConstants.NEW_LINE);
+                }
+                result.append("****************************************************************************************").append(EAPConstants.NEW_LINE);
+            }
+        }
+
+        return result != null ? result.toString() : null;
     }
 
     public void setStaticLayer(EAPLayer staticLayer) {

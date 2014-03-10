@@ -24,7 +24,6 @@
     <dependency>
       <groupId>org.sonatype.maven</groupId>
       <artifactId>wagon-ahc</artifactId>
-      <version>1.2.1</version>
       <type>jar</type>
     </dependency>
 

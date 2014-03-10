@@ -19,7 +19,6 @@
     <module.slot>main</module.slot>
     <!-- Added due to jbpm-persistence-jpa runtime hibernate dependency with EAP. -->
     <module.dependencies>org.hibernate:main,javax.api:main,javaee.api:main,org.mvel:main</module.dependencies>
-    <jbpm.version>${project.version}</jbpm.version>
   </properties>
 
   <dependencies>
@@ -27,21 +26,18 @@
   <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-bpmn2</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-flow-builder</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-flow</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 

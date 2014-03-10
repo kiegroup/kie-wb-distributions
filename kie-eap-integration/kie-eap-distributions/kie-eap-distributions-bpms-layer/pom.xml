@@ -57,21 +57,7 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-camel</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>org-codehouse-plexus</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-math</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -86,20 +72,6 @@
     <dependency>
       <groupId>org.kie.modules</groupId>
       <artifactId>org-apache-commons-exec</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-helix</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-eclipse-jgit</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -162,21 +134,7 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-sonatype-maven</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>org-sonatype-plexus</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-vfs</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -190,36 +148,7 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-zookeeper</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-batik</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>org-apache-commons-httpclient</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-fileupload</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-jxpath</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -247,74 +176,7 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-lang3</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>aopalliance</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>args4j</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>asm</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>avalon-framework</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>ch-qos-logback</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>com-github-sgroschupf-zkclient</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>com-google-code-findbugs</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>com-google-inject</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>com-googlecode-jarjar</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>com-jcraft</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>com-ning</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -332,25 +194,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>javax-ws-rs</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>jivesoftware</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>net-sf-josql</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>net-sf-opencsv</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -362,43 +206,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-abdera</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-avalon-framework</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-geronimo-specs</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-xmlgraphics</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-beanshell</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>org-eclipse-emf</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-eclipse</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -416,43 +224,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-jasypt</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-jboss-netty</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-jboss-seam-transaction</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-json</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-ocpsoft-prettytime</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>org-osgi</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>rhino</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -476,32 +248,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-sshd</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>com-google-code-gson</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-restlet-jse</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>org-jsoup</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-mina</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -511,7 +258,30 @@
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
-
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-apache-commons-math</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-apache-commons-fileupload</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-apache-commons-jxpath</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-apache-commons-lang3</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
   </dependencies>
 
 

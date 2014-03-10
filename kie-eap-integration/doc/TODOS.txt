@@ -3,7 +3,10 @@
         - solder-impl 
             - jar inside the solder module -> IllegalAccessException trying to acces package protected class methods from jars in different classloaders (solder module & webapp)
             - generate webfragment jar?? -> Generate an alert
-        - add javax.api dependency to all modules? 
+    - Maven WARNS
+        - JBoss modules module -> Some warnings are present:
+            [WARNING] Some problems were encountered while building the effective model for org.kie.modules:asm-asm-main:pom:6.1.0-SNAPSHOT
+            [WARNING] 'dependencies.dependency.systemPath' for org.jboss.eap-module-base:asm:pom should not point at files within the project directory, ${project.basedir}/src/main/resources/asm-3.3.1-redhat-4.jar-pom.xml will be unresolvable by dependent projects @ line 31, column 23
     - Remove artifact versions from module pom's
         - IP BOM
             - Review the dependency list -> not all should be added... (e.g. com.google.code.findbugs:jsr305:jar)
@@ -24,8 +27,6 @@
         - SW -> Horia Chierean / David Ward
     - BZs
         - https://bugzilla.redhat.com/show_bug.cgi?id=1039716 -> Modules refactor (maven plugin)
-    - Review dependencies
-        - Why the static dependencies applied? Are pom references to these artifacts missing?
     - Unit tests for Mojo classes
     
 - Other TODOS

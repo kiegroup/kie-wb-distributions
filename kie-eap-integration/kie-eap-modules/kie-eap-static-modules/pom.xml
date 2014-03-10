@@ -20,7 +20,6 @@
     <module>org-jbpm-minimal</module>
     <module>org-sonatype-aether</module>
     <module>org-apache-ant</module>
-    <module>org-apache-camel</module>
     <module>org-codehouse-plexus</module>
     <module>org-apache-commons-math</module>
     <module>org-apache-commons-compress</module>
@@ -41,8 +40,6 @@
     <module>org-apache-commons-vfs</module>
     <module>org-apache-maven-wagon</module>
     <module>org-apache-mina</module>
-    <module>org-apache-zookeeper</module>
-    <module>org-apache-batik</module>
     <module>org-apache-commons-httpclient</module>
     <module>org-apache-commons-fileupload</module>
     <module>org-apache-commons-jxpath</module>
@@ -52,45 +49,32 @@
     <module>org-apache-commons-lang3</module>
 
     <module>aopalliance</module>
-    <module>args4j</module>
     <module>asm</module>
-    <module>avalon-framework</module>
     <module>ch-qos-logback</module>
-    <module>com-github-sgroschupf-zkclient</module>
-    <module>com-google-code-findbugs</module>
-    <module>com-google-inject</module>
-    <module>com-googlecode-jarjar</module>
     <module>com-jcraft</module>
     <module>com-ning</module>
     <module>com-thoughtworks-xstream</module>
     <module>jakarta-regexp</module>
     <module>javax-ws-rs</module>
     <module>jivesoftware</module>
-    <module>net-sf-josql</module>
     <module>net-sf-opencsv</module>
     <module>org.antlr</module>
     <module>org-apache-abdera</module>
-    <module>org-apache-avalon-framework</module>
-    <module>org-apache-geronimo-specs</module>
     <module>org-apache-xmlgraphics</module>
     <module>org-beanshell</module>
     <module>org-eclipse-emf</module>
     <module>org-eclipse</module>
     <module>org-freemarker</module>
     <module>org-hamcrest</module>
-    <module>org-jasypt</module>
     <module>org-jboss-netty</module>
     <module>org-jboss-seam-transaction</module>
     <module>org-json</module>
     <module>org-jsoup</module>
-    <module>org-ocpsoft-prettytime</module>
     <module>org-osgi</module>
-    <module>org-restlet-jse</module>
     <module>rhino</module>
     <module>rome</module>
     <module>xmlpull</module>
     <module>xpp3</module>
-    <module>org-apache-sshd</module>
     <module>com-google-code-gson</module>
   </modules>
 

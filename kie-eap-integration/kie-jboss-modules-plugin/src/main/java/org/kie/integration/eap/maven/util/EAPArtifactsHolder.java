@@ -35,7 +35,7 @@ import java.util.*;
 public class EAPArtifactsHolder {
 
     /**
-     * Contains the relation: <artifact_shortCoordinates> <-> [ <module> <artifact> ]
+     * Contains the relation: <artifact_Coordinates> <-> [ <module> <artifact> ]
      */
     private Map<String, Object[]> artifactAllCoordinatesMap = new HashMap<String, Object[]>();
     /**

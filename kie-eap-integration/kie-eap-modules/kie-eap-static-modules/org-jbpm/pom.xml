@@ -19,7 +19,6 @@
     <module.slot>main</module.slot>
     <!-- Added due to jbpm-persistence-jpa runtime hibernate dependency with EAP. -->
     <module.dependencies>org.hibernate:main,javax.api:main,javaee.api:main</module.dependencies>
-    <jbpm.version>${project.version}</jbpm.version>
   </properties>
 
   <dependencies>
@@ -27,7 +26,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-executor</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -35,7 +33,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-persistence-jpa</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -43,7 +40,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-human-task-core</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -51,7 +47,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-bpmn2-emfextmodel</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -59,7 +54,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-workitems</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -67,7 +61,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-human-task-workitems</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -75,7 +68,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-kie-services</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -83,7 +75,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-bpmn2</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -91,7 +82,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-flow-builder</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -99,7 +89,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-runtime-manager</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -107,7 +96,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-audit</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -115,7 +103,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-shared-services</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -123,7 +110,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-flow</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
@@ -131,24 +117,14 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-human-task-audit</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-human-task-jpa</artifactId>
-      <version>${jbpm.version}</version>
       <type>jar</type>
     </dependency>
-
-    <!--<dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-services</artifactId>
-      <version>${jbpm.version}</version>
-      <type>jar</type>
-    </dependency>-->
-
 
   </dependencies>
 </project>

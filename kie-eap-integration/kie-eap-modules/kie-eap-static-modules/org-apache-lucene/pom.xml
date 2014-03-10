@@ -41,7 +41,6 @@
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-queryparser</artifactId>
-      <version>4.0.0</version>
       <type>jar</type>
     </dependency>
 
@@ -49,7 +48,6 @@
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analyzers-common</artifactId>
-      <version>4.0.0</version>
       <type>jar</type>
     </dependency>
 
@@ -57,7 +55,6 @@
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-codecs</artifactId>
-      <version>4.0.0</version>
       <type>jar</type>
     </dependency>
 
@@ -65,7 +62,6 @@
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
-      <version>4.0.0</version>
       <type>jar</type>
     </dependency>
 

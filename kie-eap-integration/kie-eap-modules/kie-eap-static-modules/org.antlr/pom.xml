@@ -25,21 +25,18 @@
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr</artifactId>
-      <version>3.5</version>
       <type>jar</type>
     </dependency>
 
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr-runtime</artifactId>
-      <version>3.5</version>
       <type>jar</type>
     </dependency>
 
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>ST4</artifactId>
-      <version>4.0.7</version>
       <type>jar</type>
     </dependency>
 

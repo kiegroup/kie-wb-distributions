@@ -48,7 +48,6 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-model</artifactId>
-      <version>3.0.5</version>
       <type>jar</type>
     </dependency>
 
@@ -56,7 +55,6 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-compat</artifactId>
-      <version>3.0.5</version>
       <type>jar</type>
     </dependency>
 
@@ -72,7 +70,6 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-aether-provider</artifactId>
-      <version>3.0.5</version>
       <type>jar</type>
     </dependency>
 
@@ -80,7 +77,6 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>3.0.5</version>
       <type>jar</type>
     </dependency>
 
@@ -96,7 +92,6 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <version>3.0.5</version>
       <type>jar</type>
     </dependency>
 

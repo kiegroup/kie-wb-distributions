@@ -25,7 +25,6 @@
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml</artifactId>
-      <version>3.9</version>
       <type>jar</type>
     </dependency>
 
@@ -33,7 +32,6 @@
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
-      <version>3.9</version>
       <type>jar</type>
     </dependency>
 
@@ -41,7 +39,6 @@
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml-schemas</artifactId>
-      <version>3.9</version>
       <type>jar</type>
     </dependency>
 

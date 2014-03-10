@@ -25,7 +25,6 @@
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
-      <version>1.4.7</version>
       <type>jar</type>
     </dependency>
 

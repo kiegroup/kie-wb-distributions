@@ -263,6 +263,38 @@ public class EAPArtifactUtils {
         return result.toString();
     }
 
+    /**
+     * Returns the artifact with all coordinates exception the version one - groupId:artifactId:type[:classifier]
+     *
+     * @param artifact The artifact.
+     * @return The artifact coordinates without the version one.
+     */
+    public static String getArtifactCoordinatesWithoutVersion(Artifact artifact) {
+        if (artifact == null) return  null;
+        StringBuilder result = new StringBuilder();
+
+        if (artifact.getGroupId() != null && artifact.getGroupId().trim().length() > 0) {
+            result.append(artifact.getGroupId());
+        }
+
+        if (artifact.getArtifactId() != null && artifact.getArtifactId().trim().length() > 0) {
+            if (result.length() > 0) result.append(EAPConstants.ARTIFACT_SEPARATOR);
+            result.append(artifact.getArtifactId());
+        }
+
+        if (artifact.getExtension() != null && artifact.getExtension().trim().length() > 0) {
+            if (result.length() > 0) result.append(EAPConstants.ARTIFACT_SEPARATOR);
+            result.append(artifact.getExtension());
+        }
+
+        if (artifact.getClassifier() != null && artifact.getClassifier().trim().length() > 0) {
+            if (result.length() > 0) result.append(EAPConstants.ARTIFACT_SEPARATOR);
+            result.append(artifact.getClassifier());
+        }
+
+        return result.toString();
+    }
+
     public static String toSnaphostVersion(Artifact artifact) {
         if (artifact == null) return null;
 

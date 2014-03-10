@@ -418,7 +418,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                 for (EAPStaticModuleDependency dep : moduleStaticDependencies) {
                     String moduleUID = EAPArtifactUtils.getUID(dep.getName(), dep.getSlot());
                     EAPModuleGraphNode node = staticLayerGraph.getNode(moduleUID);
-                    if (node == null) throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The module contains a dependency to a missing module in the static layer.");
+                    if (node == null) throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The module contains a dependency to the module " + moduleUID + " which is missing in the static layer");
                     dep.addArtifact(node.getArtifact());
                     result.addDependency(dep);
                 }

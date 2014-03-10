@@ -34,12 +34,13 @@ import static org.mockito.Mockito.when;
 
 /**
  * Tested methods:
- * - createArtifact(String groupId, String artifactId, String version, String packaging) OK
- * - createArtifact(String groupId, String artifactId, String version, String packaging, String classifier) OK
- * - equals(Artifact a1, Artifact a2) OK
- * - extractArtifactCorrdinates(String artifactCoordinates)  OK
- * - getArtifactCoordinates(org.apache.maven.artifact.Artifact artifact) OK
- * - getArtifactCoordinates(Artifact artifact) OK
+ * - createArtifact(String groupId, String artifactId, String version, String packaging)
+ * - createArtifact(String groupId, String artifactId, String version, String packaging, String classifier)
+ * - equals(Artifact a1, Artifact a2)
+ * - extractArtifactCorrdinates(String artifactCoordinates) 
+ * - getArtifactCoordinates(org.apache.maven.artifact.Artifact artifact)
+ * - getArtifactCoordinatesWithoutVersion(Artifact artifact)
+ * - getArtifactCoordinates(Artifact artifact)
  * - toSnaphostVersion(Artifact artifact)
  * - toSnaphostVersion(org.apache.maven.artifact.Artifact artifact)
  * - getPropertyValue(Model model, String propertyValue)
@@ -111,6 +112,11 @@ public class EAPArtifactUtilsTest extends EAPBaseTest {
         assertNotNull(coords);
         assertEquals(coords, "org.kie:artifact:jar:1.0");
 
+        initMockArtifact(artifact1, "org.kie", "artifact", "1.0", "jar", null);
+        coords = tested.getArtifactCoordinatesWithoutVersion(artifact1);
+        assertNotNull(coords);
+        assertEquals(coords, "org.kie:artifact:jar");
+
         org.apache.maven.artifact.Artifact mavenArtifact = mock(org.apache.maven.artifact.Artifact.class);
         when(mavenArtifact.getGroupId()).thenReturn("org.kie");
         when(mavenArtifact.getArtifactId()).thenReturn("artifact");
@@ -120,6 +126,8 @@ public class EAPArtifactUtilsTest extends EAPBaseTest {
         coords = tested.getArtifactCoordinates(mavenArtifact);
         assertNotNull(coords);
         assertEquals(coords, "org.kie:artifact:jar:eap:1.0");
+        
+        
 
     }
 
@@ -203,7 +211,7 @@ public class EAPArtifactUtilsTest extends EAPBaseTest {
         uid = tested.getUID("org.jbpm","6.1.0");
         assertEquals(uid, "org.jbpm:6.1.0");
     }
-    
+
     @After
     public void tearDown() throws Exception {
 

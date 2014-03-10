@@ -24,7 +24,6 @@
     <dependency>
       <groupId>avalon-framework</groupId>
       <artifactId>avalon-framework</artifactId>
-      <version>4.1.4</version>
       <type>jar</type>
     </dependency>
 

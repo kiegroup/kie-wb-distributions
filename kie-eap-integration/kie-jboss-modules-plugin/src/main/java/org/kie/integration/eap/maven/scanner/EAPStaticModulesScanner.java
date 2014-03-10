@@ -263,21 +263,31 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
             Artifact resolvedArtifact = artifactsHolder.getArtifact(moduleResourceArtifact);
 
             if (resolvedArtifact != null) {
-                // This artifact is not required by the current distribution. Will be not included in module.
+                // This artifact is resolvable in current tree.
                 Artifact resolved = artifactsHolder.resolveArtifact(resolvedArtifact);
                 result = moduleDependency.isOptional() ? EAPArtifactOptionalResource.create(resolved) : EAPArtifactResource.create(resolved);
                 artifactsHolder.setModule(resolvedArtifact, module);
             } else {
-                
                 // Same artifact coordinates have not been resolved in current project dependency tree.
-                // Check if another version for artifact has been resolved.
                 resolvedArtifact = artifactsHolder.contains(depGroupId, depArtifactId, depType);
+                
+                boolean isResourceVersionMissing = false;
+                // Check if the dependency for module have no version defined.
+                if (depVersion == null || depVersion.trim().length() == 0) isResourceVersionMissing = true;
+                
+                // Check if another version for artifact has been resolved.
                 if (resolvedArtifact != null) {
-                    // There exist another version resolved for this artifact.
-                    if (logger != null)
-                        logger.warn("The artifact " + moduleResourceArtifact.toString() + " is resolvable in current project but using another version: '" + resolvedArtifact.getVersion() + "'.");
+                    // There exist another version resolved for this artifact. Resolve it in current project.
                     resolvedArtifact = artifactsHolder.resolveArtifact(resolvedArtifact);
-                    result = EAPVersionMismatchedArtifactResource.create(resolvedArtifact, depVersion);
+                    
+                    if (isResourceVersionMissing) {
+                        result = EAPArtifactResource.create(resolvedArtifact);
+                    } else {
+                        if (logger != null)
+                            logger.warn("The artifact " + moduleResourceArtifact.toString() + " is resolvable in current project but using another version: '" + resolvedArtifact.getVersion() + "'.");
+                        result = EAPVersionMismatchedArtifactResource.create(resolvedArtifact, depVersion);
+                    }
+                    
                     // Add the resolved artifact with different version as module resource.
                     moduleResourceArtifact = resolvedArtifact;
                 } else {

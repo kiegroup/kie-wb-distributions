@@ -25,7 +25,6 @@
     <dependency>
       <groupId>org.quartz-scheduler</groupId>
       <artifactId>quartz</artifactId>
-      <version>1.8.5</version>
       <type>jar</type>
       <exclusions>
         <exclusion>

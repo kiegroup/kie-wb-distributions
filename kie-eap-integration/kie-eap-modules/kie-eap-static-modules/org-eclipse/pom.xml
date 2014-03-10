@@ -25,7 +25,6 @@
     <dependency>
       <groupId>org.eclipse</groupId>
       <artifactId>org.eclipse.bpmn2</artifactId>
-      <version>0.7.3</version>
       <type>jar</type>
     </dependency>
 

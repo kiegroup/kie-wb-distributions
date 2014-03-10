@@ -24,7 +24,6 @@
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
-      <version>2.2</version>
       <type>jar</type>
     </dependency>
 

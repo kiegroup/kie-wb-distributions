@@ -24,7 +24,6 @@
     <dependency>
       <groupId>org.apache.helix</groupId>
       <artifactId>helix-core</artifactId>
-      <version>0.6.2-incubating</version>
       <type>jar</type>
     </dependency>
 
