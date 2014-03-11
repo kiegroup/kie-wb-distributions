@@ -52,7 +52,6 @@
     <module>asm</module>
     <module>ch-qos-logback</module>
     <module>com-jcraft</module>
-    <module>com-ning</module>
     <module>com-thoughtworks-xstream</module>
     <module>jakarta-regexp</module>
     <module>javax-ws-rs</module>

@@ -108,18 +108,18 @@
     </plugins>
   </build>
 
-    <profiles>
-        <profile>
-            <id>eap-modules</id>
-            <activation>
-                <property>
-                    <name>eap-modules</name>
-                </property>
-            </activation>
-            <modules>
-                <module>kie-eap-integration</module>
-            </modules>
-        </profile>
-    </profiles>
+  <profiles>
+    <profile>
+      <id>fullProfile</id>
+      <activation>
+        <property>
+          <name>full</name>
+        </property>
+      </activation>
+      <modules>
+        <module>kie-eap-integration</module>
+      </modules>
+    </profile>
+  </profiles>
 
 </project>
