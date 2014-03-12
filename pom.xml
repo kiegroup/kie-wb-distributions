@@ -110,10 +110,10 @@
 
   <profiles>
     <profile>
-      <id>eap-modules</id>
+      <id>fullProfile</id>
       <activation>
         <property>
-          <name>eap-modules</name>
+          <name>full</name>
         </property>
       </activation>
       <modules>
