@@ -1,8 +1,41 @@
 - TODOS
-    - From 6.0.x
-        - solder-impl 
-            - jar inside the solder module -> IllegalAccessException trying to acces package protected class methods from jars in different classloaders (solder module & webapp)
-            - generate webfragment jar?? -> Generate an alert
+    - Dynamic module dependencies
+        - Both BPMS/BRMS contains jars in WEB-INF/lib that are in modules, and this modules are not present in the static BPMS/BRMS distribution layer... add them?
+            abdera-i18n-1.1.2.jar -> org.apache.abdera
+            asm-3.1.jar -> asm / asm.asm
+            commons-codec-1.4.jar -> org-apache-commons-codec-main -> Missing eap_61 assembly exclusion
+            commons-compress-1.4.1.jar -> org-apache-commons-compress
+            commons-exec-1.0.1.jar -> org-apache-commons-exec
+            commons-fileupload-1.2.2.jar -> org-apache-commons-fileupload
+            commons-httpclient-3.1.jar -> org-apache-commons-httpclient
+            commons-io-2.1.jar -> org-apache-commons-io-main
+            commons-jxpath-1.3.jar -> org-apache-commons-jxpath
+            commons-logging-1.1.1.jar -> org-apache-commons-logging-main -> Missing eap_61 assembly exclusion
+            commons-math-2.1.jar -> org-apache-commons-math
+            commons-net-2.2.jar -> org-apache-commons-net
+            helix-core-0.6.2-incubating.jar -> org-apache-helix
+            jakarta-regexp-1.4.jar -> jakarta-regexp
+            json-20090211.jar -> org-json
+            log4j-1.2.17.jar -> org-apache-log4j-main
+            logback-classic-1.0.9.jar -> ch-qos-logback
+            logback-core-1.0.9.jar -> ch-qos-logback
+            lucene-analyzers-common-4.0.0.jar -> org-apache-lucene
+            lucene-codecs-4.0.0.jar -> org-apache-lucene
+            lucene-core-4.0.0.jar -> org-apache-lucene
+            lucene-queries-4.0.0.jar -> org-apache-lucene
+            lucene-queryparser-4.0.0.jar -> org-apache-lucene
+            lucene-sandbox-4.0.0.jar -> org-apache-lucene
+            mina-core-2.0.4.jar -> org-apache-mina
+            netty-4.0.0.Alpha1.errai.r1.jar -> org-jboss-netty
+            opencsv-2.3.jar -> net-sf-opencsv
+            org.osgi.core-4.2.0.jar -> org-osgi
+            rome-1.0.jar -> rome
+            scannotation-1.0.3.jar -> org-scannotation-scannotation-main
+            snakeyaml-1.8.jar -> org-yaml-snakeyaml-main
+            wagon-ahc-1.2.1.jar -> org-apache-maven-wagon
+            xmlgraphics-commons-1.4.jar -> org-apache-xmlgraphics
+            xmlschema-core-2.0.3.jar -> org-apache-ws-xmlschema-main
+         
     - Maven WARNS
         - JBoss modules module -> Some warnings are present:
             [WARNING] Some problems were encountered while building the effective model for org.kie.modules:asm-asm-main:pom:6.1.0-SNAPSHOT

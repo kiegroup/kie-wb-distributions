@@ -180,7 +180,13 @@
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
-    
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-jboss-solder</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+
   </dependencies>
 
   <build>
