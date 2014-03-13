@@ -25,6 +25,8 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
+import org.kie.integration.eap.maven.template.assembly.EAPAssemblyTemplate;
+import org.kie.integration.eap.maven.template.assembly.EAPAssemblyTemplateFile;
 
 import java.io.StringWriter;
 import java.util.Collection;
@@ -144,15 +146,16 @@ public class EAPVelocityTemplateBuilder implements EAPTemplateBuilder {
     }
 
     @Override
-    public String buildDynamicModuleAssembly(String id, String[] formats, String include, Collection<String> exclusions, Collection<EAPAssemblyTemplateFile> files) {
+    public String buildDynamicModuleAssembly(EAPAssemblyTemplate assemblyTemplate) {
         VelocityContext context = createContext();
         StringWriter writer = new StringWriter();
 
-        context.put(VM_CONTEXT_LAYER_ID, id);
-        context.put(VM_CONTEXT_LAYER_FORMATS, formats);
-        context.put(VM_CONTEXT_INCLUDE, include);
-        context.put(VM_CONTEXT_EXCLUSIONS, exclusions);
-        context.put(VM_CONTEXT_FILES, files);
+        context.put(VM_CONTEXT_LAYER_ID, assemblyTemplate.getId());
+        context.put(VM_CONTEXT_LAYER_FORMATS, assemblyTemplate.getFormats());
+        // TODO: Iterate over all includes in velocity template.
+        context.put(VM_CONTEXT_INCLUDE, assemblyTemplate.getInclusions().iterator().next());
+        context.put(VM_CONTEXT_EXCLUSIONS, assemblyTemplate.getExclusions());
+        context.put(VM_CONTEXT_FILES, assemblyTemplate.getFiles());
         assemblyDynamicTemplate.merge(context, writer);
 
         return writer.toString();

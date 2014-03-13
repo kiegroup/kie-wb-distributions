@@ -18,7 +18,13 @@ package org.kie.integration.eap.maven.model.module;
 import org.kie.integration.eap.maven.model.dependency.EAPCustomModuleDependency;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleDependency;
 
+import java.util.Properties;
+
 public class EAPStaticModule extends EAPAbstractModule {
+
+    public EAPStaticModule(String name, String location, String slot, Properties properties) {
+        super(name, location, slot, properties);
+    }
 
     public EAPStaticModule(String name, String location, String slot) {
         super(name, location, slot);

@@ -20,6 +20,7 @@ import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 public interface EAPModuleGraphNode extends Comparable {
 
@@ -41,6 +42,12 @@ public interface EAPModuleGraphNode extends Comparable {
      * @return The module slot.
      */
     String getSlot();
+
+    /**
+     * The module properties.
+     * @return The module properties.
+     */
+    Properties getProperties();
 
     /**
      * The module definition pom artifact.

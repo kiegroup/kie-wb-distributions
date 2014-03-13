@@ -19,6 +19,8 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
+import org.kie.integration.eap.maven.template.assembly.EAPAssemblyTemplate;
+import org.kie.integration.eap.maven.template.assembly.EAPAssemblyTemplateFile;
 
 import java.util.Collection;
 
@@ -67,14 +69,10 @@ public interface EAPTemplateBuilder {
 
     /**
      * Build the assembly descriptor file for a given dynamic module.
-     * @param id The assembly id.
-     * @param formats The assembly formats.
-     * @param include The source artifact to include.
-     * @param exclusions The exclusions to exclude from the source artifact.
-     * @param files The files to include in the assembly descriptor..
+     * @param assemblyTemplate The assembly model.
      * @return The assembly descriptor file for a given dynamic module.
      */
-    String buildDynamicModuleAssembly(String id, String[] formats, String include, Collection<String> exclusions, Collection<EAPAssemblyTemplateFile> files);
+    String buildDynamicModuleAssembly(EAPAssemblyTemplate assemblyTemplate);
 
     /**
      * Build the jboss-all.xml descriptor to add a dependency from a dynamic module to another one.
@@ -83,13 +81,4 @@ public interface EAPTemplateBuilder {
      */
     String buildDynamicModuleDependency(String name);
 
-    /**
-     * Represents an assembly file tag.
-     */
-    public interface EAPAssemblyTemplateFile {
-        String getSource();
-        String getOutputDirectory();
-        String getFinalName();
-        boolean isFiltered();
-    }
 }

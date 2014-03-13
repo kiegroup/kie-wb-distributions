@@ -27,6 +27,7 @@ import org.sonatype.aether.artifact.Artifact;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 public class EAPModuleGraphFlatNode implements EAPModuleGraphNode {
 
@@ -40,6 +41,8 @@ public class EAPModuleGraphFlatNode implements EAPModuleGraphNode {
     private List<EAPModuleGraphNodeDependency> dependencies;
     
     private Artifact moduleArtifact;
+    
+    private Properties properties;
 
     public EAPModuleGraphFlatNode(EAPModule module) {
         this.module = module;
@@ -51,6 +54,7 @@ public class EAPModuleGraphFlatNode implements EAPModuleGraphNode {
         Collection<EAPModuleDependency> dependencies = module.getDependencies();
         
         this.moduleArtifact = module.getArtifact();
+        this.properties = module.getProperties();
         
         if (resources != null && !resources.isEmpty()) {
             this.resources = new LinkedList<EAPModuleGraphNodeResource>();
@@ -108,6 +112,10 @@ public class EAPModuleGraphFlatNode implements EAPModuleGraphNode {
     @Override
     public Collection<PathFilter> getExports() {
         return null;
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 
     @Override

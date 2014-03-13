@@ -17,6 +17,7 @@ package org.kie.integration.eap.maven.distribution;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.component.annotations.Component;
+import org.kie.integration.eap.maven.eap.EAPContainer;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
@@ -43,9 +44,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 // TODO: Add persistence new distribution properties.
 @Component( role = EAPLayerDistributionManager.class )
@@ -53,11 +52,17 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
 
     private static final String ELEMENT_STATIC_LAYER = "staticLayer";
     private static final String ATTR_STATIC_LAYER_NAME = "name";
+    private static final String ELEMENT_CONTAINER = "container";
+    private static final String ATTR_CONTAINER_ID = "id";
     private static final String ELEMENT_MODULES = "modules";
     private static final String ELEMENT_MODULE = "module";
     private static final String ELEMENT_MODULE_ARTIFACT = "module-artifact";
     private static final String ATTR_MODULE_NAME = "name";
     private static final String ATTR_MODULE_SLOT = "slot";
+    private static final String ELEMENT_PROPERTIES = "properties";
+    private static final String ELEMENT_PROPERTY = "property";
+    private static final String ELEMENT_PROPERTY_NAME = "name";
+    private static final String ELEMENT_PROPERTY_VALUE = "value";
     private static final String ELEMENT_RESOURCES= "resources";
     private static final String ELEMENT_RESOURCE = "resource";
     private static final String ATTR_RESOURCE_IS_ADDED = "isAdded";
@@ -80,6 +85,7 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
     @Override
     public EAPStaticLayerDistribution read(Object input) throws Exception {
         EAPModulesDistributionGraph result = null;
+        EAPContainer container = null;
         String xmlContent = null;
 
         try {
@@ -99,6 +105,9 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
             String distroName = EAPXMLUtils.getAttributeValue(doc.getElementsByTagName(ELEMENT_STATIC_LAYER).item(0), ATTR_STATIC_LAYER_NAME);
             result = new EAPModulesDistributionGraph(distroName);
 
+            String containerId = EAPXMLUtils.getAttributeValue(doc.getElementsByTagName(ELEMENT_CONTAINER).item(0), ATTR_CONTAINER_ID);
+            container = new EAPContainer(containerId);
+            
             NodeList modulesNodes = doc.getElementsByTagName(ELEMENT_MODULE);
             if (modulesNodes != null) {
                 for (int temp = 0; temp < modulesNodes.getLength(); temp++) {
@@ -110,7 +119,7 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
         }
 
 
-        return new EAPStaticLayerDistribution(result.getDistributionName(), result);
+        return new EAPStaticLayerDistribution(result.getDistributionName(), result, container);
     }
 
     protected EAPModuleGraphNode parseModule(Node module) {
@@ -125,6 +134,23 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
         // Parse module artifact.
         Artifact moduleArtifact = parseModuleArtifact(element.getElementsByTagName(ELEMENT_MODULE_ARTIFACT).item(0));
         result.setModuleArtifact(moduleArtifact);
+
+        // Parse properties.
+        NodeList propertiesNodes = element.getElementsByTagName(ELEMENT_PROPERTIES);
+        if (propertiesNodes != null) {
+            for (int temp = 0; temp < propertiesNodes.getLength(); temp++) {
+                Node nNode = propertiesNodes.item(temp);
+                Element nElement = (Element) nNode;
+                NodeList propertyNameNodeList = nElement.getElementsByTagName(ELEMENT_PROPERTY);
+                if (propertyNameNodeList != null) {
+                    for (int temp1 = 0; temp1 < propertyNameNodeList.getLength(); temp1++) {
+                        Node nNode1 = propertyNameNodeList.item(temp1);
+                        String[] property = parseProperty(nNode1);
+                        result.getProperties().put(property[0], property[1]);
+                    }
+                }
+            }
+        }
         
         // Parse resources.
         NodeList resourcesNodes = element.getElementsByTagName(ELEMENT_RESOURCE);
@@ -147,6 +173,18 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
         }
 
         return result;
+    }
+    
+    protected String[] parseProperty(Node node) {
+        Element element = (Element) node;
+
+        NodeList propertyNameNodeList = element.getElementsByTagName(ELEMENT_PROPERTY_NAME);
+        NodeList propertyValueNodeList = element.getElementsByTagName(ELEMENT_PROPERTY_VALUE);
+
+        String propertyName = propertyNameNodeList.item(0).getFirstChild().getNodeValue();
+        String propertyValue = propertyValueNodeList.item(0).getFirstChild().getNodeValue();
+        
+        return new String[] {propertyName, propertyValue}; 
     }
 
     protected EAPModuleGraphNodeResource parseResource(Node node) {
@@ -208,7 +246,7 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
     public Object write(EAPStaticLayerDistribution distro) throws Exception {
         EAPXMLUtils eapxmlUtils = EAPXMLUtils.newInstance();
         // Generate the DOM model.
-        writeDistributionProperties(eapxmlUtils, distro.getGraph());
+        writeDistributionProperties(eapxmlUtils, distro);
         // Write the file.
         return writeDistro(eapxmlUtils);
     }
@@ -224,8 +262,10 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
         return outWriter.getBuffer().toString();
     }
 
-    protected void writeDistributionProperties(EAPXMLUtils eapxmlUtils, EAPModulesGraph graph) throws MojoExecutionException {
-        if (graph != null) {
+    protected void writeDistributionProperties(EAPXMLUtils eapxmlUtils, EAPStaticLayerDistribution distro) throws MojoExecutionException {
+        
+        if (distro!= null) {
+            EAPModulesGraph graph = distro.getGraph();
             Document doc = eapxmlUtils.getDocument();
 
             // Generate the XML root staticLayer element
@@ -233,6 +273,10 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
             staticLayerElement.setAttribute(ATTR_STATIC_LAYER_NAME, graph.getDistributionName());
             doc.appendChild(staticLayerElement);
 
+            Map<String, String> containerProperties = new HashMap<String, String>();
+            containerProperties.put(ATTR_CONTAINER_ID, distro.getContainer().toString());
+            Element containerElement = eapxmlUtils.createElement(ELEMENT_CONTAINER, containerProperties, staticLayerElement);
+            
             // Generate each module definition.
             Collection<EAPModuleGraphNode> nodes = graph.getNodes();
             if (nodes != null) {
@@ -245,6 +289,24 @@ public class EAPXMLLayerDistribution implements EAPLayerDistributionManager {
                     statiModuleProperties.put(ATTR_MODULE_NAME, node.getName());
                     statiModuleProperties.put(ATTR_MODULE_SLOT, node.getSlot());
                     Element moduleElement = eapxmlUtils.createElement(ELEMENT_MODULE, statiModuleProperties, modulesElement);
+                    
+                    // Module properties.
+                    Properties props = node.getProperties();
+                    if (props != null && !props.isEmpty()) {
+                        Element modulePropertiesElement = eapxmlUtils.createElement(ELEMENT_PROPERTIES, null, moduleElement);
+                        Enumeration<String> propsIt = (Enumeration<String>) props.propertyNames();
+                        while (propsIt.hasMoreElements()) {
+                            String pName = propsIt.nextElement();
+                            String pValue = (String) props.get(pName);
+                            
+                            // Create the property element.
+                            Element modulePropertyElement = eapxmlUtils.createElement(ELEMENT_PROPERTY, null, modulePropertiesElement);
+                            Element modulePropertyNameElement = eapxmlUtils.createElement(ELEMENT_PROPERTY_NAME, null, modulePropertyElement);
+                            modulePropertyNameElement.appendChild(doc.createTextNode(pName));
+                            Element modulePropertyValueElement = eapxmlUtils.createElement(ELEMENT_PROPERTY_VALUE, null, modulePropertyElement);
+                            modulePropertyValueElement.appendChild(doc.createTextNode(pValue));
+                        }
+                    }
                     
                     // Create the module-artifact element.
                     Artifact moduleArtifact = node.getArtifact();

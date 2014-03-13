@@ -25,7 +25,6 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kie.integration.eap.maven.configuration.EAPConfigurationArtifact;
 import org.kie.integration.eap.maven.distribution.EAPLayerDistributionManager;
 import org.kie.integration.eap.maven.distribution.EAPStaticLayerDistribution;
-import org.kie.integration.eap.maven.distribution.EAPXMLLayerDistribution;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModuleResourceDuplicationException;
 import org.kie.integration.eap.maven.exception.EAPModulesDefinitionException;
@@ -34,17 +33,16 @@ import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
-import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
 import org.kie.integration.eap.maven.model.graph.distribution.EAPModuleNodeGraphDependency;
-import org.kie.integration.eap.maven.model.layer.EAPLayer;
-import org.kie.integration.eap.maven.model.layer.EAPLayerImpl;
 import org.kie.integration.eap.maven.model.module.EAPDynamicModule;
-import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
-import org.kie.integration.eap.maven.scanner.EAPModulesScanner;
-import org.kie.integration.eap.maven.scanner.EAPStaticModulesScanner;
+import org.kie.integration.eap.maven.patch.EAPDynamicModulesPatch;
+import org.kie.integration.eap.maven.patch.EAPPatch;
+import org.kie.integration.eap.maven.patch.EAPPatchException;
+import org.kie.integration.eap.maven.patch.EAPPatchManager;
 import org.kie.integration.eap.maven.template.EAPTemplateBuilder;
-import org.kie.integration.eap.maven.template.EAPVelocityTemplateBuilder;
+import org.kie.integration.eap.maven.template.assembly.EAPAssemblyTemplate;
+import org.kie.integration.eap.maven.template.assembly.EAPAssemblyTemplateFile;
 import org.kie.integration.eap.maven.util.*;
 import org.sonatype.aether.RepositorySystem;
 import org.sonatype.aether.RepositorySystemSession;
@@ -160,10 +158,16 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
      */
     protected EAPLayerDistributionManager distributionManager;
 
+    /**
+     * The patch manager.
+     * @component 
+     */
+    protected EAPPatchManager patchManager;
+
     // Class members.
     private Collection<Artifact> dynamicModuleArtifacts = null;
     private Collection<EAPDynamicModule> dynamicModules;
-    private EAPModulesGraph staticLayerGraph;
+    private EAPStaticLayerDistribution staticLayerDistribution;
     private EAPArtifactsHolder artifactsHolder;
     private Map<Artifact, EAPModuleGraphNode> staticModulesGraphArtifacts;
     private String distroOutputPath = null;
@@ -187,9 +191,8 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
            
             // Obtain the static layer descriptor artifact.
             Artifact moduleResolvedArtifact = artifactsHolder.resolveArtifact(staticLayerArtifact.getArtifact());
-            EAPStaticLayerDistribution staticLayerDistribution = distributionManager.read(getStaticDistributionXMLAsString(moduleResolvedArtifact));
-            staticLayerGraph = staticLayerDistribution.getGraph();
-
+            staticLayerDistribution = distributionManager.read(getStaticDistributionXMLAsString(moduleResolvedArtifact));
+            
             // Load the dynamic modules.
             dynamicModules = new ArrayList<EAPDynamicModule>();
 
@@ -200,8 +203,8 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             }
 
             // Fill the artifact-modulegraph holder Map.
-            staticModulesGraphArtifacts = new LinkedHashMap<Artifact, EAPModuleGraphNode>(staticLayerGraph.getNodes().size());
-            List<EAPModuleGraphNode> staticModules = staticLayerGraph.getNodes();
+            staticModulesGraphArtifacts = new LinkedHashMap<Artifact, EAPModuleGraphNode>(staticLayerDistribution.getGraph().getNodes().size());
+            List<EAPModuleGraphNode> staticModules = staticLayerDistribution.getGraph().getNodes();
             for (EAPModuleGraphNode staticModule : staticModules) {
                 fixDynamicModuleDependency(staticModule);
                 staticModulesGraphArtifacts.put(staticModule.getArtifact(), staticModule);
@@ -219,6 +222,19 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             throw new MojoExecutionException("Cannot read static layer distribution.", e);
         }
 
+        // Initialize patches.
+        String patchOutputPath = new StringBuilder(distroOutputPath).append(File.separator).append(EAPConstants.PATCHES_PATH).toString();
+        Collection allModules = new LinkedList();
+        allModules.addAll(dynamicModules);
+        allModules.addAll(staticLayerDistribution.getGraph().getNodes());
+        patchManager.init(staticLayerDistribution.getContainer(), patchOutputPath, allModules, artifactsHolder);
+
+        // Execute patches.
+        try {
+            patchManager.executeDynamicModulePatches();
+        } catch (EAPPatchException e) {
+            throw new MojoExecutionException("Problem executing a dynamic module patch.", e);
+        }
 
         // Genrate the jboss-deployment-structure and assembly files for each dynamic module.
         for (EAPDynamicModule dynamicModule : dynamicModules) {
@@ -417,14 +433,14 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                 // If module pom descriptor file contains dependencies, add these ones.
                 for (EAPStaticModuleDependency dep : moduleStaticDependencies) {
                     String moduleUID = EAPArtifactUtils.getUID(dep.getName(), dep.getSlot());
-                    EAPModuleGraphNode node = staticLayerGraph.getNode(moduleUID);
+                    EAPModuleGraphNode node = staticLayerDistribution.getGraph().getNode(moduleUID);
                     if (node == null) throw new EAPModuleDefinitionException(moduleArtifactCoordinates, "The module contains a dependency to the module " + moduleUID + " which is missing in the static layer");
                     dep.addArtifact(node.getArtifact());
                     result.addDependency(dep);
                 }
             } else {
                 // If module pom descriptor file does not contain dependencies, add all modules included in the staticLayer as module dependencies.
-                List<EAPModuleGraphNode> modules = staticLayerGraph.getNodes();
+                List<EAPModuleGraphNode> modules = staticLayerDistribution.getGraph().getNodes();
                 if (modules != null && !modules.isEmpty()) {
                     for (EAPModuleGraphNode module : modules) {
                         Artifact moduleArtifact = module.getArtifact();
@@ -530,14 +546,14 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
         return templateBuilder.buildJbossDeploymentStructure(dependencies);
     }
 
-    private String generateAssemblyDescriptor(String layerId, String inputWarCoordinates, String jbossDeploymentStructureContent, String jbossAllContent, Collection<String> exclusions) throws MojoExecutionException, IOException {
-        Collection<EAPTemplateBuilder.EAPAssemblyTemplateFile> assemblyFiles = new LinkedList<EAPTemplateBuilder.EAPAssemblyTemplateFile>();
+    private String generateAssemblyDescriptor(final String layerId, final String inputWarCoordinates, String jbossDeploymentStructureContent, String jbossAllContent, final Collection<String> exclusions) throws MojoExecutionException, IOException {
+        final Collection<EAPAssemblyTemplateFile> assemblyFiles = new LinkedList<EAPAssemblyTemplateFile>();
         
         // Write the jboss-deployment-structure content into a temp path.
         String jbossDepStuctureName = new StringBuilder(layerId).append("-").append(JBOSS_DEP_STRUCTURE_NAME).append(EXTENSION_XML).toString();
         final File out = EAPFileUtils.writeFile(new File(distroOutputPath), jbossDepStuctureName, jbossDeploymentStructureContent);
 
-        EAPTemplateBuilder.EAPAssemblyTemplateFile jbossDepStructureFile = new EAPTemplateBuilder.EAPAssemblyTemplateFile() {
+        final EAPAssemblyTemplateFile jbossDepStructureFile = new EAPAssemblyTemplateFile() {
 
             @Override
             public String getSource() {
@@ -566,7 +582,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
             String jbossAllName = new StringBuilder(layerId).append("-").append(JBOSS_ALL_NAME).append(EXTENSION_XML).toString();
             final File out2 = EAPFileUtils.writeFile(new File(distroOutputPath), jbossAllName, jbossAllContent);
             
-            EAPTemplateBuilder.EAPAssemblyTemplateFile jbossAllFile = new EAPTemplateBuilder.EAPAssemblyTemplateFile() {
+            final EAPAssemblyTemplateFile jbossAllFile = new EAPAssemblyTemplateFile() {
 
                 @Override
                 public String getSource() {
@@ -591,10 +607,50 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
 
             assemblyFiles.add(jbossAllFile);
         }
-        
-        
+
+        // The assembly tempalate model instance.
+        final EAPAssemblyTemplate assemblyTemplate = new EAPAssemblyTemplate() {
+            @Override
+            public String getId() {
+                return layerId;
+            }
+
+            @Override
+            public String[] getFormats() {
+                return assemblyFormats.split(",");
+            }
+
+            @Override
+            public Collection<String> getInclusions() {
+                return Arrays.asList(new String[] {inputWarCoordinates});
+            }
+
+            @Override
+            public Collection<String> getExclusions() {
+                return exclusions;
+            }
+
+            @Override
+            public Collection<EAPAssemblyTemplateFile> getFiles() {
+                return assemblyFiles;
+            }
+        };
+
+        // Patch lifecycle method.
+        try {
+            patchManager.iterateDynamic(new EAPPatchManager.EAPPatchRunnable() {
+                @Override
+                public void execute(EAPPatch patch) throws EAPPatchException {
+                    EAPDynamicModulesPatch dynamicModulesPatch = (EAPDynamicModulesPatch) patch;
+                    dynamicModulesPatch.patchAssembly(assemblyTemplate);
+                }
+            });
+        } catch (EAPPatchException e) {
+            throw new MojoExecutionException("Error executing dynamic patch in lifecycle method 'patchAssembly'.", e);
+        }
+
         // Build the content.
-        return templateBuilder.buildDynamicModuleAssembly(layerId, assemblyFormats.split(","), inputWarCoordinates ,exclusions, assemblyFiles);
+        return templateBuilder.buildDynamicModuleAssembly(assemblyTemplate);
     }
 
     private Collection<EAPModuleGraphNodeDependency> mergeDependencies(Collection<EAPModuleNodeGraphDependency> staticModuleDependencies, Collection<EAPModuleNodeGraphDependency> actualDependencies, ZipFile war) {

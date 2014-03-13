@@ -40,6 +40,12 @@ public class EAPConstants {
 
     public static final String LAYER_BASE = "base";
 
+    /** The preffix for the module properties. **/
+    public static final String MODULE_PROPERTY_PREFFIX = "module.";
+
+    /** The preffix for the module patch properties. **/
+    public static final String MODULE_PATCH_PREFFIX = "module.patch.";
+    
     /** The property for the module name in a pom's module artifact. **/
     public static final String MODULE_NAME = "module.name";
 
@@ -85,4 +91,6 @@ public class EAPConstants {
     public static final String ALL = "ALL";
 
     public static final String SLOT_MAIN = "main";
+
+    public static final String PATCHES_PATH = "patches";
 }

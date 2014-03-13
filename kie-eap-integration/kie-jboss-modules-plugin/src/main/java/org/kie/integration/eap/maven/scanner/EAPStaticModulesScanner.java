@@ -143,8 +143,24 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
             if (moduleSlot != null) moduleProperties.put(EAPConstants.MODULE_SLOT, moduleSlot);
             if (moduleDependenciesRaw != null) moduleProperties.put(EAPConstants.MODULE_DEPENDENCIES, moduleDependenciesRaw);
             checkModuleProperties(moduleProperties, moduleArtifactCoordinates);
-
-            result = createModuleInstance(moduleArtifact, moduleName, moduleLocation, moduleSlot);
+            
+            // Find additional module properties.
+            Properties moduleModelProperties = moduleModel.getProperties();
+            moduleProperties = new Properties();
+            Iterator<String> pNames = (Iterator<String>) moduleModelProperties.propertyNames();
+            while (pNames.hasNext()) {
+                String pName = pNames.next();
+                if (pName != null && pName.startsWith(EAPConstants.MODULE_PROPERTY_PREFFIX)
+                        && !pName.equalsIgnoreCase(EAPConstants.MODULE_NAME)
+                        && !pName.equalsIgnoreCase(EAPConstants.MODULE_TYPE)
+                        && !pName.equalsIgnoreCase(EAPConstants.MODULE_LOCATION)
+                        && !pName.equalsIgnoreCase(EAPConstants.MODULE_SLOT)) {
+                    String pValue = (String) moduleModelProperties.get(pName);
+                    moduleProperties.put(pName, pValue);
+                }
+            }
+            
+            result = createModuleInstance(moduleArtifact, moduleName, moduleLocation, moduleSlot, moduleProperties);
 
             // Add the static module dependencies.
             if (scanStaticDependencies) {
@@ -220,8 +236,8 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
         return EAPConstants.MODULE_TYPE_STATIC;
     }
 
-    protected EAPModule createModuleInstance(Artifact artifact, String moduleName, String moduleLocation, String moduleSlot) {
-        EAPStaticModule m = new EAPStaticModule(moduleName, moduleLocation, moduleSlot);
+    protected EAPModule createModuleInstance(Artifact artifact, String moduleName, String moduleLocation, String moduleSlot, Properties moduleProperties) {
+        EAPStaticModule m = new EAPStaticModule(moduleName, moduleLocation, moduleSlot, moduleProperties);
         m.setLayer(layer);
         m.setArtifact(artifact);
         return m;

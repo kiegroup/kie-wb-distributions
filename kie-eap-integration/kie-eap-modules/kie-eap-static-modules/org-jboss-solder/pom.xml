@@ -17,6 +17,7 @@
     <module.type>static</module.type>
     <module.location>org/jboss/solder</module.location>
     <module.slot>main</module.slot>
+    <module.patch.dynamic.webfragment>org.jboss.solder:solder-impl:jar</module.patch.dynamic.webfragment>
   </properties>
 
   <dependencies>

@@ -24,6 +24,7 @@ import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 public abstract class EAPAbstractModule implements  EAPModule {
@@ -35,6 +36,7 @@ public abstract class EAPAbstractModule implements  EAPModule {
     private Artifact artifact;
     private Set<EAPModuleResource> resources;
     private Set<EAPModuleDependency> dependencies;
+    private Properties properties;
 
     protected EAPAbstractModule(String name, String slot) {
         this.name = name;
@@ -49,6 +51,16 @@ public abstract class EAPAbstractModule implements  EAPModule {
         this.slot = slot;
         this.resources = new HashSet<EAPModuleResource>();
         this.dependencies = new HashSet<EAPModuleDependency>();
+        this.properties = new Properties();
+    }
+
+    protected EAPAbstractModule(String name, String location, String slot, Properties properties) {
+        this.name = name;
+        this.location = location;
+        this.slot = slot;
+        this.resources = new HashSet<EAPModuleResource>();
+        this.dependencies = new HashSet<EAPModuleDependency>();
+        this.properties = properties;
     }
 
     @Override
@@ -129,6 +141,10 @@ public abstract class EAPAbstractModule implements  EAPModule {
     @Override
     public String getUniqueId() {
         return EAPArtifactUtils.getUID(getName(), getSlot());
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 
     public Artifact getArtifact() {

@@ -15,6 +15,7 @@
  */
 package org.kie.integration.eap.maven.distribution;
 
+import org.kie.integration.eap.maven.eap.EAPContainer;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNode;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeDependency;
 import org.kie.integration.eap.maven.model.graph.EAPModulesGraph;
@@ -32,13 +33,15 @@ public class EAPStaticLayerDistribution {
     private String distributionName;
     private EAPLayer staticLayer;
     private EAPLayer baseLayer;
+    private EAPContainer container;
     private EAPArtifactsHolder artifactsHolder;
 
     private EAPModulesGraph graph;
     private String printedDistro;
     private Boolean includedOptionalDependencies;
 
-    public EAPStaticLayerDistribution(String distributionName, EAPModulesGraph graph) {
+    public EAPStaticLayerDistribution(String distributionName, EAPModulesGraph graph, EAPContainer container) {
+        this.container = container;
         this.distributionName = distributionName;
         this.graph = graph;
         this.includedOptionalDependencies = null;
@@ -50,7 +53,7 @@ public class EAPStaticLayerDistribution {
         StringBuilder result = new StringBuilder(EAPConstants.NEW_LINE);
         result.append("********************************************************************************************").append(EAPConstants.NEW_LINE);
         result.append("Distribution ").append(distributionName).append(EAPConstants.NEW_LINE);
-        if (baseLayer != null) result.append("Base EAP: ").append(baseLayer.getName()).append(EAPConstants.NEW_LINE);
+        if (container != null) result.append("Base EAP: ").append(container.toString()).append(EAPConstants.NEW_LINE);
         if (baseLayer != null) result.append("Base EAP modules count: ").append(baseLayer.getModules().size()).append(EAPConstants.NEW_LINE);
         if (staticLayer != null) result.append("Static modues count: ").append(staticLayer.getModules().size()).append(EAPConstants.NEW_LINE);
         if (baseLayer != null && staticLayer != null) result.append("Total modues count: ").append(staticLayer.getModules().size() + baseLayer.getModules().size()).append(EAPConstants.NEW_LINE);
@@ -167,5 +170,9 @@ public class EAPStaticLayerDistribution {
 
     public void setIncludedOptionalDependencies(Boolean includedOptionalDependencies) {
         this.includedOptionalDependencies = includedOptionalDependencies;
+    }
+
+    public EAPContainer getContainer() {
+        return container;
     }
 }

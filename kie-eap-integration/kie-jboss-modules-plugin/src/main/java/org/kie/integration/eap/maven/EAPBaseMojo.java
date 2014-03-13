@@ -27,6 +27,7 @@ import org.kie.integration.eap.maven.configuration.EAPConfigurationArtifact;
 import org.kie.integration.eap.maven.configuration.EAPConfigurationModuleDependency;
 import org.kie.integration.eap.maven.distribution.EAPLayerDistributionManager;
 import org.kie.integration.eap.maven.distribution.EAPStaticLayerDistribution;
+import org.kie.integration.eap.maven.eap.EAPContainer;
 import org.kie.integration.eap.maven.exception.EAPModuleDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModulesDefinitionException;
 import org.kie.integration.eap.maven.exception.EAPModulesDependencyBuilderException;
@@ -193,6 +194,11 @@ public abstract class EAPBaseMojo extends AbstractMojo {
     protected EAPLayer baseModulesLayer;
 
     /**
+     * The target container. 
+     */
+    protected EAPContainer container = null;
+
+    /**
      * The modules distribution generated.
      */
     protected EAPStaticLayerDistribution distribution;
@@ -265,7 +271,7 @@ public abstract class EAPBaseMojo extends AbstractMojo {
         EAPModulesGraph graph = generateModulesGraph();
 
         // Generates the distribution.
-        distribution = new EAPStaticLayerDistribution(distributionName, graph);
+        distribution = new EAPStaticLayerDistribution(distributionName, graph, container);
         distribution.setStaticLayer(staticModulesLayer);
         distribution.setBaseLayer(baseModulesLayer);
         distribution.setArtifactsHolder(artifactsHolder);
@@ -503,6 +509,8 @@ public abstract class EAPBaseMojo extends AbstractMojo {
             globalModuleName = EAPArtifactUtils.getPropertyValue(modulesArtifactModel, (String) modulesArtifactModel.getProperties().get(EAPConstants.MODULE_NAME));
             if (globalModuleName == null || globalModuleName.trim().length() == 0) throw new EAPModulesDefinitionException("No module name property found for " + modulesArtifactCoordinates);
 
+            container = new EAPContainer(globalModuleName);
+            
             List<String> modulesList = modulesArtifactModel.getModules();
 
             if (modulesList == null || modulesList.isEmpty()) throw new EAPModulesDefinitionException("No modules found for " + modulesArtifactCoordinates);

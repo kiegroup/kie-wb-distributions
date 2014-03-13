@@ -15,6 +15,7 @@
  */
 package org.kie.integration.eap.maven.util;
 
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
@@ -589,5 +590,17 @@ public class EAPArtifactUtils {
         }
         
         return result;
+    }
+
+    public static boolean isVersionEqualsThan(ComparableVersion version1, ComparableVersion version2) {
+        return version1.compareTo(version2) == 0;
+    }
+    
+    public static boolean isVersionGreaterThan(ComparableVersion version1, ComparableVersion version2) {
+        return version1.compareTo(version2) == 1;
+    }
+
+    public static boolean isVersionLowerThan(ComparableVersion version1, ComparableVersion version2) {
+        return version1.compareTo(version2) == -1;
     }
 }

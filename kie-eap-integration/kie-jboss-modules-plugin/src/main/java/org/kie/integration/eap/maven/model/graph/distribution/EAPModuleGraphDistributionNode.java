@@ -27,6 +27,7 @@ import org.sonatype.aether.artifact.Artifact;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 public class EAPModuleGraphDistributionNode implements EAPModuleGraphNode {
 
@@ -36,13 +37,15 @@ public class EAPModuleGraphDistributionNode implements EAPModuleGraphNode {
     private List<EAPModuleGraphNodeResource> resources;
     private List<EAPModuleGraphNodeDependency> dependencies;
     private Artifact moduleArtifact;
+    private Properties properties;
 
     public EAPModuleGraphDistributionNode(String name, String location, String slot) {
         this.name = name;
         this.location = location;
         this.slot = slot;
-        resources = new LinkedList<EAPModuleGraphNodeResource>();
-        dependencies = new LinkedList<EAPModuleGraphNodeDependency>();
+        this.resources = new LinkedList<EAPModuleGraphNodeResource>();
+        this.dependencies = new LinkedList<EAPModuleGraphNodeDependency>();
+        this.properties = new Properties();
     }
 
     public boolean addResource(EAPModuleGraphNodeResource resource) {
@@ -69,6 +72,10 @@ public class EAPModuleGraphDistributionNode implements EAPModuleGraphNode {
     @Override
     public String getUniqueId() {
         return EAPArtifactUtils.getUID(getName(), getSlot());
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 
     @Override

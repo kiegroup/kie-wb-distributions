@@ -15,6 +15,7 @@ Table of contents
 * **[Project Modules](#project-modules)**
 * **[EAP Modules Plugin](#eap-modules-plugin)**
 * **[Usage](#usage)**
+* **[Patches](#patches)**
 * **[Limitations](#limitations)**
 
 Introduction
@@ -540,6 +541,10 @@ TODO
 How to change the target JBoss EAP/AS version
 ----------------------------------------------
 
+TODO
+
+Patches
+=======
 TODO
 
 Limitations

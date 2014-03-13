@@ -23,6 +23,7 @@ import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Properties;
 
 public class EAPDynamicModule implements EAPModule {
 
@@ -31,15 +32,22 @@ public class EAPDynamicModule implements EAPModule {
     private Collection<EAPModuleDependency> dependencies;
     private Artifact warFile;
     private boolean addJbossAll;
+    private Properties properties;
 
     public EAPDynamicModule(String name) {
         this.name = name;
         dependencies = new LinkedList<EAPModuleDependency>();
+        properties = new Properties();
     }
 
     @Override
     public EAPLayer getLayer() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Properties getProperties() {
+        return properties;
     }
 
     @Override

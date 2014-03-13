@@ -21,6 +21,7 @@ import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
 import org.sonatype.aether.artifact.Artifact;
 
 import java.util.Collection;
+import java.util.Properties;
 
 public interface EAPModule {
 
@@ -30,6 +31,12 @@ public interface EAPModule {
      * @return The module layer.
      */
     EAPLayer getLayer();
+
+    /**
+     * The module properties.
+     * @return The module properties.
+     */
+    Properties getProperties();
 
     /**
      * The module name.
