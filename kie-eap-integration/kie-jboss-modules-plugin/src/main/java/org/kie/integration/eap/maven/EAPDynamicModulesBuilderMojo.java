@@ -224,14 +224,11 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
 
         // Initialize patches.
         String patchOutputPath = new StringBuilder(distroOutputPath).append(File.separator).append(EAPConstants.PATCHES_PATH).toString();
-        Collection allModules = new LinkedList();
-        allModules.addAll(dynamicModules);
-        allModules.addAll(staticLayerDistribution.getGraph().getNodes());
-        patchManager.init(staticLayerDistribution.getContainer(), patchOutputPath, allModules, artifactsHolder);
+        patchManager.initDynamic(staticLayerDistribution.getContainer(), patchOutputPath, artifactsHolder, staticLayerDistribution);
 
         // Execute patches.
         try {
-            patchManager.executeDynamicModulePatches();
+            patchManager.executeDynamic();
         } catch (EAPPatchException e) {
             throw new MojoExecutionException("Problem executing a dynamic module patch.", e);
         }
@@ -289,7 +286,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                 exclusions.add(JBOSS_DEP_STRUCTURE_ZIP_ENTRY_NAME);
 
                 //Generate the assembly descriptor content.
-                String assembly = generateAssemblyDescriptor(dynamicModule.getName(), warArtifactCoordinates,jbossDeploymentStructure, jbossAll, exclusions);
+                String assembly = generateAssemblyDescriptor(dynamicModule, warArtifactCoordinates,jbossDeploymentStructure, jbossAll, exclusions);
 
                 // Write the generated assembly descriptor.
                 File out = EAPFileUtils.writeFile(new File(distroOutputPath),dynamicModule.getArtifact().getArtifactId() + ASSEMBLY_DESCRIPTOR_NAME, assembly);
@@ -546,8 +543,9 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
         return templateBuilder.buildJbossDeploymentStructure(dependencies);
     }
 
-    private String generateAssemblyDescriptor(final String layerId, final String inputWarCoordinates, String jbossDeploymentStructureContent, String jbossAllContent, final Collection<String> exclusions) throws MojoExecutionException, IOException {
+    private String generateAssemblyDescriptor(final EAPDynamicModule module, final String inputWarCoordinates, String jbossDeploymentStructureContent, String jbossAllContent, final Collection<String> exclusions) throws MojoExecutionException, IOException {
         final Collection<EAPAssemblyTemplateFile> assemblyFiles = new LinkedList<EAPAssemblyTemplateFile>();
+        final String layerId = module.getName();
         
         // Write the jboss-deployment-structure content into a temp path.
         String jbossDepStuctureName = new StringBuilder(layerId).append("-").append(JBOSS_DEP_STRUCTURE_NAME).append(EXTENSION_XML).toString();
@@ -642,7 +640,7 @@ public class EAPDynamicModulesBuilderMojo extends AbstractMojo {
                 @Override
                 public void execute(EAPPatch patch) throws EAPPatchException {
                     EAPDynamicModulesPatch dynamicModulesPatch = (EAPDynamicModulesPatch) patch;
-                    dynamicModulesPatch.patchAssembly(assemblyTemplate);
+                    dynamicModulesPatch.patchAssembly(module, assemblyTemplate);
                 }
             });
         } catch (EAPPatchException e) {

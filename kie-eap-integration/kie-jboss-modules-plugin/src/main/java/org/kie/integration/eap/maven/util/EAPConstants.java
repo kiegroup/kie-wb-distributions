@@ -84,6 +84,8 @@ public class EAPConstants {
     
     public static final String WEB_INF = "WEB-INF";
 
+    public static final String WEB_INF_LIB = "WEB-INF/lib";
+
     public static final String META_INF = "META-INF";
 
     public static final String NEW_LINE = "\n";

@@ -37,6 +37,7 @@ import static org.mockito.Mockito.when;
  * - createArtifact(String groupId, String artifactId, String version, String packaging)
  * - createArtifact(String groupId, String artifactId, String version, String packaging, String classifier)
  * - equals(Artifact a1, Artifact a2)
+ * - equalsNoVersion(Artifact a1, Artifact a2)
  * - extractArtifactCorrdinates(String artifactCoordinates) 
  * - getArtifactCoordinates(org.apache.maven.artifact.Artifact artifact)
  * - getArtifactCoordinatesWithoutVersion(Artifact artifact)
@@ -47,6 +48,7 @@ import static org.mockito.Mockito.when;
  * - parseFileName(String fileName)
  * - getStaticDependencies(Artifact moduleArtifact, Model moduleModel ,String moduleDependenciesRaw)
  * - getUID(String name, String slot)
+ * - cloneArtifact(Artifact a)
  */
 public class EAPArtifactUtilsTest extends EAPBaseTest {
 
@@ -94,6 +96,17 @@ public class EAPArtifactUtilsTest extends EAPBaseTest {
 
         initMockArtifact(artifact2, "org.kie", "artifact", "1.1", "jar", null);
         areEquals = tested.equals(artifact1, artifact2);
+        assertTrue(!areEquals);
+        
+        // Test the no-version equals
+        initMockArtifact(artifact1, "org.kie", "artifact", "2.0", "jar", null);
+        initMockArtifact(artifact2, "org.kie", "artifact", "1.0", "jar", null);
+        areEquals= tested.equalsNoVersion(artifact1, artifact2);
+        assertTrue(areEquals);
+
+        initMockArtifact(artifact1, "org.kie", "artifact2", "2.0", "jar", null);
+        initMockArtifact(artifact2, "org.kie", "artifact1", "1.0", "jar", null);
+        areEquals= tested.equalsNoVersion(artifact1, artifact2);
         assertTrue(!areEquals);
     }
 
@@ -210,6 +223,18 @@ public class EAPArtifactUtilsTest extends EAPBaseTest {
         assertEquals(uid, "org.drools:main");
         uid = tested.getUID("org.jbpm","6.1.0");
         assertEquals(uid, "org.jbpm:6.1.0");
+    }
+
+    @Test
+    public void testCloneArtifact() throws Exception {
+        initMockArtifact(artifact1, "org.kie", "artifact", "1.0", "jar", null);
+        
+        Artifact result = tested.cloneArtifact(artifact1);
+        assertNotNull(result);
+        assertEquals(result.getGroupId(), "org.kie");
+        assertEquals(result.getArtifactId(), "artifact");
+        assertEquals(result.getVersion(), "1.0");
+        assertEquals(result.getExtension(), "jar");
     }
 
     @After

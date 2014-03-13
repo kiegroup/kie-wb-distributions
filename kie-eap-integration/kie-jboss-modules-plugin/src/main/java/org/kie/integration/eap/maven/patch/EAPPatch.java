@@ -25,12 +25,6 @@ public interface EAPPatch {
     void setOutputPath(String path);
     
     /**
-     * Source module definitions. 
-     * @param modules The module definitions.
-     */
-    void setModules(Collection<? extends EAPModule> modules);
-
-    /**
      * The artifacts holder instance.
      * @param artifactsHolder The artifacts holder instance.
      */

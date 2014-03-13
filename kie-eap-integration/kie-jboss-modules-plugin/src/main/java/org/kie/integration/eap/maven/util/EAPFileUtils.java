@@ -18,6 +18,8 @@ package org.kie.integration.eap.maven.util;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.jar.JarEntry;
+import java.util.jar.JarOutputStream;
 
 public class EAPFileUtils {
 
@@ -136,5 +138,41 @@ public class EAPFileUtils {
 
         return sb.toString();
 
+    }
+
+    /**
+     * Creates a JAR file and add the file <code>fileToAdd</code> into the JAR.
+     * @param outPath The output directory for the JAR file.
+     * @param fileName The JAR file name.
+     * @param fileToAdd The file to add into the JAR.
+     * @param entryName The JAR entry name of the file to add into the JAR. 
+     * @return The generated JAR file.
+     * @throws IOException
+     */
+    public static File createJarFile(String outPath, String fileName, File fileToAdd, String entryName) throws IOException {
+        if (outPath == null || fileToAdd == null) return null;
+        
+        File outFile = new File(outPath, fileName);
+
+        BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(outFile));
+        JarOutputStream jo = new JarOutputStream(bo);
+
+        BufferedInputStream bi = new BufferedInputStream(new FileInputStream(fileToAdd));
+
+        JarEntry je = new JarEntry(entryName);
+        jo.putNextEntry(je);
+
+        byte[] buf = new byte[1024];
+        int anz;
+
+        while ((anz = bi.read(buf)) != -1) {
+            jo.write(buf, 0, anz);
+        }
+
+        bi.close();
+        jo.close();
+        bo.close();
+        
+        return outFile;
     }
 }

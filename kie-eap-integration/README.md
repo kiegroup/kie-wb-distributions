@@ -545,7 +545,61 @@ TODO
 
 Patches
 =======
-TODO
+
+Introduction
+------------
+* Patches are considered independent extensions for the jboss-modules plugin that allow to perform additional operations when creating the modules distribution.
+
+* Patches are coded as Java files.
+
+* Patches have a unique identifier.
+
+* Patches are defined for:
+  - A given JBoss EAP version.
+  - A given static/dynamic module.
+
+* When building the modules distribution, always an EAP version is indicated to the build process, so a patch is executed if:
+ - The EAP version descriptor has the patch enabled for this version (patches are executed for a given EAP version, might not apply to all versions)
+ - The static/dynamic module that is currently building have the patch definition entry in the module definition file.
+
+* Patches have their own lifecycle, allowing the user to create new patches quickly and intercept in the build generation process.
+
+Available patches
+-----------------
+
+These are the current coded and tested available patches.
+
+**Servlet spec 3.0 - Webfragments**   
+* Patch identifier: <code>dynamic.webfragment</code>      
+* Is known that on both EAP 6.1.0. and 6.1.1 webfragment descriptors located inside custom static modules are not loaded.    
+* The patch consists on creating a new jar on runtime with the web-fragment descriptor to use as a patch. For each web-fragment descriptor a new jar is created and added into WEB-INF/lib of the webapp.   
+* This method allows to not modify the original deployment descriptor (web.xml) of the webapp and use always the latest <code>webfragment.xml</code> file from the JAR, if the artifact is a snapshot.    
+
+Other workarounds
+-----------------
+
+These ones are not patches themselves, they do not have any patch build file and modules are not referencing they as are not patches.  
+But for some EAP unknown issues yet, some artifacts must be placed in different locations than expected, and these workarounds have been applied to the BPMS/BRMS distribution.  
+
+**Seam transactions**    
+Seam consists of two artifacts:      
+* seam-transaction-api-3.X.jar  
+* seam-transaction-3.X.jar  
+
+The jBPM core static module for EAP depends on seam transaction api. So, this jars should be placed in another static module, not in the webapp.  
+But for a unknown reason yet, when putting seam-transaction-3.X.jar outside the webapp, the transactions are not running.  
+The reason seems to be that the transaction interceptor defined in <code>beans.xml</code> located inside webapp, is not registered if seam-transaction-3.X.jar (impl classes) is outside webapp lib.  
+This interceptor is:  
+ <code>
+ &lt;interceptors&gt;
+      &lt;class&gt;org.jboss.seam.transaction.TransactionInterceptor&lt;/class&gt;
+  &lt;/interceptors&gt;
+ </code>  
+This behaviour should be analyzed with EAP team.  
+
+**REST services**   
+As seam transactions, if the jar containing kie remote REST services <code>kie-common-services-6-X</code> is located outside webapp lib, for example inside a EAP static module, the services are not running.     
+This behaviour should be analyzed with EAP team.  
 
 Limitations
 ===========

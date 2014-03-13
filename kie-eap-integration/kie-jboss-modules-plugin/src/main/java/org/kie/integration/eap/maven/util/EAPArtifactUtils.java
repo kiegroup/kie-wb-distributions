@@ -93,7 +93,12 @@ public class EAPArtifactUtils {
     public static Artifact createArtifact(String artifactCoordinates) {
         String[] coords = extractArtifactCorrdinates(artifactCoordinates);
 
-        return new DefaultArtifact(coords[0], coords[1], coords[2], coords[3]);
+        String groupId = coords[0];
+        String artifactId = coords[1];
+        String type = coords.length > 2 ? coords[2] : "";
+        String version = coords.length > 3 ? coords[3] : "";
+        
+        return new DefaultArtifact(groupId, artifactId, type, version);
     }
 
     /**
@@ -170,6 +175,41 @@ public class EAPArtifactUtils {
         String a1Coords = getArtifactCoordinates(a1);
         String a2Coords = getArtifactCoordinates(a2);
         return a1Coords.equalsIgnoreCase(a2Coords);
+    }
+
+    /**
+     * Check if two artifacts are equals except for the version coordinate.
+     * The equality is done by comparing artifact coordinates.
+     *
+     * @param a1 The artifact.
+     * @param a2 The other artifact.
+     * @return Are artifact coordinates equals (except for version coordinate).
+     */
+    public static boolean equalsNoVersion(Artifact a1, Artifact a2) {
+        Artifact a1Copy = new DefaultArtifact(a1.getGroupId(), a1.getArtifactId(), a1.getExtension(), null);
+        Artifact a2Copy = new DefaultArtifact(a2.getGroupId(), a2.getArtifactId(), a2.getExtension(), null);
+        String a1Coords = getArtifactCoordinates(a1Copy);
+        String a2Coords = getArtifactCoordinates(a2Copy);
+        return a1Coords.equalsIgnoreCase(a2Coords);
+    }
+
+    /**
+     * Clones an artifact instance.
+     * Only clones the coordinates:
+     * - groupId
+     * - artifactId
+     * - version
+     * - type
+     * @param a The artifact to clone.
+     * @return The cloned artifact.
+     */
+    public static Artifact cloneArtifact(Artifact a) {
+        String groupId = a.getGroupId();
+        String artifactId = a.getArtifactId();
+        String type = a.getExtension();
+        String version = a.getVersion();
+
+        return new DefaultArtifact(groupId, artifactId, type, version);
     }
 
     /**
