@@ -39,15 +39,19 @@ Available commands
 How to use it
 -------------------------------------
 after it is successfully built/downloaded there will be distribution package available: kie-config-cli-${version}-dist.zip
-it's enough to unzip it and execute kie-config-cli.sh script. By default it will start it in online mode so it will ask
+it's enough to unzip it and execute kie-config-cli.sh script (or kie-config-cli.bat for windows systems). By default it will start it in online mode so it will ask
 for the location of ssh url it shall connect to - be default it's ssh://localhost:8001/system. To connect to remote server replace
 host and port with appropriate values e.g. ssh://kie-wb-host:8001/system. It requires authentication and prompts for both
 user name and password.
-To start online mode use:
+Depending to your OS, to start online mode use:
 ./kie-config-cli.sh
+or:
+kie-config-cli.bat
 
-In case cli should operate in offline mode append offline parameter to the ./kie-config-cli.sh command. It will then slightly
+In case cli should operate in offline mode append offline parameter to the ./kie-config-cli.sh (or kie-config-cli.bat) command. It will then slightly
 change behavior and will ask for the folder where .niogit (with system repo) is, so it can access the right one that requires
  modification. If there is no .niogit yet available leaving it empty will allow to create brand new setup.
-To start offline mode use:
+Depending to your OS, to start offline mode use:
 ./kie-config-cli.sh offline
+of:
+kie-config-cli.bat offline
