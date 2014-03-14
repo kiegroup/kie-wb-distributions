@@ -21,6 +21,8 @@
             factory="org.jboss.weld.resources.ManagerObjectFactory"/>
   <Resource name="jdbc/jbpm" uniqueName="jdbc/jbpm" auth="Container"
             removeAbandoned="true" factory="bitronix.tm.resource.ResourceObjectFactory" type="javax.sql.DataSource" />
+  <Resource name="TransactionSynchronizationRegistry" auth="Container" type="javax.transaction.TransactionSynchronizationRegistry"
+            factory="bitronix.tm.BitronixTransactionSynchronizationRegistryObjectFactory" />
 
   <Transaction factory="bitronix.tm.BitronixUserTransactionObjectFactory" />
 </Context>
