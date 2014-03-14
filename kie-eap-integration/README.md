@@ -409,7 +409,6 @@ Profiles
 --------
 These are the available profiles:   
 
-* <code>eap-base-modules</code>: Used to build only the JBoss EAP base module descriptors. Think that these descriptors are unusually changed from the initial definition, so this module should not be constantly build.   
 * <code>bpms-layer</code>: Used to generate the BPMS layer distribution. It results in the BPMS static layer generated in a ZIP file.   
 * <code>bpms-webapp</code>: Used to generate the BPMS webapp skinny WAR that works using the BPMS layer.   
 * <code>brms-layer</code>: Used to generate the BRMS layer distribution. It results in the BRMS static layer generated in a ZIP file.   
@@ -441,11 +440,10 @@ Run <code>mvn clean install -Dbrms-layer -Dbrms-webapp</code>
 
 * **Generate the Base JBoss EAP/AS module descriptors**
 Generates the base module definitions for all JBoss EAP/AS versions included.    
-Think that these descriptors are unusually changed from the initial definition, so this module should not be constantly build.    
 Run <code>mvn clean install -Deap-base-modules</code>   
 
 * NOTE: All these commands must be run from <code>kie-eap-integration</code> root directory.   
-* NOTE: This <code>kie-eap-integration</code> module is not build by default for <code>kie-wb-distributions</code> module build. To enable it, active the profile <code>eap-modules</code>.   
+* NOTE: This <code>kie-eap-integration</code> module is not build by default for <code>kie-wb-distributions</code> module build. To enable it, add the property <code>full</code>.   
 
 How to add static dependencies
 ------------------------------
@@ -572,7 +570,8 @@ These are the current coded and tested available patches.
 **Servlet spec 3.0 - Webfragments**   
 * Patch identifier: <code>dynamic.webfragment</code>      
 * Is known that on both EAP 6.1.0. and 6.1.1 webfragment descriptors located inside custom static modules are not loaded.    
-* The patch consists on creating a new jar on runtime with the web-fragment descriptor to use as a patch. For each web-fragment descriptor a new jar is created and added into WEB-INF/lib of the webapp.   
+* If a dynamic module is build over a static layer, which has single or multiple modules that contain resource/s with webfragment descriptors, a new generated JAR file is added into the resulting webapp for each webfragment descriptor found.  
+* So it consists on creating a new jar on runtime with a web-fragment descriptor. For each web-fragment descriptor a new jar is created and added into WEB-INF/lib of the webapp.   
 * This method allows to not modify the original deployment descriptor (web.xml) of the webapp and use always the latest <code>webfragment.xml</code> file from the JAR, if the artifact is a snapshot.    
 
 Other workarounds
