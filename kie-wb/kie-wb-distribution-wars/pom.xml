@@ -131,13 +131,6 @@
       <groupId>org.hibernate.common</groupId>
       <artifactId>hibernate-commons-annotations</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.antlr</groupId>
-      <artifactId>antlr</artifactId>
-      <version>3.1.1</version>
-      <!-- We specifically need the 3.1.1 version, and NOT HIGHER! (thus not 3.5) -->
-      <!-- (need the "antlr.RecognitionExeption" class, among others) -->
-    </dependency>
  <!-- For WAS8 shading -->
     <dependency>
       <groupId>org.sonatype.sisu</groupId>
