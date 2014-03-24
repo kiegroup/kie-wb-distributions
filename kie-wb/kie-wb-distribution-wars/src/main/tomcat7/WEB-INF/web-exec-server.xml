@@ -96,6 +96,11 @@
     <param-value>/asynch/jobs</param-value>
   </context-param>
 
+  <context-param>
+    <param-name>resteasy.document.expand.entity.references</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
   <servlet>
     <servlet-name>Resteasy</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>

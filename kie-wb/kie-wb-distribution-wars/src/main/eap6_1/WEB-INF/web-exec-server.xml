@@ -64,6 +64,11 @@ Their default values are shown as example param-values -->
         <param-value>/asynch/jobs</param-value>
     </context-param>
 
+    <context-param>
+      <param-name>resteasy.document.expand.entity.references</param-name>
+      <param-value>false</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>FileDownloadServlet</servlet-name>
         <servlet-class>org.guvnor.m2repo.backend.server.FileDownloadServlet</servlet-class>
