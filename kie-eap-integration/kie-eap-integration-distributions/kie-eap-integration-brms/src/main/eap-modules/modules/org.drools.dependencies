@@ -8,6 +8,7 @@ javax.transaction.api
 javax.xml.bind.api
 org.antlr
 org.apache.poi
+org.apache.commons.lang
 org.codehaus.woodstox
 org.dom4j
 org.hibernate

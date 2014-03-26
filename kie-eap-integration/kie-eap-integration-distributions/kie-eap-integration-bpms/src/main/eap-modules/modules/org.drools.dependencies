@@ -7,6 +7,7 @@ javax.persistence.api
 javax.transaction.api
 javax.xml.bind.api
 org.antlr
+org.apache.commons.lang
 org.apache.poi
 org.codehaus.woodstox
 org.dom4j
