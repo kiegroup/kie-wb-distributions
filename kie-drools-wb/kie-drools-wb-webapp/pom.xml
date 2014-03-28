@@ -650,7 +650,7 @@
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
           <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
-          <localWorkers>4</localWorkers>
+          <localWorkers>1</localWorkers>
           <module>org.kie.workbench.drools.FastCompiledKIEDroolsWebapp</module>
           <logLevel>INFO</logLevel>
           <compileSourcesArtifacts>
@@ -833,6 +833,7 @@
               <!-- Build all GWT permutations and optimize them -->
               <module>org.kie.workbench.drools.KIEDroolsWebapp</module>
               <draftCompile>false</draftCompile>
+              <localWorkers>4</localWorkers>
               <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms2048m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.jbpm.designer.perspective=ruleflow</extraJvmArgs>
             </configuration>
           </plugin>
