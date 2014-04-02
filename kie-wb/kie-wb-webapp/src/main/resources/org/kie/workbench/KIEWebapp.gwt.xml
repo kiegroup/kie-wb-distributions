@@ -11,6 +11,7 @@
   <inherits name="org.jbpm.console.ng.bd.JbpmConsoleNGBusinessDomainClient"/>
   <inherits name="org.jbpm.console.ng.es.JbpmConsoleNGExecutorServiceClient"/>
   <inherits name="org.jbpm.console.ng.gc.JbpmConsoleNGGenericClient"/>
+  <inherits name="org.jbpm.console.ng.ht.forms.JbpmConsoleNGHumanTasksFormsClient"/>
 
   <!-- Dashbuilder -->
   <inherits name="org.jbpm.dashboard.renderer.DashboardRendererApi"/>
