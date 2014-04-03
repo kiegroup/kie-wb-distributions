@@ -100,22 +100,6 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>UberFireImageServlet</servlet-name>
-    <servlet-class>org.uberfire.server.UberfireImageServlet</servlet-class>
-    <init-param>
-      <param-name>org.uberfire.images.paths</param-name>
-      <param-value>/org.kie.workbench.KIEWebapp</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>UberFireImageServlet</servlet-name>
-    <url-pattern>/org.kie.workbench.KIEWebapp/uberFireImages/*</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
     <servlet-name>UberfireFileUploadServlet</servlet-name>
     <servlet-class>org.uberfire.server.FileUploadServlet</servlet-class>
   </servlet>
