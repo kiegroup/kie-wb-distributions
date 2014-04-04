@@ -93,7 +93,8 @@ The application requires a datasource which must be created prior to the deploym
 
 Configure JMS resources
 --------------------------
-** Create JMS Connection factories**
+**Create JMS Connection factories**
+Please note that before configuring JMS Connection factories, you have to had configured Service Integration Bus first.
 Note: These are just example names and they can be configured as needed
 
 - KIE.RESPONSE.ALL - to receive all responses produced by bpms
@@ -101,20 +102,36 @@ Note: These are just example names and they can be configured as needed
 - KIE.INPUT  - to send messages to bpms
     assigned JNDI name will be used when sending messages over JMS
 
-** Create JMS Queues**
+  - Left side panel click on *Resources > JMS > Connection factories > New > Default messaging provider*
+  - Provide the name, JNDI name (e.g. _KIE.RESPONSE.ALL_ and _jms/conn/KIE.RESPONSE.ALL_)
+  - Choose the bus name
+
+**Create JMS Queues**
 - KIE.AUDIT - for asynchronous audit log
 - KIE.RESPONSE.ALL - for bpms responses
 - KIE.SESSION - for ksession based operations
 - KIE.TASK - for task based operations
 
-** Create JMS Activation specifications**
+  - Left side panel click on _Resources > JMS > Queues > New_, select _Default messaging provider_
+  - Provide a name, JNDI name (e.g. _KIE.AUDIT_ and _jms/queue/KIE.AUDIT_)
+  - Choose the bus name
+  - Choose _Create Service Bus Integration Destination_, follow the wizard and select the newly created queue name
+  - Click _OK_
+
+**Create JMS Activation specifications**
 - KIE.AUDIT - for asynchronous audit log
 - KIE.SESSION - for ksession based operations
 - KIE.TASK - for task based operations
 
+  - Left side panel click on _Resources > JMS > Activation specifications > New_, select _Default messaging provider_
+  - Provide a name, JNDI name (e.g. _KIE.AUDIT_ and _jms/activation/KIE.AUDIT_)
+  - Select _Queue_ as _Destination type_, provide JNDI name of the corresponding queue (e.g. _jms/queue/KIE.AUDIT_)
+  - Choose the bus name
+  - Click _OK_
+
 JVM Custom properties
 --------------------------
-** Additional JVM properties**
+**Additional JVM properties**
 - jbpm.ut.jndi.lookup  - jta/usertransaction -- allows to look up user transaction from within non managed threads, e.g. timers
 - kie.services.jms.queues.response - {JNDI_NAME} -- JNDI name of the response queue for JMS remote API
 
@@ -127,7 +144,9 @@ Deploy the application
   - Click on _Install_, select the _kie-wb-was8.war_ file from your local filesystem. Click _Next_
   - From here, you will be asked with several deployments settings.
   - You'll need to select the datasource created above as the datasource to be used by the application.
+  - Screen *Bind listeners for message-driven beans* - select for every bean *Activation Specification* and fill the corresponding activation specification JNDI name into *Target Resource JNDI Name* (e.g. _jms/activation/KIE.SESSION_). You may also specify *Destination JNDI name* using JNDI name of the appropriate JMS queue (e.g. _jms/queue/KIE.SESSION_).
   - We also recommend to set is the context path of the webapp to _kie-wb_.
+  - Screen *Map resource references to resources* - for both beans provide JNDI name of KIE.RESPONSE.ALL connection factory (e.g. _jms/conn/KIE.RESPONSE.ALL_).
   - Click _Next_ until finished.
 
 **App. settings**
