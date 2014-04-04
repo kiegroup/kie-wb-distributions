@@ -23,13 +23,10 @@
       <param-name>org.uberfire.cookie.id</param-name>
       <param-value>kie.ide.console</param-value>
     </init-param>
-    <!-- TOMCAT-JEE-SECURITY -->
-    <!--
     <init-param>
       <param-name>org.uberfire.auth.scheme</param-name>
       <param-value>org.uberfire.security.server.auth.JACCAuthenticationScheme</param-value>
     </init-param>
-    -->
     <init-param>
       <param-name>org.uberfire.auth.rememberme</param-name>
       <param-value>disabled</param-value>
@@ -156,8 +153,6 @@
     <res-auth>Container</res-auth>
   </resource-ref>
 
-  <!-- TOMCAT-JEE-SECURITY -->
-  <!--
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>rest</web-resource-name>
@@ -216,5 +211,5 @@
     </description>
     <role-name>manager</role-name>
   </security-role>
-  -->
+
 </web-app>

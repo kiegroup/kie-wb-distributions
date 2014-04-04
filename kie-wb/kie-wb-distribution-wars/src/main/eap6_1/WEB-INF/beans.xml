@@ -24,10 +24,6 @@
   <alternatives>
     <class>org.jbpm.kie.services.cdi.producer.JAASUserGroupInfoProducer</class>
   </alternatives>
-  <interceptors>
-    <class>org.uberfire.security.server.authz.cdi.RolesInterceptor</class>
-    <class>org.uberfire.security.server.authz.cdi.TraitInterceptor</class>
-  </interceptors>
 
 
 </beans>

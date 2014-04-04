@@ -23,14 +23,10 @@
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://docs.jboss.org/cdi/beans_1_0.xsd">
 
   <alternatives>
-    <class>org.jbpm.kie.services.cdi.producer.DefaultUserGroupInfoProducer</class>
-    <!-- uncomment JAASUserGroupInfoProducer when using JEE security on Tomcat -->
-    <!--class>org.jbpm.kie.services.cdi.producer.JAASUserGroupInfoProducer</class-->
+    <!-- uncomment DefaultUserGroupInfoProducer when using UberFire security -->
+    <!--class>org.jbpm.kie.services.cdi.producer.DefaultUserGroupInfoProducer</class-->
+    <class>org.jbpm.kie.services.cdi.producer.JAASUserGroupInfoProducer</class>
   </alternatives>
-  <interceptors>
-    <class>org.uberfire.security.server.authz.cdi.RolesInterceptor</class>
-    <class>org.uberfire.security.server.authz.cdi.TraitInterceptor</class>
-  </interceptors>
 
 </beans>
 

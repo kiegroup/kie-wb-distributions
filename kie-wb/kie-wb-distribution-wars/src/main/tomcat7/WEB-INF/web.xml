@@ -23,13 +23,10 @@
       <param-name>org.uberfire.cookie.id</param-name>
       <param-value>kie.ide.console</param-value>
     </init-param>
-    <!-- TOMCAT-JEE-SECURITY -->
-    <!--
     <init-param>
       <param-name>org.uberfire.auth.scheme</param-name>
       <param-value>org.uberfire.security.server.auth.JACCAuthenticationScheme</param-value>
     </init-param>
-    -->
     <init-param>
       <param-name>org.uberfire.auth.rememberme</param-name>
       <param-value>disabled</param-value>
@@ -546,8 +543,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <res-auth>Container</res-auth>
   </resource-ref>
 
-  <!-- TOMCAT-JEE-SECURITY -->
-  <!--
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>console</web-resource-name>
@@ -630,7 +625,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <error-code>403</error-code>
     <location>/not_authorized.jsp</location>
   </error-page>
-  -->
     
   <context-param>
     <param-name>resteasy.document.expand.entity.references</param-name>
