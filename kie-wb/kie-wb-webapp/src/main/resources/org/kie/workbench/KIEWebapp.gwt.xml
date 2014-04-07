@@ -4,6 +4,7 @@
 <module>
   <!-- UberFire -->
   <inherits name="org.uberfire.UberfireClientAll"/>
+  <inherits name="org.uberfire.UberfireNSWEManager"/>
 
   <!-- jbpm-wb -->
   <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksClient"/>

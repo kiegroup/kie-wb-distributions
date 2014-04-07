@@ -6,6 +6,7 @@
 
   <!-- Uberfire dependencies -->
   <inherits name="org.uberfire.UberfireClientAll"/>
+  <inherits name="org.uberfire.UberfireNSWEManager"/>
 
   <!-- designer -->
   <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
