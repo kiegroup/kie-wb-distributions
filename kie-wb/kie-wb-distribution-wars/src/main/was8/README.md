@@ -134,6 +134,7 @@ JVM Custom properties
 **Additional JVM properties**
 - jbpm.ut.jndi.lookup  - jta/usertransaction -- allows to look up user transaction from within non managed threads, e.g. timers
 - kie.services.jms.queues.response - {JNDI_NAME} -- JNDI name of the response queue for JMS remote API
+- kie.services.rest.deploy.async - false -- instructs REST service to use synchronous mode to process deployments must be set for WebSphere due to issues with CDI on WAS 8.5
 
 Deploy the application
 --------------------------
