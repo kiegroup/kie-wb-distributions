@@ -51,7 +51,7 @@
     <url-pattern>/filestore</url-pattern>
     <url-pattern>/dictionary</url-pattern>
     <url-pattern>/themes</url-pattern>
-    <url-pattern>/customeditors </url-pattern>
+    <url-pattern>/customeditors</url-pattern>
     <url-pattern>/simulation</url-pattern>
     <url-pattern>/formwidget</url-pattern>
     <url-pattern>/calledelement</url-pattern>
@@ -487,16 +487,16 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </auth-constraint>
   </security-constraint>
 
-    <security-constraint>
-        <web-resource-collection>
-          <web-resource-name>formModeler</web-resource-name>
-          <url-pattern>/formModeler/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-          <role-name>admin</role-name>
-          <role-name>analyst</role-name>
-        </auth-constraint>
-    </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>formModeler</web-resource-name>
+      <url-pattern>/formModeler/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>analyst</role-name>
+    </auth-constraint>
+  </security-constraint>
 
   <login-config>
     <auth-method>FORM</auth-method>
@@ -507,7 +507,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   </login-config>
 
   <security-role>
-    <description>Administrator - Administrates the BPMS system. Has full access
+    <description>Administrator - Administrates the BRMS system. Has full access
       rights to make any changes necessary. Also has the
       ability to add and remove users from the system.
     </description>
@@ -530,5 +530,5 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <param-name>resteasy.document.expand.entity.references</param-name>
     <param-value>false</param-value>
   </context-param>
-  
+
 </web-app>
