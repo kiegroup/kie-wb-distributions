@@ -1,5 +1,6 @@
 package org.kie.workbench.drools.client.home;
 
+import java.util.Arrays;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -9,6 +10,7 @@ import com.google.gwt.core.client.GWT;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
+import org.kie.workbench.common.services.security.AppRoles;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
@@ -18,6 +20,8 @@ import org.uberfire.mvp.Command;
  */
 @ApplicationScoped
 public class HomeProducer {
+
+    private static String[] PERMISSIONS_ADMIN = new String[]{ AppRoles.ADMIN.getName() };
 
     private AppConstants constants = AppConstants.INSTANCE;
 
@@ -53,7 +57,8 @@ public class HomeProducer {
                                                       public void execute() {
                                                           placeManager.goTo( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" );
                                                       }
-                                                  } ) );
+                                                  },
+                                                  Arrays.asList( PERMISSIONS_ADMIN ) ) );
 
         model.addSection( s1 );
 

@@ -16,6 +16,7 @@
 package org.kie.workbench.drools.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +37,7 @@ import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
+import org.kie.workbench.common.services.security.AppRoles;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.UberFirePreferences;
 import org.uberfire.client.menu.CustomSplashHelp;
@@ -57,6 +59,8 @@ import org.uberfire.workbench.model.menu.Menus;
  */
 @EntryPoint
 public class KieDroolsWorkbenchEntryPoint {
+
+    private static String[] PERMISSIONS_ADMIN = new String[]{ AppRoles.ADMIN.getName() };
 
     private AppConstants constants = AppConstants.INSTANCE;
 
@@ -164,7 +168,7 @@ public class KieDroolsWorkbenchEntryPoint {
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.administration() ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.administration() ).withRoles( Arrays.asList( PERMISSIONS_ADMIN ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" ) );
