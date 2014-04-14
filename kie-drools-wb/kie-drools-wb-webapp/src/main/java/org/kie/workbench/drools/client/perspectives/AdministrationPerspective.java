@@ -35,6 +35,7 @@ import org.uberfire.client.editors.repository.create.CreateRepositoryForm;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.security.annotations.Roles;
 import org.uberfire.workbench.model.PanelDefinition;
 import org.uberfire.workbench.model.PanelType;
 import org.uberfire.workbench.model.PerspectiveDefinition;
@@ -53,6 +54,7 @@ import static org.uberfire.workbench.model.toolbar.IconType.*;
 /**
  * A Perspective for Administrators
  */
+@Roles({ "admin" })
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "org.kie.workbench.drools.client.perspectives.AdministrationPerspective")
 public class AdministrationPerspective {
