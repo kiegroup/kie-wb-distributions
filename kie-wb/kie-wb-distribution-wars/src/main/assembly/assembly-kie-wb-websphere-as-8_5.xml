@@ -184,6 +184,7 @@
           <exclude>WEB-INF/lib/cdi-api*.jar</exclude>
           <exclude>WEB-INF/lib/javax*.jar</exclude>
           <exclude>WEB-INF/lib/resteasy*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-annotation*.jar</exclude>
           <!-- Netty-->
           <exclude>WEB-INF/lib/netty-3*.jar</exclude>
 
@@ -197,6 +198,7 @@
           <!--<exclude>WEB-INF/lib/commons-codec-*.jar</exclude>-->
           <!--<exclude>WEB-INF/lib/commons-io-*.jar</exclude>-->
           <exclude>WEB-INF/lib/jaxb-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-jaxb-api-*.jar</exclude>
           <!--<exclude>WEB-INF/lib/jaxb-impl-*.jar</exclude>-->
           <!--<exclude>WEB-INF/lib/jaxb-xjc-*.jar</exclude>-->
           <exclude>WEB-INF/lib/org.osgi.core-*.jar</exclude>
@@ -276,6 +278,7 @@
 
           <exclude>WEB-INF/lib/sisu-inject-bean*.jar</exclude>
           <exclude>WEB-INF/lib/jaxrs-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-jaxrs-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr311-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr305-*.jar</exclude>
