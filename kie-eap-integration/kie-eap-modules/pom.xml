@@ -14,16 +14,6 @@
   <packaging>pom</packaging>
   <name>KIE EAP - Module definitions</name>
 
-  <!-- net.sf.josql:josql:jar:1.5 & net.sf.josql:gentlyweb-utils:jar:1.5 are not resolvable in jboss nexus public repository. -->
-  <repositories>
-    <repository>
-      <id>repo.fusesource.com</id>
-      <name>repo.fusesource.com</name>
-      <url>http://repo.fusesource.com/maven2-legacy/</url>
-      <layout>default</layout>
-    </repository>
-  </repositories>
-
   <profiles>
 
     <!-- Profile for EAP base modules. -->
