@@ -38,13 +38,15 @@
       <artifactId>jacc</artifactId>
       <version>1.0</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>javax.security.jacc</groupId>
       <artifactId>javax.security.jacc-api</artifactId>
       <version>1.4</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
