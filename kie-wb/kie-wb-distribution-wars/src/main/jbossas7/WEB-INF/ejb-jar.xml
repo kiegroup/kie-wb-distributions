@@ -7,7 +7,7 @@
   <enterprise-beans>
     <message-driven>
       <ejb-name>KieSessionRequesMessageBean</ejb-name>
-      <ejb-class>org.kie.services.remote.jms.RequestMessageBean</ejb-class>
+      <ejb-class>org.kie.remote.services.jms.RequestMessageBean</ejb-class>
       <transaction-type>Container</transaction-type>
       <activation-config>
         <activation-config-property>
@@ -22,7 +22,7 @@
     </message-driven>  
     <message-driven>
       <ejb-name>TaskServiceRequesMessageBean</ejb-name>
-      <ejb-class>org.kie.services.remote.jms.RequestMessageBean</ejb-class>
+      <ejb-class>org.kie.remote.services.jms.RequestMessageBean</ejb-class>
       <transaction-type>Container</transaction-type>
       <activation-config>
         <activation-config-property>
