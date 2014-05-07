@@ -224,6 +224,7 @@
           <exclude>WEB-INF/lib/sisu-inject-bean*.jar</exclude>
           <exclude>WEB-INF/lib/jaxrs-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-jaxrs-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-jstl-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr311-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr305-*.jar</exclude>
