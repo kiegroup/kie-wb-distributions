@@ -158,6 +158,7 @@
           <exclude>WEB-INF/lib/errai-codegen-gwt-*.jar</exclude>
           <exclude>WEB-INF/lib/errai-cdi-jetty-*.jar</exclude>
           <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
+          <exclude>WEB-INF/lib/netty-4.0.0.*.errai.*.jar</exclude>
 
           <!-- Jetty -->
           <exclude>WEB-INF/lib/jetty-*.jar</exclude>
@@ -185,8 +186,6 @@
           <exclude>WEB-INF/lib/javax*.jar</exclude>
           <exclude>WEB-INF/lib/resteasy*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-annotation*.jar</exclude>
-          <!-- Netty-->
-          <exclude>WEB-INF/lib/netty-3*.jar</exclude>
 
           <!-- EAP 6.1 alignement -->
           <exclude>WEB-INF/lib/activation-*.jar</exclude>
