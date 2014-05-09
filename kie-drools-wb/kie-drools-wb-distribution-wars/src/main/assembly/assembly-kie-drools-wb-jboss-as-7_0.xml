@@ -114,6 +114,7 @@
           <!-- Errai -->
           <exclude>WEB-INF/lib/errai-codegen-gwt-*.jar</exclude>
           <exclude>WEB-INF/lib/errai-cdi-jetty-*.jar</exclude>
+          <exclude>WEB-INF/lib/netty-4.0.0.*.errai.*.jar</exclude>
 
           <!-- Jetty -->
           <exclude>WEB-INF/lib/jetty-*.jar</exclude>
@@ -132,7 +133,7 @@
           <exclude>WEB-INF/lib/jboss-interceptors-api_1-*.jar</exclude>
           <exclude>WEB-INF/lib/resteasy*.jar</exclude>
 
-          <!-- Netty-->
+          <!-- Netty - bundled with AS -->
           <exclude>WEB-INF/lib/netty-3*.jar</exclude>
 
         </excludes>
