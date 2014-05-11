@@ -56,6 +56,7 @@
           <exclude>WEB-INF/beans.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
+          <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/users.properties</exclude>
 
           <!-- remove shared services with btm -->
