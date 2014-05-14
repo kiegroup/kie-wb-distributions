@@ -83,6 +83,17 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-kie-services</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-asset-mgmt-client</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-asset-mgmt-backend</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -810,6 +821,8 @@
           <compileSourcesArtifacts>
 
             <!-- jbpm-wb -->
+            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-asset-mgmt-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-asset-mgmt-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-api</compileSourcesArtifact>

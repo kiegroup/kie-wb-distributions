@@ -134,4 +134,6 @@ public interface AppConstants
 
     String Refresh();
 
+    String Asset_Management();
+
 }
