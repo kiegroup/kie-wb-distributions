@@ -3,6 +3,7 @@ package org.kie.workbench.backend;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
@@ -40,11 +41,13 @@ public class BpmDependenciesProducer {
     }
 
     @Produces
+    @Named("BAM")
     public TaskLifeCycleEventListener produceBAMListener() {
         return new BAMTaskEventListener();
     }
 
     @Produces
+    @Named("Logs")
     public TaskLifeCycleEventListener produceTaskAuditListener() {
         return new JPATaskLifeCycleEventListener();
     }
