@@ -50,9 +50,12 @@ public class ApplicationScopedProducer {
     @IOSecurityAuthz
     private AuthorizationManager authorizationManager;
 
+    @Inject
+    @Named("luceneConfig")
+    private LuceneConfig config;
+
     private IOService ioService;
     private IOSearchService ioSearchService;
-    private LuceneConfig config;
 
     @Inject
     @Named("clusterServiceFactory")
@@ -60,9 +63,6 @@ public class ApplicationScopedProducer {
 
     @Inject
     private IOWatchServiceNonDotImpl watchService;
-
-
-
 
     public ApplicationScopedProducer() {
         if ( System.getProperty( "org.uberfire.watcher.autostart" ) == null ) {
@@ -81,6 +81,7 @@ public class ApplicationScopedProducer {
 
         final IOService service = new IOServiceIndexedImpl( watchService,
                                                             config.getIndexEngine(),
+                                                            config.getIndexers(),
                                                             DublinCoreView.class,
                                                             VersionAttributeView.class,
                                                             OtherMetaView.class );
