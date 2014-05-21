@@ -88,6 +88,8 @@
           <exclude>WEB-INF/lib/kie-wb-decorated-grid-widget-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-wb-metadata-widget-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-wb-view-source-widget-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-wb-common-default-editor-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-wb-common-java-editor-client-*.jar</exclude>
 
           <!-- Drools Workbench client related -->
           <exclude>WEB-INF/lib/drools-wb-categories-editor-client-*.jar</exclude>
