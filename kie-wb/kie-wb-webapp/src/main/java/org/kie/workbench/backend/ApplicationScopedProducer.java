@@ -1,13 +1,18 @@
 package org.kie.workbench.backend;
 
 import java.util.Properties;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
 
 import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
 import org.jbpm.runtime.manager.impl.DefaultRuntimeEnvironment;
@@ -42,6 +47,27 @@ import org.uberfire.security.server.cdi.SecurityFactory;
 @ApplicationScoped
 public class ApplicationScopedProducer {
 
+    /**
+     * If the EMF is not produced by an @ApplicationScoped bean, 
+     * then tomcat will create an emf *per request*, leading to a memory leak
+     */
+    @PersistenceUnit(unitName = "org.jbpm.domain")
+    private EntityManagerFactory emf;
+
+    @Produces
+    public EntityManagerFactory getEntityManagerFactory() {
+        if ( this.emf == null ) {
+            // this needs to be here for non EE containers
+            try {
+                this.emf = InitialContext.doLookup("jBPMEMF");
+            } catch ( NamingException e ) {
+                this.emf = Persistence.createEntityManagerFactory("org.jbpm.domain");
+            }
+
+        }
+        return this.emf;
+    }
+    
     @Inject
     @IOSecurityAuth
     private AuthenticationManager authenticationManager;
