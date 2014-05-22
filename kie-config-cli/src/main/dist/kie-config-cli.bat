@@ -13,7 +13,7 @@ for %%f in (.\lib\*) do (
 )
 
 rem add the kie-config-cli jar to classpath
-set MAIN_JAR=kie-config-cli-6.0.1.Final.jar
+set MAIN_JAR=${artifactId}-${version}.jar
 
 set CLASSPATH=%CLASSPATH%;%MAIN_JAR%
 
