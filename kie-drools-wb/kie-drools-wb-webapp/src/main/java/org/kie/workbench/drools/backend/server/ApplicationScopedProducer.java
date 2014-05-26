@@ -77,11 +77,6 @@ public class ApplicationScopedProducer {
     public void setup() {
         SecurityFactory.setAuthzManager( new RuntimeAuthorizationManager() );
 
-        this.config = new LuceneConfigBuilder().withInMemoryMetaModelStore()
-                .useDirectoryBasedIndex()
-                .useNIODirectory()
-                .build();
-
         final IOService service = new IOServiceIndexedImpl( watchService,
                                                             config.getIndexEngine(),
                                                             config.getIndexers(),
