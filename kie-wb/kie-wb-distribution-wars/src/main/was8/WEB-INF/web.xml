@@ -569,4 +569,14 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <error-code>403</error-code>
     <location>/not_authorized.jsp</location>
   </error-page>
+  
+  <filter>
+    <filter-name>Dynamic JAXBContext Filter</filter-name>
+    <filter-class>org.kie.remote.services.rest.jaxb.DynamicJaxbContextFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Dynamic JAXBContext Filter</filter-name>
+    <url-pattern>/rest/*</url-pattern>
+  </filter-mapping> 
+  
 </web-app>
