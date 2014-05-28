@@ -20,7 +20,7 @@
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
   <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name/id of the artifact -->
-  <id>eap-6_1</id>
+  <id>wildfly</id>
   <formats>
     <format>war</format>
     <format>dir</format>
@@ -29,7 +29,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-        <directory>${project.basedir}/src/main/eap6_1</directory>
+        <directory>${project.basedir}/src/main/wildfly</directory>
         <outputDirectory>.</outputDirectory>
     </fileSet>
   </fileSets>
@@ -54,8 +54,8 @@
           <exclude>WEB-INF/jetty-env.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
+          <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/users.properties</exclude>
-          <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/wildfly/</exclude>
 
           <!-- UF client related -->
           <exclude>WEB-INF/lib/uberfire-js-*.jar</exclude>
@@ -152,8 +152,6 @@
           <exclude>WEB-INF/lib/cxf-rt-databinding-jaxb-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-frontend-jaxws-*.jar</exclude>
           <exclude>WEB-INF/lib/dom4j-*.jar</exclude>
-          <exclude>WEB-INF/lib/ecj-*.jar</exclude>
-          <!-- this *.jar is not in the AS 7.1.1 -->
           <exclude>WEB-INF/lib/guava-*.jar</exclude>
           <exclude>WEB-INF/lib/h2-*.jar</exclude>
           <exclude>WEB-INF/lib/hibernate-commons-annotations-*.jar</exclude>

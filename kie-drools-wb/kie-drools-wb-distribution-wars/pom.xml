@@ -64,6 +64,7 @@
           <descriptors>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-as-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-eap-6_1.xml</descriptor>
+            <descriptor>src/main/assembly/assembly-kie-drools-wb-wildfly.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-tomcat-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-websphere-as-8_5.xml</descriptor>
           </descriptors>
