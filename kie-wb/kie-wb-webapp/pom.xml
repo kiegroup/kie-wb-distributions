@@ -86,13 +86,11 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-asset-mgmt-client</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-asset-mgmt-backend</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>

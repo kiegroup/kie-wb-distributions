@@ -114,14 +114,9 @@
       <artifactId>hibernate-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.hibernate.common</groupId>
-      <artifactId>hibernate-commons-annotations</artifactId>
-      <version>4.0.1.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>antlr</groupId>
+      <groupId>org.antlr</groupId>
       <artifactId>antlr</artifactId>
-      <version>2.7.7</version>
+      <!-- <version>2.7.7</version> -->
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -135,13 +130,11 @@
     <dependency>
       <groupId>org.sonatype.sisu</groupId>
       <artifactId>sisu-inject-bean</artifactId>
-      <version>2.2.3</version>
     </dependency>
     <!-- WAS8 requires JUL -->
     <dependency>
      <groupId>org.slf4j</groupId>
      <artifactId>slf4j-jdk14</artifactId>
-     <version>${version.org.slf4j}</version>
     </dependency>
   </dependencies>
 

@@ -93,7 +93,6 @@
     <dependency>
       <groupId>org.sonatype.sisu</groupId>
       <artifactId>sisu-inject-bean</artifactId>
-      <version>${version.org.sonatype.sisu}</version>
     </dependency>
 
   </dependencies>
