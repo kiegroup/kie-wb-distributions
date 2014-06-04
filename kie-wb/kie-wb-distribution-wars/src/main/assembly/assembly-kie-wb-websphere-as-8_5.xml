@@ -199,7 +199,7 @@
           <!--<exclude>WEB-INF/lib/commons-codec-*.jar</exclude>-->
           <!--<exclude>WEB-INF/lib/commons-io-*.jar</exclude>-->
           <exclude>WEB-INF/lib/jaxb-api-*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-jaxb-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-jaxb-api_*.jar</exclude>
           <!--<exclude>WEB-INF/lib/jaxb-impl-*.jar</exclude>-->
           <!--<exclude>WEB-INF/lib/jaxb-xjc-*.jar</exclude>-->
           <exclude>WEB-INF/lib/org.osgi.core-*.jar</exclude>

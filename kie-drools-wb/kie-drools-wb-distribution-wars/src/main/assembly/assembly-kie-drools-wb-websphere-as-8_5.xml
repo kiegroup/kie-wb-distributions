@@ -221,7 +221,7 @@
           <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
           <exclude>WEB-INF/lib/jaxb-*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-jaxb-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-jaxb-api_*.jar</exclude>
 
           <exclude>WEB-INF/lib/sisu-inject-bean*.jar</exclude>
           <exclude>WEB-INF/lib/jaxrs-*.jar</exclude>
