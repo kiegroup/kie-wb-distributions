@@ -95,32 +95,37 @@ function jBPMFormsAPI() {
             processId: processId,
             formURL: null,
             onsuccess: function (responseText) {
-                var xmlDoc = getXMLDoc(responseText);
+                try {
+                    var xmlDoc = getXMLDoc(responseText);
 
-                if (!xmlDoc) {
-                    errorCallback(responseText);
-                    return;
-                }
-
-                var status = xmlDoc.getElementsByTagName("status");
-
-                if (status && status.length > 0 && status[0].childNodes.length > 0) {
-                    status = status[0].childNodes[0].nodeValue;
-
-                    if (status == 'SUCCESS') {
-                        var formURL = xmlDoc.getElementsByTagName("formUrl");
-                        if (formURL && formURL.length > 0 && formURL[0].childNodes.length > 0) {
-                            this.formURL = formURL[0].childNodes[0].nodeValue;
-                            var html = "<iframe id='" + this.containerId + "_form' src='" + this.formURL + "' frameborder='0' style='width:100%; height:100%'></iframe>";
-                            var targetDiv = document.getElementById(this.containerId);
-                            targetDiv.innerHTML = html;
-                            if (successCallback) successCallback(responseText);
-                            return;
-                        }
+                    if (!xmlDoc) {
+                        if (errorCallback) errorCallback(responseText);
+                        return;
                     }
 
+                    var status = xmlDoc.getElementsByTagName("status");
+
+                    if (status && status.length > 0 && status[0].childNodes.length > 0) {
+                        status = status[0].childNodes[0].nodeValue;
+
+                        if (status == 'SUCCESS') {
+                            var formURL = xmlDoc.getElementsByTagName("formUrl");
+                            if (formURL && formURL.length > 0 && formURL[0].childNodes.length > 0) {
+                                this.formURL = formURL[0].childNodes[0].nodeValue;
+                                var html = "<iframe id='" + this.containerId + "_form' src='" + this.formURL + "' frameborder='0' style='width:100%; height:100%'></iframe>";
+                                var targetDiv = document.getElementById(this.containerId);
+                                targetDiv.innerHTML = html;
+                                if (successCallback) successCallback(responseText);
+                                return;
+                            }
+                        }
+
+                    }
+                    if (errorCallback) errorCallback(responseText);
+                } catch (err) {
+                    if (errorCallback) errorCallback("Unexpected error: " + err.message);
+                    else alert("Unexpected error: " + err.message);
                 }
-                if (errorCallback) errorCallback(responseText);
 
             },
             onerror: errorCallback
@@ -184,32 +189,37 @@ function jBPMFormsAPI() {
             taskId: taskId,
             formURL: null,
             onsuccess: function (responseText) {
-                var xmlDoc = getXMLDoc(responseText);
+                try {
+                    var xmlDoc = getXMLDoc(responseText);
 
-                if (!xmlDoc) {
-                    errorCallback(responseText);
-                    return;
-                }
-
-                var status = xmlDoc.getElementsByTagName("status");
-
-                if (status && status.length > 0 && status[0].childNodes.length > 0) {
-                    status = status[0].childNodes[0].nodeValue;
-
-                    if (status == 'SUCCESS') {
-                        var formURL = xmlDoc.getElementsByTagName("formUrl");
-                        if (formURL && formURL.length > 0 && formURL[0].childNodes.length > 0) {
-                            this.formURL = formURL[0].childNodes[0].nodeValue;
-                            var html = "<iframe id='" + this.containerId + "_form' src='" + this.formURL + "' frameborder='0' style='width:100%; height:100%'></iframe>";
-                            var targetDiv = document.getElementById(this.containerId);
-                            targetDiv.innerHTML = html;
-                            if (successCallback) successCallback(responseText);
-                            return;
-                        }
+                    if (!xmlDoc) {
+                        if (errorCallback) errorCallback(responseText);
+                        return;
                     }
 
+                    var status = xmlDoc.getElementsByTagName("status");
+
+                    if (status && status.length > 0 && status[0].childNodes.length > 0) {
+                        status = status[0].childNodes[0].nodeValue;
+
+                        if (status == 'SUCCESS') {
+                            var formURL = xmlDoc.getElementsByTagName("formUrl");
+                            if (formURL && formURL.length > 0 && formURL[0].childNodes.length > 0) {
+                                this.formURL = formURL[0].childNodes[0].nodeValue;
+                                var html = "<iframe id='" + this.containerId + "_form' src='" + this.formURL + "' frameborder='0' style='width:100%; height:100%'></iframe>";
+                                var targetDiv = document.getElementById(this.containerId);
+                                targetDiv.innerHTML = html;
+                                if (successCallback) successCallback(responseText);
+                                return;
+                            }
+                        }
+
+                    }
+                    if (errorCallback) errorCallback(responseText);
+                } catch (err) {
+                    if (errorCallback) errorCallback("Unexpected error: " + err.message);
+                    else alert("Unexpected error: " + err.message);
                 }
-                if (errorCallback) errorCallback(responseText);
             },
             onerror: errorCallback
         };
