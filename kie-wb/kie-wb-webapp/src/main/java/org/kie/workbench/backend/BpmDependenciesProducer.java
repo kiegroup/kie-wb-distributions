@@ -20,13 +20,13 @@ public class BpmDependenciesProducer {
     @Produces
     @Named("BAM")
     public TaskLifeCycleEventListener produceBAMListener() {
-        return new BAMTaskEventListener();
+        return new BAMTaskEventListener(true);
     }
 
     @Produces
     @Named("Logs")
     public TaskLifeCycleEventListener produceTaskAuditListener() {
-        return new JPATaskLifeCycleEventListener();
+        return new JPATaskLifeCycleEventListener(true);
     }
 
 
