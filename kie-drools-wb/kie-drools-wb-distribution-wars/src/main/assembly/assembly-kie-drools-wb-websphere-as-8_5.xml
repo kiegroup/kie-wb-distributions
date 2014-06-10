@@ -210,7 +210,7 @@
           <exclude>WEB-INF/lib/jboss-remote-naming-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-remoting-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-sasl*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-transaction-api_1.1_spec-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-transaction-api*.jar</exclude>
           <exclude>WEB-INF/lib/jgroups-*.jar</exclude>
           <exclude>WEB-INF/lib/neethi-*.jar</exclude>
           <exclude>WEB-INF/lib/serializer*.jar</exclude>
@@ -231,6 +231,7 @@
           <exclude>WEB-INF/lib/jboss-interceptors-*.jar</exclude>
           <exclude>WEB-INF/lib/stax-*.jar</exclude>
           <exclude>WEB-INF/lib/stax2-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-ejb3-api-*.jar</exclude>
 
         </excludes>
       </unpackOptions>
