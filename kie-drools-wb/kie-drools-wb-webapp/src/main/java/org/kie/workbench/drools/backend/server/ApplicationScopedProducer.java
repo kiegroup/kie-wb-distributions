@@ -27,7 +27,6 @@ import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
 import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.backend.server.io.IOSecurityAuth;
 import org.uberfire.backend.server.io.IOSecurityAuthz;
-import org.uberfire.commons.async.SimpleAsyncExecutorService;
 import org.uberfire.commons.cluster.ClusterServiceFactory;
 import org.uberfire.io.IOSearchService;
 import org.uberfire.io.IOService;
@@ -105,7 +104,6 @@ public class ApplicationScopedProducer {
     private void cleanup() {
         config.dispose();
         ioService.dispose();
-        SimpleAsyncExecutorService.shutdownInstances();
     }
 
     @Produces
