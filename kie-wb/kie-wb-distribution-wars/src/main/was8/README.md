@@ -35,6 +35,11 @@ Go to **_Users and groups > Manage users_**
 
    Create a single user and add to it the 5 roles above.
 
+Go to **_Servers > Server types > WAS app servers > server1 > Session management> Custom properties_**
+
+   Add this property _InvalidateOnUnauthorizedSessionRequestException = true_
+
+
 **Register the SSL certificate from Github.com**
 
 This is needed in order to enable repository cloning from Github.
