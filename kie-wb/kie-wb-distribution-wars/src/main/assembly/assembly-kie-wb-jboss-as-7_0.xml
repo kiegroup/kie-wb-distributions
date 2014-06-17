@@ -118,6 +118,9 @@
           <exclude>WEB-INF/lib/gwt-dnd-*.jar</exclude>
           <exclude>WEB-INF/lib/gchart-*.jar</exclude>
 
+          <!-- jBPM console & other client related -->
+          <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
+
           <!-- General -->
           <exclude>WEB-INF/lib/*-sources.jar</exclude>
           <exclude>WEB-INF/lib/el-api-*.jar</exclude>
@@ -128,6 +131,7 @@
           <exclude>WEB-INF/lib/errai-codegen-gwt-*.jar</exclude>
           <exclude>WEB-INF/lib/errai-cdi-jetty-*.jar</exclude>
           <exclude>WEB-INF/lib/netty-4.0.0.*.errai.*.jar</exclude>
+          <exclude>WEB-INF/lib/errai-ui-*.jar</exclude>
 
           <!-- Jetty -->
           <exclude>WEB-INF/lib/jetty-*.jar</exclude>

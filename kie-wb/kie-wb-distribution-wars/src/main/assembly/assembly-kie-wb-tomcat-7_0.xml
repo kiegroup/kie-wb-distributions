@@ -29,6 +29,7 @@
         <include>org.hibernate:hibernate-core</include>
         <include>org.hibernate:hibernate-validator</include>
         <include>org.hibernate:hibernate-commons-annotations</include>
+        <include>antlr:antlr</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
@@ -104,6 +105,9 @@
           <exclude>WEB-INF/lib/gwt-dnd-*.jar</exclude>
           <exclude>WEB-INF/lib/gchart-*.jar</exclude>
 
+          <!-- jBPM console & other client related -->
+          <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
+
           <exclude>WEB-INF/lib/*-sources.jar</exclude>
           <exclude>WEB-INF/lib/el-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-el-api_*.jar</exclude>
@@ -114,11 +118,11 @@
           <exclude>WEB-INF/lib/errai-cdi-jetty-*.jar</exclude>
           <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
           <exclude>WEB-INF/lib/netty-4.0.0.*.errai.*.jar</exclude>
+          <exclude>WEB-INF/lib/errai-ui-*.jar</exclude>
 
           <!-- Jetty -->
           <exclude>WEB-INF/lib/jetty-*.jar</exclude>
           <!-- mail.jar is needed by tomcat-->
-          <!--exclude>WEB-INF/lib/mail-*.jar</exclude-->
           <exclude>WEB-INF/lib/geronimo-spec-jta-*.jar</exclude>
           <exclude>WEB-INF/lib/servlet-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-servlet-api_*.jar</exclude>
