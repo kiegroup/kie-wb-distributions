@@ -439,6 +439,12 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-backend</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- UberFire -->
