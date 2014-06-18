@@ -195,7 +195,7 @@
           <exclude>WEB-INF/lib/jboss-remote-naming-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-remoting-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-sasl*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-transaction-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-transaction-api*.jar</exclude>
           <exclude>WEB-INF/lib/jgroups-*.jar</exclude>
           <exclude>WEB-INF/lib/neethi-*.jar</exclude>
           <exclude>WEB-INF/lib/serializer*.jar</exclude>
