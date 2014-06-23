@@ -70,7 +70,8 @@ public class HomeProducer {
                                                       public void execute() {
                                                           placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
                                                       }
-                                                  } ) );
+                                                  },
+                                                  Arrays.asList( PERMISSIONS_ADMIN ) ) );
         model.addSection( s2 );
     }
 
