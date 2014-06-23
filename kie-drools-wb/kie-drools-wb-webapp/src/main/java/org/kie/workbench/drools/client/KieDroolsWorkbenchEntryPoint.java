@@ -181,7 +181,7 @@ public class KieDroolsWorkbenchEntryPoint {
     private List<MenuItem> getDeploymentMenuItems() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles( Arrays.asList( PERMISSIONS_ADMIN ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
