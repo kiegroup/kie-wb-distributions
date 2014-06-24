@@ -63,6 +63,7 @@
         <excludes>
           <exclude>WEB-INF/jetty-env.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
+          <exclude>WEB-INF/beans.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>META-INF/context.xml</exclude>
