@@ -172,20 +172,11 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>M2RepoFileServlet</servlet-name>
-    <servlet-class>org.guvnor.m2repo.backend.server.FileServlet</servlet-class>
+    <servlet-name>M2Servlet</servlet-name>
+    <servlet-class>org.guvnor.m2repo.backend.server.M2Servlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>M2RepoFileServlet</servlet-name>
-    <url-pattern>/org.kie.workbench.KIEWebapp/m2repo/file</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>FileDownloadServlet</servlet-name>
-    <servlet-class>org.guvnor.m2repo.backend.server.FileDownloadServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FileDownloadServlet</servlet-name>
+    <servlet-name>M2Servlet</servlet-name>
     <url-pattern>/maven2/*</url-pattern>
   </servlet-mapping>
 
@@ -204,7 +195,6 @@ profile in pom.xml to use that. -->
     <servlet-name>ErraiServlet</servlet-name>
     <url-pattern>*.erraiBus</url-pattern>
   </servlet-mapping>
-
 
   <resource-env-ref>
     <description>Object factory for the CDI Bean Manager</description>
