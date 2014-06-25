@@ -15,12 +15,12 @@
  */
 package org.kie.config.cli.command.impl;
 
+import org.guvnor.structure.deployment.DeploymentConfigService;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
-import org.uberfire.backend.deployment.DeploymentConfigService;
 
 public class AddDeploymentConfigCliCommand implements CliCommand {
 

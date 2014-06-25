@@ -17,11 +17,11 @@ package org.kie.config.cli.command.impl;
 
 import java.util.Collection;
 
+import org.guvnor.structure.deployment.DeploymentConfig;
+import org.guvnor.structure.deployment.DeploymentConfigService;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
-import org.uberfire.backend.deployment.DeploymentConfig;
-import org.uberfire.backend.deployment.DeploymentConfigService;
 
 public class ListDeploymentsCliCommand implements CliCommand {
 

@@ -16,13 +16,11 @@
 package org.kie.config.cli.command.impl;
 
 import java.util.Collection;
-import java.util.Map;
 
+import org.guvnor.structure.repositories.Repository;
+import org.guvnor.structure.repositories.RepositoryService;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
-import org.kie.config.cli.command.CliCommand;
-import org.uberfire.backend.repositories.Repository;
-import org.uberfire.backend.repositories.RepositoryService;
 
 public class ListRepositoriesCliCommand extends AbstractCliCommand {
 

@@ -22,6 +22,8 @@ import javax.inject.Inject;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
+import org.guvnor.structure.client.editors.repository.clone.CloneRepositoryForm;
+import org.guvnor.structure.client.editors.repository.create.CreateRepositoryForm;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.services.security.AppRoles;
@@ -31,8 +33,6 @@ import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
 import org.uberfire.client.annotations.WorkbenchToolBar;
-import org.uberfire.client.editors.repository.clone.CloneRepositoryForm;
-import org.uberfire.client.editors.repository.create.CreateRepositoryForm;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
@@ -50,8 +50,8 @@ import org.uberfire.workbench.model.toolbar.ToolBar;
 import org.uberfire.workbench.model.toolbar.impl.DefaultToolBar;
 import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 
-import static org.uberfire.workbench.model.toolbar.IconType.*;
 import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
+import static org.uberfire.workbench.model.toolbar.IconType.*;
 
 /**
  * A Perspective for Administrators
@@ -161,7 +161,7 @@ public class AdministrationPerspective {
     private void buildMenuBar() {
         this.menus = MenuFactory
                 .newTopLevelMenu( AppConstants.INSTANCE.MenuOrganizationalUnits() )
-                .withRoles( kieACL.getGrantedRoles(G_AUTHORING) )
+                .withRoles( kieACL.getGrantedRoles( G_AUTHORING ) )
                 .menus()
                 .menu( AppConstants.INSTANCE.MenuManageOrganizationalUnits() )
                 .respondsWith( new Command() {
@@ -174,7 +174,7 @@ public class AdministrationPerspective {
                 .endMenus()
                 .endMenu()
                 .newTopLevelMenu( constants.repositories() )
-                .withRoles( kieACL.getGrantedRoles(G_AUTHORING) )
+                .withRoles( kieACL.getGrantedRoles( G_AUTHORING ) )
                 .menus()
                 .menu( AppConstants.INSTANCE.listRepositories() )
                 .respondsWith( new Command() {

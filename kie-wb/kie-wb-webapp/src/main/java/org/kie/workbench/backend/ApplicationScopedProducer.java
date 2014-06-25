@@ -1,7 +1,6 @@
 package org.kie.workbench.backend;
 
 import java.util.Properties;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
@@ -22,21 +21,16 @@ import org.kie.internal.runtime.manager.RuntimeEnvironment;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
 import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
+import org.kie.uberfire.metadata.backend.lucene.LuceneConfig;
+import org.kie.uberfire.metadata.io.IOSearchIndex;
+import org.kie.uberfire.metadata.io.IOServiceIndexedImpl;
 import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
-import org.uberfire.backend.server.io.IOSecurityAuth;
-import org.uberfire.backend.server.io.IOSecurityAuthz;
 import org.uberfire.commons.cluster.ClusterServiceFactory;
 import org.uberfire.io.IOSearchService;
 import org.uberfire.io.IOService;
 import org.uberfire.io.attribute.DublinCoreView;
 import org.uberfire.io.impl.cluster.IOServiceClusterImpl;
 import org.uberfire.java.nio.base.version.VersionAttributeView;
-import org.uberfire.metadata.backend.lucene.LuceneConfig;
-import org.uberfire.metadata.backend.lucene.LuceneConfigBuilder;
-import org.uberfire.metadata.io.IOSearchIndex;
-import org.uberfire.metadata.io.IOServiceIndexedImpl;
-import org.uberfire.security.auth.AuthenticationManager;
-import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
 
@@ -48,7 +42,7 @@ import org.uberfire.security.server.cdi.SecurityFactory;
 public class ApplicationScopedProducer {
 
     /**
-     * If the EMF is not produced by an @ApplicationScoped bean, 
+     * If the EMF is not produced by an @ApplicationScoped bean,
      * then tomcat will create an emf *per request*, leading to a memory leak
      */
     @PersistenceUnit(unitName = "org.jbpm.domain")
@@ -59,22 +53,14 @@ public class ApplicationScopedProducer {
         if ( this.emf == null ) {
             // this needs to be here for non EE containers
             try {
-                this.emf = InitialContext.doLookup("jBPMEMF");
+                this.emf = InitialContext.doLookup( "jBPMEMF" );
             } catch ( NamingException e ) {
-                this.emf = Persistence.createEntityManagerFactory("org.jbpm.domain");
+                this.emf = Persistence.createEntityManagerFactory( "org.jbpm.domain" );
             }
 
         }
         return this.emf;
     }
-    
-    @Inject
-    @IOSecurityAuth
-    private AuthenticationManager authenticationManager;
-
-    @Inject
-    @IOSecurityAuthz
-    private AuthorizationManager authorizationManager;
 
     @Inject
     @Named("luceneConfig")
@@ -115,9 +101,6 @@ public class ApplicationScopedProducer {
                                                   false );
         }
 
-        ioService.setAuthenticationManager( authenticationManager );
-        ioService.setAuthorizationManager( authorizationManager );
-
         this.ioSearchService = new IOSearchIndex( config.getSearchIndex(),
                                                   ioService );
     }
@@ -140,8 +123,6 @@ public class ApplicationScopedProducer {
         return ioSearchService;
     }
 
-
-
     @Produces
     @Singleton
     @PerRequest
@@ -152,7 +133,5 @@ public class ApplicationScopedProducer {
         environment.setUserGroupCallback( new JBossUserGroupCallbackImpl( properties ) );
         return environment;
     }
-
-
 
 }

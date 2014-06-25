@@ -18,14 +18,14 @@ package org.kie.config.cli.command.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.guvnor.structure.organizationalunit.OrganizationalUnit;
+import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
+import org.guvnor.structure.repositories.Repository;
+import org.guvnor.structure.repositories.RepositoryService;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
-import org.uberfire.backend.organizationalunit.OrganizationalUnit;
-import org.uberfire.backend.organizationalunit.OrganizationalUnitService;
-import org.uberfire.backend.repositories.Repository;
-import org.uberfire.backend.repositories.RepositoryService;
 
 public class CreateOrganizationalUnitCliCommand implements CliCommand {
 

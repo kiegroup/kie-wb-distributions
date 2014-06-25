@@ -17,12 +17,11 @@ package org.kie.config.cli.command.impl;
 
 import java.util.Collection;
 
+import org.guvnor.structure.organizationalunit.OrganizationalUnit;
+import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
+import org.guvnor.structure.repositories.Repository;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
-import org.kie.config.cli.command.CliCommand;
-import org.uberfire.backend.organizationalunit.OrganizationalUnit;
-import org.uberfire.backend.organizationalunit.OrganizationalUnitService;
-import org.uberfire.backend.repositories.Repository;
 
 public class ListOrganizationalUnitCliCommand extends AbstractCliCommand {
 

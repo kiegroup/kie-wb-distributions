@@ -6,6 +6,9 @@
   <inherits name="org.uberfire.UberfireClientAll"/>
   <inherits name="org.uberfire.UberfireNSWEManager"/>
 
+  <!-- Uberfire Extensions - Core Widgets -->
+  <inherits name="org.kie.uberfire.KIEUberfireWidgetsCore"/>
+
   <!-- jbpm-wb -->
   <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksClient"/>
   <inherits name="org.jbpm.console.ng.pr.JbpmConsoleNGProcessRuntimeClient"/>
@@ -26,6 +29,7 @@
   <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
 
   <!-- Guvnor dependencies -->
+  <inherits name="org.guvnor.structure.GuvnorStructureClient"/>
   <inherits name="org.guvnor.inbox.GuvnorInboxClient"/>
   <inherits name="org.guvnor.m2repo.GuvnorM2RepoEditorClient"/>
   <inherits name='org.guvnor.common.services.GuvnorServicesAPI'/>
