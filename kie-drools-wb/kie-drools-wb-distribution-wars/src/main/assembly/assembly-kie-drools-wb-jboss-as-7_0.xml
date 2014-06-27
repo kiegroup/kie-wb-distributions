@@ -109,6 +109,9 @@
           <exclude>WEB-INF/lib/gwt-dnd-*.jar</exclude>
           <exclude>WEB-INF/lib/gchart-*.jar</exclude>
 
+          <!-- jBPM console & other client related -->
+          <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
+
           <!-- General -->
           <exclude>WEB-INF/lib/*-sources.jar</exclude>
           <exclude>WEB-INF/lib/el-api-*.jar</exclude>
@@ -139,6 +142,7 @@
 
           <!-- Netty - bundled with AS -->
           <exclude>WEB-INF/lib/netty-3*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-ejb3-api-*.jar</exclude>
 
           <!-- exclude UF form-based login.jsp -->
           <exclude>login.jsp</exclude>

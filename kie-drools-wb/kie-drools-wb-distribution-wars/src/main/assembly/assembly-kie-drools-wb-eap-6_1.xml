@@ -111,6 +111,9 @@
           <exclude>WEB-INF/lib/gwt-dnd-*.jar</exclude>
           <exclude>WEB-INF/lib/gchart-*.jar</exclude>
 
+          <!-- jBPM console & other client related -->
+          <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
+
           <!-- General -->
           <exclude>WEB-INF/lib/*-sources.jar</exclude>
           <exclude>WEB-INF/lib/el-api-*.jar</exclude>
@@ -145,12 +148,9 @@
           <!-- EAP 6.1 alignement -->
           <exclude>WEB-INF/lib/activation-*.jar</exclude>
           <exclude>WEB-INF/lib/antlr-2*.jar</exclude>
-          <!-- <exclude>WEB-INF/lib/cdi-api*.jar</exclude> ALREADY EXCLUDED-->
           <exclude>WEB-INF/lib/commons-cli-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-collections-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-lang-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-databinding-jaxb-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-frontend-jaxws-*.jar</exclude>
           <exclude>WEB-INF/lib/dom4j-*.jar</exclude>
           <exclude>WEB-INF/lib/ecj-*.jar</exclude>
           <!-- this *.jar is not in the AS 7.1.1 -->
@@ -168,22 +168,15 @@
           <exclude>WEB-INF/lib/jackson-mapper-asl-*.jar</exclude>
           <exclude>WEB-INF/lib/jackson-xc-*.jar</exclude>
           <exclude>WEB-INF/lib/javassist-*.jar</exclude>
-          <!-- <exclude>WEB-INF/lib/javax.inject-1*.jar</exclude>  ALREADY EXCLUDED-->
           <exclude>WEB-INF/lib/jboss-ejb-api_*.jar</exclude>
           <exclude>WEB-INF/lib/jcl-over-slf4j-*.jar</exclude>
           <exclude>WEB-INF/lib/jdom-*.jar</exclude>
           <exclude>WEB-INF/lib/jettison-*.jar</exclude>
           <exclude>WEB-INF/lib/joda-time-*.jar</exclude>
           <exclude>WEB-INF/lib/jsf-api-*.jar</exclude>
-          <!-- <exclude>WEB-INF/lib/mail-*.jar</exclude>  ALREADY EXCLUDED-->
-          <!-- <exclude>WEB-INF/lib/resteasy-jaxb-provider*.jar</exclude> -->
-          <!-- <exclude>WEB-INF/lib/resteasy-jaxrs-*.jar</exclude> -->
-          <!-- <exclude>WEB-INF/lib/resteasy-multipart-provider-*.jar</exclude>  ALREADY EXCLUDED-->
           <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
           <exclude>WEB-INF/lib/slf4j-ext-*.jar</exclude>
           <exclude>WEB-INF/lib/velocity-*.jar</exclude>
-          <!-- <exclude>WEB-INF/lib/weld-core-*.jar</exclude> ALREADY EXCLUDED -->
-          <!--<exclude>WEB-INF/lib/weld-spi-*.jar</exclude>  ALREADY EXCLUDED -->
           <exclude>WEB-INF/lib/woodstox-core-asl-*.jar</exclude>
           <exclude>WEB-INF/lib/wsdl4j-*.jar</exclude>
           <exclude>WEB-INF/lib/xalan-*.jar</exclude>
@@ -192,14 +185,6 @@
           <!-- transitive dependencies -->
           <exclude>WEB-INF/lib/apache-mime4j-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-configuration-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-api-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-bindings-soap-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-bindings-xml-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-core-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-frontend-simple-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-transports-http-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-ws-addr-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-ws-policy-*.jar</exclude>
           <exclude>WEB-INF/lib/hornetq-commons-*.jar</exclude>
           <exclude>WEB-INF/lib/hornetq-journal-*.jar</exclude>
           <exclude>WEB-INF/lib/httpclient-*.jar</exclude>
@@ -212,7 +197,7 @@
           <exclude>WEB-INF/lib/jboss-remote-naming-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-remoting-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-sasl*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-transaction-api_1.1_spec-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-transaction-api*.jar</exclude>
           <exclude>WEB-INF/lib/jgroups-*.jar</exclude>
           <exclude>WEB-INF/lib/neethi-*.jar</exclude>
           <exclude>WEB-INF/lib/serializer*.jar</exclude>
@@ -220,6 +205,7 @@
           <exclude>WEB-INF/lib/xml-resolver*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-ejb3-api-*.jar</exclude>
 
           <!-- exclude UF form-based login.jsp -->
           <exclude>login.jsp</exclude>
