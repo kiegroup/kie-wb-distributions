@@ -216,10 +216,10 @@
           <artifactId>jbpm-shared-services</artifactId>
           <groupId>org.jbpm</groupId>
         </exclusion>
-        <exclusion>
-          <artifactId>jbpm-runtime-manager</artifactId>
-          <groupId>org.jbpm</groupId>
-        </exclusion>
+        <!--<exclusion>-->
+          <!--<artifactId>jbpm-runtime-manager</artifactId>-->
+          <!--<groupId>org.jbpm</groupId>-->
+        <!--</exclusion>-->
         <exclusion>
           <artifactId>jbpm-human-task-workitems</artifactId>
           <groupId>org.jbpm</groupId>
