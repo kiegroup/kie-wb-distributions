@@ -110,6 +110,20 @@
     <!-- guvnor dependencies -->
     <dependency>
       <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-structure-api</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jboss.errai</groupId>
+          <artifactId>errai-bus</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-structure-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-project-api</artifactId>
       <exclusions>
         <exclusion>
