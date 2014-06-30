@@ -1,4 +1,2 @@
 org.drools.compiler.cdi.KieCDIExtensio
 org.kie.internal.runtime.cdi.BootOnLoadExtension
-org.uberfire.commons.services.cdi.StartupBeanExtension
-org.uberfire.security.server.cdi.SecurityExtension
