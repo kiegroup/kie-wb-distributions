@@ -16,8 +16,9 @@
     <packaging>pom</packaging>
 
         <properties>
-            </properties>
-    
+          <module.name>EAP-6.3</module.name>
+        </properties>
+
 
     
         <modules>
@@ -225,7 +226,7 @@
                     <module>org-jboss-jboss-transaction-spi-main</module>
                     <module>org-jboss-jts-integration-main</module>
                     <module>org-jboss-jts-main</module>
-                    <module>org-jboss-log4j-logmanager-main</module>
+                    <!-- <module>org-jboss-log4j-logmanager-main</module> -->
                     <module>org-jboss-logging-jul-to-slf4j-stub-main</module>
                     <module>org-jboss-logging-main</module>
                     <module>org-jboss-logmanager-main</module>
@@ -310,7 +311,7 @@
                     <module>org-scannotation-scannotation-main</module>
                     <module>org-slf4j-ext-main</module>
                     <module>org-slf4j-impl-main</module>
-                    <module>org-slf4j-jcl-over-slf4j-main</module>
+                    <!-- <module>org-slf4j-jcl-over-slf4j-main</module>-->
                     <module>org-slf4j-main</module>
                     <module>org-wildfly-extension-picketlink-main</module>
                     <module>org-yaml-snakeyaml-main</module>

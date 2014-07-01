@@ -329,7 +329,7 @@
           <!-- The maven module that contains all base EAP/AS modules for a given version.-->
           <baseModule>
               <groupId>org.kie.modules</groupId>
-              <artifactId>jboss-eap-6.1.1</artifactId>
+              <artifactId>jboss-eap-6.3</artifactId>
               <version>${project.version}</version>
               <type>pom</type>
               <exclusions>
