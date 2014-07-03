@@ -13,6 +13,8 @@ import org.kie.uberfire.metadata.io.IOSearchIndex;
 import org.kie.uberfire.metadata.io.IOServiceIndexedImpl;
 import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.commons.cluster.ClusterServiceFactory;
+import org.uberfire.commons.services.cdi.Startup;
+import org.uberfire.commons.services.cdi.StartupType;
 import org.uberfire.io.IOSearchService;
 import org.uberfire.io.IOService;
 import org.uberfire.io.attribute.DublinCoreView;
@@ -25,6 +27,7 @@ import org.uberfire.security.server.cdi.SecurityFactory;
  * This class should contain all ApplicationScoped producers
  * required by the application.
  */
+@Startup(StartupType.BOOTSTRAP)
 @ApplicationScoped
 public class ApplicationScopedProducer {
 
@@ -54,7 +57,6 @@ public class ApplicationScopedProducer {
 
         final IOService service = new IOServiceIndexedImpl( watchService,
                                                             config.getIndexEngine(),
-                                                            config.getIndexers(),
                                                             DublinCoreView.class,
                                                             VersionAttributeView.class,
                                                             OtherMetaView.class );
