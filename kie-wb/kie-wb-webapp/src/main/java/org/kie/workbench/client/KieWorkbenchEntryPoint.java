@@ -48,7 +48,6 @@ import org.kie.workbench.common.services.security.KieWorkbenchACL;
 import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
 import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
-import org.uberfire.client.UberFirePreferences;
 import org.uberfire.client.menu.CustomSplashHelp;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
@@ -121,7 +120,6 @@ public class KieWorkbenchEntryPoint {
     }
 
     private void loadPreferences() {
-        UberFirePreferences.setProperty( "org.uberfire.client.workbench.widgets.listbar.context.disable", true );
         appConfigService.call( new RemoteCallback<Map<String, String>>() {
             @Override
             public void callback( final Map<String, String> response ) {
