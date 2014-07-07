@@ -24,8 +24,8 @@
 
   <alternatives>
     <!-- uncomment DefaultUserGroupInfoProducer when using UberFire security -->
-    <!--class>org.jbpm.kie.services.cdi.producer.DefaultUserGroupInfoProducer</class-->
-    <class>org.jbpm.kie.services.cdi.producer.JAASUserGroupInfoProducer</class>
+    <!--class>org.jbpm.services.cdi.producer.DefaultUserGroupInfoProducer</class-->
+    <class>org.jbpm.services.cdi.producer.JAASUserGroupInfoProducer</class>
   </alternatives>
 
 </beans>

@@ -20,6 +20,6 @@
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://docs.jboss.org/cdi/beans_1_0.xsd">
 
   <alternatives>
-    <class>org.jbpm.kie.services.cdi.producer.DefaultUserGroupInfoProducer</class>
+    <class>org.jbpm.services.cdi.producer.DefaultUserGroupInfoProducer</class>
   </alternatives>
 </beans>
