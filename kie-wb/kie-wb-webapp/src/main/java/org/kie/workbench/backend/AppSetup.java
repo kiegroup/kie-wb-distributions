@@ -20,6 +20,7 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
@@ -35,11 +36,15 @@ import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
+import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
+import org.kie.workbench.common.services.security.impl.KieWorkbenchACLImpl;
+import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.uberfire.commons.services.cdi.ApplicationStarted;
 import org.uberfire.commons.services.cdi.Startup;
 import org.uberfire.commons.services.cdi.StartupType;
+import org.uberfire.security.server.RolesRegistry;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
 //is not deployed to the Application Servers /bin folder. This will be remedied when an
@@ -84,6 +89,9 @@ public class AppSetup {
 
     @Inject
     private Event<ApplicationStarted> applicationStartedEvent;
+
+    @Inject
+    private KieWorkbenchSecurityService securityService;
 
     @PostConstruct
     public void assertPlayground() {
@@ -141,6 +149,15 @@ public class AppSetup {
         }
         if ( !workItemsEditorSettingsDefined ) {
             configurationService.addConfiguration( getWorkItemElementDefinitions() );
+        }
+
+        final KieWorkbenchPolicy policy = new KieWorkbenchPolicy( securityService.loadPolicy() );
+        // register roles
+        for ( final Map.Entry<String, String> entry : policy.entrySet() ) {
+            if ( entry.getKey().startsWith( KieWorkbenchACLImpl.PREFIX_ROLES ) ) {
+                String role = entry.getValue();
+                RolesRegistry.get().registerRole( role );
+            }
         }
 
         // rest of jbpm wb bootstrap

@@ -27,6 +27,10 @@
       <param-value>org.uberfire.security.server.auth.JACCAuthenticationScheme</param-value>
     </init-param>
     <init-param>
+      <param-name>org.uberfire.roles.mode</param-name>
+      <param-value>ROLE</param-value>
+    </init-param>
+    <init-param>
       <param-name>org.uberfire.auth.rememberme</param-name>
       <param-value>disabled</param-value>
     </init-param>
