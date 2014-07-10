@@ -160,10 +160,14 @@
       <artifactId>kie-services-remote</artifactId>
     </dependency>
 
-    <!-- guvnor rest api -->
+    <!-- Guvnor REST -->
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-rest-backend</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-wb-rest</artifactId>
+      <artifactId>drools-wb-rest-defaultapprover</artifactId>
     </dependency>
 
     <!-- Miscellaneous jBPM dependencies -->
