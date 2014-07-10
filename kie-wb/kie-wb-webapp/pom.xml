@@ -157,7 +157,7 @@
     <!-- kie remote -->
     <dependency>
       <groupId>org.kie.remote</groupId>
-      <artifactId>kie-services-remote</artifactId>
+      <artifactId>kie-remote-services</artifactId>
     </dependency>
 
     <!-- Guvnor REST -->
