@@ -153,8 +153,13 @@
       <artifactId>jbpm-console-ng-dashboard-client</artifactId>
     </dependency>
 
+    <!-- REST -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+    </dependency>
 
-    <!-- kie remote -->
+    <!-- KIE REST -->
     <dependency>
       <groupId>org.kie.remote</groupId>
       <artifactId>kie-remote-services</artifactId>
