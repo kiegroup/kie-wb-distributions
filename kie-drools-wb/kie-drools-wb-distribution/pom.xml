@@ -43,13 +43,13 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-drools-wb-distribution-wars</artifactId>
-      <classifier>jboss-as7.0</classifier>
+      <classifier>jboss-as7</classifier>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-drools-wb-distribution-wars</artifactId>
-      <classifier>tomcat7.0</classifier>
+      <classifier>tomcat7</classifier>
       <type>war</type>
     </dependency>
 
