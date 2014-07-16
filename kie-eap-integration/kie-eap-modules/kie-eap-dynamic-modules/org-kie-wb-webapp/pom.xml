@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <module.name>org.kie.webapp</module.name>
+    <module.name>kie-wb</module.name>
     <module.type>dynamic</module.type>
   </properties>
 

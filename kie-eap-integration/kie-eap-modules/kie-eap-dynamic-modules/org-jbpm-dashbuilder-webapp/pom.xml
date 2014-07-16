@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <module.name>org.jbpm.dashbuilder</module.name>
+    <module.name>jbpm-dashbuilder</module.name>
     <module.type>dynamic</module.type>
   
     <!-- jBPM Dashbuilder does not depend on all bpms-layer modules, it only depends on some of them.. --> 

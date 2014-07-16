@@ -11,14 +11,13 @@
 
   <artifactId>kie-eap-distributions-brms-webapp</artifactId>
   <name>KIE EAP - BRMS Webapp</name>
+  <packaging>pom</packaging>
 
   <properties>
     <!-- The distribution name. -->
     <modules.distribution.name>brms-webapp</modules.distribution.name>
     <!-- The output path where descriptors and assemblies will be placed. -->
     <modules.tmp.path>${project.build.directory}/generated</modules.tmp.path>
-    <!-- The final name for the assembled webapp. -->
-    <modules.kie-drools-wb.finalName>kie-drools-wb-distribution-wars-${project.version}-${modules.distribution.name}</modules.kie-drools-wb.finalName>
   </properties>
 
   <!-- The BRMS distributions dependencies. -->
@@ -77,7 +76,6 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>${modules.kie-drools-wb.finalName}</finalName>
               <descriptors>
                 <!-- Assembly the kie-drools-wb WAR. -->
                 <descriptor>${modules.tmp.path}/dynamic-modules/${modules.distribution.name}/org-kie-drools-wb-webapp-assembly.xml</descriptor>
@@ -85,7 +83,7 @@
               <archive>
                 <addMavenDescriptor>false</addMavenDescriptor>
               </archive>
-              <appendAssemblyId>false</appendAssemblyId>
+              <appendAssemblyId>true</appendAssemblyId>
             </configuration>
           </execution>
 

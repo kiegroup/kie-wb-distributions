@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <module.name>org.kie.drools.webapp</module.name>
+    <module.name>kie-drools-wb</module.name>
     <module.type>dynamic</module.type>
   </properties>
 

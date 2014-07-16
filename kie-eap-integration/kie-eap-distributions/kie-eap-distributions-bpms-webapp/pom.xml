@@ -11,18 +11,16 @@
 
   <artifactId>kie-eap-distributions-bpms-webapp</artifactId>
   <name>KIE EAP - BPMS Webapp</name>
+  <packaging>pom</packaging>
 
   <properties>
     <!-- The distribution name. -->
     <modules.distribution.name>bpms-webapp</modules.distribution.name>
     <!-- The output path where descriptors and assemblies will be placed. -->
     <modules.tmp.path>${project.build.directory}/generated</modules.tmp.path>
-    <!-- The final names for the assembled webapps. -->
-    <modules.kie-wb.finalName>kie-wb-distribution-wars-${project.version}-${modules.distribution.name}</modules.kie-wb.finalName>
-    <modules.jbpm-dasbuilder.finalName>jbpm-dashboard-distributions-${project.version}-${modules.distribution.name}</modules.jbpm-dasbuilder.finalName>
-    <!-- This property is required to set a module dependency from jBPM dashbuilder to kiwb-webap. 
-        Note that the property module.add-jboss-all is set into the pom.xml for module org-jbpm-dashbuilder-webapp. -->
-    <jboss-all-org.jbpm.dashbuilder>${modules.kie-wb.finalName}.war</jboss-all-org.jbpm.dashbuilder>
+    <!--Note that the property module.add-jboss-all is set into the pom.xml for module org-jbpm-dashbuilder-webapp. -->
+    <!-- <jboss-all-org.jbpm.dashbuilder>${modules.kie-wb.finalName}.war</jboss-all-org.jbpm.dashbuilder> -->
+    <jboss-all-jbpm-dashbuilder>${project.artifactId}-${project.version}-kie-wb.war</jboss-all-jbpm-dashbuilder>
   </properties>
 
   <!-- The BPMS distributions dependencies. -->
@@ -90,35 +88,15 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>${modules.kie-wb.finalName}</finalName>
               <descriptors>
                 <!-- Assembly the kie-wb WAR. -->
                 <descriptor>${modules.tmp.path}/dynamic-modules/${modules.distribution.name}/org-kie-wb-webapp-assembly.xml</descriptor>
-              </descriptors>
-              <archive>
-                <addMavenDescriptor>false</addMavenDescriptor>
-              </archive>
-              <appendAssemblyId>false</appendAssemblyId>
-            </configuration>
-          </execution>
-
-          <!-- Assembly the dashbuilder WAR distribution. -->
-          <execution>
-            <id>assembly-dashbuilder</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <finalName>${modules.jbpm-dasbuilder.finalName}</finalName>
-              <descriptors>
-                <!-- Assembly the dashbuilder WAR. -->
                 <descriptor>${modules.tmp.path}/dynamic-modules/${modules.distribution.name}/org-jbpm-dashbuilder-webapp-assembly.xml</descriptor>
               </descriptors>
               <archive>
                 <addMavenDescriptor>false</addMavenDescriptor>
               </archive>
-              <appendAssemblyId>false</appendAssemblyId>
+              <appendAssemblyId>true</appendAssemblyId>
             </configuration>
           </execution>
 
