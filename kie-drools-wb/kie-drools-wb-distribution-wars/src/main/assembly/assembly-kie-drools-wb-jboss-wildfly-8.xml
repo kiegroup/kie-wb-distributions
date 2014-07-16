@@ -139,8 +139,8 @@
           <exclude>WEB-INF/lib/jboss-interceptors-api_1-*.jar</exclude>
           <exclude>WEB-INF/lib/resteasy*.jar</exclude>
 
-          <!-- Netty - bundled with EAP -->
-          <exclude>WEB-INF/lib/netty-3*.jar</exclude>
+          <!-- We need org.jboss.netty not io.netty bundled with Wildfly -->
+          <!--<exclude>WEB-INF/lib/netty-3*.jar</exclude>-->
 
           <!-- EAP 6.1 alignement -->
           <exclude>WEB-INF/lib/activation-*.jar</exclude>
@@ -152,7 +152,8 @@
           <exclude>WEB-INF/lib/cxf-rt-databinding-jaxb-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-frontend-jaxws-*.jar</exclude>
           <exclude>WEB-INF/lib/dom4j-*.jar</exclude>
-          <exclude>WEB-INF/lib/guava-*.jar</exclude>
+          <!-- Include com.google.guava:guava:13.0.1 as Wildfly bundles com.google.guava:guava:16.0.1 and is incompatible -->
+          <!--<exclude>WEB-INF/lib/guava-*.jar</exclude>-->
           <exclude>WEB-INF/lib/h2-*.jar</exclude>
           <exclude>WEB-INF/lib/hibernate-commons-annotations-*.jar</exclude>
           <exclude>WEB-INF/lib/hibernate-core-*.jar</exclude>
