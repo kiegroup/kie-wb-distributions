@@ -32,7 +32,6 @@ import javax.inject.Named;
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.guvnor.common.services.project.model.GAV;
 import org.guvnor.common.services.project.model.POM;
-import org.guvnor.common.services.project.service.ProjectService;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.Repository;
@@ -43,6 +42,7 @@ import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
 import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
 import org.kie.workbench.common.services.security.impl.KieWorkbenchACLImpl;
+import org.kie.workbench.common.services.shared.project.KieProjectService;
 import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +91,7 @@ public class AppSetup {
     private ConfigurationFactory configurationFactory;
 
     @Inject
-    private ProjectService projectService;
+    private KieProjectService projectService;
 
     @Inject
     private Event<ApplicationStarted> applicationStartedEvent;

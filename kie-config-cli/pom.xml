@@ -200,6 +200,20 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.services</groupId>
+      <artifactId>kie-wb-common-services-backend</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.guvnor</groupId>
+          <artifactId>guvnor-project-builder</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.workbench.services</groupId>
+          <artifactId>kie-wb-common-refactoring-backend</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
     <!-- weld deps -->
     <dependency>

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.guvnor.common.services.project.model.Project;
-import org.guvnor.common.services.project.service.ProjectService;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.Repository;
@@ -16,6 +15,7 @@ import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
 import org.kie.workbench.common.screens.explorer.model.ProjectExplorerContent;
 import org.kie.workbench.common.screens.explorer.service.ExplorerService;
+import org.kie.workbench.common.services.shared.project.KieProjectService;
 
 public class AddRoleToProjectCliCommand implements CliCommand {
 
@@ -32,7 +32,7 @@ public class AddRoleToProjectCliCommand implements CliCommand {
         OrganizationalUnitService organizationalUnitService = container.instance().select( OrganizationalUnitService.class ).get();
         RepositoryService repositoryService = container.instance().select( RepositoryService.class ).get();
         ExplorerService projectExplorerService = container.instance().select( ExplorerService.class ).get();
-        ProjectService projectService = container.instance().select( ProjectService.class ).get();
+        KieProjectService projectService = container.instance().select( KieProjectService.class ).get();
 
         InputReader input = context.getInput();
         System.out.print( ">>Repository alias:" );
