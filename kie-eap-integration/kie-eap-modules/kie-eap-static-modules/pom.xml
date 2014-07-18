@@ -18,7 +18,7 @@
     <module>org-drools</module>
     <module>org-jbpm</module>
     <module>org-jbpm-minimal</module>
-    <module>org-sonatype-aether</module>
+    <module>org-eclipse-aether</module>
     <module>org-apache-ant</module>
     <module>org-codehouse-plexus</module>
     <module>org-apache-commons-math</module>
@@ -32,6 +32,7 @@
     <module>org-apache-commons-net</module>
     <module>org-apache-poi</module>
     <module>com-google-protobuf</module>
+    <module>org-eclipse-sisu</module>
     <module>org-sonatype-sisu</module>
     <module>org-tukaani</module>
     <module>org-jboss-solder</module>

@@ -43,7 +43,7 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-sonatype-aether</artifactId>
+      <artifactId>org-eclipse-aether</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -114,6 +114,13 @@
     <dependency>
       <groupId>org.kie.modules</groupId>
       <artifactId>com-google-protobuf</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-eclipse-sisu</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
