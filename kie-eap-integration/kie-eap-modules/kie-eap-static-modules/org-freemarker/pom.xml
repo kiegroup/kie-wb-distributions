@@ -17,6 +17,8 @@
     <module.type>static</module.type>
     <module.location>org/freemarker</module.location>
     <module.slot>main</module.slot>
+    <!-- Added log4j due to runtime dependency -->
+    <module.dependencies>org.apache.log4j:main</module.dependencies>
   </properties>
 
   <dependencies>
