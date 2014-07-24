@@ -17,7 +17,6 @@ package org.kie.workbench.client.perspectives;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
@@ -48,7 +47,7 @@ import org.uberfire.workbench.model.menu.Menus;
 /**
  * A Perspective to show M2_REPO related screen
  */
-@Dependent
+@ApplicationScoped
 @WorkbenchPerspective(identifier = "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective", isDefault = false)
 public class M2RepoPerspective {
 

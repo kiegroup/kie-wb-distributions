@@ -16,7 +16,6 @@
 package org.kie.workbench.drools.client;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -37,7 +36,11 @@ import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
-import org.kie.workbench.common.services.security.AppRoles;
+import org.kie.workbench.common.services.security.KieWorkbenchACL;
+import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
+import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
+import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
+import org.kie.workbench.drools.client.home.HomeProducer;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.UberFirePreferences;
 import org.uberfire.client.menu.CustomSplashHelp;
@@ -54,13 +57,13 @@ import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.*;
+
 /**
  * GWT's Entry-point for kie-drools-wb
  */
 @EntryPoint
 public class KieDroolsWorkbenchEntryPoint {
-
-    private static String[] PERMISSIONS_ADMIN = new String[]{ AppRoles.ADMIN.getName() };
 
     private AppConstants constants = AppConstants.INSTANCE;
 
@@ -82,11 +85,28 @@ public class KieDroolsWorkbenchEntryPoint {
     @Inject
     private Identity identity;
 
+    @Inject
+    private KieWorkbenchACL kieACL;
+
+    @Inject
+    private HomeProducer homeProducer;
+
+    @Inject
+    private Caller<KieWorkbenchSecurityService> kieSecurityService;
+
     @AfterInitialization
     public void startApp() {
-        loadPreferences();
-        setupMenu();
-        hideLoadingPopup();
+        kieSecurityService.call( new RemoteCallback<String>() {
+            public void callback( final String str ) {
+                KieWorkbenchPolicy policy = new KieWorkbenchPolicy( str );
+                kieACL.activatePolicy( policy );
+                loadPreferences();
+                loadStyles();
+                setupMenu();
+                hideLoadingPopup();
+                homeProducer.init();
+            }
+        } ).loadPolicy();
     }
 
     private void loadPreferences() {
@@ -97,6 +117,12 @@ public class KieDroolsWorkbenchEntryPoint {
                 ApplicationPreferences.setUp( response );
             }
         } ).loadPreferences();
+    }
+
+    private void loadStyles() {
+        //Ensure CSS has been loaded
+        //ShowcaseResources.INSTANCE.showcaseCss().ensureInjected();
+        RoundedCornersResource.INSTANCE.roundCornersCss().ensureInjected();
     }
 
     private void setupMenu() {
@@ -115,15 +141,9 @@ public class KieDroolsWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( constants.authoring() )
-                .withItems( getAuthoringMenuItems() )
-                .endMenu()
-                .newTopLevelMenu( constants.deployment() )
-                .withItems( getDeploymentMenuItems() )
-                .endMenu()
-                .newTopLevelMenu( constants.find() )
-                .position( MenuPosition.RIGHT )
-                .respondsWith( new Command() {
+                .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
+                .newTopLevelMenu( constants.deployment() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
+                .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                     @Override
                     public void execute() {
                         placeManager.goTo( "FindForm" );
@@ -158,17 +178,17 @@ public class KieDroolsWorkbenchEntryPoint {
         return result;
     }
 
-    private List<MenuItem> getAuthoringMenuItems() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+    private List<MenuItem> getAuthoringViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
 
-        result.add( MenuFactory.newSimpleItem( constants.project_authoring() ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.project_authoring() ).withRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.DroolsAuthoringPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.administration() ).withRoles( Arrays.asList( PERMISSIONS_ADMIN ) ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.administration() ).withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" ) );
@@ -178,10 +198,10 @@ public class KieDroolsWorkbenchEntryPoint {
         return result;
     }
 
-    private List<MenuItem> getDeploymentMenuItems() {
+    private List<MenuItem> getDeploymentViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );

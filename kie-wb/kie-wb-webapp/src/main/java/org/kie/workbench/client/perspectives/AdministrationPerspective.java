@@ -24,7 +24,6 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.client.resources.i18n.AppConstants;
-import org.kie.workbench.common.services.security.AppRoles;
 import org.kie.workbench.common.services.security.KieWorkbenchACL;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.uberfire.client.annotations.Perspective;
@@ -36,7 +35,6 @@ import org.uberfire.client.editors.repository.create.CreateRepositoryForm;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
-import org.uberfire.security.annotations.Roles;
 import org.uberfire.workbench.model.PanelDefinition;
 import org.uberfire.workbench.model.PanelType;
 import org.uberfire.workbench.model.PerspectiveDefinition;
@@ -50,18 +48,15 @@ import org.uberfire.workbench.model.toolbar.ToolBar;
 import org.uberfire.workbench.model.toolbar.impl.DefaultToolBar;
 import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 
-import static org.uberfire.workbench.model.toolbar.IconType.*;
 import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
+import static org.uberfire.workbench.model.toolbar.IconType.*;
 
 /**
  * A Perspective for Administrators
  */
-@Roles({ "admin" })
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "org.kie.workbench.client.perspectives.AdministrationPerspective")
 public class AdministrationPerspective {
-
-    private static String[] PERMISSIONS_ADMIN = new String[]{ AppRoles.ADMIN.getName() };
 
     private AppConstants constants = AppConstants.INSTANCE;
 
@@ -161,7 +156,7 @@ public class AdministrationPerspective {
     private void buildMenuBar() {
         this.menus = MenuFactory
                 .newTopLevelMenu( AppConstants.INSTANCE.MenuOrganizationalUnits() )
-                .withRoles( kieACL.getGrantedRoles(G_AUTHORING) )
+                .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
                 .menus()
                 .menu( AppConstants.INSTANCE.MenuManageOrganizationalUnits() )
                 .respondsWith( new Command() {
@@ -174,7 +169,7 @@ public class AdministrationPerspective {
                 .endMenus()
                 .endMenu()
                 .newTopLevelMenu( constants.repositories() )
-                .withRoles( kieACL.getGrantedRoles(G_AUTHORING) )
+                .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
                 .menus()
                 .menu( AppConstants.INSTANCE.listRepositories() )
                 .respondsWith( new Command() {
@@ -202,8 +197,8 @@ public class AdministrationPerspective {
         final DefaultToolBarItem i2 = new DefaultToolBarItem( DOWNLOAD_ALT,
                                                               constants.cloneRepository(),
                                                               cloneRepoCommand );
-        i1.setRoles( PERMISSIONS_ADMIN );
-        i2.setRoles( PERMISSIONS_ADMIN );
+        i1.setRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ).toArray( new String[ 0 ] ) );
+        i2.setRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ).toArray( new String[ 0 ] ) );
         toolBar.addItem( i1 );
         toolBar.addItem( i2 );
     }
