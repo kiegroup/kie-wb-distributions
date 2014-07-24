@@ -126,5 +126,11 @@
       <type>jar</type>
     </dependency>
 
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-services-api</artifactId>
+      <type>jar</type>
+    </dependency>
+
   </dependencies>
 </project>
