@@ -37,7 +37,6 @@ import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.lifecycle.OnStartup;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
-import org.uberfire.security.annotations.Roles;
 import org.uberfire.workbench.model.PanelType;
 import org.uberfire.workbench.model.PerspectiveDefinition;
 import org.uberfire.workbench.model.impl.PartDefinitionImpl;
@@ -48,7 +47,6 @@ import org.uberfire.workbench.model.menu.Menus;
 /**
  * A Perspective to show M2_REPO related screen
  */
-@Roles({ "admin" })
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective", isDefault = false)
 public class M2RepoPerspective {
