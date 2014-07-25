@@ -571,6 +571,12 @@
       <artifactId>drools-wb-rest-defaultapprover</artifactId>
     </dependency>
 
+    <!-- REST -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+    </dependency>
+    
     <!-- formModeler dependencies -->
     <dependency>
       <groupId>org.jbpm</groupId>
