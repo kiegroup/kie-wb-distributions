@@ -17,6 +17,7 @@ package org.kie.config.cli;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
@@ -28,7 +29,6 @@ import org.uberfire.security.Resource;
 import org.uberfire.security.Role;
 import org.uberfire.security.Subject;
 import org.uberfire.security.authz.AuthorizationException;
-import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.security.authz.RuntimeResource;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
@@ -72,8 +72,9 @@ public class EnvironmentProvider {
     }
 
     @Produces
+    @Alternative
     public SessionInfo getSessionInfo() {
         CliIdentity identity = new CliIdentity();
-        return new SessionInfoImpl(identity.getName(), identity);
+        return new SessionInfoImpl( identity.getName(), identity );
     }
 }

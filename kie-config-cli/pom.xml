@@ -164,11 +164,11 @@
           <groupId>org.uberfire</groupId>
           <artifactId>uberfire-backend-server</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>org.apache.maven</groupId>
-          <artifactId>maven-model</artifactId>
-        </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-m2repo-editor-backend</artifactId>
     </dependency>
 
     <!-- kie-wb-common dependencies -->
@@ -244,10 +244,6 @@
           <artifactId>jbpm-shared-services</artifactId>
           <groupId>org.jbpm</groupId>
         </exclusion>
-        <!--<exclusion>-->
-          <!--<artifactId>jbpm-runtime-manager</artifactId>-->
-          <!--<groupId>org.jbpm</groupId>-->
-        <!--</exclusion>-->
         <exclusion>
           <artifactId>jbpm-human-task-workitems</artifactId>
           <groupId>org.jbpm</groupId>
