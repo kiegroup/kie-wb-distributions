@@ -181,6 +181,10 @@ function jBPMFormsAPI() {
     }
 
     this.showTaskForm = function (hostUrl, taskId, responseDiv, successCallback, errorCallback) {
+        if (!hostUrl || !taskId || !responseDiv) return;
+
+        if (hostUrl.charAt(hostUrl.length -1) != "/") hostUrl += "/";
+
         var config = {
             containerId: responseDiv,
             host: hostUrl,
