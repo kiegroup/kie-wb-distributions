@@ -150,11 +150,11 @@
           <groupId>org.uberfire</groupId>
           <artifactId>uberfire-backend-server</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>org.apache.maven</groupId>
-          <artifactId>maven-model</artifactId>
-        </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-m2repo-editor-backend</artifactId>
     </dependency>
 
     <!-- kie-wb-common dependencies -->
@@ -183,6 +183,20 @@
         <exclusion>
           <groupId>org.jboss.errai</groupId>
           <artifactId>errai-bus</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.services</groupId>
+      <artifactId>kie-wb-common-services-backend</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.guvnor</groupId>
+          <artifactId>guvnor-project-builder</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.workbench.services</groupId>
+          <artifactId>kie-wb-common-refactoring-backend</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -216,10 +230,6 @@
           <artifactId>jbpm-shared-services</artifactId>
           <groupId>org.jbpm</groupId>
         </exclusion>
-        <!--<exclusion>-->
-          <!--<artifactId>jbpm-runtime-manager</artifactId>-->
-          <!--<groupId>org.jbpm</groupId>-->
-        <!--</exclusion>-->
         <exclusion>
           <artifactId>jbpm-human-task-workitems</artifactId>
           <groupId>org.jbpm</groupId>
