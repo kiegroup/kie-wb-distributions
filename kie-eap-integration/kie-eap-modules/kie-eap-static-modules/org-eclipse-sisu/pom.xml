@@ -33,6 +33,8 @@
     <module.type>static</module.type>
     <module.location>org/eclipse/sisu</module.location>
     <module.slot>main</module.slot>
+    <!-- Export the javax.inject.api -->
+    <module.dependencies>javax.inject.api:main:true</module.dependencies>
   </properties>
 
   <dependencies>
