@@ -33,6 +33,8 @@
     <module.type>static</module.type>
     <module.location>org/eclipse/aether</module.location>
     <module.slot>main</module.slot>
+    <!-- import the javax.inject.api -->
+    <module.dependencies>javax.inject.api:main</module.dependencies>
   </properties>
 
   <dependencies>
