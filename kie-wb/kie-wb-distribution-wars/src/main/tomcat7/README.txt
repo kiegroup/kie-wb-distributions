@@ -39,7 +39,7 @@ Installation notes
 
     NOTE: jdbc/jbpm is the JNDI name used by tomcat distribution of the application
 
-3. Define btm.root system propery and location where bitronix config file is placed
+3. Define btm.root system property and location where bitronix config file is placed
 
     create setenv.sh (or setenv.bat) file inside TOMCAT_HOME/bin and add following:
 
