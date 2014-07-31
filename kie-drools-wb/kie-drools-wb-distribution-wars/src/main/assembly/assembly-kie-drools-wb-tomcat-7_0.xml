@@ -113,9 +113,11 @@
           <!-- mail.jar is needed by tomcat-->
           <exclude>WEB-INF/lib/geronimo-spec-jta-*.jar</exclude>
           <exclude>WEB-INF/lib/servlet-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/javax.servlet-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-servlet-api_*.jar</exclude>
           <exclude>WEB-INF/lib/jsp-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-jsp-api_*.jar</exclude>
+          <exclude>WEB-INF/lib/javax.security.jacc-api-*.jar</exclude>
 
           <!-- exclude UF form-based login.jsp -->
           <exclude>login.jsp</exclude>
