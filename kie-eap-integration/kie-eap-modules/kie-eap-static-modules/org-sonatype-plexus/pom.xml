@@ -16,7 +16,7 @@
     <module.name>org.sonatype.plexus</module.name>
     <module.type>static</module.type>
     <module.location>org/sonatype/plexus</module.location>
-    <module.dependencies>javax.api:main</module.dependencies>
+    <module.dependencies>javax.api:main,org.eclipse.sisu:main</module.dependencies>
     <module.slot>main</module.slot>
   </properties>
 

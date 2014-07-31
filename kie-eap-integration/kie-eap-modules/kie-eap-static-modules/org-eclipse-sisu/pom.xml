@@ -34,7 +34,7 @@
     <module.location>org/eclipse/sisu</module.location>
     <module.slot>main</module.slot>
     <!-- Export the javax.inject.api -->
-    <module.dependencies>javax.inject.api:main:true,java.api:main</module.dependencies>
+    <module.dependencies>javax.inject.api:main:true,java.api:main,org.sonatype.sisu:main</module.dependencies>
   </properties>
 
   <dependencies>
