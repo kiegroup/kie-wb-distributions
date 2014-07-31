@@ -56,6 +56,7 @@
           <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
           <exclude>WEB-INF/classes/users.properties</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/wildfly/</exclude>
+          <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/weblogic/</exclude>
 
           <!-- UF client related -->
           <exclude>WEB-INF/lib/uberfire-js-*.jar</exclude>

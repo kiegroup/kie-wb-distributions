@@ -1,0 +1,2 @@
+org.kie.workbench.drools.backend.server.weblogic.SwapClassloaderExtension
+org.kie.internal.runtime.cdi.BootOnLoadExtension

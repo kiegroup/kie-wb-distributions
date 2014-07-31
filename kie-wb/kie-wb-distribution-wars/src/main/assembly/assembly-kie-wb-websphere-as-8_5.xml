@@ -33,7 +33,7 @@
       <outputDirectory>.</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${project.build.directory}/lib</directory>
+      <directory>${project.build.directory}/lib/was</directory>
       <outputDirectory>WEB-INF/lib</outputDirectory>
     </fileSet>
   </fileSets>
@@ -70,6 +70,7 @@
           <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
           <exclude>WEB-INF/classes/users.properties</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/wildfly/</exclude>
+          <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
           <!-- Exclude non-JUL logging stuff (i.e: log4j, logback) -->
           <exclude>WEB-INF/log4j.xml</exclude>
           <exclude>WEB-INF/classes/logback.xml</exclude>
