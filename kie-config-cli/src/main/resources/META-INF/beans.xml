@@ -7,6 +7,7 @@
 
   <weld:scan>
     <weld:exclude name="org.jbpm.kie.services.impl.form.FormProviderServiceImpl"/>
+    <weld:exclude name="org.guvnor.structure.backend.repositories.git.GitRepositoryFactoryHelper"/>
   </weld:scan>
 
   <alternatives>
