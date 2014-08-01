@@ -255,13 +255,13 @@ public class KieWorkbenchEntryPoint {
             }
         } ).endMenu().build().getItems().get( 0 ) );
         
-        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
+       /* result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
-
+       */
         return result;
     }
 
