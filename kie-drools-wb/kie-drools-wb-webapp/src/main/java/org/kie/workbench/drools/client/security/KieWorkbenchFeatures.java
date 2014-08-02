@@ -26,6 +26,8 @@ public class KieWorkbenchFeatures {
     public static final String F_ARTIFACT_REPO = "wb_artifact_repository";
     public static final String F_ADMINISTRATION = "wb_administration";
     public static final String F_SEARCH = "wb_search";
+    public static final String F_MANAGEMENT = "wb_management";
 
     public static final String G_AUTHORING = "wb_authoring";
+    public static final String G_SERVERS = "wb_servers";
 }

@@ -151,6 +151,7 @@ public class KieWorkbenchEntryPoint {
                 .endMenu()
                 .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
                 .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
+                .newTopLevelMenu( constants.Servers() ).withRoles( kieACL.getGrantedRoles( G_SERVERS ) ).withItems( getServersViews() ).endMenu()
                 .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
                 .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
                 .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
@@ -252,11 +253,24 @@ public class KieWorkbenchEntryPoint {
                 placeManager.goTo( new DefaultPlaceRequest( "Jobs" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
-        
+
         result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
+    }
+
+    private List<? extends MenuItem> getServersViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+
+        result.add( MenuFactory.newSimpleItem( constants.Management() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "ServerManagementPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 

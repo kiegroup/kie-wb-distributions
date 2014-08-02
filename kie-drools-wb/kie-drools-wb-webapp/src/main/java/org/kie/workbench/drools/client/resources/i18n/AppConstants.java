@@ -44,6 +44,10 @@ public interface AppConstants
 
     String deployment();
 
+    String servers();
+
+    String management();
+
     String artifactRepository();
 
     String newItem();

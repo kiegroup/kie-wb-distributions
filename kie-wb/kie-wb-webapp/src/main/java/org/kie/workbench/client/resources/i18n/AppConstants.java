@@ -60,6 +60,10 @@ public interface AppConstants
 
     String Deploy();
 
+    String Servers();
+
+    String Management();
+
     String Deployments();
 
     String newItem();
