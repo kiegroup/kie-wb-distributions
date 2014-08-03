@@ -1,0 +1,13 @@
+
+keytool -genkey -alias server -keyalg RSA -keystore keystore.jks -storepass keystorePassword
+- keystorePassword
+
+keytool -genkey -alias client -keyalg RSA -keystore client.keystore -storepass clientKeystorePassword -keysize 2048 -storetype pkcs12
+- clientKeystorePassword
+
+keytool -exportcert -keystore client.keystore -storetype pkcs12 -storepass clientKeystorePassword -alias client -file client.cer
+
+keytool -import -file client.cer -alias client -keystore trustore.jks -storepass truststorePassword
+- truststorePassword
+- "yes" when asked to trust the certificate
+

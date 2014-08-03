@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema">
+    <!--  h2 
+    -->
+    <datasource jndi-name="java:/jdbc/jbpm-ds" enabled="true" use-java-context="true"
+                pool-name="jbpmDS">
+        <connection-url>jdbc:h2:tcp://localhost/target/arquillian-test;DB_CLOSE_DELAY=-1;MVCC=TRUE</connection-url>
+        <driver>h2</driver>
+        <pool></pool>
+        <security>
+            <user-name>sa</user-name>
+            <password>sa</password>
+        </security>
+    </datasource>
+    <!--  postgres
+    <datasource jta="true" jndi-name="java:/jdbc/jbpm-ds" pool-name="jbpmDS" enabled="true" use-java-context="true" use-ccm="true">
+      <connection-url>jdbc:postgresql://localhost:5432/jbpm5</connection-url>
+      <driver>org.postgresql</driver>
+      <pool>
+        <min-pool-size>2</min-pool-size>
+        <max-pool-size>20</max-pool-size>
+        <prefill>true</prefill>
+      </pool>
+      <security>
+        <user-name>jbpm5</user-name>
+        <password>jbpm5</password>
+      </security>
+      <validation>
+        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+      </validation>
+    </datasource>
+     -->
+    <!--
+    <xa-datasource jndi-name="java:jbdc/jbpm-ds" pool-name="H2XADS">
+        <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+        <xa-datasource-property name="URL">jdbc:h2:file:arquillian-test;DB_CLOSE_DELAY=-1</xa-datasource-property>
+        <driver>h2</driver>
+        <security>
+            <user-name>sa</user-name>
+            <password>sa</password>
+        </security>
+    </xa-datasource>
+    -->
+</datasources>

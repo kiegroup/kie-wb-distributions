@@ -1,0 +1,7 @@
+# IDE build directories
+target/
+bin/
+local/
+
+# Test directories
+repositories/

@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.kie.smoke</groupId>
+    <artifactId>kie-smoke-tests</artifactId>
+    <version>6.2.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>kie-wb-smoke-tests</artifactId>
+  <packaging>pom</packaging>
+
+  <name>KIE Smoke Tests :: kie-wb</name>
+  <description>Integration smoke tests for kie-wb</description>
+
+  <modules>
+    <module>kie-wb-smoke-tests-base</module>
+    <module>kie-wb-smoke-tests-eap</module>
+    <module>kie-wb-smoke-tests-tomcat</module>
+    <module>kie-wb-smoke-tests-jboss-as</module>
+    <module>kie-wb-smoke-tests-wildfly</module>
+  </modules>
+
+</project>

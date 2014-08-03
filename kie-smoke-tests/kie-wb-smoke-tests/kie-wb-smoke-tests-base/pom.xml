@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.kie.smoke</groupId>
+    <artifactId>kie-wb-smoke-tests</artifactId>
+    <version>6.2.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>kie-wb-smoke-tests-base</artifactId>
+  <packaging>jar</packaging>
+
+  <name>KIE Smoke Tests :: kie-wb :: base methods</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.kie.smoke</groupId>
+      <artifactId>kie-smoke-tests-util</artifactId>
+     </dependency>
+    <dependency>
+      <groupId>org.kie.remote</groupId>
+      <artifactId>kie-remote-client</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>hornetq-jms-client</artifactId>
+          <groupId>org.hornetq</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-rest-client</artifactId>
+    </dependency>
+    <dependency>    
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-kie-services</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>kie-ci</artifactId>
+          <groupId>org.kie</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-core</artifactId>
+    </dependency>
+
+    <!-- logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <!-- other -->
+    <dependency>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
+    </dependency> 
+  </dependencies>
+
+  <build>
+    <testResources>
+        <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>true</filtering>
+        </testResource>
+    </testResources>
+  </build>
+  
+</project>
+
