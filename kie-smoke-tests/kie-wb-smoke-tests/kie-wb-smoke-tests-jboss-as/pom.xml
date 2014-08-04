@@ -245,6 +245,25 @@
               <overwrite>true</overwrite>
             </configuration>
           </execution>
+          <!-- HORNETQ-408 is not fixed on AS 7.1.1.Final
+          <execution>
+            <id>copy-ssl-files</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${jboss.as.server.name}/standalone/configuration/ssl</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/test/resources/ssl/server</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+          -->
         </executions>
       </plugin>
       <!-- 3. modify server configuration -->
@@ -269,14 +288,16 @@
                   </includes>
                   <stylesheet>src/test/resources-jboss-as7/xslt/addDebugLogging.xslt</stylesheet>
                 </transformationSet>
+                <!-- HORNETQ-408 is not fixed on AS 7.1.1.Final
                 <transformationSet>
                   <dir>${project.build.directory}/${jboss.as.server.name}/standalone/configuration</dir>
                   <outputDir>${project.build.directory}/${jboss.as.server.name}/standalone/configuration</outputDir>
                   <includes>
                     <include>standalone-full.xml</include>
                   </includes>
-                  <stylesheet>src/test/resources-jboss-as7/xslt/changeJmsMessagingConfig.xslt</stylesheet>
+                  <stylesheet>target/test-classes/xslt/changeJmsMessagingConfig.xslt</stylesheet>
                 </transformationSet>
+                -->
               </transformationSets>
             </configuration>
           </execution>

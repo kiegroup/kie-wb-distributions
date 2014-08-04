@@ -49,7 +49,8 @@ public class JbossAsKieWbSmokeIntegrationTest extends AbstractKieWbSmokeIntegrat
 
     @Override
     public boolean jmsQueuesAvailable() {
-        return true;
+        // See HORNETQ-408 (unresolved in AS 7.1.1.Final, fixed in EAP 6.x)
+        return false;
     }
 
     @Override
