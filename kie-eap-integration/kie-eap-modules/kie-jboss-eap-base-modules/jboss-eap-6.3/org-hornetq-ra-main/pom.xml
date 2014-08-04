@@ -24,10 +24,10 @@
                 <dependency>
           <groupId>org.hornetq</groupId>
           <artifactId>hornetq-ra</artifactId>
-          <version>2.3.18.Final-redhat-1</version>
+          <version>2.3.20.Final-redhat-1</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/hornetq-ra-2.3.18.Final-redhat-1.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/hornetq-ra-2.3.20.Final-redhat-1.jar-pom.xml</systemPath>
         </dependency>
               </dependencies>
     

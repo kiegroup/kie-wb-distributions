@@ -21,53 +21,53 @@
     
 
         <dependencies>
+          <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-journal</artifactId>
+            <version>2.3.20.Final-redhat-1</version>
+            <type>pom</type>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/hornetq-journal-2.3.20.Final-redhat-1.jar-pom.xml</systemPath>
+          </dependency>
+          <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-core-client</artifactId>
+            <version>2.3.20.Final-redhat-1</version>
+            <type>pom</type>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/hornetq-core-client-2.3.20.Final-redhat-1.jar-pom.xml</systemPath>
+          </dependency>
+          <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-jms-server</artifactId>
+            <version>2.3.20.Final-redhat-1</version>
+            <type>pom</type>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/hornetq-jms-server-2.3.20.Final-redhat-1.jar-pom.xml</systemPath>
+          </dependency>
+          <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-commons</artifactId>
+            <version>2.3.20.Final-redhat-1</version>
+            <type>pom</type>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/hornetq-commons-2.3.20.Final-redhat-1.jar-pom.xml</systemPath>
+          </dependency>
+          <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-server</artifactId>
+            <version>2.3.20.Final-redhat-1</version>
+            <type>pom</type>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/hornetq-server-2.3.20.Final-redhat-1.jar-pom.xml</systemPath>
+          </dependency>
                 <dependency>
           <groupId>org.hornetq</groupId>
           <artifactId>hornetq-jms-client</artifactId>
-          <version>2.3.18.Final-redhat-1</version>
+          <version>2.3.20.Final-redhat-1</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/hornetq-jms-client-2.3.18.Final-redhat-1.jar-pom.xml</systemPath>
-        </dependency>
-                <dependency>
-          <groupId>org.hornetq</groupId>
-          <artifactId>hornetq-journal</artifactId>
-          <version>2.3.18.Final-redhat-1</version>
-          <type>pom</type>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/hornetq-journal-2.3.18.Final-redhat-1.jar-pom.xml</systemPath>
-        </dependency>
-                <dependency>
-          <groupId>org.hornetq</groupId>
-          <artifactId>hornetq-server</artifactId>
-          <version>2.3.18.Final-redhat-1</version>
-          <type>pom</type>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/hornetq-server-2.3.18.Final-redhat-1.jar-pom.xml</systemPath>
-        </dependency>
-                <dependency>
-          <groupId>org.hornetq</groupId>
-          <artifactId>hornetq-core-client</artifactId>
-          <version>2.3.18.Final-redhat-1</version>
-          <type>pom</type>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/hornetq-core-client-2.3.18.Final-redhat-1.jar-pom.xml</systemPath>
-        </dependency>
-                <dependency>
-          <groupId>org.hornetq</groupId>
-          <artifactId>hornetq-jms-server</artifactId>
-          <version>2.3.18.Final-redhat-1</version>
-          <type>pom</type>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/hornetq-jms-server-2.3.18.Final-redhat-1.jar-pom.xml</systemPath>
-        </dependency>
-                <dependency>
-          <groupId>org.hornetq</groupId>
-          <artifactId>hornetq-commons</artifactId>
-          <version>2.3.18.Final-redhat-1</version>
-          <type>pom</type>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/hornetq-commons-2.3.18.Final-redhat-1.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/hornetq-jms-client-2.3.20.Final-redhat-1.jar-pom.xml</systemPath>
         </dependency>
               </dependencies>
     

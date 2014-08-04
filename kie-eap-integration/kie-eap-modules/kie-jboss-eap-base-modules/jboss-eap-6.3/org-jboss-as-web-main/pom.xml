@@ -25,10 +25,18 @@
     <dependency>
       <groupId>org.jboss.web</groupId>
       <artifactId>jbossweb</artifactId>
-      <version>7.4.2.Final-redhat-1</version>
+      <version>7.4.8.Final-redhat-4</version>
       <type>pom</type>
       <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/jbossweb-7.4.2.Final-redhat-1.jar-pom.xml</systemPath>
+      <systemPath>${project.basedir}/src/main/resources/jbossweb-7.4.8.Final-redhat-4.jar-pom.xml</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.as</groupId>
+      <artifactId>jboss-as-web</artifactId>
+      <version>7.4.0.Final-redhat-19</version>
+      <type>pom</type>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/jboss-as-web-7.4.0.Final-redhat-19.jar-pom.xml</systemPath>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jdt.core.compiler</groupId>
@@ -37,14 +45,6 @@
       <type>pom</type>
       <scope>system</scope>
       <systemPath>${project.basedir}/src/main/resources/ecj-4.3.1.redhat-1.jar-pom.xml</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.as</groupId>
-      <artifactId>jboss-as-web</artifactId>
-      <version>7.4.0.Final-redhat-11</version>
-      <type>pom</type>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/jboss-as-web-7.4.0.Final-redhat-11.jar-pom.xml</systemPath>
     </dependency>
 
     <!-- Custom dependencies. -->

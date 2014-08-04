@@ -23,43 +23,43 @@
         <dependencies>
                 <dependency>
           <groupId>org.jboss.security</groupId>
-          <artifactId>jboss-negotiation-net</artifactId>
-          <version>2.3.0.Final-redhat-1</version>
+          <artifactId>jboss-negotiation-spnego</artifactId>
+          <version>2.3.3.Final-redhat-1</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-net-2.3.0.Final-redhat-1.jar-pom.xml</systemPath>
-        </dependency>
-                <dependency>
-          <groupId>org.jboss.security</groupId>
-          <artifactId>jboss-negotiation-extras</artifactId>
-          <version>2.3.0.Final-redhat-1</version>
-          <type>pom</type>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-extras-2.3.0.Final-redhat-1.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-spnego-2.3.3.Final-redhat-1.jar-pom.xml</systemPath>
         </dependency>
                 <dependency>
           <groupId>org.jboss.security</groupId>
           <artifactId>jboss-negotiation-common</artifactId>
-          <version>2.3.0.Final-redhat-1</version>
+          <version>2.3.3.Final-redhat-1</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-common-2.3.0.Final-redhat-1.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-common-2.3.3.Final-redhat-1.jar-pom.xml</systemPath>
+        </dependency>
+                <dependency>
+          <groupId>org.jboss.security</groupId>
+          <artifactId>jboss-negotiation-extras</artifactId>
+          <version>2.3.3.Final-redhat-1</version>
+          <type>pom</type>
+          <scope>system</scope>
+          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-extras-2.3.3.Final-redhat-1.jar-pom.xml</systemPath>
         </dependency>
                 <dependency>
           <groupId>org.jboss.security</groupId>
           <artifactId>jboss-negotiation-ntlm</artifactId>
-          <version>2.3.0.Final-redhat-1</version>
+          <version>2.3.3.Final-redhat-1</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-ntlm-2.3.0.Final-redhat-1.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-ntlm-2.3.3.Final-redhat-1.jar-pom.xml</systemPath>
         </dependency>
                 <dependency>
           <groupId>org.jboss.security</groupId>
-          <artifactId>jboss-negotiation-spnego</artifactId>
-          <version>2.3.0.Final-redhat-1</version>
+          <artifactId>jboss-negotiation-net</artifactId>
+          <version>2.3.3.Final-redhat-1</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-spnego-2.3.0.Final-redhat-1.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/jboss-negotiation-net-2.3.3.Final-redhat-1.jar-pom.xml</systemPath>
         </dependency>
               </dependencies>
     

@@ -24,10 +24,10 @@
                 <dependency>
           <groupId>org.jboss.spec.javax.xml.ws</groupId>
           <artifactId>jboss-jaxws-api_2.2_spec</artifactId>
-          <version>2.0.1.Final-redhat-2</version>
+          <version>2.0.2.Final-redhat-1</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/jboss-jaxws-api_2.2_spec-2.0.1.Final-redhat-2.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/jboss-jaxws-api_2.2_spec-2.0.2.Final-redhat-1.jar-pom.xml</systemPath>
         </dependency>
               </dependencies>
     

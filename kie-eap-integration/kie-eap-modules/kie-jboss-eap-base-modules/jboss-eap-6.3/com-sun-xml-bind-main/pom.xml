@@ -25,18 +25,18 @@
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-xjc</artifactId>
-      <version>2.2.5.redhat-7</version>
+      <version>2.2.5.redhat-8</version>
       <type>pom</type>
       <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/jaxb-xjc-2.2.5.redhat-7.jar-pom.xml</systemPath>
+      <systemPath>${project.basedir}/src/main/resources/jaxb-xjc-2.2.5.redhat-8.jar-pom.xml</systemPath>
     </dependency>
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
-      <version>2.2.5.redhat-7</version>
+      <version>2.2.5.redhat-8</version>
       <type>pom</type>
       <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/jaxb-impl-2.2.5.redhat-7.jar-pom.xml</systemPath>
+      <systemPath>${project.basedir}/src/main/resources/jaxb-impl-2.2.5.redhat-8.jar-pom.xml</systemPath>
     </dependency>
 
     <!-- Custom dependencies. -->

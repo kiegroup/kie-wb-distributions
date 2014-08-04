@@ -24,10 +24,10 @@
                 <dependency>
           <groupId>org.jboss.as</groupId>
           <artifactId>jboss-as-clustering-common</artifactId>
-          <version>7.4.0.Final-redhat-11</version>
+          <version>7.4.0.Final-redhat-19</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/jboss-as-clustering-common-7.4.0.Final-redhat-11.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/jboss-as-clustering-common-7.4.0.Final-redhat-19.jar-pom.xml</systemPath>
         </dependency>
               </dependencies>
     

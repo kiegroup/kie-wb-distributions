@@ -24,10 +24,10 @@
                 <dependency>
           <groupId>org.apache.ws.security</groupId>
           <artifactId>wss4j</artifactId>
-          <version>1.6.14.redhat-1</version>
+          <version>1.6.15.redhat-1</version>
           <type>pom</type>
           <scope>system</scope>
-          <systemPath>${project.basedir}/src/main/resources/wss4j-1.6.14.redhat-1.jar-pom.xml</systemPath>
+          <systemPath>${project.basedir}/src/main/resources/wss4j-1.6.15.redhat-1.jar-pom.xml</systemPath>
         </dependency>
               </dependencies>
     

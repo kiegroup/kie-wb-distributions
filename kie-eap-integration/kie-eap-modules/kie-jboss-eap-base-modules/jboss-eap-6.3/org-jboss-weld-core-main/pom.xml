@@ -25,10 +25,10 @@
     <dependency>
       <groupId>org.jboss.weld</groupId>
       <artifactId>weld-core</artifactId>
-      <version>1.1.19.Final-redhat-1</version>
+      <version>1.1.23.Final-redhat-1</version>
       <type>pom</type>
       <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/weld-core-1.1.19.Final-redhat-1.jar-pom.xml</systemPath>
+      <systemPath>${project.basedir}/src/main/resources/weld-core-1.1.23.Final-redhat-1.jar-pom.xml</systemPath>
     </dependency>
 
     <!-- Custom dependencies. -->
