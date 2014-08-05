@@ -54,6 +54,7 @@
     <module>kie-wb</module>
     <module>kie-drools-wb</module>
     <module>kie-tomcat-integration</module>
+    <module>kie-smoke-tests</module>
   </modules>
 
   <build>
