@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.kie.modules</groupId>
     <artifactId>jboss-eap-6.3</artifactId>
-    <version>6.2.0-SNAPSHOT</version>
+    <version>6.2.0.Beta1</version>
   </parent>
 
   <groupId>org.kie.modules</groupId>
   <artifactId>org-apache-neethi-main</artifactId>
   <name>EAP Base Module org.apache.neethi:main</name>
-  <version>6.2.0-SNAPSHOT</version>
+  <version>6.2.0.Beta1</version>
   <packaging>pom</packaging>
 
   <properties>
