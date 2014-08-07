@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 import org.jbpm.kie.services.cdi.producer.UserGroupInfoProducer;
 import org.jbpm.services.task.audit.JPATaskLifeCycleEventListener;
-import org.jbpm.services.task.lifecycle.listeners.BAMTaskEventListener;
+import org.jbpm.services.task.audit.lifecycle.listeners.BAMTaskEventListener;
 import org.jbpm.shared.services.cdi.Selectable;
 import org.kie.api.task.TaskLifeCycleEventListener;
 import org.kie.internal.task.api.UserInfo;
