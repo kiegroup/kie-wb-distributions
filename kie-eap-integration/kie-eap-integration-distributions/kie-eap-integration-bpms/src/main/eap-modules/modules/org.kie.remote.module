@@ -1,0 +1,3 @@
+module.name=org.kie.remote
+module.type=static
+module.location=org/kie/remote

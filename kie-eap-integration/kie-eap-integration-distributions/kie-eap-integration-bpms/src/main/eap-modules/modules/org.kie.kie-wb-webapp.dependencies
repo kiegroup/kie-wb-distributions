@@ -82,6 +82,7 @@ org.joda.time
 org.junit
 org.kie
 org.kie.lib
+org.kie.remote
 org.mvel
 org.osgi.core
 org.slf4j

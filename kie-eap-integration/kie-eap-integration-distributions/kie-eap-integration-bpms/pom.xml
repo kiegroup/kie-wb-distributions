@@ -21,6 +21,13 @@
       <type>pom</type>
     </dependency>
 
+    <dependency>
+      <groupId>org.kie.remote</groupId>
+      <artifactId>kie-services-client</artifactId>
+      <version>${project.version}</version> <!-- TODO: Remove version and set into kie-parent. -->
+      <type>jar</type>
+    </dependency>
+
   </dependencies>
 
   <properties>
