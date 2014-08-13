@@ -22,6 +22,7 @@ org.apache.maven.wagon
 javax.jms.api
 javax.xml.bind.api
 org.javassist
+org.jboss.remote-naming
 org.jboss.resteasy.resteasy-jackson-provider
 org.jboss.resteasy.resteasy-jaxb-provider
 org.jboss.resteasy.resteasy-jaxrs
