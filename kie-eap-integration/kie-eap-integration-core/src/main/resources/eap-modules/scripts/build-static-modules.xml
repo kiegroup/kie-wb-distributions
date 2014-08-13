@@ -418,19 +418,19 @@ Then, this ant project should receive the property file location and read artifa
                                 regexp="(.*):(.*)"
                                 select="\2"
                                 casesensitive="false" />
-              <property name="dependency-services" value="${dependency-export-temp}"/>
+              <property name="dependency-services" value='services="${dependency-export-temp}"'/>
             </ac:then>
             <ac:else>
               <property name="dependency-value" value="${dependency-value-temp}"/>
               <property name="dependency-export" value="${dependency-export-temp}"/>
-              <property name="dependency-services" value="none"/>
+              <property name="dependency-services" value=""/>
             </ac:else>
           </ac:if>
         </ac:then>
         <ac:else>
           <property name="dependency-value" value="${dependency-name}"/>
           <property name="dependency-export" value="false"/>
-          <property name="dependency-services" value="none"/>
+          <property name="dependency-services" value=""/>
         </ac:else>
       </ac:if>
 
