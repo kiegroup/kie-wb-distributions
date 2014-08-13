@@ -394,20 +394,43 @@ Then, this ant project should receive the property file location and read artifa
       <ac:if>
         <contains string="${dependency-name}" substring=":"/>
         <ac:then>
-          <ac:propertyregex property="dependency-value"
+          <ac:propertyregex property="dependency-value-temp"
                             input="${dependency-name}"
                             regexp="(.*):(.*)"
                             select="\1"
                             casesensitive="false" />
-          <ac:propertyregex property="dependency-export"
+          <ac:propertyregex property="dependency-export-temp"
                             input="${dependency-name}"
                             regexp="(.*):(.*)"
                             select="\2"
                             casesensitive="false" />
+          <!-- Check for the serivces attribute value. -->
+          <ac:if>
+          <contains string="${dependency-value-temp}" substring=":"/>
+            <ac:then>
+              <ac:propertyregex property="dependency-value"
+                                input="${dependency-value-temp}"
+                                regexp="(.*):(.*)"
+                                select="\1"
+                                casesensitive="false" />
+              <ac:propertyregex property="dependency-export"
+                                input="${dependency-value-temp}"
+                                regexp="(.*):(.*)"
+                                select="\2"
+                                casesensitive="false" />
+              <property name="dependency-services" value="${dependency-export-temp}"/>
+            </ac:then>
+            <ac:else>
+              <property name="dependency-value" value="${dependency-value-temp}"/>
+              <property name="dependency-export" value="${dependency-export-temp}"/>
+              <property name="dependency-services" value="none"/>
+            </ac:else>
+          </ac:if>
         </ac:then>
         <ac:else>
           <property name="dependency-value" value="${dependency-name}"/>
           <property name="dependency-export" value="false"/>
+          <property name="dependency-services" value="none"/>
         </ac:else>
       </ac:if>
 
@@ -416,6 +439,7 @@ Then, this ant project should receive the property file location and read artifa
           <template-prop-params>
                 <param type="token" name="DEPENDENCY" value="${dependency-value}"/>
                 <param type="token" name="EXPORT" value="${dependency-export}"/>
+                <param type="token" name="SERVICES" value="${dependency-services}"/>
             </template-prop-params>
             <template-prop-result>
                 <concat destfile="${file-name}" append="true">@{template-content}</concat>
