@@ -391,50 +391,62 @@ Then, this ant project should receive the property file location and read artifa
     <target name="create-module-xml-dependency">
       <!-- By default, the export attribute vale is false. Check if this dependency entry uses true as a value.
             If a custom depedency entry export value is set, then the entry syntax is <dep-name>:<export> -->
+   
+      <ac:propertyregex property="three-attr-matcher"
+                        input="${dependency-name}"
+                        regexp="(.*):(.*):(.*)"
+                        select="\1"
+                        casesensitive="false"
+                        defaultValue="-no-matches-"/>
       <ac:if>
-        <contains string="${dependency-name}" substring=":"/>
+        <ac:equals arg1="${three-attr-matcher}" arg2="-no-matches-"/>
         <ac:then>
-          <ac:propertyregex property="dependency-value-temp"
+          <ac:propertyregex property="two-attribute-matcher"
                             input="${dependency-name}"
                             regexp="(.*):(.*)"
                             select="\1"
-                            casesensitive="false" />
-          <ac:propertyregex property="dependency-export-temp"
-                            input="${dependency-name}"
-                            regexp="(.*):(.*)"
-                            select="\2"
-                            casesensitive="false" />
-          <!-- Check for the serivces attribute value. -->
+                            casesensitive="false"
+                            defaultValue="-no-matches-"/>
+
           <ac:if>
-          <contains string="${dependency-value-temp}" substring=":"/>
+            <ac:equals arg1="${two-attribute-matcher}" arg2="-no-matches-"/>
             <ac:then>
-              <ac:propertyregex property="dependency-value"
-                                input="${dependency-value-temp}"
-                                regexp="(.*):(.*)"
-                                select="\1"
-                                casesensitive="false" />
-              <ac:propertyregex property="dependency-export"
-                                input="${dependency-value-temp}"
-                                regexp="(.*):(.*)"
-                                select="\2"
-                                casesensitive="false" />
-              <property name="dependency-services" value='services="${dependency-export-temp}"'/>
+              <property name="dependency-value" value="${dependency-name}"/>
+              <property name="dependency-export" value="false"/>
+              <property name="dependency-services" value=""/>
             </ac:then>
             <ac:else>
-              <property name="dependency-value" value="${dependency-value-temp}"/>
-              <property name="dependency-export" value="${dependency-export-temp}"/>
+              <property name="dependency-value" value="${two-attribute-matcher}"/>
+              <ac:propertyregex property="dependency-export"
+                                input="${dependency-name}"
+                                regexp="(.*):(.*)"
+                                select="\2"
+                                casesensitive="false"
+                                defaultValue="-no-matches-"/>
               <property name="dependency-services" value=""/>
             </ac:else>
           </ac:if>
+
         </ac:then>
         <ac:else>
-          <property name="dependency-value" value="${dependency-name}"/>
-          <property name="dependency-export" value="false"/>
-          <property name="dependency-services" value=""/>
+          <property name="dependency-value" value="${three-attr-matcher}"/>
+          <ac:propertyregex property="dependency-export"
+                            input="${dependency-name}"
+                            regexp="(.*):(.*):(.*)"
+                            select="\2"
+                            casesensitive="false"
+                            defaultValue="-no-matches-"/>
+          <ac:propertyregex property="dependency-services-value"
+                            input="${dependency-name}"
+                            regexp="(.*):(.*):(.*)"
+                            select="\3"
+                            casesensitive="false"
+                            defaultValue="-no-matches-"/>
+          <property name="dependency-services" value='services="${dependency-services-value}"'/>
         </ac:else>
       </ac:if>
 
-        <build-from-template-property template-property="module.dependency"
+      <build-from-template-property template-property="module.dependency"
                                       temp-path="${modules.temp.path}">
           <template-prop-params>
                 <param type="token" name="DEPENDENCY" value="${dependency-value}"/>
