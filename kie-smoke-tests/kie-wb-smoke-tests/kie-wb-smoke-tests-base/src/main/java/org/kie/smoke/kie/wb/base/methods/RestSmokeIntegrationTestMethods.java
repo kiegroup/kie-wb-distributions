@@ -422,7 +422,7 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
             assertEquals("VariableInstanceLog list size", 1, viLogs.size());
             VariableInstanceLog vil = viLogs.get(0);
             assertNotNull("Empty VariableInstanceLog instance.", vil);
-            assertEquals("Process instance id", vil.getProcessInstanceId(), objVarProcInstId);
+            assertEquals("Process instance id", vil.getProcessInstanceId().longValue(), objVarProcInstId);
             assertEquals("Variable id", vil.getVariableId(), "myobject");
             assertEquals("Variable value", vil.getValue(), varVal);
 
