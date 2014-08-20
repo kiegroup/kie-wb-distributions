@@ -21,7 +21,7 @@
     <!-- Added dependency to jbpm module as drools core requires some jbpm resources (xsd,etc). -->
     <!-- Export the javax.inject.api: https://bugzilla.redhat.com/show_bug.cgi?id=1061887 -->
     <module.dependencies>org.hibernate:main,org.jboss.vfs:main,javax.transaction.api:main,org.jbpm:main,org.jbpm-minimal:main,javax.api:main,javax.inject.api:main:true</module.dependencies>
-    <drools.version>${project.version}</drools.version>
+    <version.org.drools>${project.version}</version.org.drools>
   </properties>
 
   <dependencies>
@@ -112,7 +112,7 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-pmml</artifactId>
-      <version>${drools.version}</version>
+      <version>${version.org.drools}</version>
       <type>jar</type>
     </dependency>
 
