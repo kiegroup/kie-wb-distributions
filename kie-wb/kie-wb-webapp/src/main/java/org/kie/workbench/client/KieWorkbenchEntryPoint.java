@@ -40,6 +40,7 @@ import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
+import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.resources.i18n.AppConstants;
@@ -63,6 +64,7 @@ import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
 import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
+import org.uberfire.client.mvp.ActivityBeansCache;
 
 /**
  *
@@ -98,6 +100,12 @@ public class KieWorkbenchEntryPoint {
 
     @Inject
     private Caller<KieWorkbenchSecurityService> kieSecurityService;
+    
+    @Inject
+    private Caller<PlaceManagerActivityService> pmas;
+    
+    @Inject
+    private ActivityBeansCache activityBeansCache;
 
     private SuggestBox actionText;
     private TextBox textSuggestBox;
@@ -117,6 +125,16 @@ public class KieWorkbenchEntryPoint {
                 homeProducer.init();
             }
         } ).loadPolicy();
+        
+        List<String> allActivities = activityBeansCache.getActivitiesById();
+        pmas.call(new RemoteCallback<Void>(){
+
+          @Override
+          public void callback(Void response) {
+            
+          }
+        }).initActivities(allActivities);
+        
     }
 
     private void loadPreferences() {
