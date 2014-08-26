@@ -38,8 +38,8 @@ import java.util.Map;
 import javax.jms.Queue;
 import javax.naming.InitialContext;
 
-import org.jbpm.process.audit.ProcessInstanceLog;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
@@ -91,7 +91,7 @@ public class JmsSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTest
         assertNotNull( "Null process instance!", procInst);
         long procId = procInst.getId();
     
-        List<ProcessInstanceLog> procLogs = runtimeEngine.getAuditLogService().findActiveProcessInstances(HUMAN_TASK_PROCESS_ID);
+        List<ProcessInstanceLog> procLogs = (List<ProcessInstanceLog>) runtimeEngine.getAuditLogService().findActiveProcessInstances(HUMAN_TASK_PROCESS_ID);
         boolean procLogFound = false;
         for (ProcessInstanceLog log : procLogs) {
             if (log == null) {

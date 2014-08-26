@@ -1,9 +1,7 @@
 package org.kie.smoke.kie.wb.base.methods;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.kie.smoke.tests.util.RestUtil.delete;
-import static org.kie.smoke.tests.util.RestUtil.get;
-import static org.kie.smoke.tests.util.RestUtil.post;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,6 +24,8 @@ import org.guvnor.rest.client.RemoveRepositoryRequest;
 import org.guvnor.rest.client.RepositoryRequest;
 import org.jboss.resteasy.client.ClientRequest;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
+import org.kie.remote.client.rest.KieRemoteHttpRequest;
+import org.kie.remote.client.rest.KieRemoteHttpResponse;
 import org.kie.services.client.api.RestRequestHelper;
 import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult;
 import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentUnit;
@@ -49,6 +49,7 @@ public class RestRepositoryDeploymentUtil {
     private int totalTries = 10;
     
     private final static MediaType jsonMediaType = MediaType.APPLICATION_JSON_TYPE;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public RestRepositoryDeploymentUtil(URL deploymentUrl, String user, String password, RuntimeStrategy strategy) {
         requestHelper = RestRequestHelper.newInstance(deploymentUrl, user, password);
@@ -97,8 +98,8 @@ public class RestRepositoryDeploymentUtil {
      */
     private JobRequest deleteRepository(String repositoryName) {
         logger.debug("Deleting repository '{}'", repositoryName);
-        RemoveRepositoryRequest entity = 
-                delete(createRequest("repositories/" + repositoryName), jsonMediaType, 202, RemoveRepositoryRequest.class);
+        KieRemoteHttpRequest httpRequest = createRequest("repositories/" + repositoryName);
+        RemoveRepositoryRequest entity = delete(httpRequest, 202, RemoveRepositoryRequest.class);
         if (entity.getStatus() == JobStatus.ACCEPTED || entity.getStatus() == JobStatus.SUCCESS) {
             return entity;
         } else {
@@ -120,8 +121,8 @@ public class RestRepositoryDeploymentUtil {
         repoRequest.setRequestType("clone");
         repoRequest.setGitURL(cloneRepoUrl);
         String input = serializeToJsonString(repoRequest);
-        ClientRequest request = createRequest("repositories/", input);
-        return post(request, jsonMediaType, 202, CreateOrCloneRepositoryRequest.class);
+        KieRemoteHttpRequest httpRequest = createRequest("repositories/", input);
+        return post(httpRequest, 202, CreateOrCloneRepositoryRequest.class);
     }
 
     /**
@@ -142,7 +143,8 @@ public class RestRepositoryDeploymentUtil {
         ou.setName(name);
         ou.setOwner(owner);
         String input = serializeToJsonString(ou);
-        return post(createRequest("organizationalunits/", input), jsonMediaType, 202, CreateOrganizationalUnitRequest.class);
+        KieRemoteHttpRequest httpRequest = createRequest("organizationalunits/", input);
+        return post(httpRequest, 202, CreateOrganizationalUnitRequest.class);
     }
 
     /**
@@ -170,8 +172,8 @@ public class RestRepositoryDeploymentUtil {
      */
     private JobRequest installProject(String repositoryName, String project) {
         logger.debug("Installing project '{}' from repo '{}'", project, repositoryName);
-        ClientRequest request = createMavenOperationRequest(repositoryName, project, "install");
-        return post(request, jsonMediaType, 202, InstallProjectRequest.class);
+        KieRemoteHttpRequest httpRequest = createMavenOperationRequest(repositoryName, project, "install");
+        return post(httpRequest, 202, InstallProjectRequest.class);
     }
 
     /**
@@ -182,7 +184,7 @@ public class RestRepositoryDeploymentUtil {
      * @param operation The maven operation to be executed
      * @return The {@link ClientRequest} to be called
      */
-    private ClientRequest createMavenOperationRequest(String repositoryName, String project, String operation) {
+    private KieRemoteHttpRequest createMavenOperationRequest(String repositoryName, String project, String operation) {
         logger.debug("Calling maven '{}' operation on project '{}' in repo '{}'", operation, project, repositoryName);
         return createRequest("repositories/" + repositoryName + "/projects/" + project + "/maven/" + operation);
     }
@@ -195,8 +197,8 @@ public class RestRepositoryDeploymentUtil {
      */
     private JaxbDeploymentJobResult removeDeploymentUnit(String deploymentId) {
         logger.debug("Undeploying '{}'", deploymentId);
-        ClientRequest request = createRequest("deployment/" + deploymentId + "/undeploy");
-        return post(request, jsonMediaType, 202, JaxbDeploymentJobResult.class);
+        KieRemoteHttpRequest request = createRequest("deployment/" + deploymentId + "/undeploy");
+        return post(request, 202, JaxbDeploymentJobResult.class);
     }
 
     /**
@@ -213,10 +215,8 @@ public class RestRepositoryDeploymentUtil {
             opUrl += "?strategy=" + strategy.toString();
         }
 
-        ClientRequest request = createRequest(opUrl);
-        JaxbDeploymentJobResult jr = post(request, jsonMediaType, 202, JaxbDeploymentJobResult.class);
-
-        return jr;
+        KieRemoteHttpRequest httpRequest = createRequest(opUrl);
+        return post(httpRequest, 202, JaxbDeploymentJobResult.class); 
     }
 
     /**
@@ -247,8 +247,8 @@ public class RestRepositoryDeploymentUtil {
                     incompleteRequests.remove(request.getJobId());
                     continue;
                 }
-                ClientRequest restRequest = createRequest("jobs/" + jobId);
-                JobResult jobResult = get(restRequest, jsonMediaType, JobResult.class);
+                KieRemoteHttpRequest httpRequest = createRequest("jobs/" + jobId);
+                JobResult jobResult = get(httpRequest, JobResult.class);
                 requestStatusMap.put(jobId, jobResult.getStatus());
             }
             ++tryCount;
@@ -302,8 +302,8 @@ public class RestRepositoryDeploymentUtil {
                     ++allDone;
                     continue;
                 }
-                ClientRequest restRequest = createRequest("deployment/" + deployId);
-                JaxbDeploymentUnit requestedDeployUnit = get(restRequest, jsonMediaType, JaxbDeploymentUnit.class);
+                KieRemoteHttpRequest httpRequest = createRequest("deployment/" + deployId);
+                JaxbDeploymentUnit requestedDeployUnit = get(httpRequest, JaxbDeploymentUnit.class);
                 requestStatusMap.put(deployId, requestedDeployUnit.getStatus());
             }
             ++tryCount;
@@ -335,12 +335,52 @@ public class RestRepositoryDeploymentUtil {
      * @param relativeUrl The url of the REST call to be made, relative to the ../rest/ base
      * @return
      */
-    private ClientRequest createRequest(String relativeUrl) {
-        return requestHelper.createRequest(relativeUrl);
+    private KieRemoteHttpRequest createRequest(String relativeUrl) {
+        return requestHelper.createRequest(relativeUrl).contentType(jsonMediaType.toString());
     }
 
-    private ClientRequest createRequest(String resourcePath, String body) {
-        return createRequest(resourcePath).body(jsonMediaType, body);
+    private KieRemoteHttpRequest createRequest(String resourcePath, String body) {
+        return createRequest(resourcePath).contentType(jsonMediaType.toString()).body(body);
     }
 
+    private <T> T deserializeBody( String jsonStr, Class<T> entityClass) { 
+       try { 
+          return (T) objectMapper.readValue(jsonStr, entityClass);
+       } catch(Exception e) { 
+           logger.error("Unable to deserialize {} instance:\n{}", entityClass.getSimpleName(), jsonStr, e);
+           fail("Unable to deserialize JSON string, see log.");
+           throw new RuntimeException("This should never be thrown because of the fail() line before this..");
+       }
+    }
+   
+    private <T> T delete(KieRemoteHttpRequest httpRequest, int status, Class<T> entityClass) { 
+        KieRemoteHttpResponse httpResponse = httpRequest.delete().response();
+        assertEquals( "Incorrect response status (" + httpRequest.getUri() + ")", status, httpResponse.code());
+        try { 
+            return deserializeBody(httpResponse.body(), entityClass);
+        } finally { 
+            httpRequest.disconnect();
+        }
+    }
+    
+    private <T> T post(KieRemoteHttpRequest httpRequest, int status, Class<T> entityClass) { 
+        KieRemoteHttpResponse httpResponse = httpRequest.post().response();
+        assertEquals( "Incorrect response status (" + httpRequest.getUri() + ")", status, httpResponse.code());
+        try { 
+            return deserializeBody(httpResponse.body(), entityClass);
+        } finally { 
+            httpRequest.disconnect();
+        }
+    }
+    
+    private <T> T get(KieRemoteHttpRequest httpRequest, Class<T> entityClass) { 
+        KieRemoteHttpResponse httpResponse = httpRequest.get().response();
+        assertEquals( "Incorrect response status (" + httpRequest.getUri() + ")", 200, httpResponse.code());
+        try { 
+            return  deserializeBody(httpResponse.body(), entityClass);
+        } finally { 
+            httpRequest.disconnect();
+        }
+    }
+    
 }

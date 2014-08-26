@@ -16,11 +16,9 @@
   <description>Integration smoke tests for kie-wb and kie-drools-wb</description>
 
   <modules>
-    <!--
     <module>kie-smoke-tests-util</module>
     <module>kie-wb-smoke-tests</module>
     <module>kie-drools-wb-smoke-tests</module>
-    -->
   </modules>
 
   <properties>

@@ -36,8 +36,6 @@ import static org.kie.smoke.kie.wb.base.util.TestConstants.OBJECT_VARIABLE_PROCE
 import static org.kie.smoke.kie.wb.base.util.TestConstants.RULE_TASK_PROCESS_ID;
 import static org.kie.smoke.kie.wb.base.util.TestConstants.SCRIPT_TASK_VAR_PROCESS_ID;
 import static org.kie.smoke.kie.wb.base.util.TestConstants.VERSION;
-import static org.kie.smoke.tests.util.RestUtil.get;
-import static org.kie.smoke.tests.util.RestUtil.post;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -49,23 +47,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.net.util.Base64;
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
-import org.jbpm.process.audit.AuditLogService;
-import org.jbpm.process.audit.ProcessInstanceLog;
-import org.jbpm.process.audit.VariableInstanceLog;
-import org.jbpm.process.audit.event.AuditEvent;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
+import org.kie.api.runtime.manager.audit.VariableInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
+import org.kie.remote.client.jaxb.JaxbTaskSummaryListResponse;
+import org.kie.remote.client.rest.KieRemoteHttpRequest;
+import org.kie.remote.client.rest.KieRemoteHttpResponse;
 import org.kie.services.client.api.RemoteRestRuntimeEngineFactory;
 import org.kie.services.client.api.RestRequestHelper;
 import org.kie.services.client.api.command.RemoteRuntimeEngine;
@@ -80,7 +79,6 @@ import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentUnit
 import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentUnitList;
 import org.kie.services.client.serialization.jaxb.impl.process.JaxbProcessDefinition;
 import org.kie.services.client.serialization.jaxb.impl.process.JaxbProcessInstanceResponse;
-import org.kie.services.client.serialization.jaxb.impl.task.JaxbTaskSummaryListResponse;
 import org.kie.tests.MyType;
 import org.kie.tests.Person;
 import org.kie.tests.Request;
@@ -121,7 +119,6 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
     }
 
     public static class Builder {
-
         private String deploymentId = null;
         private RuntimeStrategy strategy = RuntimeStrategy.SINGLETON;
         private MediaType mediaType = MediaType.APPLICATION_XML_TYPE;
@@ -159,9 +156,9 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         }
     }
 
-    private JaxbSerializationProvider jaxbSerializationProvider = new JaxbSerializationProvider();
+    private static JaxbSerializationProvider jaxbSerializationProvider = new JaxbSerializationProvider();
     {
-        jaxbSerializationProvider.addJaxbClasses(MyType.class);
+        jaxbSerializationProvider.addJaxbClasses(MyType.class, Person.class, Request.class);
     }
     private JsonSerializationProvider jsonSerializationProvider = new JsonSerializationProvider();
 
@@ -178,6 +175,54 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
                 .addPassword(password).build();
     }
 
+    private <T> T deserialize(KieRemoteHttpResponse httpResponse, Class<T> entityClass) { 
+       String acceptHeader = httpResponse.header(HttpHeaders.CONTENT_TYPE);
+       Object objResult = null;
+       if( MediaType.APPLICATION_XML.equals(acceptHeader) || acceptHeader == null ) { 
+          objResult = jaxbSerializationProvider.deserialize(httpResponse.body());
+       } else if( MediaType.APPLICATION_JSON.equals(acceptHeader) ) { 
+          objResult = jsonSerializationProvider.deserialize(httpResponse.body(), entityClass);
+       }
+       T result = null;
+       try { 
+          result = (T) objResult; 
+       } catch( ClassCastException cce ) { 
+           String msg = "Expected result to be an instance of " + entityClass.getName(); 
+           logger.error(msg, cce);
+           fail( msg );
+       }
+       return result;
+    }
+    
+    private <T> T get(KieRemoteHttpRequest httpRequest, Class<T> entityClass) { 
+        logger.debug(">> [GET] " + httpRequest.getUri());
+        KieRemoteHttpResponse httpResponse = httpRequest.get().response();
+        assertEquals( "Incorrect response status (" + httpRequest.getUri() + ")", 200, httpResponse.code() );
+        try { 
+            return deserialize(httpResponse, entityClass);
+        } finally { 
+            httpRequest.disconnect();
+        }
+    }
+    
+    private <T> T post(KieRemoteHttpRequest httpRequest, int status, Class<T> entityClass) { 
+        logger.debug(">> [POST] " + httpRequest.getUri());
+        KieRemoteHttpResponse httpResponse = httpRequest.post().response();
+        assertEquals( "Incorrect response status (" + httpRequest.getUri() + ")", status, httpResponse.code() );
+        try { 
+            return deserialize(httpResponse, entityClass);
+        } finally { 
+            httpRequest.disconnect();
+        }
+    }
+    
+    private void post(KieRemoteHttpRequest httpRequest, int status) { 
+        logger.debug(">> [POST] " + httpRequest.getUri());
+        KieRemoteHttpResponse httpResponse = httpRequest.post().response();
+        assertEquals( "Incorrect response status (" + httpRequest.getUri() + ")", status, httpResponse.code() );
+        httpRequest.disconnect();
+    }
+    
     /**
      * Test methods
      */
@@ -202,22 +247,22 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         String deploymentId = "org.test:kjar:1.0";
         String orgUnit = "integTestUser";
         deployUtil.createAndDeployRepository(repoUrl, repositoryName, project, deploymentId, orgUnit, user);
-
     }
 
     public void urlsGetDeployments(URL deploymentUrl, String user, String password) throws Exception {
         // test with normal RestRequestHelper
         RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl, user, password);
 
-        ClientRequest restRequest = requestHelper.createRequest("deployment/");
-        JaxbDeploymentUnitList depList = get(restRequest, mediaType, JaxbDeploymentUnitList.class);
+        KieRemoteHttpRequest httpRequest = requestHelper.createRequest("deployment/");
+        JaxbDeploymentUnitList depList = get(httpRequest, JaxbDeploymentUnitList.class);
         assertNotNull("Null answer!", depList);
         assertNotNull("Null deployment list!", depList.getDeploymentUnitList());
         assertTrue("Empty deployment list!", depList.getDeploymentUnitList().size() > 0);
 
         String deploymentId = depList.getDeploymentUnitList().get(0).getIdentifier();
-        restRequest = requestHelper.createRequest("deployment/" + deploymentId);
-        JaxbDeploymentUnit dep = get(restRequest, mediaType, JaxbDeploymentUnit.class);
+        httpRequest = requestHelper.createRequest("deployment/" + deploymentId);
+        JaxbDeploymentUnit dep = get(httpRequest, JaxbDeploymentUnit.class);
+        
         assertNotNull("Null answer!", dep);
         assertNotNull("Null deployment list!", dep);
         assertEquals("Empty status!", JaxbDeploymentStatus.DEPLOYED, dep.getStatus());
@@ -319,28 +364,33 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
 
         {
             // Start process
-            ClientRequest restRequest = helper.createRequest(
-                    "runtime/" + deploymentId + "/process/" + SCRIPT_TASK_VAR_PROCESS_ID + "/start?map_x=initVal");
-            logger.debug(">> " + restRequest.getUri());
-            JaxbProcessInstanceResponse processInstance = post(restRequest, mediaType, JaxbProcessInstanceResponse.class);
+            KieRemoteHttpRequest httpRequest = helper.createRequest("runtime/" + deploymentId + "/process/" + SCRIPT_TASK_VAR_PROCESS_ID + "/start?map_x=initVal");
+            JaxbProcessInstanceResponse processInstance = post(httpRequest, 200, JaxbProcessInstanceResponse.class);
             long scriptTaskVarProcInstId = processInstance.getId();
 
             // instances/
-            restRequest = helper.createRequest("history/instances");
-            JaxbHistoryLogList historyLogList = get(restRequest, mediaType, JaxbHistoryLogList.class);
-            List<AuditEvent> auditEventList = historyLogList.getResult();
+            httpRequest = helper.createRequest("history/instances");
+            JaxbHistoryLogList historyLogList = get(httpRequest, JaxbHistoryLogList.class);
+            List<Object> auditEventList = historyLogList.getResult();
 
             assertFalse( "Empty list of audit events.", auditEventList.isEmpty() );
-            for (AuditEvent event : auditEventList) {
+            for (Object event : auditEventList) {
                 assertTrue("ProcessInstanceLog", event instanceof ProcessInstanceLog);
                 ProcessInstanceLog procLog = (ProcessInstanceLog) event;
-                Object[][] out = { { procLog.getDuration(), "duration" }, { procLog.getEnd(), "end date" },
-                        { procLog.getExternalId(), "externalId" }, { procLog.getId(), "id" },
-                        { procLog.getIdentity(), "identity" }, { procLog.getOutcome(), "outcome" },
-                        { procLog.getParentProcessInstanceId(), "parent proc id" }, { procLog.getProcessId(), "process id" },
-                        { procLog.getProcessInstanceId(), "process instance id" }, { procLog.getProcessName(), "process name" },
-                        { procLog.getProcessVersion(), "process version" }, { procLog.getStart(), "start date" },
+                // @formatter:off
+                Object[][] out = { 
+                        { procLog.getDuration(), "duration" }, 
+                        { procLog.getEnd(), "end date" },
+                        { procLog.getIdentity(), "identity" }, 
+                        { procLog.getOutcome(), "outcome" },
+                        { procLog.getParentProcessInstanceId(), "parent proc id" }, 
+                        { procLog.getProcessId(), "process id" },
+                        { procLog.getProcessInstanceId(), "process instance id" }, 
+                        { procLog.getProcessName(), "process name" },
+                        { procLog.getProcessVersion(), "process version" }, 
+                        { procLog.getStart(), "start date" },
                         { procLog.getStatus(), "status" } };
+                // @formatter:on
                 for (int i = 0; i < out.length; ++i) {
                     // System.out.println(out[i][1] + ": " + out[i][0]);
                 }
@@ -349,8 +399,8 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
             // instance/{procInstId}
             ProcessInstanceLog origProcInstLog = ((ProcessInstanceLog) auditEventList.get(0));
             long procInstId = origProcInstLog.getProcessInstanceId();
-            restRequest = helper.createRequest("history/instance/" + origProcInstLog.getProcessInstanceId());
-            JaxbProcessInstanceLog procInstLog = get(restRequest, mediaType, JaxbProcessInstanceLog.class);
+            httpRequest = helper.createRequest("history/instance/" + origProcInstLog.getProcessInstanceId());
+            JaxbProcessInstanceLog procInstLog = get(httpRequest, JaxbProcessInstanceLog.class);
             assertNotNull( "Null process instance log!", procInstLog );
             assertEquals( "Log process instance id", 
                     procInstId, procInstLog.getProcessInstanceId().longValue());
@@ -360,8 +410,8 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
             // TODO: instance/{procInstId}/child
 
             // instance/{procInstId}/node
-            restRequest = helper.createRequest("history/instance/" + procInstId + "/node" );
-            historyLogList = get(restRequest, mediaType, JaxbHistoryLogList.class);
+            httpRequest = helper.createRequest("history/instance/" + procInstId + "/node" );
+            historyLogList = get(httpRequest, JaxbHistoryLogList.class);
             assertNotNull( "Null process instance log!", historyLogList );
             auditEventList = historyLogList.getResult();
             assertTrue("Empty audit event list!", auditEventList != null && ! auditEventList.isEmpty() );
@@ -371,9 +421,9 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
             // TODO: instance/{procInstId}/node/{nodeId}
 
             // instance/{procInstId}/variable/{variable}
-            restRequest = helper.createRequest("history/instance/" + scriptTaskVarProcInstId + "/variable/x");
-            logger.debug(">> [runtime]" + restRequest.getUri());
-            historyLogList = get(restRequest, mediaType, JaxbHistoryLogList.class);
+            httpRequest = helper.createRequest("history/instance/" + scriptTaskVarProcInstId + "/variable/x");
+            logger.debug(">> [runtime]" + httpRequest.getUri());
+            historyLogList = get(httpRequest, JaxbHistoryLogList.class);
             List<AbstractJaxbHistoryObject> historyVarLogList = historyLogList.getHistoryLogList();
 
             for (int i = 0; i < historyVarLogList.size(); ++i) {
@@ -388,9 +438,9 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         
         // process/{procDefId}
         {
-            ClientRequest restRequest = helper.createRequest(
-                    "runtime/" + deploymentId + "/process/" + OBJECT_VARIABLE_PROCESS_ID );
-            JaxbProcessDefinition procDef = get(restRequest, mediaType, JaxbProcessDefinition.class);
+            KieRemoteHttpRequest httpRequest 
+                = helper.createRequest("runtime/" + deploymentId + "/process/" + OBJECT_VARIABLE_PROCESS_ID );
+            JaxbProcessDefinition procDef = get(httpRequest, JaxbProcessDefinition.class);
             assertNotNull( "Empty process definition!", procDef);
             assertEquals( "Process definition id", OBJECT_VARIABLE_PROCESS_ID, procDef.getId());
         }
@@ -398,19 +448,19 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         { 
             String varId = "myobject";
             String varVal = "10";
-            ClientRequest restRequest = helper.createRequest(
-                    "runtime/" + deploymentId + "/process/" + OBJECT_VARIABLE_PROCESS_ID + "/start?map_" + varId + "=" + varVal);
-            JaxbProcessInstanceResponse procInstResp = post(restRequest, mediaType, JaxbProcessInstanceResponse.class);
+            KieRemoteHttpRequest httpRequest 
+                = helper.createRequest( "runtime/" + deploymentId + "/process/" + OBJECT_VARIABLE_PROCESS_ID + "/start?map_" + varId + "=" + varVal);
+            JaxbProcessInstanceResponse procInstResp = post(httpRequest, 200, JaxbProcessInstanceResponse.class);
             long objVarProcInstId = procInstResp.getResult().getId();
 
             // variable/{varId}
 
-            restRequest = helper.createRequest("history/variable/" + varId);
-            JaxbHistoryLogList jhll = get(restRequest, mediaType, JaxbHistoryLogList.class);
+            httpRequest = helper.createRequest("history/variable/" + varId);
+            JaxbHistoryLogList jhll = get(httpRequest, JaxbHistoryLogList.class);
             List<VariableInstanceLog> viLogs = new ArrayList<VariableInstanceLog>();
             if (jhll != null) {
-                List<AuditEvent> history = jhll.getResult();
-                for (AuditEvent ae : history) {
+                List<Object> history = jhll.getResult();
+                for (Object ae : history) {
                     VariableInstanceLog viLog = (VariableInstanceLog) ae;
                     if (viLog.getProcessInstanceId() == objVarProcInstId) {
                         viLogs.add(viLog);
@@ -430,14 +480,14 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
             
             // history/variable/{varId}/instances
 
-            restRequest = helper.createRequest("history/variable/" + varId + "/instances");
-            jhll = get(restRequest, mediaType, JaxbHistoryLogList.class);
+            httpRequest = helper.createRequest("history/variable/" + varId + "/instances");
+            jhll = get(httpRequest, JaxbHistoryLogList.class);
 
             assertNotNull("Empty ProcesInstanceLog list", jhll);
             List<ProcessInstanceLog> piLogs = new ArrayList<ProcessInstanceLog>();
             if (jhll != null) {
-                List<AuditEvent> history = jhll.getResult();
-                for (AuditEvent ae : history) {
+                List<Object> history = jhll.getResult();
+                for (Object ae : history) {
                     piLogs.add((ProcessInstanceLog) ae);
                 }
             }
@@ -445,7 +495,6 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
             assertEquals("ProcessInstanceLog list size", piLogs.size(), 1);
             ProcessInstanceLog pi = piLogs.get(0);
             assertNotNull(pi);
-            assertEquals(objVarProcInstId, pi.getId());
 
             // TODO: history/variable/{varId}/value/{val}/instances
         }
@@ -455,9 +504,9 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         RestRequestHelper maryReqHelper = RestRequestHelper.newInstance(deploymentUrl, MARY_USER, MARY_PASSWORD);
         RestRequestHelper johnReqHelper = RestRequestHelper.newInstance(deploymentUrl, JOHN_USER, JOHN_PASSWORD);
 
-        ClientRequest restRequest = maryReqHelper.createRequest(
+        KieRemoteHttpRequest httpRequest = maryReqHelper.createRequest(
                 "runtime/" + deploymentId + "/process/" + GROUP_ASSSIGNMENT_PROCESS_ID + "/start");
-        JaxbProcessInstanceResponse procInstResp = post(restRequest, mediaType, JaxbProcessInstanceResponse.class);
+        JaxbProcessInstanceResponse procInstResp = post(httpRequest, 200, JaxbProcessInstanceResponse.class);
         assertEquals(ProcessInstance.STATE_ACTIVE, procInstResp.getState());
         long procInstId = procInstResp.getId();
 
@@ -469,16 +518,13 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         assertEquals("Task 1", taskSummary.getName());
 
         // complete 'Task 1' as mary
-        restRequest = maryReqHelper.createRequest("task/" + taskId + "/claim");
-        ClientResponse<?> responseObj = post(restRequest, mediaType);
-        responseObj.releaseConnection();
+        httpRequest = maryReqHelper.createRequest("task/" + taskId + "/claim");
+        post(httpRequest, 200);
 
-        restRequest = maryReqHelper.createRequest("task/" + taskId + "/start");
-        responseObj = post(restRequest, mediaType);
-        responseObj.releaseConnection();
-        restRequest = maryReqHelper.createRequest("task/" + taskId + "/complete");
-        responseObj = post(restRequest, mediaType);
-        responseObj.releaseConnection();
+        httpRequest = maryReqHelper.createRequest("task/" + taskId + "/start");
+        post(httpRequest, 200);
+        httpRequest = maryReqHelper.createRequest("task/" + taskId + "/complete");
+        post(httpRequest, 200);
 
         // now make sure that the next task has been assigned to the
         // correct person. it should be mary.
@@ -488,15 +534,12 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         taskId = taskSummary.getId();
 
         // complete 'Task 2' as john
-        restRequest = maryReqHelper.createRequest("task/" + taskId + "/release");
-        responseObj = post(restRequest, mediaType);
-        responseObj.releaseConnection();
-        restRequest = johnReqHelper.createRequest("task/" + taskId + "/start");
-        responseObj = post(restRequest, mediaType);
-        responseObj.releaseConnection();
-        restRequest = johnReqHelper.createRequest("task/" + taskId + "/complete");
-        responseObj = post(restRequest, mediaType);
-        responseObj.releaseConnection();
+        httpRequest = maryReqHelper.createRequest("task/" + taskId + "/release");
+        post(httpRequest, 200);
+        httpRequest = johnReqHelper.createRequest("task/" + taskId + "/start");
+        post(httpRequest, 200);
+        httpRequest = johnReqHelper.createRequest("task/" + taskId + "/complete");
+        post(httpRequest, 200);
 
         // now make sure that the next task has been assigned to the
         // correct person. it should be john.
@@ -506,24 +549,22 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         taskId = taskSummary.getId();
 
         // complete 'Task 3' as john
-        restRequest = johnReqHelper.createRequest("task/" + taskId + "/start");
-        responseObj = post(restRequest, mediaType);
-        responseObj.releaseConnection();
-        restRequest = johnReqHelper.createRequest("task/" + taskId + "/complete");
-        responseObj = post(restRequest, mediaType);
-        responseObj.releaseConnection();
+        httpRequest = johnReqHelper.createRequest("task/" + taskId + "/start");
+        post(httpRequest, 200);
+        httpRequest = johnReqHelper.createRequest("task/" + taskId + "/complete");
+        post(httpRequest, 200);
 
         // assert process finished
-        restRequest = maryReqHelper.createRequest("history/instance/" + procInstId);
-        JaxbProcessInstanceLog jaxbProcInstLog = get(restRequest, mediaType, JaxbProcessInstanceLog.class);
+        httpRequest = maryReqHelper.createRequest("history/instance/" + procInstId);
+        JaxbProcessInstanceLog jaxbProcInstLog = get(httpRequest, JaxbProcessInstanceLog.class);
         ProcessInstanceLog procInstLog = jaxbProcInstLog.getResult();
         assertEquals("Process instance has not completed!", ProcessInstance.STATE_COMPLETED, procInstLog.getStatus().intValue());
     }
 
     private TaskSummary getTaskSummary(RestRequestHelper requestHelper, long processInstanceId, Status status) throws Exception {
-        ClientRequest restRequest = requestHelper.createRequest(
+        KieRemoteHttpRequest httpRequest = requestHelper.createRequest(
                 "task/query?processInstanceId=" + processInstanceId + "&status=" + status.toString());
-        JaxbTaskSummaryListResponse taskSumListResp = get(restRequest, mediaType, JaxbTaskSummaryListResponse.class);
+        JaxbTaskSummaryListResponse taskSumListResp = get(httpRequest, JaxbTaskSummaryListResponse.class);
         List<TaskSummary> taskSumList = taskSumListResp.getResult();
         assertEquals(1, taskSumList.size());
         return taskSumList.get(0);
@@ -562,7 +603,7 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         /**
          * Check that MyType was correctly deserialized on server side
          */
-        List<VariableInstanceLog> varLogList = engine.getAuditLogService().findVariableInstancesByName("type", false);
+        List<VariableInstanceLog> varLogList = (List<VariableInstanceLog>) engine.getAuditLogService().findVariableInstancesByName("type", false);
         VariableInstanceLog thisProcInstVarLog = null;
         for (VariableInstanceLog varLog : varLogList) {
             if (varLog.getProcessInstanceId() == procInstId) {
@@ -574,7 +615,7 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         assertEquals("De/serialization of Kjar type did not work.", param.getClass().getName(), thisProcInstVarLog.getValue());
 
         // Double check for BZ-1085267
-        varLogList = engine.getAuditLogService().findVariableInstances(procInstId, "type");
+        varLogList = (List<VariableInstanceLog>) engine.getAuditLogService().findVariableInstances(procInstId, "type");
         assertNotNull("No variable log list retrieved!", varLogList);
         assertTrue("Variable log list is empty!", varLogList.size() > 0);
     }
@@ -584,7 +625,7 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         RemoteRuntimeEngine runtimeEngine = getRemoteRuntime(deploymentUrl, user, password);
 
         KieSession ksession = runtimeEngine.getKieSession();
-        AuditLogService auditLogService = runtimeEngine.getAuditLogService();
+        AuditService auditService = runtimeEngine.getAuditLogService();
 
         // Setup facts
         Person person = new Person("guest", "Dluhoslav Chudobny");
@@ -606,7 +647,7 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         // assertEquals("Poor customer", ((Request)ksession.getObject(factHandle)).getInvalidReason());
         assertNull(ksession.getProcessInstance(pi.getId()));
 
-        List<VariableInstanceLog> varLogs = auditLogService.findVariableInstancesByName("requestReason", false);
+        List<VariableInstanceLog> varLogs = (List<VariableInstanceLog>) auditService.findVariableInstancesByName("requestReason", false);
         for (VariableInstanceLog varLog : varLogs) {
             if (varLog.getProcessInstanceId() == pi.getId()) {
                 assertEquals("Poor customer", varLog.getValue());

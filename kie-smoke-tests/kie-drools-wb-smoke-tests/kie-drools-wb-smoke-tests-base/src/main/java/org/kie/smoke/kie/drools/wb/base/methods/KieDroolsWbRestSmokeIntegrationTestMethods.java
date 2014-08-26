@@ -1,11 +1,11 @@
 package org.kie.smoke.kie.drools.wb.base.methods;
 
-import static org.kie.smoke.tests.util.RestUtil.*;
-import static org.kie.smoke.kie.drools.wb.base.util.TestConstants.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.kie.smoke.kie.drools.wb.base.util.TestConstants.MARY_PASSWORD;
+import static org.kie.smoke.kie.drools.wb.base.util.TestConstants.MARY_USER;
+import static org.kie.smoke.tests.util.RestUtil.delete;
+import static org.kie.smoke.tests.util.RestUtil.get;
+import static org.kie.smoke.tests.util.RestUtil.post;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.JsonGenerationException;
@@ -33,9 +34,10 @@ import org.guvnor.rest.client.OrganizationalUnit;
 import org.guvnor.rest.client.RemoveRepositoryFromOrganizationalUnitRequest;
 import org.guvnor.rest.client.RepositoryRequest;
 import org.guvnor.rest.client.RepositoryResponse;
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
 import org.junit.Test;
+import org.kie.remote.client.rest.KieRemoteHttpRequest;
+import org.kie.remote.client.rest.KieRemoteHttpRequestException;
+import org.kie.remote.client.rest.KieRemoteHttpResponse;
 import org.kie.services.client.api.RestRequestHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,14 +51,45 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
 
     private final int maxTries = 10;
    
-    private final MediaType mediaType = MediaType.APPLICATION_JSON_TYPE;
-   
     private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
     
-    protected static void addToRequestBody(ClientRequest restRequest, Object obj) throws Exception { 
+    protected static void addToRequestBody(KieRemoteHttpRequest restRequest, Object obj) throws Exception { 
         String body = convertObjectToJsonString(obj);
         logger.debug( "]] " + body );
-        restRequest.body(MediaType.APPLICATION_JSON_TYPE, body);
+        restRequest.accept(MediaType.APPLICATION_JSON).body(body);
+    }
+   
+    private <T> T get(KieRemoteHttpRequest httpRequest, Class<T> entityClass) { 
+        KieRemoteHttpResponse httpResponse = httpRequest.get().response();
+        assertEquals("Incorrect response status (" + httpRequest.getUri() + ")", 200, httpResponse.code() );
+        return deserialize(httpResponse, entityClass);
+    }
+   
+    private <T> T post(KieRemoteHttpRequest httpRequest, int status, Class<T> entityClass) { 
+        KieRemoteHttpResponse httpResponse = httpRequest.post().response();
+        assertEquals("Incorrect response status (" + httpRequest.getUri() + ")", status, httpResponse.code() );
+        return deserialize(httpResponse, entityClass);
+    }
+   
+    private <T> T delete(KieRemoteHttpRequest httpRequest, int status, Class<T> entityClass) { 
+        KieRemoteHttpResponse httpResponse = httpRequest.delete().response();
+        assertEquals("Incorrect response status (" + httpRequest.getUri() + ")", status, httpResponse.code() );
+        return deserialize(httpResponse, entityClass);
+    }
+   
+    private <T> T deserialize(KieRemoteHttpResponse httpResponse, Class<T> entityClass) { 
+        String acceptHeader = httpResponse.header(HttpHeaders.CONTENT_TYPE);
+        assertTrue( "Incorrect content type header: " + acceptHeader,  acceptHeader == null || MediaType.APPLICATION_JSON.equals(acceptHeader) );
+        String content = httpResponse.body();
+        
+        T result = null;
+        try {
+            result = mapper.readValue(content, entityClass);
+        } catch( Exception e ) {
+            logger.error( "Unable to deserialze {} instance:\n{}", entityClass.getName(), content);
+            fail( "Unable to deserialize json string, see log.");
+        }
+        return result;
     }
     
     private static ObjectMapper mapper = new ObjectMapper();
@@ -93,8 +126,8 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
     public void manipulatingRepositories(URL deploymentUrl) throws Exception {
         // rest/repositories GET
         RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
-        ClientRequest restRequest = requestHelper.createRequest("repositories");
-        Collection<RepositoryResponse> repoResponses = get(restRequest, mediaType, Collection.class);
+        KieRemoteHttpRequest restRequest = requestHelper.createRequest("repositories");
+        Collection<RepositoryResponse> repoResponses = get(restRequest, Collection.class);
         assertTrue( repoResponses.size() > 0 );
         String ufPlaygroundUrl = null;
         Iterator<?> iter = repoResponses.iterator();
@@ -115,7 +148,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         newRepo.setRequestType("new");
         addToRequestBody(restRequest, newRepo);
         
-        CreateOrCloneRepositoryRequest createJobRequest = post(restRequest, mediaType, 202, CreateOrCloneRepositoryRequest.class);
+        CreateOrCloneRepositoryRequest createJobRequest = post(restRequest, 202, CreateOrCloneRepositoryRequest.class);
         logger.debug("]] " + convertObjectToJsonString(createJobRequest));
         assertNotNull( "create repo job request", createJobRequest);
         assertEquals( "job request status", JobStatus.ACCEPTED, createJobRequest.getStatus() );
@@ -131,7 +164,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         String testProjectName = "test-project";
         project.setName(testProjectName);
         addToRequestBody(restRequest, project);
-        CreateProjectRequest createProjectRequest = post(restRequest, mediaType, 202, CreateProjectRequest.class);
+        CreateProjectRequest createProjectRequest = post(restRequest, 202, CreateProjectRequest.class);
         logger.debug("]] " + convertObjectToJsonString(createProjectRequest));
         
         // rest/jobs/{jobId} GET
@@ -152,8 +185,8 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
     public void mavenOperations(URL deploymentUrl) throws Exception { 
         // rest/repositories GET
         RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
-        ClientRequest restRequest = requestHelper.createRequest("repositories");
-        Collection<Map<String, String>> repoResponses = get(restRequest, mediaType, Collection.class);
+        KieRemoteHttpRequest restRequest = requestHelper.createRequest("repositories");
+        Collection<Map<String, String>> repoResponses = get(restRequest, Collection.class);
         assertTrue( repoResponses.size() > 0 );
         String repoName = repoResponses.iterator().next().get("name");
        
@@ -165,7 +198,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         project.setName(projectName);
         addToRequestBody(restRequest, project);
 
-        CreateProjectRequest createProjectRequest = post(restRequest, mediaType, 202, CreateProjectRequest.class);
+        CreateProjectRequest createProjectRequest = post(restRequest, 202, CreateProjectRequest.class);
         logger.debug("]] " + convertObjectToJsonString(createProjectRequest));
         
         // rest/jobs/{jobId} GET
@@ -173,7 +206,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
 
         // rest/repositories/{repoName}/projects POST
         restRequest = requestHelper.createRequest("repositories/" + repoName + "/projects/" + projectName + "/maven/compile");
-        CompileProjectRequest compileRequest = post(restRequest, mediaType, 202, CompileProjectRequest.class);
+        CompileProjectRequest compileRequest = post(restRequest, 202, CompileProjectRequest.class);
         logger.debug("]] " + convertObjectToJsonString(compileRequest));
         
         // rest/jobs/{jobId} GET
@@ -192,8 +225,8 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         assertEquals( "Initial status of request should be ACCEPTED", JobStatus.ACCEPTED, jobStatus );
         int wait = 0;
         while( jobStatus.equals(JobStatus.ACCEPTED) && wait < maxTries ) {
-            ClientRequest restRequest = requestHelper.createRequest("jobs/" + jobId);
-            JobResult jobResult = get(restRequest, mediaType, JobResult.class);
+            KieRemoteHttpRequest restRequest = requestHelper.createRequest("jobs/" + jobId);
+            JobResult jobResult = get(restRequest, JobResult.class);
             logger.debug( "]] " + convertObjectToJsonString(jobResult) );
             assertEquals( jobResult.getJobId(), jobId );
             jobStatus = jobResult.getStatus();
@@ -216,8 +249,8 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
     public void manipulatingOUs(URL deploymentUrl) throws Exception { 
         // rest/organizaionalunits GET
         RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
-        ClientRequest restRequest = requestHelper.createRequest("organizationalunits");
-        Collection<OrganizationalUnit> orgUnits = get(restRequest, mediaType, Collection.class);
+        KieRemoteHttpRequest restRequest = requestHelper.createRequest("organizationalunits");
+        Collection<OrganizationalUnit> orgUnits = get(restRequest, Collection.class);
         int origUnitsSize = orgUnits.size();
         
         // rest/organizaionalunits POST
@@ -227,14 +260,14 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         orgUnit.setName(UUID.randomUUID().toString());
         orgUnit.setOwner(this.getClass().getSimpleName());
         addToRequestBody(restRequest, orgUnit);
-        CreateOrganizationalUnitRequest createOURequest = post(restRequest, mediaType, 202, CreateOrganizationalUnitRequest.class);
+        CreateOrganizationalUnitRequest createOURequest = post(restRequest, 202, CreateOrganizationalUnitRequest.class);
 
         // rest/jobs/{jobId}
         waitForJobToComplete(deploymentUrl, createOURequest.getJobId(), createOURequest.getStatus(), requestHelper);
        
         // rest/organizaionalunits GET
         restRequest = requestHelper.createRequest("organizationalunits");
-        orgUnits = get(restRequest, mediaType, Collection.class);
+        orgUnits = get(restRequest, Collection.class);
         assertEquals( "Exepcted an OU to be added.", origUnitsSize + 1, orgUnits.size());
         
         // rest/repositories POST
@@ -246,7 +279,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         newRepo.setRequestType("new");
         addToRequestBody(restRequest, newRepo);
         
-        CreateOrCloneRepositoryRequest createRepoRequest = post(restRequest, mediaType, 202, CreateOrCloneRepositoryRequest.class);
+        CreateOrCloneRepositoryRequest createRepoRequest = post(restRequest, 202, CreateOrCloneRepositoryRequest.class);
         logger.debug("]] " + convertObjectToJsonString(createRepoRequest));
         assertNotNull( "create repo job request", createRepoRequest);
         assertEquals( "job request status", JobStatus.ACCEPTED, createRepoRequest.getStatus() );
@@ -257,7 +290,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         // rest/organizationalunits/{ou}/repositories/{repoName} POST
         restRequest = requestHelper.createRequest("organizationalunits/" + orgUnit.getName() + "/repositories/" + repoName);
         
-        AddRepositoryToOrganizationalUnitRequest addRepoToOuRequest = post(restRequest, mediaType, 202, AddRepositoryToOrganizationalUnitRequest.class);
+        AddRepositoryToOrganizationalUnitRequest addRepoToOuRequest = post(restRequest, 202, AddRepositoryToOrganizationalUnitRequest.class);
         logger.debug("]] " + convertObjectToJsonString(addRepoToOuRequest));
         assertNotNull( "add repo to ou job request", addRepoToOuRequest);
         assertEquals( "job request status", JobStatus.ACCEPTED, addRepoToOuRequest.getStatus() );
@@ -268,7 +301,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         // rest/organizationalunits/{ou} GET
         restRequest = requestHelper.createRequest("organizationalunits/" + orgUnit.getName() );
         
-        OrganizationalUnit orgUnitRequest = get(restRequest, mediaType, OrganizationalUnit.class);
+        OrganizationalUnit orgUnitRequest = get(restRequest, OrganizationalUnit.class);
         logger.debug("]] " + convertObjectToJsonString(orgUnitRequest));
         assertNotNull( "organizational unit request", orgUnitRequest);
         
@@ -276,7 +309,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         
         // rest/organizationalunits/{ou}/repositories/{repoName} DELETE
         restRequest = requestHelper.createRequest("organizationalunits/" + orgUnit.getName() + "/repositories/" + repoName);
-        RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRquest = delete(restRequest, mediaType, 202, RemoveRepositoryFromOrganizationalUnitRequest.class);
+        RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRquest = delete(restRequest, 202, RemoveRepositoryFromOrganizationalUnitRequest.class);
         logger.debug("]] " + convertObjectToJsonString(remRepoFromOuRquest));
         assertNotNull( "add repo to ou job request", remRepoFromOuRquest);
         assertEquals( "job request status", JobStatus.ACCEPTED, remRepoFromOuRquest.getStatus() );
@@ -286,7 +319,7 @@ public class KieDroolsWbRestSmokeIntegrationTestMethods {
         
         // rest/organizationalunits/{ou} GET
         restRequest = requestHelper.createRequest("organizationalunits/" + orgUnit.getName() );
-        orgUnitRequest = get(restRequest, mediaType, OrganizationalUnit.class);
+        orgUnitRequest = get(restRequest, OrganizationalUnit.class);
         logger.debug("]] " + convertObjectToJsonString(orgUnitRequest));
         assertNotNull( "organizational unit request", orgUnitRequest);
         
