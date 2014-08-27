@@ -100,20 +100,11 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>M2RepoFileServlet</servlet-name>
-    <servlet-class>org.guvnor.m2repo.backend.server.FileServlet</servlet-class>
+    <servlet-name>M2Servlet</servlet-name>
+    <servlet-class>org.guvnor.m2repo.backend.server.M2Servlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>M2RepoFileServlet</servlet-name>
-    <url-pattern>/org.kie.workbench.KIEWebapp/m2repo/file</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>FileDownloadServlet</servlet-name>
-    <servlet-class>org.guvnor.m2repo.backend.server.FileDownloadServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FileDownloadServlet</servlet-name>
+    <servlet-name>M2Servlet</servlet-name>
     <url-pattern>/maven2/*</url-pattern>
   </servlet-mapping>
 
@@ -471,18 +462,18 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <!-- end designer -->
 
   <!--start form-modeler -->
-    <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
-    </servlet>
+  <servlet>
+    <servlet-name>Controller</servlet-name>
+    <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
+  </servlet>
 
-    <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
-    </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
+  </servlet-mapping>
   <!-- end form-modeler -->
 
-    <resource-ref>
+  <resource-ref>
     <description>Console DS</description>
     <res-ref-name>jdbc/jbpm</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
@@ -504,19 +495,19 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </auth-constraint>
   </security-constraint>
 
-    <security-constraint>
-        <web-resource-collection>
-          <web-resource-name>formModeler</web-resource-name>
-          <url-pattern>/formModeler/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-          <role-name>admin</role-name>
-          <role-name>analyst</role-name>
-          <role-name>developer</role-name>
-          <role-name>user</role-name>
-          <role-name>manager</role-name>
-        </auth-constraint>
-    </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>formModeler</web-resource-name>
+      <url-pattern>/formModeler/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>analyst</role-name>
+      <role-name>developer</role-name>
+      <role-name>user</role-name>
+      <role-name>manager</role-name>
+    </auth-constraint>
+  </security-constraint>
 
   <login-config>
     <auth-method>FORM</auth-method>
@@ -528,17 +519,17 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
 
   <security-role>
     <description>Administrator - Administrates the BPMS system. Has full access
-       rights to make any changes necessary. Also has the
-       ability to add and remove users from the system.
+      rights to make any changes necessary. Also has the
+      ability to add and remove users from the system.
     </description>
     <role-name>admin</role-name>
   </security-role>
 
   <security-role>
     <description>Analyst - Responsible for creating and designing processes
-       into the system. Creates process flows and handles
-       process change requests. Needs to test processes that
-       they create. Also creates forms and dashboards.
+      into the system. Creates process flows and handles
+      process change requests. Needs to test processes that
+      they create. Also creates forms and dashboards.
     </description>
     <role-name>analyst</role-name>
   </security-role>
@@ -561,7 +552,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
 
   <security-role>
     <description>Manager/Viewer-only User - Viewer of the system that is interested in statistics
-      around the  business processes and their performance, business indicators, and other
+      around the business processes and their performance, business indicators, and other
       reporting of the system and people who interact with the system.
     </description>
     <role-name>manager</role-name>
