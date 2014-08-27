@@ -99,6 +99,18 @@
       <type>jar</type>
     </dependency>
 
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-document</artifactId>
+      <type>jar</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-audit</artifactId>
+      <type>jar</type>
+    </dependency>
+
 
     <dependency>
       <groupId>org.jbpm</groupId>
