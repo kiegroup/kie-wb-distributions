@@ -45,8 +45,8 @@
     <url-pattern>/rest/*</url-pattern>
     <url-pattern>/maven2/*</url-pattern>
   </filter-mapping>
-  
-  
+
+
   <!-- RESTEasy configurations -->
 
   <context-param>
@@ -57,7 +57,8 @@
   <context-param>
     <param-name>resteasy.servlet.mapping.prefix</param-name>
     <param-value>/rest</param-value>
-   </context-param>
+     
+  </context-param>
 
   <context-param>
     <param-name>resteasy.injector.factory</param-name>
@@ -112,11 +113,11 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>FileDownloadServlet</servlet-name>
-    <servlet-class>org.guvnor.m2repo.backend.server.FileDownloadServlet</servlet-class>
+    <servlet-name>M2Servlet</servlet-name>
+    <servlet-class>org.guvnor.m2repo.backend.server.M2Servlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>FileDownloadServlet</servlet-name>
+    <servlet-name>M2Servlet</servlet-name>
     <url-pattern>/maven2/*</url-pattern>
   </servlet-mapping>
 
@@ -178,17 +179,17 @@
 
   <security-role>
     <description>Administrator - Administrates the BPMS system. Has full access
-       rights to make any changes necessary. Also has the
-       ability to add and remove users from the system.
+      rights to make any changes necessary. Also has the
+      ability to add and remove users from the system.
     </description>
     <role-name>admin</role-name>
   </security-role>
 
   <security-role>
     <description>Analyst - Responsible for creating and designing processes
-       into the system. Creates process flows and handles
-       process change requests. Needs to test processes that
-       they create. Also creates forms and dashboards.
+      into the system. Creates process flows and handles
+      process change requests. Needs to test processes that
+      they create. Also creates forms and dashboards.
     </description>
     <role-name>analyst</role-name>
   </security-role>
@@ -211,7 +212,7 @@
 
   <security-role>
     <description>Manager/Viewer-only User - Viewer of the system that is interested in statistics
-      around the  business processes and their performance, business indicators, and other
+      around the business processes and their performance, business indicators, and other
       reporting of the system and people who interact with the system.
     </description>
     <role-name>manager</role-name>
