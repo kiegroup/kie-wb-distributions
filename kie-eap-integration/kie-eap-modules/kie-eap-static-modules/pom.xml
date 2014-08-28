@@ -60,6 +60,7 @@
     <module>net-sf-opencsv</module>
     <module>org.antlr</module>
     <module>org-apache-abdera</module>
+    <module>org-apache-camel</module>
     <module>org-apache-xmlgraphics</module>
     <module>org-beanshell</module>
     <module>org-eclipse-emf</module>
