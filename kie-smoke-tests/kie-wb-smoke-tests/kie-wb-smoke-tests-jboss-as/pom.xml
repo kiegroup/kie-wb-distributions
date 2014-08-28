@@ -177,7 +177,7 @@
         <artifactId>maven-failsafe-plugin</artifactId>
         <executions>
           <execution>
-            <id>integration-test</id>
+            <id>failsafe-test-goal</id>
             <phase>integration-test</phase>
             <goals>
               <goal>integration-test</goal>

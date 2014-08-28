@@ -13,8 +13,6 @@
 
   <name>KIE Smoke Tests :: kie-wb :: Wildfly 8 tests</name>
 
-  <!-- == test setup == generate-test-resources: unpack jboss process-test-resources: place standalone-full.xml, fix standalone-full.xml 
-    post-integration-test: fix weird characters in failsafe reports -->
   <properties>
     <skip.integration.tests>true</skip.integration.tests>
 
@@ -89,13 +87,15 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <executions>
             <execution>
-              <id>integration-test</id>
+              <id>failsafe-test-goal</id>
+              <phase>integration-test</phase>
               <goals>
                 <goal>integration-test</goal>
               </goals>
             </execution>
             <execution>
-              <id>verify</id>
+              <id>failsafe-verify-goal</id>
+              <phase>verify</phase>
               <goals>
                 <goal>verify</goal>
               </goals>

@@ -171,8 +171,15 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
     }
 
     private RemoteRuntimeEngine getRemoteRuntime(URL deploymentUrl, String user, String password) {
-        return RemoteRestRuntimeEngineFactory.newBuilder().addDeploymentId(deploymentId).addUrl(deploymentUrl).addUserName(user)
-                .addPassword(password).build();
+        // @formatter:off
+        return RemoteRestRuntimeEngineFactory.newBuilder()
+                .addDeploymentId(deploymentId)
+                .addUrl(deploymentUrl)
+                .addUserName(user)
+                .addPassword(password)
+                .addExtraJaxbClasses(MyType.class, Person.class, Request.class)
+                .build();
+        // @formatter:on
     }
 
     private <T> T deserialize(KieRemoteHttpResponse httpResponse, Class<T> entityClass) { 
