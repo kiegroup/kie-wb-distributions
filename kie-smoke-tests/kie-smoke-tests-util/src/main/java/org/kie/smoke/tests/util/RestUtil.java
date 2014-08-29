@@ -135,6 +135,19 @@ public class RestUtil {
         return httpMethodReturnType(POST, restRequest, mediaType, status, responseType);
     }
 
+    /**
+     * Call the POST HTTP method on the given request and then releases the connection.
+     * @param restRequest The {@link ClientRequest} instance with the request information
+     * @param mediaType The {@link MediaType} that should be used with the request
+     * @param status The HTTP status that the request should return
+     * @return The actual entity returned by the request: this can be null
+     */
+    public static void post(ClientRequest restRequest, MediaType mediaType, int status) {
+        ClientResponse<?> responseObj = httpMethodReturnResponse(POST, restRequest, mediaType, status);
+        responseObj.releaseConnection();
+    }
+
+    
     private static ClientResponse<?> httpMethodReturnResponse(int type, ClientRequest restRequest, MediaType mediaType, int status) {
         setAcceptHeader(restRequest, mediaType);
         ClientResponse<?> responseObj = logAndExecuteRequest(type, restRequest);

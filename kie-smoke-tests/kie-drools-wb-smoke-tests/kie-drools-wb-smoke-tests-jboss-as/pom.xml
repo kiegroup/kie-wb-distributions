@@ -145,13 +145,15 @@
         <artifactId>maven-failsafe-plugin</artifactId>
         <executions>
           <execution>
-            <id>integration-test</id>
+            <id>failsafe-test</id>
+            <phase>integration-test</phase>
             <goals>
               <goal>integration-test</goal>
             </goals>
           </execution>
           <execution>
             <id>verify</id>
+            <phase>verify</phase>
             <goals>
               <goal>verify</goal>
             </goals>
