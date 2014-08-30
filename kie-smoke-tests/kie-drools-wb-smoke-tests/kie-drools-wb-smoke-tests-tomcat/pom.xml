@@ -99,9 +99,45 @@
     </testResources>
 
     <plugins>
+      <!-- run tests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>failsafe-test</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>failsafe-verify</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=512m</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <environmentVariables>
+            <CATALINA_HOME>${tomcat.home}</CATALINA_HOME>
+          </environmentVariables>
+          <!-- Workaround for SHRINKDESC-97 until it is fixed. -->
+          <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
+        </configuration>
+      </plugin>
+
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
+          <!-- 1. unpack tomcat server -->
           <execution>
             <id>unpack-tomcat</id>
             <phase>generate-test-resources</phase>
@@ -121,6 +157,7 @@
               </artifactItems>
             </configuration>
           </execution>
+          <!-- 1. create local copy of war to check (debugging, etc.)
           <execution>
             <id>check-kie-drools-wb-war</id>
             <phase>generate-test-resources</phase>
@@ -140,6 +177,8 @@
               <outputDirectory>${project.build.directory}/deployments</outputDirectory>
             </configuration>
           </execution>
+           -->
+          <!-- 2. install jars needed when using the kie-drools-wb war on tomcat -->
           <execution>
             <id>copy-kie-drools-wb-libs</id>
             <phase>generate-test-resources</phase>
@@ -196,6 +235,7 @@
           </execution>
         </executions>
       </plugin>
+      <!-- 3. install user and other configuration files -->
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
@@ -218,12 +258,13 @@
           </execution>
         </executions>
       </plugin>
+      <!-- 4. activate integration code by modifying tomcat server.xml -->
       <plugin>
         <groupId>com.google.code.maven-replacer-plugin</groupId>
         <artifactId>replacer</artifactId>
         <executions>
           <execution>
-            <id>fix-jboss-standalone-xml</id>
+            <id>fix-tomcat-confiruation</id>
             <phase>process-test-resources</phase>
             <goals>
               <goal>replace</goal>
@@ -244,6 +285,7 @@
           </execution>
         </executions>
       </plugin>
+      <!-- 4. delete webapps/ROOT since it can get in the way -->
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
@@ -259,17 +301,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <environmentVariables>
-            <CATALINA_HOME>${tomcat.home}</CATALINA_HOME>
-          </environmentVariables>
-          <!-- Workaround for SHRINKDESC-97 until it is fixed. -->
-          <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
-        </configuration>
       </plugin>
     </plugins>
   </build>
