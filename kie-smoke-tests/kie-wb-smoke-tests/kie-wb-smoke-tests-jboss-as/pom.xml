@@ -69,10 +69,12 @@
     <dependency>
       <groupId>org.hornetq</groupId>
       <artifactId>hornetq-core-client</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.hornetq</groupId>
       <artifactId>hornetq-jms-client</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
     

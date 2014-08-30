@@ -213,8 +213,9 @@ public class RestUtil {
             responseEntity = responseObj.getEntity(responseType);
         } catch( Exception e ) { 
             String msg = "Unable to serialize " + responseType.getSimpleName() + " instance";
+            logger.error(msg, e);
             responseObj.resetStream();
-            logger.error("{}:\n {}", msg, responseObj.getEntity(String.class), e);
+            logger.error("Body of response:\n {}", responseObj.getEntity(String.class));
             fail(msg);
             throw new RuntimeException("Fail should keep this exception from being thrown!");
         }

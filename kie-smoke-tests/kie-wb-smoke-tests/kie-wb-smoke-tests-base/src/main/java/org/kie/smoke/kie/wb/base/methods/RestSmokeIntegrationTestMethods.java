@@ -474,7 +474,7 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         TaskSummary taskSummary = getTaskSummary(maryReqHelper, procInstId, Status.Ready);
         long taskId = taskSummary.getId();
         assertNull(taskSummary.getActualOwner());
-        assertNull(taskSummary.getPotentialOwners());
+        assertTrue(taskSummary.getPotentialOwners().isEmpty());
         assertEquals("Task 1", taskSummary.getName());
 
         // complete 'Task 1' as mary
