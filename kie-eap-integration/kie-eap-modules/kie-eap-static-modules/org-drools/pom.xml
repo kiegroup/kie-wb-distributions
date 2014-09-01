@@ -112,7 +112,6 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-pmml</artifactId>
-      <version>${version.org.drools}</version>
       <type>jar</type>
     </dependency>
 
