@@ -98,6 +98,7 @@
           <exclude>WEB-INF/lib/kie-wb-common-default-editor-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-wb-common-java-editor-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-wb-common-server-ui-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-wb-common-contributors-client-*.jar</exclude>
 
           <!-- Drools Workbench client related -->
           <exclude>WEB-INF/lib/drools-wb-categories-editor-client-*.jar</exclude>
@@ -124,6 +125,16 @@
 
           <!-- jBPM console & other client related -->
           <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
+
+          <!-- Dashbuilder client related -->
+          <exclude>WEB-INF/lib/dashbuilder-common-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/dashbuilder-dataset-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/dashbuilder-displayer-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/dashbuilder-displayer-screen-*.jar</exclude>
+          <exclude>WEB-INF/lib/dashbuilder-displayer-editor-*.jar</exclude>
+          <exclude>WEB-INF/lib/dashbuilder-renderer-google-*.jar</exclude>
+          <exclude>WEB-INF/lib/dashbuilder-renderer-table-*.jar</exclude>
+          <exclude>WEB-INF/lib/dashbuilder-renderer-selector-*.jar</exclude>
 
           <!-- General -->
           <exclude>WEB-INF/lib/*-sources.jar</exclude>

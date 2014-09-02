@@ -476,6 +476,20 @@
       <artifactId>kie-uberfire-widgets-service-backend</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-contributors-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-contributors-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-contributors-backend</artifactId>
+    </dependency>
 
     <!-- Drools Workbench Screens -->
     <dependency>
@@ -990,7 +1004,7 @@
           <runTarget>org.kie.workbench.KIEWebapp/KIEWebapp.html</runTarget>
             <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Djetty.custom.sys.classes=bitronix;javax.transaction -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false</extraJvmArgs>
           <server>org.jboss.errai.cdi.server.gwt.JettyLauncher</server>
-          <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile, 
+          <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile,
           see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
           <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
         </configuration>
@@ -1037,7 +1051,7 @@
         </configuration>
       </plugin>
 
-      <!-- Tests are skipped by default because they require additional GWT 
+      <!-- Tests are skipped by default because they require additional GWT
       dependencies. Run mvn with -Pintegration-test to enable testing. -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>

@@ -42,9 +42,13 @@ public interface AppConstants
 
     String administration();
 
+    String contributors();
+
     String deployment();
 
     String servers();
+
+    String activity();
 
     String management();
 

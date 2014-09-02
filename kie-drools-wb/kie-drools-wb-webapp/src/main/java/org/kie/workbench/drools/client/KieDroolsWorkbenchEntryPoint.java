@@ -142,6 +142,7 @@ public class KieDroolsWorkbenchEntryPoint {
                 .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
                 .newTopLevelMenu( constants.deployment() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
                 .newTopLevelMenu( constants.servers() ).withRoles( kieACL.getGrantedRoles( G_SERVERS ) ).withItems( getServerViews() ).endMenu()
+                .newTopLevelMenu( constants.activity() ).withRoles( kieACL.getGrantedRoles( G_ACTIVITY ) ).withItems( getActivityViews() ).endMenu()
                 .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -217,6 +218,19 @@ public class KieDroolsWorkbenchEntryPoint {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "ServerManagementPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
+    }
+
+    private List<MenuItem> getActivityViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+
+        result.add( MenuFactory.newSimpleItem( constants.contributors() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 

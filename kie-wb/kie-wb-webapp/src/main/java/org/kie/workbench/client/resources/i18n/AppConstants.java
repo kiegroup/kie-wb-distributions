@@ -42,6 +42,8 @@ public interface AppConstants
 
     String Administration();
 
+    String Contributors();
+
     String Authoring();
 
     String Process_Management();
@@ -61,6 +63,8 @@ public interface AppConstants
     String Deploy();
 
     String Servers();
+
+    String Activity();
 
     String Management();
 

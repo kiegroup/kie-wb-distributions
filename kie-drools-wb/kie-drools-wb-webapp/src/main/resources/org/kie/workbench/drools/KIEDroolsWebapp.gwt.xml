@@ -35,6 +35,7 @@
   <inherits name="org.kie.workbench.common.screens.projectimportsscreen.KieWorkbenchCommonProjectImportsScreenClient"/>
   <inherits name="org.kie.workbench.common.screens.javaeditor.KieWorkbenchCommonJavaEditorClient"/>
   <inherits name="org.kie.workbench.common.screens.server.management.ServerManagementClient"/>
+  <inherits name="org.kie.workbench.common.screens.contributors.KieWorkbenchContributorsClient"/>
 
   <!-- Common Services -->
   <inherits name="org.kie.workbench.common.services.KieWorkbenchCommonServicesAPI"/>
