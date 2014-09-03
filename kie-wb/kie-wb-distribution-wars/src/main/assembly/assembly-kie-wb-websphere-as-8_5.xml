@@ -112,6 +112,7 @@
           <exclude>WEB-INF/lib/kie-wb-common-java-editor-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-wb-common-server-ui-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-wb-common-contributors-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-wb-common-social-home-page-client-*.jar</exclude>
 
           <!-- Drools Workbench client related -->
           <exclude>WEB-INF/lib/drools-wb-categories-editor-client-*.jar</exclude>
