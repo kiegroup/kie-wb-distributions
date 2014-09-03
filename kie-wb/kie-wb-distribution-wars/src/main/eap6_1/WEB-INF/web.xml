@@ -577,7 +577,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <url-pattern>/rest/*</url-pattern>
   </filter-mapping> 
  
-  <!-- web services
   <servlet>
     <servlet-name>CommandWebService</servlet-name>
     <servlet-class>org.kie.remote.services.ws.command.CommandWebServiceImpl</servlet-class>
@@ -587,6 +586,5 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <servlet-name>CommandWebService</servlet-name>
     <url-pattern>/ws/CommandService</url-pattern>
   </servlet-mapping>
-  -->
    
 </web-app>
