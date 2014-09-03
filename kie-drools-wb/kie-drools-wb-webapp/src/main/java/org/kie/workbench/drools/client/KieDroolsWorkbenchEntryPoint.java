@@ -227,10 +227,24 @@ public class KieDroolsWorkbenchEntryPoint {
     private List<MenuItem> getActivityViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
+        result.add( MenuFactory.newSimpleItem( constants.timeline() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
         result.add( MenuFactory.newSimpleItem( constants.contributors() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.people() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 

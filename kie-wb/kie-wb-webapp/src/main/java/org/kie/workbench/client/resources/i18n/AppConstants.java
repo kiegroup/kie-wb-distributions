@@ -44,6 +44,10 @@ public interface AppConstants
 
     String Contributors();
 
+    String Timeline();
+
+    String People();
+
     String Authoring();
 
     String Process_Management();

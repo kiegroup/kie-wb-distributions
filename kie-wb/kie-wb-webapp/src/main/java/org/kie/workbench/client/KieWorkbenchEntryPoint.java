@@ -51,6 +51,7 @@ import org.kie.workbench.common.services.shared.security.KieWorkbenchSecuritySer
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.menu.CustomSplashHelp;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
+import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
@@ -64,7 +65,6 @@ import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
 import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
-import org.uberfire.client.mvp.ActivityBeansCache;
 
 /**
  *
@@ -100,10 +100,10 @@ public class KieWorkbenchEntryPoint {
 
     @Inject
     private Caller<KieWorkbenchSecurityService> kieSecurityService;
-    
+
     @Inject
     private Caller<PlaceManagerActivityService> pmas;
-    
+
     @Inject
     private ActivityBeansCache activityBeansCache;
 
@@ -125,16 +125,16 @@ public class KieWorkbenchEntryPoint {
                 homeProducer.init();
             }
         } ).loadPolicy();
-        
-        List<String> allActivities = activityBeansCache.getActivitiesById();
-        pmas.call(new RemoteCallback<Void>(){
 
-          @Override
-          public void callback(Void response) {
-            
-          }
-        }).initActivities(allActivities);
-        
+        List<String> allActivities = activityBeansCache.getActivitiesById();
+        pmas.call( new RemoteCallback<Void>() {
+
+            @Override
+            public void callback( Void response ) {
+
+            }
+        } ).initActivities( allActivities );
+
     }
 
     private void loadPreferences() {
@@ -297,12 +297,26 @@ public class KieWorkbenchEntryPoint {
     }
 
     private List<MenuItem> getActivityViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+        final List<MenuItem> result = new ArrayList<MenuItem>( 3 );
+
+        result.add( MenuFactory.newSimpleItem( constants.Timeline() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
 
         result.add( MenuFactory.newSimpleItem( constants.Contributors() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.People() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
