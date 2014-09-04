@@ -24,7 +24,6 @@
     <dependency>
       <groupId>jakarta-regexp</groupId>
       <artifactId>jakarta-regexp</artifactId>
-      <version>1.4</version>
       <type>jar</type>
     </dependency>
 
