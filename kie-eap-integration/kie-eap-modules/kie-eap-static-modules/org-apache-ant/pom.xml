@@ -31,7 +31,6 @@
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant-launcher</artifactId>
-      <version>1.8.2</version>
       <type>jar</type>
     </dependency>
 
