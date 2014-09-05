@@ -17,7 +17,7 @@
     <module.type>static</module.type>
     <module.location>org/apache/maven</module.location>
     <module.slot>main</module.slot>
-    <module.dependencies>org.sonatype.sisu:main,org.eclipse.sisu:main:true,javax.inject.api:main</module.dependencies>
+    <module.dependencies>com.google.guava:main,org.sonatype.sisu:main,org.eclipse.sisu:main:true,javax.inject.api:main</module.dependencies>
   </properties>
 
   <dependencies>

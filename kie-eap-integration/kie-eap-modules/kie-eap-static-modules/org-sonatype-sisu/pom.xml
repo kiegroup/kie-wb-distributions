@@ -28,14 +28,12 @@
       <version>3.1.0</version>
       <type>jar</type>
       <classifier>no_aop</classifier>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonatype.sisu</groupId>
-      <artifactId>sisu-guava</artifactId>
-      <version>0.9.9</version>
-      <type>jar</type>
-<!--      <classifier>no_aop</classifier> -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.sonatype.sisu</groupId>
+          <artifactId>sisu-guava</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- These clases are provided by org.sonatype.sisu:sisu-inject-plexus artifact. -->
