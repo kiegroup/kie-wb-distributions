@@ -36,23 +36,5 @@
       </exclusions>
     </dependency>
 
-    <!-- These clases are provided by org.sonatype.sisu:sisu-inject-plexus artifact. -->
-    <!-- So the references to this artifact should be mapped to this module, but this artifact should not be included as the classes
-    that it contains are already contained in org.sonatype.sisu:sisu-inject-plexus. So mark it as optional (not included as resource).
-    -->
-    <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-container-default</artifactId>
-      <version>1.0-alpha-9-stable-1</version>
-      <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>classworlds</groupId>
-          <artifactId>classworlds</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
   </dependencies>
 </project>

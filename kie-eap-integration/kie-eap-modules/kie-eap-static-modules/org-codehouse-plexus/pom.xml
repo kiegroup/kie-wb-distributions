@@ -50,13 +50,5 @@
       <type>jar</type>
     </dependency>
 
-    <!--<dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-container-default</artifactId>
-      <version>1.0-alpha-9-stable-1</version>
-      <type>jar</type>
-    </dependency>-->
-
-
   </dependencies>
 </project>
