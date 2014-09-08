@@ -42,14 +42,12 @@
     <dependency>
       <groupId>org.eclipse.sisu</groupId>
       <artifactId>org.eclipse.sisu.plexus</artifactId>
-      <version>0.0.0.M5</version>
       <type>jar</type>
     </dependency>
 
     <dependency>
       <groupId>org.eclipse.sisu</groupId>
       <artifactId>org.eclipse.sisu.inject</artifactId>
-      <version>0.0.0.M5</version>
       <type>jar</type>
       <exclusions>
         <exclusion>
