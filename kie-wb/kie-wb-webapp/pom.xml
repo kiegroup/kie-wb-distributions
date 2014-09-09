@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-wb</artifactId>
-    <version>6.2.0-SNAPSHOT</version>
+    <version>6.2.0.Beta2</version>
   </parent>
 
   <artifactId>kie-wb-webapp</artifactId>
@@ -90,11 +90,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-services-cdi</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-asset-mgmt-client</artifactId>
     </dependency>
 
     <dependency>
@@ -898,8 +893,6 @@
           <compileSourcesArtifacts>
 
             <!-- jbpm-wb -->
-            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-asset-mgmt-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-asset-mgmt-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-api</compileSourcesArtifact>

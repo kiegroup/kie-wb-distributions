@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.kie.modules</groupId>
     <artifactId>jboss-eap-6.3</artifactId>
-    <version>6.2.0-SNAPSHOT</version>
+    <version>6.2.0.Beta2</version>
   </parent>
 
   <groupId>org.kie.modules</groupId>
   <artifactId>com-google-guava-main</artifactId>
   <name>EAP Base Module com.google.guava:main</name>
-  <version>6.2.0-SNAPSHOT</version>
+  <version>6.2.0.Beta2</version>
   <packaging>pom</packaging>
 
   <properties>
