@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<weblogic-ejb-jar xmlns="http://xmlns.oracle.com/weblogic/weblogic-ejb-jar" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://xmlns.oracle.com/weblogic/weblogic-ejb-jar http://xmlns.oracle.com/weblogic/weblogic-ejb-jar/1.5/weblogic-ejb-jar.xsd">
+
+  <weblogic-enterprise-bean>
+    <ejb-name>KieSessionRequesMessageBean</ejb-name>
+    <message-driven-descriptor>
+      <destination-jndi-name>jms/KIE.SESSION</destination-jndi-name>
+      <connection-factory-jndi-name>jms/cf/KIE.SESSION</connection-factory-jndi-name>
+    </message-driven-descriptor>
+    <resource-description>
+      <res-ref-name>org.kie.remote.services.jms.RequestMessageBean/factory</res-ref-name>
+      <jndi-name>jms/cf/KIE.RESPONSE.ALL</jndi-name>
+    </resource-description>
+  </weblogic-enterprise-bean>
+  <weblogic-enterprise-bean>
+    <ejb-name>TaskServiceRequesMessageBean</ejb-name>
+    <message-driven-descriptor>
+      <destination-jndi-name>jms/KIE.TASK</destination-jndi-name>
+      <connection-factory-jndi-name>jms/cf/KIE.TASK</connection-factory-jndi-name>
+    </message-driven-descriptor>
+    <resource-description>
+      <res-ref-name>org.kie.remote.services.jms.RequestMessageBean/factory</res-ref-name>
+      <jndi-name>jms/cf/KIE.RESPONSE.ALL</jndi-name>
+    </resource-description>
+  </weblogic-enterprise-bean>
+  <weblogic-enterprise-bean>
+    <ejb-name>JMSAuditProcessor</ejb-name>
+    <message-driven-descriptor>
+      <destination-jndi-name>jms/KIE.AUDIT</destination-jndi-name>
+      <connection-factory-jndi-name>jms/cf/KIE.AUDIT</connection-factory-jndi-name>
+    </message-driven-descriptor>
+  </weblogic-enterprise-bean>
+
+</weblogic-ejb-jar>

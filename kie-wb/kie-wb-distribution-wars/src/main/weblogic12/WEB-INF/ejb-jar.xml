@@ -1,0 +1,27 @@
+<ejb-jar id="ejb-jar_ID" version="3.1"
+      xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                          http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd">
+
+  <enterprise-beans>
+    <message-driven>
+      <ejb-name>KieSessionRequesMessageBean</ejb-name>
+      <ejb-class>org.kie.remote.services.jms.RequestMessageBean</ejb-class>
+      <transaction-type>Bean</transaction-type>
+      <message-destination-type>javax.jms.Queue</message-destination-type>
+    </message-driven>  
+    <message-driven>
+      <ejb-name>TaskServiceRequesMessageBean</ejb-name>
+      <ejb-class>org.kie.remote.services.jms.RequestMessageBean</ejb-class>
+      <transaction-type>Bean</transaction-type>
+      <message-destination-type>javax.jms.Queue</message-destination-type>
+    </message-driven>  
+    <message-driven>
+      <ejb-name>JMSAuditProcessor</ejb-name>
+      <ejb-class>org.jbpm.kie.services.impl.audit.AuditJMSProcessor</ejb-class>
+      <transaction-type>Container</transaction-type>
+      <message-destination-type>javax.jms.Queue</message-destination-type>
+    </message-driven>  
+  </enterprise-beans>
+</ejb-jar>

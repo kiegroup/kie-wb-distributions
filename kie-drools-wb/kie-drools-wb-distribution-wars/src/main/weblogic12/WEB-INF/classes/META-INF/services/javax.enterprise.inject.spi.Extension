@@ -1,2 +1,4 @@
-org.kie.workbench.drools.backend.server.weblogic.SwapClassloaderExtension
-org.kie.internal.runtime.cdi.BootOnLoadExtension
+#weblogic specific setup - swap classloader for startup operation
+org.kie.workbench.backend.weblogic.SwapClassloaderExtension
+#disable BootOnLoadExtension to let EJB startup to the bootstrapping as ejbs are deployed after cdi
+#org.kie.internal.runtime.cdi.BootOnLoadExtension
