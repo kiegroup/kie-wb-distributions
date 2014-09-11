@@ -29,6 +29,13 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
+      <artifactId>org-kie-remote</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.modules</groupId>
       <artifactId>org-drools</artifactId>
       <version>${project.version}</version>
       <type>pom</type>

@@ -15,6 +15,7 @@
 
   <modules>
     <module>org-kie</module>
+    <module>org-kie-remote</module>
     <module>org-drools</module>
     <module>org-jbpm</module>
     <module>org-jbpm-minimal</module>
