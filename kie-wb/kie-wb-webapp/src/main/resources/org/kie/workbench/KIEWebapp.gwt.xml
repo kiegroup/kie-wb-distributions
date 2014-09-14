@@ -17,8 +17,6 @@
   <inherits name="org.jbpm.console.ng.gc.JbpmConsoleNGGenericClient"/>
   <inherits name="org.jbpm.console.ng.ht.forms.JbpmConsoleNGHumanTasksFormsClient"/>
   
-  <!-- asset mgmt -->
-  <inherits name="org.jbpm.console.ng.asset.JbpmConsoleNGAssetMgmtClient"/>
 
   <!-- Dashbuilder -->
   <inherits name="org.jbpm.dashboard.renderer.DashboardRendererApi"/>
@@ -29,6 +27,7 @@
   <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
 
   <!-- Guvnor dependencies -->
+  <inherits name='org.guvnor.asset.management.GuvnorAssetMgmtClient'/>
   <inherits name="org.guvnor.structure.GuvnorStructureClient"/>
   <inherits name="org.guvnor.inbox.GuvnorInboxClient"/>
   <inherits name="org.guvnor.m2repo.GuvnorM2RepoEditorClient"/>

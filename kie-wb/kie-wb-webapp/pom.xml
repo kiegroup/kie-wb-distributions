@@ -94,11 +94,6 @@
 
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-asset-mgmt-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-asset-mgmt-backend</artifactId>
     </dependency>
 
@@ -355,6 +350,19 @@
       <artifactId>guvnor-organizationalunit-manager</artifactId>
     </dependency>
 
+    <dependency>
+       <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-asset-mgmt-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-asset-mgmt-backend</artifactId>
+    </dependency>
+     <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-asset-mgmt-project</artifactId>
+    </dependency>
+    
     <!-- Common -->
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
@@ -898,8 +906,6 @@
           <compileSourcesArtifacts>
 
             <!-- jbpm-wb -->
-            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-asset-mgmt-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.jbpm:jbpm-console-ng-asset-mgmt-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-api</compileSourcesArtifact>
@@ -934,9 +940,12 @@
             <compileSourcesArtifact>org.guvnor:guvnor-workingset-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-services-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-project-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-project-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-message-console-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-message-console-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.guvnor:guvnor-organizationalunit-manager</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-asset-mgmt-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.guvnor:guvnor-asset-mgmt-client</compileSourcesArtifact>
 
             <!-- Common dependencies -->
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-editor-api</compileSourcesArtifact>
