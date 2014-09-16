@@ -44,6 +44,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,9 +158,11 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         }
     }
 
-    private static JaxbSerializationProvider jaxbSerializationProvider = new JaxbSerializationProvider();
-    {
-        jaxbSerializationProvider.addJaxbClasses(MyType.class, Person.class, Request.class);
+    private static JaxbSerializationProvider jaxbSerializationProvider;
+    { 
+        Class<?> [] extraClasses = { MyType.class, Person.class, Request.class };
+        jaxbSerializationProvider = JaxbSerializationProvider.clientSideInstance(Arrays.asList(extraClasses));
+        
     }
     private JsonSerializationProvider jsonSerializationProvider = new JsonSerializationProvider();
 
@@ -245,7 +248,7 @@ public class RestSmokeIntegrationTestMethods extends AbstractSmokeIntegrationTes
         }
         assertEquals(200, respCode);
 
-        JaxbSerializationProvider jaxbSerializer = new JaxbSerializationProvider();
+        JaxbSerializationProvider jaxbSerializer = JaxbSerializationProvider.clientSideInstance();
         String xmlStrObj = getConnectionContent(connection.getContent());
         depList = (JaxbDeploymentUnitList) jaxbSerializer.deserialize(xmlStrObj);
 
