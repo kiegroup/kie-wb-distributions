@@ -1,0 +1,170 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.kie</groupId>
+    <artifactId>kie-wb-distributions</artifactId>
+    <version>6.2.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.kie.smoke</groupId>
+  <artifactId>kie-wb-smoke-tests-cargo</artifactId>
+
+  <name>KIE Smoke Tests</name>
+  <description>Integration smoke tests for kie-wb and kie-drools-wb</description>
+
+  <properties>
+    <!-- tomcat 7.0.32 + arq-tomcat 1.0.0.CR6 is the magic combination that works.. :/ -->
+    <version.org.apache.tomcat>7.0.32</version.org.apache.tomcat>
+    <version.org.jboss.arquillian.container.tomcat>1.0.0.CR6</version.org.jboss.arquillian.container.tomcat>
+    
+    <!-- jboss eap  -->
+    <override.version.org.jboss.as>7.2.0.Final</override.version.org.jboss.as>
+    <jboss.eap.server.name>jboss-eap-6.3</jboss.eap.server.name>
+    
+    <!-- wildfly -->
+    <version.org.wildfly>8.1.0.Final</version.org.wildfly>
+    <wildfly.server.name>wildfly-${version.org.wildfly}</wildfly.server.name>
+
+    <!-- These properties are set in profiles kie-drools-wb and kie-wb -->
+    <deployable.groupId></deployable.groupId>
+    <deployable.artifactId></deployable.artifactId>
+    <deployable.version></deployable.version>
+
+    <deployable.context></deployable.context>
+    <container.host>localhost</container.host>
+    <container.port>8080</container.port>
+    <deployable.base.uri>http://${container.host}:${container.port}/${deployable.context}</deployable.base.uri>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drools-wb-distribution-wars</artifactId>
+      <classifier>eap-6_1</classifier>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-wb-distribution-wars</artifactId>
+      <classifier>eap-6_1</classifier>
+      <type>war</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- ensure that repository directory is deleted before test runs -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <configuration>
+            <filesets>
+              <fileset>
+                <directory>${basedir}</directory>
+                <includes>
+                  <include>*db</include>
+                  <include>btm*log</include>
+                  <include>repository/</include>
+                  <include>.niogit/</include>
+                  <include>.index/</include>
+                </includes>
+              </fileset>
+            </filesets>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>kie-drools-wb</id>
+      <properties>
+        <deployable.groupId>org.kie</deployable.groupId>
+        <deployable.artifactId>kie-drools-wb-distribution-wars</deployable.artifactId>
+        <deployable.version>${project.version}</deployable.version>
+        <deployable.context>kie-drools-wb</deployable.context>
+      </properties>
+
+    </profile>
+    <profile>
+      <id>kie-wb</id>
+      <properties>
+        <deployable.groupId>org.kie</deployable.groupId>
+        <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
+        <deployable.version>${project.version}</deployable.version>
+        <deployable.context>kie-wb</deployable.context>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>eap63x</id>
+      <properties>
+        <eap63x.download.url>file:///home/psiroky/work/releases/jboss-eap-6.3.0.zip</eap63x.download.url>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>jboss74x</containerId>
+                <type>installed</type>
+                <zipUrlInstaller>
+                  <url>${eap63x.download.url}</url>
+                </zipUrlInstaller>
+              </container>
+              <configuration>
+                <configfiles>
+                  <configfile>
+                    <file>${project.basedir}/src/main/resources-eap63x-wildfly/config</file>
+                    <todir>configuration</todir>
+                    <overwrite>true</overwrite>
+                  </configfile>
+                </configfiles>
+              </configuration>
+              <deployables>
+                <deployable>
+                  <groupId>${deployable.groupId}</groupId>
+                  <artifactId>${deployable.artifactId}</artifactId>
+                  <classifier>eap-6_1</classifier>
+                  <type>war</type>
+                  <properties>
+                    <context>${deployable.context}</context>
+                  </properties>
+                  <pingURL>${deployable.base.uri}</pingURL>
+                  <pingTimeout>120000</pingTimeout>
+                </deployable>
+              </deployables>
+            </configuration>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>tomcat7x</id>
+    </profile>
+
+  </profiles>
+  
+</project>
