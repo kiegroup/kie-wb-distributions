@@ -1,7 +1,7 @@
 Weblogic deployment instructions
 ========================================
 
-This document explains how to deploy a KIE Workbench distribution file (_kie-wb-was8.war_) on Weblogic Application Server 12c.
+This document explains how to deploy a KIE Workbench distribution file (_kie-wb-weblogic12.war_) on Weblogic Application Server 12c.
 
 Open the Weblogic's Administration Console _http://localhost:7001/console/console.portal_
 
