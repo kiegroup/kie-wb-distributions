@@ -15,6 +15,7 @@ import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
 import org.kie.workbench.common.screens.explorer.model.ProjectExplorerContent;
 import org.kie.workbench.common.screens.explorer.service.ExplorerService;
+import org.kie.workbench.common.screens.explorer.service.ProjectExplorerContentQuery;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
 
 public class RemoveRoleFromProjectCliCommand implements CliCommand {
@@ -51,7 +52,8 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
             }
         }
         ArrayList<Project> projects = new ArrayList<Project>();
-        ProjectExplorerContent content = projectExplorerService.getContent(ou, repo, null, null, null, Collections.EMPTY_SET);
+        ProjectExplorerContentQuery query = new ProjectExplorerContentQuery(ou, repo);
+        ProjectExplorerContent content = projectExplorerService.getContent(query);
         projects.addAll( content.getProjects() );
         if ( projects.size() == 0 ) {
             return "No projects found in repository " + alias;
