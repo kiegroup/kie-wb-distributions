@@ -11,7 +11,7 @@
   <groupId>org.kie.smoke</groupId>
   <artifactId>kie-wb-smoke-tests-cargo</artifactId>
 
-  <name>KIE Smoke Tests</name>
+  <name>KIE Smoke Tests Using Cargo</name>
   <description>Integration smoke tests for kie-wb and kie-drools-wb</description>
 
   <properties>
@@ -30,7 +30,7 @@
     <!-- These properties are set in profiles kie-drools-wb and kie-wb -->
     <deployable.groupId></deployable.groupId>
     <deployable.artifactId></deployable.artifactId>
-    <deployable.version></deployable.version>
+    <deployable.version>6.2.0.Beta1</deployable.version> <!-- ${project.version} by default -->
 
     <deployable.context></deployable.context>
     <container.host>localhost</container.host>
@@ -39,17 +39,61 @@
   </properties>
 
   <dependencies>
+    <!-- WAR distributions -->
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-drools-wb-distribution-wars</artifactId>
       <classifier>eap-6_1</classifier>
+      <version>${deployable.version}</version>
       <type>war</type>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-wb-distribution-wars</artifactId>
       <classifier>eap-6_1</classifier>
+      <version>${deployable.version}</version>
       <type>war</type>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-rest-client</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-kie-services</artifactId>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>kie-ci</artifactId>
+          <groupId>org.kie</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.remote</groupId>
+      <artifactId>kie-remote-client</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hornetq</groupId>
+          <artifactId>hornetq-jms-client</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
     </dependency>
   </dependencies>
 
@@ -84,7 +128,6 @@
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
         <deployable.artifactId>kie-drools-wb-distribution-wars</deployable.artifactId>
-        <deployable.version>${project.version}</deployable.version>
         <deployable.context>kie-drools-wb</deployable.context>
       </properties>
 
@@ -94,7 +137,6 @@
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
         <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
-        <deployable.version>${project.version}</deployable.version>
         <deployable.context>kie-wb</deployable.context>
       </properties>
     </profile>
@@ -105,6 +147,14 @@
         <eap63x.download.url>file:///home/psiroky/work/releases/jboss-eap-6.3.0.zip</eap63x.download.url>
       </properties>
       <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.cargo</groupId>
+              <artifactId>cargo-maven2-plugin</artifactId>
+            </plugin>
+          </plugins>
+        </pluginManagement>
         <plugins>
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
@@ -118,11 +168,20 @@
                 </zipUrlInstaller>
               </container>
               <configuration>
+                <properties>
+                  <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
+                  <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
+                </properties>
                 <configfiles>
                   <configfile>
-                    <file>${project.basedir}/src/main/resources-eap63x-wildfly/config</file>
+                    <file>${project.basedir}/src/test/resources-eap63x-wildfly/config</file>
                     <todir>configuration</todir>
-                    <overwrite>true</overwrite>
+                    <overwrite>false</overwrite>
+                  </configfile>
+                  <configfile>
+                    <file>${project.basedir}/src/test/resources/ssl/server</file>
+                    <todir>configuration/ssl</todir>
+                    <overwrite>false</overwrite>
                   </configfile>
                 </configfiles>
               </configuration>
@@ -157,6 +216,47 @@
               </execution>
             </executions>
           </plugin>
+          <!-- Apply XSLT tempaltes, this needs to be executed _after_ cargo:configure -->
+          <!--<plugin>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>xml-maven-plugin</artifactId>-->
+            <!--<version>1.0</version>-->
+            <!--<executions>-->
+              <!--<execution>-->
+                <!--<id>modify-standalone-full</id>-->
+                <!--<phase>package</phase>-->
+                <!--<goals>-->
+                  <!--<goal>transform</goal>-->
+                <!--</goals>-->
+                <!--<configuration>-->
+                  <!--<transformationSets>-->
+                    <!--<transformationSet>-->
+                      <!--<dir>${project.build.directory}/cargo/configurations/jboss74x/configuration</dir>-->
+                      <!--<outputDir>${project.build.directory}/cargo/configurations/jboss74x/configuration</outputDir>-->
+                      <!--<includes>-->
+                        <!--<include>standalone-full.xml</include>-->
+                      <!--</includes>-->
+                      <!--<stylesheet>src/test/resources-eap63x-wildfly/xslt/addDebugLogging.xslt</stylesheet>-->
+                      <!--<fileMappers>-->
+                        <!--<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">-->
+                          <!--<pattern>standalone-full.xml</pattern>-->
+                          <!--<replacement>standalone-full-kie.xml</replacement>-->
+                        <!--</fileMapper>-->
+                      <!--</fileMappers>-->
+                    <!--</transformationSet>-->
+                    <!--<transformationSet>-->
+                      <!--<dir>${project.build.directory}/cargo/configurations/jboss74x/configuration</dir>-->
+                      <!--<outputDir>${project.build.directory}/cargo/configurations/jboss74x/configuration</outputDir>-->
+                      <!--<includes>-->
+                        <!--<include>standalone-full-kie.xml</include>-->
+                      <!--</includes>-->
+                      <!--<stylesheet>src/test/resources-eap63x-wildfly/xslt/changeJmsMessagingConfig.xslt</stylesheet>-->
+                    <!--</transformationSet>-->
+                  <!--</transformationSets>-->
+                <!--</configuration>-->
+              <!--</execution>-->
+            <!--</executions>-->
+          <!--</plugin>-->
         </plugins>
       </build>
     </profile>
