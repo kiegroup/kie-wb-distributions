@@ -14,7 +14,7 @@ Installation notes
 
 2. Create configuration files inside TOMCAT_HOME/conf
     * btm-config.properties
-    ************************ sampke btm-config.properites *************************
+    ************************ sample btm-config.properties *************************
          bitronix.tm.serverId=tomcat-btm-node0
          bitronix.tm.journal.disk.logPart1Filename=${btm.root}/work/btm1.tlog
          bitronix.tm.journal.disk.logPart2Filename=${btm.root}/work/btm2.tlog
@@ -24,8 +24,7 @@ Installation notes
 
 
     * resources.properties
-    ************************ sampke resources.properites **************************
-
+    ************************ sample resources.properties **************************
          resource.ds1.className=bitronix.tm.resource.jdbc.lrc.LrcXADataSource
          resource.ds1.uniqueName=jdbc/jbpm
          resource.ds1.minPoolSize=10
