@@ -17,11 +17,8 @@
     <module.type>static</module.type>
     <module.location>org/kie/remote</module.location>
     <module.slot>main</module.slot>
-    <!-- Added due to runtime dependency with EAP. -->
-    <module.dependencies>org.kie:main:true,javax.xml.bind.api:main</module.dependencies>
-    <!--
-    <module.dependencies>org.sonatype.sisu:main,org.codehouse.plexus:main,org.sonatype.plexus:main,org.jbpm:main,org.jbpm-minimal:main,javax.api:main,javax.inject.api:main</module.dependencies>
-    -->
+    <!-- Added due to runtime dependencies. -->
+    <module.dependencies>org.kie:main:true,javax.xml.bind.api:main,org.jboss.remote-naming:main:true,org.hornetq:main:true</module.dependencies>
   </properties>
 
   <dependencies>
