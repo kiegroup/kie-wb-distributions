@@ -38,13 +38,39 @@
     <deployable.base.uri>http://${container.host}:${container.port}/${deployable.context}</deployable.base.uri>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb-distribution-wars</artifactId>
+        <classifier>eap-6_1</classifier>
+        <version>${deployable.version}</version>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
+        <classifier>eap-6_1</classifier>
+        <version>${deployable.version}</version>
+        <type>war</type>
+      </dependency>
+
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
+        <classifier>tomcat7</classifier>
+        <version>${deployable.version}</version>
+        <type>war</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <!-- WAR distributions -->
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-drools-wb-distribution-wars</artifactId>
       <classifier>eap-6_1</classifier>
-      <version>${deployable.version}</version>
       <type>war</type>
       <scope>test</scope>
     </dependency>
@@ -52,7 +78,13 @@
       <groupId>org.kie</groupId>
       <artifactId>kie-wb-distribution-wars</artifactId>
       <classifier>eap-6_1</classifier>
-      <version>${deployable.version}</version>
+      <type>war</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-wb-distribution-wars</artifactId>
+      <classifier>tomcat7</classifier>
       <type>war</type>
       <scope>test</scope>
     </dependency>
@@ -95,9 +127,20 @@
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
     </dependency>
+
   </dependencies>
 
   <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>false</filtering>
+      </testResource>
+      <testResource>
+        <directory>src/test/filtered-resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
     <pluginManagement>
       <plugins>
         <!-- ensure that repository directory is deleted before test runs -->
@@ -118,6 +161,26 @@
             </filesets>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven2-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>start-container</id>
+              <phase>pre-integration-test</phase>
+              <goals>
+                <goal>start</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>stop-container</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>stop</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -130,8 +193,8 @@
         <deployable.artifactId>kie-drools-wb-distribution-wars</deployable.artifactId>
         <deployable.context>kie-drools-wb</deployable.context>
       </properties>
-
     </profile>
+
     <profile>
       <id>kie-wb</id>
       <properties>
@@ -147,14 +210,6 @@
         <eap63x.download.url>file:///home/psiroky/work/releases/jboss-eap-6.3.0.zip</eap63x.download.url>
       </properties>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.cargo</groupId>
-              <artifactId>cargo-maven2-plugin</artifactId>
-            </plugin>
-          </plugins>
-        </pluginManagement>
         <plugins>
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
@@ -174,14 +229,14 @@
                 </properties>
                 <configfiles>
                   <configfile>
-                    <file>${project.basedir}/src/test/resources-eap63x-wildfly/config</file>
+                    <file>${project.build.testOutputDirectory}/eap63x-wildfly/config</file>
                     <todir>configuration</todir>
-                    <overwrite>false</overwrite>
+                    <overwrite>true</overwrite>
                   </configfile>
                   <configfile>
-                    <file>${project.basedir}/src/test/resources/ssl/server</file>
+                    <file>${project.build.testOutputDirectory}/ssl/server</file>
                     <todir>configuration/ssl</todir>
-                    <overwrite>false</overwrite>
+                    <overwrite>true</overwrite>
                   </configfile>
                 </configfiles>
               </configuration>
@@ -199,70 +254,134 @@
                 </deployable>
               </deployables>
             </configuration>
-            <executions>
-              <execution>
-                <id>start-container</id>
-                <phase>pre-integration-test</phase>
-                <goals>
-                  <goal>start</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>stop-container</id>
-                <phase>post-integration-test</phase>
-                <goals>
-                  <goal>stop</goal>
-                </goals>
-              </execution>
-            </executions>
           </plugin>
-          <!-- Apply XSLT tempaltes, this needs to be executed _after_ cargo:configure -->
-          <!--<plugin>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>xml-maven-plugin</artifactId>-->
-            <!--<version>1.0</version>-->
-            <!--<executions>-->
-              <!--<execution>-->
-                <!--<id>modify-standalone-full</id>-->
-                <!--<phase>package</phase>-->
-                <!--<goals>-->
-                  <!--<goal>transform</goal>-->
-                <!--</goals>-->
-                <!--<configuration>-->
-                  <!--<transformationSets>-->
-                    <!--<transformationSet>-->
-                      <!--<dir>${project.build.directory}/cargo/configurations/jboss74x/configuration</dir>-->
-                      <!--<outputDir>${project.build.directory}/cargo/configurations/jboss74x/configuration</outputDir>-->
-                      <!--<includes>-->
-                        <!--<include>standalone-full.xml</include>-->
-                      <!--</includes>-->
-                      <!--<stylesheet>src/test/resources-eap63x-wildfly/xslt/addDebugLogging.xslt</stylesheet>-->
-                      <!--<fileMappers>-->
-                        <!--<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">-->
-                          <!--<pattern>standalone-full.xml</pattern>-->
-                          <!--<replacement>standalone-full-kie.xml</replacement>-->
-                        <!--</fileMapper>-->
-                      <!--</fileMappers>-->
-                    <!--</transformationSet>-->
-                    <!--<transformationSet>-->
-                      <!--<dir>${project.build.directory}/cargo/configurations/jboss74x/configuration</dir>-->
-                      <!--<outputDir>${project.build.directory}/cargo/configurations/jboss74x/configuration</outputDir>-->
-                      <!--<includes>-->
-                        <!--<include>standalone-full-kie.xml</include>-->
-                      <!--</includes>-->
-                      <!--<stylesheet>src/test/resources-eap63x-wildfly/xslt/changeJmsMessagingConfig.xslt</stylesheet>-->
-                    <!--</transformationSet>-->
-                  <!--</transformationSets>-->
-                <!--</configuration>-->
-              <!--</execution>-->
-            <!--</executions>-->
-          <!--</plugin>-->
+          <!-- TODO apply XSLTs -->
         </plugins>
       </build>
     </profile>
 
     <profile>
       <id>tomcat7x</id>
+      <properties>
+        <tomcat7x.download.url>file:///home/psiroky/work/releases/apache-tomcat-7.0.55.zip</tomcat7x.download.url>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.codehaus.btm</groupId>
+          <artifactId>btm</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.codehaus.btm</groupId>
+          <artifactId>btm-tomcat55-lifecycle</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>javax.transaction</groupId>
+          <artifactId>jta</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-tomcat-integration</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>javax.security.jacc</groupId>
+          <artifactId>javax.security.jacc-api</artifactId>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>tomcat7x</containerId>
+                <type>installed</type>
+                <zipUrlInstaller>
+                  <url>${tomcat7x.download.url}</url>
+                </zipUrlInstaller>
+                <systemProperties>
+                  <tomcat.home>${project.build.directory}/cargo/configurations/tomcat7x</tomcat.home>
+                  <bitronix.tm.configuration>${project.build.directory}/cargo/configurations/tomcat7x/conf/btm-config.properties</bitronix.tm.configuration>
+                  <jbpm.tsr.jndi.lookup>java:comp/env/TransactionSynchronizationRegistry</jbpm.tsr.jndi.lookup>
+                </systemProperties>
+                <dependencies>
+                  <dependency>
+                    <groupId>org.codehaus.btm</groupId>
+                    <artifactId>btm</artifactId>
+                  </dependency>
+                  <dependency>
+                    <groupId>org.codehaus.btm</groupId>
+                    <artifactId>btm-tomcat55-lifecycle</artifactId>
+                  </dependency>
+                  <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                  </dependency>
+                  <dependency>
+                    <groupId>javax.transaction</groupId>
+                    <artifactId>jta</artifactId>
+                  </dependency>
+                  <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                  </dependency>
+                  <dependency>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-tomcat-integration</artifactId>
+                  </dependency>
+                  <dependency>
+                    <groupId>javax.security.jacc</groupId>
+                    <artifactId>javax.security.jacc-api</artifactId>
+                  </dependency>
+                </dependencies>
+              </container>
+              <configuration>
+                <properties>
+                  <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
+                </properties>
+                <configfiles>
+                  <configfile>
+                    <file>${project.build.testOutputDirectory}/tomcat/config</file>
+                    <todir>conf</todir>
+                    <overwrite>true</overwrite>
+                  </configfile>
+                  <!--<configfile>-->
+                    <!--<file>${project.basedir}/src/test/resources/ssl/server</file>-->
+                    <!--<todir>configuration/ssl</todir>-->
+                    <!--<overwrite>false</overwrite>-->
+                  <!--</configfile>-->
+                </configfiles>
+              </configuration>
+              <deployables>
+                <deployable>
+                  <groupId>${deployable.groupId}</groupId>
+                  <artifactId>${deployable.artifactId}</artifactId>
+                  <classifier>tomcat7</classifier>
+                  <type>war</type>
+                  <properties>
+                    <context>${deployable.context}</context>
+                  </properties>
+                  <pingURL>${deployable.base.uri}</pingURL>
+                  <pingTimeout>120000</pingTimeout>
+                </deployable>
+              </deployables>
+            </configuration>
+          </plugin>
+          <!-- TODO apply XSLTs -->
+        </plugins>
+      </build>
     </profile>
 
   </profiles>
