@@ -63,7 +63,7 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-human-tasks-client</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-human-tasks-backend</artifactId>
@@ -118,13 +118,13 @@
     </dependency>
 
     <dependency>
-        <groupId>org.jbpm</groupId>
-        <artifactId>jbpm-console-ng-human-tasks-forms-client</artifactId>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-human-tasks-forms-client</artifactId>
     </dependency>
 
     <dependency>
-        <groupId>org.jbpm</groupId>
-        <artifactId>jbpm-console-ng-human-tasks-forms-backend</artifactId>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-human-tasks-forms-backend</artifactId>
     </dependency>
 
     <dependency>
@@ -136,12 +136,12 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-executor-service-backend</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-generic-client</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-dashboard-api</artifactId>
@@ -351,18 +351,18 @@
     </dependency>
 
     <dependency>
-       <groupId>org.guvnor</groupId>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-asset-mgmt-client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-asset-mgmt-backend</artifactId>
     </dependency>
-     <dependency>
+    <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-asset-mgmt-project</artifactId>
     </dependency>
-    
+
     <!-- Common -->
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
@@ -806,6 +806,16 @@
       </exclusions>
     </dependency>
 
+    <!-- UberFire PlugIn Extension -->
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-runtime-plugins-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-runtime-plugins-client</artifactId>
+    </dependency>
+
     <!-- Search -->
     <dependency>
       <groupId>org.kie.uberfire</groupId>
@@ -1023,9 +1033,11 @@
             <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-backend</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
 
+            <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-runtime-plugins-client</compileSourcesArtifact>
+
           </compileSourcesArtifacts>
           <runTarget>org.kie.workbench.KIEWebapp/KIEWebapp.html</runTarget>
-            <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Djetty.custom.sys.classes=bitronix;javax.transaction -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false</extraJvmArgs>
+          <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Djetty.custom.sys.classes=bitronix;javax.transaction -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false</extraJvmArgs>
           <server>org.jboss.errai.cdi.server.gwt.JettyLauncher</server>
           <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile,
           see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->

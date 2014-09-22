@@ -143,6 +143,12 @@ public class KieDroolsWorkbenchEntryPoint {
                 .newTopLevelMenu( constants.deployment() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
                 .newTopLevelMenu( constants.servers() ).withRoles( kieACL.getGrantedRoles( G_SERVERS ) ).withItems( getServerViews() ).endMenu()
                 .newTopLevelMenu( constants.activity() ).withRoles( kieACL.getGrantedRoles( G_ACTIVITY ) ).withItems( getActivityViews() ).endMenu()
+                .newTopLevelMenu( constants.plugins() ).withRoles( kieACL.getGrantedRoles( G_PLUGIN_MANAGEMENT ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "PlugInAuthoringPerspective" );
+                    }
+                } ).endMenu()
                 .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                     @Override
                     public void execute() {

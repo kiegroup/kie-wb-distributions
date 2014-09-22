@@ -84,6 +84,8 @@ public interface AppConstants
 
     String find();
 
+    String PlugIns();
+
     String missingDefaultPerspective();
 
     String explore();

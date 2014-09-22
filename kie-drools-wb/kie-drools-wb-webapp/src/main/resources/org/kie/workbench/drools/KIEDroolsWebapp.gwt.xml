@@ -11,6 +11,9 @@
   <!-- Uberfire Extensions - Core Widgets -->
   <inherits name="org.kie.uberfire.KIEUberfireWidgetsCore"/>
 
+  <!-- Uberfire Extensions - Runtime Plugin -->
+  <inherits name="org.kie.uberfire.plugin.RuntimePluginClient"/>
+
   <!-- designer -->
   <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
   <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
@@ -23,7 +26,7 @@
   <inherits name="org.guvnor.common.services.project.GuvnorProjectAPI"/>
   <inherits name="org.guvnor.common.services.workingset.GuvnorWorkingsetAPI"/>
   <inherits name="org.guvnor.common.services.workingset.GuvnorWorkingsetClient"/>
-  <inherits name="org.guvnor.messageconsole.GuvnorMessageConsoleClient" />
+  <inherits name="org.guvnor.messageconsole.GuvnorMessageConsoleClient"/>
   <inherits name='org.guvnor.organizationalunit.manager.GuvnorOrganizationalUnitManager'/>
 
   <!--Common Screens -->

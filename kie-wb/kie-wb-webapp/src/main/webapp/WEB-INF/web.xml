@@ -41,7 +41,7 @@
     <url-pattern>/filestore</url-pattern>
     <url-pattern>/dictionary</url-pattern>
     <url-pattern>/themes</url-pattern>
-    <url-pattern>/customeditors </url-pattern>
+    <url-pattern>/customeditors</url-pattern>
     <url-pattern>/simulation</url-pattern>
     <url-pattern>/formwidget</url-pattern>
     <url-pattern>/calledelement</url-pattern>
@@ -56,7 +56,7 @@
     <url-pattern>/plugin</url-pattern>
     <url-pattern>/plugin/*</url-pattern>
     <url-pattern>/stencilset/*</url-pattern>
-
+    <url-pattern>/plugins/*</url-pattern>
   </filter-mapping>
 
   <!-- RESTEasy configurations -->
@@ -86,7 +86,6 @@
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
 
-
   <!-- UberFire servlets -->
   <servlet>
     <servlet-name>UberFireServlet</servlet-name>
@@ -115,6 +114,20 @@
   <servlet-mapping>
     <servlet-name>UberfireFileDownloadServlet</servlet-name>
     <url-pattern>/org.kie.workbench.KIEWebapp/defaulteditor/download/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PluginMediaServlet</servlet-name>
+    <servlet-class>org.kie.uberfire.plugin.backend.PluginMediaServlet</servlet-class>
+    <init-param>
+      <param-name>url-pattern</param-name>
+      <param-value>/plugins/</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PluginMediaServlet</servlet-name>
+    <url-pattern>/plugins/*</url-pattern>
   </servlet-mapping>
 
   <!-- drools-wb servlets -->

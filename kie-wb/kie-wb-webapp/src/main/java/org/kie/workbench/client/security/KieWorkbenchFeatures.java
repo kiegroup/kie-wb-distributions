@@ -35,6 +35,7 @@ public class KieWorkbenchFeatures {
     public static final String F_PROCESS_DASHBOARD = "wb_process_dashboard";
     public static final String F_DASHBOARD_BUILDER = "wb_dashboard_builder";
     public static final String F_SEARCH = "wb_search";
+    public static final String F_PLUGIN_MANAGEMENT = "wb_plugin_management";
 
     public static final String G_AUTHORING = "wb_authoring";
     public static final String G_DEPLOY = "wb_deploy";
@@ -43,4 +44,5 @@ public class KieWorkbenchFeatures {
     public static final String G_PROCESS_MANAGEMENT = "wb_process_management";
     public static final String G_TASKS = "wb_task_management";
     public static final String G_DASHBOARDS = "wb_dashboards";
+    public static final String G_PLUGIN_MANAGEMENT = "wb_plugin_management";
 }

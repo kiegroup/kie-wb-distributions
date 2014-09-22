@@ -48,7 +48,8 @@
         <include>org.hibernate:hibernate-validator</include>
         <include>org.hibernate.common:hibernate-commons-annotations</include>
         <include>antlr:antlr</include>
-        <include>org.slf4j:slf4j-jdk14:jar</include> <!-- WAS8 requires JUL -->
+        <include>org.slf4j:slf4j-jdk14:jar</include>
+        <!-- WAS8 requires JUL -->
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
@@ -88,6 +89,7 @@
           <exclude>WEB-INF/lib/uberfire-security-client-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-workbench-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-widgets-commons-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-uberfire-runtime-plugins-client-*.jar</exclude>
 
           <!-- Guvnor client related -->
           <exclude>WEB-INF/lib/guvnor-structure-client-*.jar</exclude>
@@ -240,7 +242,7 @@
           <exclude>WEB-INF/lib/sisu-inject-bean*.jar</exclude>
           <exclude>WEB-INF/lib/jaxrs-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-jaxrs-*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-jstl-*.jar</exclude>          
+          <exclude>WEB-INF/lib/jboss-jstl-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr311-*.jar</exclude>
           <exclude>WEB-INF/lib/jsr305-*.jar</exclude>

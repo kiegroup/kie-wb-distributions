@@ -72,6 +72,8 @@
           <exclude>WEB-INF/lib/uberfire-security-client-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-workbench-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-widgets-commons-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-uberfire-runtime-plugins-client-*.jar</exclude>
+
           <!-- Dom4j on as 7.1.1 breaks the PU-->
           <exclude>WEB-INF/lib/dom4j*.jar</exclude>
 
