@@ -80,8 +80,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>javax.transaction</groupId>
-      <artifactId>jta</artifactId>
+      <groupId>org.jboss.spec.javax.transaction</groupId>
+      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -206,8 +206,8 @@
                   <overWrite>false</overWrite>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>javax.transaction</groupId>
-                  <artifactId>jta</artifactId>
+                  <groupId>org.jboss.spec.javax.transaction</groupId>
+                  <artifactId>jboss-transaction-api_1.1_spec</artifactId>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                 </artifactItem>
@@ -224,8 +224,8 @@
                   <overWrite>false</overWrite>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>javax.security.jacc</groupId>
-                  <artifactId>javax.security.jacc-api</artifactId>
+                  <groupId>org.jboss.spec.javax.security.jacc</groupId>
+                  <artifactId>jboss-jacc-api_1.4_spec</artifactId>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                 </artifactItem>

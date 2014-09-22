@@ -43,6 +43,13 @@
      <releases><enabled>false</enabled></releases>
     </repository>
   </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-runtime-manager</artifactId>
+    </dependency>
+  </dependencies>
              
   <build>
 
