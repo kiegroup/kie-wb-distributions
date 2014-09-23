@@ -1,4 +1,4 @@
-package org.kie.smoke.wb.base.methods;
+package org.kie.smoke.wb.util;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,7 +27,6 @@ import org.kie.internal.runtime.conf.RuntimeStrategy;
 import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult;
 import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentUnit;
 import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentUnit.JaxbDeploymentStatus;
-import org.kie.smoke.wb.util.RestRequestHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -319,7 +318,7 @@ public class RestRepositoryDeploymentUtil {
                     ex.printStackTrace();
                     return null;
                 }
-                T res = response.getEntity();
+                T res = response.getEntity(returnType);
                 return res;
             }
             // now that we know that the result is wrong, try to identify the

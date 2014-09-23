@@ -10,9 +10,7 @@ import org.kie.smoke.wb.category.KieWbSmoke;
 public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrationTest {
 
     @Test
-
     public void testCreateAndDeleteOrganizationalUnit() {
         System.out.println("KIE integration test!");
-
     }
 }
