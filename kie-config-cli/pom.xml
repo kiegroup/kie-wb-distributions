@@ -212,6 +212,10 @@
           <groupId>org.kie.workbench.services</groupId>
           <artifactId>kie-wb-common-refactoring-backend</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.uberfire</groupId>
+          <artifactId>uberfire-client-all</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -377,6 +381,7 @@
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
+              <includeScope>runtime</includeScope>
             </configuration>
           </execution>
         </executions>
