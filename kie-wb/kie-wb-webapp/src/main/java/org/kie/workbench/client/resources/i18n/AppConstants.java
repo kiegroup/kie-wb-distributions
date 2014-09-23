@@ -150,4 +150,6 @@ public interface AppConstants
 
     String Asset_Management();
 
+    String DeploymentDescriptor();
+
 }
