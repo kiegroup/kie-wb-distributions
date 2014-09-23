@@ -150,4 +150,24 @@ Their default values are shown as example param-values -->
     </description>
     <role-name>manager</role-name>
   </security-role>
+
+  <filter>
+    <filter-name>Dynamic JAXBContext Filter</filter-name>
+    <filter-class>org.kie.remote.services.rest.jaxb.DynamicJaxbContextFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Dynamic JAXBContext Filter</filter-name>
+    <url-pattern>/rest/*</url-pattern>
+  </filter-mapping>
+
+  <!-- web services -->
+  <servlet>
+    <servlet-name>CommandWebService</servlet-name>
+    <servlet-class>org.kie.remote.services.ws.command.CommandWebServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CommandWebService</servlet-name>
+    <url-pattern>/ws/CommandService</url-pattern>
+  </servlet-mapping>
 </web-app>
