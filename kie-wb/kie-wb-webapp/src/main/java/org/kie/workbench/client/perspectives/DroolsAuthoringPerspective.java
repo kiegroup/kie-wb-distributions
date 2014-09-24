@@ -21,6 +21,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import com.google.gwt.user.client.Window;
 import org.guvnor.common.services.project.context.ProjectContextChangeEvent;
 import org.guvnor.inbox.client.InboxPresenter;
 import org.kie.workbench.client.resources.i18n.AppConstants;
@@ -79,8 +80,27 @@ public class DroolsAuthoringPerspective {
 
     private String projectRootPath;
 
+    private MenuItem ddMenuItem = MenuFactory.newSimpleItem(AppConstants.INSTANCE.DeploymentDescriptor()).respondsWith(
+            new Command() {
+                @Override
+                public void execute() {
+
+                    placeManager.goTo(PathFactory.newPath("kie-deployment-descriptor.xml",
+                            projectRootPath + "/src/main/resources/META-INF/kie-deployment-descriptor.xml"));
+
+                }
+            }
+
+    ).endMenu().build().getItems().get(0);
+
     public void onProjectContextChanged( @Observes final ProjectContextChangeEvent event ) {
-        projectRootPath = event.getProject().getRootPath().toURI();
+        if (event.getProject() != null) {
+            projectRootPath = event.getProject().getRootPath().toURI();
+            ddMenuItem.setEnabled(true);
+        } else {
+            ddMenuItem.setEnabled(false);
+        }
+
     }
 
     @PostConstruct
@@ -178,14 +198,7 @@ public class DroolsAuthoringPerspective {
 
     private List<MenuItem> getToolsMenuItems() {
         List<MenuItem> toolsMenuItems = projectMenu.getMenuItems();
-        toolsMenuItems.add(MenuFactory.newSimpleItem( AppConstants.INSTANCE.DeploymentDescriptor() ).respondsWith(
-                new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo(PathFactory.newPath("kie-deployment-descriptor.xml",
-                                projectRootPath + "/src/main/resources/META-INF/kie-deployment-descriptor.xml"));
-                    }
-                } ).endMenu().build().getItems().get( 0 ));
+        toolsMenuItems.add(ddMenuItem);
 
         return toolsMenuItems;
     }
