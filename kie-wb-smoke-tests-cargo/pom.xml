@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -11,35 +11,55 @@
   <groupId>org.kie.smoke</groupId>
   <artifactId>kie-wb-smoke-tests-cargo</artifactId>
 
-  <name>KIE Smoke Tests Using Cargo</name>
-  <description>Integration smoke tests for kie-wb and kie-drools-wb</description>
+  <name>KIE Workbench Smoke Tests Using Cargo</name>
+  <description>Integration smoke tests for KIE Workbench and KIE Drools Workbench</description>
 
   <properties>
-    <!-- tomcat 7.0.32 + arq-tomcat 1.0.0.CR6 is the magic combination that works.. :/ -->
-    <version.org.apache.tomcat>7.0.32</version.org.apache.tomcat>
-    <version.org.jboss.arquillian.container.tomcat>1.0.0.CR6</version.org.jboss.arquillian.container.tomcat>
-    
     <!-- jboss eap  -->
     <override.version.org.jboss.as>7.2.0.Final</override.version.org.jboss.as>
     <jboss.eap.server.name>jboss-eap-6.3</jboss.eap.server.name>
-    
+
     <!-- wildfly -->
     <version.org.wildfly>8.1.0.Final</version.org.wildfly>
     <wildfly.server.name>wildfly-${version.org.wildfly}</wildfly.server.name>
 
-    <!-- These properties are set in profiles kie-drools-wb and kie-wb -->
-    <deployable.groupId></deployable.groupId>
-    <deployable.artifactId></deployable.artifactId>
-    <deployable.version>6.2.0.Beta1</deployable.version> <!-- ${project.version} by default -->
-
-    <deployable.context></deployable.context>
+    <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.3.x -->
+    <!-- These properties are overriden in profiles kie-drools-wb and kie-wb -->
+    <deployable.groupId>org.kie</deployable.groupId>
+    <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
+    <deployable.version>${project.version}</deployable.version>
+    <deployable.context>kie-wb</deployable.context>
     <container.host>localhost</container.host>
-    <container.port>8080</container.port>
-    <deployable.base.uri>http://${container.host}:${container.port}/${deployable.context}</deployable.base.uri>
+
+    <!-- <container.servlet.port/> can't specify the property here, as build-helper plugin would then not be able to override it -->
+    <deployable.base.uri>http://${container.host}:${container.port}/${deployable.context}/</deployable.base.uri>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <!-- kie-wb distribution wars -->
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
+        <classifier>eap-6_1</classifier>
+        <version>${deployable.version}</version>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
+        <classifier>tomcat7</classifier>
+        <version>${deployable.version}</version>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
+        <classifier>wildfly8</classifier>
+        <version>${deployable.version}</version>
+        <type>war</type>
+      </dependency>
+      <!-- kie-drools-wb distributions wars -->
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-drools-wb-distribution-wars</artifactId>
@@ -49,55 +69,56 @@
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
-        <artifactId>kie-wb-distribution-wars</artifactId>
-        <classifier>eap-6_1</classifier>
+        <artifactId>kie-drools-wb-distribution-wars</artifactId>
+        <classifier>tomcat7</classifier>
         <version>${deployable.version}</version>
         <type>war</type>
       </dependency>
-
       <dependency>
         <groupId>org.kie</groupId>
-        <artifactId>kie-wb-distribution-wars</artifactId>
-        <classifier>tomcat7</classifier>
+        <artifactId>kie-drools-wb-distribution-wars</artifactId>
+        <classifier>wildfly8</classifier>
         <version>${deployable.version}</version>
         <type>war</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
+  <!-- The dependencies should have <scope>test</scope> as all of this module does is executing tests. However,
+       having this setting for each depdendency would clutter the POM, so the <scope> is not used on purpose. -->
   <dependencies>
-    <!-- WAR distributions -->
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-drools-wb-distribution-wars</artifactId>
       <classifier>eap-6_1</classifier>
       <type>war</type>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-wb-distribution-wars</artifactId>
       <classifier>eap-6_1</classifier>
       <type>war</type>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-wb-distribution-wars</artifactId>
       <classifier>tomcat7</classifier>
       <type>war</type>
-      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drools-wb-distribution-wars</artifactId>
+      <classifier>tomcat7</classifier>
+      <type>war</type>
     </dependency>
 
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-rest-client</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-kie-services</artifactId>
-      <scope>test</scope>
       <exclusions>
         <exclusion>
           <artifactId>kie-ci</artifactId>
@@ -120,12 +141,28 @@
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxrs</artifactId>
-      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxb-provider</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson-provider</artifactId>
     </dependency>
 
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
     </dependency>
 
   </dependencies>
@@ -143,27 +180,25 @@
     </testResources>
     <pluginManagement>
       <plugins>
-        <!-- ensure that repository directory is deleted before test runs -->
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <configuration>
-            <filesets>
-              <fileset>
-                <directory>${basedir}</directory>
-                <includes>
-                  <include>*db</include>
-                  <include>btm*log</include>
-                  <include>repository/</include>
-                  <include>.niogit/</include>
-                  <include>.index/</include>
-                </includes>
-              </fileset>
-            </filesets>
-          </configuration>
-        </plugin>
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
           <artifactId>cargo-maven2-plugin</artifactId>
+          <configuration>
+            <configuration>
+              <properties>
+                <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
+              </properties>
+            </configuration>
+            <deployables>
+              <deployable>
+                <properties>
+                  <context>${deployable.context}</context>
+                </properties>
+                <pingURL>${deployable.base.uri}</pingURL>
+                <pingTimeout>120000</pingTimeout>
+              </deployable>
+            </deployables>
+          </configuration>
           <executions>
             <execution>
               <id>start-container</id>
@@ -184,6 +219,7 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <!-- Common configuration for both kie-wb and kie-drools-wb and all supported containers -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
@@ -212,6 +248,19 @@
         <deployable.artifactId>kie-drools-wb-distribution-wars</deployable.artifactId>
         <deployable.context>kie-drools-wb</deployable.context>
       </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <configuration>
+                <groups>org.kie.smoke.wb.category.KieDroolsWbSmoke</groups>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
 
     <profile>
@@ -221,6 +270,19 @@
         <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
         <deployable.context>kie-wb</deployable.context>
       </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <configuration>
+                <groups>org.kie.smoke.wb.category.KieWbSmoke</groups>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
 
     <profile>
@@ -244,7 +306,6 @@
               <configuration>
                 <properties>
                   <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
-                  <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
                 </properties>
                 <configfiles>
                   <configfile>
@@ -265,16 +326,10 @@
                   <artifactId>${deployable.artifactId}</artifactId>
                   <classifier>eap-6_1</classifier>
                   <type>war</type>
-                  <properties>
-                    <context>${deployable.context}</context>
-                  </properties>
-                  <pingURL>${deployable.base.uri}</pingURL>
-                  <pingTimeout>120000</pingTimeout>
                 </deployable>
               </deployables>
             </configuration>
           </plugin>
-          <!-- TODO apply XSLTs -->
         </plugins>
       </build>
     </profile>
@@ -288,22 +343,18 @@
         <dependency>
           <groupId>org.codehaus.btm</groupId>
           <artifactId>btm</artifactId>
-          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.codehaus.btm</groupId>
           <artifactId>btm-tomcat55-lifecycle</artifactId>
-          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>com.h2database</groupId>
           <artifactId>h2</artifactId>
-          <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>javax.transaction</groupId>
-          <artifactId>jta</artifactId>
-          <scope>test</scope>
+          <groupId>org.jboss.spec.javax.transaction</groupId>
+          <artifactId>jboss-transaction-api_1.1_spec</artifactId>
         </dependency>
         <dependency>
           <groupId>org.slf4j</groupId>
@@ -314,8 +365,8 @@
           <artifactId>kie-tomcat-integration</artifactId>
         </dependency>
         <dependency>
-          <groupId>javax.security.jacc</groupId>
-          <artifactId>javax.security.jacc-api</artifactId>
+          <groupId>org.jboss.spec.javax.security.jacc</groupId>
+          <artifactId>jboss-jacc-api_1.4_spec</artifactId>
         </dependency>
       </dependencies>
       <build>
@@ -332,7 +383,9 @@
                 </zipUrlInstaller>
                 <systemProperties>
                   <tomcat.home>${project.build.directory}/cargo/configurations/tomcat7x</tomcat.home>
-                  <bitronix.tm.configuration>${project.build.directory}/cargo/configurations/tomcat7x/conf/btm-config.properties</bitronix.tm.configuration>
+                  <bitronix.tm.configuration>
+                    ${project.build.directory}/cargo/configurations/tomcat7x/conf/btm-config.properties
+                  </bitronix.tm.configuration>
                   <jbpm.tsr.jndi.lookup>java:comp/env/TransactionSynchronizationRegistry</jbpm.tsr.jndi.lookup>
                 </systemProperties>
                 <dependencies>
@@ -349,8 +402,8 @@
                     <artifactId>h2</artifactId>
                   </dependency>
                   <dependency>
-                    <groupId>javax.transaction</groupId>
-                    <artifactId>jta</artifactId>
+                    <groupId>org.jboss.spec.javax.transaction</groupId>
+                    <artifactId>jboss-transaction-api_1.1_spec</artifactId>
                   </dependency>
                   <dependency>
                     <groupId>org.slf4j</groupId>
@@ -361,26 +414,18 @@
                     <artifactId>kie-tomcat-integration</artifactId>
                   </dependency>
                   <dependency>
-                    <groupId>javax.security.jacc</groupId>
-                    <artifactId>javax.security.jacc-api</artifactId>
+                    <groupId>org.jboss.spec.javax.security.jacc</groupId>
+                    <artifactId>jboss-jacc-api_1.4_spec</artifactId>
                   </dependency>
                 </dependencies>
               </container>
               <configuration>
-                <properties>
-                  <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
-                </properties>
                 <configfiles>
                   <configfile>
                     <file>${project.build.testOutputDirectory}/tomcat/config</file>
                     <todir>conf</todir>
                     <overwrite>true</overwrite>
                   </configfile>
-                  <!--<configfile>-->
-                    <!--<file>${project.basedir}/src/test/resources/ssl/server</file>-->
-                    <!--<todir>configuration/ssl</todir>-->
-                    <!--<overwrite>false</overwrite>-->
-                  <!--</configfile>-->
                 </configfiles>
               </configuration>
               <deployables>
@@ -389,20 +434,47 @@
                   <artifactId>${deployable.artifactId}</artifactId>
                   <classifier>tomcat7</classifier>
                   <type>war</type>
-                  <properties>
-                    <context>${deployable.context}</context>
-                  </properties>
-                  <pingURL>${deployable.base.uri}</pingURL>
-                  <pingTimeout>120000</pingTimeout>
                 </deployable>
               </deployables>
             </configuration>
           </plugin>
-          <!-- TODO apply XSLTs -->
+          <plugin>
+            <!-- Tomcat is not (yet?) configured with JMS, so exclude the JMS tests. -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <excludedGroups>org.kie.smoke.wb.category.JMSSmoke</excludedGroups>
+            </configuration>
+          </plugin>
         </plugins>
       </build>
     </profile>
 
+    <profile>
+      <id>custom-container</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>none</phase>
+                <!-- do nothing, container is not managed by cargo! -->
+                <goals/>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>none</phase>
+                <!-- do nothing, container is not managed by cargo! -->
+                <goals/>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
-  
+
 </project>
