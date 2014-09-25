@@ -29,6 +29,7 @@
     <container.host>localhost</container.host>
     <container.port>8080</container.port>
     <deployable.base.uri>http://${container.host}:${container.port}/${deployable.context}/</deployable.base.uri>
+    <deployment.timeout.millis>120000</deployment.timeout.millis>
   </properties>
 
   <dependencyManagement>
@@ -190,7 +191,7 @@
                 <context>${deployable.context}</context>
               </properties>
               <pingURL>${deployable.base.uri}</pingURL>
-              <pingTimeout>120000</pingTimeout>
+              <pingTimeout>${deployment.timeout.millis}</pingTimeout>
             </deployable>
           </deployables>
         </configuration>
