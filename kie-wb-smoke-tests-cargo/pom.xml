@@ -30,8 +30,7 @@
     <deployable.version>${project.version}</deployable.version>
     <deployable.context>kie-wb</deployable.context>
     <container.host>localhost</container.host>
-
-    <!-- <container.servlet.port/> can't specify the property here, as build-helper plugin would then not be able to override it -->
+    <container.port>8080</container.port>
     <deployable.base.uri>http://${container.host}:${container.port}/${deployable.context}/</deployable.base.uri>
   </properties>
 
@@ -178,47 +177,43 @@
         <filtering>true</filtering>
       </testResource>
     </testResources>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.cargo</groupId>
-          <artifactId>cargo-maven2-plugin</artifactId>
-          <configuration>
-            <configuration>
-              <properties>
-                <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
-              </properties>
-            </configuration>
-            <deployables>
-              <deployable>
-                <properties>
-                  <context>${deployable.context}</context>
-                </properties>
-                <pingURL>${deployable.base.uri}</pingURL>
-                <pingTimeout>120000</pingTimeout>
-              </deployable>
-            </deployables>
-          </configuration>
-          <executions>
-            <execution>
-              <id>start-container</id>
-              <phase>pre-integration-test</phase>
-              <goals>
-                <goal>start</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>stop-container</id>
-              <phase>post-integration-test</phase>
-              <goals>
-                <goal>stop</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven2-plugin</artifactId>
+        <configuration>
+          <configuration>
+            <properties>
+              <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
+            </properties>
+          </configuration>
+          <deployables>
+            <deployable>
+              <properties>
+                <context>${deployable.context}</context>
+              </properties>
+              <pingURL>${deployable.base.uri}</pingURL>
+              <pingTimeout>120000</pingTimeout>
+            </deployable>
+          </deployables>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-container</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>stop-container</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <!-- Common configuration for both kie-wb and kie-drools-wb and all supported containers -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -265,6 +260,9 @@
 
     <profile>
       <id>kie-wb</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
         <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
@@ -287,6 +285,9 @@
 
     <profile>
       <id>eap63x</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <eap63x.download.url>file:///home/psiroky/work/releases/jboss-eap-6.3.0.zip</eap63x.download.url>
       </properties>
@@ -370,6 +371,7 @@
         </dependency>
       </dependencies>
       <build>
+        <pluginManagement>
         <plugins>
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
@@ -447,6 +449,7 @@
             </configuration>
           </plugin>
         </plugins>
+        </pluginManagement>
       </build>
     </profile>
 
