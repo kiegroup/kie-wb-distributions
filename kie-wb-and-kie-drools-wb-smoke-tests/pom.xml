@@ -15,10 +15,7 @@
   <description>Integration smoke tests for KIE Workbench and KIE Drools Workbench</description>
 
   <properties>
-    <!-- jboss eap  -->
-    <override.version.org.jboss.as>7.2.0.Final</override.version.org.jboss.as>
-    <jboss.eap.server.name>jboss-eap-6.3</jboss.eap.server.name>
-
+    <version.tomcat>7.0.55</version.tomcat>
     <!-- wildfly -->
     <version.org.wildfly>8.1.0.Final</version.org.wildfly>
     <wildfly.server.name>wildfly-${version.org.wildfly}</wildfly.server.name>
@@ -289,7 +286,11 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <eap63x.download.url>file:///home/psiroky/work/releases/jboss-eap-6.3.0.zip</eap63x.download.url>
+        <!-- The EAP 6.3.x binary can't be anonymously downloaded due to license issues. It can be downloaded manually
+             and for free (e.g. from http://jbossas.jboss.org/downloads.html) and the zip location needs to be specified
+             here or via system property when running the build (don't forget to use the `file://` prefix when
+             referencing the zip from local filesystem). -->
+        <eap63x.download.url>valid-url-for-eap-6.3.x-needs-to-be-specified-here-or-via-cmd-line</eap63x.download.url>
       </properties>
       <build>
         <plugins>
@@ -338,7 +339,7 @@
     <profile>
       <id>tomcat7x</id>
       <properties>
-        <tomcat7x.download.url>file:///home/psiroky/work/releases/apache-tomcat-7.0.55.zip</tomcat7x.download.url>
+        <tomcat7x.download.url>https://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat}/bin/apache-tomcat-${version.tomcat}.zip</tomcat7x.download.url>
       </properties>
       <dependencies>
         <dependency>
