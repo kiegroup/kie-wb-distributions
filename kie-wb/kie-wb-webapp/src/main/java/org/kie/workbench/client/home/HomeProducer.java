@@ -60,7 +60,7 @@ public class HomeProducer {
 
                                                              @Override
                                                              public void execute() {
-                                                                 placeManager.goTo( "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective" );
+                                                                 placeManager.goTo( "AuthoringPerspective" );
                                                              }
                                                          } );
 

@@ -190,7 +190,7 @@ public class KieDroolsWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.project_authoring() ).withRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.DroolsAuthoringPerspective" ) );
+                placeManager.goTo( new DefaultPlaceRequest( "AuthoringPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 

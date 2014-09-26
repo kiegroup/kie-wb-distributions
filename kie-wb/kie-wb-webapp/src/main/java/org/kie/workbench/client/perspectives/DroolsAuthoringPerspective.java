@@ -54,7 +54,7 @@ import org.uberfire.workbench.model.toolbar.impl.DefaultToolBar;
 import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "org.kie.workbench.client.perspectives.DroolsAuthoringPerspective")
+@WorkbenchPerspective(identifier = "AuthoringPerspective")
 public class DroolsAuthoringPerspective {
 
     private AppConstants constants = AppConstants.INSTANCE;
