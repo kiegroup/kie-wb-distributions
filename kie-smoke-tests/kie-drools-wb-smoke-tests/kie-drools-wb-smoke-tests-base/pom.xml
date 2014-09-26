@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.kie.smoke</groupId>
     <artifactId>kie-drools-wb-smoke-tests</artifactId>
-    <version>6.2.0-SNAPSHOT</version>
+    <version>6.2.0.Beta3</version>
   </parent>
 
   <artifactId>kie-drools-wb-smoke-tests-base</artifactId>

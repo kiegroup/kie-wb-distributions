@@ -5,7 +5,7 @@
         <parent>
         <groupId>org.kie.modules</groupId>
         <artifactId>jboss-eap-6.3</artifactId>
-        <version>6.2.0-SNAPSHOT</version>
+        <version>6.2.0.Beta3</version>
       </parent>
       
     <groupId>org.kie.modules</groupId>
