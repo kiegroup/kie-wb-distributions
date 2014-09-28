@@ -520,7 +520,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         TaskSummary taskSummary = getTaskSummary(maryReqHelper, procInstId, Status.Ready);
         long taskId = taskSummary.getId();
         assertNull(taskSummary.getActualOwner());
-        assertTrue(taskSummary.getPotentialOwners().isEmpty());
+        assertNull(taskSummary.getPotentialOwners());
         assertEquals("Task 1", taskSummary.getName());
 
         // complete 'Task 1' as mary
