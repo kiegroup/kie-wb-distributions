@@ -27,6 +27,7 @@
     <deployable.context>kie-wb</deployable.context>
     <container.host>localhost</container.host>
     <container.port>8080</container.port>
+    <container.startstop.timeout.millis>120000</container.startstop.timeout.millis>
     <deployable.base.uri>http://${container.host}:${container.port}/${deployable.context}/</deployable.base.uri>
     <deployment.timeout.millis>120000</deployment.timeout.millis>
   </properties>
@@ -150,26 +151,37 @@
         <filtering>true</filtering>
       </testResource>
     </testResources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven2-plugin</artifactId>
+          <configuration>
+            <container>
+              <timeout>${container.startstop.timeout.millis}</timeout>
+            </container>
+            <configuration>
+              <properties>
+                <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
+              </properties>
+            </configuration>
+            <deployables>
+              <deployable>
+                <properties>
+                  <context>${deployable.context}</context>
+                </properties>
+                <pingURL>${deployable.base.uri}</pingURL>
+                <pingTimeout>${deployment.timeout.millis}</pingTimeout>
+              </deployable>
+            </deployables>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven2-plugin</artifactId>
-        <configuration>
-          <configuration>
-            <properties>
-              <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
-            </properties>
-          </configuration>
-          <deployables>
-            <deployable>
-              <properties>
-                <context>${deployable.context}</context>
-              </properties>
-              <pingURL>${deployable.base.uri}</pingURL>
-              <pingTimeout>${deployment.timeout.millis}</pingTimeout>
-            </deployable>
-          </deployables>
-        </configuration>
         <executions>
           <execution>
             <id>start-container</id>
