@@ -9,7 +9,7 @@
   </parent>
 
   <groupId>org.kie.smoke</groupId>
-  <artifactId>kie-wb-and-kie-drools-wb-smoke-tests</artifactId>
+  <artifactId>kie-wb-smoke-tests</artifactId>
 
   <name>KIE Workbench and KIE Drools Workbench Smoke Tests</name>
   <description>Integration smoke tests for KIE Workbench and KIE Drools Workbench</description>
