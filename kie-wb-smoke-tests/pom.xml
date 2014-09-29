@@ -83,43 +83,6 @@
   <!-- The dependencies should have <scope>test</scope> as all of this module does is executing tests. However,
        having this setting for each depdendency would clutter the POM, so the <scope> is not used on purpose. -->
   <dependencies>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-distribution-wars</artifactId>
-      <classifier>eap-6_1</classifier>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-distribution-wars</artifactId>
-      <classifier>tomcat7</classifier>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-distribution-wars</artifactId>
-      <classifier>wildfly8</classifier>
-      <type>war</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-distribution-wars</artifactId>
-      <classifier>eap-6_1</classifier>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-distribution-wars</artifactId>
-      <classifier>tomcat7</classifier>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-distribution-wars</artifactId>
-      <classifier>wildfly8</classifier>
-      <type>war</type>
-    </dependency>
 
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -302,6 +265,20 @@
              referencing the zip from local filesystem). -->
         <eap63x.download.url>valid-url-for-eap-6.3.x-needs-to-be-specified-here-or-via-cmd-line</eap63x.download.url>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>eap-6_1</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>eap-6_1</classifier>
+          <type>war</type>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -355,6 +332,18 @@
         <tomcat7x.download.url>https://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat}/bin/apache-tomcat-${version.tomcat}.zip</tomcat7x.download.url>
       </properties>
       <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>tomcat7</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>tomcat7</classifier>
+          <type>war</type>
+        </dependency>
         <dependency>
           <groupId>org.codehaus.btm</groupId>
           <artifactId>btm</artifactId>
@@ -472,6 +461,20 @@
       <properties>
         <wildfly8x.download.url>http://download.jboss.org/wildfly/${version.org.wildfly}/wildfly-${version.org.wildfly}.zip</wildfly8x.download.url>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>wildfly8</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>wildfly8</classifier>
+          <type>war</type>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
