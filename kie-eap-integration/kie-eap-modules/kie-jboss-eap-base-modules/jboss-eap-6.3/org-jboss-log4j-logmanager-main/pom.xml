@@ -5,7 +5,7 @@
         <parent>
         <groupId>org.kie.modules</groupId>
         <artifactId>jboss-eap-6.3</artifactId>
-        <version>6.2.0-SNAPSHOT</version>
+        <!-- version removed from unused module to enable mvn version updates -->
       </parent>
       
     <groupId>org.kie.modules</groupId>
