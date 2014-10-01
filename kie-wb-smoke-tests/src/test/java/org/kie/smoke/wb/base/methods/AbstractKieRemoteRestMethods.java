@@ -7,8 +7,8 @@ import static org.junit.Assert.fail;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
-import org.kie.remote.client.rest.KieRemoteHttpRequest;
-import org.kie.remote.client.rest.KieRemoteHttpResponse;
+import org.kie.remote.common.rest.KieRemoteHttpRequest;
+import org.kie.remote.common.rest.KieRemoteHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
