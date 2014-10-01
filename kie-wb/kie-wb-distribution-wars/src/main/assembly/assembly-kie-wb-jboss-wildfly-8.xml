@@ -232,6 +232,7 @@
           <exclude>WEB-INF/lib/apache-mime4j-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-configuration-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/cxf-bundle-jaxrs-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-bindings-soap-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-bindings-xml-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-core-*.jar</exclude>
