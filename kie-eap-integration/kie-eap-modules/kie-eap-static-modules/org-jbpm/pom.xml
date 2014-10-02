@@ -55,6 +55,12 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-workitems</artifactId>
       <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-bundle-jaxrs</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
 
