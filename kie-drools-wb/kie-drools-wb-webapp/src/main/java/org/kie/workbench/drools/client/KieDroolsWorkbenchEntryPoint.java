@@ -35,6 +35,7 @@ import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
+import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
 import org.kie.workbench.common.services.security.KieWorkbenchACL;
 import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
@@ -44,6 +45,7 @@ import org.kie.workbench.drools.client.home.HomeProducer;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.menu.CustomSplashHelp;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
+import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
@@ -93,6 +95,12 @@ public class KieDroolsWorkbenchEntryPoint {
     @Inject
     private Caller<KieWorkbenchSecurityService> kieSecurityService;
 
+    @Inject
+    private Caller<PlaceManagerActivityService> pmas;
+
+    @Inject
+    private ActivityBeansCache activityBeansCache;
+
     @AfterInitialization
     public void startApp() {
         kieSecurityService.call( new RemoteCallback<String>() {
@@ -106,6 +114,14 @@ public class KieDroolsWorkbenchEntryPoint {
                 homeProducer.init();
             }
         } ).loadPolicy();
+        List<String> allActivities = activityBeansCache.getActivitiesById();
+        pmas.call( new RemoteCallback<Void>() {
+
+            @Override
+            public void callback( Void response ) {
+
+            }
+        } ).initActivities( allActivities );
     }
 
     private void loadPreferences() {
@@ -200,6 +216,18 @@ public class KieDroolsWorkbenchEntryPoint {
                 placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
@@ -213,6 +241,7 @@ public class KieDroolsWorkbenchEntryPoint {
                 placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
+
 
         return result;
     }

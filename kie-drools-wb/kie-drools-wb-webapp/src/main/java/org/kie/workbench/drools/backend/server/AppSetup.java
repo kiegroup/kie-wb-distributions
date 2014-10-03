@@ -40,6 +40,7 @@ import org.guvnor.structure.server.config.ConfigGroup;
 import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
+import org.jbpm.console.ng.bd.service.AdministrationService;
 import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
 import org.kie.workbench.common.services.security.impl.KieWorkbenchACLImpl;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
@@ -98,6 +99,9 @@ public class AppSetup {
 
     @Inject
     private KieWorkbenchSecurityService securityService;
+
+    @Inject
+    private AdministrationService administrationService;
 
     @PostConstruct
     public void assertPlayground() {
@@ -163,7 +167,9 @@ public class AppSetup {
                 RolesRegistry.get().registerRole( role );
             }
         }
-
+        // rest of jbpm wb bootstrap
+        administrationService.bootstrapConfig();
+        administrationService.bootstrapDeployments();
         // notify components that bootstrap is completed to start post setups
         applicationStartedEvent.fire( new ApplicationStarted() );
     }
@@ -238,6 +244,8 @@ public class AppSetup {
         group.addConfigItem( configurationFactory.newConfigItem( "build.enable-incremental",
                                                                  "true" ) );
         group.addConfigItem( configurationFactory.newConfigItem( "rule-modeller-onlyShowDSLStatements",
+                                                                 "false" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy",
                                                                  "false" ) );
         return group;
     }

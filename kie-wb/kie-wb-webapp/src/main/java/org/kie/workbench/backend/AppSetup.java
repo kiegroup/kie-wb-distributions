@@ -242,6 +242,8 @@ public class AppSetup {
                                                                  "designer" ) );
         group.addConfigItem( configurationFactory.newConfigItem( "designer.profile",
                                                                  "jbpm" ) );
+        group.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy",
+                "true" ) );
         return group;
     }
 

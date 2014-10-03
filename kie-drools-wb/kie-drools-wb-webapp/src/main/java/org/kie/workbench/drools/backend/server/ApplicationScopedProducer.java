@@ -61,6 +61,9 @@ public class ApplicationScopedProducer {
         if ( System.getProperty( "org.uberfire.watcher.autostart" ) == null ) {
             System.setProperty( "org.uberfire.watcher.autostart", "false" );
         }
+        if ( System.getProperty( "org.kie.deployment.desc.location" ) == null ) {
+            System.setProperty( "org.kie.deployment.desc.location", "classpath:META-INF/kie-wb-deployment-descriptor.xml" );
+        }
     }
 
     @PostConstruct

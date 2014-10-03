@@ -16,10 +16,20 @@
     limitations under the License.
 
 -->
+
+
 <beans xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:s="urn:java:ee"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://docs.jboss.org/cdi/beans_1_0.xsd">
 
   <alternatives>
-    <class>org.jbpm.services.cdi.producer.DefaultUserGroupInfoProducer</class>
+    <!-- uncomment DefaultUserGroupInfoProducer when using UberFire security -->
+    <!--class>org.jbpm.services.cdi.producer.DefaultUserGroupInfoProducer</class-->
+    <class>org.jbpm.services.cdi.producer.JAASUserGroupInfoProducer</class>
   </alternatives>
+
 </beans>
+
+    
+    
+

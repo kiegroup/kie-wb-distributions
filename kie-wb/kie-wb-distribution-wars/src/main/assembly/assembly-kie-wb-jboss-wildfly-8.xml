@@ -58,6 +58,7 @@
           <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
           <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/users.properties</exclude>
+          <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
 
           <!-- remove shared services with btm -->

@@ -117,4 +117,8 @@ public interface AppConstants
     String Upload();
 
     String Refresh();
+
+    String Asset_Management();
+
+    String Tasks_List();
 }

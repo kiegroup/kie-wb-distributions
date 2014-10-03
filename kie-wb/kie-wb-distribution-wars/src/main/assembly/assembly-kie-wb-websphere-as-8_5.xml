@@ -72,6 +72,7 @@
           <exclude>WEB-INF/classes/users.properties</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/wildfly/</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
+          <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
           <!-- Exclude non-JUL logging stuff (i.e: log4j, logback) -->
           <exclude>WEB-INF/log4j.xml</exclude>
           <exclude>WEB-INF/classes/logback.xml</exclude>
