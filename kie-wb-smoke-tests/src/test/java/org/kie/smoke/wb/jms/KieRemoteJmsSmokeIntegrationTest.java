@@ -14,6 +14,7 @@ import org.kie.services.client.api.command.RemoteRuntimeEngine;
 import org.kie.smoke.wb.AbstractWorkbenchIntegrationTest;
 import org.kie.smoke.wb.category.JMSSmoke;
 import org.kie.smoke.wb.category.KieWbSmoke;
+import org.kie.smoke.wb.util.TestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,8 +96,8 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
                 .useSsl(true)
                 .addHostName("localhost")
                 .addJmsConnectorPort(5446)
-                .addKeystoreLocation("ssl/client_keystore.jks")
-                .addKeystorePassword("CLIENT_KEYSTORE_PASSWORD")
+                .addKeystoreLocation(TestConstants.CLIENT_KEY_TRUSTSTORE_LOCATION)
+                .addKeystorePassword(TestConstants.CLIENT_KEYSTORE_PASSWORD)
                 .useKeystoreAsTruststore();
 
         try {

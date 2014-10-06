@@ -83,11 +83,6 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
 
     private static final Logger logger = LoggerFactory.getLogger(KieRemoteRestSmokeIntegrationTest.class);
 
-//    public abstract MediaType getMediaType();
-//    public abstract boolean jmsQueuesAvailable();
-//    public abstract RuntimeStrategy getStrategy();
-//    public abstract int getTimeout();
-
     private static final String taskUserId = "salaboy";
 
     private final String deploymentId;
@@ -100,18 +95,12 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
 
     public KieRemoteRestSmokeIntegrationTest() {
         this.deploymentId = KJAR_DEPLOYMENT_ID;
-        this.mediaType = MediaType.APPLICATION_XML_TYPE;
+        this.mediaType = MediaType.APPLICATION_XML_TYPE; // TODO run the tests with both XML and JSON?
         this.strategy = RuntimeStrategy.SINGLETON;
         this.timeout = 1000;
         this.deploymentUnit = new KModuleDeploymentUnit(GROUP_ID, ARTIFACT_ID, VERSION);
-        assertEquals("Deployment unit information", deploymentId, deploymentUnit.getIdentifier());
+        assertEquals("Returned deployment unit identifier is incorrect!", deploymentId, deploymentUnit.getIdentifier());
     }
-
-    private final static int SETUP = 0;
-
-    private final static int REST_SUCCEEDING = 1;
-
-    private final static int JMS_SUCCEEDING = 2;
 
     private static JaxbSerializationProvider jaxbSerializationProvider;
 
@@ -157,12 +146,6 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         Thread.sleep(sleep * 1000);
     }
 
-    @Before
-    public void printTestName() {
-        String testName = Thread.currentThread().getStackTrace()[2].getMethodName();
-        System.out.println("-=> " + testName);
-    }
-
     /**
      * Clone, build and deploy the test deployment unit.
      */
@@ -178,12 +161,11 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         String deploymentId = "org.test:kjar:1.0";
         String orgUnit = "integTestUser";
         deployUtil.createAndDeployRepository(repoUrl, repositoryName, project, deploymentId, orgUnit, MARY_USER);
-        Thread.sleep(5000);
+        Thread.sleep(5000); // TODO don't use hardcoded wait, but rather polling
     }
 
     @Test
     public void testUrlsGetDeployments() throws Exception {
-        printTestName();
         // test with normal RestRequestHelper
         String user = MARY_USER;
         String password = MARY_PASSWORD;
@@ -487,7 +469,6 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
 
     @Test
     public void testRestRemoteApiRuleTaskProcess() throws Exception {
-        printTestName();
         // Remote API setup
         RemoteRuntimeEngine runtimeEngine = getRemoteRuntime(deploymentUrl, MARY_USER, MARY_PASSWORD);
 

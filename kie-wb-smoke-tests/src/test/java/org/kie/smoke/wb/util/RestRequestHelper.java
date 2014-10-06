@@ -45,7 +45,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class is meant to help users help interact with the (kie-wb or business-central) REST api by creating
+ * This class is meant to help users interact with the (kie-wb or business-central) REST api by creating
  * either {@link ClientRequest} (REST request) instances or {@link ClientRequestFactory} instances to
  * create {@link ClientRequest} instances.
  */
