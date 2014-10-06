@@ -92,7 +92,7 @@ public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
      * @throws Exception When things go wrong..
      */
     @Test
-    public void manipulatingRepositories() throws Exception {
+    public void testManipulatingRepositories() throws Exception {
         // rest/repositories GET
         RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
         ClientRequest restRequest = requestHelper.createRequest("repositories");
@@ -150,7 +150,7 @@ public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
      * @throws Exception
      */
     @Test
-    public void mavenOperations() throws Exception {
+    public void testMavenOperations() throws Exception {
         // rest/repositories GET
         RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
         ClientRequest restRequest = requestHelper.createRequest("repositories");
@@ -213,7 +213,7 @@ public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
      * @throws Exception
      */
     @Test
-    public void manipulatingOUs() throws Exception {
+    public void testManipulatingOUs() throws Exception {
         // rest/organizaionalunits GET
         RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
         ClientRequest restRequest = requestHelper.createRequest("organizationalunits");

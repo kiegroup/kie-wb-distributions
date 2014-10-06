@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * With thanks to Ivo Bek, Radovan Synek, Marek Baluch, Jiri Locker, Luask Petrovicky.
+ * With thanks to Ivo Bek, Radovan Synek, Marek Baluch, Jiri Locker, Lukas Petrovicky.
  * </p> 
  * Copied from the RestWorkbenchClient and BusinessCentral classes and then modified. 
  */
