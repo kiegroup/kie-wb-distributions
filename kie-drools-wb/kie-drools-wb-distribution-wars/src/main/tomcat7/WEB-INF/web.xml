@@ -497,6 +497,13 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <resource-env-ref-type>org.jboss.errai.bus.server.service.ErraiService</resource-env-ref-type>
   </resource-env-ref>
 
+  <resource-ref>
+    <description>Console DS</description>
+    <res-ref-name>jdbc/jbpm</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+
   <context-param>
     <param-name>errai.properties</param-name>
     <param-value>/WEB-INF/errai.properties</param-value>

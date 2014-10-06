@@ -21,6 +21,11 @@
       <includes>
         <include>org.apache.ant:ant:jar</include>
         <include>org.apache.ant:ant-launcher:jar</include>
+        <include>org.hibernate:hibernate-entitymanager</include>
+        <include>org.hibernate:hibernate-core</include>
+        <include>org.hibernate:hibernate-validator</include>
+        <include>org.hibernate:hibernate-commons-annotations</include>
+        <include>antlr:antlr</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
@@ -33,6 +38,7 @@
       <unpack>true</unpack>
       <unpackOptions>
         <excludes>
+          <exclude>META-INF/context.xml</exclude>
           <exclude>WEB-INF/jetty-env.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
           <exclude>WEB-INF/beans.xml</exclude>
@@ -51,6 +57,7 @@
           <exclude>WEB-INF/lib/uberfire-workbench-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-widgets-commons-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-runtime-plugins-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-uberfire-social-activities-client-*.jar</exclude>
 
           <!-- Guvnor client related -->
           <exclude>WEB-INF/lib/guvnor-structure-client-*.jar</exclude>
@@ -59,6 +66,7 @@
           <exclude>WEB-INF/lib/guvnor-workingset-client-*.jar</exclude>
           <exclude>WEB-INF/lib/guvnor-message-console-client-*.jar</exclude>
           <exclude>WEB-INF/lib/guvnor-organizationalunit-manager-*.jar</exclude>
+          <exclude>WEB-INF/lib/guvnor-asset-mgmt-client-*.jar</exclude>
 
           <!-- Kie Workbench client related-->
           <exclude>WEB-INF/lib/kie-wb-common-ui-*.jar</exclude>
@@ -136,6 +144,10 @@
           <exclude>WEB-INF/lib/jsp-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-jsp-api_*.jar</exclude>
           <exclude>WEB-INF/lib/javax.security.jacc-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-servlet-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-transaction-*.jar</exclude>
+          <exclude>WEB-INF/lib/btm-*.jar</exclude>
+          <exclude>WEB-INF/lib/jta-*.jar</exclude>
 
           <!-- exclude UF form-based login.jsp -->
           <exclude>login.jsp</exclude>
