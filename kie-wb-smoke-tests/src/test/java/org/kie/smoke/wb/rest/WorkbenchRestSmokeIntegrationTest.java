@@ -120,7 +120,7 @@ public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         CreateOrCloneRepositoryRequest createJobRequest = post(restRequest, mediaType, 202, CreateOrCloneRepositoryRequest.class);
         logger.debug("]] " + convertObjectToJsonString(createJobRequest));
         assertNotNull("create repo job request", createJobRequest);
-        assertEquals("job request status", JobStatus.ACCEPTED, createJobRequest.getStatus());
+        assertEquals("job request status", JobStatus.APPROVED, createJobRequest.getStatus());
         String jobId = createJobRequest.getJobId();
 
         // rest/jobs/{jobId} GET
@@ -190,9 +190,9 @@ public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
     }
 
     private void waitForJobToComplete(URL deploymentUrl, String jobId, JobStatus jobStatus, RestRequestHelper requestHelper) throws Exception {
-        assertEquals("Initial status of request should be ACCEPTED", JobStatus.ACCEPTED, jobStatus);
+        assertEquals("Initial status of request should be APPROVED", JobStatus.APPROVED, jobStatus);
         int wait = 0;
-        while (jobStatus.equals(JobStatus.ACCEPTED) && wait < maxTries) {
+        while (jobStatus.equals(JobStatus.APPROVED) && wait < maxTries) {
             ClientRequest restRequest = requestHelper.createRequest("jobs/" + jobId);
             JobResult jobResult = get(restRequest, mediaType, JobResult.class);
             logger.debug("]] " + convertObjectToJsonString(jobResult));
@@ -249,7 +249,7 @@ public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         CreateOrCloneRepositoryRequest createRepoRequest = post(restRequest, mediaType, 202, CreateOrCloneRepositoryRequest.class);
         logger.debug("]] " + convertObjectToJsonString(createRepoRequest));
         assertNotNull("create repo job request", createRepoRequest);
-        assertEquals("job request status", JobStatus.ACCEPTED, createRepoRequest.getStatus());
+        assertEquals("job request status", JobStatus.APPROVED, createRepoRequest.getStatus());
 
         // rest/jobs/{jobId}
         waitForJobToComplete(deploymentUrl, createRepoRequest.getJobId(), createRepoRequest.getStatus(), requestHelper);
@@ -260,7 +260,7 @@ public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         AddRepositoryToOrganizationalUnitRequest addRepoToOuRequest = post(restRequest, mediaType, 202, AddRepositoryToOrganizationalUnitRequest.class);
         logger.debug("]] " + convertObjectToJsonString(addRepoToOuRequest));
         assertNotNull("add repo to ou job request", addRepoToOuRequest);
-        assertEquals("job request status", JobStatus.ACCEPTED, addRepoToOuRequest.getStatus());
+        assertEquals("job request status", JobStatus.APPROVED, addRepoToOuRequest.getStatus());
 
         // rest/jobs/{jobId}
         waitForJobToComplete(deploymentUrl, addRepoToOuRequest.getJobId(), addRepoToOuRequest.getStatus(), requestHelper);
@@ -279,7 +279,7 @@ public class WorkbenchRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRquest = delete(restRequest, mediaType, 202, RemoveRepositoryFromOrganizationalUnitRequest.class);
         logger.debug("]] " + convertObjectToJsonString(remRepoFromOuRquest));
         assertNotNull("add repo to ou job request", remRepoFromOuRquest);
-        assertEquals("job request status", JobStatus.ACCEPTED, remRepoFromOuRquest.getStatus());
+        assertEquals("job request status", JobStatus.APPROVED, remRepoFromOuRquest.getStatus());
 
         // rest/jobs/{jobId}
         waitForJobToComplete(deploymentUrl, remRepoFromOuRquest.getJobId(), remRepoFromOuRquest.getStatus(), requestHelper);
