@@ -93,7 +93,7 @@
           <finalName>kie-drools-wb-${project.version}</finalName>
           <descriptors>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-as-7_0.xml</descriptor>
-            <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-eap-6_1.xml</descriptor>
+            <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-eap-6_3.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-wildfly-8.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-tomcat-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-drools-wb-websphere-as-8_5.xml</descriptor>
