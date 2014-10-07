@@ -1,22 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%@ page import="java.util.Locale" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
 <%
-    Locale locale= null;
-    try{
-        locale = new Locale(request.getParameter("locale"));
-    } catch(Exception e){
-        locale= request.getLocale();
-    }
+  request.getSession().invalidate();
+  Locale locale = null;
+  try {
+    locale = new Locale( request.getParameter( "locale" ) );
+  } catch ( Exception e ) {
+    locale = request.getLocale();
+  }
 %>
 <i18n:bundle id="bundle" baseName="org.kie.workbench.drools.client.resources.i18n.LoginConstants"
-             locale='<%= locale%>' />
-<%
-  request.getSession().invalidate();
-%>
+             locale='<%= locale%>'/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -31,7 +29,7 @@
       margin: 0;
       pading: 0;
       color: #fff;
-      background: url('<%=request.getContextPath()%>/images/bg-login.png') repeat #1b1b1b;
+      background: url('images/bg-login.png') repeat #1b1b1b;
       font-size: 14px;
       text-shadow: #050505 0 -1px 0;
       font-weight: bold;
@@ -48,7 +46,7 @@
       border-bottom: solid 3px #777973;
       height: 250px;
       width: 100%;
-      background: url('<%=request.getContextPath()%>/images/bg-login-top.png') repeat #fff;
+      background: url('images/bg-login-top.png') repeat #fff;
       z-index: 1;
     }
 
@@ -145,14 +143,19 @@
 
 <div id="login-wrapper" class="png_bg">
   <div id="login-top">
-    <img src="<%=request.getContextPath()%>/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
+    <img src="images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
   </div>
 
   <div id="login-content">
 
     <h3><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></h3>
-    <form action="<%=request.getContextPath()%>/org.kie.workbench.drools.KIEDroolsWebapp/KIEDroolsWebapp.html" method="GET">
+
+    <form action="kie-drools-wb.html" method="GET">
       <p>
+        <% if (request.getParameter("gwt.codesvr") != null) { %>
+        <input type="hidden" name="gwt.codesvr" value="<%= org.owasp.encoder.Encode.forHtmlAttribute(request.getParameter("gwt.codesvr")) %>"/>
+        <% } %>
+
         <input class="button" type="submit" value='<i18n:message key="loginAsAnotherUser">Login as another user</i18n:message>'/>
       </p>
 

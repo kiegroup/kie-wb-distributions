@@ -3,13 +3,14 @@ package org.kie.workbench.backend;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.jboss.errai.security.shared.api.Role;
+import org.jboss.errai.security.shared.api.identity.User;
 import org.jbpm.kie.services.api.IdentityProvider;
-import org.uberfire.security.Identity;
-import org.uberfire.security.Role;
 
 @SessionScoped
 public class UberFireIdentityProvider implements IdentityProvider, Serializable {
@@ -17,7 +18,7 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
     private static final long serialVersionUID = 1L;
 
     @Inject
-    private Identity identity;
+    private User identity;
     @Inject
     private HttpServletRequest request;
 
@@ -25,7 +26,7 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
     public String getName() {
         try {
 
-            return identity.getName();
+            return identity.getIdentifier();
         } catch (Exception e) {
             if (request != null && request.getUserPrincipal() != null) {
                 return request.getUserPrincipal().getName();
@@ -38,7 +39,7 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
     public List<String> getRoles() {
         List<String> roles = new ArrayList<String>();
 
-        List<Role> ufRoles = identity.getRoles();
+        Set<Role> ufRoles = identity.getRoles();
         for (Role role : ufRoles) {
             roles.add(role.getName());
         }

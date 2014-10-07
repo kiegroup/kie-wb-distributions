@@ -17,46 +17,13 @@
   </listener>
 
   <filter>
-    <filter-name>UberFire Security Filter</filter-name>
-    <filter-class>org.uberfire.security.server.UberFireSecurityFilter</filter-class>
-    <init-param>
-      <param-name>org.uberfire.cookie.id</param-name>
-      <param-value>kie.ide.console</param-value>
-    </init-param>
+    <filter-name>request-capture</filter-name>
+    <filter-class>org.kie.uberfire.security.server.SecurityIntegrationFilter</filter-class>
   </filter>
 
   <filter-mapping>
-    <filter-name>UberFire Security Filter</filter-name>
-    <url-pattern>/rest/*</url-pattern>
-    <url-pattern>/maven2/*</url-pattern>
-    <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
-    <url-pattern>/resourceList</url-pattern>
-    <url-pattern>/editor</url-pattern>
-    <url-pattern>/editor/*</url-pattern>
-    <url-pattern>/menuconnector/*</url-pattern>
-    <url-pattern>/menu/*</url-pattern>
-    <url-pattern>/uuidRepository</url-pattern>
-    <url-pattern>/transformer</url-pattern>
-    <url-pattern>/assetservice</url-pattern>
-    <url-pattern>/filestore</url-pattern>
-    <url-pattern>/dictionary</url-pattern>
-    <url-pattern>/themes</url-pattern>
-    <url-pattern>/customeditors</url-pattern>
-    <url-pattern>/simulation</url-pattern>
-    <url-pattern>/formwidget</url-pattern>
-    <url-pattern>/calledelement</url-pattern>
-    <url-pattern>/stencilpatterns</url-pattern>
-    <url-pattern>/jbpmservicerepo</url-pattern>
-    <url-pattern>/processdiff</url-pattern>
-    <url-pattern>/taskforms</url-pattern>
-    <url-pattern>/taskformseditor</url-pattern>
-    <url-pattern>/processinfo</url-pattern>
-    <url-pattern>/syntaxcheck</url-pattern>
-    <url-pattern>/plugins</url-pattern>
-    <url-pattern>/plugin</url-pattern>
-    <url-pattern>/plugin/*</url-pattern>
-    <url-pattern>/stencilset/*</url-pattern>
-    <url-pattern>/plugins/*</url-pattern>
+    <filter-name>request-capture</filter-name>
+    <url-pattern>*</url-pattern>
   </filter-mapping>
 
   <!-- RESTEasy configurations -->
@@ -87,17 +54,6 @@
   </servlet-mapping>
 
   <!-- UberFire servlets -->
-  <servlet>
-    <servlet-name>UberFireServlet</servlet-name>
-    <servlet-class>org.uberfire.server.UberfireServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>UberFireServlet</servlet-name>
-    <url-pattern>/org.kie.workbench.KIEWebapp/KIEWebapp.html</url-pattern>
-  </servlet-mapping>
-
   <servlet>
     <servlet-name>UberfireFileUploadServlet</servlet-name>
     <servlet-class>org.uberfire.server.FileUploadServlet</servlet-class>
@@ -186,23 +142,8 @@ profile in pom.xml to use that. -->
     <resource-env-ref-type>org.jboss.errai.bus.server.service.ErraiService</resource-env-ref-type>
   </resource-env-ref>
 
-  <context-param>
-    <param-name>errai.properties</param-name>
-    <param-value>/WEB-INF/errai.properties</param-value>
-  </context-param>
-
-  <context-param>
-    <param-name>login.config</param-name>
-    <param-value>/WEB-INF/login.config</param-value>
-  </context-param>
-
-  <context-param>
-    <param-name>users.properties</param-name>
-    <param-value>/WEB-INF/users.properties</param-value>
-  </context-param>
-
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
 
   <!-- Designer -->
@@ -534,4 +475,120 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+
+  <!-- Container based security -->
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>console</web-resource-name>
+      <url-pattern>/kie-wb.html</url-pattern>
+      <url-pattern>*.erraiBus</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
+      <url-pattern>/rest/*</url-pattern>
+      <url-pattern>/maven2/*</url-pattern>
+      <url-pattern>/resourceList</url-pattern>
+      <url-pattern>/editor</url-pattern>
+      <url-pattern>/editor/*</url-pattern>
+      <url-pattern>/menuconnector/*</url-pattern>
+      <url-pattern>/menu/*</url-pattern>
+      <url-pattern>/uuidRepository</url-pattern>
+      <url-pattern>/transformer</url-pattern>
+      <url-pattern>/assetservice</url-pattern>
+      <url-pattern>/filestore</url-pattern>
+      <url-pattern>/dictionary</url-pattern>
+      <url-pattern>/themes</url-pattern>
+      <url-pattern>/customeditors</url-pattern>
+      <url-pattern>/simulation</url-pattern>
+      <url-pattern>/formwidget</url-pattern>
+      <url-pattern>/calledelement</url-pattern>
+      <url-pattern>/stencilpatterns</url-pattern>
+      <url-pattern>/jbpmservicerepo</url-pattern>
+      <url-pattern>/processdiff</url-pattern>
+      <url-pattern>/taskforms</url-pattern>
+      <url-pattern>/taskformseditor</url-pattern>
+      <url-pattern>/processinfo</url-pattern>
+      <url-pattern>/syntaxcheck</url-pattern>
+      <url-pattern>/plugins</url-pattern>
+      <url-pattern>/plugin</url-pattern>
+      <url-pattern>/plugin/*</url-pattern>
+      <url-pattern>/stencilset/*</url-pattern>
+      <url-pattern>/plugins/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>analyst</role-name>
+      <role-name>developer</role-name>
+      <role-name>user</role-name>
+      <role-name>manager</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>formModeler</web-resource-name>
+      <url-pattern>/formModeler/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>analyst</role-name>
+      <role-name>developer</role-name>
+      <role-name>user</role-name>
+      <role-name>manager</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/login.jsp</form-login-page>
+      <form-error-page>/login.jsp?message=Login failed: Invalid UserName or Password</form-error-page>
+    </form-login-config>
+  </login-config>
+
+  <error-page>
+    <error-code>403</error-code>
+    <location>/not_authorized.jsp</location>
+  </error-page>
+
+  <security-role>
+    <description>Administrator - Administrates the BPMS system. Has full access
+      rights to make any changes necessary. Also has the
+      ability to add and remove users from the system.
+    </description>
+    <role-name>admin</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Analyst - Responsible for creating and designing processes
+      into the system. Creates process flows and handles
+      process change requests. Needs to test processes that
+      they create. Also creates forms and dashboards.
+    </description>
+    <role-name>analyst</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Developer - Implements code required for process to work. Mostly uses
+      the JBDS connection to view processes, but may use the
+      web tool occasionally.
+    </description>
+    <role-name>developer</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Business user - Daily user of the system to take actions on business tasks
+      that are required for the processes to continue forward. Works
+      primarily with the task lists.
+    </description>
+    <role-name>user</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Manager/Viewer-only User - Viewer of the system that is interested in statistics
+      around the business processes and their performance, business indicators, and other
+      reporting of the system and people who interact with the system.
+    </description>
+    <role-name>manager</role-name>
+  </security-role>
+
 </web-app>

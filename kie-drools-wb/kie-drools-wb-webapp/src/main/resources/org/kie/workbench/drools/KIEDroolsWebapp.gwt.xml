@@ -6,7 +6,6 @@
 
   <!-- Uberfire dependencies -->
   <inherits name="org.uberfire.UberfireClientAll"/>
-  <inherits name="org.uberfire.UberfireNSWEManager"/>
 
   <!-- Uberfire Extensions - Core Widgets -->
   <inherits name="org.kie.uberfire.KIEUberfireWidgetsCore"/>
@@ -94,5 +93,7 @@
   <extend-property name="locale" values="pt_BR"/>
   <extend-property name="locale" values="zh_CN"/>
   <extend-property name="locale" values="de"/>
+
+  <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
 
 </module>

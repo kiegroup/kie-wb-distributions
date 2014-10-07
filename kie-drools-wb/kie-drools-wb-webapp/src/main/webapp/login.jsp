@@ -5,12 +5,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
 <%
-    Locale locale= null;
-    try{
-        locale = new Locale(request.getParameter("locale"));
-    } catch(Exception e){
-        locale= request.getLocale();
-    }
+  Locale locale= null;
+  try{
+    locale = new Locale(request.getParameter("locale"));
+  } catch(Exception e){
+    locale= request.getLocale();
+  }
 %>
 <i18n:bundle id="bundle" baseName="org.kie.workbench.drools.client.resources.i18n.LoginConstants"
              locale='<%= locale%>' />
@@ -28,7 +28,7 @@
       margin: 0;
       pading: 0;
       color: #fff;
-      background: url('<%=request.getContextPath()%>/images/bg-login.png') repeat #1b1b1b;
+      background: url('images/bg-login.png') repeat #1b1b1b;
       font-size: 14px;
       text-shadow: #050505 0 -1px 0;
       font-weight: bold;
@@ -45,7 +45,7 @@
       border-bottom: solid 3px #777973;
       height: 250px;
       width: 100%;
-      background: url('<%=request.getContextPath()%>/images/bg-login-top.png') repeat #fff;
+      background: url('images/bg-login-top.png') repeat #fff;
       z-index: 1;
     }
 
@@ -142,28 +142,30 @@
 
 <div id="login-wrapper" class="png_bg">
   <div id="login-top">
-    <img src="<%=request.getContextPath()%>/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
+    <img src="images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
   </div>
 
   <div id="login-content">
     <c:if test="${param.message != null}">
       <h3><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></h3>
     </c:if>
-
-    <form action="uf_security_check" method="POST">
+    <form action="j_security_check" method="POST">
       <p>
         <label style="white-space: nowrap;"><i18n:message key="UserName">Username</i18n:message></label>
-        <input value="" name="uf_username" class="text-input" type="text"/>
+        <input value="" name="j_username" class="text-input" type="text"/>
       </p>
       <br style="clear: both;"/>
 
       <p>
         <label style="white-space: nowrap;"><i18n:message key="Password">Password</i18n:message></label>
-        <input name="uf_password" class="text-input" type="password"/>
+        <input name="j_password" class="text-input" type="password"/>
       </p>
       <br style="clear: both;"/>
 
       <p>
+        <% if (request.getParameter("gwt.codesvr") != null) { %>
+        <input type="hidden" name="gwt.codesvr" value="<%= org.owasp.encoder.Encode.forHtmlAttribute(request.getParameter("gwt.codesvr")) %>"/>
+        <% } %>
         <input class="button" type="submit" value='<i18n:message key="SignIn">Sign In</i18n:message>'/>
       </p>
 

@@ -4,5 +4,5 @@ $registerSplashScreen({
     body_height: 391,
     title: "Help",
     display_next_time: true,
-    interception_points: ["org.kie.workbench.client.perspectives.DroolsAuthoringPerspective"]
+    interception_points: ["AuthoringPerspective"]
 });

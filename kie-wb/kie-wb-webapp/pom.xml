@@ -33,6 +33,24 @@
   <description>KIE Workbench - Webapp</description>
 
   <dependencies>
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty-plus</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty-naming</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- Hack: ANT bundled with kie-ci needs to be excluded when running on Jetty -->
     <!-- It is added back for other Application Servers in their respective assemblies -->
     <dependency>
@@ -682,12 +700,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-panel-manager-nswe</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
     <!-- Errai AS -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -733,11 +745,6 @@
       <artifactId>errai-weld-integration</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-cdi-jetty</artifactId>
-    </dependency>
-
     <!-- Weld Modules -->
     <dependency>
       <groupId>org.jboss.weld.se</groupId>
@@ -754,6 +761,11 @@
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.owasp.encoder</groupId>
+      <artifactId>encoder</artifactId>
     </dependency>
 
     <!-- Rouge imports to avoid OSGi errors -->
@@ -804,6 +816,12 @@
           <groupId>org.slf4j</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+
+    <!-- UberFire Security Extension -->
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-servlet-security</artifactId>
     </dependency>
 
     <!-- UberFire PlugIn Extension -->
@@ -1036,9 +1054,8 @@
             <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-runtime-plugins-client</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
-          <runTarget>org.kie.workbench.KIEWebapp/KIEWebapp.html</runTarget>
-          <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Djetty.custom.sys.classes=bitronix;javax.transaction -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false</extraJvmArgs>
-          <server>org.jboss.errai.cdi.server.gwt.JettyLauncher</server>
+          <runTarget>kie-wb.html</runTarget>
+          <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false</extraJvmArgs>
           <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile,
           see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
           <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>

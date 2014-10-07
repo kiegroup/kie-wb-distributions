@@ -51,13 +51,13 @@
       <unpack>true</unpack>
       <unpackOptions>
         <excludes>
-          <exclude>WEB-INF/jetty-env.xml</exclude>
+          <exclude>WEB-INF/jetty-web.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
           <exclude>WEB-INF/beans.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
-          <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
           <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
-          <exclude>WEB-INF/classes/users.properties</exclude>
+          <exclude>WEB-INF/classes/login.conf</exclude>
+          <exclude>WEB-INF/classes/realm.properties</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/wildfly/</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
@@ -150,7 +150,6 @@
 
           <!-- Errai -->
           <exclude>WEB-INF/lib/errai-codegen-gwt-*.jar</exclude>
-          <exclude>WEB-INF/lib/errai-cdi-jetty-*.jar</exclude>
           <exclude>WEB-INF/lib/netty-4.0.0.*.errai.*.jar</exclude>
 
           <!-- Jetty -->
@@ -259,10 +258,6 @@
           <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-ejb3-api-*.jar</exclude>
-
-          <!-- exclude UF form-based login.jsp -->
-          <exclude>login.jsp</exclude>
-
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>

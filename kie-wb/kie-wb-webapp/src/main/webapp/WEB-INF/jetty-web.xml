@@ -1,7 +1,21 @@
 <!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN"
     "http://jetty.mortbay.org/configure.dtd">
-
 <Configure id="sample-weld" class="org.mortbay.jetty.webapp.WebAppContext">
+
+  <!-- Tell jetty where to find login config -->
+  <Call class="java.lang.System" name="setProperty">
+    <Arg>java.security.auth.login.config</Arg>
+    <Arg>WEB-INF/classes/login.conf</Arg>
+  </Call>
+
+  <!-- Bug fix for Jetty to properly handle login config in a per-project setup -->
+  <Set name="serverClasses">
+    <Array type="java.lang.String">
+      <Item>-org.mortbay.jetty.plus.jaas.</Item>
+      <Item>org.mortbay.jetty</Item>
+      <Item>org.slf4j.</Item>
+    </Array>
+  </Set>
 
   <Get name="securityHandler">
     <Set name="userRealm">
@@ -19,35 +33,6 @@
     <Item>org.mortbay.jetty.webapp.JettyWebXmlConfiguration</Item>
   </Array>
 
-  <New id="BeanManager" class="org.mortbay.jetty.plus.naming.Resource">
-    <Arg>
-      <Ref id="sample-weld"/>
-    </Arg>
-    <Arg>BeanManager</Arg>
-    <Arg>
-      <New class="javax.naming.Reference">
-        <Arg>javax.enterprise.inject.spi.BeanManager</Arg>
-        <Arg>org.jboss.weld.resources.ManagerObjectFactory</Arg>
-        <Arg/>
-      </New>
-    </Arg>
-  </New>
-
-  <New id="Errai" class="org.mortbay.jetty.plus.naming.Resource">
-    <Arg>
-      <Ref id="sample-weld"/>
-    </Arg>
-    <Arg>ErraiService</Arg>
-    <Arg>
-      <New class="javax.naming.Reference">
-        <Arg>org.jboss.errai.bus.server.service.ErraiService</Arg>
-        <Arg>org.jboss.errai.container.ErraiServiceObjectFactory</Arg>
-        <Arg/>
-      </New>
-    </Arg>
-  </New>
-
-  <!-- persistence configuration -->
   <Call name="getConfiguration" class="bitronix.tm.TransactionManagerServices">
     <Set name="serverId">jetty-btm-node0</Set>
     <Set name="logPart1Filename">
@@ -99,6 +84,20 @@
     </Arg>
   </New>
 
+  <New id="BeanManager" class="org.mortbay.jetty.plus.naming.Resource">
+    <Arg>
+      <Ref id="sample-weld"/>
+    </Arg>
+    <Arg>BeanManager</Arg>
+    <Arg>
+      <New class="javax.naming.Reference">
+        <Arg>javax.enterprise.inject.spi.BeanManager</Arg>
+        <Arg>org.jboss.weld.resources.ManagerObjectFactory</Arg>
+        <Arg/>
+      </New>
+    </Arg>
+  </New>
+
   <New id="emf" class="org.mortbay.jetty.plus.naming.Resource">
     <Arg>jBPMEMF</Arg>
     <Arg>
@@ -107,4 +106,5 @@
       </Call>
     </Arg>
   </New>
+
 </Configure>

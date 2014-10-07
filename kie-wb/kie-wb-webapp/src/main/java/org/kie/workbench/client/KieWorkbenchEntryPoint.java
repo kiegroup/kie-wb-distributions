@@ -24,7 +24,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.i18n.client.LocaleInfo;
@@ -40,6 +39,9 @@ import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
+import org.jboss.errai.security.shared.api.Role;
+import org.jboss.errai.security.shared.api.identity.User;
+import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.home.HomeProducer;
@@ -57,8 +59,6 @@ import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
-import org.uberfire.security.Identity;
-import org.uberfire.security.Role;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.MenuPosition;
@@ -87,7 +87,7 @@ public class KieWorkbenchEntryPoint {
     private SyncBeanManager iocManager;
 
     @Inject
-    public Identity identity;
+    public User identity;
 
     @Inject
     private Caller<AppConfigService> appConfigService;
@@ -106,6 +106,9 @@ public class KieWorkbenchEntryPoint {
 
     @Inject
     private ActivityBeansCache activityBeansCache;
+
+    @Inject
+    private Caller<AuthenticationService> authService;
 
     private SuggestBox actionText;
     private TextBox textSuggestBox;
@@ -126,15 +129,7 @@ public class KieWorkbenchEntryPoint {
             }
         } ).loadPolicy();
 
-        List<String> allActivities = activityBeansCache.getActivitiesById();
-        pmas.call( new RemoteCallback<Void>() {
-
-            @Override
-            public void callback( Void response ) {
-
-            }
-        } ).initActivities( allActivities );
-
+        pmas.call().initActivities( activityBeansCache.getActivitiesById() );
     }
 
     private void loadPreferences() {
@@ -187,7 +182,7 @@ public class KieWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( constants.User() + ": " + identity.getName() )
+                .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
                 .position( MenuPosition.RIGHT )
                 .withItems( getRoles() )
                 .endMenu()
@@ -205,12 +200,7 @@ public class KieWorkbenchEntryPoint {
                 result.add( MenuFactory.newSimpleItem( constants.Role() + ": " + role.getName() ).endMenu().build().getItems().get( 0 ) );
             }
         }
-        result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                redirect( GWT.getModuleBaseURL() + "uf_logout" );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new LogoutCommand() ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
@@ -396,6 +386,23 @@ public class KieWorkbenchEntryPoint {
                 e.getStyle().setVisibility( Style.Visibility.HIDDEN );
             }
         }.run( 500 );
+    }
+
+    private class LogoutCommand implements Command {
+
+        @Override
+        public void execute() {
+            authService.call( new RemoteCallback<Void>() {
+                @Override
+                public void callback( Void response ) {
+                    final StringBuilder baseUrl = new StringBuilder();
+                    baseUrl.append( Window.Location.getProtocol() ).append( "//" );
+                    baseUrl.append( Window.Location.getHost());
+                    baseUrl.append( Window.Location.getPath() );
+                    redirect( baseUrl.toString() );
+                }
+            } ).logout();
+        }
     }
 
     public static native void redirect( String url )/*-{

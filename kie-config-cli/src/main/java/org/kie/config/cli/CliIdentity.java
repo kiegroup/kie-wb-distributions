@@ -1,45 +1,46 @@
 package org.kie.config.cli;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 
-import org.uberfire.security.Identity;
-import org.uberfire.security.Role;
+import org.jboss.errai.security.shared.api.Group;
+import org.jboss.errai.security.shared.api.Role;
+import org.jboss.errai.security.shared.api.identity.User;
 
 /**
  * An alternative Identity used from the CLI to ensure the user has ADMIN permissions
  */
 @Alternative
 @ApplicationScoped
-public class CliIdentity implements Identity {
+public class CliIdentity implements User {
 
     private static final long serialVersionUID = -9178650167557721039L;
 
-    private List<Role> roles = new ArrayList<Role>();
+    private Set<Role> roles = new HashSet<Role>();
 
     @PostConstruct
     public void setup() {
         roles.add( EnvironmentProvider.ADMIN_ROLE );
     }
 
-    //@Override
-    public String getName() {
+    @Override
+    public String getIdentifier() {
         return System.getProperty( "user.name" );
     }
 
     @Override
-    public boolean hasRole( Role role ) {
-        return roles.contains( role );
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     @Override
-    public List<Role> getRoles() {
-        return roles;
+    public Set<Group> getGroups() {
+        return Collections.emptySet();
     }
 
     @Override
@@ -48,18 +49,17 @@ public class CliIdentity implements Identity {
     }
 
     @Override
-    public void aggregateProperty(String name,
-                                  String value) {
+    public void setProperty( String s,
+                             String s2 ) {
+
     }
 
     @Override
-    public void removeProperty(String name) {
+    public void removeProperty( String name ) {
     }
 
     @Override
-    public String getProperty(String name,
-                              String defaultValue) {
+    public String getProperty( String s ) {
         return null;
     }
-
 }

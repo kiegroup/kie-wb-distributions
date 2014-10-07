@@ -35,6 +35,9 @@ import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
+import org.jboss.errai.security.shared.api.Role;
+import org.jboss.errai.security.shared.api.identity.User;
+import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
 import org.kie.workbench.common.services.security.KieWorkbenchACL;
 import org.kie.workbench.common.services.security.KieWorkbenchPolicy;
@@ -51,8 +54,6 @@ import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
-import org.uberfire.security.Identity;
-import org.uberfire.security.Role;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.MenuPosition;
@@ -84,7 +85,7 @@ public class KieDroolsWorkbenchEntryPoint {
     private ActivityManager activityManager;
 
     @Inject
-    private Identity identity;
+    private User identity;
 
     @Inject
     private KieWorkbenchACL kieACL;
@@ -100,6 +101,9 @@ public class KieDroolsWorkbenchEntryPoint {
 
     @Inject
     private ActivityBeansCache activityBeansCache;
+
+    @Inject
+    private Caller<AuthenticationService> authService;
 
     @AfterInitialization
     public void startApp() {
@@ -172,7 +176,7 @@ public class KieDroolsWorkbenchEntryPoint {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( constants.User() + ": " + identity.getName() )
+                .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
                 .position( MenuPosition.RIGHT )
                 .withItems( getRoles() )
                 .endMenu()
@@ -190,12 +194,7 @@ public class KieDroolsWorkbenchEntryPoint {
                 result.add( MenuFactory.newSimpleItem( constants.Role() + ": " + role.getName() ).endMenu().build().getItems().get( 0 ) );
             }
         }
-        result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                redirect( GWT.getModuleBaseURL() + "uf_logout" );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new LogoutCommand() ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
@@ -320,6 +319,23 @@ public class KieDroolsWorkbenchEntryPoint {
                 e.getStyle().setVisibility( Style.Visibility.HIDDEN );
             }
         }.run( 500 );
+    }
+
+    private class LogoutCommand implements Command {
+
+        @Override
+        public void execute() {
+            authService.call( new RemoteCallback<Void>() {
+                @Override
+                public void callback( Void response ) {
+                    final StringBuilder baseUrl = new StringBuilder();
+                    baseUrl.append( Window.Location.getProtocol() ).append( "//" );
+                    baseUrl.append( Window.Location.getHost());
+                    baseUrl.append( Window.Location.getPath() );
+                    redirect( baseUrl.toString() );
+                }
+            } ).logout();
+        }
     }
 
     public static native void redirect( String url )/*-{
