@@ -20,7 +20,7 @@
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
   <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name/id of the artifact -->
-  <id>eap-6_1</id>
+  <id>eap6_3</id>
   <formats>
     <format>war</format>
     <format>dir</format>
@@ -29,8 +29,8 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/src/main/eap6_1</directory>
-      <outputDirectory>.</outputDirectory>
+        <directory>${project.basedir}/src/main/eap6_3</directory>
+        <outputDirectory>.</outputDirectory>
     </fileSet>
   </fileSets>
   <dependencySets>
@@ -45,7 +45,7 @@
     </dependencySet>
     <dependencySet>
       <includes>
-        <include>org.kie:kie-wb-webapp:war</include>
+        <include>org.kie:kie-drools-wb-webapp:war</include>
       </includes>
       <outputDirectory>.</outputDirectory>
       <unpack>true</unpack>
@@ -56,15 +56,10 @@
           <exclude>WEB-INF/beans.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
-          <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/users.properties</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
-          <exclude>WEB-INF/classes/org/kie/workbench/backend/wildfly/</exclude>
-          <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
-
-          <!-- remove shared services with btm -->
-          <exclude>WEB-INF/lib/jbpm-shared-services-*-btm.jar</exclude>
-          <exclude>WEB-INF/lib/btm-*.jar</exclude>
+          <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/wildfly/</exclude>
+          <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/weblogic/</exclude>
 
           <!-- UF client related -->
           <exclude>WEB-INF/lib/uberfire-js-*.jar</exclude>
@@ -75,9 +70,7 @@
           <exclude>WEB-INF/lib/uberfire-workbench-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-widgets-commons-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-runtime-plugins-client-*.jar</exclude>
-
-          <!-- Dom4j on as 7.1.1 breaks the PU-->
-          <exclude>WEB-INF/lib/dom4j*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-uberfire-social-activities-client-*.jar</exclude>
 
           <!-- Guvnor client related -->
           <exclude>WEB-INF/lib/guvnor-structure-client-*.jar</exclude>
@@ -173,31 +166,15 @@
           <!-- Netty - bundled with EAP -->
           <exclude>WEB-INF/lib/netty-3*.jar</exclude>
 
-          <!-- Form Modeler client related -->
-          <exclude>WEB-INF/lib/jbpm-form-modeler-editor-client-*.jar</exclude>
-          <exclude>WEB-INF/lib/jbpm-form-modeler-renderer-client-*.jar</exclude>
-          <exclude>WEB-INF/lib/jbpm-form-modeler-app-*.jar</exclude>
-
-          <!-- jBPM console & other client related -->
-          <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
-
           <!-- EAP 6.1 alignement -->
           <exclude>WEB-INF/lib/activation-*.jar</exclude>
           <exclude>WEB-INF/lib/antlr-2*.jar</exclude>
-          <!-- <exclude>WEB-INF/lib/cdi-api*.jar</exclude> ALREADY EXCLUDED-->
           <exclude>WEB-INF/lib/commons-cli-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-collections-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-lang-*.jar</exclude>
-          <exclude>WEB-INF/lib/commons-codec-*.jar</exclude>
-          <exclude>WEB-INF/lib/commons-io-*.jar</exclude>
-          <exclude>WEB-INF/lib/jaxb-impl-*.jar</exclude>
-          <exclude>WEB-INF/lib/jaxb-xjc-*.jar</exclude>
-          <exclude>WEB-INF/lib/org.osgi.core-*.jar</exclude>
-          <exclude>WEB-INF/lib/snakeyaml-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-databinding-jaxb-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-frontend-jaxws-*.jar</exclude>
           <exclude>WEB-INF/lib/dom4j-*.jar</exclude>
-          <exclude>WEB-INF/lib/ecj-*.jar</exclude> <!-- this *.jar is not in the AS 7.1.1 -->
+          <exclude>WEB-INF/lib/ecj-*.jar</exclude>
+          <!-- this *.jar is not in the AS 7.1.1 -->
           <exclude>WEB-INF/lib/guava-*.jar</exclude>
           <exclude>WEB-INF/lib/h2-*.jar</exclude>
           <exclude>WEB-INF/lib/hibernate-commons-annotations-*.jar</exclude>
@@ -229,15 +206,6 @@
           <!-- transitive dependencies -->
           <exclude>WEB-INF/lib/apache-mime4j-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-configuration-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-api-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-bundle-jaxrs-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-bindings-soap-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-bindings-xml-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-core-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-frontend-simple-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-transports-http-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-ws-addr-*.jar</exclude>
-          <exclude>WEB-INF/lib/cxf-rt-ws-policy-*.jar</exclude>
           <exclude>WEB-INF/lib/hornetq-commons-*.jar</exclude>
           <exclude>WEB-INF/lib/hornetq-journal-*.jar</exclude>
           <exclude>WEB-INF/lib/httpclient-*.jar</exclude>

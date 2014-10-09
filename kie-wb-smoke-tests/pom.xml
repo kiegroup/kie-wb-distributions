@@ -38,7 +38,7 @@
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-wb-distribution-wars</artifactId>
-        <classifier>eap-6_1</classifier>
+        <classifier>eap6_3</classifier>
         <version>${deployable.version}</version>
         <type>war</type>
       </dependency>
@@ -60,7 +60,7 @@
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-drools-wb-distribution-wars</artifactId>
-        <classifier>eap-6_1</classifier>
+        <classifier>eap6_3</classifier>
         <version>${deployable.version}</version>
         <type>war</type>
       </dependency>
@@ -281,13 +281,13 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>eap-6_1</classifier>
+          <classifier>eap6_3</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>eap-6_1</classifier>
+          <classifier>eap6_3</classifier>
           <type>war</type>
         </dependency>
       </dependencies>
@@ -325,7 +325,7 @@
                 <deployable>
                   <groupId>${deployable.groupId}</groupId>
                   <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>eap-6_1</classifier>
+                  <classifier>eap6_3</classifier>
                   <type>war</type>
                 </deployable>
               </deployables>
