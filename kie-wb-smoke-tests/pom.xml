@@ -15,9 +15,9 @@
   <description>Integration smoke tests for KIE Workbench and KIE Drools Workbench</description>
 
   <properties>
-    <version.tomcat>7.0.55</version.tomcat>
-    <!-- wildfly -->
-    <version.org.wildfly>8.1.0.Final</version.org.wildfly>
+    <version.tomcat7>7.0.55</version.tomcat7>
+    <version.tomcat8>8.0.14</version.tomcat8>
+    <version.wildfly8>8.1.0.Final</version.wildfly8>
 
     <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.3.x -->
     <!-- These properties are overriden in profiles kie-drools-wb and kie-wb -->
@@ -138,6 +138,35 @@
       <artifactId>logback-classic</artifactId>
     </dependency>
 
+    <!-- deps needed by Tomcat 7x and Tomcat 8x -->
+    <dependency>
+      <groupId>org.codehaus.btm</groupId>
+      <artifactId>btm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.btm</groupId>
+      <artifactId>btm-tomcat55-lifecycle</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.spec.javax.transaction</groupId>
+      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-tomcat-integration</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.spec.javax.security.jacc</groupId>
+      <artifactId>jboss-jacc-api_1.4_spec</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -367,38 +396,8 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <tomcat7x.download.url>https://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat}/bin/apache-tomcat-${version.tomcat}.zip</tomcat7x.download.url>
+        <tomcat7x.download.url>https://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip</tomcat7x.download.url>
       </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.codehaus.btm</groupId>
-          <artifactId>btm</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.codehaus.btm</groupId>
-          <artifactId>btm-tomcat55-lifecycle</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>com.h2database</groupId>
-          <artifactId>h2</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.jboss.spec.javax.transaction</groupId>
-          <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-tomcat-integration</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.jboss.spec.javax.security.jacc</groupId>
-          <artifactId>jboss-jacc-api_1.4_spec</artifactId>
-        </dependency>
-      </dependencies>
       <build>
         <pluginManagement>
         <plugins>
@@ -453,7 +452,12 @@
               <configuration>
                 <configfiles>
                   <configfile>
-                    <file>${project.build.testOutputDirectory}/tomcat/config</file>
+                    <file>${project.build.testOutputDirectory}/tomcat-shared/config</file>
+                    <todir>conf</todir>
+                    <overwrite>true</overwrite>
+                  </configfile>
+                  <configfile>
+                    <file>${project.build.testOutputDirectory}/tomcat7/config</file>
                     <todir>conf</todir>
                     <overwrite>true</overwrite>
                   </configfile>
@@ -483,9 +487,102 @@
     </profile>
 
     <profile>
+      <id>tomcat8x</id>
+      <properties>
+        <tomcat8x.download.url>https://archive.apache.org/dist/tomcat/tomcat-8/v${version.tomcat8}/bin/apache-tomcat-${version.tomcat8}.zip</tomcat8x.download.url>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.cargo</groupId>
+              <artifactId>cargo-maven2-plugin</artifactId>
+              <configuration>
+                <container>
+                  <containerId>tomcat8x</containerId>
+                  <type>installed</type>
+                  <zipUrlInstaller>
+                    <url>${tomcat8x.download.url}</url>
+                  </zipUrlInstaller>
+                  <systemProperties>
+                    <tomcat.home>${project.build.directory}/cargo/configurations/tomcat8x</tomcat.home>
+                    <bitronix.tm.configuration>
+                      ${project.build.directory}/cargo/configurations/tomcat8x/conf/btm-config.properties
+                    </bitronix.tm.configuration>
+                    <jbpm.tsr.jndi.lookup>java:comp/env/TransactionSynchronizationRegistry</jbpm.tsr.jndi.lookup>
+                  </systemProperties>
+                  <dependencies>
+                    <dependency>
+                      <groupId>org.codehaus.btm</groupId>
+                      <artifactId>btm</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.codehaus.btm</groupId>
+                      <artifactId>btm-tomcat55-lifecycle</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>com.h2database</groupId>
+                      <artifactId>h2</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.jboss.spec.javax.transaction</groupId>
+                      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.slf4j</groupId>
+                      <artifactId>slf4j-api</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.kie</groupId>
+                      <artifactId>kie-tomcat-integration</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.jboss.spec.javax.security.jacc</groupId>
+                      <artifactId>jboss-jacc-api_1.4_spec</artifactId>
+                    </dependency>
+                  </dependencies>
+                </container>
+                <configuration>
+                  <configfiles>
+                    <configfile>
+                      <file>${project.build.testOutputDirectory}/tomcat-shared/config</file>
+                      <todir>conf</todir>
+                      <overwrite>true</overwrite>
+                    </configfile>
+                    <configfile>
+                      <file>${project.build.testOutputDirectory}/tomcat8/config</file>
+                      <todir>conf</todir>
+                      <overwrite>true</overwrite>
+                    </configfile>
+                  </configfiles>
+                </configuration>
+                <deployables>
+                  <deployable>
+                    <groupId>${deployable.groupId}</groupId>
+                    <artifactId>${deployable.artifactId}</artifactId>
+                    <classifier>tomcat7</classifier> <!-- No Tomcat8 specific deployable needed (yet) -->
+                    <type>war</type>
+                  </deployable>
+                </deployables>
+              </configuration>
+            </plugin>
+            <plugin>
+              <!-- Tomcat is not (yet?) configured with JMS, so exclude the JMS tests. -->
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <configuration>
+                <excludedGroups>org.kie.smoke.wb.category.JMSSmoke</excludedGroups>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+
+    <profile>
       <id>wildfly8x</id>
       <properties>
-        <wildfly8x.download.url>http://download.jboss.org/wildfly/${version.org.wildfly}/wildfly-${version.org.wildfly}.zip</wildfly8x.download.url>
+        <wildfly8x.download.url>http://download.jboss.org/wildfly/${version.wildfly8}/wildfly-${version.wildfly8}.zip</wildfly8x.download.url>
       </properties>
       <build>
         <plugins>
