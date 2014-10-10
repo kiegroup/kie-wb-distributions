@@ -2,12 +2,6 @@
     "http://jetty.mortbay.org/configure.dtd">
 <Configure id="sample-weld" class="org.mortbay.jetty.webapp.WebAppContext">
 
-  <!-- Tell jetty where to find login config -->
-  <Call class="java.lang.System" name="setProperty">
-    <Arg>java.security.auth.login.config</Arg>
-    <Arg>WEB-INF/classes/login.conf</Arg>
-  </Call>
-
   <!-- Bug fix for Jetty to properly handle login config in a per-project setup -->
   <Set name="serverClasses">
     <Array type="java.lang.String">

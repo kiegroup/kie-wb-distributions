@@ -1067,7 +1067,7 @@
 
           </compileSourcesArtifacts>
           <runTarget>kie-wb.html</runTarget>
-          <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false</extraJvmArgs>
+          <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.security.auth.login.config=./src/main/resources/login-cli.conf</extraJvmArgs>
           <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile,
           see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
           <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
