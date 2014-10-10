@@ -104,4 +104,7 @@
 
   <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
 
+  <!-- We don't need to support IE8 or older -->
+  <set-property name="user.agent" value="gecko1_8,safari,opera,ie9"/>
+
 </module>
