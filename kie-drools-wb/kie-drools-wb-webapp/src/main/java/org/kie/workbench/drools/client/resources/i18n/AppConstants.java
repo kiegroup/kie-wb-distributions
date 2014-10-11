@@ -66,6 +66,10 @@ public interface AppConstants
 
     String plugins();
 
+    String extensions();
+
+    String perspectiveEditor();
+
     String search();
 
     String missingDefaultPerspective();

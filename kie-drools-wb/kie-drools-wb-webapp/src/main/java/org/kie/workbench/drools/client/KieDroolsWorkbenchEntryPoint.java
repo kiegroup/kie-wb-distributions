@@ -23,7 +23,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.Window;
@@ -163,12 +162,7 @@ public class KieDroolsWorkbenchEntryPoint {
                 .newTopLevelMenu( constants.deployment() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
                 .newTopLevelMenu( constants.servers() ).withRoles( kieACL.getGrantedRoles( G_SERVERS ) ).withItems( getServerViews() ).endMenu()
                 .newTopLevelMenu( constants.activity() ).withRoles( kieACL.getGrantedRoles( G_ACTIVITY ) ).withItems( getActivityViews() ).endMenu()
-                .newTopLevelMenu( constants.plugins() ).withRoles( kieACL.getGrantedRoles( G_PLUGIN_MANAGEMENT ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "PlugInAuthoringPerspective" );
-                    }
-                } ).endMenu()
+                .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
                 .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -240,7 +234,6 @@ public class KieDroolsWorkbenchEntryPoint {
                 placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
-
 
         return result;
     }
@@ -330,12 +323,31 @@ public class KieDroolsWorkbenchEntryPoint {
                 public void callback( Void response ) {
                     final StringBuilder baseUrl = new StringBuilder();
                     baseUrl.append( Window.Location.getProtocol() ).append( "//" );
-                    baseUrl.append( Window.Location.getHost());
+                    baseUrl.append( Window.Location.getHost() );
                     baseUrl.append( Window.Location.getPath() );
                     redirect( baseUrl.toString() );
                 }
             } ).logout();
         }
+    }
+
+    private List<? extends MenuItem> getExtensionsViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
+        result.add( MenuFactory.newSimpleItem( constants.plugins() ).withRoles( kieACL.getGrantedRoles( F_PLUGIN_MANAGEMENT ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "PlugInAuthoringPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.perspectiveEditor() ).withRoles( kieACL.getGrantedRoles( F_PERSPECTIVE_EDITOR ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "PerspectiveEditorPerspective" ) );
+            }
+
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
     }
 
     public static native void redirect( String url )/*-{

@@ -544,6 +544,16 @@
       <artifactId>kie-uberfire-runtime-plugins-client</artifactId>
     </dependency>
 
+    <!-- UberFire Perspective Editor -->
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-perspective-editor-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-perspective-editor-backend</artifactId>
+    </dependency>
+
     <!-- UberFire -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -649,10 +659,10 @@
       <artifactId>resteasy-jaxrs</artifactId>
     </dependency>
     <dependency>
-       <groupId>org.jboss.resteasy</groupId>
-       <artifactId>resteasy-jackson-provider</artifactId>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson-provider</artifactId>
     </dependency>
-    
+
     <!-- formModeler dependencies -->
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -660,8 +670,8 @@
     </dependency>
 
     <dependency>
-        <groupId>org.jbpm</groupId>
-        <artifactId>jbpm-form-modeler-service-core</artifactId>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-service-core</artifactId>
     </dependency>
 
     <dependency>
