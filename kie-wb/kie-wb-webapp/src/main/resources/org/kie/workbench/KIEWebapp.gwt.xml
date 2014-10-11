@@ -11,6 +11,9 @@
   <!-- Uberfire Extensions - Runtime Plugin -->
   <inherits name="org.kie.uberfire.plugin.RuntimePluginClient"/>
 
+  <!-- Uberfire Extensions - Perspective Editor -->
+  <inherits name="org.kie.uberfire.perspective.editor.PerspectiveEditorClient"/>
+
   <!-- jbpm-wb -->
   <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksClient"/>
   <inherits name="org.jbpm.console.ng.pr.JbpmConsoleNGProcessRuntimeClient"/>

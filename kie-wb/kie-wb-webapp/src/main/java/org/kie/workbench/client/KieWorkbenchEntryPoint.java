@@ -169,12 +169,7 @@ public class KieWorkbenchEntryPoint {
                 .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
                 .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
                 .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
-                .newTopLevelMenu( constants.PlugIns() ).withRoles( kieACL.getGrantedRoles( F_PLUGIN_MANAGEMENT ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "PlugInAuthoringPerspective" );
-                    }
-                } ).endMenu()
+                .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_PLUGIN_MANAGEMENT ) ).withItems( getExtensionsViews() ).endMenu()
                 .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -313,6 +308,24 @@ public class KieWorkbenchEntryPoint {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
+    }
+
+    private List<? extends MenuItem> getExtensionsViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
+        result.add( MenuFactory.newSimpleItem( constants.PlugIns() ).withRoles( kieACL.getGrantedRoles( F_PLUGIN_MANAGEMENT ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "PlugInAuthoringPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.PerspectiveEditor() ).withRoles( kieACL.getGrantedRoles( F_PERSPECTIVE_EDITOR ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "PerspectiveEditorPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 

@@ -36,6 +36,8 @@ public class KieWorkbenchFeatures {
     public static final String F_DASHBOARD_BUILDER = "wb_dashboard_builder";
     public static final String F_SEARCH = "wb_search";
     public static final String F_PLUGIN_MANAGEMENT = "wb_plugin_management";
+    public static final String F_PERSPECTIVE_EDITOR = "wb_perspective_editor";
+    public static final String F_EXTENSIONS = "wb_extensions";
 
     public static final String G_AUTHORING = "wb_authoring";
     public static final String G_DEPLOY = "wb_deploy";
