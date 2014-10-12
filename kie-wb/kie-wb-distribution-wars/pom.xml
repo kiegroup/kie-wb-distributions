@@ -18,66 +18,66 @@
   <build>
     <plugins>
       <!-- special handling for WAS8.5 as sisu-inject-bean:2.2.3 contains javax.inject classes which conflicts with WAS-->
-      <!-- <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-shade-plugin</artifactId>
-         <version>2.2</version>
-         <executions>
-           <execution>
-             <id>was-specific</id>
-             <phase>package</phase>
-             <goals>
-               <goal>shade</goal>
-             </goals>
-             <configuration>
-               <outputFile>${project.build.directory}/lib/was/nojavax-sisu-inject-bean.jar</outputFile>
-               <artifactSet>
-                 <includes>
-                   <include>org.sonatype.sisu:sisu-inject-bean</include>
-                 </includes>
-               </artifactSet>
-               <filters>
-                 <filter>
-                   <artifact>org.sonatype.sisu:sisu-inject-bean</artifact>
-                   <excludes>
-                     <exclude>javax/**</exclude>
-                   </excludes>
-                 </filter>
-               </filters>
-             </configuration>
-           </execution>
-           <execution>
-             <id>weblogic-specific</id>
-             <phase>package</phase>
-             <goals>
-               <goal>shade</goal>
-             </goals>
-             <configuration>
-               <outputFile>${project.build.directory}/lib/weblogic/errai-weld-integration-cdi.jar</outputFile>
-               <transformers>
-                 <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                   <resource>META-INF/beans.xml</resource>
-                   <file>src/main/weblogic-addons/beans.xml</file>
-                 </transformer>
-               </transformers>
-               <artifactSet>
-                 <includes>
-                   <include>org.jboss.errai:errai-weld-integration</include>
-                 </includes>
-               </artifactSet>
-               <filters>
-                 <filter>
-                   <artifact>org.jboss.errai:errai-weld-integration</artifact>
-                   <includes>
-                     <include>*/**</include>
-                   </includes>
-                 </filter>
-               </filters>
-             </configuration>
-           </execution>
-         </executions>
-       </plugin>
-       end of WAS 8.5 specific handling -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.2</version>
+        <executions>
+          <execution>
+            <id>was-specific</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <outputFile>${project.build.directory}/lib/was/nojavax-sisu-inject-bean.jar</outputFile>
+              <artifactSet>
+                <includes>
+                  <include>org.sonatype.sisu:sisu-inject-bean</include>
+                </includes>
+              </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>org.sonatype.sisu:sisu-inject-bean</artifact>
+                  <excludes>
+                    <exclude>javax/**</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+          <execution>
+            <id>weblogic-specific</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <outputFile>${project.build.directory}/lib/weblogic/errai-weld-integration-cdi.jar</outputFile>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
+                  <resource>META-INF/beans.xml</resource>
+                  <file>src/main/weblogic-addons/beans.xml</file>
+                </transformer>
+              </transformers>
+              <artifactSet>
+                <includes>
+                  <include>org.jboss.errai:errai-weld-integration</include>
+                </includes>
+              </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>org.jboss.errai:errai-weld-integration</artifact>
+                  <includes>
+                    <include>*/**</include>
+                  </includes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- end of WAS 8.5 and Weblogic 12 specific handling -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -92,12 +92,12 @@
         <configuration>
           <finalName>kie-wb-${project.version}</finalName>
           <descriptors>
-            <!-- <descriptor>src/main/assembly/assembly-kie-wb-jboss-as-7_0.xml</descriptor> -->
+            <descriptor>src/main/assembly/assembly-kie-wb-jboss-as-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-wb-jboss-eap-6_3.xml</descriptor>
-<!--             <descriptor>src/main/assembly/assembly-kie-wb-jboss-wildfly-8.xml</descriptor>
+            <descriptor>src/main/assembly/assembly-kie-wb-jboss-wildfly-8.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-wb-tomcat-7_0.xml</descriptor>
             <descriptor>src/main/assembly/assembly-kie-wb-websphere-as-8_5.xml</descriptor>
-            <descriptor>src/main/assembly/assembly-kie-wb-weblogic-12.xml</descriptor> -->
+            <descriptor>src/main/assembly/assembly-kie-wb-weblogic-12.xml</descriptor>
           </descriptors>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
