@@ -1074,6 +1074,7 @@
             <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
 
             <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-runtime-plugins-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-perspective-editor-client</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
           <runTarget>kie-wb.html</runTarget>
