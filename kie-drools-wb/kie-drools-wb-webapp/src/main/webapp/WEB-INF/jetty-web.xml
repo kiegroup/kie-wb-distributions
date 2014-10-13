@@ -79,10 +79,7 @@
   </New>
 
   <New id="BeanManager" class="org.mortbay.jetty.plus.naming.Resource">
-    <Arg>
-      <Ref id="sample-weld"/>
-    </Arg>
-    <Arg>BeanManager</Arg>
+    <Arg>java:comp/BeanManager</Arg>
     <Arg>
       <New class="javax.naming.Reference">
         <Arg>javax.enterprise.inject.spi.BeanManager</Arg>
