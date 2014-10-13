@@ -17,6 +17,7 @@
     <module.type>static</module.type>
     <module.location>org/osgi</module.location>
     <module.slot>main</module.slot>
+    <module.dependencies>org.osgi.core:main:true</module.dependencies>
   </properties>
 
   <dependencies>
