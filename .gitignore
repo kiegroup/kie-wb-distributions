@@ -16,3 +16,5 @@
 # Created by Zanata
 /org.kie
 
+# does not exist on the 6.0.x branch
+/kie-wb-smoke-tests/

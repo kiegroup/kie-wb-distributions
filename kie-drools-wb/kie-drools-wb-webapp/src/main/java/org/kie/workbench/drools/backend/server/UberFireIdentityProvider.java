@@ -1,4 +1,4 @@
-package org.kie.workbench.backend;
+package org.kie.workbench.drools.backend.server;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,12 +9,11 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.guvnor.common.services.shared.identity.RequestIdentityProvider;
-import org.jbpm.kie.services.api.IdentityProvider;
 import org.uberfire.security.Identity;
 import org.uberfire.security.Role;
 
 @SessionScoped
-public class UberFireIdentityProvider implements RequestIdentityProvider, IdentityProvider, Serializable {
+public class UberFireIdentityProvider implements RequestIdentityProvider, Serializable {
 
     private static final long serialVersionUID = 1L;
 
