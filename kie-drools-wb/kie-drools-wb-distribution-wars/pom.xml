@@ -45,38 +45,9 @@
               </filters>
             </configuration>
           </execution>
-          <execution>
-            <id>weblogic-specific</id>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <outputFile>${project.build.directory}/lib/weblogic/errai-weld-integration-cdi.jar</outputFile>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                  <resource>META-INF/beans.xml</resource>
-                  <file>src/main/weblogic-addons/beans.xml</file>
-                </transformer>
-              </transformers>
-              <artifactSet>
-                <includes>
-                  <include>org.jboss.errai:errai-weld-integration</include>
-                </includes>
-              </artifactSet>
-              <filters>
-                <filter>
-                  <artifact>org.jboss.errai:errai-weld-integration</artifact>
-                  <includes>
-                    <include>*/**</include>
-                  </includes>
-                </filter>
-              </filters>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
-      <!-- end of WAS 8.5 and Weblogic 12 specific handling -->
+      <!-- end of WAS 8.5 specific handling -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -147,11 +118,6 @@
     <dependency>
       <groupId>org.sonatype.sisu</groupId>
       <artifactId>sisu-inject-bean</artifactId>
-    </dependency>
-    <!-- For Weblogic  shading -->
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-weld-integration</artifactId>
     </dependency>
 
   </dependencies>
