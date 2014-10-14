@@ -38,13 +38,16 @@
       <unpack>true</unpack>
       <unpackOptions>
         <excludes>
-          <exclude>META-INF/context.xml</exclude>
-          <exclude>WEB-INF/jetty-env.xml</exclude>
+          <exclude>WEB-INF/jetty-web.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
           <exclude>WEB-INF/beans.xml</exclude>
+          <exclude>WEB-INF/classes/login.conf</exclude>
+          <exclude>WEB-INF/classes/login-cli.conf</exclude>
+          <exclude>WEB-INF/classes/realm.properties</exclude>
+          <exclude>META-INF/context.xml</exclude>
+
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
-          <exclude>WEB-INF/classes/META-INF/services/org.uberfire.security.auth.AuthenticationSource</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/wildfly/</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/weblogic/</exclude>
 
@@ -150,9 +153,6 @@
           <exclude>WEB-INF/lib/jboss-transaction-*.jar</exclude>
           <exclude>WEB-INF/lib/btm-*.jar</exclude>
           <exclude>WEB-INF/lib/jta-*.jar</exclude>
-
-          <!-- exclude UF form-based login.jsp -->
-          <exclude>login.jsp</exclude>
 
         </excludes>
       </unpackOptions>

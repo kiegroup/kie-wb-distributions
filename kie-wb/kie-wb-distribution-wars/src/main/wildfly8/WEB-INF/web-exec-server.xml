@@ -12,25 +12,6 @@
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
 
-  <filter>
-    <filter-name>UberFire Security Filter</filter-name>
-    <filter-class>org.uberfire.security.server.UberFireSecurityFilter</filter-class>
-    <init-param>
-      <param-name>org.uberfire.cookie.id</param-name>
-      <param-value>kie.ide.console</param-value>
-    </init-param>
-    <init-param>
-      <param-name>org.uberfire.auth.scheme</param-name>
-      <param-value>org.uberfire.security.server.auth.JACCAuthenticationScheme</param-value>
-    </init-param>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>UberFire Security Filter</filter-name>
-    <url-pattern>/rest/*</url-pattern>
-    <url-pattern>/maven2/*</url-pattern>
-  </filter-mapping>
-
   <!-- RESTEasy configurations -->
   <!-- enable the Asynchronous Job Service -->
   <context-param>
@@ -96,6 +77,7 @@ Their default values are shown as example param-values -->
     <web-resource-collection>
       <web-resource-name>rest</web-resource-name>
       <url-pattern>/rest/*</url-pattern>
+      <url-pattern>/maven2/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
