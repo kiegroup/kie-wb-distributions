@@ -48,7 +48,7 @@
           </execution>
         </executions>
       </plugin>
-      <!-- end of WAS 8.5 and Weblogic 12 specific handling -->
+      <!-- end of WAS 8.5 specific handling -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
