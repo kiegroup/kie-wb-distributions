@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +22,8 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
     @Inject
     private User identity;
     @Inject
-    private HttpServletRequest request;
+    @RequestScoped
+    private Instance<HttpServletRequest> request;
 
     @Override
     public String getName() {
@@ -28,8 +31,8 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
 
             return identity.getIdentifier();
         } catch (Exception e) {
-            if (request != null && request.getUserPrincipal() != null) {
-                return request.getUserPrincipal().getName();
+            if (!request.isUnsatisfied() && request.get().getUserPrincipal() != null) {
+                return request.get().getUserPrincipal().getName();
             }
             return null;
         }
@@ -39,7 +42,7 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
     public List<String> getRoles() {
         List<String> roles = new ArrayList<String>();
 
-        Set<Role> ufRoles = identity.getRoles();
+        final Set<Role> ufRoles = identity.getRoles();
         for (Role role : ufRoles) {
             roles.add(role.getName());
         }
@@ -49,8 +52,8 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
 
     @Override
     public boolean hasRole(String role) {
-        if (request != null) {
-            return request.isUserInRole(role);
+        if (!request.isUnsatisfied()) {
+            return request.get().isUserInRole(role);
         }
         return false;
     }

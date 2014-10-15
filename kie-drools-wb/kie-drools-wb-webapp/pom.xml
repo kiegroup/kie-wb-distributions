@@ -634,13 +634,6 @@
       <artifactId>jaxb-xjc</artifactId>
     </dependency>
 
-    <!-- Solder -->
-    <dependency>
-      <groupId>org.jboss.solder</groupId>
-      <artifactId>solder-impl</artifactId>
-    </dependency>
-
-
     <!--JUnit for Test scenarios -->
     <dependency>
       <groupId>junit</groupId>

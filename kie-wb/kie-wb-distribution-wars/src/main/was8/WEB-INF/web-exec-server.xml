@@ -15,6 +15,16 @@
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
 
+  <filter>
+    <filter-name>request-capture</filter-name>
+    <filter-class>org.kie.uberfire.security.server.SecurityIntegrationFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>request-capture</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <servlet>
     <servlet-name>M2Servlet</servlet-name>
     <servlet-class>org.guvnor.m2repo.backend.server.M2Servlet</servlet-class>

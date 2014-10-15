@@ -1,3 +1,2 @@
-org.kie.workbench.backend.wildfly.SolderCDIWorkaround
 org.kie.internal.runtime.cdi.BootOnLoadExtension
 org.jbpm.console.ng.bd.backend.server.profile.ProfileManagerExtension

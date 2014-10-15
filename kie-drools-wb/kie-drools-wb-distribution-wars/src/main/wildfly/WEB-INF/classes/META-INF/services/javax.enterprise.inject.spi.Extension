@@ -1,2 +1,1 @@
-org.kie.workbench.drools.backend.server.wildfly.SolderCDIWorkaround
 org.kie.internal.runtime.cdi.BootOnLoadExtension
