@@ -241,11 +241,6 @@
       <artifactId>btm</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.jboss.solder</groupId>
-      <artifactId>solder-impl</artifactId>
-    </dependency>
-
     <!-- Models held within Drools -->
     <dependency>
       <groupId>org.drools</groupId>

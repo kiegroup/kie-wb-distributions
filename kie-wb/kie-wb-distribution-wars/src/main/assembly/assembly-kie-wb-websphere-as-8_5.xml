@@ -182,6 +182,7 @@
           <exclude>WEB-INF/lib/geronimo-spec-jta-*.jar</exclude>
           <exclude>WEB-INF/lib/geronimo-activation_*.jar</exclude>
           <exclude>WEB-INF/lib/geronimo-javamail_*.jar</exclude>
+          <exclude>WEB-INF/lib/geronimo-stax-api_*.jar</exclude>
           <exclude>WEB-INF/lib/servlet-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jstl-*.jar</exclude>
           <exclude>WEB-INF/lib/jsp-api-*.jar</exclude>
@@ -243,6 +244,8 @@
           <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-ejb3-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-jaxws-api*.jar</exclude>
+
 
           <exclude>WEB-INF/lib/sisu-inject-bean*.jar</exclude>
           <exclude>WEB-INF/lib/jaxrs-*.jar</exclude>
