@@ -125,4 +125,6 @@ public interface AppConstants
     String Asset_Management();
 
     String Tasks_List();
+
+    String Apps();
 }

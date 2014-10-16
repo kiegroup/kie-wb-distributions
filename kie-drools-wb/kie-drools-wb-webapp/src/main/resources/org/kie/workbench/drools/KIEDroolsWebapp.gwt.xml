@@ -79,6 +79,9 @@
 
   <!-- Uberfire Extensions - Perspective Editor -->
   <inherits name="org.kie.uberfire.perspective.editor.PerspectiveEditorClient"/>
+  <!-- Uberfire Extensions - Apps -->
+  <inherits name="org.kie.uberfire.apps.UberfireAppsClient"/>
+
 
   <!-- Form-Modeler -->
   <inherits name="org.jbpm.formModeler.renderer.FormRendererAPI"/>

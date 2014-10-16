@@ -83,6 +83,7 @@
           <exclude>WEB-INF/lib/kie-uberfire-runtime-plugins-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-social-activities-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-perspective-editor-client-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-uberfire-apps-client-*.jar</exclude>
 
           <!-- Guvnor client related -->
           <exclude>WEB-INF/lib/guvnor-structure-client-*.jar</exclude>

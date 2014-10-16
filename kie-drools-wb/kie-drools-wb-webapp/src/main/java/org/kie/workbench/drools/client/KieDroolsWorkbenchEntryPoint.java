@@ -346,7 +346,13 @@ public class KieDroolsWorkbenchEntryPoint {
             }
 
         } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.Apps() ).withRoles( kieACL.getGrantedRoles( F_APPS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "AppsPerspective" ) );
+            }
 
+        } ).endMenu().build().getItems().get( 0 ) );
         return result;
     }
 

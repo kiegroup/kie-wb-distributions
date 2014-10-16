@@ -554,6 +554,16 @@
       <artifactId>kie-uberfire-perspective-editor-backend</artifactId>
     </dependency>
 
+    <!-- UberFire Apps -->
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-apps-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-apps-backend</artifactId>
+    </dependency>
+
     <!-- UberFire -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -995,7 +1005,8 @@
 
             <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-runtime-plugins-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-perspective-editor-client</compileSourcesArtifact>
-            
+            <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-apps-client</compileSourcesArtifact>
+
           </compileSourcesArtifacts>
           <runTarget>kie-drools-wb.html</runTarget>
           <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms1024m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.jbpm.designer.perspective=ruleflow -Dorg.kie.clean.onstartup=true -Djava.security.auth.login.config=./src/main/resources/login-cli.conf</extraJvmArgs>
