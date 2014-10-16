@@ -43,6 +43,11 @@
         <include>org.apache.ant:ant:jar</include>
         <include>org.apache.ant:ant-launcher:jar</include>
         <include>org.slf4j:sl:jar</include>
+        <include>org.hibernate:hibernate-entitymanager</include>
+        <include>org.hibernate:hibernate-core</include>
+        <include>org.hibernate:hibernate-validator</include>
+        <include>org.hibernate.common:hibernate-commons-annotations</include>
+        <include>antlr:antlr</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
@@ -66,7 +71,6 @@
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
-          <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/wildfly/</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/weblogic/</exclude>
           <exclude>WEB-INF/log4j.xml</exclude>
           <exclude>WEB-INF/classes/logback.xml</exclude>
