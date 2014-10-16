@@ -42,6 +42,7 @@
       <unpack>true</unpack>
       <unpackOptions>
         <excludes>
+          <exclude>META-INF/context.xml</exclude>
           <exclude>WEB-INF/jetty-web.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
           <exclude>WEB-INF/beans.xml</exclude>
@@ -165,9 +166,7 @@
 
           <!-- Servlet API -->
           <exclude>WEB-INF/lib/javax.servlet-api-*.jar</exclude>
-          
-          <!-- Errai -->
-          <exclude>WEB-INF/lib/errai-jaxrs-client-*.jar</exclude>
+
 
         </excludes>
       </unpackOptions>
