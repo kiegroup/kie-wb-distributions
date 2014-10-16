@@ -60,7 +60,6 @@
 
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
-          <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/wildfly/</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/weblogic/</exclude>
 
           <!-- UF client related -->

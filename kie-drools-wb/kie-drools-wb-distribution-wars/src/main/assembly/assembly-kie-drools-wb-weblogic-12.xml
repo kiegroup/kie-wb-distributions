@@ -43,6 +43,11 @@
       <includes>
         <include>org.apache.ant:ant:jar</include>
         <include>org.apache.ant:ant-launcher:jar</include>
+        <include>org.hibernate:hibernate-entitymanager</include>
+        <include>org.hibernate:hibernate-core</include>
+        <include>org.hibernate:hibernate-validator</include>
+        <include>org.hibernate.common:hibernate-commons-annotations</include>
+        <include>antlr:antlr</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
@@ -64,7 +69,6 @@
 
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
-          <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/wildfly/</exclude>
 
           <!-- UF client related -->
           <exclude>WEB-INF/lib/uberfire-js-*.jar</exclude>
@@ -180,7 +184,6 @@
           <exclude>WEB-INF/lib/commons-cli-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-collections-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-lang-*.jar</exclude>
-          <exclude>WEB-INF/lib/dom4j-*.jar</exclude>
           <!-- this *.jar is not in the AS 7.1.1 -->
           <exclude>WEB-INF/lib/h2-*.jar</exclude>
           <exclude>WEB-INF/lib/hibernate-commons-annotations-*.jar</exclude>
@@ -213,7 +216,6 @@
           <exclude>WEB-INF/lib/httpcore_*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-ejb-client-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-jms-api_*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-logging-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-logmanager*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-marshalling-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-remote-naming-*.jar</exclude>
