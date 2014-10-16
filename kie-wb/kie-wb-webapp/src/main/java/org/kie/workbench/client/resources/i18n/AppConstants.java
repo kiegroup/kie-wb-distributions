@@ -156,4 +156,5 @@ public interface AppConstants
 
     String DeploymentDescriptor();
 
+    String Apps();
 }
