@@ -148,6 +148,22 @@ profile in pom.xml to use that. -->
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
 
+  <!-- Basic Auth Filter for REST and Maven2 repo -->
+  <filter>
+    <filter-name>HTTP Basic Auth Filter</filter-name>
+    <filter-class>org.kie.uberfire.security.server.BasicAuthSecurityFilter</filter-class>
+    <init-param>
+      <param-name>realmName</param-name>
+      <param-value>KIE Drools Workbench Realm</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>HTTP Basic Auth Filter</filter-name>
+    <url-pattern>/rest/*</url-pattern>
+    <url-pattern>/maven2/*</url-pattern>
+  </filter-mapping>
+
   <!-- START DESIGNER -->
   <filter>
     <filter-name>Designer Injection Filter</filter-name>
@@ -462,8 +478,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/kie-drools-wb.html</url-pattern>
       <url-pattern>*.erraiBus</url-pattern>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/*</url-pattern>
-      <url-pattern>/rest/*</url-pattern>
-      <url-pattern>/maven2/*</url-pattern>
       <url-pattern>/resourceList</url-pattern>
       <url-pattern>/editor</url-pattern>
       <url-pattern>/editor/*</url-pattern>
