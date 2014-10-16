@@ -30,7 +30,7 @@ public class UberFireIdentityProvider implements RequestIdentityProvider, Serial
             if (request != null && request.getUserPrincipal() != null) {
                 return request.getUserPrincipal().getName();
             }
-            return null;
+            return "unknown";
         }
     }
 
