@@ -31,7 +31,6 @@ import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
-import org.uberfire.client.annotations.WorkbenchToolBar;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.panels.impl.MultiListWorkbenchPanelPresenter;
 import org.uberfire.client.workbench.panels.impl.SimpleWorkbenchPanelPresenter;
@@ -45,12 +44,8 @@ import org.uberfire.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.Menus;
-import org.uberfire.workbench.model.toolbar.ToolBar;
-import org.uberfire.workbench.model.toolbar.impl.DefaultToolBar;
-import org.uberfire.workbench.model.toolbar.impl.DefaultToolBarItem;
 
 import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
-import static org.uberfire.workbench.model.toolbar.IconType.*;
 
 /**
  * A Perspective for Administrators
@@ -76,31 +71,63 @@ public class AdministrationPerspective {
     private Command newRepoCommand = null;
     private Command cloneRepoCommand = null;
 
-    private PerspectiveDefinition perspective;
-    private Menus menus;
-    private ToolBar toolBar;
-
     @PostConstruct
     public void init() {
         buildCommands();
-        buildPerspective();
-        buildMenuBar();
-        buildToolBar();
     }
 
     @Perspective
     public PerspectiveDefinition getPerspective() {
-        return this.perspective;
+        final PerspectiveDefinition perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
+        perspective.setName( constants.Administration() );
+
+        perspective.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "RepositoriesEditor" ) ) );
+
+        final PanelDefinition west = new PanelDefinitionImpl( SimpleWorkbenchPanelPresenter.class.getName() );
+        west.setWidth( 300 );
+        west.setMinWidth( 200 );
+        west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "FileExplorer" ) ) );
+
+        perspective.getRoot().insertChild( CompassPosition.WEST, west );
+
+        return perspective;
     }
 
     @WorkbenchMenu
     public Menus getMenus() {
-        return this.menus;
-    }
-
-    @WorkbenchToolBar
-    public ToolBar getToolBar() {
-        return this.toolBar;
+        return MenuFactory
+                .newTopLevelMenu( AppConstants.INSTANCE.MenuOrganizationalUnits() )
+                .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
+                .menus()
+                .menu( AppConstants.INSTANCE.MenuManageOrganizationalUnits() )
+                .respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.kie.workbench.common.screens.organizationalunit.manager.OrganizationalUnitManager" );
+                    }
+                } )
+                .endMenu()
+                .endMenus()
+                .endMenu()
+                .newTopLevelMenu( constants.repositories() )
+                .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
+                .menus()
+                .menu( AppConstants.INSTANCE.listRepositories() )
+                .respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "RepositoriesEditor" );
+                    }
+                } )
+                .endMenu()
+                .menu( constants.cloneRepository() )
+                .respondsWith( cloneRepoCommand )
+                .endMenu()
+                .menu( constants.newRepository() )
+                .respondsWith( newRepoCommand )
+                .endMenu()
+                .endMenus()
+                .endMenu().build();
     }
 
     private void buildCommands() {
@@ -138,70 +165,4 @@ public class AdministrationPerspective {
             }
         };
     }
-
-    private void buildPerspective() {
-        this.perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
-        this.perspective.setName( constants.Administration() );
-
-        this.perspective.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "RepositoriesEditor" ) ) );
-
-        final PanelDefinition west = new PanelDefinitionImpl( SimpleWorkbenchPanelPresenter.class.getName() );
-        west.setWidth( 300 );
-        west.setMinWidth( 200 );
-        west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "FileExplorer" ) ) );
-
-        this.perspective.getRoot().insertChild( CompassPosition.WEST,
-                                                west );
-    }
-
-    private void buildMenuBar() {
-        this.menus = MenuFactory
-                .newTopLevelMenu( AppConstants.INSTANCE.MenuOrganizationalUnits() )
-                .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
-                .menus()
-                .menu( AppConstants.INSTANCE.MenuManageOrganizationalUnits() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.kie.workbench.common.screens.organizationalunit.manager.OrganizationalUnitManager" );
-                    }
-                } )
-                .endMenu()
-                .endMenus()
-                .endMenu()
-                .newTopLevelMenu( constants.repositories() )
-                .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
-                .menus()
-                .menu( AppConstants.INSTANCE.listRepositories() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "RepositoriesEditor" );
-                    }
-                } )
-                .endMenu()
-                .menu( constants.cloneRepository() )
-                .respondsWith( cloneRepoCommand )
-                .endMenu()
-                .menu( constants.newRepository() )
-                .respondsWith( newRepoCommand )
-                .endMenu()
-                .endMenus()
-                .endMenu().build();
-    }
-
-    private void buildToolBar() {
-        this.toolBar = new DefaultToolBar( "file.explorer" );
-        final DefaultToolBarItem i1 = new DefaultToolBarItem( FOLDER_CLOSE_ALT,
-                                                              constants.newRepository(),
-                                                              newRepoCommand );
-        final DefaultToolBarItem i2 = new DefaultToolBarItem( DOWNLOAD_ALT,
-                                                              constants.cloneRepository(),
-                                                              cloneRepoCommand );
-        i1.setRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ).toArray( new String[ 0 ] ) );
-        i2.setRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ).toArray( new String[ 0 ] ) );
-        toolBar.addItem( i1 );
-        toolBar.addItem( i2 );
-    }
-
 }
