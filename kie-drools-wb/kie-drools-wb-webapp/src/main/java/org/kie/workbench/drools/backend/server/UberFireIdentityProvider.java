@@ -34,7 +34,7 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
             if (!request.isUnsatisfied() && request.get().getUserPrincipal() != null) {
                 return request.get().getUserPrincipal().getName();
             }
-            return null;
+            return "unknown";
         }
     }
 
