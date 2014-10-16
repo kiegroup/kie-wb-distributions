@@ -849,6 +849,16 @@
       <artifactId>kie-uberfire-perspective-editor-backend</artifactId>
     </dependency>
 
+    <!-- UberFire Apps -->
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-apps-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>kie-uberfire-apps-backend</artifactId>
+    </dependency>
+
     <!-- Search -->
     <dependency>
       <groupId>org.kie.uberfire</groupId>
@@ -1070,6 +1080,7 @@
 
             <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-runtime-plugins-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-perspective-editor-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-apps-client</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
           <runTarget>kie-wb.html</runTarget>
