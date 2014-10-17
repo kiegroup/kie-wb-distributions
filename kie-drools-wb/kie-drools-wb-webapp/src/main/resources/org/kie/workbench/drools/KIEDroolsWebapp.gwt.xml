@@ -42,6 +42,7 @@
   <inherits name="org.kie.workbench.common.screens.server.management.ServerManagementClient"/>
   <inherits name="org.kie.workbench.common.screens.contributors.KieWorkbenchContributorsClient"/>
   <inherits name="org.kie.workbench.common.screens.social.hp.SocialHomePageClient"/>
+  <inherits name="org.kie.workbench.common.screens.defaulteditor.DroolsWorkbenchDefaultEditorClient"/>
 
   <!-- Common Services -->
   <inherits name="org.kie.workbench.common.services.KieWorkbenchCommonServicesAPI"/>
@@ -64,7 +65,6 @@
   <inherits name="org.drools.workbench.screens.guided.scorecard.DroolsWorkbenchGuidedScoreCardEditorClient"/>
   <inherits name="org.drools.workbench.screens.dsltext.DroolsWorkbenchDSLTextEditorClient"/>
   <inherits name="org.drools.workbench.screens.globals.DroolsWorkbenchGlobalsEditorClient"/>
-  <inherits name="org.kie.workbench.common.screens.defaulteditor.DroolsWorkbenchDefaultEditorClient"/>
   <inherits name="org.drools.workbench.screens.workitems.DroolsWorkbenchWorkItemsEditorClient"/>
   <inherits name="org.drools.workbench.screens.dtablexls.DroolsWorkbenchDecisionTableXLSEditorClient"/>
   <inherits name="org.drools.workbench.screens.scorecardxls.DroolsWorkbenchScoreCardXLSEditorClient"/>
@@ -79,9 +79,9 @@
 
   <!-- Uberfire Extensions - Perspective Editor -->
   <inherits name="org.kie.uberfire.perspective.editor.PerspectiveEditorClient"/>
+
   <!-- Uberfire Extensions - Apps -->
   <inherits name="org.kie.uberfire.apps.UberfireAppsClient"/>
-
 
   <!-- Form-Modeler -->
   <inherits name="org.jbpm.formModeler.renderer.FormRendererAPI"/>
@@ -93,13 +93,18 @@
   <!-- Specify the paths for translatable code -->
   <source path='client'/>
 
-
   <extend-property name="locale" values="es"/>
   <extend-property name="locale" values="fr"/>
   <extend-property name="locale" values="ja"/>
   <extend-property name="locale" values="pt_BR"/>
   <extend-property name="locale" values="zh_CN"/>
   <extend-property name="locale" values="de"/>
+
+  <!-- SuperDevMode -->
+  <add-linker name="xsiframe"/>
+  <set-configuration-property name="devModeRedirectEnabled" value="true"/>
+  <set-property name="compiler.useSourceMaps" value="true"/>
+  <set-configuration-property name='xsiframe.failIfScriptTag' value='false'/>
 
   <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
 
