@@ -10,6 +10,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.jboss.errai.security.shared.api.Group;
 import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
 import org.jbpm.kie.services.api.IdentityProvider;
@@ -45,6 +46,11 @@ public class UberFireIdentityProvider implements IdentityProvider, Serializable 
         final Set<Role> ufRoles = identity.getRoles();
         for (Role role : ufRoles) {
             roles.add(role.getName());
+        }
+
+        final Set<Group> ufGroups = identity.getGroups();
+        for (Group group : ufGroups) {
+            roles.add(group.getName());
         }
 
         return roles;
