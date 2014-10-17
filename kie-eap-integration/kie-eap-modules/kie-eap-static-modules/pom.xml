@@ -36,7 +36,6 @@
     <module>org-eclipse-sisu</module>
     <module>org-sonatype-sisu</module>
     <module>org-tukaani</module>
-    <module>org-jboss-solder</module>
     <module>org-sonatype-maven</module>
     <module>org-sonatype-plexus</module>
     <module>org-apache-commons-vfs</module>
