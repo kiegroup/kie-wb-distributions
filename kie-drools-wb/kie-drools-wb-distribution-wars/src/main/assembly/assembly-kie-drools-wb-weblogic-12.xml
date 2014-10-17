@@ -68,6 +68,7 @@
           <exclude>WEB-INF/classes/realm.properties</exclude>
 
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
+          <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
 
           <!-- UF client related -->
