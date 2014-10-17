@@ -281,10 +281,6 @@
           <groupId>org.jboss.seam.transaction</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>solder-api</artifactId>
-          <groupId>org.jboss.solder</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>hibernate-jpa-2.0-api</artifactId>
           <groupId>org.hibernate.javax.persistence</groupId>
         </exclusion>
@@ -347,11 +343,6 @@
           <groupId>org.slf4j</groupId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.solder</groupId>
-      <artifactId>solder-impl</artifactId>
-      <scope>runtime</scope>
     </dependency>
 
     <dependency>
