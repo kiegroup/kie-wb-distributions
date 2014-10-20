@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.i18n.client.LocaleInfo;
@@ -414,11 +415,8 @@ public class KieWorkbenchEntryPoint {
             authService.call( new RemoteCallback<Void>() {
                 @Override
                 public void callback( Void response ) {
-                    final StringBuilder baseUrl = new StringBuilder();
-                    baseUrl.append( Window.Location.getProtocol() ).append( "//" );
-                    baseUrl.append( Window.Location.getHost());
-                    baseUrl.append( Window.Location.getPath() );
-                    redirect( baseUrl.toString() );
+                    final String location = GWT.getModuleBaseURL().replaceFirst("/" + GWT.getModuleName() + "/", "");
+                    redirect( location );
                 }
             } ).logout();
         }
