@@ -29,7 +29,7 @@ import org.kie.uberfire.metadata.io.IndexersFactory;
 import org.uberfire.commons.services.cdi.Startup;
 import org.uberfire.commons.services.cdi.StartupType;
 
-@Startup(StartupType.EAGER)
+@Startup(value = StartupType.BOOTSTRAP, priority = -1)
 @ApplicationScoped
 public class IndexersBootstrap {
 
