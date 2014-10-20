@@ -66,6 +66,7 @@
           <exclude>WEB-INF/classes/login.conf</exclude>
           <exclude>WEB-INF/classes/login-cli.conf</exclude>
           <exclude>WEB-INF/classes/realm.properties</exclude>
+          <exclude>WEB-INF/classes/jetty-groups.properties</exclude>
           <exclude>META-INF/context.xml</exclude>
 
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
