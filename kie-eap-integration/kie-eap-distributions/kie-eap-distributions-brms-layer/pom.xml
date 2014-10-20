@@ -43,7 +43,39 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-jbpm-minimal</artifactId>
+      <artifactId>org-jbpm</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-compress</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-exec</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.freemarker</groupId>
+          <artifactId>freemarker</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-eclipse-emf</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.modules</groupId>
+      <artifactId>org-apache-commons-httpclient</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
     </dependency>
@@ -245,7 +277,7 @@
             <staticDependency>
               <name>com.opensymphony.quartz</name>
               <slot>main</slot>
-              <dependencies>org.jbpm-minimal:main,org.drools:main,org.kie:main</dependencies>
+              <dependencies>org.jbpm:main,org.drools:main,org.kie:main</dependencies>
             </staticDependency>
           </staticDependencies>
           
