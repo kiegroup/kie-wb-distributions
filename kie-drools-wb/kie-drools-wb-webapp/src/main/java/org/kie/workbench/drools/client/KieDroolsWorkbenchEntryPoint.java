@@ -145,23 +145,11 @@ public class KieDroolsWorkbenchEntryPoint {
     private void setupMenu() {
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
 
-        final Menus menus = MenuFactory
-                .newTopLevelMenu( constants.home() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        if ( defaultPerspective != null ) {
-                            placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
-                        } else {
-                            Window.alert( constants.missingDefaultPerspective() );
-                        }
-                    }
-                } )
-                .endMenu()
+        final Menus menus =
+                MenuFactory.newTopLevelMenu( constants.home() ).withItems( getHomeViews() ).endMenu()
                 .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
                 .newTopLevelMenu( constants.deployment() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
-                .newTopLevelMenu( constants.servers() ).withRoles( kieACL.getGrantedRoles( G_SERVERS ) ).withItems( getServerViews() ).endMenu()
-                .newTopLevelMenu( constants.activity() ).withRoles( kieACL.getGrantedRoles( G_ACTIVITY ) ).withItems( getActivityViews() ).endMenu()
+                .newTopLevelMenu( constants.tasks() ).withItems( getTasksViews() ).endMenu()
                 .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
                 .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                     @Override
@@ -193,78 +181,25 @@ public class KieDroolsWorkbenchEntryPoint {
         return result;
     }
 
-    private List<MenuItem> getAuthoringViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
-
-        result.add( MenuFactory.newSimpleItem( constants.project_authoring() ).withRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "AuthoringPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        result.add( MenuFactory.newSimpleItem( constants.administration() ).withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        return result;
-    }
-
-    private List<MenuItem> getDeploymentViews() {
+    private List<? extends MenuItem> getHomeViews() {
+        final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.homePage() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
+                if ( defaultPerspective != null ) {
+                    placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
+                } else {
+                    Window.alert( constants.missingDefaultPerspective() );
+                }
             }
         } ).endMenu().build().getItems().get( 0 ) );
-
-        return result;
-    }
-
-    private List<MenuItem> getServerViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
-
-        result.add( MenuFactory.newSimpleItem( constants.management() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "ServerManagementPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        return result;
-    }
-
-    private List<MenuItem> getActivityViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
         result.add( MenuFactory.newSimpleItem( constants.timeline() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        result.add( MenuFactory.newSimpleItem( constants.contributors() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
@@ -275,6 +210,98 @@ public class KieDroolsWorkbenchEntryPoint {
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
+        return result;
+    }
+
+    private List<MenuItem> getAuthoringViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
+
+        result.add( MenuFactory.newSimpleItem( constants.project_authoring() ).withRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "AuthoringPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.contributors() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.administration() ).withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
+    }
+
+    private List<MenuItem> getDeploymentViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+
+        result.add( MenuFactory.newSimpleItem( constants.ruleDeployments() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "ServerManagementPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
+    }
+
+    private List<? extends MenuItem> getTasksViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
+
+        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
+    }
+
+    private List<? extends MenuItem> getExtensionsViews() {
+        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
+        result.add( MenuFactory.newSimpleItem( constants.plugins() ).withRoles( kieACL.getGrantedRoles( F_PLUGIN_MANAGEMENT ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "PlugInAuthoringPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.perspectiveEditor() ).withRoles( kieACL.getGrantedRoles( F_PERSPECTIVE_EDITOR ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "PerspectiveEditorPerspective" ) );
+            }
+
+        } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.Apps() ).withRoles( kieACL.getGrantedRoles( F_APPS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "AppsPerspective" ) );
+            }
+
+        } ).endMenu().build().getItems().get( 0 ) );
         return result;
     }
 
@@ -329,31 +356,6 @@ public class KieDroolsWorkbenchEntryPoint {
                 }
             } ).logout();
         }
-    }
-
-    private List<? extends MenuItem> getExtensionsViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
-        result.add( MenuFactory.newSimpleItem( constants.plugins() ).withRoles( kieACL.getGrantedRoles( F_PLUGIN_MANAGEMENT ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "PlugInAuthoringPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.perspectiveEditor() ).withRoles( kieACL.getGrantedRoles( F_PERSPECTIVE_EDITOR ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "PerspectiveEditorPerspective" ) );
-            }
-
-        } ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Apps() ).withRoles( kieACL.getGrantedRoles( F_APPS ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "AppsPerspective" ) );
-            }
-
-        } ).endMenu().build().getItems().get( 0 ) );
-        return result;
     }
 
     public static native void redirect( String url )/*-{
