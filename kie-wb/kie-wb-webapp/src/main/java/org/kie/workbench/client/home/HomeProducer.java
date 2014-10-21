@@ -54,26 +54,6 @@ public class HomeProducer {
                                                               constants.homeImproveCaption(),
                                                               url + "/images/HandHome.jpg" ) );
 
-        final Section s0 = new Section( constants.Home() );
-
-        SectionEntry s0_a = ModelUtils.makeSectionEntry( constants.Timeline(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "SocialHomePagePerspective" );
-                    }
-                } );
-
-        SectionEntry s0_b = ModelUtils.makeSectionEntry( constants.People(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "UserHomePagePerspective" );
-                    }
-                } );
-
         final Section s1 = new Section( constants.Authoring() );
 
         SectionEntry s1_a = ModelUtils.makeSectionEntry( constants.Project_Authoring(),
@@ -201,35 +181,6 @@ public class HomeProducer {
                                                              }
                                                          } );
 
-        final Section s6 = new Section( constants.Extensions() );
-
-        SectionEntry s6_a = ModelUtils.makeSectionEntry( constants.PlugIns(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "PlugInAuthoringPerspective" );
-                    }
-                } );
-
-        SectionEntry s6_b = ModelUtils.makeSectionEntry( constants.PerspectiveEditor(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "PerspectiveEditorPerspective" );
-                    }
-                } );
-
-        SectionEntry s6_c = ModelUtils.makeSectionEntry( constants.Apps(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "AppsPerspective" );
-                    }
-                } );
-
         s1.setRoles( kieACL.getGrantedRoles( G_AUTHORING ) );
         s1_a.setRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) );
         s1_b.setRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) );
@@ -252,9 +203,6 @@ public class HomeProducer {
         s5_a.setRoles( kieACL.getGrantedRoles( F_PROCESS_DASHBOARD ) );
         s5_b.setRoles( kieACL.getGrantedRoles( F_DASHBOARD_BUILDER ) );
 
-        s0.addEntry( s0_a );
-        s0.addEntry( s0_b );
-
         s1.addEntry( s1_a );
         s1.addEntry( s1_b );
         s1.addEntry( s1_c );
@@ -273,17 +221,11 @@ public class HomeProducer {
         s5.addEntry( s5_a );
         s5.addEntry( s5_b );
 
-        s6.addEntry( s6_a );
-        s6.addEntry( s6_b );
-        s6.addEntry( s6_c );
-
-        model.addSection( s0 );
         model.addSection( s1 );
         model.addSection( s2 );
         model.addSection( s3 );
         model.addSection( s4 );
         model.addSection( s5 );
-        model.addSection( s6 );
     }
 
     @Produces
