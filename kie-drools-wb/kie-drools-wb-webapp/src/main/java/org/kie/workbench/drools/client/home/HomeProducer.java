@@ -42,26 +42,6 @@ public class HomeProducer {
                                                               constants.homeDeployCaption(),
                                                               url + "/images/HandHome.jpg" ) );
 
-        final Section s0 = new Section( constants.home() );
-
-        SectionEntry s0_a = ModelUtils.makeSectionEntry( constants.timeline(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "SocialHomePagePerspective" );
-                    }
-                } );
-
-        SectionEntry s0_b = ModelUtils.makeSectionEntry( constants.people(),
-                new Command() {
-
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "UserHomePagePerspective" );
-                    }
-                } );
-
         final Section s1 = new Section( constants.authoring() );
         final SectionEntry s1_a = ModelUtils.makeSectionEntry( constants.project_authoring(),
                                                                new Command() {
@@ -128,34 +108,6 @@ public class HomeProducer {
                                                                     }
                                                                 } );
 
-        final Section s4 = new Section( constants.extensions() );
-        final SectionEntry s4_a = ModelUtils.makeSectionEntry( constants.plugins(),
-                                                                new Command() {
-
-                                                                    @Override
-                                                                    public void execute() {
-                                                                        placeManager.goTo( "PlugInAuthoringPerspective" );
-                                                                    }
-                                                                } );
-
-        final SectionEntry s4_b = ModelUtils.makeSectionEntry( constants.perspectiveEditor(),
-                                                                new Command() {
-
-                                                                    @Override
-                                                                    public void execute() {
-                                                                        placeManager.goTo( "PerspectiveEditorPerspective" );
-                                                                    }
-                                                                } );
-
-        final SectionEntry s4_c = ModelUtils.makeSectionEntry( constants.Apps(),
-                                                                new Command() {
-
-                                                                    @Override
-                                                                    public void execute() {
-                                                                        placeManager.goTo( "AppsPerspective" );
-                                                                    }
-                                                                } );
-
         s1.setRoles( kieACL.getGrantedRoles( G_AUTHORING ) );
         s1_a.setRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) );
         s1_b.setRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) );
@@ -165,9 +117,6 @@ public class HomeProducer {
 
         s2.setRoles( kieACL.getGrantedRoles( G_AUTHORING ) );
         s2_a.setRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) );
-
-        s0.addEntry( s0_a );
-        s0.addEntry( s0_b );
 
         s1.addEntry( s1_a );
         s1.addEntry( s1_b );
@@ -179,15 +128,9 @@ public class HomeProducer {
 
         s3.addEntry( s3_a );
 
-        s4.addEntry( s4_a );
-        s4.addEntry( s4_b );
-        s4.addEntry( s4_c );
-
-        model.addSection( s0 );
         model.addSection( s1 );
         model.addSection( s2 );
         model.addSection( s3 );
-        model.addSection( s4 );
     }
 
     @Produces
