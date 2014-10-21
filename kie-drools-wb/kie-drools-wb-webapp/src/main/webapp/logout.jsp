@@ -6,7 +6,10 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
 <%
   request.logout();
-  request.getSession(false).invalidate();
+  javax.servlet.http.HttpSession httpSession = request.getSession(false);
+  if (httpSession != null) {
+    httpSession.invalidate();
+  }
   Locale locale = null;
   try {
     locale = new Locale( request.getParameter( "locale" ) );
