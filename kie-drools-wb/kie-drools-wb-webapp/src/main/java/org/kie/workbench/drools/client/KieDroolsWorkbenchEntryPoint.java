@@ -322,7 +322,7 @@ public class KieDroolsWorkbenchEntryPoint {
             authService.call( new RemoteCallback<Void>() {
                 @Override
                 public void callback( Void response ) {
-                    final String location = GWT.getModuleBaseURL().replaceFirst("/" + GWT.getModuleName() + "/", "");
+                    final String location = GWT.getModuleBaseURL().replaceFirst("/" + GWT.getModuleName() + "/",  "/logout.jsp");
                     redirect( location );
                 }
             } ).logout();
