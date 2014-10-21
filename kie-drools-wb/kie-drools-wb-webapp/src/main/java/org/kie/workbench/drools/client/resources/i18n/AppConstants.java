@@ -36,6 +36,8 @@ public interface AppConstants
 
     String home();
 
+    String homePage();
+
     String authoring();
 
     String project_authoring();
@@ -54,7 +56,7 @@ public interface AppConstants
 
     String activity();
 
-    String management();
+    String ruleDeployments();
 
     String artifactRepository();
 
@@ -123,6 +125,8 @@ public interface AppConstants
     String Refresh();
 
     String Asset_Management();
+
+    String tasks();
 
     String Tasks_List();
 

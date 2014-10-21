@@ -60,6 +60,8 @@ public interface AppConstants
 
     String Home();
 
+    String Home_Page();
+
     String Process_Definitions();
 
     String Process_Instances();
@@ -70,9 +72,9 @@ public interface AppConstants
 
     String Activity();
 
-    String Management();
+    String Rule_Deployments();
 
-    String Deployments();
+    String Process_Deployments();
 
     String newItem();
 

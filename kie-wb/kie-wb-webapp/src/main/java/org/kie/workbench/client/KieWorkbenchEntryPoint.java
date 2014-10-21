@@ -150,23 +150,11 @@ public class KieWorkbenchEntryPoint {
 
     private void setupMenu() {
 
-        final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
 
-        final Menus menus = MenuFactory.newTopLevelMenu( constants.Home() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                if ( defaultPerspective != null ) {
-                    placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
-                } else {
-                    Window.alert( constants.missingDefaultPerspective() );
-                }
-            }
-        } )
-                .endMenu()
+        final Menus menus =
+                MenuFactory.newTopLevelMenu( constants.Home() ).withItems( getHomeViews() ).endMenu()
                 .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
                 .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
-                .newTopLevelMenu( constants.Servers() ).withRoles( kieACL.getGrantedRoles( G_SERVERS ) ).withItems( getServersViews() ).endMenu()
-                .newTopLevelMenu( constants.Activity() ).withRoles( kieACL.getGrantedRoles( G_ACTIVITY ) ).withItems( getActivityViews() ).endMenu()
                 .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
                 .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
                 .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
@@ -201,6 +189,38 @@ public class KieWorkbenchEntryPoint {
         return result;
     }
 
+    private List<? extends MenuItem> getHomeViews() {
+        final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+
+        result.add( MenuFactory.newSimpleItem( constants.Home_Page() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                if ( defaultPerspective != null ) {
+                    placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
+                } else {
+                    Window.alert( constants.missingDefaultPerspective() );
+                }
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Timeline() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.People() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        return result;
+    }
+
     private List<? extends MenuItem> getAuthoringViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
@@ -208,6 +228,20 @@ public class KieWorkbenchEntryPoint {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "AuthoringPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Contributors() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
@@ -251,10 +285,17 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getDeploymentViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 3 );
 
-        result.add( MenuFactory.newSimpleItem( constants.Deployments() ).withRoles( kieACL.getGrantedRoles( F_DEPLOYMENTS ) ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Process_Deployments() ).withRoles( kieACL.getGrantedRoles( F_DEPLOYMENTS ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "Deployments" ) );
+            }
+        } ).endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Rule_Deployments() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "ServerManagementPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
@@ -262,53 +303,6 @@ public class KieWorkbenchEntryPoint {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "Jobs" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        return result;
-    }
-
-    private List<? extends MenuItem> getServersViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
-
-        result.add( MenuFactory.newSimpleItem( constants.Management() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "ServerManagementPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        return result;
-    }
-
-    private List<MenuItem> getActivityViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 3 );
-
-        result.add( MenuFactory.newSimpleItem( constants.Timeline() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        result.add( MenuFactory.newSimpleItem( constants.Contributors() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        result.add( MenuFactory.newSimpleItem( constants.People() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
