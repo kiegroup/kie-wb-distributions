@@ -31,6 +31,7 @@ public class KieWorkbenchFeatures {
     public static final String F_DEPLOYMENTS = "wb_deployments";
     public static final String F_MANAGEMENT = "wb_management";
     public static final String F_CONTRIBUTORS = "wb_contributors";
+    public static final String F_ASSET_MANAGEMENT = "wb_asset_management";
     public static final String F_JOBS = "wb_jobs";
     public static final String F_TASKS = "wb_tasks";
     public static final String F_PROCESS_DASHBOARD = "wb_process_dashboard";
@@ -43,8 +44,6 @@ public class KieWorkbenchFeatures {
 
     public static final String G_AUTHORING = "wb_authoring";
     public static final String G_DEPLOY = "wb_deploy";
-    public static final String G_SERVERS = "wb_servers";
-    public static final String G_ACTIVITY = "wb_activity";
     public static final String G_PROCESS_MANAGEMENT = "wb_process_management";
     public static final String G_TASKS = "wb_task_management";
     public static final String G_DASHBOARDS = "wb_dashboards";
