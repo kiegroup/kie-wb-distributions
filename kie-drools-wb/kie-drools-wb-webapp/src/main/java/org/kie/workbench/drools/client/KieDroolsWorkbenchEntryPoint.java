@@ -197,14 +197,14 @@ public class KieDroolsWorkbenchEntryPoint {
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.timeline() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.timeline() ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.people() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.people() ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
@@ -231,7 +231,7 @@ public class KieDroolsWorkbenchEntryPoint {
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).respondsWith( new Command() {
+        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).withRoles( kieACL.getGrantedRoles( F_ASSET_MANAGEMENT ) ).respondsWith( new Command() {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
