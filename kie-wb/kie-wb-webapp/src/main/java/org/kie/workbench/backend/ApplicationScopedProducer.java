@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import org.guvnor.common.services.backend.metadata.attribute.OtherMetaView;
 import org.jboss.errai.security.shared.api.identity.User;
+import org.jboss.errai.security.shared.api.identity.UserImpl;
 import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.kie.uberfire.metadata.backend.lucene.LuceneConfig;
 import org.kie.uberfire.metadata.io.IOSearchIndex;
@@ -107,7 +108,11 @@ public class ApplicationScopedProducer {
     @Produces
     @RequestScoped
     public User getIdentity() {
-        return authenticationService.getUser();
+        try {
+            return authenticationService.getUser();
+        } catch ( final IllegalStateException ex ) {
+            return new UserImpl( "system" );
+        }
     }
 
 }
