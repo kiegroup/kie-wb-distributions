@@ -27,6 +27,12 @@
       <groupId>org.kie.remote</groupId>
       <artifactId>kie-remote-client</artifactId>
       <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.kie.remote</groupId>
+          <artifactId>kie-remote-common</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
