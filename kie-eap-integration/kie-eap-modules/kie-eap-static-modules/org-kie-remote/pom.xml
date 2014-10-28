@@ -55,10 +55,4 @@
       </exclusions>
     </dependency>
 
-    <dependency>
-      <groupId>org.kie.remote</groupId>
-      <artifactId>kie-remote-common</artifactId>
-      <type>jar</type>
-    </dependency>
-  </dependencies>
 </project>
