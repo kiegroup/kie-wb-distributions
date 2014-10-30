@@ -15,6 +15,7 @@
  */
 package org.kie.workbench.client.perspectives;
 
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -40,6 +41,7 @@ import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
 import org.uberfire.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
+import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.Menus;
 
 @ApplicationScoped
@@ -115,10 +117,7 @@ public class DroolsAuthoringPerspective {
                 .newTopLevelMenu( constants.newItem() )
                 .withItems( newResourcesMenu.getMenuItems() )
                 .endMenu()
-                .newTopLevelMenu( constants.tools() )
-                .withItems( projectMenu.getMenuItems() )
-                .endMenu()
-                .newTopLevelMenu( constants.Repository() )
+                .newTopLevelMenu( AppConstants.INSTANCE.Repository() )
                 .withItems( repositoryMenu.getMenuItems() )
                 .endMenu().build();
     }
