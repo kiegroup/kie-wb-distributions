@@ -1,9 +1,38 @@
 package org.kie.smoke.wb.rest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.kie.smoke.wb.util.RestUtil.get;
 import static org.kie.smoke.wb.util.RestUtil.post;
-import static org.kie.smoke.wb.util.TestConstants.*;
+import static org.kie.smoke.wb.util.TestConstants.ARTIFACT_ID;
+import static org.kie.smoke.wb.util.TestConstants.GROUP_ASSSIGNMENT_PROCESS_ID;
+import static org.kie.smoke.wb.util.TestConstants.GROUP_ID;
+import static org.kie.smoke.wb.util.TestConstants.HUMAN_TASK_PROCESS_ID;
+import static org.kie.smoke.wb.util.TestConstants.JOHN_PASSWORD;
+import static org.kie.smoke.wb.util.TestConstants.JOHN_USER;
+import static org.kie.smoke.wb.util.TestConstants.KJAR_DEPLOYMENT_ID;
+import static org.kie.smoke.wb.util.TestConstants.MARY_PASSWORD;
+import static org.kie.smoke.wb.util.TestConstants.MARY_USER;
+import static org.kie.smoke.wb.util.TestConstants.OBJECT_VARIABLE_PROCESS_ID;
+import static org.kie.smoke.wb.util.TestConstants.RULE_TASK_PROCESS_ID;
+import static org.kie.smoke.wb.util.TestConstants.SCRIPT_TASK_VAR_PROCESS_ID;
+import static org.kie.smoke.wb.util.TestConstants.VERSION;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
@@ -25,6 +54,7 @@ import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
+import org.kie.remote.client.jaxb.ClientJaxbSerializationProvider;
 import org.kie.remote.client.jaxb.JaxbTaskSummaryListResponse;
 import org.kie.services.client.api.RemoteRestRuntimeEngineFactory;
 import org.kie.services.client.api.command.RemoteRuntimeEngine;
@@ -47,19 +77,6 @@ import org.kie.tests.Person;
 import org.kie.tests.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.*;
 
 @Category(KieWbSmoke.class)
 public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrationTest {
@@ -100,7 +117,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
 
     {
         Class<?>[] extraClasses = {MyType.class, Person.class, Request.class};
-        jaxbSerializationProvider = JaxbSerializationProvider.clientSideInstance(Arrays.asList(extraClasses));
+        jaxbSerializationProvider = ClientJaxbSerializationProvider.newInstance(Arrays.asList(extraClasses));
 
     }
 
@@ -204,7 +221,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         }
         assertEquals(200, respCode);
 
-        JaxbSerializationProvider jaxbSerializer = JaxbSerializationProvider.clientSideInstance();
+        JaxbSerializationProvider jaxbSerializer = ClientJaxbSerializationProvider.newInstance();
         String xmlStrObj = getConnectionContent(connection.getContent());
         depList = (JaxbDeploymentUnitList) jaxbSerializer.deserialize(xmlStrObj);
 
