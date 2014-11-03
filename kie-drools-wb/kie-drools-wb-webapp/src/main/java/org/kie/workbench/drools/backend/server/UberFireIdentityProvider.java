@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.jboss.errai.security.shared.api.Group;
 import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
-import org.jbpm.kie.services.api.IdentityProvider;
+import org.kie.internal.identity.IdentityProvider;
 
 @SessionScoped
 public class UberFireIdentityProvider implements IdentityProvider, Serializable {
