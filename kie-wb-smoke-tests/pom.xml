@@ -17,6 +17,7 @@
   <properties>
     <version.tomcat7>7.0.55</version.tomcat7>
     <version.tomcat8>8.0.14</version.tomcat8>
+    <version.jbossas7>7.1.1.Final</version.jbossas7>
     <version.wildfly8>8.1.0.Final</version.wildfly8>
 
     <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.3.x -->
@@ -45,6 +46,13 @@
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-wb-distribution-wars</artifactId>
+        <classifier>jboss-as7</classifier>
+        <version>${deployable.version}</version>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
         <classifier>tomcat7</classifier>
         <version>${deployable.version}</version>
         <type>war</type>
@@ -61,6 +69,13 @@
         <groupId>org.kie</groupId>
         <artifactId>kie-drools-wb-distribution-wars</artifactId>
         <classifier>eap6_3</classifier>
+        <version>${deployable.version}</version>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb-distribution-wars</artifactId>
+        <classifier>jboss-as7</classifier>
         <version>${deployable.version}</version>
         <type>war</type>
       </dependency>
@@ -267,6 +282,12 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>jboss-as7</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
           <classifier>tomcat7</classifier>
           <type>war</type>
         </dependency>
@@ -307,6 +328,12 @@
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
           <classifier>eap6_3</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>jboss-as7</classifier>
           <type>war</type>
         </dependency>
         <dependency>
@@ -365,7 +392,7 @@
                 </properties>
                 <configfiles>
                   <configfile>
-                    <file>${project.build.testOutputDirectory}/eap63x-wildfly/config</file>
+                    <file>${project.build.testOutputDirectory}/eap-jbossas-wildfly-shared/config</file>
                     <todir>configuration</todir>
                     <overwrite>true</overwrite>
                   </configfile>
@@ -381,6 +408,54 @@
                   <groupId>${deployable.groupId}</groupId>
                   <artifactId>${deployable.artifactId}</artifactId>
                   <classifier>eap6_3</classifier>
+                  <type>war</type>
+                </deployable>
+              </deployables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>jbossas7x</id>
+      <properties>
+        <jbossas7x.download.url>http://download.jboss.org/jbossas/7.1/jboss-as-${version.jbossas7}/jboss-as-${version.jbossas7}.zip</jbossas7x.download.url>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>jboss71x</containerId>
+                <type>installed</type>
+                <zipUrlInstaller>
+                  <url>${jbossas7x.download.url}</url>
+                </zipUrlInstaller>
+              </container>
+              <configuration>
+                <properties>
+                  <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
+                </properties>
+                <configfiles>
+                  <configfile>
+                    <file>${project.build.testOutputDirectory}/eap-jbossas-wildfly-shared/config</file>
+                    <todir>configuration</todir>
+                    <overwrite>true</overwrite>
+                  </configfile>
+                  <configfile>
+                    <file>${project.build.testOutputDirectory}/ssl/server</file>
+                    <todir>configuration/ssl</todir>
+                    <overwrite>true</overwrite>
+                  </configfile>
+                </configfiles>
+              </configuration>
+              <deployables>
+                <deployable>
+                  <groupId>${deployable.groupId}</groupId>
+                  <artifactId>${deployable.artifactId}</artifactId>
+                  <classifier>jboss-as7</classifier>
                   <type>war</type>
                 </deployable>
               </deployables>
@@ -603,7 +678,7 @@
                 </properties>
                 <configfiles>
                   <configfile>
-                    <file>${project.build.testOutputDirectory}/eap63x-wildfly/config</file>
+                    <file>${project.build.testOutputDirectory}/eap-jbossas-wildfly-shared/config</file>
                     <todir>configuration</todir>
                     <overwrite>true</overwrite>
                   </configfile>
