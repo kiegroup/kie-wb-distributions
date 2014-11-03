@@ -33,69 +33,6 @@
     <deployment.timeout.millis>120000</deployment.timeout.millis>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <!-- kie-wb distribution wars -->
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-wb-distribution-wars</artifactId>
-        <classifier>eap6_3</classifier>
-        <version>${deployable.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-wb-distribution-wars</artifactId>
-        <classifier>jboss-as7</classifier>
-        <version>${deployable.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-wb-distribution-wars</artifactId>
-        <classifier>tomcat7</classifier>
-        <version>${deployable.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-wb-distribution-wars</artifactId>
-        <classifier>wildfly8</classifier>
-        <version>${deployable.version}</version>
-        <type>war</type>
-      </dependency>
-      <!-- kie-drools-wb distributions wars -->
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-drools-wb-distribution-wars</artifactId>
-        <classifier>eap6_3</classifier>
-        <version>${deployable.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-drools-wb-distribution-wars</artifactId>
-        <classifier>jboss-as7</classifier>
-        <version>${deployable.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-drools-wb-distribution-wars</artifactId>
-        <classifier>tomcat7</classifier>
-        <version>${deployable.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-drools-wb-distribution-wars</artifactId>
-        <classifier>wildfly8</classifier>
-        <version>${deployable.version}</version>
-        <type>war</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <!-- The dependencies should have <scope>test</scope> as all of this module does is executing tests. However,
        having this setting for each depdendency would clutter the POM, so the <scope> is not used on purpose. -->
   <dependencies>
