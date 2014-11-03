@@ -48,6 +48,8 @@ import org.uberfire.workbench.model.menu.Menus;
 @WorkbenchPerspective(identifier = "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective", isDefault = false)
 public class M2RepoPerspective extends FlowPanel {
 
+    private AppConstants constants = AppConstants.INSTANCE;
+
     @Inject
     private ContextualSearch contextualSearch;
 
@@ -75,7 +77,7 @@ public class M2RepoPerspective extends FlowPanel {
 
     @WorkbenchMenu
     public Menus getMenus() {
-        return MenuFactory.newTopLevelMenu( AppConstants.INSTANCE.Upload() )
+        return MenuFactory.newTopLevelMenu( constants.Upload() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -93,7 +95,7 @@ public class M2RepoPerspective extends FlowPanel {
                     }
                 } )
                 .endMenu()
-                .newTopLevelMenu( AppConstants.INSTANCE.Refresh() )
+                .newTopLevelMenu( constants.Refresh() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {

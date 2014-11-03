@@ -96,10 +96,10 @@ public class AdministrationPerspective {
     @WorkbenchMenu
     public Menus getMenus() {
         return MenuFactory
-                .newTopLevelMenu( AppConstants.INSTANCE.MenuOrganizationalUnits() )
+                .newTopLevelMenu( constants.MenuOrganizationalUnits() )
                 .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
                 .menus()
-                .menu( AppConstants.INSTANCE.MenuManageOrganizationalUnits() )
+                .menu( constants.MenuManageOrganizationalUnits() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {
@@ -112,7 +112,7 @@ public class AdministrationPerspective {
                 .newTopLevelMenu( constants.repositories() )
                 .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
                 .menus()
-                .menu( AppConstants.INSTANCE.listRepositories() )
+                .menu( constants.listRepositories() )
                 .respondsWith( new Command() {
                     @Override
                     public void execute() {

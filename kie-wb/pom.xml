@@ -25,11 +25,11 @@
 
   <groupId>org.kie</groupId>
   <artifactId>kie-wb</artifactId>
-    
+
   <packaging>pom</packaging>
   <name>KIE Workbench</name>
   <description>KIE Workbench</description>
- 
+
   <modules>
     <module>kie-wb-webapp</module>
     <module>kie-wb-distribution-wars</module>
@@ -37,10 +37,14 @@
 
   <repositories>
     <repository>
-     <id>sonatype</id>
-     <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-     <snapshots><enabled>true</enabled></snapshots>
-     <releases><enabled>false</enabled></releases>
+      <id>sonatype</id>
+      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
     </repository>
   </repositories>
 
@@ -50,7 +54,7 @@
       <artifactId>jbpm-runtime-manager</artifactId>
     </dependency>
   </dependencies>
-             
+
   <build>
 
     <plugins>
@@ -97,5 +101,34 @@
     </plugins>
 
   </build>
+
+  <profiles>
+    <!-- Community Home Page -->
+    <profile>
+      <id>notProductizedProfile</id>
+      <activation>
+        <property>
+          <name>!productized</name>
+        </property>
+      </activation>
+      <modules>
+        <module>kie-wb-home-page-community</module>
+      </modules>
+    </profile>
+
+    <!-- Product Home Page -->
+    <profile>
+      <id>productizedProfile</id>
+      <activation>
+        <property>
+          <name>productized</name>
+        </property>
+      </activation>
+      <modules>
+        <module>kie-wb-home-page-product</module>
+      </modules>
+    </profile>
+
+  </profiles>
 
 </project>
