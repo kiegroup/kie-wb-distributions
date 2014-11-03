@@ -15,19 +15,15 @@
  */
 package org.kie.workbench.client.perspectives;
 
-import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.guvnor.common.services.project.context.ProjectContextChangeEvent;
 import org.guvnor.inbox.client.InboxPresenter;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.screens.projecteditor.client.menu.ProjectMenu;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
-import org.uberfire.backend.vfs.PathFactory;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -44,7 +40,6 @@ import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
 import org.uberfire.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
-import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.Menus;
 
 @ApplicationScoped
@@ -68,30 +63,6 @@ public class DroolsAuthoringPerspective {
     @Inject
     private RepositoryMenu repositoryMenu;
 
-    private String projectRootPath;
-
-    private MenuItem ddMenuItem = MenuFactory.newSimpleItem(AppConstants.INSTANCE.DeploymentDescriptor()).respondsWith(
-            new Command() {
-                @Override
-                public void execute() {
-
-                    placeManager.goTo(PathFactory.newPath("kie-deployment-descriptor.xml",
-                            projectRootPath + "/src/main/resources/META-INF/kie-deployment-descriptor.xml"));
-
-                }
-            }
-
-    ).endMenu().build().getItems().get(0);
-
-    public void onProjectContextChanged( @Observes final ProjectContextChangeEvent event ) {
-        if (event.getProject() != null) {
-            projectRootPath = event.getProject().getRootPath().toURI();
-            ddMenuItem.setEnabled(true);
-        } else {
-            ddMenuItem.setEnabled(false);
-        }
-
-    }
 
     @Perspective
     public PerspectiveDefinition getPerspective() {
@@ -146,18 +117,13 @@ public class DroolsAuthoringPerspective {
                 .withItems( newResourcesMenu.getMenuItems() )
                 .endMenu()
                 .newTopLevelMenu( constants.tools() )
-                .withItems( getToolsMenuItems() )
+                .withItems( projectMenu.getMenuItems() )
                 .endMenu()
                 .newTopLevelMenu( AppConstants.INSTANCE.Repository() )
                 .withItems( repositoryMenu.getMenuItems() )
                 .endMenu().build();
     }
 
-    private List<MenuItem> getToolsMenuItems() {
-        List<MenuItem> toolsMenuItems = projectMenu.getMenuItems();
-        toolsMenuItems.add(ddMenuItem);
 
-        return toolsMenuItems;
-    }
 
 }
