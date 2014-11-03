@@ -33,17 +33,16 @@
     <deployment.timeout.millis>120000</deployment.timeout.millis>
   </properties>
 
-  <!-- The dependencies should have <scope>test</scope> as all of this module does is executing tests. However,
-       having this setting for each depdendency would clutter the POM, so the <scope> is not used on purpose. -->
   <dependencies>
-
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-rest-client</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-kie-services</artifactId>
+      <scope>test</scope>
       <exclusions>
         <exclusion>
           <artifactId>kie-ci</artifactId>
@@ -55,6 +54,7 @@
     <dependency>
       <groupId>org.kie.remote</groupId>
       <artifactId>kie-remote-client</artifactId>
+      <scope>test</scope>
       <exclusions>
         <exclusion>
           <groupId>org.hornetq</groupId>
@@ -66,58 +66,71 @@
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxrs</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxb-provider</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jackson-provider</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <!-- deps needed by Tomcat 7x and Tomcat 8x -->
     <dependency>
       <groupId>org.codehaus.btm</groupId>
       <artifactId>btm</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.codehaus.btm</groupId>
       <artifactId>btm-tomcat55-lifecycle</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.spec.javax.transaction</groupId>
       <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-tomcat-integration</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.spec.javax.security.jacc</groupId>
       <artifactId>jboss-jacc-api_1.4_spec</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
