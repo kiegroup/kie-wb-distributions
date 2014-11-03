@@ -15,6 +15,50 @@
   <name>KIE Drools Workbench - Distribution Wars</name>
   <description>This module builds the download wars for different application servers.</description>
 
+  <dependencies>
+    <!-- Internal dependencies -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drools-wb-webapp</artifactId>
+      <type>war</type>
+    </dependency>
+
+    <!-- External dependencies -->
+    <dependency>
+      <groupId>org.apache.ant</groupId>
+      <artifactId>ant</artifactId>
+    </dependency>
+
+    <!-- hibernate/persistence dependencies -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.common</groupId>
+      <artifactId>hibernate-commons-annotations</artifactId>
+    </dependency>
+
+    <!-- For WAS8 shadding -->
+    <dependency>
+      <groupId>org.sonatype.sisu</groupId>
+      <artifactId>sisu-inject-bean</artifactId>
+    </dependency>
+
+  </dependencies>
+
   <build>
     <plugins>
       <!-- special handling for WAS8.5 as sisu-inject-bean:2.2.3 contains javax.inject classes which conflicts with WAS-->
@@ -63,12 +107,12 @@
         <configuration>
           <finalName>kie-drools-wb-${project.version}</finalName>
           <descriptors>
-            <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-as-7_0.xml</descriptor>
-            <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-eap-6_3.xml</descriptor>
-            <descriptor>src/main/assembly/assembly-kie-drools-wb-jboss-wildfly-8.xml</descriptor>
-            <descriptor>src/main/assembly/assembly-kie-drools-wb-tomcat-7_0.xml</descriptor>
-            <descriptor>src/main/assembly/assembly-kie-drools-wb-websphere-as-8_5.xml</descriptor>
-            <descriptor>src/main/assembly/assembly-kie-drools-wb-weblogic-12.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-as-7.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-eap-6_3.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-wildfly-8.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-tomcat-7.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-websphere-as-8.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-weblogic-12.xml</descriptor>
           </descriptors>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
@@ -79,48 +123,48 @@
     </plugins>
   </build>
 
-  <dependencies>
-    <!-- Internal dependencies -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-webapp</artifactId>
-      <type>war</type>
-    </dependency>
+  <profiles>
+    <profile>
+      <id>productizedProfile</id>
 
-    <!-- External dependencies -->
-    <dependency>
-      <groupId>org.apache.ant</groupId>
-      <artifactId>ant</artifactId>
-    </dependency>
+      <activation>
+        <property>
+          <name>productized</name>
+        </property>
+      </activation>
 
-    <!-- hibernate/persistence dependencies -->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-entitymanager</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.antlr</groupId>
-      <artifactId>antlr</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate.common</groupId>
-      <artifactId>hibernate-commons-annotations</artifactId>
-    </dependency>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <finalName>kie-drools-wb-${project.version}</finalName>
+              <descriptors>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-jboss-as-7-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-jboss-eap-6_3-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-jboss-wildfly-8-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-tomcat-7-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-websphere-as-8-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-weblogic-12-redhat.xml</descriptor>
+              </descriptors>
+              <archive>
+                <addMavenDescriptor>false</addMavenDescriptor>
+              </archive>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
 
-    <!-- For WAS8 shadding -->
-    <dependency>
-      <groupId>org.sonatype.sisu</groupId>
-      <artifactId>sisu-inject-bean</artifactId>
-    </dependency>
-
-  </dependencies>
+    </profile>
+  </profiles>
 
 </project>

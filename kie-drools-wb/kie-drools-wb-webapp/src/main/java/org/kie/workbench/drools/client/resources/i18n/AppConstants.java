@@ -52,17 +52,11 @@ public interface AppConstants
 
     String deployment();
 
-    String servers();
-
-    String activity();
-
     String ruleDeployments();
 
     String artifactRepository();
 
     String newItem();
-
-    String logout();
 
     String find();
 
@@ -78,8 +72,6 @@ public interface AppConstants
 
     String explore();
 
-    String files();
-
     String repositories();
 
     String listRepositories();
@@ -88,8 +80,6 @@ public interface AppConstants
 
     String newRepository();
 
-    String projects();
-
     String inboxIncomingChanges();
 
     String inboxRecentlyEdited();
@@ -97,16 +87,6 @@ public interface AppConstants
     String inboxRecentlyOpened();
 
     String tools();
-
-    String homeTheKnowledgeLifeCycle();
-
-    String homeAuthor();
-
-    String homeAuthorCaption();
-
-    String homeDeploy();
-
-    String homeDeployCaption();
 
     String Role();
 

@@ -68,10 +68,6 @@ public interface AppConstants
 
     String Deploy();
 
-    String Servers();
-
-    String Activity();
-
     String Rule_Deployments();
 
     String Process_Deployments();
@@ -96,8 +92,6 @@ public interface AppConstants
 
     String explore();
 
-    String files();
-
     String repositories();
 
     String listRepositories();
@@ -105,8 +99,6 @@ public interface AppConstants
     String cloneRepository();
 
     String newRepository();
-
-    String projects();
 
     String inboxIncomingChanges();
 
@@ -116,30 +108,8 @@ public interface AppConstants
 
     String tools();
 
-    String homeDiscover();
-
-    String homeDiscoverCaption();
-
-    String homeTheKnowledgeLifeCycle();
-
-    String homeAuthor();
-
-    String homeAuthorCaption();
-
-    String homeDeploy();
-
-    String homeDeployCaption();
-
-    String homeWork();
-
-    String homeWorkCaption();
-
-    String homeImprove();
-
-    String homeImproveCaption();
-
     String User();
-    
+
     String Role();
 
     String Jobs();
@@ -155,8 +125,6 @@ public interface AppConstants
     String Refresh();
 
     String Asset_Management();
-
-    String DeploymentDescriptor();
 
     String Apps();
 }

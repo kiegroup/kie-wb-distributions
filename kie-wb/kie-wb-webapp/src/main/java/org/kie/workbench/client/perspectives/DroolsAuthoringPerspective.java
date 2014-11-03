@@ -63,7 +63,6 @@ public class DroolsAuthoringPerspective {
     @Inject
     private RepositoryMenu repositoryMenu;
 
-
     @Perspective
     public PerspectiveDefinition getPerspective() {
         PerspectiveDefinitionImpl perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
@@ -80,7 +79,7 @@ public class DroolsAuthoringPerspective {
 
     @WorkbenchMenu
     public Menus getMenus() {
-        return  MenuFactory
+        return MenuFactory
                 .newTopLevelMenu( constants.explore() )
                 .menus()
                 .menu( constants.inboxIncomingChanges() )
@@ -119,11 +118,9 @@ public class DroolsAuthoringPerspective {
                 .newTopLevelMenu( constants.tools() )
                 .withItems( projectMenu.getMenuItems() )
                 .endMenu()
-                .newTopLevelMenu( AppConstants.INSTANCE.Repository() )
+                .newTopLevelMenu( constants.Repository() )
                 .withItems( repositoryMenu.getMenuItems() )
                 .endMenu().build();
     }
-
-
 
 }

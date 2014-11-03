@@ -121,7 +121,7 @@ public class DroolsAuthoringPerspective {
                 .newTopLevelMenu( constants.tools() )
                 .withItems( projectMenu.getMenuItems() )
                 .endMenu()
-                .newTopLevelMenu( AppConstants.INSTANCE.Repository() )
+                .newTopLevelMenu( constants.Repository() )
                 .withItems( repositoryMenu.getMenuItems() )
                 .endMenu().build();
     }

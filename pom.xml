@@ -25,11 +25,11 @@
 
   <groupId>org.kie</groupId>
   <artifactId>kie-wb-distributions</artifactId>
-    
+
   <packaging>pom</packaging>
   <name>KIE Workbench - Distributions</name>
   <description>KIE Workbench - Distributions</description>
- 
+
   <repositories>
     <!-- Bootstrap repository to locate the parent pom when the parent pom has not been build locally. -->
     <repository>
@@ -110,6 +110,7 @@
   </build>
 
   <profiles>
+
     <profile>
       <id>fullProfile</id>
       <activation>
@@ -121,6 +122,19 @@
         <module>kie-eap-integration</module>
       </modules>
     </profile>
+
+    <profile>
+      <id>productizedProfile</id>
+      <activation>
+        <property>
+          <name>productized</name>
+        </property>
+      </activation>
+      <modules>
+        <module>kie-wb-distribution-home</module>
+      </modules>
+    </profile>
+
   </profiles>
 
 </project>
