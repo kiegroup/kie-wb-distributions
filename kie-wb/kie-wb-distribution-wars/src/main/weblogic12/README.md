@@ -59,14 +59,18 @@ Connection factories and queues are created inside JMS module.
 
 **Create JMS Connection factories**
 
-- KIE.RESPONSE.ALL - to receive all responses produced by bpms
-    assigned JNDI name needs to be set as one of JVM custom properties (kie.services.jms.queues.response)
-- KIE.INPUT  - to send messages to bpms
+- KIE.RESPONSE.ALL - to receive all responses produced by bpms (default value jms/cf/KIE.RESPONSE.ALL)
+    assigned JNDI name will be used when receiving messages from JMS
+- KIE.SESSION  - to send messages to process engine  (default value jms/cf/KIE.SESSION)
+    assigned JNDI name will be used when sending messages over JMS
+- KIE.TASK - to send messages to task service (default value jms/cf/KIE.TASK)
+    assigned JNDI name will be used when sending messages over JMS
+- KIE.AUDIT - to send message with audit trail (default value jms/cf/KIE.AUDIT)
     assigned JNDI name will be used when sending messages over JMS
 
   - Left side panel click on *Services > Messaging > JMS Modules > {name of the jms module} *
   - Click new and select Connection factory as type
-  - Provide the name, JNDI name (e.g. _KIE.RESPONSE.ALL_ and _jms/conn/KIE.RESPONSE.ALL_)
+  - Provide the name, JNDI name (e.g. _KIE.RESPONSE.ALL_ and _jms/cf/KIE.RESPONSE.ALL_)
   - Follow instructions on the screen
 
 **Create JMS Queues**
