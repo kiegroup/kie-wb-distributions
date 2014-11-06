@@ -43,10 +43,6 @@ function jBPMFormsAPI() {
         sendRequest(config, "GET");
     }
 
-    var postRequest = function(config) {
-        sendRequest(config, "POST");
-    }
-
     var sendRequest = function(config, method) {
         if (!config) return;
 
@@ -132,7 +128,7 @@ function jBPMFormsAPI() {
         };
         configs[responseDiv] = config;
 
-        postRequest(config);
+        getRequest(config);
     };
 
 
