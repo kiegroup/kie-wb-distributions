@@ -222,7 +222,7 @@ public class KieWorkbenchEntryPoint {
     }
 
     private List<? extends MenuItem> getAuthoringViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
+        final List<MenuItem> result = new ArrayList<MenuItem>( 4 );
 
         result.add( MenuFactory.newSimpleItem( constants.Project_Authoring() ).withRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) ).respondsWith( new Command() {
             @Override
@@ -238,12 +238,6 @@ public class KieWorkbenchEntryPoint {
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).withRoles( kieACL.getGrantedRoles( F_ASSET_MANAGEMENT ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
 
         result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) ).respondsWith( new Command() {
             @Override
