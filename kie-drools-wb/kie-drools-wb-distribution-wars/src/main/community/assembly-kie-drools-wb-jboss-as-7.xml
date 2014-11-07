@@ -77,6 +77,9 @@
           <exclude>WEB-INF/lib/kie-uberfire-wires-core-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-wires-core-trees-*.jar</exclude>
 
+            <!-- Dom4j on as 7.1.1 breaks the PU-->
+            <exclude>WEB-INF/lib/dom4j*.jar</exclude>
+
           <!-- Guvnor client related -->
           <exclude>WEB-INF/lib/guvnor-project-client-*.jar</exclude>
           <exclude>WEB-INF/lib/guvnor-structure-client-*.jar</exclude>
