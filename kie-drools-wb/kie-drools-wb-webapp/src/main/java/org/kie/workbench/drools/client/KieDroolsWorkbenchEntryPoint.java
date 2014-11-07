@@ -215,7 +215,7 @@ public class KieDroolsWorkbenchEntryPoint {
     }
 
     private List<MenuItem> getAuthoringViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
+        final List<MenuItem> result = new ArrayList<MenuItem>( 4 );
 
         result.add( MenuFactory.newSimpleItem( constants.project_authoring() ).withRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) ).respondsWith( new Command() {
             @Override
@@ -228,13 +228,6 @@ public class KieDroolsWorkbenchEntryPoint {
             @Override
             public void execute() {
                 placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        result.add( MenuFactory.newSimpleItem( constants.Asset_Management() ).withRoles( kieACL.getGrantedRoles( F_ASSET_MANAGEMENT ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Asset Management" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
