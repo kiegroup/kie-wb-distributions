@@ -4,10 +4,6 @@ KIE Workbench and KIE Drools Workbench Smoke Tests - TODO list
      - different containers are using additional ports (e.g. Tomcat for AJP connector, EAP/WildFly for admin. access), this needs to be considered
      - build-helper-maven-plugin can used
 
- - add cargo config + profile for WildFly
-
- - add cargo config + profile for JBossAS 7 (is this still needed?)
-
  - apply the XSLT templates to container config. In ideal case this could be done as a part of cargo execution. However, it would probably need to
    be implemented, as the feature is not there right now
      - properly setup JMS for EAP and WildFly using the XSLT and un-ignore the JMS tests
@@ -15,7 +11,7 @@ KIE Workbench and KIE Drools Workbench Smoke Tests - TODO list
 
  - add few most basic UI tests (e.g. just login/logout + click through the menus)
 
- - configure workbench to use custom maven setttings.xml to avoid installing to local (~/.m2) maven repo
+ - configure workbench to use custom maven settings.xml to avoid installing to local (~/.m2) maven repo
 
  - create simple README that would sum up the tests being executed + some basic conventions for adding new tests, updating cargo config, adding additional profiles, etc
 
