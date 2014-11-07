@@ -907,6 +907,10 @@
       <exclusions>
         <exclusion>
           <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.cxf</groupId>
           <artifactId>cxf-bundle-jaxrs</artifactId>
         </exclusion>
         <exclusion>
