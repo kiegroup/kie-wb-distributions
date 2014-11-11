@@ -17,7 +17,7 @@
 
   <filter>
     <filter-name>request-capture</filter-name>
-    <filter-class>org.kie.uberfire.security.server.SecurityIntegrationFilter</filter-class>
+    <filter-class>org.uberfire.ext.security.server.SecurityIntegrationFilter</filter-class>
   </filter>
 
   <filter-mapping>
