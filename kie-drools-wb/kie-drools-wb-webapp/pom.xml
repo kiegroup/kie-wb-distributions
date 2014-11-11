@@ -91,8 +91,8 @@
       <artifactId>kie-internal</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-metadata-api</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-metadata-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
@@ -611,49 +611,50 @@
       </exclusions>
     </dependency>
 
-    <!-- UberFire Extension -->
+    <!-- UberFire Security Extension -->
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-servlet-security</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-servlet-security</artifactId>
     </dependency>
 
+    <!-- UberFire Plugins Extension -->
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-metadata-commons-io</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-metadata-backend-lucene</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-runtime-plugins-backend</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-runtime-plugins-backend</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-runtime-plugins-client</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-runtime-plugins-client</artifactId>
     </dependency>
 
     <!-- UberFire Perspective Editor -->
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-perspective-editor-client</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-perspective-editor-client</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-perspective-editor-backend</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-perspective-editor-backend</artifactId>
     </dependency>
 
     <!-- UberFire Apps -->
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-apps-client</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-apps-client</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-apps-backend</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-apps-backend</artifactId>
+    </dependency>
+
+    <!-- Search -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-metadata-backend-lucene</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-metadata-commons-io</artifactId>
     </dependency>
 
     <!-- UberFire -->
@@ -897,8 +898,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-widgets-service-backend</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-widgets-service-backend</artifactId>
     </dependency>
 
     <dependency>
@@ -1225,9 +1226,9 @@
                 <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-backend</compileSourcesArtifact>
                 <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
 
-                <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-runtime-plugins-client</compileSourcesArtifact>
-                <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-perspective-editor-client</compileSourcesArtifact>
-                <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-apps-client</compileSourcesArtifact>
+                <compileSourcesArtifact>org.uberfire:uberfire-runtime-plugins-client</compileSourcesArtifact>
+                <compileSourcesArtifact>org.uberfire:uberfire-perspective-editor-client</compileSourcesArtifact>
+                <compileSourcesArtifact>org.uberfire:uberfire-apps-client</compileSourcesArtifact>
 
               </compileSourcesArtifacts>
             </configuration>
@@ -1377,9 +1378,9 @@
                 <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-backend</compileSourcesArtifact>
                 <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
 
-                <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-runtime-plugins-client</compileSourcesArtifact>
-                <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-perspective-editor-client</compileSourcesArtifact>
-                <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-apps-client</compileSourcesArtifact>
+                <compileSourcesArtifact>org.uberfire:uberfire-runtime-plugins-client</compileSourcesArtifact>
+                <compileSourcesArtifact>org.uberfire:uberfire-perspective-editor-client</compileSourcesArtifact>
+                <compileSourcesArtifact>org.uberfire:uberfire-apps-client</compileSourcesArtifact>
 
               </compileSourcesArtifacts>
             </configuration>
