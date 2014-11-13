@@ -19,7 +19,7 @@
     </message-driven>  
     <message-driven>
       <ejb-name>JMSAuditProcessor</ejb-name>
-      <ejb-class>org.jbpm.kie.services.impl.audit.AuditJMSProcessor</ejb-class>
+      <ejb-class>org.jbpm.services.cdi.impl.audit.AuditJMSProcessor</ejb-class>
       <transaction-type>Container</transaction-type>
       <message-destination-type>javax.jms.Queue</message-destination-type>
     </message-driven>  
