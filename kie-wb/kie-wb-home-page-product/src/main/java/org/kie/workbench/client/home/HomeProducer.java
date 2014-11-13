@@ -10,7 +10,7 @@ import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.common.screens.home.client.resources.i18n.HomeConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
-import org.kie.workbench.common.services.security.KieWorkbenchACL;
+import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.uberfire.client.mvp.PlaceManager;
 
 import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;

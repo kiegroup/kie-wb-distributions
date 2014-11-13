@@ -26,7 +26,7 @@ import org.guvnor.asset.management.client.editors.repository.wizard.CreateReposi
 import org.guvnor.structure.client.editors.repository.clone.CloneRepositoryForm;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.client.resources.i18n.AppConstants;
-import org.kie.workbench.common.services.security.KieWorkbenchACL;
+import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
