@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import org.guvnor.asset.management.client.editors.repository.wizard.CreateRepositoryWizard;
 import org.guvnor.structure.client.editors.repository.clone.CloneRepositoryForm;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
-import org.kie.workbench.common.services.security.KieWorkbenchACL;
+import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.annotations.Perspective;
