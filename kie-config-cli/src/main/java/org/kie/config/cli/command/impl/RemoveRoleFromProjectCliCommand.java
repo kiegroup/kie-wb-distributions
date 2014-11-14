@@ -3,6 +3,7 @@ package org.kie.config.cli.command.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 
 import org.guvnor.common.services.project.model.Project;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
@@ -15,6 +16,7 @@ import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
 import org.kie.workbench.common.screens.explorer.model.ProjectExplorerContent;
 import org.kie.workbench.common.screens.explorer.service.ExplorerService;
+import org.kie.workbench.common.screens.explorer.service.Option;
 import org.kie.workbench.common.screens.explorer.service.ProjectExplorerContentQuery;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
 
@@ -45,15 +47,16 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
         }
         OrganizationalUnit ou = null;
         Collection<OrganizationalUnit> units = organizationalUnitService.getOrganizationalUnits();
-        for (OrganizationalUnit unit : units) {
-            if (unit.getRepositories().contains(repo)) {
+        for ( OrganizationalUnit unit : units ) {
+            if ( unit.getRepositories().contains( repo ) ) {
                 ou = unit;
                 break;
             }
         }
         ArrayList<Project> projects = new ArrayList<Project>();
-        ProjectExplorerContentQuery query = new ProjectExplorerContentQuery(ou, repo);
-        ProjectExplorerContent content = projectExplorerService.getContent(query);
+        ProjectExplorerContentQuery query = new ProjectExplorerContentQuery( ou, repo );
+        query.setOptions( new HashSet<Option>() );
+        ProjectExplorerContent content = projectExplorerService.getContent( query );
         projects.addAll( content.getProjects() );
         if ( projects.size() == 0 ) {
             return "No projects found in repository " + alias;
@@ -76,7 +79,7 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
             }
         }
         Project project = projects.get( projectIndex - 1 );
-        if (project.getRoles() == null || project.getRoles().isEmpty()) {
+        if ( project.getRoles() == null || project.getRoles().isEmpty() ) {
             return "No roles defined for project " + project.getProjectName();
         }
 

@@ -27,6 +27,24 @@
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
       <artifactId>kie-wb-common-services-api</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.guvnor</groupId>
+          <artifactId>guvnor-structure-client</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.uberfire</groupId>
+          <artifactId>uberfire-client-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.guvnor</groupId>
+          <artifactId>guvnor-message-console-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -173,7 +191,15 @@
         </exclusion>
         <exclusion>
           <groupId>org.drools</groupId>
+          <artifactId>drools-workbench-models-datamodel-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.drools</groupId>
           <artifactId>drools-workbench-models-commons</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.uberfire</groupId>
+          <artifactId>uberfire-client-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -201,11 +227,37 @@
           <groupId>org.uberfire</groupId>
           <artifactId>uberfire-backend-server</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.guvnor</groupId>
+          <artifactId>guvnor-m2repo-editor-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-workbench-models-datamodel-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.guvnor</groupId>
+          <artifactId>guvnor-workingset-api</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-m2repo-editor-backend</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.github.gwtbootstrap</groupId>
+          <artifactId>gwt-bootstrap</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.uberfire</groupId>
+          <artifactId>uberfire-workbench-client</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.uberfire</groupId>
+          <artifactId>uberfire-client-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- kie-wb-common dependencies -->
@@ -220,6 +272,10 @@
         <exclusion>
           <groupId>org.jboss.errai</groupId>
           <artifactId>errai-bus</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.uberfire</groupId>
+          <artifactId>uberfire-client-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -252,6 +308,18 @@
         <exclusion>
           <groupId>org.uberfire</groupId>
           <artifactId>uberfire-client-all</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-workbench-models-datamodel-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-backend</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
