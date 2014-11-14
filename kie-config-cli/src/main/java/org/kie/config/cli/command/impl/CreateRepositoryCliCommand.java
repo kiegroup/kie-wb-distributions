@@ -27,43 +27,49 @@ import org.kie.config.cli.support.InputReader;
 
 public class CreateRepositoryCliCommand implements CliCommand {
 
-	@Override
-	public String getName() {
-		return "create-repo";
-	}
+    @Override
+    public String getName() {
+        return "create-repo";
+    }
 
-	@Override
-	public String execute(CliContext context) {
-		StringBuffer result = new StringBuffer();
-		WeldContainer container = context.getContainer();
+    @Override
+    public String execute( CliContext context ) {
+        StringBuffer result = new StringBuffer();
+        WeldContainer container = context.getContainer();
 
-		RepositoryService repositoryService = container.instance().select(RepositoryService.class).get();
+        RepositoryService repositoryService = container.instance().select( RepositoryService.class ).get();
 
         InputReader input = context.getInput();
-		System.out.print(">>Repository alias:");
-		String alias = input.nextLine();
-		
-		System.out.print(">>User:");
-		String user = input.nextLine();
-		
-		System.out.print(">>Password:");
-		String password = context.getInput().nextLineNoEcho();
-		
-		System.out.print(">>Remote origin:");
-		String origin = input.nextLine();
-		
-		Map<String, Object> env = new HashMap<String, Object>();
-		env.put("username", user);
-		env.put("crypt:password", password);
+        System.out.print( ">>Repository alias:" );
+        String alias = input.nextLine();
 
-		if (origin.trim().length() > 0) {
-			env.put("origin", origin);
-		}
-		
-		Repository repo = repositoryService.createRepository("git", alias, env);
-		result.append("Repository with alias " + repo.getAlias() + " has been successfully created");
-		
-		return result.toString();
-	}
+        System.out.print( ">>User:" );
+        String user = input.nextLine();
+
+        System.out.print( ">>Password:" );
+        String password = context.getInput().nextLineNoEcho();
+
+        System.out.print( ">>Remote origin:" );
+        String origin = input.nextLine();
+
+        Map<String, Object> env = new HashMap<String, Object>();
+        env.put( "username", user );
+        env.put( "crypt:password", password );
+
+        if ( origin.trim().length() > 0 ) {
+            env.put( "origin", origin );
+        }
+
+        //Mark this Repository as being created by the kie-config-cli tool. This has no affect on the operation
+        //of the Repository in the workbench, but it does indicate to kie-config-cli that the Repository should
+        //not have its origin overridden when cloning. A local clone is required to manipulate Projects.
+        env.put( "org.kie.config.cli.command.CliCommand",
+                 "CreateRepositoryCliCommand" );
+
+        Repository repo = repositoryService.createRepository( "git", alias, env );
+        result.append( "Repository with alias " + repo.getAlias() + " has been successfully created" );
+
+        return result.toString();
+    }
 
 }
