@@ -214,6 +214,16 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-human-tasks-forms-backend</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-human-tasks-forms-modeler-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-human-tasks-forms-modeler-backend</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -229,6 +239,18 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-generic-client</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-workbench-integration-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-workbench-integration-backend</artifactId>
+    </dependency>
+    
+    
 
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -1149,7 +1171,9 @@
                 <compileSourcesArtifact>org.jbpm:jbpm-console-ng-business-domain-client</compileSourcesArtifact>
                 <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-client</compileSourcesArtifact>
                 <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-forms-client</compileSourcesArtifact>
-
+                <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-forms-modeler-client</compileSourcesArtifact>
+                <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-integration-client</compileSourcesArtifact>
+                
                 <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
                 <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
 

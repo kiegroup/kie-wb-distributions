@@ -28,7 +28,9 @@
   <inherits name="org.jbpm.console.ng.es.JbpmConsoleNGExecutorServiceClient"/>
   <inherits name="org.jbpm.console.ng.gc.JbpmConsoleNGGenericClient"/>
   <inherits name="org.jbpm.console.ng.ht.forms.JbpmConsoleNGHumanTasksFormsClient"/>
-
+  <inherits name="org.jbpm.console.ng.ht.forms.modeler.JbpmConsoleNGHumanTasksFormsModelerClient"/>
+  <inherits name="org.jbpm.console.ng.wi.JbpmConsoleNGWorkbenchIntegrationClient"/>
+    
   <!-- Form-Modeler -->
   <inherits name="org.jbpm.formModeler.editor.FormModelerEditorClient"/>
   <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>
