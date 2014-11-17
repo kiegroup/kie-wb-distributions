@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package org.kie.workbench.drools.client.navbar;
-
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
-import org.uberfire.client.workbench.Header;
+package org.kie.workbench.client.navbar;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import static java.lang.Integer.MAX_VALUE;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Widget;
+import org.uberfire.client.workbench.Header;
 
 @ApplicationScoped
 public class LogoWidgetPresenter implements Header {
@@ -42,7 +40,7 @@ public class LogoWidgetPresenter implements Header {
 
     @Override
     public int getOrder() {
-        return MAX_VALUE;
+        return 3;
     }
 
     @Override

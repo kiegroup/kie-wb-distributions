@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.kie.workbench.drools.client.navbar;
+package org.kie.workbench.client.navbar;
+
+import javax.annotation.PostConstruct;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -23,10 +25,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RequiresResize;
-import org.kie.workbench.drools.client.resources.AppResource;
-
-
-import javax.annotation.PostConstruct;
+import org.kie.workbench.client.resources.AppResource;
 
 /**
  * A stand-alone (i.e. devoid of Workbench dependencies) View
