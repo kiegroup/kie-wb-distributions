@@ -222,6 +222,14 @@
           <groupId>org.uberfire</groupId>
           <artifactId>uberfire-client-api</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.guvnor</groupId>
+          <artifactId>guvnor-message-console-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-api</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
