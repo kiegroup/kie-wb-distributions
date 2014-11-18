@@ -179,7 +179,7 @@
           <!-- Netty - bundled with EAP -->
           <exclude>WEB-INF/lib/netty-3*.jar</exclude>
 
-          <!-- EAP 6.1 alignement -->
+          <!-- EAP 6.3 alignment -->
           <exclude>WEB-INF/lib/activation-*.jar</exclude>
           <exclude>WEB-INF/lib/antlr-2*.jar</exclude>
           <exclude>WEB-INF/lib/commons-cli-*.jar</exclude>

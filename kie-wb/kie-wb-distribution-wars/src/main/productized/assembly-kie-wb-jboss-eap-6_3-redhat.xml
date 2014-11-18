@@ -214,7 +214,7 @@
           <!-- jBPM console & other client related -->
           <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
 
-          <!-- EAP 6.1 alignement -->
+          <!-- EAP 6.3 alignment -->
           <exclude>WEB-INF/lib/activation-*.jar</exclude>
           <exclude>WEB-INF/lib/antlr-2*.jar</exclude>
           <!-- <exclude>WEB-INF/lib/cdi-api*.jar</exclude> ALREADY EXCLUDED-->
