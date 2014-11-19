@@ -17,6 +17,7 @@
     <module.type>static</module.type>
     <module.location>org/junit</module.location>
     <module.slot>main</module.slot>
+    <module.dependencies>org.hamcrest:main</module.dependencies>
   </properties>
 
   <dependencies>
