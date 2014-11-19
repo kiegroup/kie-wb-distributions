@@ -99,6 +99,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>ArchiveServlet</servlet-name>
+    <servlet-class>org.guvnor.common.services.backend.archive.ArchiveServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArchiveServlet</servlet-name>
+    <url-pattern>/org.kie.workbench.KIEWebapp/archive</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>ScoreCardFileServlet</servlet-name>
     <servlet-class>org.drools.workbench.screens.scorecardxls.backend.server.ScoreCardXLSFileServlet</servlet-class>
   </servlet>
