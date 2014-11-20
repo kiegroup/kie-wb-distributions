@@ -16,21 +16,19 @@
   </servlet-mapping>
 
   <filter>
-    <filter-name>UberFire XSS Security Filter</filter-name>
-    <filter-class>org.uberfire.security.server.XSSServletFilter</filter-class>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>UberFire XSS Security Filter</filter-name>
-    <url-pattern>*</url-pattern>
-  </filter-mapping>
-
-  <filter>
     <filter-name>UberFire Security Headers Filter</filter-name>
     <filter-class>org.uberfire.security.server.SecureHeadersFilter</filter-class>
     <init-param>
       <param-name>x-frame-options</param-name>
       <param-value>SAMEORIGIN</param-value>
+    </init-param>
+    <init-param>
+      <param-name>x-xss-protection-enable</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>x-xss-protection-block</param-name>
+      <param-value>true</param-value>
     </init-param>
   </filter>
 
@@ -77,7 +75,7 @@
     <url-pattern>/filestore</url-pattern>
     <url-pattern>/dictionary</url-pattern>
     <url-pattern>/themes</url-pattern>
-    <url-pattern>/customeditors </url-pattern>
+    <url-pattern>/customeditors</url-pattern>
     <url-pattern>/simulation</url-pattern>
     <url-pattern>/formwidget</url-pattern>
     <url-pattern>/calledelement</url-pattern>
@@ -522,19 +520,19 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </auth-constraint>
   </security-constraint>
 
-    <security-constraint>
-        <web-resource-collection>
-          <web-resource-name>formModeler</web-resource-name>
-          <url-pattern>/formModeler/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-          <role-name>admin</role-name>
-          <role-name>analyst</role-name>
-          <role-name>developer</role-name>
-          <role-name>user</role-name>
-          <role-name>manager</role-name>
-        </auth-constraint>
-    </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>formModeler</web-resource-name>
+      <url-pattern>/formModeler/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>analyst</role-name>
+      <role-name>developer</role-name>
+      <role-name>user</role-name>
+      <role-name>manager</role-name>
+    </auth-constraint>
+  </security-constraint>
 
   <login-config>
     <auth-method>FORM</auth-method>
@@ -579,7 +577,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
 
   <security-role>
     <description>Manager/Viewer-only User - Viewer of the system that is interested in statistics
-      around the  business processes and their performance, business indicators, and other
+      around the business processes and their performance, business indicators, and other
       reporting of the system and people who interact with the system.
     </description>
     <role-name>manager</role-name>
@@ -589,7 +587,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <error-code>403</error-code>
     <location>/not_authorized.jsp</location>
   </error-page>
-  
+
   <filter>
     <filter-name>Dynamic JAXBContext Filter</filter-name>
     <filter-class>org.kie.remote.services.rest.jaxb.DynamicJaxbContextFilter</filter-class>
@@ -597,6 +595,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <filter-mapping>
     <filter-name>Dynamic JAXBContext Filter</filter-name>
     <url-pattern>/rest/*</url-pattern>
-  </filter-mapping> 
-  
+  </filter-mapping>
+
 </web-app>
