@@ -23,6 +23,28 @@
     <url-pattern>*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>UberFire Security Headers Filter</filter-name>
+    <filter-class>org.kie.uberfire.security.server.SecureHeadersFilter</filter-class>
+    <init-param>
+      <param-name>x-frame-options</param-name>
+      <param-value>SAMEORIGIN</param-value>
+    </init-param>
+    <init-param>
+      <param-name>x-xss-protection-enable</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>x-xss-protection-block</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>UberFire Security Headers Filter</filter-name>
+    <url-pattern>*</url-pattern>
+  </filter-mapping>
+
   <servlet>
     <servlet-name>UberfireFileUploadServlet</servlet-name>
     <servlet-class>org.uberfire.server.FileUploadServlet</servlet-class>
@@ -107,12 +129,12 @@ profile in pom.xml to use that. -->
   </servlet-mapping>
 
   <servlet>
-     <servlet-name>ArchiveServlet</servlet-name>
-     <servlet-class>org.guvnor.common.services.backend.archive.ArchiveServlet</servlet-class>
+    <servlet-name>ArchiveServlet</servlet-name>
+    <servlet-class>org.guvnor.common.services.backend.archive.ArchiveServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-     <servlet-name>ArchiveServlet</servlet-name>
-     <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/archive</url-pattern>
+    <servlet-name>ArchiveServlet</servlet-name>
+    <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/archive</url-pattern>
   </servlet-mapping>
 
   <servlet>

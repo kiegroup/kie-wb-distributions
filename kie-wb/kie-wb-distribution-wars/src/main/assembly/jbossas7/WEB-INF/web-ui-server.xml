@@ -17,6 +17,28 @@
     <url-pattern>*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>UberFire Security Headers Filter</filter-name>
+    <filter-class>org.kie.uberfire.security.server.SecureHeadersFilter</filter-class>
+    <init-param>
+      <param-name>x-frame-options</param-name>
+      <param-value>SAMEORIGIN</param-value>
+    </init-param>
+    <init-param>
+      <param-name>x-xss-protection-enable</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>x-xss-protection-block</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>UberFire Security Headers Filter</filter-name>
+    <url-pattern>*</url-pattern>
+  </filter-mapping>
+
   <servlet>
     <servlet-name>LoginRedirectServlet</servlet-name>
     <servlet-class>org.kie.uberfire.security.server.LoginRedirectServlet</servlet-class>
