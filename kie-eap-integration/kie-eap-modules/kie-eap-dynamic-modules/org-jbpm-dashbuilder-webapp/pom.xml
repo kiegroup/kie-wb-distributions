@@ -16,7 +16,7 @@
     <module.type>dynamic</module.type>
   
     <!-- jBPM Dashbuilder does not depend on all bpms-layer modules, it only depends on some of them.. --> 
-    <module.dependencies>org.apache.commons.math:main,org.apache.commons.compress:main,org.apache.commons.exec:main,org.apache.lucene:main,org.apache.maven:main,org.apache.commons.net:main,org.apache.poi:main,org.apache.commons.httpclient:main,org.apache.commons.fileupload:main,org.apache.commons.jxpath:main,com.opensymphony.quartz:main,org.junit:main,org.apache.xmlbeans:main,org.apache.commons.lang3:main</module.dependencies>
+    <module.dependencies>org.apache.commons.math:main,org.apache.commons.compress:main,org.apache.commons.exec:main,org.apache.lucene:main,org.apache.maven:main,org.apache.commons.net:main,org.apache.poi:main,org.apache.commons.fileupload:main,org.apache.commons.jxpath:main,com.opensymphony.quartz:main,org.junit:main,org.apache.xmlbeans:main,org.apache.commons.lang3:main</module.dependencies>
     
     <!-- The jBPM Dashbuilder webapp depends on kie-wb-webapp.
         So this module should add the jboss-all.xml descriptor.-->

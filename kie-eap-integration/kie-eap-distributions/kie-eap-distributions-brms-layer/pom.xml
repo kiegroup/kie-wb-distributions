@@ -75,13 +75,6 @@
 
     <dependency>
       <groupId>org.kie.modules</groupId>
-      <artifactId>org-apache-commons-httpclient</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.modules</groupId>
       <artifactId>org-eclipse-aether</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
