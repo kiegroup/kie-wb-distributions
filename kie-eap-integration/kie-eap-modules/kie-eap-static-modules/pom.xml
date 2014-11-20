@@ -41,7 +41,6 @@
     <module>org-apache-commons-vfs</module>
     <module>org-apache-maven-wagon</module>
     <module>org-apache-mina</module>
-    <module>org-apache-commons-httpclient</module>
     <module>org-apache-commons-fileupload</module>
     <module>org-apache-commons-jxpath</module>
     <module>com-opensymphony-quartz</module>
