@@ -1,30 +1,5 @@
 package org.kie.smoke.wb.jms;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
-import org.kie.api.runtime.process.ProcessInstance;
-import org.kie.api.task.TaskService;
-import org.kie.api.task.model.TaskSummary;
-import org.kie.services.client.api.RemoteJmsRuntimeEngineFactory;
-import org.kie.services.client.api.builder.RemoteJmsRuntimeEngineBuilder;
-import org.kie.services.client.api.command.RemoteRuntimeEngine;
-import org.kie.smoke.wb.AbstractWorkbenchIntegrationTest;
-import org.kie.smoke.wb.category.JMSSmoke;
-import org.kie.smoke.wb.category.KieWbSmoke;
-import org.kie.smoke.wb.util.TestConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.jms.Queue;
-import javax.naming.InitialContext;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -39,6 +14,34 @@ import static org.kie.smoke.wb.util.TestConstants.KRIS_USER;
 import static org.kie.smoke.wb.util.TestConstants.MARY_PASSWORD;
 import static org.kie.smoke.wb.util.TestConstants.MARY_USER;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.jms.Queue;
+import javax.naming.InitialContext;
+
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.manager.RuntimeEngine;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
+import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.api.task.TaskService;
+import org.kie.api.task.model.TaskSummary;
+import org.kie.remote.client.api.RemoteJmsRuntimeEngineBuilder;
+import org.kie.remote.client.api.RemoteJmsRuntimeEngineFactory;
+import org.kie.remote.client.api.RemoteRuntimeEngineFactory;
+import org.kie.services.client.api.command.RemoteRuntimeEngine;
+import org.kie.smoke.wb.AbstractWorkbenchIntegrationTest;
+import org.kie.smoke.wb.category.JMSSmoke;
+import org.kie.smoke.wb.category.KieWbSmoke;
+import org.kie.smoke.wb.util.TestConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Category({KieWbSmoke.class, JMSSmoke.class})
 public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrationTest {
     private static final Logger logger = LoggerFactory.getLogger(KieRemoteJmsSmokeIntegrationTest.class);
@@ -47,7 +50,7 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
     private static final String RESPONSE_QUEUE_NAME = "jms/queue/KIE.RESPONSE";
 
     private final String deploymentId = KJAR_DEPLOYMENT_ID;
-    private final InitialContext remoteInitialContext = RemoteJmsRuntimeEngineFactory.getRemoteJbossInitialContext("localhost", MARY_USER, MARY_PASSWORD);
+    private final InitialContext remoteInitialContext = RemoteRuntimeEngineFactory.getRemoteJbossInitialContext("localhost", MARY_USER, MARY_PASSWORD);
 
     // Helper methods ------------------------------------------------------------------------------------------------------------
 
@@ -111,17 +114,17 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
             fail(msg);
         }
 
-        RemoteRuntimeEngine krisRuntimeEngine = jreBuilder
+        RuntimeEngine krisRuntimeEngine = jreBuilder
                 .addUserName(KRIS_USER)
                 .addPassword(KRIS_PASSWORD)
                 .build();
 
-        RemoteRuntimeEngine maryRuntimeEngine = jreBuilder
+        RuntimeEngine maryRuntimeEngine = jreBuilder
                 .addUserName(MARY_USER)
                 .addPassword(MARY_PASSWORD)
                 .build();
 
-        RemoteRuntimeEngine johnRuntimeEngine = jreBuilder
+        RuntimeEngine johnRuntimeEngine = jreBuilder
                 .addUserName(JOHN_USER)
                 .addPassword(JOHN_PASSWORD)
                 .build();
@@ -129,8 +132,7 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
         runHumanTaskGroupIdTest(krisRuntimeEngine, johnRuntimeEngine, maryRuntimeEngine);
     }
 
-    public void runHumanTaskGroupIdTest(RemoteRuntimeEngine krisRuntimeEngine, RemoteRuntimeEngine johnRuntimeEngine,
-                                        RemoteRuntimeEngine maryRuntimeEngine) {
+    public void runHumanTaskGroupIdTest(RuntimeEngine krisRuntimeEngine, RuntimeEngine johnRuntimeEngine, RuntimeEngine maryRuntimeEngine) {
 
         KieSession ksession = krisRuntimeEngine.getKieSession();
 
