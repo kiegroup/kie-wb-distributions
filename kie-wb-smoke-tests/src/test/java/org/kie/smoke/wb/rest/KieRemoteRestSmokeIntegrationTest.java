@@ -40,11 +40,11 @@ import org.apache.commons.net.util.Base64;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.audit.AuditService;
 import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.manager.audit.VariableInstanceLog;
@@ -54,10 +54,9 @@ import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
+import org.kie.remote.client.api.RemoteRuntimeEngineFactory;
 import org.kie.remote.client.jaxb.ClientJaxbSerializationProvider;
 import org.kie.remote.client.jaxb.JaxbTaskSummaryListResponse;
-import org.kie.services.client.api.RemoteRestRuntimeEngineFactory;
-import org.kie.services.client.api.command.RemoteRuntimeEngine;
 import org.kie.services.client.serialization.JaxbSerializationProvider;
 import org.kie.services.client.serialization.JsonSerializationProvider;
 import org.kie.services.client.serialization.jaxb.impl.audit.AbstractJaxbHistoryObject;
@@ -120,9 +119,9 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         return RestRequestHelper.newInstance(deploymentUrl, user, password, timeout, mediaType);
     }
 
-    private RemoteRuntimeEngine getRemoteRuntime(URL deploymentUrl, String user, String password) {
+    private RuntimeEngine getRemoteRuntime(URL deploymentUrl, String user, String password) {
         // @formatter:off
-        return RemoteRestRuntimeEngineFactory.newBuilder()
+        return RemoteRuntimeEngineFactory.newRestBuilder()
                 .addDeploymentId(deploymentId)
                 .addUrl(deploymentUrl)
                 .addUserName(user)
@@ -361,7 +360,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         String user = MARY_USER;
         String password = MARY_PASSWORD;
         // create REST request
-        RemoteRuntimeEngine engine = getRemoteRuntime(deploymentUrl, user, password);
+        RuntimeEngine engine = getRemoteRuntime(deploymentUrl, user, password);
         KieSession ksession = engine.getKieSession();
         ProcessInstance processInstance = ksession.startProcess(HUMAN_TASK_PROCESS_ID);
         assertNotNull("Null ProcessInstance!", processInstance);
@@ -420,7 +419,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         String password = MARY_PASSWORD;
 
         // Remote API setup
-        RemoteRuntimeEngine engine = getRemoteRuntime(deploymentUrl, user, password);
+        RuntimeEngine engine = getRemoteRuntime(deploymentUrl, user, password);
         // test
 
         /**
@@ -439,7 +438,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         testParamSerialization(engine, new Float[]{39.391f});
     }
 
-    private void testParamSerialization(RemoteRuntimeEngine engine, Object param) {
+    private void testParamSerialization(RuntimeEngine engine, Object param) {
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("myobject", param);
         KieSession ksession = engine.getKieSession();
@@ -470,7 +469,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
     @Test
     public void testRestRemoteApiRuleTaskProcess() throws Exception {
         // Remote API setup
-        RemoteRuntimeEngine runtimeEngine = getRemoteRuntime(deploymentUrl, MARY_USER, MARY_PASSWORD);
+        RuntimeEngine runtimeEngine = getRemoteRuntime(deploymentUrl, MARY_USER, MARY_PASSWORD);
 
         KieSession ksession = runtimeEngine.getKieSession();
         AuditService auditService = runtimeEngine.getAuditLogService();
