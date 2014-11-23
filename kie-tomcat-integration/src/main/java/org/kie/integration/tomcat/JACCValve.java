@@ -51,84 +51,82 @@ public class JACCValve extends ValveBase {
 
     private static final Logger logger = LoggerFactory.getLogger(JACCValve.class);
 
-	private static ThreadLocal<Request> currentRequest = new ThreadLocal<Request>();
-	
-	public JACCValve() {
-		try {
-			PolicyContext.registerHandler("javax.security.auth.Subject.container", new PolicyContextHandler() {
-				
-				public boolean supports(String key) throws PolicyContextException {
-					if ("javax.security.auth.Subject.container".equals(key)) {
-						return true;
-					}
-					
-					return false;
-				}
-				
-				public String[] getKeys() throws PolicyContextException {
-					return new String[]{"javax.security.auth.Subject.container"};
-				}
-				
-				public Object getContext(String key, Object data)
-						throws PolicyContextException {
-				    
-				    Request req = currentRequest.get();
-				    if (req == null || req.getPrincipal() == null) {
-				        return null;
-				    }
+    private static ThreadLocal<Request> currentRequest = new ThreadLocal<Request>();
 
-				    Set<Principal> principals = new HashSet<Principal>();
-			        principals.add(req.getPrincipal());
-		            principals.add(getGroup(req.getPrincipal()));
+    public JACCValve() {
+        try {
+            PolicyContext.registerHandler("javax.security.auth.Subject.container", new PolicyContextHandler() {
 
-			        final Subject s = new Subject(false, principals , Collections.EMPTY_SET, Collections.EMPTY_SET);
-					return s;
-				}
-			}, false);
-			
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+                public boolean supports(String key) throws PolicyContextException {
+                    if ("javax.security.auth.Subject.container".equals(key)) {
+                        return true;
+                    }
+                    return false;
+                }
 
-	@Override
-	public void invoke(Request request, Response response) throws IOException,
-			ServletException {
-	    currentRequest.set(request);
+                public String[] getKeys() throws PolicyContextException {
+                    return new String[]{"javax.security.auth.Subject.container"};
+                }
+
+                public Object getContext(String key, Object data)
+                        throws PolicyContextException {
+
+                    Request req = currentRequest.get();
+                    if (req == null || req.getPrincipal() == null) {
+                        return null;
+                    }
+
+                    Set<Principal> principals = new HashSet<Principal>();
+                    principals.add(req.getPrincipal());
+                    principals.add(getGroup(req.getPrincipal()));
+
+                    final Subject s = new Subject(false, principals, Collections.EMPTY_SET, Collections.EMPTY_SET);
+                    return s;
+                }
+            }, false);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void invoke(Request request, Response response) throws IOException,
+            ServletException {
+        currentRequest.set(request);
         wrapListeners(request);
-	    try {
-	        getNext().invoke(request, response);
-	    } finally {
-	        currentRequest.set(null);
-	    }
-		
-	}
+        try {
+            getNext().invoke(request, response);
+        } finally {
+            currentRequest.set(null);
+        }
+
+    }
 
 
     protected Group getGroup(Principal principal) {
         Group group = new Group() {
-            
+
             private List<Principal> members = new ArrayList<Principal>();
+
             public String getName() {
                 return "Roles";
             }
-            
+
             public boolean removeMember(Principal user) {
                 return members.remove(user);
             }
-            
+
             public Enumeration<? extends Principal> members() {
-                
                 return Collections.enumeration(members);
             }
-            
+
             public boolean isMember(Principal member) {
                 return members.contains(member);
             }
-            
+
             public boolean addMember(Principal user) {
-                
                 return members.add(user);
             }
         };
@@ -138,20 +136,20 @@ public class JACCValve extends ValveBase {
             while (it.hasNext()) {
                 AbstractRole user = ((AbstractRole) it.next());
                 group.addMember(user);
-                
+
             }
         } else if (principal instanceof GenericPrincipal) {
             String[] roles = ((GenericPrincipal) principal).getRoles();
             for (final String role : roles) {
                 group.addMember(new Principal() {
-                    
+
                     public String getName() {
                         return role;
                     }
                 });
             }
         }
-        
+
         return group;
     }
 
@@ -161,7 +159,7 @@ public class JACCValve extends ValveBase {
         Object[] listeners = context.getApplicationEventListeners();
         for (int i = 0; i < listeners.length; i++) {
             if (listeners[i] instanceof ServletRequestListener && !(listeners[i] instanceof WrappedServletRequestListener)) {
-                listeners[i] = new WrappedServletRequestListener((ServletRequestListener)listeners[i]);
+                listeners[i] = new WrappedServletRequestListener((ServletRequestListener) listeners[i]);
             }
         }
     }
@@ -177,6 +175,7 @@ public class JACCValve extends ValveBase {
         WrappedServletRequestListener(ServletRequestListener delegate) {
             this.delegate = delegate;
         }
+
         @Override
         public void requestDestroyed(ServletRequestEvent servletRequestEvent) {
             try {
