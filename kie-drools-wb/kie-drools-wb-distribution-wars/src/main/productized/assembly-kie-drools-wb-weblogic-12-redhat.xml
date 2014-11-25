@@ -238,7 +238,6 @@
 
           <!-- transitive dependencies -->
           <exclude>WEB-INF/lib/apache-mime4j-*.jar</exclude>
-          <exclude>WEB-INF/lib/commons-configuration-*.jar</exclude>
           <exclude>WEB-INF/lib/hornetq-commons-*.jar</exclude>
           <exclude>WEB-INF/lib/hornetq-journal-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-ejb-client-*.jar</exclude>
