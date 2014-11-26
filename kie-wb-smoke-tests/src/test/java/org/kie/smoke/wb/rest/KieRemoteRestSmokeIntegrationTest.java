@@ -449,7 +449,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         /**
          * Check that MyType was correctly deserialized on server side
          */
-        List<VariableInstanceLog> varLogList = (List<VariableInstanceLog>) engine.getAuditLogService().findVariableInstancesByName("type", false);
+        List<VariableInstanceLog> varLogList = (List<VariableInstanceLog>) engine.getAuditService().findVariableInstancesByName("type", false);
         VariableInstanceLog thisProcInstVarLog = null;
         for (VariableInstanceLog varLog : varLogList) {
             if (varLog.getProcessInstanceId() == procInstId) {
@@ -461,7 +461,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         assertEquals("De/serialization of Kjar type did not work.", param.getClass().getName(), thisProcInstVarLog.getValue());
 
         // Double check for BZ-1085267
-        varLogList = (List<VariableInstanceLog>) engine.getAuditLogService().findVariableInstances(procInstId, "type");
+        varLogList = (List<VariableInstanceLog>) engine.getAuditService().findVariableInstances(procInstId, "type");
         assertNotNull("No variable log list retrieved!", varLogList);
         assertTrue("Variable log list is empty!", varLogList.size() > 0);
     }
@@ -472,7 +472,7 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         RuntimeEngine runtimeEngine = getRemoteRuntime(deploymentUrl, MARY_USER, MARY_PASSWORD);
 
         KieSession ksession = runtimeEngine.getKieSession();
-        AuditService auditService = runtimeEngine.getAuditLogService();
+        AuditService auditService = runtimeEngine.getAuditService();
 
         // Setup facts
         Person person = new Person("guest", "Dluhoslav Chudobny");

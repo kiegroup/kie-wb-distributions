@@ -78,7 +78,7 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
         assertNotNull("Null process instance!", procInst);
         long procId = procInst.getId();
 
-        List<ProcessInstanceLog> procLogs = (List<ProcessInstanceLog>) runtimeEngine.getAuditLogService().findActiveProcessInstances(HUMAN_TASK_PROCESS_ID);
+        List<ProcessInstanceLog> procLogs = (List<ProcessInstanceLog>) runtimeEngine.getAuditService().findActiveProcessInstances(HUMAN_TASK_PROCESS_ID);
         boolean procLogFound = false;
         for (ProcessInstanceLog log : procLogs) {
             if (log == null) {
@@ -183,7 +183,7 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
             taskService.complete(task.getId(), user, results);
         }
 
-        ProcessInstanceLog procInstLog = maryRuntimeEngine.getAuditLogService().findProcessInstance(procInstId);
+        ProcessInstanceLog procInstLog = maryRuntimeEngine.getAuditService().findProcessInstance(procInstId);
     }
 
     protected TaskSummary findTaskSummary(Long procInstId, List<TaskSummary> taskSumList) {
