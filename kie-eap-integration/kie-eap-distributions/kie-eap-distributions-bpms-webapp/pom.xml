@@ -18,9 +18,6 @@
     <modules.distribution.name>bpms-webapp</modules.distribution.name>
     <!-- The output path where descriptors and assemblies will be placed. -->
     <modules.tmp.path>${project.build.directory}/generated</modules.tmp.path>
-    <!--Note that the property module.add-jboss-all is set into the pom.xml for module org-jbpm-dashbuilder-webapp. -->
-    <!-- <jboss-all-org.jbpm.dashbuilder>${modules.kie-wb.finalName}.war</jboss-all-org.jbpm.dashbuilder> -->
-    <jboss-all-jbpm-dashbuilder>${project.artifactId}-${project.version}-kie-wb.war</jboss-all-jbpm-dashbuilder>
   </properties>
 
   <!-- The BPMS distributions dependencies. -->
