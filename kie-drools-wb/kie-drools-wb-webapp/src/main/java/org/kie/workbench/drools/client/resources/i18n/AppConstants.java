@@ -50,7 +50,7 @@ public interface AppConstants
 
     String people();
 
-    String deployment();
+    String deploy();
 
     String ruleDeployments();
 

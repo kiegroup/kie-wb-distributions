@@ -42,7 +42,7 @@ public interface HomeConstants
 
     String contributors();
 
-    String deployment();
+    String deploy();
 
     String ruleDeployments();
 
