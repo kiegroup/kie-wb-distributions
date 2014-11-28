@@ -44,19 +44,7 @@
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-services-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-services-backend</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-structure-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-structure-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -105,10 +93,6 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-client-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-workbench-client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>

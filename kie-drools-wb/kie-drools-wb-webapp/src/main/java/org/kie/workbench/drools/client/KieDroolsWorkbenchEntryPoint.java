@@ -149,7 +149,7 @@ public class KieDroolsWorkbenchEntryPoint {
         final Menus menus =
                 MenuFactory.newTopLevelMenu( constants.home() ).withItems( getHomeViews() ).endMenu()
                 .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
-                .newTopLevelMenu( constants.deployment() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
+                .newTopLevelMenu( constants.deploy() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
                 .newTopLevelMenu( constants.tasks() ).withItems( getTasksViews() ).endMenu()
                 .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
                 .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
