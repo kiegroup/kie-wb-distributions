@@ -76,6 +76,7 @@
     <filter-name>HTTP Basic Auth Filter</filter-name>
     <url-pattern>/rest/*</url-pattern>
     <url-pattern>/maven2/*</url-pattern>
+    <url-pattern>/ws/*</url-pattern>
   </filter-mapping>
 
   <!-- drools-wb servlets -->
@@ -609,6 +610,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <url-pattern>/rest/*</url-pattern>
   </filter-mapping>
 
+  <!-- web services -->
   <servlet>
     <servlet-name>CommandWebService</servlet-name>
     <servlet-class>org.kie.remote.services.ws.command.CommandWebServiceImpl</servlet-class>
