@@ -22,14 +22,6 @@
       <param-name>x-frame-options</param-name>
       <param-value>SAMEORIGIN</param-value>
     </init-param>
-    <init-param>
-      <param-name>x-xss-protection-enable</param-name>
-      <param-value>true</param-value>
-    </init-param>
-    <init-param>
-      <param-name>x-xss-protection-block</param-name>
-      <param-value>true</param-value>
-    </init-param>
   </filter>
 
   <filter-mapping>
