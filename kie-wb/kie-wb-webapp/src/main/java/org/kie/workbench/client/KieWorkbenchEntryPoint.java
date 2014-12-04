@@ -34,6 +34,8 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.TextBox;
 import org.guvnor.common.services.shared.config.AppConfigService;
+import org.guvnor.common.services.shared.security.KieWorkbenchACL;
+import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
@@ -47,10 +49,9 @@ import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.resources.i18n.AppConstants;
-import org.guvnor.common.services.shared.security.KieWorkbenchACL;
-import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
+import org.kie.workbench.common.widgets.client.menu.AboutMenuBuilder;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.menu.CustomSplashHelp;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
@@ -150,29 +151,30 @@ public class KieWorkbenchEntryPoint {
 
     private void setupMenu() {
 
-
         final Menus menus =
                 MenuFactory.newTopLevelMenu( constants.Home() ).withItems( getHomeViews() ).endMenu()
-                .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
-                .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
-                .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
-                .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
-                .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
-                .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
-                .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                        .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
+                        .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
+                        .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
+                        .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
+                        .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
+                        .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
+                        .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                     @Override
                     public void execute() {
                         placeManager.goTo( "FindForm" );
                     }
                 } )
-                .endMenu()
-                .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
-                .position( MenuPosition.RIGHT )
-                .withItems( getRoles() )
-                .endMenu()
-                .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
-                .endMenu()
-                .build();
+                        .endMenu()
+                        .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
+                        .position( MenuPosition.RIGHT )
+                        .withItems( getRoles() )
+                        .endMenu()
+                        .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
+                        .endMenu()
+                        .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
+                        .endMenu()
+                        .build();
 
         menubar.addMenus( menus );
     }
@@ -237,7 +239,6 @@ public class KieWorkbenchEntryPoint {
                 placeManager.goTo( new DefaultPlaceRequest( "ContributorsPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
-
 
         result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) ).respondsWith( new Command() {
             @Override
@@ -403,7 +404,7 @@ public class KieWorkbenchEntryPoint {
             authService.call( new RemoteCallback<Void>() {
                 @Override
                 public void callback( Void response ) {
-                    final String location = GWT.getModuleBaseURL().replaceFirst("/" + GWT.getModuleName() + "/",  "/logout.jsp");
+                    final String location = GWT.getModuleBaseURL().replaceFirst( "/" + GWT.getModuleName() + "/", "/logout.jsp" );
                     redirect( location );
                 }
             } ).logout();
