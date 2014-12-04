@@ -1019,7 +1019,7 @@
           <artifactId>gwt-maven-plugin</artifactId>
           <configuration>
             <module>org.kie.workbench.FastCompiledKIEWebapp</module>
-            <draftCompile>false</draftCompile>
+            <draftCompile>true</draftCompile>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>1</localWorkers>
             <logLevel>INFO</logLevel>
@@ -1294,7 +1294,7 @@
       </build>
     </profile>
 
-    <!-- Full profile builds all GWT permutions -->
+    <!-- Full profile builds all GWT permutations -->
     <profile>
       <id>fullProfile</id>
       <activation>
