@@ -1051,6 +1051,7 @@
               -Dorg.uberfire.nio.git.ssh.enabled=false\
               -Djava.security.auth.login.config=./src/main/resources/login-cli.conf\
               -Djetty.custom.sys.classes=bitronix;javax.transaction\
+              -Djava.util.prefs.syncInterval=2000000
             </extraJvmArgs>
             <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:,
                  see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
