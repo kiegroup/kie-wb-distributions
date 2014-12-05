@@ -986,7 +986,8 @@
               -Dorg.kie.demo=true\
               -Dorg.kie.clean.onstartup=true\
               -Dorg.jbpm.designer.perspective=ruleflow\
-              -Djava.security.auth.login.config=./src/main/resources/login-cli.conf
+              -Djava.security.auth.login.config=./src/main/resources/login-cli.conf\
+              -Djava.util.prefs.syncInterval=2000000
             </extraJvmArgs>
             <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:,
                  see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
