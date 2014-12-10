@@ -84,7 +84,7 @@ public class HomeProducer {
 
                                                                    @Override
                                                                    public void execute() {
-                                                                       placeManager.goTo( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" );
+                                                                       placeManager.goTo( "AdministrationPerspective" );
                                                                    }
                                                                } );
 

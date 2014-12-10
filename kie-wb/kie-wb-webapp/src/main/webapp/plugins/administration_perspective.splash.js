@@ -4,5 +4,5 @@ $registerSplashScreen({
     body_height: 371,
     title: "Help",
     display_next_time: true,
-    interception_points: ["org.kie.workbench.client.perspectives.AdministrationPerspective"]
+    interception_points: ["AdministrationPerspective"]
 });
