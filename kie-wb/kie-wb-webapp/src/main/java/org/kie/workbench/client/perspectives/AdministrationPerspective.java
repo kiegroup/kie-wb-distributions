@@ -52,7 +52,7 @@ import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
  * A Perspective for Administrators
  */
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "org.kie.workbench.client.perspectives.AdministrationPerspective")
+@WorkbenchPerspective(identifier = "AdministrationPerspective")
 public class AdministrationPerspective {
 
     private AppConstants constants = AppConstants.INSTANCE;

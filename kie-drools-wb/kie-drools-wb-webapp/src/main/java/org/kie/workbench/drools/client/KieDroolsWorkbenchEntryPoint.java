@@ -245,7 +245,7 @@ public class KieDroolsWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.administration() ).withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "org.kie.workbench.drools.client.perspectives.AdministrationPerspective" ) );
+                placeManager.goTo( new DefaultPlaceRequest( "AdministrationPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
