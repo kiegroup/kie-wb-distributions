@@ -19,7 +19,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.guvnor.inbox.client.InboxPresenter;
-import org.kie.workbench.common.screens.projecteditor.client.menu.ProjectMenu;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
@@ -56,9 +55,6 @@ public class DroolsAuthoringPerspective {
 
     @Inject
     private NewResourcesMenu newResourcesMenu;
-
-    @Inject
-    private ProjectMenu projectMenu;
 
     @Inject
     private PlaceManager placeManager;
@@ -117,9 +113,6 @@ public class DroolsAuthoringPerspective {
                 .endMenu()
                 .newTopLevelMenu( constants.newItem() )
                 .withItems( newResourcesMenu.getMenuItems() )
-                .endMenu()
-                .newTopLevelMenu( constants.tools() )
-                .withItems( projectMenu.getMenuItems() )
                 .endMenu()
                 .newTopLevelMenu( constants.Repository() )
                 .withItems( repositoryMenu.getMenuItems() )
