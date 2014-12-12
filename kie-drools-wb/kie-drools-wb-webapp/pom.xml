@@ -1022,6 +1022,7 @@
               <compileSourcesArtifact>org.guvnor:guvnor-message-console-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.guvnor:guvnor-message-console-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.guvnor:guvnor-organizationalunit-manager</compileSourcesArtifact>
+              <compileSourcesArtifact>org.guvnor:guvnor-asset-mgmt-client</compileSourcesArtifact>
 
               <!-- Common dependencies -->
               <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-editor-api</compileSourcesArtifact>
