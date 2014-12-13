@@ -1097,6 +1097,7 @@
               <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-backend</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
 
+              <compileSourcesArtifact>org.uberfire:uberfire-commons-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-runtime-plugins-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-perspective-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-apps-client</compileSourcesArtifact>
