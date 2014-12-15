@@ -3,6 +3,6 @@ $registerSplashScreen({
     templateUrl: 'jobs.splash.html',
     body_height: 352,
     title: 'Async Jobs',
-    display_next_time: true,
+    display_next_time: false,
     interception_points: ['Jobs']
 });
