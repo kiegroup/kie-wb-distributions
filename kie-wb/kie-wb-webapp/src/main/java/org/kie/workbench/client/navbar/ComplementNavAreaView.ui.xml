@@ -19,17 +19,13 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:b="urn:import:com.github.gwtbootstrap.client.ui">
 
-    <ui:with field="res" type="org.uberfire.client.resources.WorkbenchResources"/>
-    <ui:with field="i18n" type="org.kie.workbench.client.resources.i18n.AppConstants"/>
+  <ui:with field="res" type="org.uberfire.client.resources.WorkbenchResources"/>
+  <ui:with field="i18n" type="org.kie.workbench.client.resources.i18n.AppConstants"/>
 
-    <ui:style>
+  <ui:style>
+
     .contextArea {
       height: 47px !important;
-    }
-
-    .logo {
-      float: left;
-      margin-left: 20px;
     }
 
     .search {
@@ -44,17 +40,14 @@
       margin-top: 7px;
     }
 
-    .searchForm {
-      margin-bottom: 0px !important;
-    }
   </ui:style>
 
   <g:FlowPanel styleName="{style.contextArea} {res.CSS.listbar}">
     <g:FlowPanel ui:field="contextMenuArea" styleName="{style.contextMenu}"/>
     <g:FlowPanel addStyleNames="{style.search} input-append">
-        <b:TextBox alternateSize="XLARGE" ui:field="searchTextBox" placeholder="{i18n.Search}"/>
-        <b:Button icon="SEARCH" ui:field="searchButton" ></b:Button>
-    </g:FlowPanel>  
+      <b:TextBox alternateSize="XLARGE" ui:field="searchTextBox" placeholder="{i18n.Search}"/>
+      <b:Button icon="SEARCH" ui:field="searchButton"></b:Button>
+    </g:FlowPanel>
   </g:FlowPanel>
 
 
