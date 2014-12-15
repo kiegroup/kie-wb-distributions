@@ -20,12 +20,9 @@ import javax.annotation.PostConstruct;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RequiresResize;
-import org.kie.workbench.client.resources.AppResource;
 
 /**
  * A stand-alone (i.e. devoid of Workbench dependencies) View
@@ -43,13 +40,8 @@ public class LogoWidgetView
 
     private static ViewBinder uiBinder = GWT.create( ViewBinder.class );
 
-    @UiField(provided = true)
-    public Image logo;
-
-
     @PostConstruct
     public void init() {
-        logo = new Image( AppResource.INSTANCE.images().logo() );
         initWidget( uiBinder.createAndBindUi( this ) );
     }
 
