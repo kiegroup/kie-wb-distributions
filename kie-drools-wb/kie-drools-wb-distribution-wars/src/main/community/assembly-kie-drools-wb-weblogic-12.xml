@@ -212,7 +212,6 @@
           <exclude>WEB-INF/lib/jsf-api-*.jar</exclude>
           <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
           <exclude>WEB-INF/lib/slf4j-ext-*.jar</exclude>
-          <exclude>WEB-INF/lib/velocity-*.jar</exclude>
           <exclude>WEB-INF/lib/woodstox-core-asl-*.jar</exclude>
           <exclude>WEB-INF/lib/wsdl4j-*.jar</exclude>
           <exclude>WEB-INF/lib/xalan-*.jar</exclude>
