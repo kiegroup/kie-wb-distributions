@@ -37,6 +37,7 @@ import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.guvnor.structure.server.config.ConfigGroup;
+import org.guvnor.structure.server.config.ConfigItem;
 import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
@@ -139,6 +140,15 @@ public class AppSetup {
         for ( ConfigGroup globalConfigGroup : globalConfigGroups ) {
             if ( GLOBAL_SETTINGS.equals( globalConfigGroup.getName() ) ) {
                 globalSettingsDefined = true;
+
+                ConfigItem<String> runtimeDeployConfig = globalConfigGroup.getConfigItem("support.runtime.deploy");
+                if (runtimeDeployConfig == null) {
+                    globalConfigGroup.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy", "false" ) );
+                    configurationService.updateConfiguration(globalConfigGroup);
+                } else if (!runtimeDeployConfig.getValue().equalsIgnoreCase("false")) {
+                    runtimeDeployConfig.setValue("false");
+                    configurationService.updateConfiguration(globalConfigGroup);
+                }
                 break;
             }
         }
