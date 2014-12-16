@@ -41,6 +41,11 @@
       <groupId>org.kie</groupId>
       <artifactId>kie-internal</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-identity-session-provider</artifactId>
+    </dependency>
 
 
     <!-- Jetty -->

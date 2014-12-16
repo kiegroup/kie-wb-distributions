@@ -41,6 +41,12 @@
       <groupId>org.kie</groupId>
       <artifactId>kie-internal</artifactId>
     </dependency>
+    
+    <!-- identity provider -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-identity-session-provider</artifactId>
+    </dependency>
 
     <!-- dependencies added because of new illegal transitive dependency check -->
 
