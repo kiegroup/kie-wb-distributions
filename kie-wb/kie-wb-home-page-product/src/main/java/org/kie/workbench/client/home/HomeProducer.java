@@ -6,11 +6,11 @@ import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.LocaleInfo;
+import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
-import org.kie.workbench.common.screens.home.client.resources.i18n.HomeConstants;
+import org.kie.workbench.client.resources.i18n.HomeConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
-import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.uberfire.client.mvp.PlaceManager;
 
 import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
@@ -33,7 +33,8 @@ public class HomeProducer {
 
     public void init() {
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( homeConstants.home_title(), homeConstants.home_subtitle() );
+        model = new HomeModel( homeConstants.home_title(),
+                               homeConstants.home_subtitle() );
 
         final Section s1 = new Section( homeConstants.authoring_header(),
                                         homeConstants.authoring_paragraph(),
