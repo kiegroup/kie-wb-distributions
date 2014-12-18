@@ -8,6 +8,7 @@ import org.jbpm.formModeler.api.client.FormRenderContext;
 import org.jbpm.formModeler.api.client.FormRenderContextManager;
 import org.jbpm.formModeler.api.events.FormSubmitFailEvent;
 import org.jbpm.formModeler.api.events.FormSubmittedEvent;
+import org.jbpm.formModeler.api.events.ResizeFormcontainerEvent;
 import org.jbpm.formModeler.api.model.Form;
 
 @ApplicationScoped
@@ -55,6 +56,11 @@ public class MockFormRenderContextManagerImpl implements FormRenderContextManage
 
     @Override 
     public void fireContextSubmit(FormSubmittedEvent event) {
+        throw new UnsupportedOperationException("Form modeler is not available");
+    }
+
+    @Override
+    public void fireContextFormResize(ResizeFormcontainerEvent event) {
         throw new UnsupportedOperationException("Form modeler is not available");
     }
 
