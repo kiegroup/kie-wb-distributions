@@ -6,9 +6,9 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
-import org.kie.workbench.common.screens.home.client.resources.i18n.HomeConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
+import org.kie.workbench.drools.client.resources.i18n.HomeConstants;
 import org.uberfire.client.mvp.PlaceManager;
 
 /**
@@ -27,7 +27,8 @@ public class HomeProducer {
     @PostConstruct
     public void init() {
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( homeConstants.home_title(), homeConstants.home_subtitle() );
+        model = new HomeModel( homeConstants.home_title(),
+                               homeConstants.home_subtitle() );
 
         final Section s1 = new Section( homeConstants.authoring_header(),
                                         homeConstants.authoring_paragraph(),
