@@ -66,6 +66,14 @@
   <servlet>
     <servlet-name>DTableXLSFileServlet</servlet-name>
     <servlet-class>org.drools.workbench.screens.dtablexls.backend.server.DecisionTableXLSFileServlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>DTableXLSFileServlet</servlet-name>
@@ -75,6 +83,14 @@
   <servlet>
     <servlet-name>ArchiveServlet</servlet-name>
     <servlet-class>org.guvnor.common.services.backend.archive.ArchiveServlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>ArchiveServlet</servlet-name>
@@ -84,6 +100,14 @@
   <servlet>
     <servlet-name>ScoreCardFileServlet</servlet-name>
     <servlet-class>org.drools.workbench.screens.scorecardxls.backend.server.ScoreCardXLSFileServlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>ScoreCardFileServlet</servlet-name>
@@ -93,6 +117,14 @@
   <servlet>
     <servlet-name>M2Servlet</servlet-name>
     <servlet-class>org.guvnor.m2repo.backend.server.M2Servlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>M2Servlet</servlet-name>
@@ -448,6 +480,22 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <!-- end form-modeler-->
 
   <!-- security settings -->
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>download</web-resource-name>
+      <url-pattern>/org.kie.workbench.KIEWebapp/archive</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/defaulteditor/upload/*</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/defaulteditor/download/*</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/dtablexls/file</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/scorecardxls/file</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>analyst</role-name>
+      <role-name>developer</role-name>
+    </auth-constraint>
+  </security-constraint>
 
   <security-constraint>
     <web-resource-collection>
