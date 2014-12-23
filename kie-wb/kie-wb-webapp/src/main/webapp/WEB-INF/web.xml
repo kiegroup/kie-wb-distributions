@@ -132,6 +132,14 @@
   <servlet>
     <servlet-name>UberfireFileUploadServlet</servlet-name>
     <servlet-class>org.uberfire.server.FileUploadServlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>UberfireFileUploadServlet</servlet-name>
@@ -141,6 +149,14 @@
   <servlet>
     <servlet-name>UberfireFileDownloadServlet</servlet-name>
     <servlet-class>org.uberfire.server.FileDownloadServlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>UberfireFileDownloadServlet</servlet-name>
@@ -151,6 +167,14 @@
   <servlet>
     <servlet-name>DTableXLSFileServlet</servlet-name>
     <servlet-class>org.drools.workbench.screens.dtablexls.backend.server.DecisionTableXLSFileServlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>DTableXLSFileServlet</servlet-name>
@@ -160,6 +184,14 @@
   <servlet>
     <servlet-name>ScoreCardFileServlet</servlet-name>
     <servlet-class>org.drools.workbench.screens.scorecardxls.backend.server.ScoreCardXLSFileServlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>ScoreCardFileServlet</servlet-name>
@@ -169,6 +201,14 @@
   <servlet>
     <servlet-name>M2Servlet</servlet-name>
     <servlet-class>org.guvnor.m2repo.backend.server.M2Servlet</servlet-class>
+    <init-param>
+      <param-name>includes-path</param-name>
+      <param-value>git://**,default://**</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludes-path</param-name>
+      <param-value>file://**</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>M2Servlet</servlet-name>
