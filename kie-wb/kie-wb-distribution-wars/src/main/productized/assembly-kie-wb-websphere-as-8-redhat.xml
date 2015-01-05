@@ -115,7 +115,6 @@
           <exclude>WEB-INF/lib/uberfire-widgets-commons-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-runtime-plugins-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-uberfire-social-activities-client-*.jar</exclude>
-          <exclude>WEB-INF/lib/uberfire-perspective-editor-client-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-commons-editor-client-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-apps-client-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-widgets-properties-editor-client-*.jar</exclude>
