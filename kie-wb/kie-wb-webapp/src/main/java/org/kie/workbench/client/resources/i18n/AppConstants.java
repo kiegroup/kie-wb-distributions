@@ -86,8 +86,6 @@ public interface AppConstants
 
     String Extensions();
 
-    String PerspectiveEditor();
-
     String missingDefaultPerspective();
 
     String explore();

@@ -312,12 +312,6 @@ public class KieWorkbenchEntryPoint {
                 placeManager.goTo( new DefaultPlaceRequest( "PlugInAuthoringPerspective" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.PerspectiveEditor() ).withRoles( kieACL.getGrantedRoles( F_PERSPECTIVE_EDITOR ) ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "PerspectiveEditorPerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
         result.add( MenuFactory.newSimpleItem( constants.Apps() ).withRoles( kieACL.getGrantedRoles( F_APPS ) ).respondsWith( new Command() {
             @Override
             public void execute() {
