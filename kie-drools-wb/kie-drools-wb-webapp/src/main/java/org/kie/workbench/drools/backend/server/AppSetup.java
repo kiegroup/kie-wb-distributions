@@ -32,6 +32,9 @@ import javax.inject.Named;
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.guvnor.common.services.project.model.GAV;
 import org.guvnor.common.services.project.model.POM;
+import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
+import org.guvnor.common.services.shared.security.KieWorkbenchSecurityService;
+import org.guvnor.common.services.shared.security.impl.KieWorkbenchACLImpl;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.Repository;
@@ -42,10 +45,8 @@ import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
-import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
-import org.guvnor.common.services.shared.security.impl.KieWorkbenchACLImpl;
+import org.kie.internal.utils.KieMeta;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
-import org.guvnor.common.services.shared.security.KieWorkbenchSecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.uberfire.commons.services.cdi.ApplicationStarted;
@@ -110,13 +111,18 @@ public class AppSetup {
         if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
             loadExampleRepositories( exampleRepositoriesRoot );
 
-        } else if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-            Repository repository = createRepository( DROOLS_WB_PLAYGROUND_ALIAS,
-                                                      DROOLS_WB_PLAYGROUND_SCHEME,
-                                                      DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                      DROOLS_WB_PLAYGROUND_UID,
-                                                      DROOLS_WB_PLAYGROUND_PWD );
-            createOU( repository, OU_NAME, OU_OWNER );
+        } else if ( !KieMeta.isProductized() ) {
+            //Only clone examples for Community
+            if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
+                Repository repository = createRepository( DROOLS_WB_PLAYGROUND_ALIAS,
+                                                          DROOLS_WB_PLAYGROUND_SCHEME,
+                                                          DROOLS_WB_PLAYGROUND_ORIGIN,
+                                                          DROOLS_WB_PLAYGROUND_UID,
+                                                          DROOLS_WB_PLAYGROUND_PWD );
+                createOU( repository,
+                          OU_NAME,
+                          OU_OWNER );
+            }
 
         } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
 
@@ -141,13 +147,13 @@ public class AppSetup {
             if ( GLOBAL_SETTINGS.equals( globalConfigGroup.getName() ) ) {
                 globalSettingsDefined = true;
 
-                ConfigItem<String> runtimeDeployConfig = globalConfigGroup.getConfigItem("support.runtime.deploy");
-                if (runtimeDeployConfig == null) {
+                ConfigItem<String> runtimeDeployConfig = globalConfigGroup.getConfigItem( "support.runtime.deploy" );
+                if ( runtimeDeployConfig == null ) {
                     globalConfigGroup.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy", "false" ) );
-                    configurationService.updateConfiguration(globalConfigGroup);
-                } else if (!runtimeDeployConfig.getValue().equalsIgnoreCase("false")) {
-                    runtimeDeployConfig.setValue("false");
-                    configurationService.updateConfiguration(globalConfigGroup);
+                    configurationService.updateConfiguration( globalConfigGroup );
+                } else if ( !runtimeDeployConfig.getValue().equalsIgnoreCase( "false" ) ) {
+                    runtimeDeployConfig.setValue( "false" );
+                    configurationService.updateConfiguration( globalConfigGroup );
                 }
                 break;
             }

@@ -27,6 +27,9 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
+import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
+import org.guvnor.common.services.shared.security.KieWorkbenchSecurityService;
+import org.guvnor.common.services.shared.security.impl.KieWorkbenchACLImpl;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.Repository;
@@ -37,9 +40,7 @@ import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
-import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
-import org.guvnor.common.services.shared.security.impl.KieWorkbenchACLImpl;
-import org.guvnor.common.services.shared.security.KieWorkbenchSecurityService;
+import org.kie.internal.utils.KieMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.uberfire.commons.services.cdi.ApplicationStarted;
@@ -101,18 +102,21 @@ public class AppSetup {
         if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
             loadExampleRepositories( exampleRepositoriesRoot );
 
-        } else if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-            administrationService.bootstrapRepository( OU_NAME,
-                                                       JBPM_WB_PLAYGROUND_ALIAS,
-                                                       JBPM_WB_PLAYGROUND_ORIGIN,
-                                                       JBPM_WB_PLAYGROUND_UID,
-                                                       JBPM_WB_PLAYGROUND_PWD );
+        } else if ( !KieMeta.isProductized() ) {
+            //Only clone examples for Community
+            if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
+                administrationService.bootstrapRepository( OU_NAME,
+                                                           JBPM_WB_PLAYGROUND_ALIAS,
+                                                           JBPM_WB_PLAYGROUND_ORIGIN,
+                                                           JBPM_WB_PLAYGROUND_UID,
+                                                           JBPM_WB_PLAYGROUND_PWD );
 
-            administrationService.bootstrapRepository( OU_NAME,
-                                                       DROOLS_WB_PLAYGROUND_ALIAS,
-                                                       DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                       DROOLS_WB_PLAYGROUND_UID,
-                                                       DROOLS_WB_PLAYGROUND_PWD );
+                administrationService.bootstrapRepository( OU_NAME,
+                                                           DROOLS_WB_PLAYGROUND_ALIAS,
+                                                           DROOLS_WB_PLAYGROUND_ORIGIN,
+                                                           DROOLS_WB_PLAYGROUND_UID,
+                                                           DROOLS_WB_PLAYGROUND_PWD );
+            }
 
         } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
             administrationService.bootstrapRepository( "example",
@@ -132,13 +136,13 @@ public class AppSetup {
         for ( ConfigGroup configGroup : configGroups ) {
             if ( GLOBAL_SETTINGS.equals( configGroup.getName() ) ) {
                 globalSettingsDefined = true;
-                ConfigItem<String> runtimeDeployConfig = configGroup.getConfigItem("support.runtime.deploy");
-                if (runtimeDeployConfig == null) {
+                ConfigItem<String> runtimeDeployConfig = configGroup.getConfigItem( "support.runtime.deploy" );
+                if ( runtimeDeployConfig == null ) {
                     configGroup.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy", "true" ) );
-                    configurationService.updateConfiguration(configGroup);
-                } else if (!runtimeDeployConfig.getValue().equalsIgnoreCase("true")) {
-                    runtimeDeployConfig.setValue("true");
-                    configurationService.updateConfiguration(configGroup);
+                    configurationService.updateConfiguration( configGroup );
+                } else if ( !runtimeDeployConfig.getValue().equalsIgnoreCase( "true" ) ) {
+                    runtimeDeployConfig.setValue( "true" );
+                    configurationService.updateConfiguration( configGroup );
                 }
                 break;
             }
