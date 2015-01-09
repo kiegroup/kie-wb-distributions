@@ -71,7 +71,7 @@
     <!-- Migration tool -->
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-wb-jcr2vfs-migration-core</artifactId>
+      <artifactId>drools-wb-jcr2vfs-distribution</artifactId>
       <type>zip</type>
     </dependency>
 

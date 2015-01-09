@@ -41,7 +41,7 @@
     <!-- Migration tool -->    
     <dependencySet>
       <includes>
-        <include>org.drools:drools-wb-jcr2vfs-migration-core:zip</include>
+        <include>org.drools:drools-wb-jcr2vfs-distribution:zip</include>
       </includes>
       <outputDirectory>migration</outputDirectory>
       <useStrictFiltering>true</useStrictFiltering>
