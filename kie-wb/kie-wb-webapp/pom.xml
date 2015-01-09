@@ -890,6 +890,14 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-human-tasks-forms-modeler-client</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-human-tasks-forms-modeler-api</artifactId>
+    </dependency>
+     <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-human-tasks-forms-modeler-backend</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
