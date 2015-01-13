@@ -47,6 +47,10 @@
       <param-name>display-after-login</param-name>
       <param-value>/kie-drools-wb.html</param-value>
     </init-param>
+    <init-param>
+      <param-name>display-when-not-authenticated</param-name>
+      <param-value>/login.jsp</param-value>
+    </init-param>
   </servlet>
 
   <servlet-mapping>
