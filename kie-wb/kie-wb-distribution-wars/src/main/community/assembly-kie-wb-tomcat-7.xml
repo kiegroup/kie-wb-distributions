@@ -162,7 +162,7 @@
           <exclude>WEB-INF/lib/jboss-servlet-api_*.jar</exclude>
           <exclude>WEB-INF/lib/jsp-api-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-jsp-api_*.jar</exclude>
-          <exclude>WEB-INF/lib/javax.security.jacc-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-jacc-api_*.jar</exclude>
 
           <exclude>WEB-INF/lib/jboss-servlet-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-transaction-*.jar</exclude>
