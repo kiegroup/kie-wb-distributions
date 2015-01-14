@@ -194,6 +194,7 @@ public class AppSetup {
                 final List<Repository> repositories = new ArrayList<Repository>();
                 organizationalUnit = organizationalUnitService.createOrganizationalUnit( OU_NAME,
                                                                                          OU_OWNER,
+                                                                                         null,
                                                                                          repositories );
                 logger.info( "Created Organizational Unit '" + OU_NAME + "'." );
 
