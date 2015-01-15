@@ -20,7 +20,7 @@
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
   <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name/id of the artifact -->
-  <id>eap6_3</id>
+  <id>eap6_4</id>
   <formats>
     <format>war</format>
     <format>dir</format>
@@ -29,19 +29,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/src/main/assembly/eap6_3</directory>
-      <outputDirectory>.</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/src/main/productized/images</directory>
-      <outputDirectory>images</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/src/main/productized/styles</directory>
-      <outputDirectory>styles</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/src/main/productized/webapp</directory>
+      <directory>${project.basedir}/src/main/assembly/eap6_4</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
   </fileSets>
@@ -63,16 +51,6 @@
       <unpack>true</unpack>
       <unpackOptions>
         <excludes>
-          <exclude>favicon.ico</exclude>
-          <exclude>index.jsp</exclude>
-          <exclude>kie-wb.html</exclude>
-          <exclude>login.jsp</exclude>
-          <exclude>logout.jsp</exclude>
-          <exclude>not_authorized.jsp</exclude>
-          <exclude>rest-api.jsp</exclude>
-
-          <exclude>images/logo.png</exclude>
-
           <exclude>WEB-INF/jetty-web.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>
           <exclude>WEB-INF/beans.xml</exclude>
@@ -105,7 +83,7 @@
           <exclude>WEB-INF/lib/uberfire-widgets-properties-editor-client-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-wires-core-client-*.jar</exclude>
           <exclude>WEB-INF/lib/uberfire-wires-core-trees-*.jar</exclude>
-
+          
           <!-- Dom4j on as 7.1.1 breaks the PU-->
           <exclude>WEB-INF/lib/dom4j*.jar</exclude>
 
@@ -135,9 +113,9 @@
           <exclude>WEB-INF/lib/kie-wb-common-contributors-client-*.jar</exclude>
           <exclude>WEB-INF/lib/kie-wb-common-social-home-page-client-*.jar</exclude>
 
-          <!-- Product specific Home Page -->
-          <exclude>WEB-INF/lib/kie-wb-home-page-product-*.jar</exclude>
-          <exclude>WEB-INF/lib/kie-wb-distribution-home-client-*.jar</exclude>
+          <!-- Community specific Home Page -->
+          <exclude>WEB-INF/lib/kie-wb-home-page-community-*.jar</exclude>
+          <exclude>WEB-INF/lib/kie-wb-common-home-client-*.jar</exclude>
 
           <!-- Drools Workbench client related -->
           <exclude>WEB-INF/lib/drools-wb-categories-editor-client-*.jar</exclude>
@@ -231,8 +209,7 @@
           <exclude>WEB-INF/lib/cxf-rt-databinding-jaxb-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-frontend-jaxws-*.jar</exclude>
           <exclude>WEB-INF/lib/dom4j-*.jar</exclude>
-          <exclude>WEB-INF/lib/ecj-*.jar</exclude>
-          <!-- this *.jar is not in the AS 7.1.1 -->
+          <exclude>WEB-INF/lib/ecj-*.jar</exclude> <!-- this *.jar is not in the AS 7.1.1 -->
           <exclude>WEB-INF/lib/guava-*.jar</exclude>
           <exclude>WEB-INF/lib/h2-*.jar</exclude>
           <exclude>WEB-INF/lib/hibernate-commons-annotations-*.jar</exclude>
@@ -294,7 +271,6 @@
           <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-ejb3-api-*.jar</exclude>
-
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
