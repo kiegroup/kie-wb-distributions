@@ -121,7 +121,7 @@
           <finalName>kie-wb-${project.version}</finalName>
           <descriptors>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-as-7.xml</descriptor>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-eap-6_3.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-eap-6_4.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-wildfly-8.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-tomcat-7.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-websphere-as-8.xml</descriptor>
@@ -167,7 +167,7 @@
               <finalName>kie-wb-${project.version}</finalName>
               <descriptors>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-jboss-as-7-redhat.xml</descriptor>
-                <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-jboss-eap-6_3-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-jboss-eap-6_4-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-jboss-wildfly-8-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-tomcat-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-websphere-as-8-redhat.xml</descriptor>

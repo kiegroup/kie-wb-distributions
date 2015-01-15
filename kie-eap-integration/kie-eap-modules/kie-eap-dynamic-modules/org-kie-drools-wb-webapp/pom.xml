@@ -24,7 +24,7 @@
       <artifactId>kie-drools-wb-distribution-wars</artifactId>
       <version>${project.version}</version>
       <type>war</type>
-      <classifier>eap6_3</classifier>
+      <classifier>eap6_4</classifier>
     </dependency>
 
   </dependencies>
