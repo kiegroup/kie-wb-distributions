@@ -63,7 +63,7 @@ public class RestRepositoryDeploymentUtil {
         }
 
         JobRequest createRepoJob = createRepository(repositoryName, repoUrl);
-        JobRequest createOrgUnitJob = createOrganizationalUnit(orgUnit, user, repositoryName);
+        JobRequest createOrgUnitJob = createOrganizationalUnit(orgUnit, user, orgUnit, repositoryName);
         waitForJobsToFinish(sleepSecs, createRepoJob, createOrgUnitJob);
         
         JaxbDeploymentJobResult deployJob = createDeploymentUnit(deploymentId, strategy);
@@ -121,8 +121,9 @@ public class RestRepositoryDeploymentUtil {
      * @param repositories The list of repositories that the org unit should own
      * @return A {@link JobRequest} instance returned by the request with the initial status of the request
      */
-    private JobRequest createOrganizationalUnit(String name, String owner, String... repositories) {
-        logger.info("Creating organizational unit '{}' owned by '{}' containing [{}]", name, owner, repositories);
+    private JobRequest createOrganizationalUnit(String name, String owner, String defaultGroupId, String... repositories) {
+        logger.info("Creating organizational unit '{}' owned by '{}' with default group id {}, containing [{}]",
+                        name, owner, defaultGroupId, repositories);
         OrganizationalUnit ou = new OrganizationalUnit();
         ou.setRepositories(new ArrayList<String>());
         for (int i = 0; repositories != null && i < repositories.length; ++i) {
@@ -130,6 +131,7 @@ public class RestRepositoryDeploymentUtil {
         }
         ou.setName(name);
         ou.setOwner(owner);
+        ou.setDefaultGroupId( defaultGroupId );
         String input = serializeToJsonString(ou);
         return post(createRequest("organizationalunits/", input), CreateOrganizationalUnitRequest.class);
     }

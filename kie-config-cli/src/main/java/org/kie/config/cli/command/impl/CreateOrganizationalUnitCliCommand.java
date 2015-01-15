@@ -49,6 +49,9 @@ public class CreateOrganizationalUnitCliCommand implements CliCommand {
         System.out.print( ">>Organizational Unit owner:" );
         String owner = input.nextLine();
 
+        System.out.print( ">>Default Group Id for this Organizational Unit:" );
+        String defaultGroupId = input.nextLine();
+
         System.out.print( ">>Repositories (comma separated list):" );
         String repos = input.nextLine();
         Collection<Repository> repositories = new ArrayList<Repository>();
@@ -64,7 +67,7 @@ public class CreateOrganizationalUnitCliCommand implements CliCommand {
             }
         }
 
-        OrganizationalUnit organizationalUnit = organizationalUnitService.createOrganizationalUnit( name, owner, repositories );
+        OrganizationalUnit organizationalUnit = organizationalUnitService.createOrganizationalUnit( name, owner, defaultGroupId, repositories );
         result.append( "Organizational Unit " + organizationalUnit.getName() + " successfully created" );
         return result.toString();
     }
