@@ -17,9 +17,9 @@ package org.kie.integration.eap.maven;
 
 import org.junit.Before;
 import org.mockito.Mock;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.graph.Dependency;
-import org.sonatype.aether.graph.DependencyNode;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.graph.DependencyNode;
 
 import java.util.ArrayList;
 import java.util.List;

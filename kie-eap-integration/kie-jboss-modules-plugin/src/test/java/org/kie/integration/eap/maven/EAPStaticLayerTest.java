@@ -23,7 +23,7 @@ import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
 import org.mockito.Mock;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import java.util.ArrayList;
 import java.util.Collection;

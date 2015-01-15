@@ -16,7 +16,7 @@
 package org.kie.integration.eap.maven.model.graph;
 
 import org.kie.integration.eap.maven.model.common.PathFilter;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.List;

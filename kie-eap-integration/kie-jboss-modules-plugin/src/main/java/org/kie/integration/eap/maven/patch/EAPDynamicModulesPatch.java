@@ -13,7 +13,7 @@ import org.kie.integration.eap.maven.template.assembly.EAPAssemblyTemplate;
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPArtifactsHolder;
 import org.kie.integration.eap.maven.util.EAPConstants;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.LinkedList;

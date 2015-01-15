@@ -17,8 +17,8 @@ package org.kie.integration.eap.maven.model.graph.distribution;
 
 import org.kie.integration.eap.maven.model.common.PathFilter;
 import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.graph.Exclusion;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Exclusion;
 
 import java.util.Collection;
 

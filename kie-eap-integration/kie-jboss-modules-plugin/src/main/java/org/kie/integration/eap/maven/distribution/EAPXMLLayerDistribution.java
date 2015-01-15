@@ -28,7 +28,7 @@ import org.kie.integration.eap.maven.model.graph.distribution.EAPModuleGraphDist
 import org.kie.integration.eap.maven.model.graph.distribution.EAPModulesDistributionGraph;
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPXMLUtils;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

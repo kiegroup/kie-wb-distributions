@@ -29,8 +29,8 @@ import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.model.resource.EAPArtifactResource;
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPConstants;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.resolution.ArtifactResolutionException;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.resolution.ArtifactResolutionException;
 
 import java.util.Collection;
 import java.util.Properties;

@@ -17,11 +17,11 @@ package org.kie.integration.eap.maven.util;
 
 import org.kie.integration.eap.maven.exception.EAPModuleResourceDuplicationException;
 import org.kie.integration.eap.maven.model.module.EAPModule;
-import org.sonatype.aether.RepositorySystem;
-import org.sonatype.aether.RepositorySystemSession;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.repository.RemoteRepository;
-import org.sonatype.aether.resolution.ArtifactResolutionException;
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.repository.RemoteRepository;
+import org.eclipse.aether.resolution.ArtifactResolutionException;
 
 import java.util.*;
 

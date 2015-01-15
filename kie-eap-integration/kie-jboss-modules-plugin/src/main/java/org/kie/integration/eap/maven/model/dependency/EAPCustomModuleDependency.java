@@ -17,7 +17,7 @@ package org.kie.integration.eap.maven.model.dependency;
 
 import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.util.EAPConstants;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.HashSet;

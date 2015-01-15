@@ -38,8 +38,8 @@ import org.kie.integration.eap.maven.model.resource.EAPVersionMismatchedArtifact
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPArtifactsHolder;
 import org.kie.integration.eap.maven.util.EAPConstants;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.resolution.ArtifactResolutionException;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.resolution.ArtifactResolutionException;
 
 import java.io.IOException;
 import java.util.*;
@@ -331,7 +331,7 @@ public class EAPStaticModulesScanner implements EAPModulesScanner {
                 for (Exclusion exclusion : exclusions) {
                     if (logger != null) logger.info("Excluding [" + exclusion.getGroupId() + EAPConstants.ARTIFACT_SEPARATOR + exclusion.getArtifactId() + "] from module " + module.getUniqueId());
                     // Work with aether model.
-                    org.sonatype.aether.graph.Exclusion e = new org.sonatype.aether.graph.Exclusion(exclusion.getGroupId(), exclusion.getArtifactId(), null, null);
+                    org.eclipse.aether.graph.Exclusion e = new org.eclipse.aether.graph.Exclusion(exclusion.getGroupId(), exclusion.getArtifactId(), null, null);
                     result.addExclusion(e);
                 }
             }

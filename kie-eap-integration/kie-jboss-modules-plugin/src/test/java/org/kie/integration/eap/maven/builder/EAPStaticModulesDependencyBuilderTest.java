@@ -21,8 +21,8 @@ import org.junit.Test;
 import org.kie.integration.eap.maven.EAPBaseDependencyNodeTest;
 import org.kie.integration.eap.maven.model.dependency.EAPCustomModuleDependency;
 import org.kie.integration.eap.maven.model.dependency.EAPModuleMissingDependency;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.graph.DependencyNode;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.DependencyNode;
 
 import java.util.List;
 

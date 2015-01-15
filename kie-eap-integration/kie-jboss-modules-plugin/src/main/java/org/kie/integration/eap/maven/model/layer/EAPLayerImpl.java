@@ -18,7 +18,7 @@ package org.kie.integration.eap.maven.model.layer;
 import org.kie.integration.eap.maven.exception.EAPModulesDefinitionException;
 import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.HashMap;
