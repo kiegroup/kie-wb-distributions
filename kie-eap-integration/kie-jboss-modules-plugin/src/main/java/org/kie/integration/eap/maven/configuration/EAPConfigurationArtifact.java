@@ -16,7 +16,7 @@
 package org.kie.integration.eap.maven.configuration;
 
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.LinkedList;

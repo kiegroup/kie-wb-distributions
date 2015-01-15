@@ -24,9 +24,9 @@ import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.model.module.EAPModule;
 import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPArtifactsHolder;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.graph.Dependency;
-import org.sonatype.aether.graph.DependencyNode;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.graph.DependencyNode;
 
 import java.util.Collection;
 import java.util.LinkedList;

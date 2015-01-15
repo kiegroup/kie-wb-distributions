@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.kie.integration.eap.maven.EAPBaseTest;
 import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.mockito.Mock;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import java.util.Collection;
 import java.util.Properties;

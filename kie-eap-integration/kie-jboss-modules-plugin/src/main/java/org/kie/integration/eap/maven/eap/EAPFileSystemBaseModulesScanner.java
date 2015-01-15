@@ -22,7 +22,7 @@ import org.kie.integration.eap.maven.util.EAPArtifactUtils;
 import org.kie.integration.eap.maven.util.EAPConstants;
 import org.kie.integration.eap.maven.util.EAPFileUtils;
 import org.kie.integration.eap.maven.util.EAPXMLUtils;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

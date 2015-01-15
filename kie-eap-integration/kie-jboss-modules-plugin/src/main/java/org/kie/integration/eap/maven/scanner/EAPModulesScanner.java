@@ -22,7 +22,7 @@ import org.kie.integration.eap.maven.model.dependency.EAPStaticDistributionModul
 import org.kie.integration.eap.maven.model.dependency.EAPStaticModuleDependency;
 import org.kie.integration.eap.maven.model.layer.EAPLayer;
 import org.kie.integration.eap.maven.util.EAPArtifactsHolder;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import java.util.Collection;
 

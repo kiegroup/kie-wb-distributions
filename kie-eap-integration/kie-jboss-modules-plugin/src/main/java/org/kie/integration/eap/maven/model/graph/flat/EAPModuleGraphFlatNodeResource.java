@@ -20,7 +20,7 @@ import org.kie.integration.eap.maven.model.graph.EAPModuleGraphNodeResource;
 import org.kie.integration.eap.maven.model.resource.EAPArtifactOptionalResource;
 import org.kie.integration.eap.maven.model.resource.EAPModuleResource;
 import org.kie.integration.eap.maven.model.resource.EAPUnresolvableArtifactResource;
-import org.sonatype.aether.graph.Exclusion;
+import org.eclipse.aether.graph.Exclusion;
 
 import java.util.Collection;
 
