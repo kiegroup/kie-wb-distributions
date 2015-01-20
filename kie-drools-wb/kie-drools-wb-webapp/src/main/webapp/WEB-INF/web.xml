@@ -189,14 +189,6 @@ profile in pom.xml to use that. -->
   <servlet>
     <servlet-name>M2Servlet</servlet-name>
     <servlet-class>org.guvnor.m2repo.backend.server.M2Servlet</servlet-class>
-    <init-param>
-      <param-name>includes-path</param-name>
-      <param-value>git://**,default://**</param-value>
-    </init-param>
-    <init-param>
-      <param-name>excludes-path</param-name>
-      <param-value>file://**</param-value>
-    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>M2Servlet</servlet-name>
