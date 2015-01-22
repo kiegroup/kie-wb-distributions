@@ -44,6 +44,7 @@ import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.menu.AboutMenuBuilder;
+import org.kie.workbench.common.widgets.client.menu.ResetPerspectivesMenuBuilder;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.kie.workbench.drools.client.home.HomeProducer;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
@@ -168,6 +169,8 @@ public class KieDroolsWorkbenchEntryPoint {
                         .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
                         .endMenu()
                         .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
+                        .endMenu()
+                        .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
                         .endMenu()
                         .build();
 
