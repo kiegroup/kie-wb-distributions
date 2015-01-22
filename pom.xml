@@ -113,7 +113,7 @@
 
   <profiles>
 
-    <profile>
+<!--    <profile>
       <id>fullProfile</id>
       <activation>
         <property>
@@ -123,7 +123,7 @@
       <modules>
         <module>kie-eap-integration</module>
       </modules>
-    </profile>
+    </profile>-->
 
     <profile>
       <id>productizedProfile</id>
