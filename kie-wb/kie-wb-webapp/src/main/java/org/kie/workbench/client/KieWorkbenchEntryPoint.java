@@ -15,37 +15,24 @@
  */
 package org.kie.workbench.client;
 
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_ADMINISTRATION;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_APPS;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_ARTIFACT_REPO;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_CONTRIBUTORS;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_DASHBOARD_BUILDER;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_DEPLOYMENTS;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_EXTENSIONS;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_JOBS;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_MANAGEMENT;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_PLUGIN_MANAGEMENT;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_PROCESS_DASHBOARD;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_PROCESS_DEFINITIONS;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_PROCESS_INSTANCES;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_PROJECT_AUTHORING;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_SEARCH;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.F_TASKS;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.G_AUTHORING;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.G_DASHBOARDS;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.G_DEPLOY;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.G_PROCESS_MANAGEMENT;
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.G_TASKS;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.inject.Inject;
 
+import com.google.gwt.animation.client.Animation;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.i18n.client.LocaleInfo;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
+import com.google.gwt.user.client.ui.TextBox;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
@@ -66,6 +53,7 @@ import org.kie.workbench.common.services.shared.preferences.ApplicationPreferenc
 import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.kie.workbench.common.widgets.client.menu.AboutMenuBuilder;
 import org.kie.workbench.common.widgets.client.menu.LanguageSelectorMenuBuilder;
+import org.kie.workbench.common.widgets.client.menu.ResetPerspectivesMenuBuilder;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.menu.CustomSplashHelp;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
@@ -80,16 +68,7 @@ import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
-import com.google.gwt.animation.client.Animation;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.i18n.client.LocaleInfo;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
-import com.google.gwt.user.client.ui.TextBox;
+import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
 
 /**
  *
@@ -199,6 +178,8 @@ public class KieWorkbenchEntryPoint {
                         .endMenu()
                         .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
                         .endMenu()
+                        .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
+                        .endMenu()
                         .build();
 
         menubar.addMenus( menus );
@@ -219,7 +200,7 @@ public class KieWorkbenchEntryPoint {
     private List<? extends MenuItem> getHomeViews() {
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
-     
+
         result.add( MenuFactory.newSimpleItem( constants.Home_Page() ).respondsWith( new Command() {
             @Override
             public void execute() {
