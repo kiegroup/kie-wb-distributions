@@ -106,6 +106,7 @@
             <include>kie-drools-wb-webapp/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants*.properties</include>
           </includes>
           <workDir>.</workDir>
+          <tempDir>.</tempDir>
         </configuration>
       </plugin>
     </plugins>
