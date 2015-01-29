@@ -184,14 +184,6 @@ profile in pom.xml to use that. -->
     <filter-name>Redirect Filter</filter-name>
     <url-pattern>/org.jbpm.designer.jBPMDesigner/*</url-pattern>
   </filter-mapping>
-  <filter>
-    <filter-name>Pluggable Filter</filter-name>
-    <filter-class>org.jbpm.designer.web.filter.impl.PluggableFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>Pluggable Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
   <servlet>
     <display-name>Resource List</display-name>
     <servlet-name>ResourceList</servlet-name>
