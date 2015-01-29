@@ -42,6 +42,7 @@ import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
 import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
+import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.menu.AboutMenuBuilder;
 import org.kie.workbench.common.widgets.client.menu.LanguageSelectorMenuBuilder;
@@ -108,6 +109,9 @@ public class KieDroolsWorkbenchEntryPoint {
     @Inject
     private Caller<AuthenticationService> authService;
 
+    @Inject
+    private Caller<SocialConfigurationService> socialConfigurationService;
+
     @AfterInitialization
     public void startApp() {
         kieSecurityService.call( new RemoteCallback<String>() {
@@ -147,37 +151,42 @@ public class KieDroolsWorkbenchEntryPoint {
     }
 
     private void setupMenu() {
-        final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
+        socialConfigurationService.call( new RemoteCallback<Boolean>() {
+            public void callback( final Boolean socialEnabled ) {
 
-        final Menus menus =
-                MenuFactory.newTopLevelMenu( constants.home() ).withItems( getHomeViews() ).endMenu()
-                        .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
-                        .newTopLevelMenu( constants.deploy() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
-                        .newTopLevelMenu( constants.tasks() ).withItems( getTasksViews() ).endMenu()
-                        .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
-                        .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
 
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "FindForm" );
-                    }
-                } )
-                        .endMenu()
-                        .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
-                        .position( MenuPosition.RIGHT )
-                        .withItems( getRoles() )
-                        .endMenu()
-                        .newTopLevelCustomMenu( iocManager.lookupBean( LanguageSelectorMenuBuilder.class ).getInstance() )
-                        .endMenu()
-                        .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
-                        .endMenu()
-                        .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
-                        .endMenu()
-                        .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
-                        .endMenu()
-                        .build();
+                final Menus menus =
+                        MenuFactory.newTopLevelMenu( constants.home() ).withItems( getHomeViews( socialEnabled ) ).endMenu()
+                                .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
+                                .newTopLevelMenu( constants.deploy() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
+                                .newTopLevelMenu( constants.tasks() ).withItems( getTasksViews() ).endMenu()
+                                .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
+                                .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
 
-        menubar.addMenus( menus );
+                            @Override
+                            public void execute() {
+                                placeManager.goTo( "FindForm" );
+                            }
+                        } )
+                                .endMenu()
+                                .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
+                                .position( MenuPosition.RIGHT )
+                                .withItems( getRoles() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( LanguageSelectorMenuBuilder.class ).getInstance() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
+                                .endMenu()
+                                .build();
+
+                menubar.addMenus( menus );
+            }
+        } ).isSocialEnable();
     }
 
     private List<? extends MenuItem> getRoles() {
@@ -192,7 +201,7 @@ public class KieDroolsWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getHomeViews() {
+    private List<? extends MenuItem> getHomeViews( Boolean socialEnabled ) {
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
@@ -206,21 +215,21 @@ public class KieDroolsWorkbenchEntryPoint {
                 }
             }
         } ).endMenu().build().getItems().get( 0 ) );
+        if ( socialEnabled ) {
+            result.add( MenuFactory.newSimpleItem( constants.timeline() ).respondsWith( new Command() {
+                @Override
+                public void execute() {
+                    placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
+                }
+            } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.timeline() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        result.add( MenuFactory.newSimpleItem( constants.people() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
+            result.add( MenuFactory.newSimpleItem( constants.people() ).respondsWith( new Command() {
+                @Override
+                public void execute() {
+                    placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
+                }
+            } ).endMenu().build().getItems().get( 0 ) );
+        }
         return result;
     }
 

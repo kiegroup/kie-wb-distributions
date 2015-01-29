@@ -49,6 +49,7 @@ import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.resources.i18n.AppConstants;
+import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.kie.workbench.common.widgets.client.menu.AboutMenuBuilder;
@@ -114,6 +115,9 @@ public class KieWorkbenchEntryPoint {
     @Inject
     private Caller<AuthenticationService> authService;
 
+    @Inject
+    private Caller<SocialConfigurationService> socialConfigurationService;
+
     private SuggestBox actionText;
     private TextBox textSuggestBox;
     DefaultSuggestionDisplay suggestionDisplay;
@@ -152,37 +156,40 @@ public class KieWorkbenchEntryPoint {
     }
 
     private void setupMenu() {
+        socialConfigurationService.call( new RemoteCallback<Boolean>() {
+            public void callback( final Boolean socialEnabled ) {
+                final Menus menus =
+                        MenuFactory.newTopLevelMenu( constants.Home() ).withItems( getHomeViews( socialEnabled ) ).endMenu()
+                                .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
+                                .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
+                                .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
+                                .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
+                                .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
+                                .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
+                                .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                            @Override
+                            public void execute() {
+                                placeManager.goTo( "FindForm" );
+                            }
+                        } )
+                                .endMenu()
+                                .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
+                                .position( MenuPosition.RIGHT )
+                                .withItems( getRoles() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( LanguageSelectorMenuBuilder.class ).getInstance() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
+                                .endMenu()
+                                .build();
 
-        final Menus menus =
-                MenuFactory.newTopLevelMenu( constants.Home() ).withItems( getHomeViews() ).endMenu()
-                        .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
-                        .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
-                        .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
-                        .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
-                        .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
-                        .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
-                        .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "FindForm" );
-                    }
-                } )
-                        .endMenu()
-                        .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
-                        .position( MenuPosition.RIGHT )
-                        .withItems( getRoles() )
-                        .endMenu()
-                        .newTopLevelCustomMenu( iocManager.lookupBean( LanguageSelectorMenuBuilder.class ).getInstance() )
-                        .endMenu()
-                        .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
-                        .endMenu()
-                        .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
-                        .endMenu()
-                        .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
-                        .endMenu()
-                        .build();
-
-        menubar.addMenus( menus );
+                menubar.addMenus( menus );
+            }
+        } ).isSocialEnable();
     }
 
     private List<? extends MenuItem> getRoles() {
@@ -197,7 +204,7 @@ public class KieWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getHomeViews() {
+    private List<? extends MenuItem> getHomeViews( Boolean socialEnabled ) {
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
@@ -211,20 +218,21 @@ public class KieWorkbenchEntryPoint {
                 }
             }
         } ).endMenu().build().getItems().get( 0 ) );
+        if ( socialEnabled ) {
+            result.add( MenuFactory.newSimpleItem( constants.Timeline() ).respondsWith( new Command() {
+                @Override
+                public void execute() {
+                    placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
+                }
+            } ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.Timeline() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "SocialHomePagePerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
-
-        result.add( MenuFactory.newSimpleItem( constants.People() ).respondsWith( new Command() {
-            @Override
-            public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
-            }
-        } ).endMenu().build().getItems().get( 0 ) );
+            result.add( MenuFactory.newSimpleItem( constants.People() ).respondsWith( new Command() {
+                @Override
+                public void execute() {
+                    placeManager.goTo( new DefaultPlaceRequest( "UserHomePagePerspective" ) );
+                }
+            } ).endMenu().build().getItems().get( 0 ) );
+        }
         return result;
     }
 
