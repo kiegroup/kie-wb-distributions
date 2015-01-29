@@ -36,7 +36,7 @@
         <property>
           <name>bpms-webapp</name>
         </property>
-        <activeByDefault>true</activeByDefault>
+        <activeByDefault>false</activeByDefault>
       </activation>
       <modules>
         <module>kie-eap-distributions-bpms-webapp</module>
@@ -64,7 +64,7 @@
         <property>
           <name>brms-webapp</name>
         </property>
-        <activeByDefault>true</activeByDefault>
+        <activeByDefault>false</activeByDefault>
       </activation>
       <modules>
         <module>kie-eap-distributions-brms-webapp</module>
