@@ -32,6 +32,10 @@
           <groupId>org.kie.remote</groupId>
           <artifactId>kie-remote-common</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.kie.remote.ws</groupId>
+          <artifactId>kie-remote-ws-common</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
