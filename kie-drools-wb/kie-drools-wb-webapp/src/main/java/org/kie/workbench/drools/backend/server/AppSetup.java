@@ -107,87 +107,95 @@ public class AppSetup {
 
     @PostConstruct
     public void assertPlayground() {
-        final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
-        if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
-            loadExampleRepositories( exampleRepositoriesRoot );
+        try {
+            configurationService.startBatch();
+            final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
+            if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
+                loadExampleRepositories( exampleRepositoriesRoot );
 
-        } else if ( !KieMeta.isProductized() ) {
-            //Only clone examples for Community
-            if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-                Repository repository = createRepository( DROOLS_WB_PLAYGROUND_ALIAS,
-                                                          DROOLS_WB_PLAYGROUND_SCHEME,
-                                                          DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                          DROOLS_WB_PLAYGROUND_UID,
-                                                          DROOLS_WB_PLAYGROUND_PWD );
-                createOU( repository,
-                          OU_NAME,
-                          OU_OWNER );
-            }
-
-        } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
-
-            Repository exampleRepo = createRepository( "repository1",
-                                                       "git",
-                                                       null,
-                                                       "",
-                                                       "" );
-            createOU( exampleRepo,
-                      "example",
-                      "" );
-            createProject( exampleRepo,
-                           "org.kie.example",
-                           "project1",
-                           "1.0.0-SNAPSHOT" );
-        }
-
-        //Define mandatory properties
-        List<ConfigGroup> globalConfigGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
-        boolean globalSettingsDefined = false;
-        for ( ConfigGroup globalConfigGroup : globalConfigGroups ) {
-            if ( GLOBAL_SETTINGS.equals( globalConfigGroup.getName() ) ) {
-                globalSettingsDefined = true;
-
-                ConfigItem<String> runtimeDeployConfig = globalConfigGroup.getConfigItem( "support.runtime.deploy" );
-                if ( runtimeDeployConfig == null ) {
-                    globalConfigGroup.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy", "false" ) );
-                    configurationService.updateConfiguration( globalConfigGroup );
-                } else if ( !runtimeDeployConfig.getValue().equalsIgnoreCase( "false" ) ) {
-                    runtimeDeployConfig.setValue( "false" );
-                    configurationService.updateConfiguration( globalConfigGroup );
+            } else if ( !KieMeta.isProductized() ) {
+                //Only clone examples for Community
+                if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
+                    Repository repository = createRepository( DROOLS_WB_PLAYGROUND_ALIAS,
+                                                              DROOLS_WB_PLAYGROUND_SCHEME,
+                                                              DROOLS_WB_PLAYGROUND_ORIGIN,
+                                                              DROOLS_WB_PLAYGROUND_UID,
+                                                              DROOLS_WB_PLAYGROUND_PWD );
+                    createOU( repository,
+                              OU_NAME,
+                              OU_OWNER );
                 }
-                break;
-            }
-        }
-        if ( !globalSettingsDefined ) {
-            configurationService.addConfiguration( getGlobalConfiguration() );
-        }
 
-        //Define properties required by the Work Items Editor
-        List<ConfigGroup> editorConfigGroups = configurationService.getConfiguration( ConfigType.EDITOR );
-        boolean workItemsEditorSettingsDefined = false;
-        for ( ConfigGroup editorConfigGroup : editorConfigGroups ) {
-            if ( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS.equals( editorConfigGroup.getName() ) ) {
-                workItemsEditorSettingsDefined = true;
-                break;
-            }
-        }
-        if ( !workItemsEditorSettingsDefined ) {
-            configurationService.addConfiguration( getWorkItemElementDefinitions() );
-        }
+            } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
 
-        final KieWorkbenchPolicy policy = new KieWorkbenchPolicy( securityService.loadPolicy() );
-        // register roles
-        for ( final Map.Entry<String, String> entry : policy.entrySet() ) {
-            if ( entry.getKey().startsWith( KieWorkbenchACLImpl.PREFIX_ROLES ) ) {
-                String role = entry.getValue();
-                RolesRegistry.get().registerRole( role );
+                Repository exampleRepo = createRepository( "repository1",
+                                                           "git",
+                                                           null,
+                                                           "",
+                                                           "" );
+                createOU( exampleRepo,
+                          "example",
+                          "" );
+                createProject( exampleRepo,
+                               "org.kie.example",
+                               "project1",
+                               "1.0.0-SNAPSHOT" );
             }
+
+            //Define mandatory properties
+            List<ConfigGroup> globalConfigGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
+            boolean globalSettingsDefined = false;
+            for ( ConfigGroup globalConfigGroup : globalConfigGroups ) {
+                if ( GLOBAL_SETTINGS.equals( globalConfigGroup.getName() ) ) {
+                    globalSettingsDefined = true;
+
+                    ConfigItem<String> runtimeDeployConfig = globalConfigGroup.getConfigItem( "support.runtime.deploy" );
+                    if ( runtimeDeployConfig == null ) {
+                        globalConfigGroup.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy", "false" ) );
+                        configurationService.updateConfiguration( globalConfigGroup );
+                    } else if ( !runtimeDeployConfig.getValue().equalsIgnoreCase( "false" ) ) {
+                        runtimeDeployConfig.setValue( "false" );
+                        configurationService.updateConfiguration( globalConfigGroup );
+                    }
+                    break;
+                }
+            }
+            if ( !globalSettingsDefined ) {
+                configurationService.addConfiguration( getGlobalConfiguration() );
+            }
+
+            //Define properties required by the Work Items Editor
+            List<ConfigGroup> editorConfigGroups = configurationService.getConfiguration( ConfigType.EDITOR );
+            boolean workItemsEditorSettingsDefined = false;
+            for ( ConfigGroup editorConfigGroup : editorConfigGroups ) {
+                if ( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS.equals( editorConfigGroup.getName() ) ) {
+                    workItemsEditorSettingsDefined = true;
+                    break;
+                }
+            }
+            if ( !workItemsEditorSettingsDefined ) {
+                configurationService.addConfiguration( getWorkItemElementDefinitions() );
+            }
+
+            final KieWorkbenchPolicy policy = new KieWorkbenchPolicy( securityService.loadPolicy() );
+            // register roles
+            for ( final Map.Entry<String, String> entry : policy.entrySet() ) {
+                if ( entry.getKey().startsWith( KieWorkbenchACLImpl.PREFIX_ROLES ) ) {
+                    String role = entry.getValue();
+                    RolesRegistry.get().registerRole( role );
+                }
+            }
+            // rest of jbpm wb bootstrap
+            administrationService.bootstrapConfig();
+            administrationService.bootstrapDeployments();
+            // notify components that bootstrap is completed to start post setups
+            applicationStartedEvent.fire( new ApplicationStarted() );
+        } catch ( final Exception e ) {
+            logger.error( "Error during update config", e );
+            throw new RuntimeException( e );
+        } finally {
+            configurationService.endBatch();
         }
-        // rest of jbpm wb bootstrap
-        administrationService.bootstrapConfig();
-        administrationService.bootstrapDeployments();
-        // notify components that bootstrap is completed to start post setups
-        applicationStartedEvent.fire( new ApplicationStarted() );
     }
 
     private void loadExampleRepositories( final String exampleRepositoriesRoot ) {

@@ -97,88 +97,95 @@ public class AppSetup {
 
     @PostConstruct
     public void assertPlayground() {
+        try {
+            configurationService.startBatch();
 
-        final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
-        if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
-            loadExampleRepositories( exampleRepositoriesRoot );
+            final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
+            if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
+                loadExampleRepositories( exampleRepositoriesRoot );
 
-        } else if ( !KieMeta.isProductized() ) {
-            //Only clone examples for Community
-            if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-                administrationService.bootstrapRepository( OU_NAME,
-                                                           JBPM_WB_PLAYGROUND_ALIAS,
-                                                           JBPM_WB_PLAYGROUND_ORIGIN,
-                                                           JBPM_WB_PLAYGROUND_UID,
-                                                           JBPM_WB_PLAYGROUND_PWD );
+            } else if ( !KieMeta.isProductized() ) {
+                //Only clone examples for Community
+                if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
+                    administrationService.bootstrapRepository( OU_NAME,
+                                                               JBPM_WB_PLAYGROUND_ALIAS,
+                                                               JBPM_WB_PLAYGROUND_ORIGIN,
+                                                               JBPM_WB_PLAYGROUND_UID,
+                                                               JBPM_WB_PLAYGROUND_PWD );
 
-                administrationService.bootstrapRepository( OU_NAME,
-                                                           DROOLS_WB_PLAYGROUND_ALIAS,
-                                                           DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                           DROOLS_WB_PLAYGROUND_UID,
-                                                           DROOLS_WB_PLAYGROUND_PWD );
-            }
-
-        } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
-            administrationService.bootstrapRepository( "example",
-                                                       "repository1",
-                                                       null,
-                                                       "",
-                                                       "" );
-            administrationService.bootstrapProject( "repository1",
-                                                    "org.kie.example",
-                                                    "project1",
-                                                    "1.0.0-SNAPSHOT" );
-        }
-
-        // Setup mandatory properties for Drools-Workbench
-        List<ConfigGroup> configGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
-        boolean globalSettingsDefined = false;
-        for ( ConfigGroup configGroup : configGroups ) {
-            if ( GLOBAL_SETTINGS.equals( configGroup.getName() ) ) {
-                globalSettingsDefined = true;
-                ConfigItem<String> runtimeDeployConfig = configGroup.getConfigItem( "support.runtime.deploy" );
-                if ( runtimeDeployConfig == null ) {
-                    configGroup.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy", "true" ) );
-                    configurationService.updateConfiguration( configGroup );
-                } else if ( !runtimeDeployConfig.getValue().equalsIgnoreCase( "true" ) ) {
-                    runtimeDeployConfig.setValue( "true" );
-                    configurationService.updateConfiguration( configGroup );
+                    administrationService.bootstrapRepository( OU_NAME,
+                                                               DROOLS_WB_PLAYGROUND_ALIAS,
+                                                               DROOLS_WB_PLAYGROUND_ORIGIN,
+                                                               DROOLS_WB_PLAYGROUND_UID,
+                                                               DROOLS_WB_PLAYGROUND_PWD );
                 }
-                break;
+
+            } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
+                administrationService.bootstrapRepository( "example",
+                                                           "repository1",
+                                                           null,
+                                                           "",
+                                                           "" );
+                administrationService.bootstrapProject( "repository1",
+                                                        "org.kie.example",
+                                                        "project1",
+                                                        "1.0.0-SNAPSHOT" );
             }
-        }
-        if ( !globalSettingsDefined ) {
-            configurationService.addConfiguration( getGlobalConfiguration() );
-        }
 
-        // Setup properties required by the Work Items Editor
-        List<ConfigGroup> editorConfigGroups = configurationService.getConfiguration( ConfigType.EDITOR );
-        boolean workItemsEditorSettingsDefined = false;
-        for ( ConfigGroup editorConfigGroup : editorConfigGroups ) {
-            if ( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS.equals( editorConfigGroup.getName() ) ) {
-                workItemsEditorSettingsDefined = true;
-                break;
+            // Setup mandatory properties for Drools-Workbench
+            List<ConfigGroup> configGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
+            boolean globalSettingsDefined = false;
+            for ( ConfigGroup configGroup : configGroups ) {
+                if ( GLOBAL_SETTINGS.equals( configGroup.getName() ) ) {
+                    globalSettingsDefined = true;
+                    ConfigItem<String> runtimeDeployConfig = configGroup.getConfigItem( "support.runtime.deploy" );
+                    if ( runtimeDeployConfig == null ) {
+                        configGroup.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy", "true" ) );
+                        configurationService.updateConfiguration( configGroup );
+                    } else if ( !runtimeDeployConfig.getValue().equalsIgnoreCase( "true" ) ) {
+                        runtimeDeployConfig.setValue( "true" );
+                        configurationService.updateConfiguration( configGroup );
+                    }
+                    break;
+                }
             }
-        }
-        if ( !workItemsEditorSettingsDefined ) {
-            configurationService.addConfiguration( getWorkItemElementDefinitions() );
-        }
-
-        final KieWorkbenchPolicy policy = new KieWorkbenchPolicy( securityService.loadPolicy() );
-        // register roles
-        for ( final Map.Entry<String, String> entry : policy.entrySet() ) {
-            if ( entry.getKey().startsWith( KieWorkbenchACLImpl.PREFIX_ROLES ) ) {
-                String role = entry.getValue();
-                RolesRegistry.get().registerRole( role );
+            if ( !globalSettingsDefined ) {
+                configurationService.addConfiguration( getGlobalConfiguration() );
             }
+
+            // Setup properties required by the Work Items Editor
+            List<ConfigGroup> editorConfigGroups = configurationService.getConfiguration( ConfigType.EDITOR );
+            boolean workItemsEditorSettingsDefined = false;
+            for ( ConfigGroup editorConfigGroup : editorConfigGroups ) {
+                if ( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS.equals( editorConfigGroup.getName() ) ) {
+                    workItemsEditorSettingsDefined = true;
+                    break;
+                }
+            }
+            if ( !workItemsEditorSettingsDefined ) {
+                configurationService.addConfiguration( getWorkItemElementDefinitions() );
+            }
+
+            final KieWorkbenchPolicy policy = new KieWorkbenchPolicy( securityService.loadPolicy() );
+            // register roles
+            for ( final Map.Entry<String, String> entry : policy.entrySet() ) {
+                if ( entry.getKey().startsWith( KieWorkbenchACLImpl.PREFIX_ROLES ) ) {
+                    String role = entry.getValue();
+                    RolesRegistry.get().registerRole( role );
+                }
+            }
+            // rest of jbpm wb bootstrap
+            administrationService.bootstrapConfig();
+            administrationService.bootstrapDeployments();
+
+            // notify components that bootstrap is completed to start post setups
+            applicationStartedEvent.fire( new ApplicationStarted() );
+        } catch ( final Exception e ) {
+            logger.error( "Error during update config", e );
+            throw new RuntimeException( e );
+        } finally {
+            configurationService.endBatch();
         }
-
-        // rest of jbpm wb bootstrap
-        administrationService.bootstrapConfig();
-        administrationService.bootstrapDeployments();
-
-        // notify components that bootstrap is completed to start post setups
-        applicationStartedEvent.fire( new ApplicationStarted() );
     }
 
     private void loadExampleRepositories( final String exampleRepositoriesRoot ) {
