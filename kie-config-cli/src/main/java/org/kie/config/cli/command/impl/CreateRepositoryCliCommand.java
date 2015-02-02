@@ -15,6 +15,8 @@
  */
 package org.kie.config.cli.command.impl;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,10 +40,27 @@ public class CreateRepositoryCliCommand implements CliCommand {
         WeldContainer container = context.getContainer();
 
         RepositoryService repositoryService = container.instance().select( RepositoryService.class ).get();
+        String alias = null;
 
         InputReader input = context.getInput();
-        System.out.print( ">>Repository alias:" );
-        String alias = input.nextLine();
+        while (alias == null) {
+            System.out.print(">>Repository alias:");
+            alias = input.nextLine();
+
+            try {
+                new URI("default://localhost/" + alias);
+            } catch (URISyntaxException e) {
+                System.err.print(">> Invalid value for repository alias: '" + alias + "'");
+                alias = null;
+            }
+
+        }
+
+        Repository repoCheck = repositoryService.getRepository(alias);
+        if (repoCheck != null) {
+            result.append(" Repository with alias: '" + alias + "' already exists, cannot proceed");
+            return result.toString();
+        }
 
         System.out.print( ">>User:" );
         String user = input.nextLine();
