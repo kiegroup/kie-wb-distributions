@@ -93,6 +93,7 @@ public class GitRepositoryHelper implements RepositoryFactoryHelper {
         final Object command = repo.getEnvironment().get( "org.kie.config.cli.command.CliCommand" );
         if ( command != null ) {
             //The Repository was created using kie-config-cli and hence cannot be cloned from the workbench
+            repo.getEnvironment().put( "init", true );
         } else {
             //Override with a workbench URL
             final String url = context.getScheme() + "://" + context.getUser() + "@" + context.getHost() + ":" + context.getPort() + "/" + repo.getAlias();
