@@ -175,11 +175,25 @@
           <groupId>org.jboss.errai</groupId>
           <artifactId>errai-bus</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-api</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-structure-backend</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-backend</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -204,6 +218,14 @@
         <exclusion>
           <groupId>org.uberfire</groupId>
           <artifactId>uberfire-client-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-backend</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -242,6 +264,14 @@
         <exclusion>
           <groupId>org.guvnor</groupId>
           <artifactId>guvnor-workingset-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.kie.uberfire</groupId>
+          <artifactId>kie-uberfire-social-activities-backend</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
