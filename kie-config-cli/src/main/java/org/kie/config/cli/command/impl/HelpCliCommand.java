@@ -51,7 +51,8 @@ public class HelpCliCommand implements CliCommand {
 		helpMessage.append("\t remove-role-org-unit - remove role(s) from organizational unit\n");
         helpMessage.append("\t add-role-project - add role(s) to project\n");
         helpMessage.append("\t remove-role-project - remove role(s) from project\n");
-        helpMessage.append("\t push-changes - pushes changes to upstream repository (only online mode)");
+        helpMessage.append("\t push-changes - pushes changes to upstream repository (only online mode)\n");
+		helpMessage.append("\t fetch-changes - fetches changes from upstream repository (only online mode)");
 		return helpMessage.toString();
 	}
 

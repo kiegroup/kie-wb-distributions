@@ -29,6 +29,7 @@ import org.kie.config.cli.command.impl.CreateOrganizationalUnitCliCommand;
 import org.kie.config.cli.command.impl.CreateRepositoryCliCommand;
 import org.kie.config.cli.command.impl.DiscardCliCommand;
 import org.kie.config.cli.command.impl.ExitCliCommand;
+import org.kie.config.cli.command.impl.FetchGitRepositoryCliCommand;
 import org.kie.config.cli.command.impl.HelpCliCommand;
 import org.kie.config.cli.command.impl.ListDeploymentsCliCommand;
 import org.kie.config.cli.command.impl.ListOrganizationalUnitCliCommand;
@@ -70,6 +71,7 @@ public class CliCommandRegistry {
         commands.put("add-role-project", new AddRoleToProjectCliCommand());
         commands.put("remove-role-project", new RemoveRoleFromProjectCliCommand());
         commands.put("push-changes", new PushGitRepositoryCliCommand());
+		commands.put("fetch-changes", new FetchGitRepositoryCliCommand());
 	}
 	
 	public static CliCommandRegistry get() {
