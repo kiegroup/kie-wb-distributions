@@ -33,7 +33,6 @@
   <modules>
     <module>kie-drools-wb-webapp</module>
     <module>kie-drools-wb-distribution-wars</module>
-    <module>kie-drools-wb-distribution</module>
   </modules>
 
   <build>
@@ -94,6 +93,7 @@
       </activation>
       <modules>
         <module>kie-drools-wb-home-page-community</module>
+        <module>kie-drools-wb-distribution</module>
       </modules>
     </profile>
 
