@@ -20,7 +20,7 @@
     <version.jbossas7>7.1.1.Final</version.jbossas7>
     <version.wildfly8>8.1.0.Final</version.wildfly8>
 
-    <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.3.x -->
+    <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.4.x -->
     <!-- These properties are overriden in profiles kie-drools-wb and kie-wb -->
     <deployable.groupId>org.kie</deployable.groupId>
     <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
@@ -315,13 +315,13 @@
     </profile>
 
     <profile>
-      <id>eap63x</id>
+      <id>eap64x</id>
       <properties>
-        <!-- The EAP 6.3.x binary can't be anonymously downloaded due to license issues. It can be downloaded manually
+        <!-- The EAP 6.4.x binary can't be anonymously downloaded due to license issues. It can be downloaded manually
              and for free (e.g. from http://jbossas.jboss.org/downloads.html) and the zip location needs to be specified
              here or via system property when running the build (don't forget to use the `file://` prefix when
              referencing the zip from local filesystem). -->
-        <eap63x.download.url>valid-url-for-eap-6.3.x-needs-to-be-specified-here-or-via-cmd-line</eap63x.download.url>
+        <eap64x.download.url>valid-url-for-eap-6.4.x-needs-to-be-specified-here-or-via-cmd-line</eap64x.download.url>
       </properties>
       <build>
         <plugins>
@@ -330,10 +330,11 @@
             <artifactId>cargo-maven2-plugin</artifactId>
             <configuration>
               <container>
+                <!-- jboss74x works for now, but should be updated to jboss75x once Cargo supports EAP 6.4 -->
                 <containerId>jboss74x</containerId>
                 <type>installed</type>
                 <zipUrlInstaller>
-                  <url>${eap63x.download.url}</url>
+                  <url>${eap64x.download.url}</url>
                 </zipUrlInstaller>
               </container>
               <configuration>
