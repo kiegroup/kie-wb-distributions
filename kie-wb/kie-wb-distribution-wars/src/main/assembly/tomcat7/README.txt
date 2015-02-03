@@ -42,9 +42,11 @@ Installation notes
 
     create setenv.sh (or setenv.bat) file inside TOMCAT_HOME/bin and add following:
 
-    CATALINA_OPTS="-Xmx512M -XX:MaxPermSize=512m -Dbtm.root=$CATALINA_HOME -Dbitronix.tm.configuration=$CATALINA_HOME/conf/btm-config.properties -Djbpm.tsr.jndi.lookup=java:comp/env/TransactionSynchronizationRegistry"
+    CATALINA_OPTS="-Xmx512M -XX:MaxPermSize=512m -Dbtm.root=$CATALINA_HOME -Dbitronix.tm.configuration=$CATALINA_HOME/conf/btm-config.properties -Djbpm.tsr.jndi.lookup=java:comp/env/TransactionSynchronizationRegistry  -Djava.security.auth.login.config=$CATALINA_HOME/webapps/kie-wb/WEB-INF/classes/login.config"
 
     NOTE: this is an example for unix like systems for Windows $CATALINA_HOME needs to be replaced with windows env variable or absolute path
+    NOTE: java.security.auth.login.config value includes name of the folder in which application is deployed by default it assumes kie-wb so ensure that matches real installation.
+        login.config file can be externalized as well meaning be placed outside of war file.
 
 
     *******************************************************************************
