@@ -43,12 +43,6 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-drools-wb-distribution-wars</artifactId>
-      <classifier>jboss-as7</classifier>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-distribution-wars</artifactId>
       <classifier>eap6_4</classifier>
       <type>war</type>
     </dependency>
