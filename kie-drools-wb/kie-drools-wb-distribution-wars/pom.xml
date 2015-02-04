@@ -107,7 +107,6 @@
         <configuration>
           <finalName>kie-drools-wb-${project.version}</finalName>
           <descriptors>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-as-7.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-eap-6_4.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-wildfly-8.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-tomcat-7.xml</descriptor>
@@ -149,7 +148,6 @@
             <configuration>
               <finalName>kie-drools-wb-${project.version}</finalName>
               <descriptors>
-                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-jboss-as-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-jboss-eap-6_4-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-jboss-wildfly-8-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-tomcat-7-redhat.xml</descriptor>
