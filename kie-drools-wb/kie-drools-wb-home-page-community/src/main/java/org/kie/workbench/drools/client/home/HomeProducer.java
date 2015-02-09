@@ -61,15 +61,6 @@ public class HomeProducer {
                                                                    }
                                                                } );
 
-        final SectionEntry s1_c = ModelUtils.makeSectionEntry( constants.Asset_Management(),
-                                                               new Command() {
-
-                                                                   @Override
-                                                                   public void execute() {
-                                                                       placeManager.goTo( "Asset Management" );
-                                                                   }
-                                                               } );
-
         final SectionEntry s1_d = ModelUtils.makeSectionEntry( constants.artifactRepository(),
                                                                new Command() {
 
@@ -111,7 +102,6 @@ public class HomeProducer {
         s1.setRoles( kieACL.getGrantedRoles( G_AUTHORING ) );
         s1_a.setRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) );
         s1_b.setRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) );
-        s1_c.setRoles( kieACL.getGrantedRoles( F_ASSET_MANAGEMENT ) );
         s1_d.setRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) );
         s1_e.setRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) );
 
@@ -120,7 +110,6 @@ public class HomeProducer {
 
         s1.addEntry( s1_a );
         s1.addEntry( s1_b );
-        s1.addEntry( s1_c );
         s1.addEntry( s1_d );
         s1.addEntry( s1_e );
 
