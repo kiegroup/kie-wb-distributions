@@ -143,14 +143,14 @@
 
 <div id="login-wrapper" class="png_bg">
   <div id="login-top">
-    <img src="images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
+    <img src="<%= request.getContextPath() %>/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
   </div>
 
   <div id="login-content">
 
     <h3><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></h3>
 
-    <form action="kie-wb.html" method="GET">
+    <form action="<%= request.getContextPath() %>/kie-wb.html" method="GET">
       <p>
         <% if (request.getParameter("gwt.codesvr") != null) { %>
         <input type="hidden" name="gwt.codesvr" value="<%= org.owasp.encoder.Encode.forHtmlAttribute(request.getParameter("gwt.codesvr")) %>"/>
