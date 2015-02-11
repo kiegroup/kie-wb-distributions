@@ -2,20 +2,14 @@ package org.kie.workbench.backend;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 
 import org.jbpm.runtime.manager.impl.jpa.EntityManagerFactoryManager;
 import org.jbpm.services.cdi.Selectable;
 import org.jbpm.services.cdi.producer.UserGroupInfoProducer;
-import org.jbpm.services.task.audit.JPATaskLifeCycleEventListener;
-import org.jbpm.services.task.lifecycle.listeners.BAMTaskEventListener;
-
-import org.kie.api.task.TaskLifeCycleEventListener;
 import org.kie.internal.task.api.UserInfo;
 
 public class BpmDependenciesProducer {
@@ -40,19 +34,6 @@ public class BpmDependenciesProducer {
     @Inject
     @Selectable
     private UserGroupInfoProducer userGroupInfoProducer;
-
-    @Produces
-    @Named("BAM")
-    public TaskLifeCycleEventListener produceBAMListener() {
-        return new BAMTaskEventListener(true);
-    }
-
-    @Produces
-    @Named("Logs")
-    public TaskLifeCycleEventListener produceTaskAuditListener() {
-        return new JPATaskLifeCycleEventListener(true);
-    }
-
 
     @Produces
     public org.kie.api.task.UserGroupCallback produceSelectedUserGroupCalback() {
