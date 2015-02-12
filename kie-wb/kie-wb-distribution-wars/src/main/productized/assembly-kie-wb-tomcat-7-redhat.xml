@@ -198,6 +198,10 @@
           <!-- Servlet API -->
           <exclude>WEB-INF/lib/javax.servlet-api-*.jar</exclude>
 
+          <!-- Legacy log system -->
+          <exclude>WEB-INF/lib/log4j-*.jar</exclude>
+          <exclude>WEB-INF/log4j.xml</exclude>
+
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
