@@ -163,6 +163,10 @@
           <exclude>WEB-INF/lib/btm-*.jar</exclude>
           <exclude>WEB-INF/lib/jta-*.jar</exclude>
 
+          <!-- Legacy log system -->
+          <exclude>WEB-INF/lib/log4j-*.jar</exclude>
+          <exclude>WEB-INF/log4j.xml</exclude>
+
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
