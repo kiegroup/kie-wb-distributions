@@ -32,6 +32,10 @@
   <name>KIE Drools Workbench - Webapp</name>
   <description>KIE Drools Workbench - Webapp</description>
 
+  <properties>
+    <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.kie</groupId>
@@ -884,7 +888,7 @@
             <module>org.kie.workbench.drools.FastCompiledKIEDroolsWebapp</module>
             <draftCompile>true</draftCompile>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
-            <localWorkers>1</localWorkers>
+            <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
             <logLevel>INFO</logLevel>
             <runTarget>kie-drools-wb.html</runTarget>
             <extraJvmArgs>-Xmx4096m -Xms1024m -XX:MaxPermSize=256m -XX:PermSize=128m\
@@ -1157,6 +1161,9 @@
           <name>full</name>
         </property>
       </activation>
+      <properties>
+        <gwt.compiler.localWorkers>4</gwt.compiler.localWorkers>
+      </properties>
       <build>
         <pluginManagement>
           <plugins>
@@ -1166,7 +1173,6 @@
               <configuration>
                 <module>org.kie.workbench.drools.KIEDroolsWebapp</module>
                 <draftCompile>false</draftCompile>
-                <localWorkers>4</localWorkers>
               </configuration>
             </plugin>
           </plugins>
