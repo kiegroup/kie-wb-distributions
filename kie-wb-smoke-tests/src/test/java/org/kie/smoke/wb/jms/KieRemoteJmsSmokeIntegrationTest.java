@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.jms.Queue;
 import javax.naming.InitialContext;
 
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -31,6 +32,7 @@ import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
+import org.kie.internal.runtime.conf.RuntimeStrategy;
 import org.kie.remote.client.api.RemoteJmsRuntimeEngineBuilder;
 import org.kie.remote.client.api.RemoteJmsRuntimeEngineFactory;
 import org.kie.remote.client.api.RemoteRuntimeEngineFactory;
@@ -52,6 +54,14 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
     private final String deploymentId = KJAR_DEPLOYMENT_ID;
     private final InitialContext remoteInitialContext = RemoteRuntimeEngineFactory.getRemoteJbossInitialContext("localhost", MARY_USER, MARY_PASSWORD);
 
+    /**
+     * Clone, build and deploy the test deployment unit.
+     */
+    @BeforeClass
+    public static void setupDeployment() throws Exception {
+        deployJbpmPlayGroundIntegrationTests(RuntimeStrategy.SINGLETON);
+    }
+    
     // Helper methods ------------------------------------------------------------------------------------------------------------
 
     /**
