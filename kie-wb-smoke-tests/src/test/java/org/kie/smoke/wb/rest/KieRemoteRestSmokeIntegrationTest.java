@@ -131,11 +131,12 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         // @formatter:on
     }
 
+    /**
+     * Clone, build and deploy the test deployment unit.
+     */
     @BeforeClass
-    public static void waitForDeployedKmodulesToLoad() throws InterruptedException {
-        long sleep = 2;
-        logger.info("Waiting " + sleep + " secs for server to finish starting up.");
-        Thread.sleep(sleep * 1000);
+    public static void setupDeployment() throws Exception {
+        deployJbpmPlayGroundIntegrationTests(RuntimeStrategy.SINGLETON);
     }
 
     @AfterClass
@@ -143,24 +144,6 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         long sleep = 1;
         logger.info("Waiting " + sleep + " secs for tx's on server to close.");
         Thread.sleep(sleep * 1000);
-    }
-
-    /**
-     * Clone, build and deploy the test deployment unit.
-     */
-    @BeforeClass
-    public static void setupDeployment() throws Exception {
-        RestRepositoryDeploymentUtil deployUtil = new RestRepositoryDeploymentUtil(deploymentUrl, MARY_USER, MARY_PASSWORD, RuntimeStrategy.SINGLETON);
-        deployUtil.setSleepSeconds(5);
-        deployUtil.setTotalTries(6);
-
-        String repoUrl = "https://github.com/droolsjbpm/jbpm-playground.git";
-        String repositoryName = "playground";
-        String project = "integration-tests";
-        String deploymentId = "org.test:kjar:1.0";
-        String orgUnit = "integTestUser";
-        deployUtil.createAndDeployRepository(repoUrl, repositoryName, project, deploymentId, orgUnit, MARY_USER);
-        Thread.sleep(5000); // TODO don't use hardcoded wait, but rather polling
     }
 
     @Test

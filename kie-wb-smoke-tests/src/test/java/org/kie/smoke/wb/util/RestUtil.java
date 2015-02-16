@@ -28,6 +28,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
+import org.jboss.resteasy.util.GenericType;
 import org.jboss.resteasy.util.HttpHeaderNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +56,7 @@ public class RestUtil {
     public static ClientResponse<?> get(ClientRequest restRequest, MediaType mediaType) {
         return httpMethodReturnResponse(GET, restRequest, mediaType, 200);
     }
-
+    
     /**
      * Call the POST HTTP method on the given request
      * @param restRequest The {@link ClientRequest} instance with the request
@@ -88,6 +89,17 @@ public class RestUtil {
         return httpMethodReturnType(GET, restRequest, mediaType, 200, responseType);
     }
 
+    /**
+     * Call the GET HTTP method on the given request and return the actual entity returned
+     * @param restRequest The {@link ClientRequest} instance with the request information
+     * @param mediaType The {@link MediaType} that should be used with the request
+     * @param responseType The {@link Class} of the return type
+     * @return The actual entity returned by the request: this can be null
+     */
+    public static <T> T get(ClientRequest restRequest, MediaType mediaType, GenericType<T> genericType) {
+        return httpMethodReturnType(GET, restRequest, mediaType, 200, genericType);
+    }
+    
     /**
      * Call the POST HTTP method on the given request and return the actual entity returned
      * @param restRequest The {@link ClientRequest} instance with the request information
@@ -147,18 +159,22 @@ public class RestUtil {
         responseObj.releaseConnection();
     }
 
-    
     private static ClientResponse<?> httpMethodReturnResponse(int type, ClientRequest restRequest, MediaType mediaType, int status) {
         setAcceptHeader(restRequest, mediaType);
         ClientResponse<?> responseObj = logAndExecuteRequest(type, restRequest);
         return checkResponse(responseObj, status);
     }
 
+    private static <T> T httpMethodReturnType(int type, ClientRequest restRequest, MediaType mediaType, int status, GenericType<T> genericType) {
+        ClientResponse<?> responseObj = httpMethodReturnResponse(type, restRequest, mediaType, status);
+        return getResponseEntityViaGenericType(responseObj, genericType);
+    }
+    
     private static <T> T httpMethodReturnType(int type, ClientRequest restRequest, MediaType mediaType, int status, Class<T> responseType) {
         ClientResponse<?> responseObj = httpMethodReturnResponse(type, restRequest, mediaType, status);
         return getResponseEntity(responseObj, responseType);
     }
-
+    
     private static final int GET = 0;
     private static final int POST = 1;
     private static final int DEL = 2;
@@ -213,6 +229,21 @@ public class RestUtil {
             responseEntity = responseObj.getEntity(responseType);
         } catch( Exception e ) { 
             String msg = "Unable to serialize " + responseType.getSimpleName() + " instance";
+            logger.error(msg, e);
+            responseObj.resetStream();
+            logger.error("Body of response:\n {}", responseObj.getEntity(String.class));
+            fail(msg);
+            throw new RuntimeException("Fail should keep this exception from being thrown!");
+        }
+        return responseEntity;
+    }
+   
+    private static <T extends Object,U> T getResponseEntityViaGenericType(ClientResponse<?> responseObj, GenericType<T> genericType ) {
+        T responseEntity = null;
+        try { 
+            responseEntity = responseObj.getEntity(genericType);
+        } catch( Exception e ) { 
+            String msg = "Unable to serialize " + genericType.getType().getSimpleName() +"<" + ((Class) genericType.getGenericType()).getSimpleName() + "> instance";
             logger.error(msg, e);
             responseObj.resetStream();
             logger.error("Body of response:\n {}", responseObj.getEntity(String.class));
