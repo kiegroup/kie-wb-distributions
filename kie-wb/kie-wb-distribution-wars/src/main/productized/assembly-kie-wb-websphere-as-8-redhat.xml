@@ -33,6 +33,10 @@
       <outputDirectory>.</outputDirectory>
     </fileSet>
     <fileSet>
+      <directory>${project.basedir}/src/main/productized/banner</directory>
+      <outputDirectory>banner</outputDirectory>
+    </fileSet>
+    <fileSet>
       <directory>${project.basedir}/src/main/productized/images</directory>
       <outputDirectory>images</outputDirectory>
     </fileSet>
@@ -82,7 +86,7 @@
           <exclude>not_authorized.jsp</exclude>
           <exclude>rest-api.jsp</exclude>
 
-          <exclude>images/logo.png</exclude>
+          <exclude>banner/logo.png</exclude>
 
           <exclude>META-INF/context.xml</exclude>
           <exclude>WEB-INF/jetty-web.xml</exclude>
