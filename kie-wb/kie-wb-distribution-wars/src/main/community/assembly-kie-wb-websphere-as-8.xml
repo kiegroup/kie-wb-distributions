@@ -74,10 +74,6 @@
           <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
-          <!-- Exclude non-JUL logging stuff (i.e: log4j, logback) -->
-          <exclude>WEB-INF/log4j.xml</exclude>
-          <exclude>WEB-INF/classes/logback.xml</exclude>
-          <exclude>WEB-INF/lib/logback-*.jar</exclude>
 
           <!-- remove shared services with btm -->
           <exclude>WEB-INF/lib/jbpm-shared-services-*-btm.jar</exclude>
