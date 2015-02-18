@@ -125,4 +125,7 @@ public interface AppConstants
     String Asset_Management();
 
     String Apps();
+
+    String logoBannerError();
+
 }

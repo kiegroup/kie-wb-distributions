@@ -15,6 +15,10 @@
       <outputDirectory>.</outputDirectory>
     </fileSet>
     <fileSet>
+      <directory>${project.basedir}/src/main/productized/banner</directory>
+      <outputDirectory>banner</outputDirectory>
+    </fileSet>
+    <fileSet>
       <directory>${project.basedir}/src/main/productized/images</directory>
       <outputDirectory>images</outputDirectory>
     </fileSet>
@@ -57,7 +61,7 @@
           <exclude>logout.jsp</exclude>
           <exclude>not_authorized.jsp</exclude>
 
-          <exclude>images/logo.png</exclude>
+          <exclude>banner/logo.png</exclude>
 
           <exclude>WEB-INF/jetty-web.xml</exclude>
           <exclude>WEB-INF/web.xml</exclude>

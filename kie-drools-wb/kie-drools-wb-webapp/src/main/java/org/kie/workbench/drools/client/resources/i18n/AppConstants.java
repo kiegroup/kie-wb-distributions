@@ -109,4 +109,7 @@ public interface AppConstants
     String Tasks_List();
 
     String Apps();
+
+    String logoBannerError();
+
 }
