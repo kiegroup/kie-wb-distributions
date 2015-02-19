@@ -65,7 +65,7 @@
       <groupId>org.sonatype.sisu</groupId>
       <artifactId>sisu-inject-bean</artifactId>
     </dependency>
-    <!-- WAS8 requires JUL -->
+    <!-- WAS8 uses JUL, so just bind slf4j to that -->
     <dependency>
      <groupId>org.slf4j</groupId>
      <artifactId>slf4j-jdk14</artifactId>
