@@ -58,7 +58,7 @@
       <includes>
         <include>org.apache.ant:ant:jar</include>
         <include>org.apache.ant:ant-launcher:jar</include>
-        <include>org.slf4j:sl:jar</include>
+        <include>org.slf4j:slf4j-jdk14:jar</include>
         <include>org.hibernate:hibernate-entitymanager</include>
         <include>org.hibernate:hibernate-core</include>
         <include>org.hibernate:hibernate-validator</include>
@@ -98,6 +98,15 @@
           <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/org/jbpm/services/task/identity/UserGroupsAssignmentsOne.mvel</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/drools/backend/server/weblogic/</exclude>
+
+          <!-- Logging-->
+          <!-- Exclude non JUL stuff (e.g. log4j and logback). All logging calls should be delegated
+               to JUL as that is the logging implementation used in WAS. This way admins/users can
+               easily change the logging config without modifying files inside the WAR (e.g. the logback.xml). -->
+          <exclude>WEB-INF/log4j.xml</exclude>
+          <exclude>WEB-INF/lib/log4j-*.jar</exclude>
+          <exclude>WEB-INF/classes/logback.xml</exclude>
+          <exclude>WEB-INF/lib/logback-*.jar</exclude>
 
           <!-- UF client related -->
           <exclude>WEB-INF/lib/uberfire-js-*.jar</exclude>
@@ -276,10 +285,6 @@
           <exclude>WEB-INF/lib/jboss-interceptors-*.jar</exclude>
           <exclude>WEB-INF/lib/stax-*.jar</exclude>
           <exclude>WEB-INF/lib/jms-*.jar</exclude>
-
-          <!-- Legacy log system -->
-          <exclude>WEB-INF/lib/log4j-*.jar</exclude>
-          <exclude>WEB-INF/log4j.xml</exclude>
 
         </excludes>
       </unpackOptions>
