@@ -196,8 +196,9 @@ public class RestRepositoryDeploymentUtil {
            } catch( Exception e ) { 
                fail("Unable to get status from request response: "  + e.getMessage());
            }
+           ++tryCount;
        }
-       ++tryCount;
+
        try { 
            logger.info("Sleeping {} while waiting for GET {}{} => {} (expecting {})", 
                    sleepSecs, url, jobId, resultClass.getSimpleName(), expectedStatus );
