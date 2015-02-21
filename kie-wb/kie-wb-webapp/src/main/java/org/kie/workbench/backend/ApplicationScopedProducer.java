@@ -90,7 +90,6 @@ public class ApplicationScopedProducer {
     @PreDestroy
     private void cleanup() {
         config.dispose();
-        ioService.dispose();
     }
 
     @Produces
