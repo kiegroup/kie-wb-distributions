@@ -6,16 +6,12 @@ import static org.junit.Assert.*;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.guvnor.rest.client.CreateOrCloneRepositoryRequest;
 import org.guvnor.rest.client.CreateOrganizationalUnitRequest;
-import org.guvnor.rest.client.InstallProjectRequest;
 import org.guvnor.rest.client.JobRequest;
 import org.guvnor.rest.client.JobResult;
 import org.guvnor.rest.client.JobStatus;
@@ -23,10 +19,6 @@ import org.guvnor.rest.client.OrganizationalUnit;
 import org.guvnor.rest.client.RemoveRepositoryRequest;
 import org.guvnor.rest.client.RepositoryRequest;
 import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
-import org.jboss.resteasy.client.core.BaseClientResponse;
-import org.jboss.resteasy.spi.BadRequestException;
-import org.jboss.resteasy.spi.ReaderException;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
 import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult;
 import org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentUnit;
@@ -177,40 +169,40 @@ public class RestRepositoryDeploymentUtil {
         
         return jr;
     }
- 
-    private <T,S> void waitForJobToFinish(String jobId, String url, Class<T> resultClass, S expectedStatus ) { 
-       S lastStatus = null;
-       
-       boolean notDone = true;
-       int tryCount = 0;
-       while( notDone && tryCount <= totalTries ) {
-           if( expectedStatus.equals(lastStatus) ) { 
-                  notDone = false;
-                  continue;
-           }
-           ClientRequest restRequest = createRequest( url + jobId );
-           T jobResult = get(restRequest, mediaType, resultClass);
-           try { 
-               Method getStatusMethod = resultClass.getMethod("getStatus");
-               lastStatus = (S) getStatusMethod.invoke(jobResult);
-           } catch( Exception e ) { 
-               fail("Unable to get status from request response: "  + e.getMessage());
-           }
-           ++tryCount;
-           try {
-               logger.debug("Sleeping {}s while waiting for GET {}{} => {} (expecting {})",
-                       sleepSecs, url, jobId, resultClass.getSimpleName(), expectedStatus);
-               Thread.sleep(sleepSecs * 1000);
-           } catch (InterruptedException e) {
-               logger.error("Interrupted when waiting for job completion!");
-           }
-       }
-       if (tryCount > totalTries) {
-           fail("Timeout reached while waiting for job to finish. Expected job status=" + expectedStatus +
-                   ", last known status=" + lastStatus);
-       }
 
-       assertEquals("Wrong job status!", expectedStatus, lastStatus);
+    private <T, S> void waitForJobToFinish(String jobId, String url, Class<T> resultClass, S expectedStatus) {
+        S lastStatus = null;
+
+        boolean notDone = true;
+        int tryCount = 0;
+        while (notDone && tryCount <= totalTries) {
+            if (expectedStatus.equals(lastStatus)) {
+                notDone = false;
+                continue;
+            }
+            ClientRequest restRequest = createRequest(url + jobId);
+            T jobResult = get(restRequest, mediaType, resultClass);
+            try {
+                Method getStatusMethod = resultClass.getMethod("getStatus");
+                lastStatus = (S) getStatusMethod.invoke(jobResult);
+            } catch (Exception e) {
+                fail("Unable to get status from request response: " + e.getMessage());
+            }
+            ++tryCount;
+            try {
+                logger.debug("Sleeping {}s while waiting for GET {}{} => {} (expecting {})",
+                        sleepSecs, url, jobId, resultClass.getSimpleName(), expectedStatus);
+                Thread.sleep(sleepSecs * 1000);
+            } catch (InterruptedException e) {
+                logger.error("Interrupted when waiting for job completion!");
+            }
+        }
+        if (tryCount > totalTries) {
+            fail("Timeout reached while waiting for job to finish. Expected job status=" + expectedStatus +
+                    ", last known status=" + lastStatus);
+        }
+
+        assertEquals("Wrong job status!", expectedStatus, lastStatus);
     }
    
     // Helper methods -------------------------------------------------------------------------------------------------------------
