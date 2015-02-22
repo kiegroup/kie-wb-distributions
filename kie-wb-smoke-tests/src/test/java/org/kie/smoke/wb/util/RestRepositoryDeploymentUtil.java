@@ -149,7 +149,7 @@ public class RestRepositoryDeploymentUtil {
      * @param object The object to be serialized
      * @return The JSON {@link String} instance
      */
-    private String serializeToJsonString(Object object) { 
+    private String serializeToJsonString(Object object) {
         String input = null;
         try {
             input = new ObjectMapper().writeValueAsString(object);
@@ -183,7 +183,7 @@ public class RestRepositoryDeploymentUtil {
        
        boolean notDone = true;
        int tryCount = 0;
-       while( notDone && tryCount < totalTries ) { 
+       while( notDone && tryCount <= totalTries ) {
            if( expectedStatus.equals(lastStatus) ) { 
                   notDone = false;
                   continue;
@@ -197,15 +197,20 @@ public class RestRepositoryDeploymentUtil {
                fail("Unable to get status from request response: "  + e.getMessage());
            }
            ++tryCount;
+           try {
+               logger.debug("Sleeping {}s while waiting for GET {}{} => {} (expecting {})",
+                       sleepSecs, url, jobId, resultClass.getSimpleName(), expectedStatus);
+               Thread.sleep(sleepSecs * 1000);
+           } catch (InterruptedException e) {
+               logger.error("Interrupted when waiting for job completion!");
+           }
+       }
+       if (tryCount > totalTries) {
+           fail("Timeout reached while waiting for job to finish. Expected job status=" + expectedStatus +
+                   ", last known status=" + lastStatus);
        }
 
-       try { 
-           logger.info("Sleeping {} while waiting for GET {}{} => {} (expecting {})", 
-                   sleepSecs, url, jobId, resultClass.getSimpleName(), expectedStatus );
-           Thread.sleep(sleepSecs*1000);
-       } catch( Exception e ) { 
-           logger.error("Unable to sleep: " + e.getMessage(), e);
-       }
+       assertEquals("Wrong job status!", expectedStatus, lastStatus);
     }
    
     // Helper methods -------------------------------------------------------------------------------------------------------------
