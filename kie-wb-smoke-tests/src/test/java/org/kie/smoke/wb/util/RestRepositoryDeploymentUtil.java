@@ -59,7 +59,7 @@ public class RestRepositoryDeploymentUtil {
             // environment created by the steps below
         }
 
-        JobRequest createOrgUnitJob = createOrganizationalUnit(orgUnitName, this.getClass().getSimpleName(), orgUnitName, user);
+        JobRequest createOrgUnitJob = createOrganizationalUnit(orgUnitName, this.getClass().getSimpleName(), orgUnitName);
         waitForJobToFinish(createOrgUnitJob.getJobId(), "jobs/", JobResult.class, JobStatus.SUCCESS);
         JobRequest createRepoJob = createRepository(repositoryName, orgUnitName, repoUrl);
         waitForJobToFinish(createRepoJob.getJobId(), "jobs/", JobResult.class, JobStatus.SUCCESS);
