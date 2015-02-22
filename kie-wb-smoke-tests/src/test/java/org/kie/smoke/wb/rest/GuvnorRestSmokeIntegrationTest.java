@@ -54,8 +54,8 @@ import org.slf4j.LoggerFactory;
 public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegrationTest {
     private static Logger logger = LoggerFactory.getLogger(GuvnorRestSmokeIntegrationTest.class);
 
-    private final int maxTries = 10;
-    private final int jobCompleteSleepSecs = 30;
+    private final int maxTries = 60;
+    private final int jobCompleteSleepSecs = 1;
 
     private final MediaType mediaType = MediaType.APPLICATION_JSON_TYPE;
 
@@ -197,7 +197,7 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             logger.debug("]] " + convertObjectToJsonString(projectList));
             
             assertNotNull( "Null project list", projectList );
-            assertFalse( "Empty project list", projectList.isEmpty() );
+
             for( ProjectResponse project : projectList ) { 
                assertNotEquals( "Test project should have been deleted", testProjectName, project.getName() );
             }
@@ -304,9 +304,9 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             assertEquals(jobResult.getJobId(), jobId);
             jobStatus = jobResult.getStatus();
             ++wait;
-        } while (jobStatus.equals(JobStatus.APPROVED) && wait < maxTries);
-        
-        if( wait < maxTries ) { 
+        } while ((jobStatus.equals(JobStatus.ACCEPTED) || jobStatus.equals(JobStatus.APPROVED)) && wait < maxTries);
+
+        if( wait < maxTries ) {
             assertEquals("Job does not have expected status", expectedStatus, jobStatus);
         }
         assertTrue("Too many tries!", wait < maxTries);
@@ -428,19 +428,17 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
         {
             // rest/organizationalunits/{ou} DELETE
             ClientRequest restRequest = requestHelper.createRequest("organizationalunits/" + ouList.get(1).getName());
-            RemoveOrganizationalUnitRequest removeOrgUnitRequest = delete(restRequest, mediaType, RemoveOrganizationalUnitRequest.class);
+            RemoveOrganizationalUnitRequest removeOrgUnitRequest = delete(restRequest, mediaType, 202, RemoveOrganizationalUnitRequest.class);
             logger.debug("]] " + convertObjectToJsonString(removeOrgUnitRequest));
             assertNotNull("organizational unit request", removeOrgUnitRequest);
+            waitForJobToComplete(deploymentUrl, removeOrgUnitRequest.getJobId(), removeOrgUnitRequest.getStatus(), requestHelper);
+
         }
         
         {
-            // rest/organizationalunits/{ou} GET
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits/");
-            OrganizationalUnit orgUnitRequest = get(restRequest, mediaType, OrganizationalUnit.class);
-            logger.debug("]] " + convertObjectToJsonString(orgUnitRequest));
-            assertNotNull("organizational unit request", orgUnitRequest);
-
-            assertFalse("repository should have been deleted from organizational unit", orgUnitRequest.getRepositories().contains(repoName));
+            // verify the OU was deleted - the GET request should return 404
+            ClientRequest restRequest = requestHelper.createRequest("organizationalunits/" + ouList.get(1).getName());
+            get(restRequest, mediaType, 404, String.class);
         }
     }
 }
