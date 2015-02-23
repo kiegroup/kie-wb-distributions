@@ -29,7 +29,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +36,6 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.net.util.Base64;
-import org.jboss.resteasy.client.ClientRequest;
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -58,7 +56,6 @@ import org.kie.remote.client.api.RemoteRuntimeEngineFactory;
 import org.kie.remote.client.jaxb.ClientJaxbSerializationProvider;
 import org.kie.remote.client.jaxb.JaxbTaskSummaryListResponse;
 import org.kie.services.client.serialization.JaxbSerializationProvider;
-import org.kie.services.client.serialization.JsonSerializationProvider;
 import org.kie.services.client.serialization.jaxb.impl.audit.AbstractJaxbHistoryObject;
 import org.kie.services.client.serialization.jaxb.impl.audit.JaxbHistoryLogList;
 import org.kie.services.client.serialization.jaxb.impl.audit.JaxbProcessInstanceLog;
@@ -69,8 +66,6 @@ import org.kie.services.client.serialization.jaxb.impl.process.JaxbProcessDefini
 import org.kie.services.client.serialization.jaxb.impl.process.JaxbProcessInstanceResponse;
 import org.kie.smoke.wb.AbstractWorkbenchIntegrationTest;
 import org.kie.smoke.wb.category.KieWbSmoke;
-import org.kie.smoke.wb.util.RestRepositoryDeploymentUtil;
-import org.kie.smoke.wb.util.RestRequestHelper;
 import org.kie.tests.MyType;
 import org.kie.tests.Person;
 import org.kie.tests.Request;
@@ -78,6 +73,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Category(KieWbSmoke.class)
+@SuppressWarnings("unchecked")
 public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrationTest {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRemoteRestSmokeIntegrationTest.class);
@@ -86,38 +82,19 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
 
     private final String deploymentId;
     private final KModuleDeploymentUnit deploymentUnit;
-    private RuntimeStrategy strategy = RuntimeStrategy.SINGLETON;
 
-    private MediaType mediaType;
-    private int timeout;
-    private static final int DEFAULT_TIMEOUT = 10;
+    private String mediaType;
 
     public KieRemoteRestSmokeIntegrationTest() {
         this.deploymentId = KJAR_DEPLOYMENT_ID;
-        this.mediaType = MediaType.APPLICATION_XML_TYPE; // TODO run the tests with both XML and JSON?
-        this.strategy = RuntimeStrategy.SINGLETON;
-        this.timeout = 1000;
+        this.mediaType = MediaType.APPLICATION_XML; // TODO run the tests with both XML and JSON?
         this.deploymentUnit = new KModuleDeploymentUnit(GROUP_ID, ARTIFACT_ID, VERSION);
         assertEquals("Returned deployment unit identifier is incorrect!", deploymentId, deploymentUnit.getIdentifier());
     }
 
-    private static JaxbSerializationProvider jaxbSerializationProvider;
-
-    {
-        Class<?>[] extraClasses = {MyType.class, Person.class, Request.class};
-        jaxbSerializationProvider = ClientJaxbSerializationProvider.newInstance(Arrays.asList(extraClasses));
-
-    }
-
-    private JsonSerializationProvider jsonSerializationProvider = new JsonSerializationProvider();
-
     /**
      * Helper methods
      */
-
-    private RestRequestHelper getRestRequestHelper(URL deploymentUrl, String user, String password) {
-        return RestRequestHelper.newInstance(deploymentUrl, user, password, timeout, mediaType);
-    }
 
     private RuntimeEngine getRemoteRuntime(URL deploymentUrl, String user, String password) {
         // @formatter:off
@@ -151,17 +128,19 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         // test with normal RestRequestHelper
         String user = MARY_USER;
         String password = MARY_PASSWORD;
-        RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl, user, password);
 
-        ClientRequest httpRequest = requestHelper.createRequest("deployment/");
-        JaxbDeploymentUnitList depList = get(httpRequest, mediaType, JaxbDeploymentUnitList.class);
+        JaxbDeploymentUnitList depList = get(deploymentUrl, "rest/deployment/", mediaType, 
+                200, user, password,
+                JaxbDeploymentUnitList.class);
+        
         assertNotNull("Null answer!", depList);
         assertNotNull("Null deployment list!", depList.getDeploymentUnitList());
         assertTrue("Empty deployment list!", depList.getDeploymentUnitList().size() > 0);
 
         String deploymentId = depList.getDeploymentUnitList().get(0).getIdentifier();
-        httpRequest = requestHelper.createRequest("deployment/" + deploymentId);
-        JaxbDeploymentUnit dep = get(httpRequest, mediaType, JaxbDeploymentUnit.class);
+        JaxbDeploymentUnit dep = get(deploymentUrl, "rest/deployment/" + deploymentId, mediaType,
+                200, user, password, 
+                JaxbDeploymentUnit.class);
 
         assertNotNull("Null answer!", dep);
         assertNotNull("Null deployment list!", dep);
@@ -199,16 +178,19 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         //restTests.urlsHistoryLogs(deploymentUrl, MARY_USER, MARY_PASSWORD);
         String user = MARY_USER;
         String password = MARY_PASSWORD;
-        RestRequestHelper helper = getRestRequestHelper(deploymentUrl, user, password);
         {
             // Start process
-            ClientRequest httpRequest = helper.createRequest("runtime/" + deploymentId + "/process/" + SCRIPT_TASK_VAR_PROCESS_ID + "/start?map_x=initVal");
-            JaxbProcessInstanceResponse processInstance = post(httpRequest, mediaType, 200, JaxbProcessInstanceResponse.class);
+            JaxbProcessInstanceResponse processInstance = post(deploymentUrl, 
+                    "rest/runtime/" + deploymentId + "/process/" + SCRIPT_TASK_VAR_PROCESS_ID + "/start?map_x=initVal",
+                    mediaType, 
+                    200, user, password, 
+                    JaxbProcessInstanceResponse.class);
             long scriptTaskVarProcInstId = processInstance.getId();
 
             // instances/
-            httpRequest = helper.createRequest("history/instances");
-            JaxbHistoryLogList historyLogList = get(httpRequest, mediaType, JaxbHistoryLogList.class);
+            JaxbHistoryLogList historyLogList = get(deploymentUrl, "rest/history/instances", mediaType, 
+                    200, user, password,  
+                    JaxbHistoryLogList.class);
             List<Object> auditEventList = historyLogList.getResult();
 
             assertFalse("Empty list of audit events.", auditEventList.isEmpty());
@@ -237,8 +219,10 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
             // instance/{procInstId}
             ProcessInstanceLog origProcInstLog = ((ProcessInstanceLog) auditEventList.get(0));
             long procInstId = origProcInstLog.getProcessInstanceId();
-            httpRequest = helper.createRequest("history/instance/" + origProcInstLog.getProcessInstanceId());
-            JaxbProcessInstanceLog procInstLog = get(httpRequest, mediaType, JaxbProcessInstanceLog.class);
+            JaxbProcessInstanceLog procInstLog = get(deploymentUrl, "rest/history/instance/" + origProcInstLog.getProcessInstanceId(), 
+                    mediaType, 
+                    200, user, password, 
+                    JaxbProcessInstanceLog.class);
             assertNotNull("Null process instance log!", procInstLog);
             assertEquals("Log process instance id",
                     procInstId, procInstLog.getProcessInstanceId().longValue());
@@ -248,8 +232,9 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
             // TODO: instance/{procInstId}/child
 
             // instance/{procInstId}/node
-            httpRequest = helper.createRequest("history/instance/" + procInstId + "/node");
-            historyLogList = get(httpRequest, mediaType, JaxbHistoryLogList.class);
+            historyLogList = get(deploymentUrl, "rest/history/instance/" + procInstId + "/node", mediaType, 
+                    200, user, password, 
+                    JaxbHistoryLogList.class);
             assertNotNull("Null process instance log!", historyLogList);
             auditEventList = historyLogList.getResult();
             assertTrue("Empty audit event list!", auditEventList != null && !auditEventList.isEmpty());
@@ -259,9 +244,9 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
             // TODO: instance/{procInstId}/node/{nodeId}
 
             // instance/{procInstId}/variable/{variable}
-            httpRequest = helper.createRequest("history/instance/" + scriptTaskVarProcInstId + "/variable/x");
-            logger.debug(">> [runtime]" + httpRequest.getUri());
-            historyLogList = get(httpRequest, mediaType, JaxbHistoryLogList.class);
+            historyLogList = get(deploymentUrl, "rest/history/instance/" + scriptTaskVarProcInstId + "/variable/x", mediaType,
+                    200, user, password, 
+                    JaxbHistoryLogList.class);
             List<AbstractJaxbHistoryObject> historyVarLogList = historyLogList.getHistoryLogList();
 
             for (int i = 0; i < historyVarLogList.size(); ++i) {
@@ -276,9 +261,11 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
 
         // process/{procDefId}
         {
-            ClientRequest httpRequest
-                    = helper.createRequest("runtime/" + deploymentId + "/process/" + OBJECT_VARIABLE_PROCESS_ID);
-            JaxbProcessDefinition procDef = get(httpRequest, mediaType, JaxbProcessDefinition.class);
+            JaxbProcessDefinition procDef = get(deploymentUrl,
+                    "rest/runtime/" + deploymentId + "/process/" + OBJECT_VARIABLE_PROCESS_ID, 
+                    mediaType, 
+                    200, user, password, 
+                    JaxbProcessDefinition.class);
             assertNotNull("Empty process definition!", procDef);
             assertEquals("Process definition id", OBJECT_VARIABLE_PROCESS_ID, procDef.getId());
         }
@@ -286,15 +273,17 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
         {
             String varId = "myobject";
             String varVal = "10";
-            ClientRequest httpRequest
-                    = helper.createRequest("runtime/" + deploymentId + "/process/" + OBJECT_VARIABLE_PROCESS_ID + "/start?map_" + varId + "=" + varVal);
-            JaxbProcessInstanceResponse procInstResp = post(httpRequest, mediaType, 200, JaxbProcessInstanceResponse.class);
+            JaxbProcessInstanceResponse procInstResp = post(deploymentUrl, 
+                    "rest/runtime/" + deploymentId + "/process/" + OBJECT_VARIABLE_PROCESS_ID + "/start?map_" + varId + "=" + varVal,
+                    mediaType, 
+                    200, user, password, 
+                    JaxbProcessInstanceResponse.class);
             long objVarProcInstId = procInstResp.getResult().getId();
 
             // variable/{varId}
-
-            httpRequest = helper.createRequest("history/variable/" + varId);
-            JaxbHistoryLogList jhll = get(httpRequest, mediaType, JaxbHistoryLogList.class);
+            JaxbHistoryLogList jhll = get(deploymentUrl, "rest/history/variable/" + varId, mediaType,
+                    200, user, password, 
+                    JaxbHistoryLogList.class);
             List<VariableInstanceLog> viLogs = new ArrayList<VariableInstanceLog>();
             if (jhll != null) {
                 List<Object> history = jhll.getResult();
@@ -317,9 +306,9 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
             // TODO: variable/{varId}/{value}
 
             // history/variable/{varId}/instances
-
-            httpRequest = helper.createRequest("history/variable/" + varId + "/instances");
-            jhll = get(httpRequest, mediaType, JaxbHistoryLogList.class);
+            jhll = get(deploymentUrl, "rest/history/variable/" + varId + "/instances", mediaType,
+                    200, user, password,
+                    JaxbHistoryLogList.class);
 
             assertNotNull("Empty ProcesInstanceLog list", jhll);
             List<ProcessInstanceLog> piLogs = new ArrayList<ProcessInstanceLog>();
@@ -487,70 +476,70 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
 
     @Test
     public void testRestUrlsGroupAssignmentProcess() throws Exception {
-        RestRequestHelper maryReqHelper = RestRequestHelper.newInstance(deploymentUrl, MARY_USER, MARY_PASSWORD);
-        RestRequestHelper johnReqHelper = RestRequestHelper.newInstance(deploymentUrl, JOHN_USER, JOHN_PASSWORD);
-
-        ClientRequest httpRequest = maryReqHelper.createRequest(
-                "runtime/" + deploymentId + "/process/" + GROUP_ASSSIGNMENT_PROCESS_ID + "/start");
-        JaxbProcessInstanceResponse procInstResp = post(httpRequest, mediaType, 200, JaxbProcessInstanceResponse.class);
+        JaxbProcessInstanceResponse procInstResp = post(deploymentUrl,
+                "rest/runtime/" + deploymentId + "/process/" + GROUP_ASSSIGNMENT_PROCESS_ID + "/start", 
+                mediaType, 
+                200, MARY_USER, MARY_PASSWORD,
+                JaxbProcessInstanceResponse.class);
         assertEquals(ProcessInstance.STATE_ACTIVE, procInstResp.getState());
         long procInstId = procInstResp.getId();
 
         // assert the task
-        TaskSummary taskSummary = getTaskSummary(maryReqHelper, procInstId, Status.Ready);
+        TaskSummary taskSummary = getTaskSummary(procInstId, Status.Ready, MARY_USER, MARY_PASSWORD);
         long taskId = taskSummary.getId();
         assertNull(taskSummary.getActualOwner());
         assertNull(taskSummary.getPotentialOwners());
         assertEquals("Task 1", taskSummary.getName());
 
         // complete 'Task 1' as mary
-        httpRequest = maryReqHelper.createRequest("task/" + taskId + "/claim");
-        post(httpRequest, mediaType, 200);
-
-        httpRequest = maryReqHelper.createRequest("task/" + taskId + "/start");
-        post(httpRequest, mediaType, 200);
-        httpRequest = maryReqHelper.createRequest("task/" + taskId + "/complete");
-        post(httpRequest, mediaType, 200);
+        post(deploymentUrl, "rest/task/" + taskId + "/claim", mediaType,
+               200, MARY_USER, MARY_PASSWORD);
+        post(deploymentUrl, "rest/task/" + taskId + "/start", mediaType,
+               200, MARY_USER, MARY_PASSWORD);
+        post(deploymentUrl, "rest/task/" + taskId + "/complete", mediaType,
+               200, MARY_USER, MARY_PASSWORD);
 
         // now make sure that the next task has been assigned to the
         // correct person. it should be mary.
-        taskSummary = getTaskSummary(maryReqHelper, procInstId, Status.Reserved);
+        taskSummary = getTaskSummary(procInstId, Status.Reserved, MARY_USER, MARY_PASSWORD);
         assertEquals("Task 2", taskSummary.getName());
         assertEquals(MARY_USER, taskSummary.getActualOwner().getId());
         taskId = taskSummary.getId();
 
         // complete 'Task 2' as john
-        httpRequest = maryReqHelper.createRequest("task/" + taskId + "/release");
-        post(httpRequest, mediaType, 200);
-        httpRequest = johnReqHelper.createRequest("task/" + taskId + "/start");
-        post(httpRequest, mediaType, 200);
-        httpRequest = johnReqHelper.createRequest("task/" + taskId + "/complete");
-        post(httpRequest, mediaType, 200);
+        post(deploymentUrl, "rest/task/" + taskId + "/release", mediaType,
+               200, MARY_USER, MARY_PASSWORD);
+        post(deploymentUrl, "rest/task/" + taskId + "/start", mediaType,
+               200, JOHN_USER, JOHN_PASSWORD);
+        post(deploymentUrl, "rest/task/" + taskId + "/complete", mediaType,
+               200, JOHN_USER, JOHN_PASSWORD);
 
         // now make sure that the next task has been assigned to the
         // correct person. it should be john.
-        taskSummary = getTaskSummary(johnReqHelper, procInstId, Status.Reserved);
+        taskSummary = getTaskSummary(procInstId, Status.Reserved, JOHN_USER, JOHN_PASSWORD);
         assertEquals("Task 3", taskSummary.getName());
         assertEquals(JOHN_USER, taskSummary.getActualOwner().getId());
         taskId = taskSummary.getId();
 
         // complete 'Task 3' as john
-        httpRequest = johnReqHelper.createRequest("task/" + taskId + "/start");
-        post(httpRequest, mediaType, 200);
-        httpRequest = johnReqHelper.createRequest("task/" + taskId + "/complete");
-        post(httpRequest, mediaType, 200);
+        post(deploymentUrl, "rest/task/" + taskId + "/start", mediaType,
+               200, JOHN_USER, JOHN_PASSWORD);
+        post(deploymentUrl, "rest/task/" + taskId + "/complete", mediaType,
+               200, JOHN_USER, JOHN_PASSWORD);
 
         // assert process finished
-        httpRequest = maryReqHelper.createRequest("history/instance/" + procInstId);
-        JaxbProcessInstanceLog jaxbProcInstLog = get(httpRequest, mediaType, JaxbProcessInstanceLog.class);
+        JaxbProcessInstanceLog jaxbProcInstLog = get(deploymentUrl, "rest/history/instance/" + procInstId, mediaType, 
+                200, MARY_USER, MARY_PASSWORD,
+                JaxbProcessInstanceLog.class);
         ProcessInstanceLog procInstLog = jaxbProcInstLog.getResult();
         assertEquals("Process instance has not completed!", ProcessInstance.STATE_COMPLETED, procInstLog.getStatus().intValue());
     }
 
-    private TaskSummary getTaskSummary(RestRequestHelper requestHelper, long processInstanceId, Status status) throws Exception {
-        ClientRequest httpRequest = requestHelper.createRequest(
-                "task/query?processInstanceId=" + processInstanceId + "&status=" + status.toString());
-        JaxbTaskSummaryListResponse taskSumListResp = get(httpRequest, mediaType, JaxbTaskSummaryListResponse.class);
+    private TaskSummary getTaskSummary(long processInstanceId, Status status, String user, String password) throws Exception {
+        JaxbTaskSummaryListResponse taskSumListResp = get(deploymentUrl,
+                "rest/task/query?processInstanceId=" + processInstanceId + "&status=" + status.toString(), mediaType,
+                200, user, password,
+                JaxbTaskSummaryListResponse.class);
         List<TaskSummary> taskSumList = taskSumListResp.getResult();
         assertEquals(1, taskSumList.size());
         return taskSumList.get(0);
