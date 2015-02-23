@@ -1,27 +1,28 @@
 package org.kie.smoke.wb.rest;
 
-import static org.junit.Assert.*;
-import static org.kie.smoke.wb.util.RestUtil.delete;
-import static org.kie.smoke.wb.util.RestUtil.get;
-import static org.kie.smoke.wb.util.RestUtil.post;
+import static org.kie.smoke.wb.util.RestUtil.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.kie.smoke.wb.util.RestUtil.postEntity;
+import static org.kie.smoke.wb.util.TestConstants.MARY_PASSWORD;
+import static org.kie.smoke.wb.util.TestConstants.MARY_USER;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.guvnor.rest.client.AddRepositoryToOrganizationalUnitRequest;
 import org.guvnor.rest.client.CompileProjectRequest;
 import org.guvnor.rest.client.CreateOrCloneRepositoryRequest;
@@ -32,21 +33,19 @@ import org.guvnor.rest.client.Entity;
 import org.guvnor.rest.client.JobResult;
 import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.OrganizationalUnit;
+import org.guvnor.rest.client.ProjectRequest;
 import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.RemoveOrganizationalUnitRequest;
 import org.guvnor.rest.client.RemoveRepositoryFromOrganizationalUnitRequest;
 import org.guvnor.rest.client.RemoveRepositoryRequest;
 import org.guvnor.rest.client.RepositoryRequest;
 import org.guvnor.rest.client.RepositoryResponse;
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.util.GenericType;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.kie.smoke.wb.AbstractWorkbenchIntegrationTest;
 import org.kie.smoke.wb.category.KieDroolsWbSmoke;
 import org.kie.smoke.wb.category.KieWbSmoke;
-import org.kie.smoke.wb.util.RestRequestHelper;
-import org.kie.smoke.wb.util.TestConstants;
+import org.kie.smoke.wb.util.RestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,37 +56,16 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
     private final int maxTries = 60;
     private final int jobCompleteSleepSecs = 1;
 
-    private final MediaType mediaType = MediaType.APPLICATION_JSON_TYPE;
+    private final static String mediaType = MediaType.APPLICATION_JSON;
+    private final static String user = MARY_USER;
+    private final static String password = MARY_PASSWORD;
 
     private static final SimpleDateFormat ouSdf = new SimpleDateFormat("yy-MM-dd_HH:mm:ss");
+    private static final Random random = new Random();
 
-    protected static void addToRequestBody(ClientRequest restRequest, Object obj) throws Exception {
-        String body = convertObjectToJsonString(obj);
-        logger.debug("]] " + body);
-        restRequest.body(MediaType.APPLICATION_JSON_TYPE, body);
-    }
-
-    private static ObjectMapper mapper = new ObjectMapper();
-
-    static {
-        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_CONCRETE_AND_ARRAYS);
-    }
-
-    protected static String convertObjectToJsonString(Object object) throws JsonGenerationException, JsonMappingException, IOException {
-        return mapper.writeValueAsString(object);
-    }
-
-    protected static Object convertJsonStringToObject(String jsonStr, Class<?> type) throws JsonParseException, JsonMappingException, IOException {
-        return mapper.readValue(jsonStr, type);
-    }
-
-    private RestRequestHelper getRestRequestHelper(URL deploymentUrl) {
-        return RestRequestHelper.newInstance(deploymentUrl,
-                TestConstants.MARY_USER, TestConstants.MARY_PASSWORD,
-                500,
-                MediaType.APPLICATION_JSON_TYPE);
-    }
-
+    // Test methods ---------------------------------------------------------------------------------------------------------------
+    
+    
     /**
      * Tests the following REST urls:
      * <p/>
@@ -105,12 +83,12 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
      */
     @Test
     public void testManipulatingRepositoriesAndProjects() throws Exception {
-        RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
-        
         {
             // rest/repositories GET
-            ClientRequest restRequest = requestHelper.createRequest("repositories");
-            Collection<RepositoryResponse> repoResponses = get(restRequest, mediaType, new GenericType<Collection<RepositoryResponse>>() {});
+            Collection<RepositoryResponse> repoResponses = get(deploymentUrl,
+                    "rest/repositories", mediaType,
+                    200, user, password, 
+                    Collection.class, RepositoryResponse.class);
             assertFalse("Empty repository list", repoResponses.isEmpty());
             String ufPlaygroundUrl = null;
             for( RepositoryResponse repo : repoResponses ) {
@@ -124,78 +102,114 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
         String orgUnitName = "repo-user-" + ouSdf.format(new Date());
         {
             // rest/organizationalunit POST
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits");
             OrganizationalUnit orgUnit = new OrganizationalUnit();
             orgUnit.setName(orgUnitName);
             orgUnit.setDefaultGroupId("org.kie.smoke");
             orgUnit.setDescription("Test user for the Kie Workbench smoke tests");
             orgUnit.setOwner(this.getClass().getName());
-            addToRequestBody(restRequest, orgUnit);
 
-            CreateOrganizationalUnitRequest createOuRequest = post(restRequest, mediaType, 202, CreateOrganizationalUnitRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(createOuRequest));
+            CreateOrganizationalUnitRequest createOuRequest = postEntity(deploymentUrl, "rest/organizationalunits", mediaType, 
+                    202, user, password, 
+                    orgUnit, CreateOrganizationalUnitRequest.class);
             assertNotNull("create org unit request", createOuRequest);
             assertEquals("job request status", JobStatus.APPROVED, createOuRequest.getStatus());
             String jobId = createOuRequest.getJobId();
 
             // rest/jobs/{jobId} GET
-            waitForJobToComplete(deploymentUrl, jobId, createOuRequest.getStatus(), requestHelper);
+            waitForJobToComplete(deploymentUrl, jobId, createOuRequest.getStatus());
         }
 
         String repoName = UUID.randomUUID().toString();
         {
             // rest/repositories POST
-            ClientRequest restRequest = requestHelper.createRequest("repositories");
             RepositoryRequest newRepo = new RepositoryRequest();
             newRepo.setName(repoName);
             newRepo.setDescription("repo for rest services smoke tests");
             newRepo.setRequestType("new");
             newRepo.setOrganizationlUnitName(orgUnitName);
-            addToRequestBody(restRequest, newRepo);
 
-            CreateOrCloneRepositoryRequest createJobRequest = post(restRequest, mediaType, 202, CreateOrCloneRepositoryRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(createJobRequest));
+            CreateOrCloneRepositoryRequest createJobRequest = postEntity(deploymentUrl, "rest/repositories", mediaType,
+                    202, user, password, 1d, 
+                    newRepo, CreateOrCloneRepositoryRequest.class);
             assertNotNull("create repo job request", createJobRequest);
-            assertEquals("job request status", JobStatus.APPROVED, createJobRequest.getStatus());
-            String jobId = createJobRequest.getJobId();
+            JobStatus requestStatus = createJobRequest.getStatus();
+            assertTrue( "job request status: " + requestStatus, JobStatus.ACCEPTED.equals(requestStatus) || JobStatus.APPROVED.equals(requestStatus) );
 
             // rest/jobs/{jobId} GET
-            waitForJobToComplete(deploymentUrl, jobId, createJobRequest.getStatus(), requestHelper);
+            waitForJobToComplete(deploymentUrl, createJobRequest.getJobId(), createJobRequest.getStatus());
         }
 
-        String testProjectName = "test-project";
-        {
+        { 
             // rest/repositories/{repoName}/projects POST
-            ClientRequest restRequest = requestHelper.createRequest("repositories/" + repoName + "/projects");
+            // - backwards compatibility
             Entity project = new Entity();
-            project.setDescription("test project");
+            project.setDescription("random project");
+            String testProjectName = UUID.randomUUID().toString();
             project.setName(testProjectName);
-            addToRequestBody(restRequest, project);
-            CreateProjectRequest createProjectRequest = post(restRequest, mediaType, 202, CreateProjectRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(createProjectRequest));
-            String jobId = createProjectRequest.getJobId();
+
+            CreateProjectRequest createProjectRequest = postEntity(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType,
+                    202, user, password, 0.5, 
+                    project, CreateProjectRequest.class);
 
             // rest/jobs/{jobId} GET
-            waitForJobToComplete(deploymentUrl, jobId, createProjectRequest.getStatus(), requestHelper);
+            waitForJobToComplete(deploymentUrl, createProjectRequest.getJobId(), createProjectRequest.getStatus());
         }
        
+        String testProjectName = UUID.randomUUID().toString();
+        ProjectRequest newProject = new ProjectRequest();
+        {
+            // rest/repositories/{repoName}/projects POST
+            newProject.setDescription("test get/del project");
+            newProject.setName(testProjectName);
+            String testProjectGroupid = UUID.randomUUID().toString();
+            newProject.setGroupId(testProjectGroupid);
+            String testVersion = "1.0";
+            newProject.setVersion(testVersion);
+            CreateProjectRequest createProjectRequest = postEntity(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType,
+                    202, user, password, 0.5, 
+                    newProject, CreateProjectRequest.class);
+
+            // rest/jobs/{jobId} GET
+            waitForJobToComplete(deploymentUrl, createProjectRequest.getJobId(), createProjectRequest.getStatus());
+        } 
+      
+        // rest/repositories/{repoName}/projects GET
+        Collection<ProjectResponse> projectResponses = get(deploymentUrl,
+                "rest/repositories/" + repoName + "/projects", mediaType,
+                200, user, password, 
+                Collection.class, ProjectResponse.class);
+        
+        assertNotNull( "Null project request list", projectResponses );
+        assertFalse( "Empty project request list", projectResponses.isEmpty() );
+        ProjectRequest foundProjReq = null;
+        for( ProjectRequest projReq : projectResponses ) { 
+           if( testProjectName.equals(projReq.getName()) ) { 
+              foundProjReq = projReq;
+              break;
+           }
+        }
+        assertNotNull( "Could not find project", foundProjReq ); 
+        assertEquals( "Project group id", newProject.getGroupId(), foundProjReq.getGroupId() );
+        assertEquals( "Project version", newProject.getVersion(), foundProjReq.getVersion() );
+      
+        
         {
             // rest/repositories/{repoName}/projects/{projectName} DELETE
-            ClientRequest restRequest = requestHelper.createRequest("repositories/" + repoName + "/projects/" + testProjectName);
-            DeleteProjectRequest delProjectRequest = delete(restRequest, mediaType, 202, DeleteProjectRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(delProjectRequest));
+            DeleteProjectRequest delProjectRequest = delete(deploymentUrl, 
+                    "rest/repositories/" + repoName + "/projects/" + testProjectName, mediaType,
+                    202, user, password,
+                    DeleteProjectRequest.class);
             String jobId = delProjectRequest.getJobId();
 
             // rest/jobs/{jobId} GET
-            waitForJobToComplete(deploymentUrl, jobId, delProjectRequest.getStatus(), requestHelper);
+            waitForJobToComplete(deploymentUrl, jobId, delProjectRequest.getStatus());
         }
       
         {
             // rest/repositories/{repoName}/projects/{projectName} GET
-            ClientRequest restRequest = requestHelper.createRequest("repositories/" + repoName + "/projects" );
-            Collection<ProjectResponse> projectList = get(restRequest, mediaType, new GenericType<Collection<ProjectResponse>>() {});
-            logger.debug("]] " + convertObjectToJsonString(projectList));
-            
+            Collection<ProjectResponse> projectList = get(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType, 
+                    200, user, password,
+                    Collection.class, ProjectResponse.class);
             assertNotNull( "Null project list", projectList );
 
             for( ProjectResponse project : projectList ) { 
@@ -205,31 +219,32 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
         
         {
             // rest/organizationalunits/{ouName}/repositories/{repoName} DELETE
-            ClientRequest restRequest = requestHelper.createRequest("/organizationalunits/" + orgUnitName + "/repositories/" + repoName );
-            RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRequest = delete(restRequest, mediaType, 202, RemoveRepositoryFromOrganizationalUnitRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(remRepoFromOuRequest));
+            RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRequest = delete(deploymentUrl,
+                    "rest/organizationalunits/" + orgUnitName + "/repositories/" + repoName, mediaType,
+                    202, user, password,
+                    RemoveRepositoryFromOrganizationalUnitRequest.class);
             String jobId = remRepoFromOuRequest.getJobId();
 
             // rest/jobs/{jobId} GET
-            waitForJobToComplete(deploymentUrl, jobId, remRepoFromOuRequest.getStatus(), requestHelper);
+            waitForJobToComplete(deploymentUrl, jobId, remRepoFromOuRequest.getStatus());
         }
        
         {
             // rest/repositories/{repoName} DELETE
-            ClientRequest restRequest = requestHelper.createRequest("/repositories/" + repoName );
-            RemoveRepositoryRequest delRepoRequest = delete(restRequest, mediaType, 202, RemoveRepositoryRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(delRepoRequest));
+            RemoveRepositoryRequest delRepoRequest = delete(deploymentUrl, "rest/repositories/" + repoName, mediaType,
+                    202, user, password, 
+                    RemoveRepositoryRequest.class);
             String jobId = delRepoRequest.getJobId();
 
             // rest/jobs/{jobId} GET
-            waitForJobToComplete(deploymentUrl, jobId, delRepoRequest.getStatus(), requestHelper);
+            waitForJobToComplete(deploymentUrl, jobId, delRepoRequest.getStatus());
         }
         
         {
             // rest/repositories GET
-            ClientRequest restRequest = requestHelper.createRequest("repositories/");
-            Collection<RepositoryResponse> repoList = get(restRequest, mediaType, new GenericType<Collection<RepositoryResponse>>() {});
-            logger.debug("]] " + convertObjectToJsonString(repoList));
+            Collection<RepositoryResponse> repoList = get(deploymentUrl, "rest/repositories/", mediaType,
+                    200, user, password, 
+                   Collection.class, RepositoryResponse.class);
 
             assertNotNull( "Null repo list", repoList );
             assertFalse( "Empty repo list", repoList.isEmpty() );
@@ -251,65 +266,70 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
     @Test
     public void testMavenOperations() throws Exception {
         // rest/repositories GET
-        RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
-        ClientRequest restRequest = requestHelper.createRequest("repositories");
-        Collection<Map<String, String>> repoResponses = get(restRequest, mediaType, Collection.class);
+        Collection<RepositoryResponse> repoResponses = get(deploymentUrl, "rest/repositories", mediaType,
+                200, user, password,
+                Collection.class, RepositoryResponse.class);
         assertTrue(repoResponses.size() > 0);
-        String repoName = repoResponses.iterator().next().get("name");
+        String repoName = repoResponses.iterator().next().getName();
 
-        // rest/repositories/{repoName}/projects POST
-        restRequest = requestHelper.createRequest("repositories/" + repoName + "/projects");
-        Entity project = new Entity();
-        project.setDescription("test project");
         String projectName = UUID.randomUUID().toString();
-        project.setName(projectName);
-        addToRequestBody(restRequest, project);
+        {
+            // rest/repositories/{repoName}/projects POST
+            ProjectRequest project = new ProjectRequest();
+            project.setDescription("test project");
+            String groupId = UUID.randomUUID().toString();
+            String version = random.nextInt(1000) + ".0";
+            project.setName(projectName);
+            project.setGroupId(groupId);
+            project.setVersion(version);
+            
+            CreateProjectRequest createProjectRequest = postEntity(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType, 
+                    202, user, password, 
+                    project, 
+                    CreateProjectRequest.class);
+                
+            // rest/jobs/{jobId} GET
+            waitForJobToComplete(deploymentUrl, createProjectRequest.getJobId(), createProjectRequest.getStatus());
+        }
 
-        CreateProjectRequest createProjectRequest = post(restRequest, mediaType, 202, CreateProjectRequest.class);
-        logger.debug("]] " + convertObjectToJsonString(createProjectRequest));
+        {
+            // rest/repositories/{repoName}/projects POST
+            CompileProjectRequest compileRequest = post(deploymentUrl,
+                    "rest/repositories/" + repoName + "/projects/" + projectName + "/maven/compile", mediaType,
+                    202, user, password, 
+                    CompileProjectRequest.class);
 
-        // rest/jobs/{jobId} GET
-        waitForJobToComplete(deploymentUrl, createProjectRequest.getJobId(), createProjectRequest.getStatus(), requestHelper);
+            // rest/jobs/{jobId} GET
+            waitForJobToComplete(deploymentUrl, compileRequest.getJobId(), compileRequest.getStatus());
+        }
 
-        // rest/repositories/{repoName}/projects POST
-        restRequest = requestHelper.createRequest("repositories/" + repoName + "/projects/" + projectName + "/maven/compile");
-        CompileProjectRequest compileRequest = post(restRequest, mediaType, 202, CompileProjectRequest.class);
-        logger.debug("]] " + convertObjectToJsonString(compileRequest));
-
-        // rest/jobs/{jobId} GET
-        waitForJobToComplete(deploymentUrl, createProjectRequest.getJobId(), createProjectRequest.getStatus(), requestHelper);
-
-        // TODO implement GET
-        // rest/repositories/{repoName}/projects GET
-        /** get projects, compare/verify that new project is in list **/
-
-        // TODO implement DELETE
-        // rest/repositories/{repoName}/projects DELETE
-        /** delete projects, verify that list of projects is now one less */
     }
 
-    private void waitForJobToComplete(URL deploymentUrl, String jobId, JobStatus jobStatus, RestRequestHelper requestHelper) throws Exception {
-        waitForJobToComplete(deploymentUrl, jobId, jobStatus, requestHelper, JobStatus.SUCCESS);
+    private JobResult waitForJobToComplete(URL deploymentUrl, String jobId, JobStatus jobStatus) throws Exception {
+        return waitForJobToHaveStatus(deploymentUrl, jobId, jobStatus, JobStatus.SUCCESS);
     }
     
-    private void waitForJobToComplete(URL deploymentUrl, String jobId, JobStatus jobStatus, RestRequestHelper requestHelper, JobStatus expectedStatus) throws Exception {
-        assertEquals("Initial status of request", JobStatus.APPROVED, jobStatus);
-        
+    private JobResult waitForJobToHaveStatus(URL deploymentUrl, String jobId, JobStatus jobStatus, JobStatus expectedStatus ) throws Exception {
+        assertTrue( "Initial status of request should be ACCEPTED or APROVED: " + jobStatus, 
+                jobStatus.equals(JobStatus.ACCEPTED) || jobStatus.equals(JobStatus.APPROVED) );
         int wait = 0;
-        do {
-            Thread.sleep(jobCompleteSleepSecs * 1000);
-            ClientRequest restRequest = requestHelper.createRequest("jobs/" + jobId);
-            JobResult jobResult = get(restRequest, mediaType, JobResult.class);
-            logger.debug("]] " + convertObjectToJsonString(jobResult));
-            assertEquals(jobResult.getJobId(), jobId);
+        JobResult jobResult = null;
+        while( ! jobStatus.equals(JobStatus.SUCCESS) && wait < maxTries ) {
+            jobResult = get(deploymentUrl, "rest/jobs/" + jobId, mediaType,
+                    200, user, password, JobResult.class);
+            assertEquals( jobResult.getJobId(), jobId );
             jobStatus = jobResult.getStatus();
+            if( jobStatus.equals(expectedStatus) ) { 
+                break;
+            } else if( jobStatus.equals(JobStatus.FAIL) ) { 
+                fail( "Request failed." );
+            }
             ++wait;
-        } while ((jobStatus.equals(JobStatus.ACCEPTED) || jobStatus.equals(JobStatus.APPROVED)) && wait < maxTries);
-
-        if( wait < maxTries ) {
-            assertEquals("Job does not have expected status", expectedStatus, jobStatus);
+            Thread.sleep(3*1000);
         }
-        assertTrue("Too many tries!", wait < maxTries);
+        assertTrue( "Too many tries!", wait < maxTries );
+        
+        return jobResult;
     }
 
     /**
@@ -322,31 +342,28 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
      */
     @Test
     public void testManipulatingOUs() throws Exception {
-        // rest/organizaionalunits GET
-        RestRequestHelper requestHelper = getRestRequestHelper(deploymentUrl);
-       
         int origUnitsSize;
         List<OrganizationalUnit> ouList = new ArrayList<OrganizationalUnit>(2);
         {
             // rest/organizationalunits GET
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits");
-            Collection<OrganizationalUnit> orgUnits = get(restRequest, mediaType, Collection.class);
+            Collection<OrganizationalUnit> orgUnits = get(deploymentUrl, "rest/organizationalunits", mediaType,
+                    200, user, password, Collection.class, OrganizationalUnit.class);
             origUnitsSize = orgUnits.size();
         }
 
         {
             // rest/organizationalunits POST
             for( int i = 0; i < 2; ++i ) { 
-                ClientRequest restRequest = requestHelper.createRequest("organizationalunits");
                 OrganizationalUnit orgUnit = new OrganizationalUnit();
                 orgUnit.setDescription("Smoke Tests OU");
                 orgUnit.setName(UUID.randomUUID().toString());
                 orgUnit.setOwner(this.getClass().getSimpleName());
-                addToRequestBody(restRequest, orgUnit);
-                CreateOrganizationalUnitRequest createOURequest = post(restRequest, mediaType, 202, CreateOrganizationalUnitRequest.class);
+                CreateOrganizationalUnitRequest createOURequest = postEntity(deploymentUrl, "rest/organizationalunits", mediaType, 
+                        202, user, password,  
+                        orgUnit, CreateOrganizationalUnitRequest.class);
 
                 // rest/jobs/{jobId}
-                waitForJobToComplete(deploymentUrl, createOURequest.getJobId(), createOURequest.getStatus(), requestHelper);
+                waitForJobToComplete(deploymentUrl, createOURequest.getJobId(), createOURequest.getStatus());
 
                 ouList.add(orgUnit);
             }
@@ -354,50 +371,51 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
 
         {
             // rest/organizaionalunits GET
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits");
-            Collection<OrganizationalUnit> orgUnits = get(restRequest, mediaType, Collection.class);
+            Collection<OrganizationalUnit> orgUnits = get(deploymentUrl, "rest/organizationalunits",  mediaType,
+                    200, user, password, 
+                    Collection.class, OrganizationalUnit.class);
             assertEquals("Exepcted an OU to be added.", origUnitsSize + 2, orgUnits.size());
         }
 
         String repoName = UUID.randomUUID().toString();
         {
             // rest/repositories POST
-            ClientRequest restRequest = requestHelper.createRequest("repositories");
             RepositoryRequest newRepo = new RepositoryRequest();
             newRepo.setName(repoName);
             newRepo.setDescription("repo for testing rest services");
             newRepo.setRequestType("new");
             newRepo.setOrganizationlUnitName(ouList.get(0).getName());
-            addToRequestBody(restRequest, newRepo);
 
-            CreateOrCloneRepositoryRequest createRepoRequest = post(restRequest, mediaType, 202, CreateOrCloneRepositoryRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(createRepoRequest));
+            CreateOrCloneRepositoryRequest createRepoRequest = postEntity(deploymentUrl, "rest/repositories", mediaType,
+                    202, user, password, 
+                    newRepo, CreateOrCloneRepositoryRequest.class);
             assertNotNull("create repo job request", createRepoRequest);
             assertEquals("job request status", JobStatus.APPROVED, createRepoRequest.getStatus());
 
             // rest/jobs/{jobId}
-            waitForJobToComplete(deploymentUrl, createRepoRequest.getJobId(), createRepoRequest.getStatus(), requestHelper);
+           waitForJobToComplete(deploymentUrl, createRepoRequest.getJobId(), createRepoRequest.getStatus());
         }
        
         {
             // rest/organizationalunits/{ou}/repositories/{repoName} POST
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits/" + ouList.get(1).getName() + "/repositories/" + repoName);
+            AddRepositoryToOrganizationalUnitRequest addRepoToOuRequest = post(deploymentUrl, 
+                    "rest/organizationalunits/" + ouList.get(1).getName() + "/repositories/" + repoName, mediaType,
+                    202, user, password,
+                    AddRepositoryToOrganizationalUnitRequest.class);
 
-            AddRepositoryToOrganizationalUnitRequest addRepoToOuRequest = post(restRequest, mediaType, 202, AddRepositoryToOrganizationalUnitRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(addRepoToOuRequest));
             assertNotNull("add repo to ou job request", addRepoToOuRequest);
             assertEquals("job request status", JobStatus.APPROVED, addRepoToOuRequest.getStatus());
 
             // rest/jobs/{jobId}
-            waitForJobToComplete(deploymentUrl, addRepoToOuRequest.getJobId(), addRepoToOuRequest.getStatus(), requestHelper);
+            waitForJobToComplete(deploymentUrl, addRepoToOuRequest.getJobId(), addRepoToOuRequest.getStatus());
         }
 
         {
             // rest/organizationalunits/{ou} GET
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits/" + ouList.get(1).getName());
-
-            OrganizationalUnit orgUnitRequest = get(restRequest, mediaType, OrganizationalUnit.class);
-            logger.debug("]] " + convertObjectToJsonString(orgUnitRequest));
+            OrganizationalUnit orgUnitRequest = get(deploymentUrl,
+                     "rest/organizationalunits/" + ouList.get(1).getName(), mediaType, 
+                    200, user, password, 
+                    OrganizationalUnit.class);
             assertNotNull("organizational unit request", orgUnitRequest);
 
             assertTrue("repository has not been added to organizational unit", orgUnitRequest.getRepositories().contains(repoName));
@@ -405,21 +423,21 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
 
         {
             // rest/organizationalunits/{ou}/repositories/{repoName} DELETE
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits/" + ouList.get(1).getName() + "/repositories/" + repoName);
-            RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRquest = delete(restRequest, mediaType, 202, RemoveRepositoryFromOrganizationalUnitRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(remRepoFromOuRquest));
+            RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRquest = delete(deploymentUrl, 
+                    "rest/organizationalunits/" + ouList.get(1).getName() + "/repositories/" + repoName, mediaType,
+                    202, user, password, 
+                    RemoveRepositoryFromOrganizationalUnitRequest.class);
             assertNotNull("delete repo from ou job request", remRepoFromOuRquest);
             assertEquals("job request status", JobStatus.APPROVED, remRepoFromOuRquest.getStatus());
 
             // rest/jobs/{jobId}
-            waitForJobToComplete(deploymentUrl, remRepoFromOuRquest.getJobId(), remRepoFromOuRquest.getStatus(), requestHelper);
+            waitForJobToComplete(deploymentUrl, remRepoFromOuRquest.getJobId(), remRepoFromOuRquest.getStatus());
         }
 
         {
             // rest/organizationalunits/{ou} GET
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits/" + ouList.get(1).getName());
-            OrganizationalUnit orgUnitRequest = get(restRequest, mediaType, OrganizationalUnit.class);
-            logger.debug("]] " + convertObjectToJsonString(orgUnitRequest));
+            OrganizationalUnit orgUnitRequest = get(deploymentUrl, "rest/organizationalunits/" + ouList.get(1).getName(), mediaType,
+                    200, user, password, OrganizationalUnit.class);
             assertNotNull("organizational unit request", orgUnitRequest);
 
             assertFalse("repository should have been deleted from organizational unit", orgUnitRequest.getRepositories().contains(repoName));
@@ -427,18 +445,17 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
         
         {
             // rest/organizationalunits/{ou} DELETE
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits/" + ouList.get(1).getName());
-            RemoveOrganizationalUnitRequest removeOrgUnitRequest = delete(restRequest, mediaType, 202, RemoveOrganizationalUnitRequest.class);
-            logger.debug("]] " + convertObjectToJsonString(removeOrgUnitRequest));
+            RemoveOrganizationalUnitRequest removeOrgUnitRequest = delete(deploymentUrl, "rest/organizationalunits/" + ouList.get(1).getName(), mediaType, 
+                    202, user, password, 
+                    RemoveOrganizationalUnitRequest.class);
             assertNotNull("organizational unit request", removeOrgUnitRequest);
-            waitForJobToComplete(deploymentUrl, removeOrgUnitRequest.getJobId(), removeOrgUnitRequest.getStatus(), requestHelper);
-
+            waitForJobToComplete(deploymentUrl, removeOrgUnitRequest.getJobId(), removeOrgUnitRequest.getStatus());
         }
         
         {
             // verify the OU was deleted - the GET request should return 404
-            ClientRequest restRequest = requestHelper.createRequest("organizationalunits/" + ouList.get(1).getName());
-            get(restRequest, mediaType, 404, String.class);
+            get(deploymentUrl, "rest/organizationalunits/" + ouList.get(1).getName(), mediaType, 
+                    404, user, password);
         }
     }
 }
