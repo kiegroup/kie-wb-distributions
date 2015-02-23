@@ -66,7 +66,7 @@ public class RestRepositoryDeploymentUtil {
         
         JaxbDeploymentJobResult deployJob = createDeploymentUnit(deploymentId, strategy);
         JaxbDeploymentUnit deployUnit = deployJob.getDeploymentUnit();    
-        waitForJobToFinish(deployUnit.getIdentifier(), "deployment/", JaxbDeploymentJobResult.class, JaxbDeploymentStatus.DEPLOYED);
+        waitForJobToFinish(deployUnit.getIdentifier(), "deployment/", JaxbDeploymentUnit.class, JaxbDeploymentStatus.DEPLOYED);
     }
   
     public void setSleepSeconds(int sleepSecs) { 
