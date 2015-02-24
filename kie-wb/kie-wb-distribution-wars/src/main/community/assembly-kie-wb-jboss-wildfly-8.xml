@@ -140,6 +140,7 @@
           <exclude>WEB-INF/lib/guava-gwt-*.jar</exclude>
           <exclude>WEB-INF/lib/gwt-dnd-*.jar</exclude>
           <exclude>WEB-INF/lib/gchart-*.jar</exclude>
+          <exclude>WEB-INF/lib/gwt-slf4j-*.jar</exclude>
 
           <!-- Dashbuilder client related -->
           <exclude>WEB-INF/lib/dashbuilder-common-client-*.jar</exclude>
@@ -225,7 +226,6 @@
           <exclude>WEB-INF/lib/javassist-*.jar</exclude>
           <!-- <exclude>WEB-INF/lib/javax.inject-1*.jar</exclude>  ALREADY EXCLUDED-->
           <exclude>WEB-INF/lib/jboss-ejb-api_*.jar</exclude>
-          <exclude>WEB-INF/lib/jcl-over-slf4j-*.jar</exclude>
           <exclude>WEB-INF/lib/jdom-*.jar</exclude>
           <exclude>WEB-INF/lib/jettison-*.jar</exclude>
           <exclude>WEB-INF/lib/joda-time-*.jar</exclude>
@@ -234,8 +234,6 @@
           <!-- <exclude>WEB-INF/lib/resteasy-jaxb-provider*.jar</exclude> -->
           <!-- <exclude>WEB-INF/lib/resteasy-jaxrs-*.jar</exclude> -->
           <!-- <exclude>WEB-INF/lib/resteasy-multipart-provider-*.jar</exclude>  ALREADY EXCLUDED-->
-          <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
-          <exclude>WEB-INF/lib/slf4j-ext-*.jar</exclude>
           <exclude>WEB-INF/lib/velocity-*.jar</exclude>
           <!-- <exclude>WEB-INF/lib/weld-core-*.jar</exclude> ALREADY EXCLUDED -->
           <!--<exclude>WEB-INF/lib/weld-spi-*.jar</exclude>  ALREADY EXCLUDED -->
@@ -262,8 +260,6 @@
           <exclude>WEB-INF/lib/httpcore_*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-ejb-client-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-jms-api_*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-logging-*.jar</exclude>
-          <exclude>WEB-INF/lib/jboss-logmanager*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-marshalling-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-remote-naming-*.jar</exclude>
           <exclude>WEB-INF/lib/jboss-remoting-*.jar</exclude>
@@ -277,9 +273,20 @@
           <exclude>WEB-INF/lib/xnio-api-*.jar</exclude>
           <exclude>WEB-INF/lib/xnio-nio-*.jar</exclude>
 
-          <!-- Legacy log system -->
+          <!-- Logging -->
+          <!-- Remove legacy log systems + logback. All logging calls will be delegated to JBoss LogManager. -->
           <exclude>WEB-INF/lib/log4j-*.jar</exclude>
           <exclude>WEB-INF/log4j.xml</exclude>
+          <exclude>WEB-INF/lib/commons-logging-*.jar</exclude>
+          <exclude>WEB-INF/lib/logback-*.jar</exclude>
+          <exclude>WEB-INF/classes/logback.xml</exclude>
+          <!-- Following slf4j-* and jboss-log* jars are used directly from EAP installation.
+               Dependendency on them is defined in jboss-deployment-structure.xml -->
+          <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
+          <exclude>WEB-INF/lib/slf4j-ext-*.jar</exclude>
+          <exclude>WEB-INF/lib/jcl-over-slf4j-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-logging-*.jar</exclude>
+          <exclude>WEB-INF/lib/jboss-logmanager*.jar</exclude>
 
         </excludes>
       </unpackOptions>
