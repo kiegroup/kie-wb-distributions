@@ -39,11 +39,15 @@ Installation notes
 
     NOTE: jdbc/jbpm is the JNDI name used by tomcat distribution of the application
 
-3. Define btm.root system property and location where bitronix config file is placed
+3. Define system properties for btm.root, bitronix config file, JBoss logging provider and others.
 
     create setenv.sh (or setenv.bat) file inside TOMCAT_HOME/bin and add following:
 
-    CATALINA_OPTS="-Xmx512M -XX:MaxPermSize=512m -Dbtm.root=$CATALINA_HOME -Dbitronix.tm.configuration=$CATALINA_HOME/conf/btm-config.properties -Djbpm.tsr.jndi.lookup=java:comp/env/TransactionSynchronizationRegistry -Djava.security.auth.login.config=$CATALINA_HOME/webapps/kie-drools-wb/WEB-INF/classes/login.config"
+    CATALINA_OPTS="-Xmx512M -XX:MaxPermSize=512m -Dbtm.root=$CATALINA_HOME \
+    -Dbitronix.tm.configuration=$CATALINA_HOME/conf/btm-config.properties \
+    -Djbpm.tsr.jndi.lookup=java:comp/env/TransactionSynchronizationRegistry \
+    -Djava.security.auth.login.config=$CATALINA_HOME/webapps/kie-drools-wb/WEB-INF/classes/login.config \
+    -Dorg.jboss.logging.provider=jdk"
 
     NOTE: this is an example for unix like systems for Windows $CATALINA_HOME needs to be replaced with windows env variable or absolute path
     NOTE: java.security.auth.login.config value includes name of the folder in which application is deployed by default it assumes kie-drools-wb so ensure that matches real installation.
