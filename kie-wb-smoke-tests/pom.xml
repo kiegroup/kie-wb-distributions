@@ -123,6 +123,10 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-tomcat-integration</artifactId>
       <scope>test</scope>
@@ -436,6 +440,7 @@
                     ${project.build.directory}/cargo/configurations/tomcat7x/conf/btm-config.properties
                   </bitronix.tm.configuration>
                   <jbpm.tsr.jndi.lookup>java:comp/env/TransactionSynchronizationRegistry</jbpm.tsr.jndi.lookup>
+                  <org.jboss.logging.provider>jdk</org.jboss.logging.provider>
                 </systemProperties>
                 <dependencies>
                   <dependency>
@@ -457,6 +462,10 @@
                   <dependency>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-api</artifactId>
+                  </dependency>
+                  <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
                   </dependency>
                   <dependency>
                     <groupId>org.kie</groupId>
@@ -529,6 +538,7 @@
                       ${project.build.directory}/cargo/configurations/tomcat8x/conf/btm-config.properties
                     </bitronix.tm.configuration>
                     <jbpm.tsr.jndi.lookup>java:comp/env/TransactionSynchronizationRegistry</jbpm.tsr.jndi.lookup>
+                    <org.jboss.logging.provider>jdk</org.jboss.logging.provider>
                   </systemProperties>
                   <dependencies>
                     <dependency>
@@ -550,6 +560,10 @@
                     <dependency>
                       <groupId>org.slf4j</groupId>
                       <artifactId>slf4j-api</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.slf4j</groupId>
+                      <artifactId>slf4j-jdk14</artifactId>
                     </dependency>
                     <dependency>
                       <groupId>org.kie</groupId>
