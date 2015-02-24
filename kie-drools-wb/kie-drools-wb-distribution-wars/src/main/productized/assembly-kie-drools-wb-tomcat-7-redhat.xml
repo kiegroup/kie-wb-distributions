@@ -145,6 +145,7 @@
           <exclude>WEB-INF/lib/guava-gwt-*.jar</exclude>
           <exclude>WEB-INF/lib/gwt-dnd-*.jar</exclude>
           <exclude>WEB-INF/lib/gchart-*.jar</exclude>
+          <exclude>WEB-INF/lib/gwt-slf4j-*.jar</exclude>
 
           <!-- jBPM console & other client related -->
           <exclude>WEB-INF/lib/jbpm-*-client-*.jar</exclude>
@@ -174,7 +175,7 @@
 
           <!-- Jetty -->
           <exclude>WEB-INF/lib/jetty-*.jar</exclude>
-          <!-- mail.jar is needed by tomcat-->
+          <!-- mail.jar is needed by tomcat -->
           <exclude>WEB-INF/lib/geronimo-spec-jta-*.jar</exclude>
           <exclude>WEB-INF/lib/servlet-api-*.jar</exclude>
           <exclude>WEB-INF/lib/javax.servlet-api-*.jar</exclude>
@@ -186,9 +187,16 @@
           <exclude>WEB-INF/lib/btm-*.jar</exclude>
           <exclude>WEB-INF/lib/jta-*.jar</exclude>
 
-          <!-- Legacy log system -->
+          <!-- Logging -->
+          <!-- Remove legacy log systems + logback. All logging calls will be delegated to JUL. -->
           <exclude>WEB-INF/lib/log4j-*.jar</exclude>
           <exclude>WEB-INF/log4j.xml</exclude>
+          <exclude>WEB-INF/lib/commons-logging*.jar</exclude>
+          <exclude>WEB-INF/lib/logback-*.jar</exclude>
+          <exclude>WEB-INF/classes/logback.xml</exclude>
+          <!-- Remove slf4j-api to avoid classpath clashes. Needs to be added into tomcat/lib
+               dir where it is shared between Tomcat itself and the app. -->
+          <exclude>WEB-INF/lib/slf4j-api*.jar</exclude>
 
         </excludes>
       </unpackOptions>
