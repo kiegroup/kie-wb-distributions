@@ -68,7 +68,7 @@ Connection factories and queues are created inside JMS module.
 - KIE.AUDIT - to send message with audit trail (default value jms/cf/KIE.AUDIT)
     assigned JNDI name will be used when sending messages over JMS
 
-  - Left side panel click on *Services > Messaging > JMS Modules > {name of the jms module} *
+  - Left side panel click on _Services > Messaging > JMS Modules > {name of the jms module}_
   - Click new and select Connection factory as type
   - Provide the name, JNDI name (e.g. _KIE.RESPONSE.ALL_ and _jms/cf/KIE.RESPONSE.ALL_)
   - Follow instructions on the screen
@@ -81,11 +81,12 @@ Connection factories and queues are created inside JMS module.
 
   - Left side panel click on _Services > Messaging > JMS Modules > {name of the jms module}_
   - Click new and select Queue as type
-  - Provide a name, JNDI name (e.g. _KIE.AUDIT_ and _jms/queue/KIE.AUDIT_)
-  - Choose the bus name
-  - Choose _Create Service Bus Integration Destination_, follow the wizard and select the newly created queue name
-  - Click _OK_
+  - Provide a name, JNDI name (e.g. _KIE.AUDIT_ and _jms/KIE.AUDIT_)
+  - Choose the subdeployment name (see [1]) and make sure that the Target is the JMS Server that
+    you've created.
+  - Click _Finish_
 
+[1] If there is no subdeployment, create one.
 
 JVM Custom properties
 --------------------------
