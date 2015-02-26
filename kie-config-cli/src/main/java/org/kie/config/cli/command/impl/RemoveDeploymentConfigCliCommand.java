@@ -54,6 +54,10 @@ public class RemoveDeploymentConfigCliCommand implements CliCommand {
 		String ksession = input.nextLine();
 		
 		KModuleDeploymentUnit unit = new KModuleDeploymentUnit(groupId, artifactId, version, kbase, ksession);
+
+		if (deploymentConfigService.getDeployment(unit.getIdentifier()) == null) {
+			return "No deployment found with id " + unit.getIdentifier();
+		}
 		
 		deploymentConfigService.removeDeployment(unit.getIdentifier());
 		
