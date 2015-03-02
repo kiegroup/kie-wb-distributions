@@ -5,7 +5,7 @@
   <parent>
     <artifactId>kie-eap-modules</artifactId>
     <groupId>org.kie.modules</groupId>
-    <version>6.2.0-SNAPSHOT</version>
+    <version>6.2.0.Final</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -68,6 +68,7 @@
     <module>org-hamcrest</module>
     <module>org-jboss-netty</module>
     <module>org-jboss-seam-transaction</module>
+    <module>org-jboss-solder</module>
     <module>org-json</module>
     <module>org-jsoup</module>
     <module>org-osgi</module>
