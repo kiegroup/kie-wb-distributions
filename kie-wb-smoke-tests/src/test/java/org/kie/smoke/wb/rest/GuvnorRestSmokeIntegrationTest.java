@@ -150,7 +150,7 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             newRepo.setName(repoName);
             newRepo.setDescription("repo for rest services smoke tests");
             newRepo.setRequestType("new");
-            newRepo.setOrganizationlUnitName(orgUnitName);
+            newRepo.setOrganizationalUnitName(orgUnitName);
             addToRequestBody(restRequest, newRepo);
 
             CreateOrCloneRepositoryRequest createJobRequest = post(restRequest, mediaType, 202, CreateOrCloneRepositoryRequest.class);
@@ -367,7 +367,7 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             newRepo.setName(repoName);
             newRepo.setDescription("repo for testing rest services");
             newRepo.setRequestType("new");
-            newRepo.setOrganizationlUnitName(ouList.get(0).getName());
+            newRepo.setOrganizationalUnitName(ouList.get(0).getName());
             addToRequestBody(restRequest, newRepo);
 
             CreateOrCloneRepositoryRequest createRepoRequest = post(restRequest, mediaType, 202, CreateOrCloneRepositoryRequest.class);
