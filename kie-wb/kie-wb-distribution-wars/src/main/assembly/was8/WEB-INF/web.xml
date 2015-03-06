@@ -7,6 +7,10 @@
   <distributable/>
   -->
 
+  <listener>
+    <listener-class>org.uberfire.ext.metadata.io.BatchIndexStop</listener-class>
+  </listener>
+
   <servlet>
     <servlet-name>javax.ws.rs.core.Application</servlet-name>
   </servlet>
