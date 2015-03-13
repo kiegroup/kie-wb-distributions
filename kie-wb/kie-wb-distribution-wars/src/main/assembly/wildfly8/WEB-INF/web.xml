@@ -6,7 +6,9 @@
   <!--
   <distributable/>
   -->
-
+  <listener>
+    <listener-class>org.kie.uberfire.social.activities.servlet.StopSocial</listener-class>
+  </listener>
   <servlet-mapping>
     <servlet-name>javax.ws.rs.core.Application</servlet-name>
     <url-pattern>/rest/*</url-pattern>

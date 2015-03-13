@@ -12,7 +12,9 @@
   <listener>
     <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
   </listener>
-
+  <listener>
+    <listener-class>org.kie.uberfire.social.activities.servlet.StopSocial</listener-class>
+  </listener>
   <filter>
     <filter-name>request-capture</filter-name>
     <filter-class>org.uberfire.ext.security.server.SecurityIntegrationFilter</filter-class>
