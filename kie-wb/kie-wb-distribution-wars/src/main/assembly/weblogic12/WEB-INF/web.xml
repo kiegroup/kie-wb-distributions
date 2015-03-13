@@ -4,7 +4,9 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
   <!--<distributable/>-->
-
+  <listener>
+     <listener-class>org.kie.uberfire.social.activities.servlet.StopSocial</listener-class>
+  </listener>
   <listener>
     <listener-class>org.uberfire.ext.metadata.io.BatchIndexStop</listener-class>
   </listener>
