@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
@@ -33,6 +34,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.TextBox;
+
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
@@ -55,6 +57,7 @@ import org.kie.workbench.common.services.shared.security.KieWorkbenchSecuritySer
 import org.kie.workbench.common.widgets.client.menu.AboutMenuBuilder;
 import org.kie.workbench.common.widgets.client.menu.LanguageSelectorMenuBuilder;
 import org.kie.workbench.common.widgets.client.menu.ResetPerspectivesMenuBuilder;
+import org.kie.workbench.common.widgets.client.menu.SwitchModeMenuBuilder;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.menu.CustomSplashHelp;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
@@ -176,6 +179,8 @@ public class KieWorkbenchEntryPoint {
                                 .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
                                 .position( MenuPosition.RIGHT )
                                 .withItems( getRoles() )
+                                .endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( SwitchModeMenuBuilder.class ).getInstance() )
                                 .endMenu()
                                 .newTopLevelCustomMenu( iocManager.lookupBean( LanguageSelectorMenuBuilder.class ).getInstance() )
                                 .endMenu()
