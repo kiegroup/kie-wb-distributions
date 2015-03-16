@@ -23,8 +23,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.google.gwt.user.client.Window;
+import org.jboss.errai.common.client.api.Caller;
+import org.jboss.errai.common.client.api.RemoteCallback;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
+import org.uberfire.backend.vfs.Path;
+import org.uberfire.backend.vfs.VFSService;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -60,6 +64,9 @@ public class DroolsAuthoringNoContextNavigationPerspective {
     @Inject
     private PanelManager panelManager;
 
+    @Inject
+    private Caller<VFSService> vfsServices;
+
     private String explorerMode;
     private String projectPathString;
 
@@ -68,7 +75,7 @@ public class DroolsAuthoringNoContextNavigationPerspective {
     @PostConstruct
     public void init() {
         explorerMode = ( ( Window.Location.getParameterMap().containsKey( "explorer_mode" ) ) ? Window.Location.getParameterMap().get( "explorer_mode" ).get( 0 ) : "" ).trim();
-        projectPathString = ( ( Window.Location.getParameterMap().containsKey( "path" ) ) ? Window.Location.getParameterMap().get( "path" ).get( 0 ) : "" );
+        projectPathString = ( ( ( Window.Location.getParameterMap().containsKey( "path" ) ) ? Window.Location.getParameterMap().get( "path" ).get( 0 ) : "" ) ).trim();
     }
 
     @Perspective
@@ -98,6 +105,21 @@ public class DroolsAuthoringNoContextNavigationPerspective {
     @OnOpen
     public void onOpen() {
         placesToClose.clear();
+        if ( !projectPathString.isEmpty() ) {
+            vfsServices.call( new RemoteCallback<Boolean>() {
+                @Override
+                public void callback( Boolean isRegularFile ) {
+                    if ( isRegularFile ) {
+                        vfsServices.call( new RemoteCallback<Path>() {
+                            @Override
+                            public void callback( Path path ) {
+                                placeManager.goTo( path );
+                            }
+                        } ).get( projectPathString );
+                    }
+                }
+            } ).isRegularFile( projectPathString );
+        }
         if ( panelManager.getRoot() != null ) {
             process( panelManager.getRoot().getParts() );
             process( panelManager.getRoot().getChildren() );
