@@ -107,7 +107,7 @@ public class RestRepositoryDeploymentUtil {
         repoRequest.setName(repositoryName);
         repoRequest.setRequestType("clone");
         repoRequest.setGitURL(cloneRepoUrl);
-        repoRequest.setOrganizationalUnitName(orgUnit);
+        //repoRequest.setOrganizationalUnitName(orgUnit);
         String input = serializeToJsonString(repoRequest);
         ClientRequest request = createRequest("repositories/", input);
         return post( request, mediaType, 202, CreateOrCloneRepositoryRequest.class);
