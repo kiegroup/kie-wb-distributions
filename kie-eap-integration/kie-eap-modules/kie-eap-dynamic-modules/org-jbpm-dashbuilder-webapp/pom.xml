@@ -27,7 +27,7 @@
       <artifactId>jbpm-dashboard-distributions</artifactId>
       <version>${project.version}</version>
       <type>war</type>
-      <classifier>jboss-as7</classifier>
+      <classifier>eap6_4</classifier>
     </dependency>
 
   </dependencies>
