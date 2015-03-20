@@ -20,11 +20,11 @@ import org.kie.workbench.common.screens.explorer.service.Option;
 import org.kie.workbench.common.screens.explorer.service.ProjectExplorerContentQuery;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
 
-public class AddRoleToProjectCliCommand implements CliCommand {
+public class AddGroupToProjectCliCommand implements CliCommand {
 
     @Override
     public String getName() {
-        return "add-role-project";
+        return "add-group-project";
     }
 
     @Override
@@ -85,13 +85,13 @@ public class AddRoleToProjectCliCommand implements CliCommand {
         }
         Project project = projects.get( projectIndex - 1 );
 
-        System.out.print( ">>Security roles (comma separated list):" );
-        String rolesIn = input.nextLine();
-        if ( rolesIn.trim().length() > 0 ) {
-            String[] roles = rolesIn.split( "," );
-            for ( String role : roles ) {
-                projectService.addRole( project, role );
-                result.append( "Role " + role + " added successfully to project " + project.getProjectName() + "\n" );
+        System.out.print( ">>Security groups (comma separated list):" );
+        String groupsIn = input.nextLine();
+        if ( groupsIn.trim().length() > 0 ) {
+            String[] groups = groupsIn.split( "," );
+            for ( String group : groups ) {
+                projectService.addGroup( project, group );
+                result.append( "Group " + group + " added successfully to project " + project.getProjectName() + "\n" );
             }
         }
 

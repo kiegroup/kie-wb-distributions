@@ -45,12 +45,12 @@ public class HelpCliCommand implements CliCommand {
 		helpMessage.append("\t remove-repo - remove existing repository from config only\n");
 		helpMessage.append("\t add-repo-org-unit - add repository to the organizational unit\n");
 		helpMessage.append("\t remove-repo-org-unit - remove repository from the organizational unit\n");
-		helpMessage.append("\t add-role-repo - add role(s) to repository\n");
-		helpMessage.append("\t remove-role-repo - remove role(s) from repository\n");
-		helpMessage.append("\t add-role-org-unit - add role(s) to organizational unit\n");
-		helpMessage.append("\t remove-role-org-unit - remove role(s) from organizational unit\n");
-        helpMessage.append("\t add-role-project - add role(s) to project\n");
-        helpMessage.append("\t remove-role-project - remove role(s) from project\n");
+		helpMessage.append("\t add-group-repo - add group(s) to repository\n");
+		helpMessage.append("\t remove-group-repo - remove group(s) from repository\n");
+		helpMessage.append("\t add-group-org-unit - add group(s) to organizational unit\n");
+		helpMessage.append("\t remove-group-org-unit - remove group(s) from organizational unit\n");
+        helpMessage.append("\t add-group-project - add group(s) to project\n");
+        helpMessage.append("\t remove-group-project - remove group(s) from project\n");
         helpMessage.append("\t push-changes - pushes changes to upstream repository (only online mode)\n");
 		helpMessage.append("\t fetch-changes - fetches changes from upstream repository (only online mode)");
 		return helpMessage.toString();

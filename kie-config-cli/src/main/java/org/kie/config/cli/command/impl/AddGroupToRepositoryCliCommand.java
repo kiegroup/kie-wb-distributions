@@ -8,11 +8,11 @@ import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
 
-public class AddRoleToRepositoryCliCommand implements CliCommand {
+public class AddGroupToRepositoryCliCommand implements CliCommand {
 
 	@Override
 	public String getName() {
-		return "add-role-repo";
+		return "add-group-repo";
 	}
 
 	@Override
@@ -30,14 +30,14 @@ public class AddRoleToRepositoryCliCommand implements CliCommand {
 		if (repo == null) {
 			return "No repository " + alias + " was found";
 		}
-		System.out.print(">>Security roles (comma separated list):");
-		String rolesIn = input.nextLine();
-		if (rolesIn.trim().length() > 0) {
+		System.out.print(">>Security groups (comma separated list):");
+		String groupsIn = input.nextLine();
+		if (groupsIn.trim().length() > 0) {
 			
-			String[] roles = rolesIn.split(",");
-			for (String role : roles) {
-				repositoryService.addRole(repo, role);
-				result.append("Role " + role + " added successfully to repository " + repo.getAlias() + "\n");
+			String[] groups = groupsIn.split(",");
+			for (String group : groups) {
+				repositoryService.addGroup(repo, group);
+				result.append("Group " + group + " added successfully to repository " + repo.getAlias() + "\n");
 			}
 		}
 		
