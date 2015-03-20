@@ -7,11 +7,11 @@ import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
 
-public class RemoveRoleFromOrganizationalUnitCliCommand implements CliCommand {
+public class RemoveGroupFromOrganizationalUnitCliCommand implements CliCommand {
 
     @Override
     public String getName() {
-        return "remove-role-org-unit";
+        return "remove-group-org-unit";
     }
 
     @Override
@@ -29,14 +29,14 @@ public class RemoveRoleFromOrganizationalUnitCliCommand implements CliCommand {
         if ( organizationalUnit == null ) {
             return "No Organizational Unit " + name + " was found";
         }
-        System.out.print( ">>Security roles (comma separated list):" );
-        String rolesIn = input.nextLine();
-        if ( rolesIn.trim().length() > 0 ) {
+        System.out.print( ">>Security groups (comma separated list):" );
+        String groupsIn = input.nextLine();
+        if ( groupsIn.trim().length() > 0 ) {
 
-            String[] roles = rolesIn.split( "," );
-            for ( String role : roles ) {
-                organizationalUnitService.removeRole( organizationalUnit, role );
-                result.append( "Role " + role + " removed successfully from Organizational Unit " + organizationalUnit.getName() + "\n" );
+            String[] groups = groupsIn.split( "," );
+            for ( String group : groups ) {
+                organizationalUnitService.removeGroup( organizationalUnit, group );
+                result.append( "Group " + group + " removed successfully from Organizational Unit " + organizationalUnit.getName() + "\n" );
             }
         }
 

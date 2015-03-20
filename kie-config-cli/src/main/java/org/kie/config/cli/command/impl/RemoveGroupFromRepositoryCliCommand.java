@@ -7,11 +7,11 @@ import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
 
-public class RemoveRoleFromRepositoryCliCommand implements CliCommand {
+public class RemoveGroupFromRepositoryCliCommand implements CliCommand {
 
     @Override
     public String getName() {
-        return "remove-role-repo";
+        return "remove-group-repo";
     }
 
     @Override
@@ -29,17 +29,17 @@ public class RemoveRoleFromRepositoryCliCommand implements CliCommand {
         if ( repo == null ) {
             return "No repository " + alias + " was found";
         }
-        if ( repo.getRoles() == null || repo.getRoles().isEmpty() ) {
-            return "No roles defined for repository " + alias;
+        if ( repo.getGroups() == null || repo.getGroups().isEmpty() ) {
+            return "No groups defined for repository " + alias;
         }
-        System.out.print( ">>Security roles (comma separated list):" );
-        String rolesIn = input.nextLine();
-        if ( rolesIn.trim().length() > 0 ) {
+        System.out.print( ">>Security groups (comma separated list):" );
+        String groupsIn = input.nextLine();
+        if ( groupsIn.trim().length() > 0 ) {
 
-            String[] roles = rolesIn.split( "," );
-            for ( String role : roles ) {
-                repositoryService.removeRole( repo, role );
-                result.append( "Role " + role + " removed successfully from repository " + repo.getAlias() + "\n" );
+            String[] groups = groupsIn.split( "," );
+            for ( String group : groups ) {
+                repositoryService.removeGroup( repo, group );
+                result.append( "Group " + group + " removed successfully from repository " + repo.getAlias() + "\n" );
             }
         }
 
