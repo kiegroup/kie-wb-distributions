@@ -20,11 +20,11 @@ import org.kie.workbench.common.screens.explorer.service.Option;
 import org.kie.workbench.common.screens.explorer.service.ProjectExplorerContentQuery;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
 
-public class RemoveRoleFromProjectCliCommand implements CliCommand {
+public class RemoveGroupFromProjectCliCommand implements CliCommand {
 
     @Override
     public String getName() {
-        return "remove-role-repo";
+        return "remove-group-repo";
     }
 
     @Override
@@ -79,17 +79,17 @@ public class RemoveRoleFromProjectCliCommand implements CliCommand {
             }
         }
         Project project = projects.get( projectIndex - 1 );
-        if ( project.getRoles() == null || project.getRoles().isEmpty() ) {
-            return "No roles defined for project " + project.getProjectName();
+        if ( project.getGroups() == null || project.getGroups().isEmpty() ) {
+            return "No groups defined for project " + project.getProjectName();
         }
 
-        System.out.print( ">>Security roles (comma separated list):" );
-        String rolesIn = input.nextLine();
-        if ( rolesIn.trim().length() > 0 ) {
-            String[] roles = rolesIn.split( "," );
-            for ( String role : roles ) {
-                projectService.removeRole( project, role );
-                result.append( "Role " + role + " removed successfully from project " + project.getProjectName() + "\n" );
+        System.out.print( ">>Security groups (comma separated list):" );
+        String groupsIn = input.nextLine();
+        if ( groupsIn.trim().length() > 0 ) {
+            String[] groups = groupsIn.split( "," );
+            for ( String group : groups ) {
+                projectService.removeGroup( project, group );
+                result.append( "Group " + group + " removed successfully from project " + project.getProjectName() + "\n" );
             }
         }
 

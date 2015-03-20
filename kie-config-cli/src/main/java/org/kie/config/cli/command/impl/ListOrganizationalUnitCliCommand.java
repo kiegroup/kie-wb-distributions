@@ -42,14 +42,14 @@ public class ListOrganizationalUnitCliCommand extends AbstractCliCommand {
         for ( OrganizationalUnit config : groups ) {
             result.append( "\tOrganizational Unit " + config.getName() + "\n" );
             result.append( "\towner: " + config.getOwner() + "\n" );
-            result.append( "\troles: " + config.getRoles() + "\n" );
+            result.append( "\tgroups: " + config.getGroups() + "\n" );
             result.append( "\trepositories: \n" );
             for ( Repository repository : config.getRepositories() ) {
                 result.append( "\t\tRepository " + repository.getAlias() + "\n" );
                 result.append( "\t\t\t scheme: " + repository.getScheme() + "\n" );
                 result.append( "\t\t\t uri: " + repository.getUri() + "\n" );
                 result.append( "\t\t\t environment: " + printEnvironment(repository.getEnvironment()) + "\n" );
-                result.append( "\t\t\t repository roles: " + repository.getRoles() + "\n" );
+                result.append( "\t\t\t repository groups: " + repository.getGroups() + "\n" );
             }
         }
         return result.toString();
