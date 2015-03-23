@@ -9,6 +9,7 @@ import org.jboss.weld.literal.NamedLiteral;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.uberfire.io.IOService;
+import org.uberfire.java.nio.file.FileSystem;
 
 public class PushGitRepositoryCliCommand implements CliCommand {
 
@@ -30,8 +31,14 @@ public class PushGitRepositoryCliCommand implements CliCommand {
         if (upstream == null || gitlocal == null) {
             return "No upstream ("+upstream+") or no local ("+gitlocal+") git repository info available";
         }
-
-        ioService.getFileSystem(URI.create(gitlocal+"?push="+upstream));
+        try {
+            FileSystem fileSystem = ioService.getFileSystem(URI.create(gitlocal + "?push=" + upstream));
+            if (fileSystem == null) {
+                return "Pushed failed with missing return code";
+            }
+        } catch (Exception e) {
+            return "Pushed failed due to " + e.getMessage();
+        }
         return "Pushed successfully";
     }
 }
