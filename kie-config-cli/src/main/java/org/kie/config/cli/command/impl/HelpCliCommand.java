@@ -53,6 +53,7 @@ public class HelpCliCommand implements CliCommand {
         helpMessage.append("\t remove-group-project - remove group(s) from project\n");
         helpMessage.append("\t push-changes - pushes changes to upstream repository (only online mode)\n");
 		helpMessage.append("\t fetch-changes - fetches changes from upstream repository (only online mode)");
+		helpMessage.append("\t list-project-details - list detailed information about project inside repository");
 		return helpMessage.toString();
 	}
 

@@ -33,6 +33,7 @@ import org.kie.config.cli.command.impl.FetchGitRepositoryCliCommand;
 import org.kie.config.cli.command.impl.HelpCliCommand;
 import org.kie.config.cli.command.impl.ListDeploymentsCliCommand;
 import org.kie.config.cli.command.impl.ListOrganizationalUnitCliCommand;
+import org.kie.config.cli.command.impl.ListProjectDetailsCliCommand;
 import org.kie.config.cli.command.impl.ListRepositoriesCliCommand;
 import org.kie.config.cli.command.impl.PushGitRepositoryCliCommand;
 import org.kie.config.cli.command.impl.RemoveDeploymentConfigCliCommand;
@@ -72,6 +73,7 @@ public class CliCommandRegistry {
         commands.put("remove-group-project", new RemoveGroupFromProjectCliCommand());
         commands.put("push-changes", new PushGitRepositoryCliCommand());
 		commands.put("fetch-changes", new FetchGitRepositoryCliCommand());
+		commands.put("list-project-details", new ListProjectDetailsCliCommand());
 	}
 	
 	public static CliCommandRegistry get() {

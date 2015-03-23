@@ -2,7 +2,6 @@ package org.kie.config.cli.command.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 
 import org.guvnor.common.services.project.model.Project;
@@ -20,11 +19,11 @@ import org.kie.workbench.common.screens.explorer.service.Option;
 import org.kie.workbench.common.screens.explorer.service.ProjectExplorerContentQuery;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
 
-public class AddGroupToProjectCliCommand implements CliCommand {
+public class ListProjectDetailsCliCommand implements CliCommand {
 
     @Override
     public String getName() {
-        return "add-group-project";
+        return "list-project-details";
     }
 
     @Override
@@ -85,18 +84,12 @@ public class AddGroupToProjectCliCommand implements CliCommand {
         }
         Project project = projects.get( projectIndex - 1 );
 
-        System.out.print( ">>Security groups (comma separated list):" );
-        String groupsIn = input.nextLine();
-        if ( groupsIn.trim().length() > 0 ) {
-            String[] groups = groupsIn.split( "," );
-            for ( String group : groups ) {
-                if (project.getGroups().contains(group)) {
-                    continue;
-                }
-                projectService.addGroup( project, group );
-                result.append( "Group " + group + " added successfully to project " + project.getProjectName() + "\n" );
-            }
-        }
+        result.append("\tProject " + project.getProjectName() + "\n");
+        result.append("\t Modules: " + project.getModules() + "\n");
+        result.append("\t Root path: " + project.getRootPath().toURI() + "\n");
+        result.append("\t Pom path: " + project.getPomXMLPath().toURI() + "\n");
+        result.append("\t Groups: " + project.getGroups() + "\n");
+
 
         return result.toString();
     }

@@ -35,6 +35,10 @@ public class AddGroupToOrganizationalUnitCliCommand implements CliCommand {
 
             String[] groups = groupsIn.split( "," );
             for ( String group : groups ) {
+                if (organizationalUnit.getGroups().contains(group)) {
+                    continue;
+                }
+
                 organizationalUnitService.addGroup( organizationalUnit, group );
                 result.append( "Group " + group + " added successfully to Organizational Unit " + organizationalUnit.getName() + "\n" );
             }

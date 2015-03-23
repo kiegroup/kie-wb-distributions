@@ -36,6 +36,9 @@ public class AddGroupToRepositoryCliCommand implements CliCommand {
 			
 			String[] groups = groupsIn.split(",");
 			for (String group : groups) {
+				if (repo.getGroups().contains(group)) {
+					continue;
+				}
 				repositoryService.addGroup(repo, group);
 				result.append("Group " + group + " added successfully to repository " + repo.getAlias() + "\n");
 			}
