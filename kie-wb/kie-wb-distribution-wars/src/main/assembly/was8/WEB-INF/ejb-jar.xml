@@ -5,6 +5,13 @@
                           http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd">
 
   <enterprise-beans>
+    <session>
+      <ejb-name>EJBTimerScheduler</ejb-name>
+      <ejb-class>org.jbpm.services.ejb.timer.EJBTimerScheduler</ejb-class>
+      <session-type>Singleton</session-type>
+      <!-- override default container managed transaction -->
+      <transaction-type>Bean</transaction-type>
+    </session>
     <message-driven>
       <ejb-name>KieSessionRequesMessageBean</ejb-name>
       <ejb-class>org.kie.remote.services.jms.RequestMessageBean</ejb-class>

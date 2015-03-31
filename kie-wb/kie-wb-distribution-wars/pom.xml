@@ -70,6 +70,11 @@
      <groupId>org.slf4j</groupId>
      <artifactId>slf4j-jdk14</artifactId>
     </dependency>
+    <!-- use ejb timer service for WAS as otherwise there is not access to UserTransaction or TransactionSyncRegistry -->
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-services-ejb-timer</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
