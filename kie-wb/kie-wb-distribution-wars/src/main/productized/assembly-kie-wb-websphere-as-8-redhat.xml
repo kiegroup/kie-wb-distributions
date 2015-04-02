@@ -66,6 +66,7 @@
         <include>antlr:antlr</include>
         <!-- WAS8 uses JUL, logging calls should be delegated there. -->
         <include>org.slf4j:slf4j-jdk14:jar</include>
+        <include>org.jbpm:jbpm-services-ejb-timer</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
