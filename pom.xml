@@ -49,7 +49,6 @@
   </repositories>
 
   <modules>
-    <module>kie-docs</module>
     <module>kie-config-cli</module>
     <module>kie-wb-example-repositories</module>
     <module>kie-wb</module>
@@ -124,6 +123,18 @@
       </activation>
       <modules>
         <module>kie-wb-distribution-home</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>fullProfile</id>
+      <activation>
+        <property>
+          <name>full</name>
+        </property>
+      </activation>
+      <modules>
+        <module>kie-docs</module>
       </modules>
     </profile>
 
