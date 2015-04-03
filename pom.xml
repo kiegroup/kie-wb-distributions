@@ -49,6 +49,7 @@
   </repositories>
 
   <modules>
+    <module>kie-docs</module>
     <module>kie-config-cli</module>
     <module>kie-wb-example-repositories</module>
     <module>kie-wb</module>
