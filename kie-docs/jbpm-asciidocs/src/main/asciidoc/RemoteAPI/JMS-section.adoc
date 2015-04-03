@@ -1,0 +1,112 @@
+:icons:
+
+[[remote.jms]]
+== JMS
+The Java Message Service (JMS) is an API that allows Java Enterprise components to
+communicate with each other asynchronously and reliably. 
+
+Operations on the runtime engine and tasks can be done via the JMS API exposed by the jBPM
+console and KIE workbench. However, it's not possible to manage deployments or the knowledge
+base via this JMS API. 
+
+Unlike the REST API, it is possible to send a batch of commands to the JMS API that will all be processed in one request
+after which the responses to the commands will be collected and return in one response message.
+
+=== JMS Queue setup
+
+When the Workbench is deployed on the JBoss AS or EAP server, it automatically creates 3
+queues: 
+
+* `jms/queue/KIE.SESSION`
+* `jms/queue/KIE.TASK`
+* `jms/queue/KIE.RESPONSE`
+
+The `KIE.SESSION` and `KIE.TASK` queues should be used to send request messages to the JMS API. 
+Command response messages will be then placed on the `KIE.RESPONSE` queues. Command request messages 
+that involve starting and managing business processes should be sent to the `KIE.SESSION` and 
+command request messages that involve managing human tasks, should be sent to the `KIE.TASK` queue. 
+
+Although there are 2 different input queues, `KIE.SESSION` and `KIE.TASK`, this is only in order to 
+provide multiple input queues so as to optimize processing: command request messages will be 
+processed in the same manner regardless of which queue they're sent to.  However, in some cases, 
+users may send many more requests involving human tasks than requests involving business processes, 
+but then not want the processing of business process-related request messages to be delayed by the 
+human task messages. By sending the appropriate command request messages to the appropriate queues, 
+this problem can be avoided.
+
+The term "_command request message_" used above refers to a JMS text message that contains a 
+serialized `JaxbCommandsRequest` object. At the moment, only XML serialization (as opposed to, JSON 
+or protobuf, for example) is supported. 
+
+=== Using the remote Java API
+
+While it is possible to interact with a BPMS or KIE workbench server instance by sending and 
+processing JMS messages that you create yourself, _it will always be easier to use the remote Java 
+API_ that's supplied by the `kie-services-client` jar.
+
+For more information about how to use the remote Java API to interact with the JMS API of a server 
+instance, see the <link linkend='remote.java.api.jms'>Remote Java API</link> section.
+
+==== Serialization issues
+
+The JMS API accepts `TextMessage` instances that contain serialized `JaxbCommandsRequest` objects. 
+These `JaxbCommandsRequest` instances can be filled with multiple command objects. In this way, 
+it's possible to send a batch of commands for processing to the JMS API. 
+
+When users wish to include their own classes with requests, there a number of requirements that 
+must be met for the user-defined classes. For more information about these requirements, see the 
+<<remote.serialization.user.classes,Sending and receiving user class instances>> section in the 
+remote API additional documentation section.
+
+=== Example JMS usage
+
+The following is a rather long example that shows how to use the JMS API. The numbers ("callouts") 
+along the side of the example refer to notes below that explain particular parts of the example. 
+It's supplied for those advanced users that do not wish to use the jBPM Remote Java API.
+
+The jBPM Remote Java API, described here, will otherwise take care of all of the logic shown below.
+
+[source,java]
+----
+include::{codeDir}/org/kie/remote/client/documentation/jms/SendJmsExample.java[]
+----
+<1> These classes can all be found in the `kie-api`, `kie-services-client` and `kie-services-jaxb` JARs. 
+For this example, the only dependency needed is `org.kie.remote:kie-remote-client`, which transitively depends on both the
+`org.kie:kie-api` and `org.kie.remote:kie-remote-jaxb` artifacts. 
+
+<2> The `JaxbCommandsRequest` instance is the "holder" object in which you can place all of the commands
+you want to execute in a particular request. By using the `JaxbCommandsRequest.getCommands()` method, you 
+can retrieve the list of commands in order to add more commands to the request.
+A deployment id is required for command request messages that deal with business processes. Command request messages
+that only contain human task-related commands do not require a deployment id.
+
+<3> Note that the JMS message sent to the remote JMS API _must_ be constructed as follows:
+- It must be a JMS text message (`javax.jms.TextMessage`).
+- It must contain a serialized instance of a `JaxbCommandsRequest`, added to the message as a UTF string
+- It must have a filled JMS Correlation ID property.
+- It must have an int property with the name of "serialization" set to an acceptable value (only 0 at the moment).
+
+<4> The same serialization mechanism used to serialize the request message will be used to serialize the response 
+message.
+
+//// 
+ADD ME
+<5> In order to match the response to a command, to the initial command, use the `index` field of the returned
+`JaxbCommandResponse` instances. This `index` field will match the index of the initial command. Because
+not all commands will return a result, it's possible to send 3 commands with a command request message, and then receive
+a command response message that only includes one `JaxbCommandResponse` message with an `index` value of 1. 
+That 1 then identifies it as the response to the second command.
+
+<6> Since many of the results returned by various commands are not serializable, the jBPM JMS Remote API converts these results
+into JAXB equivalents, all of which implement the `JaxbCommandResponse` interface. The `JaxbCommandResponse.getResult()`
+method then returns the JAXB equivalent to the actual result, which will conform to the interface of the result.
+For example, in the code above, the `StartProcessCommand` returns a `ProcessInstance`. In order 
+to return this object to the requester, the `ProcessInstance` is converted to a `JaxbProcessInstanceResponse` and then
+added as a `JaxbCommandResponse` to the command response message. The same applies to the `List&lt;TaskSummary&gt;`
+that's returned by the `GetTaskAssignedAsPotentialOwnerCommand`.
+However, not all methods that can be called on a normal `ProcessInstance` can be called on the 
+`JaxbProcessInstanceResponse`_ because the `JaxbProcessInstanceResponse` is simply a representation
+of a `ProcessInstance` object. This applies to various other command response as well. In particular, methods which 
+require an active (backing) `KieSession`, such as `ProcessInstance.getProess()` or 
+`ProcessInstance.signalEvent(String type, Object event)` will throw an `UnsupportedOperationException`.
+////

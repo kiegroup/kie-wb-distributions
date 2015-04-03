@@ -69,7 +69,7 @@
   <xi:include href="RuntimeManagement.xml"/>
   <xi:include href="Console.xml"/>
   <xi:include href="BAM.xml"/>
-  <xi:include href="RemoteAPI.xml"/>
+  <xi:include href="RemoteAPI-chapter.xml"/>
 
   </part>
   

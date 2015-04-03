@@ -1,0 +1,2173 @@
+<?xml version="1.0" encoding="UTF-8"?><section xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="remote.java" xml:base="../" xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd http://www.w3.org/1999/xlink http://www.docbook.org/xml/5.0/xsd/xlink.xsd">
+<title>Remote Java API</title>
+<simpara>The Remote Java API provides <literal>KieSession</literal>, <literal>TaskService</literal> and <literal>AuditService</literal> interfaces to the JMS and REST APIs.</simpara>
+<simpara>The interface implementations provided by the Remote Java API take care of the underlying
+logic needed to communicate with the JMS or REST APIs. In other words, these implementations
+will allow you to interact with a remote workbench instance (i.e. KIE workbench or the jBPM
+Console) via known interfaces such as the <literal>KieSession</literal> or <literal>TaskService</literal> interface,
+without having to deal with the underlying transport and serialization details.</simpara>
+<simpara>The first step in interacting with the remote runtime is to use a <literal>RemoteRuntimeEngineFactory</literal>
+static <literal>newRestBuilder()</literal>, <literal>newJmsBuilder()</literal> or <literal>newCommandWebServiceClientBuilder()</literal> to create
+a builder instance. Use the new builder instance to configure and to create a <literal>RuntimeEngine</literal>
+instance to interact with the server.</simpara>
+<simpara>Each of the REST, JMS or WebService <literal>RemoteClientBuilder</literal> instances exposes different
+methods that allow the configuration of properties like the base URL of the REST API, JMS queue
+locations or timeout while waiting for responses.</simpara>
+<important>
+<title>The Remote Java API provides clients, not "instances"</title>
+<simpara>While the <literal>KieSession</literal>, <literal>TaskSerivce</literal> and <literal>AuditService</literal> instances provided by the Remote Java API
+may "look" and "feel" like local instances of the same interfaces, please make sure to remember
+that these instances are only wrappers around a REST or jMS client that interacts with a remote REST or JMS
+API.</simpara>
+<simpara> </simpara>
+<simpara>This means that if a requested operation fails on the <emphasis>server</emphasis>, the Remote Java API client instance
+on the <emphasis>client</emphasis> side will throw a <literal>RuntimeException</literal> indicating that the REST call failed. This is
+different from the behaviour of a "real" (or local) instance of a <literal>KieSession</literal>, <literal>TaskSerivce</literal> and
+<literal>AuditService</literal> instance because the exception the local instances will throw will relate to how the
+operation failed. Operations on a Remote Java API client instance that would normally throw other
+exceptions (such as the <literal>TaskService.claim(taskId, userId)</literal> operation when called by a user who is
+not a potential owner), will now throw a <literal>RuntimeException</literal> instead when the requested operation
+fails on the server.</simpara>
+<simpara> </simpara>
+<simpara>Also, while local instances require different handling (such as having to dispose of a <literal>KieSession</literal>),
+client instances provided by the Remote Java API hold no state and thus do not require any special
+handling.</simpara>
+<simpara> </simpara>
+<simpara>Finally, the instances returned by the client <literal>KieSession</literal> and <literal>TaskService</literal> instances (for example,
+process instances or task summaries) are not the same (internal) objects as used by the core engines.
+Instead, these returned instances are simple data transfer objects (DTOs) that implement the same
+interfaces but are designed to only return the associated data. Modifying or casting these returned
+instances to an internal implementation class will not succeed.</simpara>
+</important>
+<sidebar>
+<title>Creating a Remote Java Client Instance</title>
+<simpara>The following is a simple example of creating a REST-based client. The <literal>appName</literal> variable in the
+code below will be either "business-central" or "kie-wb" dependending on whether you’re using product
+or community.</simpara>
+<programlisting language="java" linenumbering="numbered">String deploymentId = "com.burns.reactor:homer:1.0";
+String serverInstanceUrl = "http://localhost:8080/" + appName;
+
+RuntimeEngine engine = RemoteRuntimeEngineFactory.newRestBuilder() <co xml:id="CO1-1"/>
+    .addDeploymentId(deploymentId) <co xml:id="CO1-2"/>
+    .addUrl(new URL(serverInstanceUrl))
+    .addUserName("homer")
+    .addPassword("d0nut5R!!!")
+    .build(); <co xml:id="CO1-3"/>
+
+KieSession kieSessionClient = engine.getKieSession();</programlisting>
+<calloutlist>
+<callout arearefs="CO1-1">
+<para>Create the appropriate builder instance. The method <literal>.newJmsBuilder()</literal> is available to create JMS
+based builder instances</para>
+</callout>
+<callout arearefs="CO1-2">
+<para>Call the appropriate methods and pass the appropriate parameters to configure the client</para>
+</callout>
+<callout arearefs="CO1-3">
+<para>"Build" or instantiate the actual client <literal>RuntimeEngine</literal> instance which you can then use to
+interact with the server</para>
+</callout>
+</calloutlist>
+</sidebar>
+<section xml:id="_remote_rest_java_api_client_configuration">
+<title>Remote REST Java API Client Configuration</title>
+<simpara>Each builder has a number of different (required or optional) methods to configure a client
+<literal>RuntimeEngine</literal> instance.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Methods with <emphasis role="strong">
+<superscript>always</superscript>
+</emphasis> next to them are <emphasis role="strong">always</emphasis> required.</simpara>
+</listitem>
+<listitem>
+<simpara>Methods with <superscript>when</superscript> next to them are <emphasis>required depending on the factors described</emphasis>
+("required <emphasis>when</emphasis>…​") and otherwise optional.</simpara>
+</listitem>
+<listitem>
+<simpara>All other methods are optional.</simpara>
+</listitem>
+</itemizedlist>
+<variablelist>
+<title>Remote Rest Runtime Engine Builder methods</title>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addDeploymentId(String deploymentId)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the deployment id of the deployment</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>doing an operation on a client instance that affects a process instance</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addExtraJaxbClasses(Class…​ extraJaxbClasses )</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Add extra classes to the classpath available
+to the serialization mechanisms</simpara>
+<simpara>When passing instances of user-defined classes in a Remote Java API call, it’s important to
+use this method first to add the classes so that the class instances can be serialized correctly.</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>passing custom class instances as arguments to an operation on a client instance</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addPassword(String password)</literal>
+<superscript>always</superscript>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the password of the user connecting to the server</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addProcessInstanceId(long process)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the process instance id of the deployment</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>interacting with a <literal>PER_PROCESS_INSTANCE</literal> deployment</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addTimeout(int timeoutInSeconds)</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the timeout for the REST call</simpara>
+<simpara>The default is 5 seconds.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addUrl(URL serverInstanceUrl)</literal>
+<superscript>always</superscript>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the URL for the application instance</simpara>
+<simpara>This should be a URL that roughly corresponds to <literal>
+<link xlink:href="http://server:port/business-central/">http://server:port/business-central/</link>
+</literal>
+or <literal>
+<link xlink:href="http://server:port/kie-wb/">http://server:port/kie-wb/</link>
+</literal>.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addUserName(String userName)</literal>
+<superscript>always</superscript>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the name of the user connecting to the server</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>clearJaxbClasses()</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Clears the list of (user-defined) Classes that the client instance should
+know about</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+<section xml:id="_example_rest_remote_java_client_configuration">
+<title>Example REST Remote Java Client Configuration</title>
+<simpara>The following example illustrates how the Remote Java API can be used with the REST API.</simpara>
+<programlisting language="java" linenumbering="numbered">public void startProcessAndHandleTaskViaRestRemoteJavaAPI(URL serverRestUrl, String deploymentId, String user, String password) {
+    // the serverRestUrl should contain a URL similar to "http://localhost:8080/jbpm-console/"
+
+    // Setup the factory class with the necessarry information to communicate with the REST services
+    RuntimeEngine engine = RemoteRuntimeEngineFactory.newRestBuilder()
+        .addUrl(serverRestUrl)
+        .addTimeout(5)
+        .addDeploymentId(deploymentId)
+        .addUserName(user)
+        .addPassword(password)
+        // if you're sending custom class parameters, make sure that
+        // the remote client instance knows about them!
+        .addExtraJaxbClasses(MyType.class)
+        .build();
+
+    // Create KieSession and TaskService instances and use them
+    KieSession ksession = engine.getKieSession();
+    TaskService taskService = engine.getTaskService();
+
+    // Each operation on a KieSession, TaskService or AuditLogService (client) instance
+    // sends a request for the operation to the server side and waits for the response
+    // If something goes wrong on the server side, the client will throw an exception.
+    Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
+    params.put("paramName", new MyType("name", 23));
+    ProcessInstance processInstance
+        = ksession.startProcess("com.burns.reactor.maintenance.cycle", params);
+    long procId = processInstance.getId();
+
+    String taskUserId = user;
+    taskService = engine.getTaskService();
+    List&lt;TaskSummary&gt; tasks = taskService.getTasksAssignedAsPotentialOwner(user, "en-UK");
+
+    long taskId = -1;
+    for (TaskSummary task : tasks) {
+        if (task.getProcessInstanceId() == procId) {
+            taskId = task.getId();
+        }
+    }
+
+    if (taskId == -1) {
+        throw new IllegalStateException("Unable to find task for " + user +
+                " in process instance " + procId);
+    }
+
+    taskService.start(taskId, taskUserId);
+
+    // resultData can also just be null
+    Map&lt;String, Object&gt; resultData = new HashMap&lt;String, Object&gt;();
+    taskService.complete(taskId, taskUserId, resultData);
+}</programlisting>
+</section>
+</section>
+<section xml:id="remote.java.api.jms">
+<title>Remote JMS Java API Client Configuration</title>
+<simpara>When configuring the remote JMS client, you must choose one of the following ways to configure
+the JMS connection:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Pass the <literal>ConnectionFactory</literal> instance and the <emphasis>KieSession</emphasis>, <emphasis>TaskService</emphasis> and <emphasis>Response</emphasis> <literal>Queue</literal>
+instances when configuring the remote java client. To do that, please use the following methods:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+<literal>addConnectionFactory(ConnectionFactory)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addKieSessionQueue(Queue)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addTaskServiceQueue(Queue)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addResponseQueue(Queue)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addHostName(String)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addJmsConnectorPort(String)</literal>
+</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>
+<emphasis>or</emphasis> pass a remote <literal>InitialContext</literal> instance that contains references to the necessary
+<literal>ConnectionFactory</literal> and <literal>Queue</literal> instances (see previous bullet).</simpara>
+<itemizedlist>
+<listitem>
+<simpara>please then use the method <literal>addRemoteInitialContext(InitialContext)</literal>
+</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>
+<emphasis>or</emphasis> pass a String with the hostname of the JBoss EAP server that KIE Workbench is running on</simpara>
+<itemizedlist>
+<listitem>
+<simpara>please then use the method <literal>addJbossServerHostName(String)</literal>
+</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+<simpara>In addition, if you are doing an operation on a task via the remote JMS client (and are not
+using the <literal>disableTaskSecurity()</literal> method), then you must also configure SSL. The following methods
+(described in more detail below) are available for this:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+<literal>addHostName(String)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addJmsConnectorPort(int)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addKeystoreLocation(String)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addKeystorePassword(String)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addTruststoreLocation(String)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>addTruststorePassword(String)</literal>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<literal>useKeystoreAsTruststore()</literal>
+</simpara>
+</listitem>
+</itemizedlist>
+<section xml:id="_example_jms_remote_java_client_configuration">
+<title>Example JMS Remote Java Client Configuration</title>
+<sidebar>
+<title>Example JMS Remote Java Client Configuration with a remote <literal>javax.jms</literal> classes</title>
+<simpara>The following example illustrates how to configure a Remote Java API JMS client using
+instances of the <literal>ConnectionFactory</literal> and <literal>Queue</literal> classes.</simpara>
+<programlisting language="java" linenumbering="numbered">private static final String CONNECTION_FACTORY_NAME = "jms/RemoteConnectionFactory"; <co xml:id="CO2-1"/>
+private static final String KSESSION_QUEUE_NAME = "jms/queue/KIE.SESSION";
+private static final String TASK_QUEUE_NAME = "jms/queue/KIE.TASK";
+private static final String RESPONSE_QUEUE_NAME = "jms/queue/KIE.RESPONSE";
+
+public void startProcessViaJmsRemoteJavaAPI(String hostname, int jmsConnPort,
+        String deploymentId, String user, String password,
+        String processId) throws NamingException {
+
+    InitialContext remoteInitialContext = getRemoteInitialContext();
+
+    String queueName = KSESSION_QUEUE_NAME;
+    Queue sessionQueue = (Queue) remoteInitialContext.lookup(queueName);
+    queueName = TASK_QUEUE_NAME;
+    Queue taskQueue = (Queue) remoteInitialContext.lookup(queueName);
+    queueName = RESPONSE_QUEUE_NAME;
+    Queue responseQueue = (Queue) remoteInitialContext.lookup(queueName);
+
+    String connFactoryName = CONNECTION_FACTORY_NAME;
+    ConnectionFactory connFact = (ConnectionFactory) remoteInitialContext.lookup(connFactoryName);
+
+    RuntimeEngine engine = RemoteRuntimeEngineFactory.newJmsBuilder()
+            .addDeploymentId(deploymentId)
+            .addConnectionFactory(connFact) <co xml:id="CO2-2"/>
+            .addKieSessionQueue(sessionQueue)
+            .addTaskServiceQueue(taskQueue)
+            .addResponseQueue(responseQueue)
+            .addUserName(user)
+            .addPassword(password)
+            .addHostName(hostname)
+            .addJmsConnectorPort(jmsConnPort)
+            .disableTaskSecurity() <co xml:id="CO2-3"/>
+            .build();
+
+    // Create KieSession instances and use them
+    KieSession ksession = engine.getKieSession();
+
+    // Each operation on a KieSession, TaskService or AuditLogService (client) instance
+    // sends a request for the operation to the server side and waits for the response
+    // If something goes wrong on the server side, the client will throw an exception.
+    ProcessInstance processInstance = ksession.startProcess(processId);
+    long procId = processInstance.getId();
+}</programlisting>
+<calloutlist>
+<callout arearefs="CO2-1">
+<para>The names of the <literal>ConnectionFactory</literal> and <literal>Queue</literal> instances may differ depending on your application server</para>
+</callout>
+<callout arearefs="CO2-2">
+<para>Here we add the connection factory and queue instances.</para>
+</callout>
+<callout arearefs="CO2-3">
+<para>If we are not using SSL, but are doing operations on tasks, then we have to explictly call
+the <literal>disableTaskSecurity()</literal> method. SSL is necessary for security reasons (plain-text password in
+message) when doing task operations via the remote Java API.</para>
+</callout>
+</calloutlist>
+</sidebar>
+<sidebar>
+<title>Example JMS Remote Java Client Configuration with a remote <literal>InitialContext</literal> instance</title>
+<simpara>The following example illustrates how to configure a Remote Java API JMS client using
+a remote <literal>InitialContext</literal> instance. See your application server documentation for how to instantiate
+a remote instance of your application server’s <literal>InitialContext</literal>.</simpara>
+<programlisting language="java" linenumbering="numbered">public void startProcessViaJmsRemoteJavaAPIInitialContext(String hostname, int jmsConnPort,
+        String deploymentId, String user, String password,
+        String processId) {
+
+    // See your application server documentation for how to initialize
+    // a remote InitialContext instance for your server instance
+    InitialContext remoteInitialContext = getRemoteInitialContext();
+
+    RuntimeEngine engine = RemoteRuntimeEngineFactory.newJmsBuilder()
+            .addDeploymentId(deploymentId)
+            .addRemoteInitialContext(remoteInitialContext)
+            .addUserName(user)
+            .addPassword(password)
+            .build();
+
+    // Create KieSession instances and use them
+    KieSession ksession = engine.getKieSession();
+
+    // Each operation on a KieSession, TaskService or AuditLogService (client) instance
+    // sends a request for the operation to the server side and waits for the response
+    // If something goes wrong on the server side, the client will throw an exception.
+    ProcessInstance processInstance = ksession.startProcess(processId);
+    long procId = processInstance.getId();
+}</programlisting>
+</sidebar>
+<sidebar>
+<title>Example JMS Remote Java Client Configuration with JBoss EAP hostname</title>
+<simpara>The following example illustrates how to configure a Remote Java API JMS client using
+the hostname of the JBoss EAP server on which kie-wb or business-central is running.</simpara>
+<programlisting language="java" linenumbering="numbered">public void startProcessViaJmsRemoteJavaAPI(String hostNameOrIpAdress,
+        String deploymentId, String user, String password,
+        String processId) {
+
+    // this requires that you also have the following dependencies
+    // - org.jboss.as:jboss-naming artifact appropriate to the EAP version you're using
+    RuntimeEngine engine = RemoteRuntimeEngineFactory.newJmsBuilder()
+            .addJbossServerHostName(hostNameOrIpAdress)
+            .addDeploymentId(deploymentId)
+            .addUserName(user)
+            .addPassword(password)
+            .build();
+}</programlisting>
+</sidebar>
+</section>
+<section xml:id="_remote_jms_runtime_engine_builder_methods">
+<title>Remote JMS Runtime Engine Builder methods</title>
+<simpara>Each builder has a number of different (required or optional) methods to configure a client
+<literal>RuntimeEngine</literal> instance.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Methods with <emphasis role="strong">
+<superscript>always</superscript>
+</emphasis> next to them are <emphasis role="strong">always</emphasis> required.</simpara>
+</listitem>
+<listitem>
+<simpara>Methods with <superscript>when</superscript> next to them are <emphasis>required depending on the factors described</emphasis>
+("required <emphasis>when</emphasis>…​") and otherwise optional.</simpara>
+</listitem>
+<listitem>
+<simpara>All other methods are optional.</simpara>
+</listitem>
+</itemizedlist>
+<variablelist>
+<title>Remote JMS Runtime Engine Builder methods</title>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addConnectionFactory(ConnectionFactory connectionFactory)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Add a <literal>ConnectionFactory</literal>
+used to create JMS session to send and receive messages</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client by passing <literal>ConnectionFactory</literal> and <literal>Queue</literal>
+instances</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addDeploymentId(String deploymentId)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the deployment id of the deployment</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>doing an operation on a client instance that affects a process instance — this
+also includes completing or failing tasks created by process instances</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addExtraJaxbClasses(Class…​ extraJaxbClasses )</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Add extra classes to the client
+for when user-defined class instances are passed as parameters to client methods</simpara>
+<simpara>When passing instances of user-defined classes in a Remote Java API call, it’s important to
+use this method first to add the classes so that the class instances can be serialized correctly.</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>passing custom class instances as arguments to an operation on a client instance</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addHostName(String hostname)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the host name for the server that the client is making a
+JMS connection with</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client by setting <literal>ConnectionFactory</literal> and <literal>Queue</literal>
+instances</simpara>
+<simpara>configuring the JMS java client to use SSL</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addJbossServerHostName(String hostname)</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the host name of the JBoss EAP server that the
+client is making a JMS connection with</simpara>
+<simpara>After using this method, no other configuration is needed with regards to the server. However,
+additional server parameters (host name, port) may be needed when also configuring SSL.</simpara>
+<simpara>Make sure that the EAP version-appropriate <literal>org.jboss.naming:jboss-naming</literal> dependency is available
+on the classpath when doing this</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addJmsConnectorPort(int port)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the port used for the JMS connection connection with
+the server</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client by passing <literal>ConnectionFactory</literal> and <literal>Queue</literal>
+instances</simpara>
+<simpara>configuring the JMS java client to use SSL</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addKeystoreLocation(String keystorePath)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the location (path) of the keystore</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client to use SSL</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addKeystorePassword(String keystorePassword)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the password for the keystore</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client to use SSL</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addKieSessionQueue(Queue ksessionQueue)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Pass the <literal>javax.jms.Queue</literal> instance representing
+the <emphasis>KIE.SESSION</emphasis> queue used to receive process instance requests from the client</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client by setting <literal>ConnectionFactory</literal> and <literal>Queue</literal>
+instances</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addPassword(String password)</literal>
+<superscript>always</superscript>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the password of the user connecting to the server</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addProcessInstanceId(long process)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the process instance id of the deployment</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>interacting with a <emphasis>`PER_PROCESS_INSTANCE`</emphasis> deployment</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addRemoteInitialContext(InitialContext remoteInitialContext)</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the remote <literal>InitialContext</literal>
+instance from the remote application server, which is then used to retrieve the <literal>ConnectionFactory</literal>
+and <literal>Queue</literal> instances</simpara>
+<simpara>After using this method, no other configuration is needed with regards to the server. However,
+additional server parameters (host name, port) may be needed when also configuring SSL.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addResponseQueue(Queue responseQueue)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Pass the <literal>javax.jms.Queue</literal> instance representing
+the <emphasis>KIE.RESPONSE</emphasis> queue used to send responses to the client</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client by setting <literal>ConnectionFactory</literal> and <literal>Queue</literal>
+instances</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addTaskServiceQueue(Queue taskServiceQueue)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Pass the <literal>javax.jms.Queue</literal> instance representing
+the <emphasis>KIE.TASK</emphasis> queue used to receive task operation requests to the client</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client by setting <literal>ConnectionFactory</literal> and <literal>Queue</literal>
+instances</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addTimeout(int timeoutInSeconds)</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the timeout for the JMS message. The default is 5 seconds.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addTruststoreLocation(String truststorePath)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the location (path) of the keystore</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client to use SSL</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addTruststoreLocation(String truststorePassword)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the password for the keystore</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>configuring the JMS java client to use SSL</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addUserName(String userName)</literal>
+<superscript>always</superscript>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the name of the user connecting to the server</simpara>
+<simpara>This is also the user whose permissions will be used when doing any task operations</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>clearJaxbClasses()</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Clears the list of (user-defined) Classes that the client instance should
+know about</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>disableTaskSecurity()</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Enables configuration of a client that can send task-related operation
+requests without having to use SSL. If this option is <emphasis role="strong">not</emphasis> used and a task operation is called, the
+client will throw an exception.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>useKeystoreAsTruststore()</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Uses the same file (location) and password for the truststore
+configuration when configuring SSL.</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+<important>
+<simpara>In order to instantiate a remote <literal>InitialContext</literal> via JNDI, the application-server-specific
+dependencies need to be included on the classpath.</simpara>
+<simpara>For JBoss EAP 6, the artifact (jar) containing this class is the
+<literal>org.jboss:jboss-remote-naming</literal> artifact (jar), version
+<literal>1.0.5.Final</literal> or higher. Depending on the version of AS 7 or EAP 6 that you
+use, this version may vary.</simpara>
+<simpara>If you are using a <emphasis>different</emphasis> application server, please see your specific
+application server documentation for the parameters and artifacts necessary to create an
+<literal>InitialContextFactory</literal> instance or otherwise get a remote
+<literal>InitialContext</literal> instance (via JNDI) from the application server instance.</simpara>
+</important>
+</section>
+<section xml:id="_example_jms_client_configuration_and_usage_with_ssl">
+<title>Example JMS client configuration and usage with SSL</title>
+<simpara>The following example illustrates how to configure a Remote Java API JMS client using
+a remote <literal>InitialContext</literal> instance along with SSL. In this case, the same file is being used as
+both the client’s keystore (the client’s identifying keys and certificates) and as the client’s
+truststore (the client’s list of trusted certificates from other parties, in this case, the server).</simpara>
+<programlisting language="java" linenumbering="numbered">public void startProcessAndHandleTaskViaJmsRemoteJavaAPISsl(String hostNameOrIpAdress, int jmsSslConnectorPort,
+        String deploymentId, String user, String password,
+        String keyTrustStoreLocation, String keyTrustStorePassword,
+        String processId) {
+
+    InitialContext remoteInitialContext = getRemoteInitialContext();
+
+    RuntimeEngine engine = RemoteRuntimeEngineFactory.newJmsBuilder()
+            .addDeploymentId(deploymentId)
+            .addRemoteInitialContext(remoteInitialContext)
+            .addUserName(user)
+            .addPassword(password)
+            .addHostName(hostNameOrIpAdress)
+            .addJmsConnectorPort(jmsSslConnectorPort)
+            .useKeystoreAsTruststore()
+            .addKeystoreLocation(keyTrustStoreLocation)
+            .addKeystorePassword(keyTrustStorePassword)
+            .build();
+
+    // create JMS request
+    KieSession ksession = engine.getKieSession();
+    ProcessInstance processInstance = ksession.startProcess(processId);
+    long procInstId = processInstance.getId();
+    logger.debug("Started process instance: " + procInstId );
+
+    TaskService taskService = engine.getTaskService();
+    List&lt;TaskSummary&gt; taskSumList
+        = taskService.getTasksAssignedAsPotentialOwner(user, "en-UK");
+    TaskSummary taskSum = null;
+    for( TaskSummary taskSumElem : taskSumList ) {
+        if( taskSumElem.getProcessInstanceId().equals(procInstId) ) {
+            taskSum = taskSumElem;
+        }
+    }
+    long taskId = taskSum.getId();
+    logger.debug("Found task " + taskId);
+
+    // get other info from task if you want to
+    Task task = taskService.getTaskById(taskId);
+    logger.debug("Retrieved task " + taskId );
+
+    taskService.start(taskId, user);
+
+    Map&lt;String, Object&gt; resultData = new HashMap&lt;String, Object&gt;();
+    // insert results for task in resultData
+    taskService.complete(taskId, user, resultData);
+    logger.debug("Completed task " + taskId );
+}</programlisting>
+</section>
+</section>
+<section xml:id="remote.java.api.ws.command">
+<title>Remote CommandWebService Java API Client Configuration</title>
+<simpara>Starting with this release, a simple webservice has been added to the remote API.</simpara>
+<sidebar>
+<title>Example WebService Remote Java Client Configuration</title>
+<simpara>The following example illustrates how to configure a Remote Java API WebService client using
+the hostname of the JBoss EAP server on which kie-wb or business-central is running.</simpara>
+<programlisting language="java" linenumbering="numbered">import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+import org.kie.api.command.Command;
+import org.kie.api.task.model.Task;
+import org.kie.remote.client.documentation.objects.MyType;
+import org.kie.remote.client.jaxb.JaxbCommandsRequest;
+import org.kie.remote.client.jaxb.JaxbCommandsResponse;
+import org.kie.remote.jaxb.gen.GetTaskCommand; <co xml:id="CO3-1"/>
+import org.kie.remote.jaxb.gen.GetTaskContentCommand;
+import org.kie.remote.jaxb.gen.GetTasksByProcessInstanceIdCommand;
+import org.kie.remote.jaxb.gen.JaxbStringObjectPairArray;
+import org.kie.remote.jaxb.gen.StartProcessCommand;
+import org.kie.remote.jaxb.gen.util.JaxbStringObjectPair;
+import org.kie.remote.services.ws.command.generated.CommandWebService;
+import org.kie.remote.services.ws.command.generated.CommandWebServiceException;
+import org.kie.services.client.api.RemoteRuntimeEngineFactory;
+import org.kie.services.client.serialization.jaxb.impl.JaxbCommandResponse;
+import org.kie.services.client.serialization.jaxb.impl.JaxbLongListResponse;
+import org.kie.services.client.serialization.jaxb.impl.process.JaxbProcessInstanceResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class WebserviceJavaApiExamples {
+
+    private Logger logger = LoggerFactory.getLogger(WebserviceJavaApiExamples.class);
+
+    /**
+     * Create the webservice client
+     * @param applicationUrl Something like "http://localhost:8080/kie-wb/"
+     *                       or "http://localhost:8080/business-central/"
+     * @param user The user doing the webservice requests
+     * @param password The user's password
+     * @param deploymentId The deployment id that the request will interact with
+     * @return A {@link CommandWebService} client instance
+     */
+    private static CommandWebService createWebserviceClient(URL applicationUrl,
+            String user, String password, String deploymentId) {
+        CommandWebService client =
+        RemoteRuntimeEngineFactory.newCommandWebServiceClientBuilder()
+            .addServerUrl(applicationUrl)
+            .addUserName(user)
+            .addPassword(password)
+            .addDeploymentId(deploymentId)
+            .addExtraJaxbClasses(MyType.class) <co xml:id="CO3-2"/>
+            .buildBasicAuthClient();
+
+        return client;
+    }
+
+    /**
+     * Send a webservice request with a single command
+     * @param service The webserivce client instance
+     * @param cmd The command that we're sending (see the
+     *            'org.kie.remote.jaxb.gen package' in kie-remote-client)
+     * @param respClass The class that we expect as a response
+     * @param deploymentId The id of the deployment that we will interact with
+     * @return the response object
+     * @throws CommandWebServiceException if the webservice operation fails
+     */
+    private static &lt;T&gt; T doWebserviceSingleCommandRequest(CommandWebService service,
+            Command&lt;?&gt; cmd, Class&lt;T&gt; respClass, String deploymentId)
+                    throws CommandWebServiceException {
+        // Get a response from the WebService
+        JaxbCommandsRequest req = new JaxbCommandsRequest(deploymentId, cmd);
+        JaxbCommandsResponse response = service.execute(req);
+
+        // check response
+        JaxbCommandResponse&lt;?&gt; cmdResp = response.getResponses().get(0);
+
+        return (T) cmdResp;
+    }
+
+    /**
+     * Start a simple process, and retrieve the task information and content
+     * via the webservice
+     *
+     * @param applicationUrl Something like "http://localhost:8080/kie-wb/"
+     *                       or "http://localhost:8080/business-central/"
+     * @param user The user doing the webservice requests
+     * @param password The user's password
+     * @param deploymentId The deployment id that the request will interact with
+     * @param processId The id of the process we want to start
+     * @throws Exception if something goes wrong
+     */
+    public static void startSimpleProcess(URL applicationUrl,
+            String user, String password, String deploymentId, String processId)
+                    throws Exception {
+
+        CommandWebService commandWebService
+            = createWebserviceClient(applicationUrl, user, password, deploymentId);
+
+        // Create start process command
+        StartProcessCommand spc = new StartProcessCommand();
+        spc.setProcessId(processId);
+        JaxbStringObjectPairArray map = new JaxbStringObjectPairArray();
+        JaxbStringObjectPair keyValue = new JaxbStringObjectPair();
+        keyValue.setKey("myobject");
+        keyValue.setValue(new MyType("variable", 29));
+        map.getItems().add(keyValue);
+        spc.setParameter(map);
+
+        // Do webService request
+        JaxbProcessInstanceResponse jpir
+            = doWebserviceSingleCommandRequest(commandWebService, spc,
+                    JaxbProcessInstanceResponse.class, deploymentId);
+        long procInstId = ((JaxbProcessInstanceResponse) jpir).getId();
+
+        // Create command
+        GetTasksByProcessInstanceIdCommand gtbic = new GetTasksByProcessInstanceIdCommand();
+        gtbic.setProcessInstanceId(procInstId);
+
+        // Do webservice request
+        JaxbLongListResponse jllr
+            = doWebserviceSingleCommandRequest(commandWebService, gtbic,
+                    JaxbLongListResponse.class, deploymentId );
+        List&lt;Long&gt; taskIds = jllr.getResult();
+        long taskId = taskIds.get(0);
+
+        // Commands for task and task content
+        GetTaskCommand gtc = new GetTaskCommand();
+        gtc.setTaskId(taskId);
+        GetTaskContentCommand gtcc = new GetTaskContentCommand();
+        gtcc.setTaskId(taskId);
+
+        // Do webservice request (with both commands)
+        JaxbCommandsRequest req = new JaxbCommandsRequest(deploymentId, gtc);
+        req.getCommands().add(gtcc); <co xml:id="CO3-3"/>
+        JaxbCommandsResponse response = commandWebService.execute(req);
+
+        // Get task and content response
+        Task task = (Task) response.getResponses().get(0).getResult();
+        Map&lt;String, Object&gt; contentMap
+            = (Map&lt;String, Object&gt;) response.getResponses().get(1).getResult();
+    }
+
+}</programlisting>
+<calloutlist>
+<callout arearefs="CO3-1">
+<para>All commands that can be used with the webservice can be found in the <literal>org.kie.remote.jaxb.gen</literal>
+package in the <literal>kie-remote-client</literal> module. These commands contain the same data as the commands
+that they are based on (that have the same name) in the core jbpm and drools modules.</para>
+</callout>
+<callout arearefs="CO3-2">
+<para>The <literal>addExtraJaxbClasses(Class…​)</literal> method must be used when using instances of user-defined
+classes in a command sent in a webservice request.</para>
+</callout>
+<callout arearefs="CO3-3">
+<para>Similar to the REST <literal>/execute</literal> method, multiple commands can be sent in one webservice request</para>
+</callout>
+</calloutlist>
+</sidebar>
+<variablelist>
+<title>Remote Webservice Client Builder methods</title>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addDeploymentId(String deploymentId)</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Set the deployment id of the deployment</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>doing an operation on a client instance that affects a process instance — this
+also includes completing or failing tasks created by process instances</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addExtraJaxbClasses(Class…​ extraJaxbClasses )</literal>
+</emphasis>
+<superscript>when</superscript>
+</term>
+<listitem>
+<simpara>Add extra classes to the client
+for when user-defined class instances are passed as parameters to client methods</simpara>
+<simpara>When passing instances of user-defined classes in a Remote Java API call, it’s important to
+use this method first to add the classes so that the class instances can be serialized correctly.</simpara>
+<variablelist>
+<varlistentry>
+<term>
+<emphasis>Required when</emphasis>:</term>
+<listitem>
+<simpara>passing custom class instances as arguments to an operation on a client instance</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addServerUrl(URL applicationUrl)</literal>
+<superscript>always</superscript>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the URL for the application (kie-wb or
+business-central) that the webservice request will be sent to</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addPassword(String password)</literal>
+<superscript>always</superscript>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the password of the user connecting to the server</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addTimeout(int timeoutInSeconds)</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the timeout for the Webservice response. The default is 5 seconds.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>addUserName(String userName)</literal>
+<superscript>always</superscript>
+</emphasis>
+</term>
+<listitem>
+<simpara>Set the name of the user connecting to the server</simpara>
+<simpara>This is also the user whose permissions will be used when doing any task operations</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>setWsdlLocationRelativePath()</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>OCRAM</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<emphasis role="strong">
+<literal>useHttpRedirect()</literal>
+</emphasis>
+</term>
+<listitem>
+<simpara>OCRAM</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</section>
+<section xml:id="_supported_methods">
+<title>Supported methods</title>
+<simpara>As mentioned above, the Remote Java API provides client-like instances of the <literal>RuntimeEngine</literal>, <literal>KieSession</literal>,
+      <literal>TaskService</literal> and <literal>AuditService</literal> interfaces.</simpara>
+<simpara>This means that while many of the methods in those interfaces are available, some are not. The following tables lists the methods
+      which are available. Methods not listed in the below, will throw an <literal>UnsupportedOperationException</literal> explaining that the
+      called method is not available.</simpara>
+<table frame="all" rowsep="1" colsep="1">
+<title>Available process-related <literal>KieSession</literal> methods</title>
+<tgroup cols="3">
+<colspec colname="col_1" colwidth="*"/>
+<colspec colname="col_2" colwidth="*"/>
+<colspec colname="col_3" colwidth="*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Return type</entry>
+<entry align="left" valign="top">Method signature</entry>
+<entry align="left" valign="top">Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>abortProcessInstance(</literal> <literal>long processInstanceId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Abort the process instance</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>ProcessInstance</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getProcessInstance(</literal> <literal>long processInstanceId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Return the process instance</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>ProcessInstance</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getProcessInstance(</literal> <literal>long processInstanceId,</literal>
+                             <literal>boolean readOnly)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Return the process instance</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;ProcessInstance&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getProcessInstances()</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Return all (active) process instances</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>signalEvent(</literal> <literal>String signal,</literal> <literal>Object event)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Signal all (active) process instances</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>signalEvent(</literal> <literal>String signal,</literal> <literal>Object event,</literal>
+                             <literal>long processInstanceId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Signal the process instance</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>ProcessInstance</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>startProcess(</literal> <literal>String processId,</literal>
+                             <literal>CorrelationKey correlationKey,</literal>
+                             <literal>Map&lt;String, Object&gt; parameters)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Start a new process and return the process instance (if the process instance has not immediately completed)</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>ProcessInstance</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>startProcess(String processId,</literal>
+                             <literal>Map&lt;String, Object&gt; parameters)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Start a new process and return the process instance (if the process instance has not immediately completed)</simpara>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<table frame="all" rowsep="1" colsep="1">
+<title>Available rules-related <literal>KieSession</literal> methods&lt;</title>
+<tgroup cols="3">
+<colspec colname="col_1" colwidth="*"/>
+<colspec colname="col_2" colwidth="*"/>
+<colspec colname="col_3" colwidth="*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Return type</entry>
+<entry align="left" valign="top">Method signature</entry>
+<entry align="left" valign="top">Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>Long</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getFactCount()</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Return the total fact count</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>Object</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getGlobal(String identifier)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Return a global fact</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>Integer</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getId()</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Return the id of the <literal>KieSession</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>setGlobal(String identifier,</literal>
+              <literal>Object value)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Set a global fact</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>fireAllRules()</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Fire all rules</simpara>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<table frame="all" rowsep="1" colsep="1">
+<title>Available <literal>WorkItemManager</literal> methods</title>
+<tgroup cols="3">
+<colspec colname="col_1" colwidth="*"/>
+<colspec colname="col_2" colwidth="*"/>
+<colspec colname="col_3" colwidth="*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Return type</entry>
+<entry align="left" valign="top">Method signature</entry>
+<entry align="left" valign="top">Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>abortWorkItem(long workItemId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Abort the work item</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>completeWorkItem(long workItemId,</literal>
+                <literal>Map&lt;String, Object&gt; results)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Complete the work item</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>WorkItem</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getWorkItem(long workItemId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Return the work item</simpara>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<table frame="all" rowsep="1" colsep="1">
+<title>Available task operation <literal>TaskService</literal> methods</title>
+<tgroup cols="3">
+<colspec colname="col_1" colwidth="*"/>
+<colspec colname="col_2" colwidth="*"/>
+<colspec colname="col_3" colwidth="*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Return type</entry>
+<entry align="left" valign="top">Method signature</entry>
+<entry align="left" valign="top">Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>Long</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>addTask(Task task,</literal>
+                       <literal>Map&lt;String, Object&gt; params)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Add a new task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>activate(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Activate a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>claim(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Claim a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>claim(long taskId, String userId,</literal>
+                      <literal>List&lt;String&gt; groupIds)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Claim a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>claimNextAvailable(String userId,</literal>
+                      <literal>String language)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Claim the next available task for a user</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>claimNextAvailable(String userId,</literal>
+                      <literal>List&lt;String&gt; groupIds,</literal>
+                      <literal>String language)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Claim the next available task for a user</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>complete(long taskId, String userId,</literal>
+                      <literal>Map&lt;String, Object&gt; data)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Complete a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>delegate(long taskId, String userId,</literal>
+                      <literal>String targetUserId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Delegate a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>exit(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Exit a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>fail(long taskId, String userId,</literal>
+                      <literal>Map&lt;String, Object&gt; faultData)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Fail a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>forward(long taskId, String userId,</literal>
+                      <literal>String targetEntityId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Forward a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>nominate(long taskId, String userId,</literal>
+                      <literal>List&lt;OrganizationalEntity&gt;</literal> <literal>potentialOwners)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Nominate a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>release(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Release a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>remove(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Remove a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>resume(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Resume a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>skip(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Skip a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>start(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Start a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>stop(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Stop a task</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>suspend(long taskId, String userId)</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>Suspend a task</simpara>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<table frame="all" rowsep="1" colsep="1">
+<title>Available task retrieval and query <literal>TaskService</literal> methods</title>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="*"/>
+<colspec colname="col_2" colwidth="*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Return type</entry>
+<entry align="left" valign="top">Method signature</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>Task</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTaskByWorkItemId(long workItemId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>Task</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTaskById(long taskId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;TaskSummary&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksAssignedAsBusinessAdministrator(String userId, String language)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;TaskSummary&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksAssignedAsPotentialOwner(String userId, String language)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;TaskSummary&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksAssignedAsPotentialOwnerByStatus(String userId,</literal> <literal>List&lt;Status&gt; status, String language)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;TaskSummary&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksOwned(String userId, String language)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;TaskSummary&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksOwnedByStatus(String userId, List&lt;Status&gt; status,</literal> <literal>String language)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;TaskSummary&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksByStatusByProcessInstanceId(long processInstanceId,</literal> <literal>List&lt;Status&gt; status, String language)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;TaskSummary&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksByProcessInstanceId(long processInstanceId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>`List&lt;TaskSummary&gt;</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksByVariousFields(List&lt;Long&gt; workItemIds,</literal> <literal>List&lt;Long&gt; taskIds,</literal>
+                         <literal>List&lt;Long&gt; procInstIds,</literal> <literal>List&lt;String&gt; busAdmins,</literal> <literal>List&lt;String&gt; potOwners,</literal>
+                         <literal>List&lt;String&gt; taskOwners,</literal> <literal>List&lt;Status&gt; status,</literal> <literal>boolean union)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;TaskSummary&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getTasksByVariousFields(Map &lt;String, List&lt;?&gt;&gt; parameters, boolean union)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>Content</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getContentById(long contentId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>Attachment</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>getAttachmentById(long attachId)</literal>
+</simpara>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<table frame="all" rowsep="1" colsep="1">
+<title>Available <literal>AuditService</literal> methods</title>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="*"/>
+<colspec colname="col_2" colwidth="*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Return type</entry>
+<entry align="left" valign="top">Method signature</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;ProcessInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findProcessInstances()</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;ProcessInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findProcessInstances(String processId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;ProcessInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findActiveProcessInstances(String processId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>ProcessInstanceLog</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findProcessInstance(long processInstanceId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;ProcessInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findSubProcessInstances(long processInstanceId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;NodeInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findNodeInstances(long processInstanceId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;NodeInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findNodeInstances(long processInstanceId,</literal> <literal>String nodeId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;VariableInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findVariableInstances(long processInstanceId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;VariableInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findVariableInstances(long processInstanceId,</literal> <literal>String variableId)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;VariableInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findVariableInstancesByName(String variableId,</literal> <literal>boolean onlyActiveProcesses)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>List&lt;VariableInstanceLog&gt;</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>findVariableInstancesByNameAndValue(String variableId,</literal> <literal>String value,</literal> <literal>boolean onlyActiveProcesses)</literal>
+</simpara>
+</entry>
+</row>
+<row>
+<entry align="left" valign="top">
+<simpara>
+<literal>void</literal>
+</simpara>
+</entry>
+<entry align="left" valign="top">
+<simpara>
+<literal>clear()</literal>
+</simpara>
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</section>
+</section>

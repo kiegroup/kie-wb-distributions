@@ -1,0 +1,267 @@
+:icons:
+
+[[remote.rest.query]]
+== REST Query API
+
+The REST Query API allows users of the jBPM console and the KIE workbench (as well as products 
+based on these applications) to "richly" query tasks, variables and process instances. 
+
+[[url-layout,remote.rest.query.urls]]
+=== URL layout
+
+The rich query operations can be reached via the following URLs: 
+
+    http://server.address:port/{application-id}/rest/query/
+      runtime                    
+        task                     * [GET] rich query for task summaries and process variables
+        process                  * [GET] rich query for process instances and process variables
+
+Both url's take a number of different query parameters. See the next section for a description of
+these. 
+
+[[query-parameters,remote.rest.query.parameters]]
+=== Query Parameters
+
+In the documentation below, 
+
+- "query parameters" are strings like `processInstanceId`, `taskId` and `tid`. The case (lowercase
+  or uppercase) of these parameters does not matter, except when the query parameter 
+  also specifies the name of a user-defined variable.
+- "parameters" are the values that are passed with some query parameters. These are values like
+  `org.process.frombulator`, `29` and `harry`. 
+
+When you submit a REST call to the query operation, your URL will look something like this: 
+
+  http://localhost:8080/business-central/rest/query/runtime/process/processId=org.process.frombulator&piid=29
+
+A query containing multiple different query parameters will search for the intersection of the given 
+parameters. 
+
+However, many of the query parameters described below can be entered multiple times: when multiple 
+values are given for the same query parameter, the query will then search for any results that match 
+one or more of the values entered. 
+
+.Repeated query parameters
+========================================================================================================
+The following process instance query: 
+ 
+`processId=org.example.process&processInstanceId=27&processInstanceId=29` 
+ 
+will return a result that
+ 
+- only contains information about process instances with the "org.example.process" process definition
+- only contains information about process instances that have an id of 27 _or_ 29
+========================================================================================================
+
+==== Range and Regular Expression parameters
+
+Some query criteria can be given in ranges while for others, a simple regular expression language 
+can be used to describe the value. 
+
+Query parameters that
+
+- can be given in ranges have an "X" in the *min/max* column in the table below.
+- use regular expressions have an "X" in the *regex* column below. 
+
+==== Range query parameters
+
+In order to pass the lower end or start of a range, add `_min`  to end of the parameter name. 
+In order to pass the upper end or end of a range, add `_max`  to end of the parameter name. 
+
+Range ends are inclusive. 
+
+Only passing one end of the range (the lower *or* upper end), results in querying on an open ended 
+range. 
+
+.Range parameters
+====================================================================================================
+The following task query: +
+
+`processId=org.example.process&taskId_min=50&taskId_max=53` +
+
+will return a result that +
+
+- only contains information about tasks associated with the "org.example.process" process definition
+- only contains information about tasks that have a task id between 50 and 53, inclusive.
+
+While the following task query: +
+
+`processId=org.example.process&taskId_min=52` +
+
+will return a result that +
+
+- only contains information about tasks associated with the "org.example.process" process definition
+- only contains information about tasks that have a task id that is _larger than or equal_ to 52
+====================================================================================================
+
+==== Regular expression query parameters
+
+In order to apply regular expressions to a query parameter, add "`_re`" to the end of the parameter 
+name.
+
+The regular expression language contains 2 special characters:
+
+- `*` means 0 or more characters
+- `.` means 1 character
+
+The slash character (`\`) is not interpreted. 
+
+.Regular expression parameters
+====================================================================================================
+The following process instance query +
+
+`processId_re=org.example.*&processVersion=2.0` +
+
+will return a result that +
+
+- only contains information about process instances associated with a process definition whose name 
+matches the regular expression "org.example.*". This includes:
+* `org.example.process`
+* `org.example.process.definition.example.long.name`
+* `orgXexampleX`
+- only contains information about process instances that have a process (definition) version of 2.0
+====================================================================================================
+
+[[parameter-table,remote.rest.query.parameter.table]]
+### Parameter Table
+
+The "task or process" column describes whether or not a query parameter can be used with 
+the task and/or the process instance query operations.  
+
+.Query parameters
+[cols="3*d<,3*e^",options="header"]
+|===================================================================================================
+| parameter              | short form | description                          | regex | min / max  | task or process
+| `processinstanceid`    | `piid`     | Process instance id                  |       | X   | T,P
+| `processid`            | `pid`      | Process id                           | X     |     | T,P
+| `workitemid`           | `wid`      | Work item id                         |       |     | T,P
+| `deploymentid`         | `did`      | Deployment id                        | X     |     | T,P
+| `taskid`               | `tid`      | Task id                              |       | X   | T
+| `initiator`            | `init`     | Task initiator/creator               | X     |     | T
+| `stakeholder`          | `stho`     | Task stakeholder                     | X     |     | T
+| `potentialowner`       | `po`       | Task potential owner                 | X     |     | T
+| `taskowner`            | `to`       | Task owner                           | X     |     | T
+| `businessadmin`        | `ba`       | Task business admin                  | X     |     | T
+| `taskstatus`           | `tst`      | Task status                          |       |     | T
+| `processinstancestatus | `pist`     | Process instance status              |       |     | T,P
+| `processversion`       | `pv`       | Process version                      | X     |     | T,P
+| `startdate`            | `stdt`     | Process instance start date^1^       |       | X   | T,P
+| `enddate`              | `edt`      | Process instance end date^1^         |       | X   | T,P
+| `varid`                | `vid`      | Variable id                          | X     |     | T,P
+| `varvalue`             | `vv`       | Variable value                       | X     |     | T,P
+| `var`                  | `var`      | Variable id and value ^2^            |       |     | T,P
+| `varregex`             | `vr`       | Variable id and value ^3^            | X     |     | T,P
+| `all`                  | `all`      | Which variable history logs ^4^      |       |     | T,P
+|===================================================================================================
+
+////
+`memory`               | `mem`      | Retrieve variables from the process instance ^5,6^ | | | T,P
+`history`              | `hist`     | Retrieve variables from the history log ^5,6^ | |  | T,P
+////
+
+[*1*] The date operations take strings with a specific date format as their values: `yy-MM-dd_HH:mm:ss`. 
+However, users can also submit only part of the date:
+
+- Submitting only the date (`yy-MM-dd`) means that a time of 00:00:00 is used (the beginning of the day).
+- Submitting only the time (`HH:mm:ss`) means that the current date is used.
+
+.Example date strings
+[cols="2*<d",options="header"]
+|============================================================
+| Date str  ing       | Actual meaning
+| `15-05-29_13:40:12` | May 29th, 2015, 13:40:12 (1:40:12 PM)
+| `14-11-20`          | November 20th, 2014, 00:00:00
+| `9:30:00`           | Today, 9:30:00 (AM)
+|============================================================
+
+For the format used, see the 
+http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html[SimpleDateFormat documentation].
+
+[*2*] The `var` query parameter is used differently than other parameters. If you want to specify 
+*both* the variable id and value of a variable (as opposed to just the variable id), then you can
+do it by using the `var` query parameter. The syntax is `var_<variable-id>=<variable-value>` +
+
+.`var_X=Y` example
+============================================================
+The query parameter and parameter pair `var_myVar=value3` queries for process instances with 
+variables^4^ that are called `myVar` and that have the value `value3`
+============================================================
+
+[*3*] The `varreggex` (or shortened version `vr`) parameter works similarly to the `var` query
+parameter. However, the value part of the query parameter can be a regular expression.
+
+[*4*] By default, only the information from most recent (last) variable instance logs is retrieved.
+However, users can also retrieve all variable instance logs (that match the given criteria) by using
+this parameter.
+////
+[*5*] This feature has not yet been implemented!
+
+[*6*] Variable information is retrieved by default from the history information (variable instance
+logs).
+////
+
+### Parameter examples
+
+.Query parameters examples
+[cols="3*d<",options="header"]
+|===================================================================================================
+| parameter              | short form | example     
+| `processinstanceid`     | `piid`     | `piid=23`
+| `processid`             | `pid`      | `processid=com.acme.example`
+| `workitemid`            | `wid`      | `wid_max=11`
+| `deploymentid`          | `did`      | `did_re=com.willy.loompa.*`
+| `taskid`                | `tid`      | `taskid=4`
+| `initiator`             | `init`     | `init_re=Davi*`
+| `stakeholder`           | `stho`     | `stho=theBoss&stho=theBossesAssistant`
+| `potentialowner`        | `po`       | `potentialowner=sara`
+| `taskowner`             | `to`       | `taskowner_re=*anderson`
+| `businessadmin`         | `ba`       | `ba=admin`
+| `taskstatus`            | `tst`      | `tst=Reserved`
+| `processinstancestatus` | `pist`     | `pist=3&pist=4`
+| `processversion`        | `pv`       | `processVersion_re=4.2*`
+| `startdate`             | `stdt`     | `stdt_min=00:00:00`
+| `enddate`               | `edt`      | `edt_max=15-01-01`
+| `varid`                 | `vid`      | `varid=numCars`
+| `varvalue`              | `vv`       | `vv=abracadabra`
+| `var`                   | `var`      | `var_numCars=10`
+| `varregex`              | `vr`       | `vr_nameCar=chitty*`
+| `all`                   | `all`      | `all`
+|===================================================================================================
+
+=== Query Output Format
+
+////
+memory/mem
+history/hist
+////
+
+The process instance query returns a 
+https://github.com/droolsjbpm/droolsjbpm-integration/blob/6.2.x/kie-remote/kie-remote-jaxb/src/main/java/org/kie/services/client/serialization/jaxb/impl/query/JaxbQueryProcessInstanceResult.java[JaxbQueryProcessInstanceResult] 
+instance. 
+
+The task query returns a 
+https://github.com/droolsjbpm/droolsjbpm-integration/blob/6.2.x/kie-remote/kie-remote-jaxb/src/main/java/org/kie/services/client/serialization/jaxb/impl/query/JaxbQueryTaskResult.java[JaxbQueryTaskResult] 
+instance. 
+
+Results are structured as follows:
+
+- a list of process instance info
+(https://github.com/droolsjbpm/droolsjbpm-integration/blob/6.2.x/kie-remote/kie-remote-jaxb/src/main/java/org/kie/services/client/serialization/jaxb/impl/query/JaxbQueryProcessInstanceInfo.java[JaxbQueryProcessInstanceInfo])
+objects
+- or a list of task instance info
+(https://github.com/droolsjbpm/droolsjbpm-integration/blob/6.2.x/kie-remote/kie-remote-jaxb/src/main/java/org/kie/services/client/serialization/jaxb/impl/query/JaxbQueryTaskInfo.java[JaxbQueryTaskInfo]) 
+objects
+
+A https://github.com/droolsjbpm/droolsjbpm-integration/blob/6.2.x/kie-remote/kie-remote-jaxb/src/main/java/org/kie/services/client/serialization/jaxb/impl/query/JaxbQueryProcessInstanceInfo.java[JaxbQueryProcessInstanceInfo]
+object contains:
+
+- a process instance object
+- a list of 0 or more variable objects
+
+A https://github.com/droolsjbpm/droolsjbpm-integration/blob/6.2.x/kie-remote/kie-remote-jaxb/src/main/java/org/kie/services/client/serialization/jaxb/impl/query/JaxbQueryTaskInfo.java[JaxbQueryTaskInfo]  
+info object contains:
+
+- the process instance id
+- a list of 0 or more task summary obejcts
+- a list of 0 or more variable objects
+
