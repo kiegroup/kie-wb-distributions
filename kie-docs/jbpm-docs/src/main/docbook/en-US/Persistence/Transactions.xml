@@ -22,22 +22,34 @@
     to specify transaction boundaries, as shown below:</para>
 
     <programlisting language="java">
-// create the entity manager factory and register it in the environment
-EntityManagerFactory emf = Persistence.createEntityManagerFactory( "org.jbpm.persistence.jpa" );
-Environment env = KnowledgeBaseFactory.newEnvironment();
-env.set( EnvironmentName.ENTITY_MANAGER_FACTORY, emf );
-env.set( EnvironmentName.TRANSACTION_MANAGER, TransactionManagerServices.getTransactionManager() );
+// create the entity manager factory
+EntityManagerFactory emf = EntityManagerFactoryManager.get().getOrCreate("org.jbpm.persistence.jpa");
+TransactionManager tm = TransactionManagerServices.getTransactionManager();
+Environment env = EnvironmentFactory.newEnvironment();
+env.set(EnvironmentName.ENTITY_MANAGER_FACTORY, emf);
+env.set(EnvironmentName.TRANSACTION_MANAGER, tm);
 
-// create a new knowledge session that uses JPA to store the runtime state
-StatefulKnowledgeSession ksession = JPAKnowledgeService.newStatefulKnowledgeSession( kbase, null, env );
+// setup the runtime environment
+RuntimeEnvironment environment = RuntimeEnvironmentBuilder.Factory.get()
+.newDefaultBuilder()
+.addAsset(ResourceFactory.newClassPathResource("MyProcessDefinition.bpmn2"), ResourceType.BPMN2)
+    .addEnvironmentEntry(EnvironmentName.TRANSACTION_MANAGER, tm)
+    .addEnvironmentEntry(EnvironmentName.PERSISTENCE_CONTEXT_MANAGER, new JpaProcessPersistenceContextManager(env))
+    .addEnvironmentEntry(EnvironmentName.TASK_PERSISTENCE_CONTEXT_MANAGER, new JPATaskPersistenceContextManager(env))
+    .get();
+
+// get the kie session
+RuntimeManager manager = RuntimeManagerFactory.Factory.get().newPerRequestRuntimeManager(environment);
+RuntimeEngine runtime = manager.getRuntimeEngine(ProcessInstanceIdContext.get());
+KieSession ksession = runtime.getKieSession();
 
 // start the transaction
-UserTransaction ut = (UserTransaction) new InitialContext().lookup( "java:comp/UserTransaction" );
+UserTransaction ut = InitialContext.doLookup("java:comp/UserTransaction");
 ut.begin();
 
 // perform multiple commands inside one transaction
 ksession.insert( new Person( "John Doe" ) );
-ksession.startProcess( "MyProcess" );
+ksession.startProcess("MyProcess");
 
 // commit the transaction
 ut.commit();
