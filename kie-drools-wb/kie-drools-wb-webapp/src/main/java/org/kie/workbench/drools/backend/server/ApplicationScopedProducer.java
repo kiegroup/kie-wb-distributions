@@ -17,7 +17,6 @@
 package org.kie.workbench.drools.backend.server;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
@@ -96,11 +95,6 @@ public class ApplicationScopedProducer {
 
         this.ioSearchService = new IOSearchIndex( config.getSearchIndex(),
                                                   ioService );
-    }
-
-    @PreDestroy
-    private void cleanup() {
-        config.dispose();
     }
 
     @Produces
