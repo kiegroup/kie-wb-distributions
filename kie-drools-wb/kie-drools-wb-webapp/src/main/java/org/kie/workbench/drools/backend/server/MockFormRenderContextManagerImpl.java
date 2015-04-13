@@ -15,17 +15,12 @@ import org.jbpm.formModeler.api.model.Form;
 public class MockFormRenderContextManagerImpl implements FormRenderContextManager {
 
     @Override 
-    public FormRenderContext newContext(Form form, Map<String, Object> ctx) {
+    public FormRenderContext newContext(Form form, String deploymentId, Map<String, Object> ctx) {
         throw new UnsupportedOperationException("Form modeler is not available");
     }
 
     @Override 
-    public FormRenderContext newContext(Form form, Map<String, Object> inputData, Map<String, Object> outputData) {
-        throw new UnsupportedOperationException("Form modeler is not available");
-    }
-
-    @Override 
-    public FormRenderContext newContext(Form form, Map<String, Object> inputData, Map<String, Object> outputData, Map<String, Object> forms) {
+    public FormRenderContext newContext(Form form, String deploymentId, Map<String, Object> inputData, Map<String, Object> outputData) {
         throw new UnsupportedOperationException("Form modeler is not available");
     }
 
