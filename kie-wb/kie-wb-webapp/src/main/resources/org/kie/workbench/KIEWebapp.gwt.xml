@@ -4,6 +4,7 @@
 <module>
   <!-- UberFire -->
   <inherits name="org.uberfire.UberfireClientAll"/>
+  <inherits name="org.uberfire.client.views.Bootstrap2"/>
 
   <!-- Uberfire Extensions - Core Widgets -->
   <inherits name="org.uberfire.ext.widgets.core.UberfireWidgetsCore"/>
@@ -27,7 +28,7 @@
   <inherits name="org.jbpm.console.ng.ht.forms.JbpmConsoleNGHumanTasksFormsClient"/>
   <inherits name="org.jbpm.console.ng.ht.forms.modeler.JbpmConsoleNGHumanTasksFormsModelerClient"/>
   <inherits name="org.jbpm.console.ng.wi.JbpmConsoleNGWorkbenchIntegrationClient"/>
-    
+
   <!-- Form-Modeler -->
   <inherits name="org.jbpm.formModeler.editor.FormModelerEditorClient"/>
   <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>
@@ -108,9 +109,7 @@
   <extend-property name="locale" values="zh_CN"/>
   <extend-property name="locale" values="de"/>
 
-  <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
-
   <!-- We don't need to support IE8 or older -->
-  <set-property name="user.agent" value="gecko1_8,safari,opera,ie9"/>
+  <set-property name="user.agent" value="gecko1_8,safari,ie9,ie10"/>
 
 </module>
