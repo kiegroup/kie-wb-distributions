@@ -46,7 +46,7 @@
   <part>
     <title>KIE</title>
     <partintro>
-      <para>KIE is the shared core for Drools and jBPM.It provides a unified methodology and programming model for
+      <para>KIE is the shared core for Drools and jBPM. It provides a unified methodology and programming model for
         building, deploying and utilizing resources.</para>
     </partintro>
 
