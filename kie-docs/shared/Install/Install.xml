@@ -138,7 +138,7 @@
     <title>Installing IDE (Rule Workbench)</title>
 
     <para>The rule workbench (for Eclipse) requires that you have Eclipse 3.4 or greater, as well as Eclipse GEF 3.4 or
-    greater. You can install it either by downloading the plug-in or, or using the update site.</para>
+    greater. You can install it either by downloading the plug-in or using the update site.</para>
 
     <para>Another option is to use the JBoss IDE, which comes with all the plug-in requirements pre packaged, as well as
     a choice of other tools separate to rules. You can choose just to install rules from the "bundle" that JBoss IDE
