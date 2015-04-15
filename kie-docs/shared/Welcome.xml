@@ -18,9 +18,9 @@
     customised Drools and jBPM installations.</para>
   <para>Git replaces JCR as the content repository, offering a fast and scalable back-end storage
     for content that has strong tooling support. There has been a refocus on simplicity away from
-    databases with an aim of storing everythign as as text file, even meta data is just a file.
+    databases with an aim of storing everything as text file, even meta data is just a file.
     The database is just there to provide fast indexing and search via Lucene. This will allow
-    repositories now to be synced and published with estbalished infrastructure, like
+    repositories now to be synced and published with established infrastructure, like
     GitHub.</para>
   <para>jBPM has been dramatically beefed up, thanks to the Polymita acquisition, with human
     tasks, form builders, class modellers, execution servers and runtime management. All fully
