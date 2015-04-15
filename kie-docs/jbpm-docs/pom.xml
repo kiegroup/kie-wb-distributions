@@ -16,4 +16,12 @@
   <name>KIE :: Documentation :: jBPM</name>
   <description>jBPM Documentation</description>
 
+  <build>
+    <resources>
+      <resource>
+        <!-- so that jbpm-asciidocs can inject this content -->
+        <directory>src/main/docbook/en-US/</directory>
+      </resource>
+    </resources>
+  </build>
 </project>
