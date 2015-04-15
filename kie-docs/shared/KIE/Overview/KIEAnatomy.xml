@@ -20,7 +20,7 @@
     is now a top level project with Drools and jBPM. This was a natural evolution as Optaplanner,
     while having strong Drools integration, has long been independant of Drools. </para>
   <para>From the Polymita acquisition, along with other things, comes the powerful Dashboard Builder
-    which provides powerful reporting capabities. Dashboard Builder is currently a temporary name
+    which provides powerful reporting capabilities. Dashboard Builder is currently a temporary name
     and after the 6.0 release a new name will be chosen. Dashboard Builder is completely
     independant of Drools and jBPM and will be used by many projects at JBoss, and hopefully
     outside of JBoss :)</para>
