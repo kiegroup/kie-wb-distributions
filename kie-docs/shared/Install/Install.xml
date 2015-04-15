@@ -189,7 +189,7 @@
       plugin directory of eclipse) and (re)start Eclipse.</para>
 
       <para><ulink
-      url="http://www.jboss.org/drools/downloads.html">http://www.jboss.org/drools/downloads.html</ulink></para>
+      url="http://www.drools.org/download/download.html">http://www.drools.org/download/download.html</ulink></para>
 
       <para>To check that the installation was successful, try opening the Drools perspective: Click the 'Open
       Perspective' button in the top right corner of your Eclipse window, select 'Other...' and pick the Drools
@@ -201,7 +201,7 @@
       find the problem, try contacting us (e.g. on irc or on the user mailing list), more info can be found no our
       homepage here:</para>
 
-      <para><ulink url="http://www.jboss.org/drools/">http://www.jboss.org/drools/</ulink></para>
+      <para><ulink url="http://www.drools.org/">http://www.drools.org/</ulink></para>
     </section>
 
     <section>
