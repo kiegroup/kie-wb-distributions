@@ -43,7 +43,7 @@
     <title>Project Editor permissions</title>
     <para>The ability to configure role-based permissions for the Project Editor have been added.</para>
     <para>Permissions can be configured using the <code>WEB-INF/classes/workbench-policy.properties</code> file.</para>
-    <para>The following permissions are supported:-
+    <para>The following permissions are supported:
       <itemizedlist>
         <listitem>
           <para>Save button</para>
