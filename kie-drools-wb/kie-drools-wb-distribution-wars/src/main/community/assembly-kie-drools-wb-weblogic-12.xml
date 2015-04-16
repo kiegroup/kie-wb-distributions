@@ -196,6 +196,7 @@
           <exclude>WEB-INF/lib/antlr-2*.jar</exclude>
           <exclude>WEB-INF/lib/commons-cli-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-collections-*.jar</exclude>
+          <!-- Exclude commons-lang-* as this is bundled with Weblogic, but don't exclude commons-lang3-* as this is not bundled with Weblogic -->
           <exclude>WEB-INF/lib/commons-lang-*.jar</exclude>
           <!-- this *.jar is not in the AS 7.1.1 -->
           <exclude>WEB-INF/lib/h2-*.jar</exclude>

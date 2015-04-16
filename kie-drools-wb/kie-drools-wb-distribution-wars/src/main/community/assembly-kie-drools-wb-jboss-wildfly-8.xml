@@ -186,6 +186,7 @@
           <!-- <exclude>WEB-INF/lib/cdi-api*.jar</exclude> ALREADY EXCLUDED-->
           <exclude>WEB-INF/lib/commons-cli-*.jar</exclude>
           <exclude>WEB-INF/lib/commons-collections-*.jar</exclude>
+          <!-- Exclude commons-lang-* as this is bundled with Wildfly, but don't exclude commons-lang3-* as this is not bundled with Wildfly -->
           <exclude>WEB-INF/lib/commons-lang-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-databinding-jaxb-*.jar</exclude>
           <exclude>WEB-INF/lib/cxf-rt-frontend-jaxws-*.jar</exclude>
