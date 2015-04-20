@@ -9,6 +9,9 @@
 /*.iws
 /*.iml
 
+# Oxygen project files
+/*.xpr
+
 # temporary text editor files ended in tilde
 *~
 

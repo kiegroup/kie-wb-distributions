@@ -10,27 +10,40 @@
   <section xml:id="wb.warInstallation">
     <title>War installation</title>
 
-    <para>From the workbench distribution zip, take the <literal>kie-wb-*.war</literal> that corresponds to your
-    application server:</para>
+    <para>Use the <literal>war</literal> from the workbench distribution zip that corrsponds to your
+      application server. The differences between these <literal>war</literal> files are mainly superficial. 
+      For example, some JARs might be excluded if the application server already supplies them.</para>
 
     <itemizedlist>
       <listitem>
-        <para><literal>jboss-as7</literal>: tailored for JBoss AS 7 (which is being renamed to WildFly in version
-        8)</para>
+        <para><literal>eap6_4</literal>: tailored for Red Hat JBoss Enterprise Application Platform 6.4</para>
       </listitem>
 
       <listitem>
-        <para><literal>tomcat7</literal>: the generic war, works on Tomcat and Jetty</para>
+        <para><literal>tomcat7</literal>: tailored for Apache Tomcat 7</para>
+        <note>
+          <para>Apache Tomcat requires additional configuration to correctly install the Workbench. Please consult 
+            the <literal>README.md</literal> in the <literal>war</literal> for the most up to date procedure.</para>
+        </note>
+      </listitem>
+      
+      <listitem>
+        <para><literal>was8</literal>: tailored for IBM WebSphere Application Server 8</para>
+      </listitem>
+
+      <listitem>
+        <para><literal>weblogic12</literal>: tailored for Oracle WebLogic Server 12c</para>
+        <note>
+          <para>Oracle WebLogic requires additional configuration to correctly install the Workbench. Please consult 
+            the <literal>README.md</literal> in the <literal>war</literal> for the most up to date procedure.</para>
+        </note>
+      </listitem>
+
+      <listitem>
+        <para><literal>wildfly8</literal>: tailored for Red Hat JBoss Wildfly 8</para>
       </listitem>
     </itemizedlist>
 
-    <note>
-      <para>The differences between these <literal>war</literal> files are superficial only, to allow out-of-the-box
-      deployment. For example, some JARs might be excluded if the application server already supplies them.</para>
-    </note>
-
-    <para>To use the workbench on a different application server (WebSphere, WebLogic, ...), use the
-    <literal>tomcat7</literal> war and tailor it to your application server's version.</para>
   </section>
 
   <section xml:id="wb.workbenchData">
