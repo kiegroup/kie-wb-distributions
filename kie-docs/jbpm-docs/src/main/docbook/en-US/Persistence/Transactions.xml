@@ -25,17 +25,12 @@
 // create the entity manager factory
 EntityManagerFactory emf = EntityManagerFactoryManager.get().getOrCreate("org.jbpm.persistence.jpa");
 TransactionManager tm = TransactionManagerServices.getTransactionManager();
-Environment env = EnvironmentFactory.newEnvironment();
-env.set(EnvironmentName.ENTITY_MANAGER_FACTORY, emf);
-env.set(EnvironmentName.TRANSACTION_MANAGER, tm);
 
 // setup the runtime environment
 RuntimeEnvironment environment = RuntimeEnvironmentBuilder.Factory.get()
 .newDefaultBuilder()
 .addAsset(ResourceFactory.newClassPathResource("MyProcessDefinition.bpmn2"), ResourceType.BPMN2)
     .addEnvironmentEntry(EnvironmentName.TRANSACTION_MANAGER, tm)
-    .addEnvironmentEntry(EnvironmentName.PERSISTENCE_CONTEXT_MANAGER, new JpaProcessPersistenceContextManager(env))
-    .addEnvironmentEntry(EnvironmentName.TASK_PERSISTENCE_CONTEXT_MANAGER, new JPATaskPersistenceContextManager(env))
     .get();
 
 // get the kie session
