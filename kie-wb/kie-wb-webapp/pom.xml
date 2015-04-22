@@ -230,11 +230,21 @@
       <artifactId>hibernate-core</artifactId>
       <optional>true</optional>
     </dependency>
+
+    <!-- 
+        Hibernate validator 4.3 is not compatible with our current GWT version.
+        Do not include it into compile classpath, as dashbuilder
+        provides the source code for hibernate validator 4.1 (dashbuilder-hibernate-validator),
+        that is the one that works with our GWT version.
+        So using runtime scope to exclude it from the GWT compile classpath.
+    -->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
+      <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
+    
     <dependency>
       <groupId>org.jboss.spec.javax.transaction</groupId>
       <artifactId>jboss-transaction-api_1.1_spec</artifactId>
