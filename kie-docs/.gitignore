@@ -10,7 +10,7 @@
 /*.iml
 
 # Oxygen project files
-/*.xpr
+/**/*.xpr
 
 # temporary text editor files ended in tilde
 *~
