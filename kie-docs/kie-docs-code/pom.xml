@@ -15,6 +15,7 @@
   <description>Example (callout) Code for various KIE Documentation</description>
 
   <dependencies>
+    <!-- kie-remote-services remote API -->
     <dependency>
       <groupId>org.kie.remote</groupId>
       <artifactId>kie-remote-client</artifactId>
@@ -22,6 +23,16 @@
     <dependency>
       <groupId>org.kie.remote</groupId>
       <artifactId>kie-remote-jaxb</artifactId>
+    </dependency>
+    
+    <!-- kie-remote-services remote API -->
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-rest-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-rest-client</artifactId>
     </dependency>
     
     <dependency>
