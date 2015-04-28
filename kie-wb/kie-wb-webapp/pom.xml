@@ -1181,6 +1181,11 @@
       <artifactId>uberfire-widgets-service-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.kie.uberfire</groupId>
+      <artifactId>i18n-taglib</artifactId>
+    </dependency>
+
     <!-- hack to disable sisu annotation processing (that scans client side types) -->
     <dependency>
       <groupId>org.eclipse.sisu</groupId>
@@ -1428,8 +1433,17 @@
             <fileset>
               <directory>${basedir}</directory>
               <includes>
-                <include>.errai/**</include>
+                <include>src/main/webapp/org.kie.workbench.KIEWebapp/</include>
+                <include>src/main/webapp/formModeler/</include>
+                <include>src/main/webapp/WEB-INF/deploy/</include>
+                <include>src/main/webapp/WEB-INF/classes/</include>
+                <include>src/main/webapp/WEB-INF/lib/</include>
+                <include>src/main/webapp/WEB-INF/tlds/</include>
+                <include>**/gwt-unitCache/**</include>
+                <include>repositories/</include>
+                <include>.errai/</include>
                 <include>.niogit/**</include>
+                <include>.index/**</include>
               </includes>
             </fileset>
           </filesets>
