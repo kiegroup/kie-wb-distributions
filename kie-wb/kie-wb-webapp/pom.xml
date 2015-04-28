@@ -842,6 +842,11 @@
       <artifactId>uberfire-apps-backend</artifactId>
     </dependency>
 
+    <!-- Layout Editor API -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-layout-editor-api</artifactId>
+    </dependency>
     <!-- Search -->
     <dependency>
       <groupId>org.uberfire</groupId>
