@@ -78,10 +78,11 @@ For more information about the composition of the deployment id, see the
 * The `event` parameter value is used as the value of the event. This value may use the _number 
   query parameter_ syntax described above.
 
-[GET] *`/runtime/_{deploymentId}_/process/instance/_{procInstId}_/variables`*
+[GET] *`/runtime/_{deploymentId}_/process/instance/_{procInstId}_/variable/{varName}`*
 
-- Gets the list of process variables in a process instance.
-- Returns a `JaxbVariablesResponse`
+- Returns the value of a process variable in a process instance. 
+- Either the variable object instance itself is returned or, if the variable is a primitive, 
+  the variable value wrapped in simple class which is returned.
 - Notes: 
 * The _procInstId_ component of the URL must conform to the following regex: `[0-9]+`
 

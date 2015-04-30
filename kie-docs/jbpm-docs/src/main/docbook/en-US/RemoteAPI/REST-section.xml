@@ -154,16 +154,16 @@ query parameter</emphasis> syntax described above.</simpara>
 </listitem>
 </itemizedlist>
 <simpara>[GET] <emphasis role="strong">
-<literal>/runtime/<emphasis>{deploymentId}</emphasis>/process/instance/<emphasis>{procInstId}</emphasis>/variables</literal>
+<literal>/runtime/<emphasis>{deploymentId}</emphasis>/process/instance/<emphasis>{procInstId}</emphasis>/variable/{varName}</literal>
 </emphasis>
 </simpara>
 <itemizedlist>
 <listitem>
-<simpara>Gets the list of process variables in a process instance.</simpara>
+<simpara>Returns the value of a process variable in a process instance.</simpara>
 </listitem>
 <listitem>
-<simpara>Returns a <literal>JaxbVariablesResponse</literal>
-</simpara>
+<simpara>Either the variable object instance itself is returned or, if the variable is a primitive,
+the variable value wrapped in simple class which is returned.</simpara>
 </listitem>
 <listitem>
 <simpara>Notes:</simpara>
