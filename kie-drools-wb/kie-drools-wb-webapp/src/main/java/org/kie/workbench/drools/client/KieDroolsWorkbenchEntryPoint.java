@@ -41,7 +41,7 @@ import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
 import org.jboss.errai.security.shared.service.AuthenticationService;
-import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
+import org.jbpm.console.ng.ga.forms.service.PlaceManagerActivityService;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.menu.AboutMenuBuilder;

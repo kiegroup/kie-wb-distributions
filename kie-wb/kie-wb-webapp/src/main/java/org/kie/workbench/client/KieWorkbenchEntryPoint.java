@@ -45,7 +45,7 @@ import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
 import org.jboss.errai.security.shared.service.AuthenticationService;
-import org.jbpm.console.ng.ht.forms.service.PlaceManagerActivityService;
+import org.jbpm.console.ng.ga.forms.service.PlaceManagerActivityService;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.resources.i18n.AppConstants;

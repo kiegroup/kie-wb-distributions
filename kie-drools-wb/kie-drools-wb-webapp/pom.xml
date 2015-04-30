@@ -856,6 +856,25 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-process-runtime-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-generic-forms-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-generic-forms-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-process-runtime-forms-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-process-runtime-forms-backend</artifactId>
+    </dependency>
 
     <!-- jBPM dependencies -->
     <dependency>
@@ -999,6 +1018,9 @@
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-forms-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-forms-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-forms-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-forms-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-forms-client</compileSourcesArtifact>
 
 
               <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-api</compileSourcesArtifact>

@@ -10,6 +10,7 @@
 
 
 
+
     <exclude name="org.kie.workbench.drools.client.**"/>
   </scan>
 </beans>
