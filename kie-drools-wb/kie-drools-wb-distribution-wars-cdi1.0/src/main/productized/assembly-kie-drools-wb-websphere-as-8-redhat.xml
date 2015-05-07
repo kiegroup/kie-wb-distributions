@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2012 JBoss Inc
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+  <id>was8</id>
+  <formats>
+    <format>war</format>
+    <format>dir</format>
+  </formats>
+
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>${project.basedir}/src/main/assembly/was8</directory>
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/src/main/productized/banner</directory>
+      <outputDirectory>banner</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/src/main/productized/images</directory>
+      <outputDirectory>images</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/src/main/productized/styles</directory>
+      <outputDirectory>styles</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/src/main/productized/webapp</directory>
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}/lib/was</directory>
+      <outputDirectory>WEB-INF/lib</outputDirectory>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <includes>
+        <include>antlr:antlr</include>
+        <include>commons-cli:commons-cli</include>
+        <include>commons-codec:commons-codec</include>
+        <include>commons-collections:commons-collections</include>
+        <include>commons-configuration:commons-configuration</include>
+        <include>commons-io:commons-io</include>
+        <include>commons-lang:commons-lang</include>
+        <include>org.apache.cxf:*</include>
+        <include>dom4j:dom4j</include>
+        <include>org.apache.httpcomponents:httpclient</include>
+        <include>org.hibernate:hibernate-entitymanager</include>
+        <include>org.hibernate:hibernate-core</include>
+        <include>org.hibernate:hibernate-validator</include>
+        <include>org.hibernate.common:hibernate-commons-annotations</include>
+        <include>com.sun.xml.bind:jaxb-impl</include>
+        <include>com.sun.xml.bind:jaxb-xjc</include>
+        <include>org.jboss.logging:jboss-logging</include>
+        <include>org.slf4j:jcl-over-slf4j</include>
+        <include>org.jdom:jdom</include>
+        <include>joda-time:joda-time</include>
+        <include>org.apache.neethi:neethi</include>
+        <include>org.slf4j:slf4j-api</include>
+        <include>org.slf4j:slf4j-ext</include>
+        <include>org.slf4j:slf4j-jdk14:jar</include>
+        <include>org.yaml:snakeyaml</include>
+        <include>org.apache.velocity:velocity</include>
+        <include>org.codehaus.woodstox:woodstox-core-asl</include>
+        <include>wsdl4j:wsdl4j</include>
+
+        <include>org.jbpm:jbpm-services-ejb-timer</include>
+        <!-- Errai integration that supports CDI 1.0 -->
+        <include>org.jboss.errai:errai-weld-integration:jar</include>
+      </includes>
+      <unpack>false</unpack>
+      <outputDirectory>WEB-INF/lib</outputDirectory>
+    </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>org.kie:kie-drools-wb-webapp:war</include>
+      </includes>
+      <outputDirectory>.</outputDirectory>
+      <unpack>true</unpack>
+      <unpackOptions>
+        <excludes>
+          <exclude>favicon.ico</exclude>
+          <exclude>index.jsp</exclude>
+          <exclude>kie-drools-wb.html</exclude>
+          <exclude>login.jsp</exclude>
+          <exclude>logout.jsp</exclude>
+          <exclude>not_authorized.jsp</exclude>
+
+          <exclude>banner/logo.png</exclude>
+
+          <exclude>META-INF/jboss-all.xml</exclude>
+          <exclude>META-INF/MANIFEST.MF</exclude>
+          <exclude>WEB-INF/beans.xml</exclude>
+          <exclude>WEB-INF/web.xml</exclude>
+          <exclude>WEB-INF/ejb-jar.xml</exclude>
+          <exclude>WEB-INF/jboss-deployment-structure.xml</exclude>
+          <exclude>WEB-INF/jboss-web.xml</exclude>
+          <exclude>WEB-INF/classes/jbpm.audit.jms.properties</exclude>
+
+          <exclude>WEB-INF/classes/application-roles.properties</exclude>
+          <exclude>WEB-INF/classes/application-users.properties</exclude>
+
+          <exclude>WEB-INF/classes/META-INF/kie-wb-deployment-descriptor.xml</exclude>
+          <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
+          <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
+          <exclude>WEB-INF/classes/org/kie/workbench/backend/wildfly/</exclude>
+          <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
+
+          <!-- EAP 6.1 alignement -->
+          <exclude>WEB-INF/lib/xmlbeans-*.jar</exclude>
+
+          <!-- transitive dependencies -->
+          <exclude>WEB-INF/lib/sisu-inject-bean*.jar</exclude>
+          <exclude>WEB-INF/lib/stax-*.jar</exclude>
+
+          <!-- Errai -->
+          <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
+          <!-- Errai 1.1+ CDI Compat -->
+          <exclude>WEB-INF/lib/errai-weld-integration-*.jar</exclude>
+        </excludes>
+      </unpackOptions>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+  </dependencySets>
+
+</assembly>
