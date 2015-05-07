@@ -33,6 +33,7 @@
   <modules>
     <module>kie-wb-webapp</module>
     <module>kie-wb-distribution-wars</module>
+    <module>kie-wb-distribution-wars-cdi1.0</module>
   </modules>
 
   <dependencies>
