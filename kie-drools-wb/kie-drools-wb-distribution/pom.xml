@@ -43,30 +43,30 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-drools-wb-distribution-wars</artifactId>
-      <classifier>eap6_4</classifier>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-distribution-wars</artifactId>
       <classifier>wildfly8</classifier>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-distribution-wars</artifactId>
+      <artifactId>kie-drools-wb-distribution-wars-cdi1.0</artifactId>
+      <classifier>eap6_4</classifier>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drools-wb-distribution-wars-cdi1.0</artifactId>
       <classifier>tomcat7</classifier>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-distribution-wars</artifactId>
+      <artifactId>kie-drools-wb-distribution-wars-cdi1.0</artifactId>
       <classifier>weblogic12</classifier>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-distribution-wars</artifactId>
+      <artifactId>kie-drools-wb-distribution-wars-cdi1.0</artifactId>
       <classifier>was8</classifier>
       <type>war</type>
     </dependency>
