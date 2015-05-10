@@ -67,6 +67,7 @@
         <include>org.yaml:snakeyaml</include>
         <include>org.apache.velocity:velocity</include>
         <include>org.codehaus.woodstox:woodstox-core-asl</include>
+        <include>org.codehaus.woodstox:stax2-api</include>
         <include>wsdl4j:wsdl4j</include>
 
         <include>org.jbpm:jbpm-services-ejb-timer</include>

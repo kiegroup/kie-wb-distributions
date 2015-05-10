@@ -52,6 +52,7 @@
         <include>org.apache.velocity:velocity</include>
         <include>org.codehaus.woodstox:woodstox-core-asl</include>
         <include>wsdl4j:wsdl4j</include>
+        <include>xerces:xercesImpl</include>
 
         <include>org.codehaus.jackson:*</include>
         <!-- Errai integration that supports CDI 1.0 -->

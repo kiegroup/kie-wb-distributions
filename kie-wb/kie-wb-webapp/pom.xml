@@ -724,6 +724,12 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-contributors-backend</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.dashbuilder</groupId>
+          <artifactId>dashbuilder-dataset-elasticsearch</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -1580,6 +1586,8 @@
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-forms-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-integration-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-integration-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-executor-service-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-executor-service-client</compileSourcesArtifact>
 
               <!-- jBPM Designer -->
               <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
@@ -1694,6 +1702,8 @@
               <compileSourcesArtifact>org.drools:drools-wb-scorecard-xls-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-workitems-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-workitems-editor-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-client</compileSourcesArtifact>
 
               <!-- UberFire -->
               <compileSourcesArtifact>org.uberfire:uberfire-commons</compileSourcesArtifact>

@@ -6,6 +6,7 @@
       <wls:package-name>com.google.common.*</wls:package-name>
       <wls:package-name>org.xmlpull.*</wls:package-name>
       <wls:package-name>org.apache.commons.io.*</wls:package-name>
+      <wls:package-name>org.joda.*</wls:package-name>
     </wls:prefer-application-packages>
   </wls:container-descriptor>
   <wls:security-role-assignment>
