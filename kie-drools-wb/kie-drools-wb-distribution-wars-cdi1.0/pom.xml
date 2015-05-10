@@ -15,6 +15,28 @@
   <name>KIE Drools Workbench - Distribution Wars for CDI 1.0</name>
   <description>This module builds the download wars for different application servers.</description>
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- Errai integration that supports CDI 1.0 -->
+      <dependency>
+        <groupId>org.jboss.errai</groupId>
+        <artifactId>errai-weld-integration</artifactId>
+        <version>${version.org.jboss.errai.errai-weld-integration-cdi10}</version>
+      </dependency>
+      <!-- TODO: move the following artifact to kie-parent-with-dependencies -->
+      <dependency>
+        <groupId>net.jcip</groupId>
+        <artifactId>jcip-annotations</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.woodstox</groupId>
+        <artifactId>stax2-api</artifactId>
+        <version>3.1.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <!-- Internal dependencies -->
     <dependency>
@@ -143,7 +165,6 @@
     <dependency>
       <groupId>net.jcip</groupId>
       <artifactId>jcip-annotations</artifactId>
-      <version>1.0</version>
     </dependency>
 
     <dependency>
@@ -346,14 +367,12 @@
     <dependency>
       <groupId>org.codehaus.woodstox</groupId>
       <artifactId>stax2-api</artifactId>
-      <version>3.1.1</version>
     </dependency>
 
     <!-- Errai integration that supports CDI 1.0 -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-weld-integration</artifactId>
-      <version>3.0.4.Final</version>
     </dependency>
   </dependencies>
 
@@ -414,16 +433,6 @@
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
         </configuration>
-      </plugin>
-      <!-- disable enforcer -->
-      <plugin>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>no-managed-deps</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
