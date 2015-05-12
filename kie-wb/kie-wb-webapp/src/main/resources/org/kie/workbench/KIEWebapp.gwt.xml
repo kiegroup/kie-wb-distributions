@@ -66,6 +66,7 @@
   <inherits name="org.kie.workbench.common.screens.defaulteditor.DroolsWorkbenchDefaultEditorClient"/>
 
   <!-- Common Services -->
+  <inherits name="org.kie.workbench.common.services.datamodeller.DataModellerCore" />
   <inherits name="org.kie.workbench.common.services.KieWorkbenchCommonServicesAPI"/>
   <inherits name='org.kie.workbench.common.services.refactoring.KieWorkbenchCommonRefactoringAPI'/>
 
