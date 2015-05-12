@@ -30,11 +30,6 @@
   <name>KIE Workbench - Distributions</name>
   <description>KIE Workbench - Distributions</description>
 
-  <properties>
-    <!-- Errai Weld integration that supports CDI 1.0 -->
-    <version.org.jboss.errai.errai-weld-integration-cdi10>3.0.4.Final</version.org.jboss.errai.errai-weld-integration-cdi10>
-  </properties>
-
   <repositories>
     <!-- Bootstrap repository to locate the parent pom when the parent pom has not been build locally. -->
     <repository>

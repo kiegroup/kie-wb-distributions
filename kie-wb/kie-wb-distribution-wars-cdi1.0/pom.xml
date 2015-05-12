@@ -21,7 +21,7 @@
       <dependency>
         <groupId>org.jboss.errai</groupId>
         <artifactId>errai-weld-integration</artifactId>
-        <version>${version.org.jboss.errai.errai-weld-integration-cdi10}</version>
+        <version>${version.org.jboss.errai.cdi10-compatible}</version>
       </dependency>
       <!-- TODO: move the following artifact to kie-parent-with-dependencies -->
       <dependency>
