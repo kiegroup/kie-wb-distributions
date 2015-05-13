@@ -156,8 +156,6 @@ public class RestRepositoryDeploymentUtil {
     /**
      * Create an organizational unit in order to manage the repository
      * @param name The name of the organizational unit
-     * @param owner The owner of the organizational unit
-     * @param repositories The list of repositories that the org unit should own
      * @return A {@link JobRequest} instance returned by the request with the initial status of the request
      */
     private OrganizationalUnit getOrganizaionalUnit(String name) {
@@ -174,9 +172,7 @@ public class RestRepositoryDeploymentUtil {
     
     /**
      * Create an organizational unit in order to manage the repository
-     * @param name The name of the organizational unit
-     * @param owner The owner of the organizational unit
-     * @param repositories The list of repositories that the org unit should own
+     * @param orgUnitName The name of the organizational unit
      * @return A {@link JobRequest} instance returned by the request with the initial status of the request
      */
     private boolean organizationalUnitExists(String orgUnitName) { 
@@ -222,11 +218,10 @@ public class RestRepositoryDeploymentUtil {
     }
 
     /**
-     * Create a {@link ClientRequest} to do a maven operation 
+     * Creates request URI for specified maven operation
      * @param repositoryName The name of the repository where the project is located
      * @param project The project to do the maven operation on 
      * @param operation The maven operation to be executed
-     * @return The {@link ClientRequest} to be called
      */
     private String createMavenOperationRequest(String repositoryName, String project, String operation) {
         return "repositories/" + repositoryName + "/projects/" + project + "/maven/" + operation;
