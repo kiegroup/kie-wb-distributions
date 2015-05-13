@@ -6,7 +6,7 @@ function jBPMFormsAPI() {
     var listener = function dolisten(event){
 
         if (lastConfig) {
-            if (!lastConfig.host.startsWith(event.origin)) return;
+            if (lastConfig.host.indexOf(event.origin) != 0) return;
 
             try {
                 var response = JSON.parse(event.data)
