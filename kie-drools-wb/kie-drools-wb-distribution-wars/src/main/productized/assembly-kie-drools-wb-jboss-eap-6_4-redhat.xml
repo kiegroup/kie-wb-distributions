@@ -27,6 +27,11 @@
   </formats>
 
   <includeBaseDirectory>false</includeBaseDirectory>
+
+  <componentDescriptors>
+    <componentDescriptor>src/main/assembly/component-cdi1.0-libs.xml</componentDescriptor>
+  </componentDescriptors>
+
   <fileSets>
     <fileSet>
         <directory>${project.basedir}/src/main/assembly/eap6_4</directory>
@@ -52,13 +57,6 @@
   <dependencySets>
     <dependencySet>
       <includes>
-        <include>org.jboss.errai:errai-weld-integration</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputDirectory>WEB-INF/lib</outputDirectory>
-    </dependencySet>
-    <dependencySet>
-      <includes>
         <include>org.kie:kie-drools-wb-webapp:war</include>
       </includes>
       <outputDirectory>.</outputDirectory>
@@ -82,7 +80,7 @@
           <exclude>WEB-INF/jboss-deployment-structure.xml</exclude>
 
           <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
-          <!-- EAP 6.3 alignment -->
+          <!-- EAP 6.4 alignment -->
           <exclude>WEB-INF/lib/ecj-*.jar</exclude> <!-- this *.jar is not in the AS 7.1.1 -->
           <exclude>WEB-INF/lib/guava-*.jar</exclude>
           <!-- Errai 1.1+ CDI Compat -->
