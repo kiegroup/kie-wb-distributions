@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2012 JBoss Inc
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
-  <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name of the artifact -->
+  <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name/id of the artifact -->
   <id>weblogic12</id>
   <formats>
     <format>war</format>
@@ -11,10 +27,15 @@
   </formats>
 
   <includeBaseDirectory>false</includeBaseDirectory>
+
+  <componentDescriptors>
+    <componentDescriptor>src/main/assembly/component-cdi1.0-libs.xml</componentDescriptor>
+  </componentDescriptors>
+
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/src/main/assembly/weblogic12</directory>
-      <outputDirectory>.</outputDirectory>
+        <directory>${project.basedir}/src/main/assembly/weblogic12</directory>
+        <outputDirectory>.</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>${project.build.directory}/lib/weblogic</directory>
@@ -55,15 +76,13 @@
         <include>xerces:xercesImpl</include>
 
         <include>org.codehaus.jackson:*</include>
-        <!-- Errai integration that supports CDI 1.0 -->
-        <include>org.jboss.errai:errai-weld-integration:jar</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
     </dependencySet>
     <dependencySet>
       <includes>
-        <include>org.kie:kie-wb-webapp:war</include>
+        <include>org.kie:kie-drools-wb-webapp:war</include>
       </includes>
       <outputDirectory>.</outputDirectory>
       <unpack>true</unpack>

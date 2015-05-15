@@ -27,6 +27,11 @@
   </formats>
 
   <includeBaseDirectory>false</includeBaseDirectory>
+
+  <componentDescriptors>
+    <componentDescriptor>src/main/assembly/component-cdi1.0-libs.xml</componentDescriptor>
+  </componentDescriptors>
+
   <fileSets>
     <fileSet>
       <directory>${project.basedir}/src/main/assembly/weblogic12</directory>
@@ -87,8 +92,6 @@
         <include>xerces:xercesImpl</include>
 
         <include>org.codehaus.jackson:*</include>
-        <!-- Errai integration that supports CDI 1.0 -->
-        <include>org.jboss.errai:errai-weld-integration:jar</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>

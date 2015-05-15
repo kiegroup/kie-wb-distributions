@@ -26,6 +26,11 @@
   </formats>
 
   <includeBaseDirectory>false</includeBaseDirectory>
+
+  <componentDescriptors>
+    <componentDescriptor>src/main/assembly/component-cdi1.0-libs.xml</componentDescriptor>
+  </componentDescriptors>
+
   <fileSets>
     <fileSet>
       <directory>${project.basedir}/src/main/assembly/was8</directory>
@@ -70,8 +75,6 @@
         <include>wsdl4j:wsdl4j</include>
 
         <include>org.jbpm:jbpm-services-ejb-timer</include>
-        <!-- Errai integration that supports CDI 1.0 -->
-        <include>org.jboss.errai:errai-weld-integration:jar</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
