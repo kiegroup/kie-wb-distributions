@@ -263,26 +263,6 @@
         <deployable.artifactId>kie-drools-wb-distribution-wars</deployable.artifactId>
         <deployable.context>kie-drools-wb</deployable.context>
       </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>eap6_4</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>tomcat7</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>wildfly8</classifier>
-          <type>war</type>
-        </dependency>
-      </dependencies>
       <build>
         <pluginManagement>
           <plugins>
@@ -305,27 +285,6 @@
         <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
         <deployable.context>kie-wb</deployable.context>
       </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>eap6_4</classifier>
-          <type>war</type>
-        </dependency>
-
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>tomcat7</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>wildfly8</classifier>
-          <type>war</type>
-        </dependency>
-      </dependencies>
       <build>
         <pluginManagement>
           <plugins>
@@ -350,6 +309,20 @@
              referencing the zip from local filesystem). -->
         <eap64x.download.url>valid-url-for-eap-6.4.x-needs-to-be-specified-here-or-via-cmd-line</eap64x.download.url>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>eap6_4</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>eap6_4</classifier>
+          <type>war</type>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -394,12 +367,25 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>tomcat7x</id>
       <properties>
         <tomcat7x.download.url>https://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip</tomcat7x.download.url>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>tomcat7</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>tomcat7</classifier>
+          <type>war</type>
+        </dependency>
+      </dependencies>
       <build>
         <pluginManagement>
         <plugins>
@@ -498,6 +484,20 @@
       <properties>
         <tomcat8x.download.url>https://archive.apache.org/dist/tomcat/tomcat-8/v${version.tomcat8}/bin/apache-tomcat-${version.tomcat8}.zip</tomcat8x.download.url>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>tomcat7</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>tomcat7</classifier>
+          <type>war</type>
+        </dependency>
+      </dependencies>
       <build>
         <pluginManagement>
           <plugins>
@@ -596,6 +596,20 @@
       <properties>
         <wildfly8x.download.url>http://download.jboss.org/wildfly/${version.wildfly8}/wildfly-${version.wildfly8}.zip</wildfly8x.download.url>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>wildfly8</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>wildfly8</classifier>
+          <type>war</type>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
