@@ -33,7 +33,6 @@
   <modules>
     <module>kie-drools-wb-webapp</module>
     <module>kie-drools-wb-distribution-wars</module>
-    <module>kie-drools-wb-distribution-wars-cdi1.0</module>
   </modules>
 
   <build>

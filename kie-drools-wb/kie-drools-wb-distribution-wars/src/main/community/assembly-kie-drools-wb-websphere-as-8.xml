@@ -26,25 +26,14 @@
   </formats>
 
   <includeBaseDirectory>false</includeBaseDirectory>
+
+  <componentDescriptors>
+    <componentDescriptor>src/main/assembly/component-cdi1.0-libs.xml</componentDescriptor>
+  </componentDescriptors>
+
   <fileSets>
     <fileSet>
       <directory>${project.basedir}/src/main/assembly/was8</directory>
-      <outputDirectory>.</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/src/main/productized/banner</directory>
-      <outputDirectory>banner</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/src/main/productized/images</directory>
-      <outputDirectory>images</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/src/main/productized/styles</directory>
-      <outputDirectory>styles</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/src/main/productized/webapp</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
     <fileSet>
@@ -86,8 +75,6 @@
         <include>wsdl4j:wsdl4j</include>
 
         <include>org.jbpm:jbpm-services-ejb-timer</include>
-        <!-- Errai integration that supports CDI 1.0 -->
-        <include>org.jboss.errai:errai-weld-integration:jar</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
@@ -100,15 +87,6 @@
       <unpack>true</unpack>
       <unpackOptions>
         <excludes>
-          <exclude>favicon.ico</exclude>
-          <exclude>index.jsp</exclude>
-          <exclude>kie-drools-wb.html</exclude>
-          <exclude>login.jsp</exclude>
-          <exclude>logout.jsp</exclude>
-          <exclude>not_authorized.jsp</exclude>
-
-          <exclude>banner/logo.png</exclude>
-
           <exclude>META-INF/jboss-all.xml</exclude>
           <exclude>META-INF/MANIFEST.MF</exclude>
           <exclude>WEB-INF/beans.xml</exclude>
