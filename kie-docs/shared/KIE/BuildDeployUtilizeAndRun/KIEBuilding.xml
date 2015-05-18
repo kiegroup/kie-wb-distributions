@@ -439,7 +439,8 @@ KieSessionModel ksessionModel1 = kieBaseModel1.newKieSessionModel( "KSession1" )
         .setType( KieSessionModel.KieSessionType.STATEFUL )
         .setClockType( ClockTypeOption.get("realtime") );
 
-KieFileSystem kfs = kieServices.newKieFileSystem();</programlisting>
+KieFileSystem kfs = kieServices.newKieFileSystem();
+kfs.writeKModuleXML(kieModuleModel.toXML());</programlisting>
     </example>
 
     <para>At this point it is also necessary to add to the <code>KieFileSystem</code>, through its
