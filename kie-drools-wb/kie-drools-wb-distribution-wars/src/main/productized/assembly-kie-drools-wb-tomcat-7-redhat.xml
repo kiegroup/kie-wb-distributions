@@ -50,6 +50,7 @@
         <include>org.apache.cxf:*</include>
         <include>dom4j:dom4j</include>
         <include>org.apache.httpcomponents:httpclient</include>
+        <include>org.hibernate.javax.persistence:hibernate-jpa-2.0-api</include>
         <include>org.hibernate:hibernate-entitymanager</include>
         <include>org.hibernate:hibernate-core</include>
         <include>org.hibernate:hibernate-validator</include>
@@ -65,6 +66,7 @@
         <include>org.yaml:snakeyaml</include>
         <include>org.apache.velocity:velocity</include>
         <include>org.codehaus.woodstox:woodstox-core-asl</include>
+        <include>org.codehaus.woodstox:stax2-api</include>
         <include>wsdl4j:wsdl4j</include>
 
         <include>org.codehaus.jackson:*</include>
@@ -106,6 +108,8 @@
         <include>xalan:serializer</include>
         <include>xerces:xercesImpl</include>
         <include>xml-resolver:xml-resolver</include>
+
+        <include>org.osgi:org.osgi.core</include>
       </includes>
       <unpack>false</unpack>
       <outputDirectory>WEB-INF/lib</outputDirectory>
