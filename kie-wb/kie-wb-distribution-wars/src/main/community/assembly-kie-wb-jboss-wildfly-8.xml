@@ -27,6 +27,7 @@
   </formats>
 
   <includeBaseDirectory>false</includeBaseDirectory>
+
   <fileSets>
     <fileSet>
       <directory>${project.basedir}/src/main/assembly/wildfly8</directory>

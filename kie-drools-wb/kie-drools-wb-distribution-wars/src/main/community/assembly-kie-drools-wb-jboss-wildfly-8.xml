@@ -27,6 +27,7 @@
   </formats>
 
   <includeBaseDirectory>false</includeBaseDirectory>
+
   <dependencySets>
     <dependencySet>
       <includes>
