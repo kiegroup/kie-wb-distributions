@@ -30,40 +30,7 @@
 
   <componentDescriptors>
     <componentDescriptor>src/main/assembly/component-cdi1.0-libs.xml</componentDescriptor>
+    <componentDescriptor>src/main/assembly/component-kie-drools-wb-eap-6_4-common.xml</componentDescriptor>
   </componentDescriptors>
-
-  <fileSets>
-    <fileSet>
-      <directory>${project.basedir}/src/main/assembly/eap6_4</directory>
-      <outputDirectory>.</outputDirectory>
-    </fileSet>
-  </fileSets>
-  <dependencySets>
-    <dependencySet>
-      <includes>
-        <include>org.kie:kie-drools-wb-webapp:war</include>
-      </includes>
-      <outputDirectory>.</outputDirectory>
-      <unpack>true</unpack>
-      <unpackOptions>
-        <excludes>
-          <exclude>META-INF/jboss-all.xml</exclude>
-          <exclude>WEB-INF/classes/application-roles.properties</exclude>
-          <exclude>WEB-INF/classes/application-users.properties</exclude>
-
-          <exclude>WEB-INF/beans.xml</exclude>
-          <exclude>WEB-INF/jboss-deployment-structure.xml</exclude>
-
-          <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
-          <!-- EAP 6.4 alignment -->
-          <exclude>WEB-INF/lib/ecj-*.jar</exclude> <!-- this *.jar is not in the AS 7.1.1 -->
-          <exclude>WEB-INF/lib/guava-*.jar</exclude>
-          <!-- Errai 1.1+ CDI Compat -->
-          <exclude>WEB-INF/lib/errai-weld-integration-*.jar</exclude>
-        </excludes>
-      </unpackOptions>
-      <useStrictFiltering>true</useStrictFiltering>
-    </dependencySet>
-  </dependencySets>
 
 </assembly>
