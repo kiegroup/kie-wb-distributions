@@ -15,31 +15,20 @@
      <dependencySet>
        <includes>
          <include>antlr:antlr</include>
-         <include>commons-cli:commons-cli</include>
-         <include>commons-codec:commons-codec</include>
-         <include>commons-collections:commons-collections</include>
-         <include>commons-configuration:commons-configuration</include>
-         <include>commons-io:commons-io</include>
-         <include>commons-lang:commons-lang</include>
          <include>org.apache.cxf:*</include>
+         <include>org.apache.neethi:neethi</include>
          <include>dom4j:dom4j</include>
-         <include>org.apache.httpcomponents:httpclient</include>
          <include>org.hibernate:hibernate-entitymanager</include>
          <include>org.hibernate:hibernate-core</include>
          <include>org.hibernate:hibernate-validator</include>
          <include>org.hibernate.common:hibernate-commons-annotations</include>
-         <include>com.sun.xml.bind:jaxb-impl</include>
          <include>com.sun.xml.bind:jaxb-xjc</include>
          <include>org.jboss.logging:jboss-logging</include>
          <include>org.slf4j:jcl-over-slf4j</include>
-         <include>org.jdom:jdom</include>
-         <include>joda-time:joda-time</include>
-         <include>org.apache.neethi:neethi</include>
          <include>org.slf4j:slf4j-api</include>
          <include>org.slf4j:slf4j-ext</include>
          <include>org.slf4j:slf4j-jdk14:jar</include>
          <include>org.yaml:snakeyaml</include>
-         <include>org.apache.velocity:velocity</include>
          <include>org.codehaus.woodstox:woodstox-core-asl</include>
          <include>org.codehaus.woodstox:stax2-api</include>
          <include>wsdl4j:wsdl4j</include>
@@ -85,6 +74,11 @@
            <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
            <!-- Errai 1.1+ CDI Compat -->
            <exclude>WEB-INF/lib/errai-weld-integration-*.jar</exclude>
+           <exclude>WEB-INF/lib/errai-weld-integration-*.jar</exclude>
+           <exclude>WEB-INF/lib/org.osgi.core-*.jar</exclude>
+           <exclude>WEB-INF/lib/javassist-*.jar</exclude>
+           <exclude>WEB-INF/lib/jgroups-*.jar</exclude>
+           <exclude>WEB-INF/lib/jackson-*.jar</exclude>
          </excludes>
        </unpackOptions>
        <useStrictFiltering>true</useStrictFiltering>
