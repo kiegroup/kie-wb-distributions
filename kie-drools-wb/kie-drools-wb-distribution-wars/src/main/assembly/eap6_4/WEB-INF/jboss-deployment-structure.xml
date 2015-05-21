@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ JBoss, Home of Professional Open Source
-  ~ Copyright 2011 Red Hat Inc. and/or its affiliates and other contributors
+  ~ Copyright 2015 Red Hat Inc. and/or its affiliates and other contributors
   ~ as indicated by the @author tags. All rights reserved.
   ~ See the copyright.txt in the distribution for a
   ~ full listing of individual contributors.
@@ -18,71 +18,46 @@
   ~ MA  02110-1301, USA.
   -->
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.0">
-    <deployment>
-        <dependencies>
-            <module name="org.jboss.netty" />
-            <!-- EAP alignement -->
-            <module name="javax.activation.api" />
-            <module name="org.antlr" />
-            <module name="org.apache.commons.cli" />
-            <module name="org.apache.commons.collections" />
-            <module name="org.apache.commons.lang" />
-            <module name="org.apache.commons.codec" />
-            <module name="org.apache.commons.io" />
-            <module name="com.sun.xml.bind" />
-            <module name="org.osgi.core" />
-            <module name="org.yaml.snakeyaml" />
-            <module name="org.apache.cxf.impl" />
-            <module name="org.dom4j" />
-            <module name="org.jboss.as.web" /> <!-- this jar (ecj) is only in EAP 6.1, not in AS 7.1.1 -->
-            <module name="com.google.guava" />
-            <module name="com.h2database.h2" />
-            <module name="org.hibernate.commons-annotations" />
-            <module name="org.hibernate" />
-            <module name="javax.persistence.api" />
-            <module name="org.hibernate.validator" />
-            <module name="org.hornetq" />
-            <module name="org.codehaus.jackson.jackson-core-asl" />
-            <module name="org.codehaus.jackson.jackson-jaxrs" />
-            <module name="org.codehaus.jackson.jackson-mapper-asl" />
-            <module name="org.codehaus.jackson.jackson-xc" />
-            <module name="org.javassist" />
-            <module name="javax.ejb.api" />
-            <module name="org.slf4j.jcl-over-slf4j" />
-            <module name="org.jdom" />
-            <module name="org.codehaus.jettison" />
-            <module name="org.joda.time" />
-            <module name="javax.faces.api" />  <!-- check 1.2 -->
-            <module name="org.slf4j" />
-            <module name="org.slf4j.ext" />
-            <module name="org.apache.velocity" />
-            <module name="org.codehaus.woodstox" />
-            <module name="javax.wsdl4j.api" />
-            <module name="org.apache.xalan" />
-            <module name="org.apache.xerces" />
+  <deployment>
+    <dependencies>
+      <!-- IMPORTANT: when adding dependency (module) here, make sure it is a public one.
+           Do not add private modules as there is no guarantee they won't be changed or
+           removed in future. EAP also generates warning(s) during the deployment if
+           the WAR depends on private modules. -->
+      <!-- Keep the alphabetical order! -->
+      <module name="javax.activation.api"/>
+      <module name="javax.ejb.api"/>
+      <module name="javax.faces.api"/>
+      <module name="javax.jms.api"/>
+      <module name="javax.validation.api"/>
+      <module name="javax.persistence.api"/>
+      <module name="javax.servlet.api"/>
+      <module name="javax.transaction.api"/>
+      <module name="javax.wsdl4j.api"/>
+      <module name="org.apache.cxf"/>
+      <module name="org.apache.xalan"/>
+      <module name="org.apache.xerces"/>
+      <module name="org.hibernate"/>
+      <module name="org.hibernate.commons-annotations"/>
+      <module name="org.hibernate.validator"/>
+      <module name="org.jboss.ejb-client"/>
+      <module name="org.jboss.logging"/>
+      <module name="org.jboss.logmanager"/>
+      <module name="org.jboss.marshalling"/>
+      <module name="org.jboss.remote-naming"/>
+      <module name="org.jboss.remoting3"/>
+      <module name="org.jboss.xnio"/>
+      <module name="org.slf4j"/>
+      <module name="org.slf4j.ext"/>
+      <module name="org.slf4j.jcl-over-slf4j"/>
 
-            <!-- transitive dependencies -->
-            <module name="org.apache.james.mime4j" />
-            <module name="org.apache.commons.configuration" />
-            <module name="org.apache.cxf" />
-            <module name="org.apache.httpcomponents" />
-            <module name="org.jboss.ejb-client" />
-            <module name="javax.jms.api" />
-            <module name="org.jboss.logging" />
-            <module name="org.jboss.logmanager" />
-            <module name="org.jboss.marshalling" />
-            <module name="org.jboss.remote-naming" />
-            <module name="org.jboss.remoting3" />
-            <module name="org.jboss.sasl" />
-            <module name="javax.servlet.api" />
-            <module name="javax.transaction.api" />
-            <module name="org.jgroups" />
-            <module name="org.apache.neethi" />
-            <module name="org.apache.xalan" />
-            <module name="javax.validation.api" />
-            <module name="org.apache.xml-resolver" />
-            <module name="org.jboss.xnio" />
-        </dependencies>
-    </deployment>
+      <!-- EXCEPTIONS - private/unsupported modules that can not be directly added into the WEB-INF/lib -->
+      <!-- Dom4j is a transitive dependency of drools-decisiontables and needs to be on classpath.
+           It is also used by Hibernate and adding it directly into WEB-INF/lib results in
+           "org.dom4j.DocumentException: org.dom4j.DocumentFactory cannot be cast to org.dom4j.DocumentFactory"
+           Depending on the EAP module seems to be the only way.
+           See https://developer.jboss.org/thread/173306 for more info. -->
+      <module name="org.dom4j"/>
+    </dependencies>
+  </deployment>
 </jboss-deployment-structure>
-

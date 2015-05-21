@@ -11,36 +11,21 @@
       <dependencySet>
         <includes>
           <include>antlr:antlr</include>
-          <include>commons-cli:commons-cli</include>
-          <include>commons-codec:commons-codec</include>
-          <include>commons-collections:commons-collections</include>
-          <include>commons-configuration:commons-configuration</include>
-          <include>commons-io:commons-io</include>
-          <include>commons-io:commons-io</include>
-          <include>commons-lang:commons-lang</include>
           <include>org.apache.cxf:*</include>
+          <include>org.apache.neethi:neethi</include>
           <include>dom4j:dom4j</include>
-          <include>org.apache.httpcomponents:httpclient</include>
           <include>org.hibernate.javax.persistence:hibernate-jpa-2.0-api</include>
           <include>org.hibernate:hibernate-entitymanager</include>
           <include>org.hibernate:hibernate-core</include>
           <include>org.hibernate:hibernate-validator</include>
           <include>org.hibernate.common:hibernate-commons-annotations</include>
-          <include>com.sun.xml.bind:jaxb-impl</include>
           <include>com.sun.xml.bind:jaxb-xjc</include>
           <include>org.jboss.logging:jboss-logging</include>
           <include>org.slf4j:jcl-over-slf4j</include>
-          <include>org.jdom:jdom</include>
-          <include>joda-time:joda-time</include>
-          <include>org.apache.neethi:neethi</include>
           <include>org.slf4j:slf4j-ext</include>
-          <include>org.yaml:snakeyaml</include>
-          <include>org.apache.velocity:velocity</include>
           <include>org.codehaus.woodstox:woodstox-core-asl</include>
           <include>org.codehaus.woodstox:stax2-api</include>
           <include>wsdl4j:wsdl4j</include>
-
-          <include>org.codehaus.jackson:*</include>
 
           <include>com.h2database:h2</include>
           <include>ch.qos.cal10n:cal10n-api</include>
@@ -59,9 +44,7 @@
           <include>org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec</include>
           <include>org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec</include>
 
-          <include>org.javassist:javassist</include>
           <include>org.jboss.logging:jboss-logging</include>
-          <include>org.jgroups:jgroups</include>
           <include>org.jboss.resteasy:jaxrs-api</include>
           <include>org.jboss.resteasy:resteasy-jaxrs</include>
           <include>org.jboss.resteasy:resteasy-cdi</include>
@@ -79,8 +62,6 @@
           <include>xalan:serializer</include>
           <include>xerces:xercesImpl</include>
           <include>xml-resolver:xml-resolver</include>
-
-          <include>org.osgi:org.osgi.core</include>
         </includes>
         <unpack>false</unpack>
         <outputDirectory>WEB-INF/lib</outputDirectory>
