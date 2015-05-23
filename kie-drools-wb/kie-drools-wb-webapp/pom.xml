@@ -1533,7 +1533,12 @@
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <packagingExcludes>**/javax/**/*.*,**/client/**/*.class,**/*.symbolMap</packagingExcludes>
+          <packagingExcludes>
+            **/javax/**/*.*,
+            **/client/**/*.class,
+            **/*.symbolMap,
+            WEB-INF/classes/logback.xml
+          </packagingExcludes>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
