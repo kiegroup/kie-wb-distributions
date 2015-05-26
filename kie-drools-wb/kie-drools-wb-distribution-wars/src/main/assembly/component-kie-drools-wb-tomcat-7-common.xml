@@ -12,7 +12,6 @@
       <includes>
         <include>antlr:antlr</include>
         <include>dom4j:dom4j</include>
-        <include>org.apache.cxf:*</include>
         <include>org.apache.neethi:neethi</include>
         <include>org.hibernate.javax.persistence:hibernate-jpa-2.0-api</include>
         <include>org.hibernate:hibernate-entitymanager</include>
