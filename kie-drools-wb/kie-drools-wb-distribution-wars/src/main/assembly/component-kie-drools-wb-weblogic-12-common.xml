@@ -16,7 +16,6 @@
       <includes>
         <include>antlr:antlr</include>
         <include>dom4j:dom4j</include>
-        <include>org.apache.cxf:*</include>
         <include>org.apache.neethi:neethi</include>
         <include>org.codehaus.jackson:jackson-jaxrs</include>
         <include>org.codehaus.woodstox:woodstox-core-asl</include>
