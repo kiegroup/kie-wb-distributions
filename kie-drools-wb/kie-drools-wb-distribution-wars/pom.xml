@@ -27,12 +27,6 @@
   </dependencyManagement>
 
   <dependencies>
-    <!-- Internal dependencies -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-drools-wb-webapp</artifactId>
-      <type>war</type>
-    </dependency>
 
     <!-- External dependencies -->
     <!--tomcat-->
@@ -337,6 +331,28 @@
 
   <profiles>
     <profile>
+      <id>notProductizedProfile</id>
+      <activation>
+        <property>
+          <name>!productized</name>
+        </property>
+      </activation>
+
+      <properties>
+        <webapp.war>org.kie:kie-drools-wb-webapp:war</webapp.war>
+      </properties>
+
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-webapp</artifactId>
+          <type>war</type>
+        </dependency>
+      </dependencies>
+
+    </profile>
+
+    <profile>
       <id>productizedProfile</id>
 
       <activation>
@@ -344,6 +360,31 @@
           <name>productized</name>
         </property>
       </activation>
+
+      <properties>
+        <webapp.war>org.kie:kie-drools-wb-webapp:war:redhat</webapp.war>
+      </properties>
+
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-drools-wb-webapp</artifactId>
+            <version>${version.org.kie}</version>
+            <type>war</type>
+            <classifier>redhat</classifier>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-webapp</artifactId>
+          <type>war</type>
+          <classifier>redhat</classifier>
+        </dependency>
+      </dependencies>
 
       <build>
         <plugins>

@@ -1895,6 +1895,16 @@
                 </compileSourcesArtifacts>
               </configuration>
             </plugin>
+            <!-- Use different classifier for "-Dproductized" builds, to be able
+                 to clearly differentiate between community and productized build
+                 (they will have different classifier). -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-war-plugin</artifactId>
+              <configuration>
+                <classifier>redhat</classifier>
+              </configuration>
+            </plugin>
           </plugins>
         </pluginManagement>
       </build>
