@@ -38,7 +38,7 @@
     </dependencySet>
     <dependencySet>
       <includes>
-        <include>org.kie:kie-drools-wb-webapp:war</include>
+        <include>${webapp.war}</include>
       </includes>
       <outputDirectory>.</outputDirectory>
       <unpack>true</unpack>
