@@ -28,7 +28,6 @@
          <include>org.slf4j:slf4j-api</include>
          <include>org.slf4j:slf4j-ext</include>
          <include>org.slf4j:slf4j-jdk14:jar</include>
-         <include>org.yaml:snakeyaml</include>
          <include>org.codehaus.woodstox:woodstox-core-asl</include>
          <include>org.codehaus.woodstox:stax2-api</include>
          <include>wsdl4j:wsdl4j</include>
