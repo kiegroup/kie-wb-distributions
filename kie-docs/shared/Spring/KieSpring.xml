@@ -474,7 +474,7 @@
           <title>Import Kie Objects using a releaseId</title>
           <programlisting language="xml">&lt;kie:import releaseId-ref="namedKieSession"/&gt;
 &lt;kie:releaseId id="namedKieSession" groupId="org.drools"
-            artifactId="named-kiesession" version="6.3.0-SNAPSHOT"/&gt;
+            artifactId="named-kiesession" version="&project.version;"/&gt;
           </programlisting>
         </figure>
         <para>Kie Scanning feature can be enabled for KieBase's imported with a specific releaseId. This feature is currently not available for global imports.</para>
@@ -484,7 +484,7 @@
             enableScanner="true" scannerInterval="1000"/&gt;
 
 &lt;kie:releaseId id="namedKieSession" groupId="org.drools"
-            artifactId="named-kiesession" version="6.3.0-SNAPSHOT"/&gt;
+            artifactId="named-kiesession" version="&project.version;"/&gt;
           </programlisting>
         </figure>
         <para>If the scanner is defined and enabled, an implicit <emphasis>KieScanner</emphasis> object is created and inserted into the spring context. It can be retrived from the
