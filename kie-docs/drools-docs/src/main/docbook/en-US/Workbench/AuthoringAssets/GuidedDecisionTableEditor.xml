@@ -842,4 +842,37 @@ end</programlisting>
       </mediaobject>
     </figure>
   </section>
+
+  <section xml:id="drools.GuidedDecisionTableEditorVerification">
+    <title>Real Time Validation and Verification</title>
+
+    <para>Decision tables are validated after each cell change. If any issues are found the results will be shown in the column on the right side of the table. Validation and verification covers the following issues:</para>
+ 
+    <section xml:id="drools.GuidedDecisionTableEditorVerificationRedundancy">
+      <title>Redundancy</title>
+      <para>Redundancy exists between two rows when both rows execute the same actions when given the same set of facts.</para>
+      <para>Redundancy might not be a problem if the redundant rules are setting a value on an existing fact, this just sets the value twice. Problems occur when the two rules increase a counter or add more facts into the working memory, since this causes unwanted side effects. In both cases the other row is not needed.</para>
+    </section>
+
+    <section xml:id="drools.GuidedDecisionTableEditorVerificationSubsumption">
+      <title>Subsumption</title>
+      <para>Subsumption exists when one row executes the same action as another row when given the same set of facts. The rows are not redundant since the another row is more complicated and it can fire with a set of facts that do not fire the subsumptant row.</para>
+      <para>The problems with subsumption are similar to the case with redundancy.</para>
+    </section>
+
+    <section xml:id="drools.GuidedDecisionTableEditorVerificationConflicts">
+      <title>Conflicts</title>
+      <para>Conflicts can exist either on a single row or between rows.</para>
+      <para>A single row conflict prevents the row actions from ever being executed.</para>
+      <para>Conflict between two rows exists when the conditions of two rules are met with a same set of facts, but the actions set fact fields to different values. The conditions can be redundant or just subsumptant. Conflicts are a problem because it is impossible to know what action is made last. Conditions might set a loan to both approbed and rejected. The end result may be different on each time the rules are ran and with each rule engine software version.</para>
+    </section>
+
+    <section xml:id="drools.GuidedDecisionTableEditorVerificationMissingRHSLHS">
+      <title>Missing Columns</title>
+      <para>In some cases, usually by accident, the user can delete all the condition or action columns. When the conditions are removed all the actions are executed and when the actions columns are missing the rows do nothing. </para>
+    </section>
+
+
+  </section>
+
 </section>
