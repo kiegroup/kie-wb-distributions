@@ -23,5 +23,20 @@
     </itemizedlist>
     <para>These checks are explained in detail in the workbench documentation.</para>
   </section>
+  
+  <section>
+    <title>Improved DRL Editor</title>
+    <para>The DRL Editor has undergone a face lift; moving from a plain TextArea to using ACE Editor and a custom DRL syntax highlighter.</para>
+    <figure>
+      <title>ACE Editor</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/Workbench/ReleaseNotes/drl-ace-editor.png" format="PNG"/>
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+  </section>
 
 </section>
