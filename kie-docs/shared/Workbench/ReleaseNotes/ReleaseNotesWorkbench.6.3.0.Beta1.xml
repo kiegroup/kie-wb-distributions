@@ -39,4 +39,79 @@
     </figure>
   </section>
 
+  <section>
+    <title>Generation of JPA enabled Data Models</title>
+    <para>Data modeller was extended to support the generation of persistable Data Objects.
+      The persistable Data Objects are based on the JPA specification and all the underlying metadata are automatically generated.
+    </para>
+
+    <itemizedlist>
+
+      <listitem>
+        <para>"The New -> Data Object" Data Objects can be marked as persistable at creation time.</para>
+
+        <figure>
+          <title>New Data Object</title>
+          <screenshot>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/Workbench/ReleaseNotes/DM-NewDataObject6.3.png"
+                           format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </screenshot>
+        </figure>
+
+      </listitem>
+
+      <listitem>
+        <para>JPA Domain editors for both Data Object and Field were added to manage the by default generated JPA metadata</para>
+
+        <figure>
+          <title>Data Object level JPA domain editor</title>
+          <screenshot>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/Workbench/ReleaseNotes/DM-DataObjectJPADomainTab6.3.png"
+                           format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </screenshot>
+        </figure>
+
+        <figure>
+          <title>Field level JPA domain editor</title>
+          <screenshot>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/Workbench/ReleaseNotes/DM-FieldJPADomainTab6.3.png"
+                           format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </screenshot>
+        </figure>
+
+      </listitem>
+
+      <listitem>
+        <para>Persistence configuration screen was added to the project editor.</para>
+
+        <figure>
+          <title>Persistence configuration</title>
+          <screenshot>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/Workbench/ReleaseNotes/DM-Persistence-Configuration6.3.png"
+                           format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </screenshot>
+        </figure>
+
+      </listitem>
+
+    </itemizedlist>
+  </section>
+
+
 </section>
