@@ -146,8 +146,7 @@ kieSession.setGlobal( "myGlobalList", list );
     working memory state, so if you want to pass data from rule to rule, assert
     the data as facts into the working memory.</para>
 
-    <para>It is strongly discouraged to set or change a global value from
-    inside your rules. We recommend to you always set the value from your
-    application using the working memory interface.</para>
+    <para>Care must be taken when changing data held by globals because
+    the rule engine is not aware of those changes, hence cannot react to them.</para>
   </section>
 </section>
