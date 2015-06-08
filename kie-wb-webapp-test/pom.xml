@@ -1,0 +1,164 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.kie</groupId>
+    <artifactId>kie-wb-distributions</artifactId>
+    <version>6.3.0-SNAPSHOT</version>
+  </parent>
+ 
+  <artifactId>kie-wb-webapp-test</artifactId>
+  <packaging>jar</packaging>
+
+  <name>KIE Workbench - Webapp Test</name>
+  <description>KIE Workbench - Webapp Test</description>
+
+  <properties>
+      <version.wildfly>8.2.0.Final</version.wildfly>
+       <jboss.home>${project.build.directory}/wildfly-${version.wildfly}</jboss.home>
+       <server.config>standalone.xml</server.config>
+       <version.plugin.resources>2.3</version.plugin.resources>
+       <version.wildfly.maven.plugin>1.1.0.Alpha1</version.wildfly.maven.plugin>
+  </properties>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-exec</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.detro</groupId>
+      <artifactId>phantomjsdriver</artifactId>
+    </dependency>
+  </dependencies>
+   <build>
+    <plugins>
+  <!-- Unpack the distribution -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>unpack-wildfly</id>
+                    <phase>generate-sources</phase>
+                    <goals>
+                        <goal>unpack</goal>
+                    </goals>
+                    <inherited>false</inherited>
+                    <configuration>
+                        <artifactItems>
+                            <artifactItem>
+                                <groupId>org.wildfly</groupId>
+                                <artifactId>wildfly-dist</artifactId>
+                                <version>${version.wildfly}</version>
+                                <type>zip</type>
+                                <overWrite>false</overWrite>
+                                <outputDirectory>${project.build.directory}</outputDirectory>
+                            </artifactItem>
+                        </artifactItems>
+                         <jvm-args>-XX:MaxPermSize=2048m -XX:PermSize=2048m</jvm-args>
+                          <systemProperties>
+                            <JAVA_OPTS>-Xmx3000m -Xms1000m -XX:PermSize=2000m -XX:MaxPermSize=4000m</JAVA_OPTS>
+                          </systemProperties>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <!-- Copy server configuration -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>${version.plugin.resources}</version>
+            <executions>
+                <execution>
+                    <id>copy-standalone-xml</id>
+                    <phase>generate-test-sources</phase>
+                    <goals>
+                        <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${jboss.home}/standalone/configuration</outputDirectory>
+                        <resources>
+                            <resource>
+                                <directory>../kie-wb/kie-wb-webapp/src/main/resources</directory>
+                            </resource>
+                        </resources>
+                         <jvm-args>-XX:MaxPermSize=2048m -XX:PermSize=2048m</jvm-args>
+                         <systemProperties>
+                            <JAVA_OPTS>-Xmx3000m -Xms1000m -XX:PermSize=2000m -XX:MaxPermSize=4000m</JAVA_OPTS>
+                          </systemProperties>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <!-- WildFly plugin to deploy war -->
+        <plugin>
+            <groupId>org.wildfly.plugins</groupId>
+            <artifactId>wildfly-maven-plugin</artifactId>
+            <version>${version.wildfly.maven.plugin}</version>
+            <configuration>
+                <jbossHome>${jboss.home}</jbossHome>
+              <javaOpts>
+                <javaOpt>-Xms2048m</javaOpt>
+                <javaOpt>-Xmx4096m</javaOpt>
+                <javaOpt>-XX:MaxPermSize=2048m</javaOpt>
+              </javaOpts>
+
+                <serverConfig>standalone-full.xml</serverConfig>
+                <targetDir>../</targetDir>
+                <filename>/kie-wb/kie-wb-distribution-wars/target/kie-wb-6.3.0-SNAPSHOT-wildfly8.war</filename>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>pre-integration-phase</id>
+                    <phase>pre-integration-test</phase>
+                    <goals>
+                        <goal>start</goal>
+                        <goal>deploy</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-surefire-plugin</artifactId>
+      <configuration>
+        <excludes>
+          <exclude>**/*Test.java</exclude>
+        </excludes>
+      </configuration>
+      <executions>
+        <execution>
+          <id>integration-test</id>
+          <goals>
+            <goal>test</goal>
+          </goals>
+          <phase>integration-test</phase>
+          <configuration>
+            <excludes>
+              <exclude>none</exclude>
+            </excludes>
+            <includes>
+              <include>**/*Test.java</include>
+            </includes>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+</plugins>
+
+  </build>
+</project>
