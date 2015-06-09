@@ -765,18 +765,6 @@
 
     <dependency>
       <groupId>org.dashbuilder</groupId>
-      <artifactId>dashbuilder-lienzo-core</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.dashbuilder</groupId>
-      <artifactId>dashbuilder-lienzo-charts</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.dashbuilder</groupId>
       <artifactId>dashbuilder-renderer-lienzo</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -1300,9 +1288,6 @@
               <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
 
               <!-- Dashbuilder -->
-              <compileSourcesArtifact>org.dashbuilder:dashbuilder-lienzo-core</compileSourcesArtifact>
-              <compileSourcesArtifact>org.dashbuilder:dashbuilder-lienzo-charts</compileSourcesArtifact>
-
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-widgets</compileSourcesArtifact>
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-validations</compileSourcesArtifact>
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-dataset-api</compileSourcesArtifact>
