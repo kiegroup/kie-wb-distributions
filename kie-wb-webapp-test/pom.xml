@@ -17,7 +17,6 @@
     <version.wildfly>8.2.0.Final</version.wildfly>
   </properties>
 
-
   <dependencies>
     <dependency>
       <groupId>org.kie</groupId>
@@ -28,11 +27,6 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-exec</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
