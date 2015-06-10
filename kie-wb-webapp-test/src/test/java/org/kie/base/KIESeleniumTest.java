@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class KIESeleniumTest {
 
     public final static String KIE_PASS = "admin";
-    public final static String KIE_URL = "http://localhost:8080/kie-wb-6.3.0-SNAPSHOT-wildfly8/kie-wb.html";
+    public final static String KIE_URL = "http://localhost:8080/kie-wb";
     public final static String KIE_USER = "admin";
 
     private WebDriver driver;
