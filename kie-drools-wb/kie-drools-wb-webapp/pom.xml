@@ -32,6 +32,10 @@
   <name>KIE Drools Workbench - Webapp</name>
   <description>KIE Drools Workbench - Webapp</description>
 
+  <properties>
+    <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
+  </properties>
+
   <dependencies>
 
     <!-- Hack: ANT bundled with kie-ci needs to be excluded when running on Jetty -->
@@ -656,7 +660,7 @@
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
           <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
-          <localWorkers>1</localWorkers>
+          <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
           <module>org.kie.workbench.drools.FastCompiledKIEDroolsWebapp</module>
           <logLevel>INFO</logLevel>
           <compileSourcesArtifacts>
@@ -830,6 +834,10 @@
         </property>
       </activation>
 
+      <properties>
+        <gwt.compiler.localWorkers>4</gwt.compiler.localWorkers>
+      </properties>
+
       <build>
         <plugins>
           <plugin><!-- Keep in sync with soa profile -->
@@ -839,7 +847,6 @@
               <!-- Build all GWT permutations and optimize them -->
               <module>org.kie.workbench.drools.KIEDroolsWebapp</module>
               <draftCompile>false</draftCompile>
-              <localWorkers>4</localWorkers>
               <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms2048m -XX:PermSize=128m -Dorg.kie.demo=true -Dorg.jbpm.designer.perspective=ruleflow</extraJvmArgs>
             </configuration>
           </plugin>

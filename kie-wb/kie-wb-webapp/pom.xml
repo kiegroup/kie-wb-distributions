@@ -32,6 +32,10 @@
   <name>KIE Workbench - Webapp</name>
   <description>KIE Workbench - Webapp</description>
 
+  <properties>
+    <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
+  </properties>
+
   <dependencies>
     <!-- Hack: ANT bundled with kie-ci needs to be excluded when running on Jetty -->
     <!-- It is added back for other Application Servers in their respective assemblies -->
@@ -846,7 +850,7 @@
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
           <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
-          <localWorkers>1</localWorkers>
+          <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
           <module>org.kie.workbench.FastCompiledKIEWebapp</module>
           <logLevel>INFO</logLevel>
           <compileSourcesArtifacts>
@@ -1042,6 +1046,11 @@
           <name>full</name>
         </property>
       </activation>
+
+      <properties>
+        <gwt.compiler.localWorkers>4</gwt.compiler.localWorkers>
+      </properties>
+
       <build>
         <plugins>
           <plugin><!-- Keep in sync with soa profile -->
@@ -1051,7 +1060,6 @@
               <!-- Build all GWT permutations and optimize them -->
               <module>org.kie.workbench.KIEWebapp</module>
               <draftCompile>false</draftCompile>
-              <localWorkers>4</localWorkers>
               <extraJvmArgs>-Xmx4096m -XX:MaxPermSize=256m -Xms2048m -XX:PermSize=128m -Djetty.custom.sys.classes=bitronix;javax.transaction -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true</extraJvmArgs>
             </configuration>
           </plugin>
