@@ -14,7 +14,7 @@ import org.openqa.selenium.WebDriver;
 
 import static org.junit.Assert.*;
 
-public class ServerManagementTest {
+public class ServerManagementIntegrationTest {
 
     private KIESeleniumTest kieSeleniumTest = new KIESeleniumTest();
 
