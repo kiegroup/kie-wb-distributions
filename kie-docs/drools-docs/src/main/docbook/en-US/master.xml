@@ -74,6 +74,7 @@
     <xi:include href="../../../../../shared/Commands/Commands.xml"/>
     <xi:include href="../../../../../shared/CDI/CDI.xml"/>
     <xi:include href="../../../../../shared/Spring/KieSpring.xml"/>
+    <xi:include href="../../../../../shared/Android/Android.xml"/>
     <xi:include href="../../../../../shared/Camel/Camel.xml"/>
     <xi:include href="../../../../../shared/DroolsServer/DroolsServer.xml"/>
     <xi:include href="../../../../../shared/RHQ/RHQ.xml"/>
