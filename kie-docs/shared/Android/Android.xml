@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="ch.kie.android" version="5.0"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd http://www.w3.org/1999/xlink http://www.docbook.org/xml/5.0/xsd/xlink.xsd"
+         xml:base="../" xmlns="http://docbook.org/ns/docbook"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:ns="http://docbook.org/ns/docbook">
+  <title>Integration with Android</title>
+
+<section>
+    <title>Integration with Drools Expert</title>
+
+    <para>
+        Drools Android integration comes in 2 flavors, with or without the <emphasis>drools-compiler</emphasis> dependency.
+        Without drools-compiler the knowledge bases are preserialized during build-time using the
+        kie-maven-plugin.  They can be unserialized using the API or injected with
+        Roboguice.  With drools-compiler the normal KieContainer API may be
+        used or a CDI-like injection with Roboguice.
+    </para>
+    
+      <section>
+        <title>PreSerialized Rules</title>
+
+        <para>
+            It is possible to use Drools without the drools-compiler dependency, which makes for a smaller apk, by
+            preserializing the compiled knowledgebases during build-time and unserializing them at runtime.
+        </para>
+
+          <section>
+              <title>Maven Configuration</title>
+
+              <para>The KieBase must be serialized during build time using <emphasis>kie-maven-plugin</emphasis>.</para>
+
+              <example>
+                  <title>Preserialized KieBase Maven pom.xml</title>
+                  <programlisting language="xml">&lt;dependencies&gt;
+  &lt;dependency&gt;
+     &lt;groupId&gt;org.drools&lt;/groupId&gt;
+     &lt;artifactId&gt;drools-android&lt;/artifactId&gt;
+     &lt;exclusions&gt;
+        &lt;exclusion&gt;
+           &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+           &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;
+           &lt;groupId&gt;com.sun.xml.parsers&lt;/groupId&gt;
+           &lt;artifactId&gt;jaxp-ri&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+     &lt;/exclusions&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+     &lt;groupId&gt;org.drools&lt;/groupId&gt;
+     &lt;artifactId&gt;drools-core&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
+&lt;build&gt;
+  &lt;plugins&gt;
+     &lt;plugin&gt;
+        &lt;groupId&gt;org.kie&lt;/groupId&gt;
+        &lt;artifactId&gt;kie-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;6.3.0-FINAL&lt;/version&gt;
+        &lt;configuration&gt;
+           &lt;kiebases&gt;
+              &lt;kiebase&gt;HelloKB&lt;/kiebase&gt;
+           &lt;/kiebases&gt;
+           &lt;resDirectory&gt;${basedir}/src/main/res/raw&lt;/resDirectory&gt;
+        &lt;/configuration&gt;
+        &lt;executions&gt;
+           &lt;execution&gt;
+              &lt;id&gt;touch&lt;/id&gt;
+              &lt;goals&gt;
+                 &lt;goal&gt;touch&lt;/goal&gt;
+              &lt;/goals&gt;
+              &lt;phase&gt;initialize&lt;/phase&gt;
+           &lt;/execution&gt;
+           &lt;execution&gt;
+              &lt;id&gt;compile-kbase&lt;/id&gt;
+              &lt;goals&gt;
+                 &lt;goal&gt;build&lt;/goal&gt;
+              &lt;/goals&gt;
+              &lt;phase&gt;compile&lt;/phase&gt;
+           &lt;/execution&gt;
+           &lt;execution&gt;
+              &lt;id&gt;serialize&lt;/id&gt;
+              &lt;goals&gt;
+                 &lt;goal&gt;serialize&lt;/goal&gt;
+              &lt;/goals&gt;
+              &lt;phase&gt;compile&lt;/phase&gt;
+           &lt;/execution&gt;
+        &lt;/executions&gt;
+     &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;
+                  </programlisting>
+              </example>
+          </section>
+
+          <section>
+              <title>Loading the KieBase</title>
+
+              <para>The KieBase must be unserialized then can be used to create sessions.</para>
+
+              <figure>
+                  <title>Loading serialized KieBase</title>
+                  <programlisting language="java">private class LoadKieBaseTask extends AsyncTask&lt;InputStream, Void, KieBase&gt; {
+   @Override
+   protected KieBase doInBackground(InputStream... params) {
+      try {
+         logger.debug("Loading knowledge base");
+         final KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
+         kbase.addKnowledgePackages((List&lt;KnowledgePackage&gt;) DroolsStreamUtils.streamIn(params[0]));
+         return kbase;
+      }catch(Exception e) {
+         logger.error("Drools exception", e);
+         return null;
+      }
+   }
+}
+                  </programlisting>
+              </figure>
+          </section>
+      </section>
+
+      <section>
+        <title>KieContainer API with drools-compiler dependency</title>
+
+        <para>
+            With the drools-compiler dependency normal KieContainer API can be used.  This comes at a cost of a larger
+            apk.  To avoid the 65K limit multidex (or proguard) can be used.
+        </para>
+
+          <section>
+              <title>Maven Configuration with drools-compiler and multidex</title>
+
+              <para>
+                  The kie-maven-plugin must be configured to build the kiebase.  Multidex must be used to allow for the
+                  increased dependencies.  There is also some settings for merging various drools xml files within the
+                  apk.
+              </para>
+
+              <example>
+              <title>pom.xml with drools-compiler and multidex</title>
+              <programlisting language="xml">&lt;dependencies&gt;
+   &lt;dependency&gt;
+     &lt;groupId&gt;org.drools&lt;/groupId&gt;
+     &lt;artifactId&gt;drools-android&lt;/artifactId&gt;
+     &lt;exclusions&gt;
+        &lt;exclusion&gt;
+           &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+           &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+     &lt;/exclusions&gt;
+   &lt;/dependency&gt;
+   &lt;dependency&gt;
+     &lt;groupId&gt;org.drools&lt;/groupId&gt;
+     &lt;artifactId&gt;drools-compiler&lt;/artifactId&gt;
+     &lt;exclusions&gt;
+        &lt;exclusion&gt;
+           &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+           &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;
+           &lt;groupId&gt;xmlpull&lt;/groupId&gt;
+           &lt;artifactId&gt;xmlpull&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;
+           &lt;groupId&gt;xpp3&lt;/groupId&gt;
+           &lt;artifactId&gt;xpp3_min&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;
+           &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+           &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;
+           &lt;groupId&gt;org.eclipse.jdt.core.compiler&lt;/groupId&gt;
+           &lt;artifactId&gt;ecj&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+     &lt;/exclusions&gt;
+   &lt;/dependency&gt;
+&lt;/dependencies&gt;
+&lt;build&gt;
+   &lt;plugins&gt;
+      &lt;plugin&gt;
+         &lt;groupId&gt;org.kie&lt;/groupId&gt;
+         &lt;artifactId&gt;kie-maven-plugin&lt;/artifactId&gt;
+         &lt;version&gt;6.3.0-FINAL&lt;/version&gt;
+         &lt;executions&gt;
+            &lt;execution&gt;
+               &lt;id&gt;compile-kbase&lt;/id&gt;
+               &lt;goals&gt;
+                  &lt;goal&gt;build&lt;/goal&gt;
+               &lt;/goals&gt;
+               &lt;phase&gt;compile&lt;/phase&gt;
+            &lt;/execution&gt;
+         &lt;/executions&gt;
+      &lt;/plugin&gt;
+      &lt;plugin&gt;
+         &lt;groupId&gt;com.simpligility.maven.plugins&lt;/groupId&gt;
+         &lt;artifactId&gt;android-maven-plugin&lt;/artifactId&gt;
+         &lt;version&gt;4.2.1&lt;/version&gt;
+         &lt;extensions&gt;true&lt;/extensions&gt;
+         &lt;configuration&gt;
+            &lt;sdk&gt;
+               &lt;platform&gt;21&lt;/platform&gt;
+            &lt;/sdk&gt;
+            &lt;dex&gt;
+               &lt;coreLibrary&gt;true&lt;/coreLibrary&gt;
+               &lt;jvmArguments&gt;&lt;jvmArgument&gt;-Xmx2048m&lt;/jvmArgument&gt;&lt;/jvmArguments&gt;
+               &lt;multiDex&gt;true&lt;/multiDex&gt;
+               &lt;mainDexList&gt;maindex.txt&lt;/mainDexList&gt;
+            &lt;/dex&gt;
+            &lt;extractDuplicates&gt;true&lt;/extractDuplicates&gt;
+            &lt;apk&gt;
+               &lt;metaInf&gt;
+               &lt;includes&gt;
+                  &lt;include&gt;services/**&lt;/include&gt;
+                  &lt;include&gt;kmodule.*&lt;/include&gt;
+                  &lt;include&gt;HelloKB/**&lt;/include&gt;
+                  &lt;include&gt;drools**&lt;/include&gt;
+                  &lt;include&gt;maven/${project.groupId}/${project.artifactId}/**&lt;/include&gt;
+               &lt;/includes&gt;
+               &lt;/metaInf&gt;
+            &lt;/apk&gt;
+         &lt;/configuration&gt;
+      &lt;/plugin&gt;
+   &lt;/plugins&gt;
+&lt;/build&gt;
+                  </programlisting>
+              </example>
+          </section>
+      </section>
+  
+  </section>
+  
+  <section>
+    <title>Integration with Roboguice</title>
+  
+      <section>
+        <title>PreSerialized Rules with Roboguice</title>
+
+        <para>With Roboguice preserialized kiebases can be injected using the @KBase annotation.</para>
+
+          <section>
+              <title>Annotations</title>
+              <para>
+                  @KBase supports an optional 'name' attribute. CDI typically
+                  does "getOrCreate" when it injects, all injections receive the same instance for the same set
+                  of annotations. the 'name' annotation forces a unique instance for each name, although all
+                  instance for that name will be identity equals.
+              </para>
+              <section>
+                  <title>@KBase</title>
+                  <para>The default argument maps to the value attribute and specifies the name of the KieBase from the
+                      kmodule.xml file.</para>
+                  <figure>
+                      <title>Injects KieBase by name from preserialized resource</title>
+                      <programlisting language="JAVA">@KBase("kbase1")
+private KieBase kbase;</programlisting>
+                  </figure>
+              </section>
+          </section>
+
+          <section>
+              <title>AndroidManifest.xml configuration</title>
+              <para>The Roboguice module needs to be specified in the manifest.</para>
+              <example>
+                  <title>Preserialized kbase roboguice manifest</title>
+                  <programlisting language="xml">&lt;application
+   android:largeHeap="true"
+   android:allowBackup="true"
+   android:icon="@drawable/ic_launcher"
+   android:label="@string/app_name"
+   android:theme="@style/AppTheme"&gt;
+      &lt;meta-data
+         android:name="roboguice.modules"
+         android:value="org.drools.android.roboguice.DroolsModule"/&gt;
+      &lt;activity
+         android:label="@string/app_name"
+         android:name="org.drools.examples.android.SplashActivity"&gt;
+      &lt;intent-filter&gt;
+         &lt;action android:name="android.intent.action.MAIN"/&gt;
+         &lt;category android:name="android.intent.category.LAUNCHER"/&gt;
+      &lt;/intent-filter&gt;
+   &lt;/activity&gt;
+&lt;/application&gt;
+                  </programlisting>
+              </example>
+          </section>
+      </section>
+
+      <section>
+        <title>KieContainer with drools-compiler dependency and Roboguice</title>
+
+        <para>With Roboguice and drools-compiler almost the full CDI syntax can be used to inject KieContainers, KieBases, and KieSessions.</para>
+
+          <section>
+              <title>Annotations</title>
+              <para>@KContainer, @KBase and @KSession all support an optional 'name' attribute. CDI typically
+                  does "getOrCreate" when it injects, all injections receive the same instance for the same set
+                  of annotations. the 'name' annotation forces a unique instance for each name, although all
+                  instance for that name will be identity equals.</para>
+              <section>
+                  <title>@KContainer</title>
+                  <figure>
+                      <title>Injects Classpath KieContainer</title>
+                      <programlisting language="JAVA">@Inject
+private KieContainer kContainer;</programlisting>
+                  </figure>
+              </section>
+              <section>
+                  <title>@KBase</title>
+                  <para>The default argument, if given, maps to the value attribute and specifies the name of the KieBase from the
+                      kmodule.xml file.</para>
+                  <figure>
+                      <title>Injects the Default KieBase from the Classpath KieContainer</title>
+                      <programlisting language="JAVA">@Inject
+private KieBase kbase;</programlisting>
+                  </figure>
+                  <figure>
+                      <title>Injects KieBase by name from the Classpath KieContainer</title>
+                      <programlisting language="JAVA">@Inject
+@KBase("kbase1")
+private KieBase kbase;</programlisting>
+                  </figure>
+              </section>
+              <section>
+                  <title>@KSession for KieSession</title>
+                  <para>@KSession is optional as it can be detected and added by the use of @Inject and variable
+                      type inference.</para>
+                  <para>The default argument, if given, maps to the value attribute and specifies the name of the KieSession from the
+                      kmodule.xml file</para>
+                  <figure>
+                      <title>Injects the Default KieSession from the Classpath KieContainer</title>
+                      <programlisting language="JAVA">@Inject
+private KieSession ksession;</programlisting>
+                  </figure>
+                  <figure>
+                      <title>Injects StatelessKieSession by name from the Classpath KieContainer</title>
+                      <programlisting language="JAVA">@Inject
+@KSession("ksession1")
+private KieSession ksession;</programlisting>
+                  </figure>
+              </section>
+              <section>
+                  <title>@KSession for StatelessKieSession</title>
+                  <para>@KSession is optional as it can be detected and added by the use of @Inject and variable
+                      type inference.</para>
+                  <para>The default argument, if given, maps to the value attribute and specifies the name of the KieSession from the
+                      kmodule.xml file.</para>
+                  <figure>
+                      <title>Injects the Default StatelessKieSession from the Classpath KieContainer</title>
+                      <programlisting language="JAVA">@Inject
+private StatelessKieSession ksession;</programlisting>
+                  </figure>
+                  <figure>
+                      <title>Injects StatelessKieSession by name from the Classpath KieContainer</title>
+                      <programlisting language="JAVA">@Inject
+@KSession("ksession1")
+private StatelessKieSession ksession;</programlisting>
+                  </figure>
+              </section>
+          </section>
+
+          <section>
+              <title>AndroidManifest.xml configuration</title>
+              <para>The Roboguice module needs to be specified in the manifest.</para>
+              <example>
+                  <title>Preserialized kbase roboguice manifest</title>
+                  <programlisting language="xml">&lt;application
+   android:largeHeap="true"
+   android:allowBackup="true"
+   android:icon="@drawable/ic_launcher"
+   android:label="@string/app_name"
+   android:theme="@style/AppTheme"&gt;
+   &lt;meta-data
+      android:name="roboguice.modules"
+      android:value="org.drools.android.roboguice.DroolsContainerModule"/&gt;
+   &lt;activity
+      android:label="@string/app_name"
+      android:name="org.drools.examples.android.SplashActivity"&gt;
+      &lt;intent-filter&gt;
+         &lt;action android:name="android.intent.action.MAIN"/&gt;
+         &lt;category android:name="android.intent.category.LAUNCHER"/&gt;
+      &lt;/intent-filter&gt;
+   &lt;/activity&gt;
+&lt;/application&gt;
+                  </programlisting>
+              </example>
+          </section>
+      </section>
+  
+  </section>
+</chapter>
