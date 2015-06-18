@@ -911,7 +911,7 @@ Person( $age := age) </programlisting>
         <para>These accessors to nested objects can be grouped with a '.(...)'
         syntax providing more readable rules as in</para>
 
-        <programlisting>Person( name==  "mark", address.( city == "london", country ==  "uk") )</programlisting>
+        <programlisting>Person( name == "mark", address.( city == "london", country == "uk") )</programlisting>
 
         <para>Note the '.' prefix, this is necessary to differentiate the nested
         object constraints from a method call.</para>
@@ -923,13 +923,13 @@ Person( $age := age) </programlisting>
         <para>When dealing with nested objects, it also quite common the need to
         cast to a subtype. It is possible to do that via the # symbol as in:</para>
 
-        <programlisting>Person( name=="mark", address#LongAddress.country == "uk" )</programlisting>
+        <programlisting>Person( name == "mark", address#LongAddress.country == "uk" )</programlisting>
 
         <para>This example casts Address to LongAddress, making its getters available.
         If the cast is not possible (instanceof returns false), the evaluation will
         be considered false. Also fully qualified names are supported:</para>
 
-        <programlisting>Person( name=="mark", address#org.domain.LongAddress.country == "uk" )</programlisting>
+        <programlisting>Person( name == "mark", address#org.domain.LongAddress.country == "uk" )</programlisting>
 
         <para>It is possible to use multiple inline casts in the same expression:</para>
 
@@ -938,7 +938,7 @@ Person( $age := age) </programlisting>
         <para>moreover, since we also support the instanceof operator, if that is used
         we will infer its results for further uses of that field, within that pattern:</para>
 
-        <programlisting>Person( name=="mark", address instanceof LongAddress, address.country == "uk" )</programlisting>
+        <programlisting>Person( name == "mark", address instanceof LongAddress, address.country == "uk" )</programlisting>
       </section>
 
       <section>
