@@ -127,8 +127,8 @@ end</programlisting>
   </section>
 
   <section>
-    <title>RuleFowGroup and AgendaGroups are merged</title>
-    <para>These two groups have been merged and now RuleFlowGroup's behave the same as AgendaGroups. The get methods
+    <title>RuleFlowGroups and AgendaGroups are merged</title>
+    <para>These two groups have been merged and now RuleFlowGroups behave the same as AgendaGroups. The get methods
       have been left, for deprecation reasons, but both return the same underlying data. When jBPM activates a group it
       now just calls setFocus. RuleFlowGroups and AgendaGroups when used together was a continued source of errors. It
       also aligns the codebase, towards PHREAK and the multi-core explotation that is planned in the future.</para>

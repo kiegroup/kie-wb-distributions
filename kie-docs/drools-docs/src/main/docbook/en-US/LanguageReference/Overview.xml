@@ -60,7 +60,7 @@
   <section>
     <title>What makes a rule</title>
 
-    <para>For the inpatients, just as an early view, a rule has the following
+    <para>For the impatient, just as an early view, a rule has the following
     rough structure:<programlisting><emphasis role="bold">rule</emphasis> <replaceable>"name"</replaceable>
     <replaceable>attributes</replaceable>
     <emphasis role="bold">when</emphasis>

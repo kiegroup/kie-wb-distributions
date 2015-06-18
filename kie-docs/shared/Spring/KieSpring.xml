@@ -170,12 +170,6 @@
 
               <row>
                 <entry>default</entry>
-                <entry>Default kbase</entry>
-                <entry>No</entry>
-              </row>
-
-              <row>
-                <entry>default</entry>
                 <entry>Boolean (TRUE/FALSE). Default kbase, if not provided,
                 it is assumed to be FALSE</entry>
                 <entry>No</entry>
