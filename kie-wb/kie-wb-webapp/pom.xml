@@ -38,6 +38,7 @@
     <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
     <errai.jboss.home>${project.build.directory}/wildfly-${as.version}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
+    <gwt.memory.settings>-Xmx4g -Xms1g -XX:MaxPermSize=256m -XX:PermSize=128m -Xss1M</gwt.memory.settings>
   </properties>
 
   <dependencies>
@@ -1485,7 +1486,7 @@
           <configuration>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
-            <extraJvmArgs>-Xmx2g -Xms1g -XX:MaxPermSize=256m -XX:PermSize=128m -Xss1M -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000</extraJvmArgs>
+            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000</extraJvmArgs>
             <draftCompile>true</draftCompile>
             <module>org.kie.workbench.FastCompiledKIEWebapp</module>
             <logLevel>INFO</logLevel>
