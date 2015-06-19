@@ -1485,7 +1485,7 @@
           <configuration>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
-            <extraJvmArgs>-Xmx4096m -Xms1024m -XX:MaxPermSize=256m -XX:PermSize=128m -Xss1M -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000</extraJvmArgs>
+            <extraJvmArgs>-Xmx2g -Xms1g -XX:MaxPermSize=256m -XX:PermSize=128m -Xss1M -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000</extraJvmArgs>
             <draftCompile>true</draftCompile>
             <module>org.kie.workbench.FastCompiledKIEWebapp</module>
             <logLevel>INFO</logLevel>
