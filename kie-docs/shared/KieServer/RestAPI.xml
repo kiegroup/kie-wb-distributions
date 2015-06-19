@@ -41,6 +41,21 @@
               <title>[POST] /</title>
               <para>Using POST HTTP method, you can execute various commands on the Execution
                      Server. E.g: create-container, list-containers, dispose-container and call-container.</para>
+                     Following is the full list of commands:
+              <para>
+                <itemizedlist>
+                  <listitem><para>CreateContainerCommand</para></listitem>
+                  <listitem><para>GetServerInfoCommand</para></listitem>
+                  <listitem><para>ListContainersCommand</para></listitem>
+                  <listitem><para>CallContainerCommand</para></listitem>
+                  <listitem><para>DisposeContainerCommand</para></listitem>
+                  <listitem><para>GetContainerInfoCommand</para></listitem>
+                  <listitem><para>GetScannerInfoCommand</para></listitem>
+                  <listitem><para>UpdateScannerCommand</para></listitem>
+                  <listitem><para>UpdateReleaseIdCommand</para></listitem>
+                </itemizedlist>
+                The commands itself can be found in the <code>org.kie.server.api.commands</code> package.
+              </para>
        </section>
        
        <section>
@@ -148,8 +163,28 @@
               <example><title>Example Server Request to fire all rules</title>
                      <programlisting language="XML">&lt;fire-all-rules/></programlisting>
               </example>
-              <para>Any valid command (of the type org.kie.api.Command) with
-                     correct attributes can be used.</para>
+              <para>Following is the list of supported commands:
+              
+                <itemizedlist>
+                  <listitem><para>AgendaGroupSetFocusCommand</para></listitem>
+                  <listitem><para>ClearActivationGroupCommand</para></listitem>
+                  <listitem><para>ClearAgendaCommand</para></listitem>
+                  <listitem><para>ClearAgendaGroupCommand</para></listitem>
+                  <listitem><para>ClearRuleFlowGroupCommand</para></listitem>
+                  <listitem><para>DeleteCommand</para></listitem>
+                  <listitem><para>InsertObjectCommand</para></listitem>
+                  <listitem><para>ModifyCommand</para></listitem>
+                  <listitem><para>GetObjectCommand</para></listitem>
+                  <listitem><para>InsertElementsCommand</para></listitem>
+                  <listitem><para>FireAllRulesCommand</para></listitem>
+                  <listitem><para>QueryCommand</para></listitem>
+                  <listitem><para>SetGlobalCommand</para></listitem>
+                  <listitem><para>GetGlobalCommand</para></listitem>
+                  <listitem><para>GetObjectsCommand</para></listitem>
+                  <listitem><para>BatchExecutionCommand</para></listitem>
+                </itemizedlist>
+                These commands can be found in the <code>org.drools.core.command.runtime</code> package.
+              </para>
        </section>
        
        <section>
@@ -220,6 +255,70 @@
               </example>
               <para>To stop the Scanner, replace the status with <code>DISPOSED</code> and remove
                      the poll-interval attribute.</para>
+       </section>
+       
+       <section>
+       
+       <title>Native REST client for Execution Server</title>
+       <para>
+       Commands outlined in this section can be sent with any REST client, whether it is curl, RESTEasy or .NET based application. However, when sending requests from Java based application, users
+       can utilize out of the box native client for remote communication with Execution Server. This client is part of the <emphasis role="bold">org.kie:kie-server-client</emphasis> project. It doesn't allow creating XML request, therefore
+       it is necessary generate them before, for example, using Drools API.
+       </para>
+       <example>
+       <title>Generate XML request</title>
+         <programlisting language="Java"> 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.drools.core.command.impl.GenericCommand;
+import org.drools.core.command.runtime.BatchExecutionCommandImpl;
+import org.drools.core.command.runtime.rule.FireAllRulesCommand;
+import org.drools.core.command.runtime.rule.InsertObjectCommand;
+import org.kie.api.command.BatchExecutionCommand;
+import org.kie.internal.runtime.helper.BatchExecutionHelper;
+
+public class DecisionClient {
+
+public static void main(String args[]) {
+        Bean1 bean1 = new Bean1();
+        bean1.setName("Robert");
+
+        InsertObjectCommand insertObjectCommand = new InsertObjectCommand(bean1, "f1");
+        FireAllRulesCommand fireAllRulesCommand = new FireAllRulesCommand("myFireCommand");
+
+        List&lt;GenericCommand&lt;?>> commands = new ArrayList&lt;GenericCommand&lt;?>>();
+        commands.add(insertObjectCommand);
+        commands.add(fireAllRulesCommand);
+        BatchExecutionCommand command = new BatchExecutionCommandImpl(commands);
+
+        String xStreamXml = BatchExecutionHelper.newXStreamMarshaller().toXML(command); // actual XML request
+	}
+}
+         </programlisting>
+       </example>
+       <para>Once the request is generated it can be sent using <emphasis role="bold">kie-server-client</emphasis> as follows:</para>
+       <example>
+       <title>Sending XML request with kie-server-client</title>
+         <programlisting language="Java"> 
+import org.kie.server.api.model.ServiceResponse;
+import org.kie.server.client.KieServicesClient;
+import org.kie.server.client.KieServicesConfiguration;
+import org.kie.server.client.KieServicesFactory;
+
+//user "anton" must have role "kie-server" assigned
+KieServicesConfiguration config =  KieServicesFactory.
+        newRestConfiguration("http://localhost:8080/kie-server/services/rest/server",
+        "anton",
+        "password1!");
+ KieServicesClient client = KieServicesFactory.newKieServicesClient(config);
+// the request "xStreamXml" we generated in previous step
+// "ListenerReproducer" is the name of the Container
+ServiceResponse&lt;String> response = client.executeCommands("ListenerReproducer", xStreamXml); 
+System.out.println(response.getResult());
+			 </programlisting>
+       </example>
+       
        </section>
        
 </section>
