@@ -27,6 +27,7 @@
   <inherits name="org.jbpm.console.ng.bd.JbpmConsoleNGBusinessDomainAPI"/>
   <inherits name="org.jbpm.console.ng.pr.JbpmConsoleNGProcessRuntimeAPI"/>
   <inherits name="org.jbpm.console.ng.ht.forms.JbpmConsoleNGHumanTasksFormsClient"/>
+  <inherits name="org.jbpm.console.ng.df.JbpmConsoleNGDataFiltersClient"/>
 
   <!-- Form-Modeler -->
   <inherits name="org.jbpm.formModeler.renderer.FormRendererAPI"/>

@@ -1205,6 +1205,12 @@
       <artifactId>jbpm-console-ng-human-tasks-forms-modeler-backend</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-data-filters-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- added found dependencies by illegal transitive dependency check -->
 
     <!-- org.dashbuilder -->
@@ -1519,6 +1525,7 @@
               <!-- jBPM Dashboard integration-->
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-dashboard-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-dashboard-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-data-filters-client</compileSourcesArtifact>
 
               <!-- Dashbuilder -->
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-widgets</compileSourcesArtifact>
