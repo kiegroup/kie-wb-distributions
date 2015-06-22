@@ -14,16 +14,13 @@
   and edited just like any other asset, and apply to the package that they
   belong to.</para>
 
-  <para>The contents of an enum config are a mapping of Fact.field to a list
-  of values to be used in a drop down. That list can either be literal, or use
-  a utility class (which you put on the classpath) to load a list of strings.
-  The strings are either a value to be shown on a drop down, or a mapping from
-  the code value (what ends up used in the rule) and a display value (see the
-  example below, using the '=').</para>
+  <para>The contents of an enum config are a mapping of <code>Fact.field</code> to a list
+  of values to be used in a drop down. The strings are either a value to be shown in a drop down, or a mapping from
+  the code value (what ends up used in the rule) and a display value.</para>
 
   <figure>
     <title>Data enumeration</title>
-
+    
     <mediaobject>
       <imageobject>
         <imagedata align="center" fileref="images/Workbench/AuthoringAssets/EnumConfig.png"
@@ -31,68 +28,54 @@
       </imageobject>
     </mediaobject>
   </figure>
+  
+<para>If you wish to use a mapping between value used in the rule and the value shown in the UI you
+    need to separate the code value and display value with an equals sign. For
+    example:<programlisting>'Person.gender' : ['M=Male','F=Female']</programlisting>In this example
+      <code>F</code> will be used in the rules but <code>Female</code> shown in the UI.</para>
 
-  <para>In the above diagram - the "MM" indicates a value that will be used in
-  the rule, yet "Mini Mal" will be displayed in the GUI.</para>
-
-  <para>Getting data lists from external data sources: It is possible to have 
-    Drools Workbench call a piece of code which will load a list of Strings. To do
-  this, you will need a bit of code that returns a <code>java.util.List</code>
-    (of String's) to be on the classpath of Drools Workbench. Instead of specifying a
-    list of values in Drools Workbench itself - the code can return the list of
-  Strings (you can use the "=" inside the strings if you want to use a
-  different display value to the rule value, as normal). For example, in the
-  'Person.age' line above, you could change it to:</para>
+  <para>Drop down lists can also depend on other field values.</para>
+  <para>Lets imagine a simple fact model, we have a class called Vehicle, which has 2 fields:
+    <code>engineType</code> and <code>fuelType</code>. We want to have a choice for the <code>engineType</code>
+    of "Petrol" or "Diesel". Now, obviously the choice type for fuel must be
+    dependent on the engine type (so for Petrol we have ULP and PULP, and for
+    Diesel we have BIO and NORMAL). We can express this dependency in an
+    enumeration as:</para>  
   
   <figure>
     <mediaobject>
       <imageobject>
-        <imagedata align="center" fileref="images/Workbench/AuthoringAssets/EnumPersonAge.png"
+        <imagedata align="center" fileref="images/Workbench/AuthoringAssets/EnumVehicleEngine.png"
           format="PNG"/>
       </imageobject>
     </mediaobject>
   </figure>
+  <para>This shows how it is possible to make the choices dependent on other
+    field values. Note that once you pick the engineType, the choice list for
+    the fuelType will be determined.</para>
   
-  <para>This assumes you have a class called "DataHelper" which has a method "getListOfAges()" which returns a List of
-    strings (and is on the classpath). You can of course mix these "dynamic" enumerations with fixed lists. You could
-    for example load from a database using JDBC. The data enumerations are loaded the first time you use the guided
-    editor in a session. If you have any guided editor sessions open - you will need to close and then open the rule to
-    see the change.</para>
-
   <section xml:id="drools.AdvancedEnumConcepts">
     <title>Advanced enumeration concepts</title>
 
-    <para>There are a few other advanced things you can do with data
-    enumerations.</para>
+    <para>There are a few other advanced things you can do with data enumerations.</para>
 
-    <para>Drop down lists that depend on field values: Lets imagine a simple
-    fact model, we have a class called Vehicle, which has 2 fields:
-    "engineType" and "fuelType". We want to have a choice for the "engineType"
-    of "Petrol" or "Diesel". Now, obviously the choice type for fuel must be
-    dependent on the engine type (so for Petrol we have ULP and PULP, and for
-    Diesel we have BIO and NORMAL). We can express this dependency in an
-    enumeration as:</para>
+    <section xml:id="drools.AdvanceEnumConcepts.external">
+      <title>External data-sources</title>
+      <para>Instead of defining a static list you can retrieve the list from an external data-source
+        by using a helper class.</para>
+      <para>The helper class must be on the Project's classpath; by adding a JAR containng the class
+        as a project dependency. The helper class must be instantiable and have a non-static method
+        that returns a <code>java.util.List</code>. Population of the list is implementation
+        specific.</para>
+      <para>For
+        example:<programlisting>'Person.age' : (new org.yourco.DataHelper()).getListOfAges()</programlisting></para>
 
+      <para>In some other cases you may want to load the enumeration data entirely from an external
+        data source (such as a relational database). To do this, you can implement a class that
+        returns a <code>Map&lt;String, List&lt;String&gt;&gt;</code>. The key of the map is the <code>Fact.field</code> 
+        and the value is a <code>java.util.List&lt;String&gt;</code> of values to be used.</para>
 
-    <figure>
-      <mediaobject>
-        <imageobject>
-          <imagedata align="center" fileref="images/Workbench/AuthoringAssets/EnumVehicleEngine.png"
-            format="PNG"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    <para>This shows how it is possible to make the choices dependent on other
-    field values. Note that once you pick the engineType, the choice list for
-    the fuelType will be determined.</para>
-
-    <para>Loading enums programmatically: In some cases, people may want to
-    load their enumeration data entirely from external data source (such as a
-    relational database). To do this, you can implement a class that returns a
-    Map. The key of the map is a string (which is the Fact.field name as shown
-    above), and the value is a <code>java.util.List</code> of Strings.</para>
-
-    <programlisting language="Java">public class SampleDataSource2 {
+      <programlisting language="Java">public class SampleDataSource2 {
 
   public Map&lt;String&gt;, List&lt;String&gt; loadData() {
     Map data = new HashMap();
@@ -105,42 +88,35 @@
     return data;
  }
 
-}</programlisting>
+}
+      </programlisting>
 
-    <para>And in the enumeration in the BRMS, you put:</para>
+      <para>The enumeration definition would simply be as follows (with no reference to fact or
+        field names):</para>
 
-    <programlisting language="Java">=(new SampleDataSource2()).loadData()</programlisting>
+      <programlisting language="Java">=(new SampleDataSource2()).loadData()</programlisting>
 
-    <para>The "=" tells it to load the data by executing your code.</para>
+      <para>The <code>=</code> operator informs the workbench to load all enumeration data from the
+        helper class.</para>
 
-    <para>Mode advanced enumerations: In the above cases, the values in the
-    lists are calculated up front. This is fine for relatively static data, or
-    small amounts of data. Imagine a scenario where you have lists of
-    countries, each country has a list of states, each state has a list of
-    localities, each locality has a list of streets and so on... You can see
-    how this is a lot of data, and it can not be loaded up. The lists should
-    be loaded dependent on what country was selected etc...</para>
+      <note>
+        <para>The helper methods will be statically evaluated when the
+          enumeration definition is requested for use in an editor.</para>
+      </note>
+      
+    </section>
 
-    <para>Well the above can be addressed in the following fashion:</para>
-    
-    <figure>
-      <mediaobject>
-        <imageobject>
-          <imagedata align="center" fileref="images/Workbench/AuthoringAssets/EnumFactField.png"
-            format="PNG"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    
-    <para>Similar to above, but note that we have just specified what fields
-    are needed, and also on the right of the ":" there are quotes around the
-    expression. This expression will then be evaluated, only when needed,
-    substituting the values from the fields specified. This means you can use
-    the field values from the GUI to drive a database query, and drill down
-    into data etc. When the drop down is loaded, or the rule loaded, it will
-    refresh the list based on the fields. 'dependentField1' and
-    'dependentField2' are names of fields on the 'Fact' type - these are used
-    to calculate the list of values which will be shown in a drop down if
-    values for the "field".</para>
+    <section xml:id="drools.AdvanceEnumConcepts.dynamic">
+      <title>Dynamic lookup</title>
+
+      <para>All of the above cases retrieve the list of values by statically evaluating the
+        enumeration definition when enumerations are required by an editor.</para><para>It is also possibly to load
+        dependent enumeration definitions dynamically from a helper class by enclosing the call to
+        the helper class within quotation marks. For
+        example:<programlisting>'Country.region(countryCode)' : '(new org.yourco.DataHelper()).getListOfRegions("@{countryCode}")'</programlisting></para>
+     
+    </section>
+
   </section>
+
 </section>
