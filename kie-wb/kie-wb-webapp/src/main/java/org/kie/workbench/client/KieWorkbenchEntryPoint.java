@@ -283,7 +283,7 @@ public class KieWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.Process_Instances() ).withRoles( kieACL.getGrantedRoles( F_PROCESS_INSTANCES ) ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Process Instances" ) );
+                placeManager.goTo( new DefaultPlaceRequest( "DataSet Process Instances" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
