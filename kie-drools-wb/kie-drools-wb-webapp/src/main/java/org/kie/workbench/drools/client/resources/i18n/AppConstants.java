@@ -110,6 +110,8 @@ public interface AppConstants
 
     String Apps();
 
+    String DataSets();
+
     String logoBannerError();
 
 }

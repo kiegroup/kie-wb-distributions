@@ -332,6 +332,13 @@ public class KieWorkbenchEntryPoint {
             }
 
         } ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.DataSets() ).withRoles( kieACL.getGrantedRoles( F_DATASETS ) ).respondsWith( new Command() {
+            @Override
+            public void execute() {
+                placeManager.goTo( new DefaultPlaceRequest( "DataSetAuthoringPerspective" ) );
+            }
+
+        } ).endMenu().build().getItems().get( 0 ) );
         return result;
     }
 
