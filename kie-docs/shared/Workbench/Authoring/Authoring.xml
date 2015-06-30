@@ -14,5 +14,6 @@
   <xi:include href="Validation/Validation.xml"/>
   <xi:include href="DataModeller/DataModeller.xml"/>
   <xi:include href="CategoriesEditor/CategoriesEditor.xml"/>
+  <xi:include href="DataSets/DataSets.xml"/>
 
 </section>
