@@ -14,7 +14,19 @@
 
   <name>KIE :: Documentation :: jBPM Asciidoc</name>
   <description>jBPM Asciidoc Documentation</description>
-  
+
+  <dependencies>
+    <!-- Used by dependency:unpack. The explicit dependency is needed
+         in order to make parallel builds work. -->
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-docs</artifactId>
+      <classifier>sources</classifier>
+      <!-- Dependant modules do not need the sources jar, so use provided scope. -->
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <resources>
       <resource>
