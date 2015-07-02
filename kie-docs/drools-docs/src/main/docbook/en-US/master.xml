@@ -61,6 +61,7 @@
     </partintro>
     <xi:include href="HybridReasoning.xml"/>
     <xi:include href="UserGuide.xml"/>
+    <xi:include href="DroolsRunning.xml"/>
     <xi:include href="LanguageReference.xml"/>
     <xi:include href="ComplexEventProcessing.xml"/>
   </part>
