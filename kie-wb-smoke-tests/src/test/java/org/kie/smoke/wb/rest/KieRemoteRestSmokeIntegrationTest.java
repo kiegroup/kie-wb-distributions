@@ -20,6 +20,8 @@ import static org.kie.smoke.wb.util.TestConstants.MARY_PASSWORD;
 import static org.kie.smoke.wb.util.TestConstants.MARY_USER;
 import static org.kie.smoke.wb.util.TestConstants.OBJECT_VARIABLE_PROCESS_ID;
 import static org.kie.smoke.wb.util.TestConstants.RULE_TASK_PROCESS_ID;
+import static org.kie.smoke.wb.util.TestConstants.SALA_PASSWORD;
+import static org.kie.smoke.wb.util.TestConstants.SALA_USER;
 import static org.kie.smoke.wb.util.TestConstants.SCRIPT_TASK_VAR_PROCESS_ID;
 import static org.kie.smoke.wb.util.TestConstants.VERSION;
 
@@ -340,8 +342,8 @@ public class KieRemoteRestSmokeIntegrationTest extends AbstractWorkbenchIntegrat
 
     @Test
     public void testRestRemoteApiHumanTaskProcess() throws Exception {
-        String user = MARY_USER;
-        String password = MARY_PASSWORD;
+        String user = SALA_USER;
+        String password = SALA_PASSWORD;
         // create REST request
         RuntimeEngine engine = getRemoteRuntime(deploymentUrl, user, password);
         KieSession ksession = engine.getKieSession();
