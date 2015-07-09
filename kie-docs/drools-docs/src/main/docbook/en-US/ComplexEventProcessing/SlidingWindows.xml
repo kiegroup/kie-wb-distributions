@@ -32,6 +32,6 @@
   </important>
 
   <xi:include href="SlidingWindows/TimeWindows.xml"/>
-
   <xi:include href="SlidingWindows/LengthWindows.xml"/>
+  <xi:include href="SlidingWindows/WindowDeclaration.xml"/>
 </section>

@@ -60,4 +60,21 @@ end</programlisting>
     and no explicit expiration policy, the engine will keep them in the
     session indefinitely. </para>
   </important>
+
+  <para>When using a sliding window, alpha constraints are evaluated before
+  the window is considered, but beta (join) constraints are evaluated afterwards.
+  This usually doesn't make a difference when time windows are concerned, but
+  it's important when using a length window. For example this pattern:</para>
+
+  <programlisting>StockTick( company == "RHT" ) over window:length( 10 )</programlisting>
+
+  <para>defines a window of (at most) 10 StockTicks all having company equal to "RHT",
+  while the following one:</para>
+
+  <programlisting>$s : String()
+StockTick( company == $s ) over window:length( 10 )</programlisting>
+
+  <para>first creates a window of (at most) 10 StockTicks regardless of the value of
+  their company attribute and then filters among them only the ones having the company
+  equal to the String selected from the working memory.</para>
 </section>
