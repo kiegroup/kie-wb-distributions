@@ -113,7 +113,7 @@
         enumeration definition when enumerations are required by an editor.</para><para>It is also possibly to load
         dependent enumeration definitions dynamically from a helper class by enclosing the call to
         the helper class within quotation marks. For
-        example:<programlisting>'Country.region(countryCode)' : '(new org.yourco.DataHelper()).getListOfRegions("@{countryCode}")'</programlisting></para>
+        example:<programlisting>'Country.region[countryCode]' : '(new org.yourco.DataHelper()).getListOfRegions("@{countryCode}")'</programlisting></para>
      
     </section>
 
