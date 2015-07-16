@@ -36,7 +36,7 @@ import org.kie.workbench.common.widgets.client.search.ContextualSearch;
 import org.kie.workbench.common.widgets.client.search.SearchBehavior;
 import org.kie.workbench.common.widgets.client.search.SetSearchTextEvent;
 import org.uberfire.client.mvp.PlaceManager;
-import org.uberfire.client.workbench.widgets.menu.PespectiveContextMenusPresenter;
+import org.uberfire.client.workbench.widgets.menu.PerspectiveContextMenusPresenter;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
 
 /**
@@ -73,7 +73,7 @@ public class ComplementNavAreaView
     public FlowPanel searchPanel;
 
     @Inject
-    private PespectiveContextMenusPresenter contextMenu;
+    private PerspectiveContextMenusPresenter contextMenu;
 
     @PostConstruct
     public void init() {
