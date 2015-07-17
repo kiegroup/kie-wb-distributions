@@ -343,15 +343,20 @@ public class KieWorkbenchEntryPoint {
     }
 
     private List<? extends MenuItem> getTasksViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
+        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
+//        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).withRoles( kieACL.getGrantedRoles( F_TASKS ) ).respondsWith( new Command() {
+//            @Override
+//            public void execute() {
+//                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
+//            }
+//        } ).endMenu().build().getItems().get( 0 ) );
         result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).withRoles( kieACL.getGrantedRoles( F_TASKS ) ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
+                placeManager.goTo( new DefaultPlaceRequest( "DataSet Tasks" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
-
         return result;
     }
 

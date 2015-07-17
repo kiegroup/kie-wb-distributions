@@ -34,6 +34,10 @@ public class DashbuilderBootstrap {
 
     public static final String PROCESS_INSTANCE_DATASET = "jbpmProcessInstances";
     public static final String PROCESS_INSTANCE_TABLE = "ProcessInstanceLog";
+    
+    public static final String HUMAN_TASKS_WITH_USER_DATASET = "jbpmHumanTasksWithUser";
+    public static final String HUMAN_TASKS_WITH_ADMIN_DATASET = "jbpmHumanTasksWithAdmin";
+    
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
 
@@ -65,8 +69,7 @@ public class DashbuilderBootstrap {
                         .label( DataSetTasksListGridViewImpl.COLUMN_STATUS )
                         .label( DataSetTasksListGridViewImpl.COLUMN_TASKID )
                         .label( DataSetTasksListGridViewImpl.COLUMN_WORKITEMID )
-                        .label( DataSetTasksListGridViewImpl.COLUMN_POTENTIALOWNERS )
-                        .label( DataSetTasksListGridViewImpl.COLUMN_BUSINESSADMINISTRATORS )
+                        
                         .buildDef() );
 
         dataSetDefRegistry.registerDataSetDef(
@@ -90,6 +93,71 @@ public class DashbuilderBootstrap {
                         .label( DataSetProcessInstanceListViewImpl.COLUMN_EXTERNALID )
                         .label( DataSetProcessInstanceListViewImpl.COLUMN_PROCESSINSTANCEDESCRIPTION )
                         .buildDef() );
+        
+        dataSetDefRegistry.registerDataSetDef(
+                DataSetFactory.newSQLDataSetDef()
+                        .uuid( HUMAN_TASKS_WITH_USER_DATASET )
+                        .name( "Human tasks and users" )
+                        .dataSource( JBPM_DATASOURCE )
+                        .dbSQL("select  t.activationtime, t.actualowner, t.createdby, "
+                                + "t.createdon, t.deploymentid, t.description, t.duedate, "
+                                + "t.name, t.parentid, t.priority, t.processid, t.processinstanceid, "
+                                + "t.processsessionid, t.status, t.taskid, t.workitemid, oe.id oeid "
+                                + "from AuditTaskImpl t, "
+                                + "peopleassignments_potowners po, "
+                                + "organizationalentity oe "
+                                + "where t.id = po.task_id and po.entity_id = oe.id", false)
+                        .date( DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_CREATEDBY )
+                        .date( DataSetTasksListGridViewImpl.COLUMN_CREATEDON )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_DEPLOYMENTID )
+                        .text( DataSetTasksListGridViewImpl.COLUMN_DESCRIPTION )
+                        .date( DataSetTasksListGridViewImpl.COLUMN_DUEDATE )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_NAME )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PARENTID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PRIORITY )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PROCESSID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PROCESSINSTANCEID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PROCESSSESSIONID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_STATUS )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_TASKID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_WORKITEMID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_ORGANIZATIONAL_ENTITY )
+                        .buildDef() );
+        
+        dataSetDefRegistry.registerDataSetDef(
+                DataSetFactory.newSQLDataSetDef()
+                        .uuid( HUMAN_TASKS_WITH_ADMIN_DATASET )
+                        .name( "Human tasks and admins" )
+                        .dataSource( JBPM_DATASOURCE )
+                        .dbSQL("select t.activationtime, t.actualowner, t.createdby, "
+                                + "t.createdon, t.deploymentid, t.description, t.duedate, "
+                                + "t.name, t.parentid, t.priority, t.processid, t.processinstanceid, "
+                                + "t.processsessionid, t.status, t.taskid, t.workitemid, oe.id oeid "
+                                + "from AuditTaskImpl t, "
+                                + "peopleassignments_bas bas, "
+                                + "organizationalentity oe "
+                                + "where t.id = bas.task_id and bas.entity_id = oe.id", false)
+                         .date( DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_CREATEDBY )
+                        .date( DataSetTasksListGridViewImpl.COLUMN_CREATEDON )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_DEPLOYMENTID )
+                        .text( DataSetTasksListGridViewImpl.COLUMN_DESCRIPTION )
+                        .date( DataSetTasksListGridViewImpl.COLUMN_DUEDATE )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_NAME )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PARENTID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PRIORITY )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PROCESSID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PROCESSINSTANCEID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_PROCESSSESSIONID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_STATUS )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_TASKID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_WORKITEMID )
+                        .label( DataSetTasksListGridViewImpl.COLUMN_ORGANIZATIONAL_ENTITY )
+                        .buildDef() );
+
 
     }
 }
