@@ -50,6 +50,7 @@
         <include>org.jboss.resteasy:resteasy-cdi</include>
         <include>org.jboss.resteasy:resteasy-jackson-provider</include>
         <include>org.jboss.resteasy:resteasy-jaxb-provider</include>
+        <include>org.scannotation:scannotation</include>
 
         <include>org.jboss.weld:weld-api</include>
         <include>org.jboss.weld:weld-core</include>

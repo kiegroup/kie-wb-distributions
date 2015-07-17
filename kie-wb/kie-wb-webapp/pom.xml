@@ -157,17 +157,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.scannotation</groupId>
-      <artifactId>scannotation</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>javassist</groupId>
-          <artifactId>javassist</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
       <groupId>org.apache.abdera</groupId>
       <artifactId>abdera-i18n</artifactId>
       <exclusions>

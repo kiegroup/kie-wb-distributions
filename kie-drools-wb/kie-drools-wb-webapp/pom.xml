@@ -151,17 +151,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.scannotation</groupId>
-      <artifactId>scannotation</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>javassist</groupId>
-          <artifactId>javassist</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
       <groupId>dom4j</groupId>
       <artifactId>dom4j</artifactId>
       <scope>provided</scope>

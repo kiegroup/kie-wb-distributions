@@ -278,6 +278,12 @@
       <artifactId>hibernate-commons-annotations</artifactId>
     </dependency>
 
+    <!-- for tomcat and RestEasy -->
+    <dependency>
+      <groupId>org.scannotation</groupId>
+      <artifactId>scannotation</artifactId>
+    </dependency>
+
     <!-- For WAS8 shading -->
     <dependency>
       <groupId>org.sonatype.sisu</groupId>
