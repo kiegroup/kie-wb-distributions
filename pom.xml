@@ -130,17 +130,6 @@
     </profile>
 
     <profile>
-      <id>fullProfile</id>
-      <activation>
-        <property>
-          <name>full</name>
-        </property>
-      </activation>
-      <modules>
-        <module>kie-docs</module>
-      </modules>
-    </profile>
-    <profile>
       <id>functionalTests</id>
       <activation>
         <property>
