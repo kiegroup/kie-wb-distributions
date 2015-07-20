@@ -19,11 +19,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
-import com.google.gwt.user.client.ui.PopupPanel;
 import org.guvnor.asset.management.client.editors.repository.wizard.CreateRepositoryWizard;
-import org.guvnor.structure.client.editors.repository.clone.CloneRepositoryForm;
+import org.guvnor.structure.client.editors.repository.clone.CloneRepositoryPresenter;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
@@ -136,17 +133,8 @@ public class AdministrationPerspective {
 
             @Override
             public void execute() {
-                final CloneRepositoryForm cloneRepositoryWizard = iocManager.lookupBean( CloneRepositoryForm.class ).getInstance();
-                //When pop-up is closed destroy bean to avoid memory leak
-                cloneRepositoryWizard.addCloseHandler( new CloseHandler<PopupPanel>() {
-
-                    @Override
-                    public void onClose( CloseEvent<PopupPanel> event ) {
-                        iocManager.destroyBean( cloneRepositoryWizard );
-                    }
-
-                } );
-                cloneRepositoryWizard.show();
+                final CloneRepositoryPresenter cloneRepositoryWizard = iocManager.lookupBean( CloneRepositoryPresenter.class ).getInstance();
+                cloneRepositoryWizard.showForm();
             }
 
         };
