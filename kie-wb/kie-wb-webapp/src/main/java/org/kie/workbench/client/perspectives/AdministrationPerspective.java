@@ -67,7 +67,7 @@ public class AdministrationPerspective {
     private KieWorkbenchACL kieACL;
 
     @Inject
-    private CloneRepositoryPresenter cloneRepositoryWizard;
+    private CloneRepositoryPresenter cloneRepositoryPresenter;
 
     private Command newRepoCommand = null;
     private Command cloneRepoCommand = null;
@@ -136,7 +136,7 @@ public class AdministrationPerspective {
 
             @Override
             public void execute() {
-                cloneRepositoryWizard.showForm();
+                cloneRepositoryPresenter.showForm();
             }
 
         };
