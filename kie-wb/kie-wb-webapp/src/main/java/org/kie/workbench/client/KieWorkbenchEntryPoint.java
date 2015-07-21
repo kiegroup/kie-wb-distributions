@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
@@ -36,6 +37,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
+import org.guvnor.structure.client.editors.repository.RepositoryPreferences;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
@@ -118,6 +120,8 @@ public class KieWorkbenchEntryPoint {
     @Inject
     private Caller<SocialConfigurationService> socialConfigurationService;
 
+    private RepositoryPreferences repositoryPreferences;
+
     private SuggestBox actionText;
     private TextBox textSuggestBox;
     DefaultSuggestionDisplay suggestionDisplay;
@@ -138,6 +142,15 @@ public class KieWorkbenchEntryPoint {
         } ).loadPolicy();
 
         pmas.call().initActivities( activityBeansCache.getActivitiesById() );
+    }
+
+    @Produces
+    public RepositoryPreferences getRepositoryPreferences() {
+        if(repositoryPreferences == null) {
+            repositoryPreferences = new RepositoryPreferences(true);
+        }
+
+        return repositoryPreferences;
     }
 
     private void loadPreferences() {

@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
@@ -32,6 +33,7 @@ import org.guvnor.common.services.shared.config.AppConfigService;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
 import org.guvnor.common.services.shared.security.KieWorkbenchSecurityService;
+import org.guvnor.structure.client.editors.repository.RepositoryPreferences;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
@@ -112,6 +114,8 @@ public class KieDroolsWorkbenchEntryPoint {
     @Inject
     private Caller<SocialConfigurationService> socialConfigurationService;
 
+    private RepositoryPreferences repositoryPreferences;
+
     @AfterInitialization
     public void startApp() {
         kieSecurityService.call( new RemoteCallback<String>() {
@@ -133,6 +137,15 @@ public class KieDroolsWorkbenchEntryPoint {
 
             }
         } ).initActivities( allActivities );
+    }
+
+    @Produces
+    public RepositoryPreferences getRepositoryPreferences() {
+        if(repositoryPreferences == null) {
+            repositoryPreferences = new RepositoryPreferences(true);
+        }
+
+        return repositoryPreferences;
     }
 
     private void loadPreferences() {
