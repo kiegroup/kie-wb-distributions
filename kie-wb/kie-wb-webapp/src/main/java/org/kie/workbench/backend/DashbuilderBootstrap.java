@@ -17,6 +17,7 @@ package org.kie.workbench.backend;
 
 import org.dashbuilder.dataset.DataSetFactory;
 import org.dashbuilder.dataset.def.DataSetDefRegistry;
+import org.jbpm.console.ng.es.client.editors.requestlist.RequestListViewImpl;
 import org.jbpm.console.ng.ht.client.editors.taskslist.grid.dash.DataSetTasksListGridViewImpl;
 import org.jbpm.console.ng.pr.client.editors.instance.list.dash.DataSetProcessInstanceListViewImpl;
 import org.uberfire.commons.services.cdi.Startup;
@@ -34,10 +35,12 @@ public class DashbuilderBootstrap {
 
     public static final String PROCESS_INSTANCE_DATASET = "jbpmProcessInstances";
     public static final String PROCESS_INSTANCE_TABLE = "ProcessInstanceLog";
-    
+
     public static final String HUMAN_TASKS_WITH_USER_DATASET = "jbpmHumanTasksWithUser";
     public static final String HUMAN_TASKS_WITH_ADMIN_DATASET = "jbpmHumanTasksWithAdmin";
-    
+
+    public static final String REQUEST_LIST_DATASET = "jbpmRequestList";
+    public static final String REQUEST_LIST_TABLE = "RequestInfo";
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
 
@@ -69,7 +72,7 @@ public class DashbuilderBootstrap {
                         .label( DataSetTasksListGridViewImpl.COLUMN_STATUS )
                         .label( DataSetTasksListGridViewImpl.COLUMN_TASKID )
                         .label( DataSetTasksListGridViewImpl.COLUMN_WORKITEMID )
-                        
+
                         .buildDef() );
 
         dataSetDefRegistry.registerDataSetDef(
@@ -93,7 +96,7 @@ public class DashbuilderBootstrap {
                         .label( DataSetProcessInstanceListViewImpl.COLUMN_EXTERNALID )
                         .label( DataSetProcessInstanceListViewImpl.COLUMN_PROCESSINSTANCEDESCRIPTION )
                         .buildDef() );
-        
+
         dataSetDefRegistry.registerDataSetDef(
                 DataSetFactory.newSQLDataSetDef()
                         .uuid( HUMAN_TASKS_WITH_USER_DATASET )
@@ -125,7 +128,7 @@ public class DashbuilderBootstrap {
                         .label( DataSetTasksListGridViewImpl.COLUMN_WORKITEMID )
                         .label( DataSetTasksListGridViewImpl.COLUMN_ORGANIZATIONAL_ENTITY )
                         .buildDef() );
-        
+
         dataSetDefRegistry.registerDataSetDef(
                 DataSetFactory.newSQLDataSetDef()
                         .uuid( HUMAN_TASKS_WITH_ADMIN_DATASET )
@@ -158,6 +161,18 @@ public class DashbuilderBootstrap {
                         .label( DataSetTasksListGridViewImpl.COLUMN_ORGANIZATIONAL_ENTITY )
                         .buildDef() );
 
-
+        dataSetDefRegistry.registerDataSetDef(
+                DataSetFactory.newSQLDataSetDef()
+                        .uuid( REQUEST_LIST_DATASET )
+                        .name( "Request List" )
+                        .dataSource( JBPM_DATASOURCE )
+                        .dbTable( REQUEST_LIST_TABLE, false )
+                        .label( RequestListViewImpl.COLUMN_ID )
+                        .date( RequestListViewImpl.COLUMN_TIMESTAMP )
+                        .label( RequestListViewImpl.COLUMN_STATUS )
+                        .label( RequestListViewImpl.COLUMN_COMMANDNAME )
+                        .label( RequestListViewImpl.COLUMN_MESSAGE )
+                        .label( RequestListViewImpl.COLUMN_BUSINESSKEY )
+                        .buildDef() );
     }
 }
