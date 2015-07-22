@@ -45,6 +45,16 @@
   </filter-mapping>
 
   <filter>
+    <filter-name>GWT Locale Filter</filter-name>
+    <filter-class>org.uberfire.server.locale.GWTLocaleHeaderFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>GWT Locale Filter</filter-name>
+    <url-pattern>/kie-wb.html</url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>UberFire Security Headers Filter</filter-name>
     <filter-class>org.uberfire.ext.security.server.SecureHeadersFilter</filter-class>
     <init-param>
