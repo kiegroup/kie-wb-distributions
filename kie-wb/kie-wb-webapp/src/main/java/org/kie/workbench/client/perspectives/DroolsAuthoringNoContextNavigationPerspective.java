@@ -69,13 +69,15 @@ public class DroolsAuthoringNoContextNavigationPerspective {
 
     private String explorerMode;
     private String projectPathString;
+    private boolean projectEditorDisableBuild;
 
     private final List<PlaceRequest> placesToClose = new ArrayList<PlaceRequest>();
 
     @PostConstruct
     public void init() {
         explorerMode = ( ( Window.Location.getParameterMap().containsKey( "explorer_mode" ) ) ? Window.Location.getParameterMap().get( "explorer_mode" ).get( 0 ) : "" ).trim();
-        projectPathString = (( ( Window.Location.getParameterMap().containsKey( "path" ) ) ? Window.Location.getParameterMap().get( "path" ).get( 0 ) : "" )).trim();
+        projectPathString = ( ( ( Window.Location.getParameterMap().containsKey( "path" ) ) ? Window.Location.getParameterMap().get( "path" ).get( 0 ) : "" ) ).trim();
+        projectEditorDisableBuild = Window.Location.getParameterMap().containsKey( "no_build" );
     }
 
     @Perspective
@@ -87,17 +89,25 @@ public class DroolsAuthoringNoContextNavigationPerspective {
         west.setWidth( 400 );
         final PlaceRequest placeRequest = new DefaultPlaceRequest( "org.kie.guvnor.explorer" );
         if ( !explorerMode.isEmpty() ) {
-            placeRequest.addParameter( "mode", explorerMode );
+            placeRequest.addParameter( "mode",
+                                       explorerMode );
         }
         if ( !projectPathString.isEmpty() ) {
-            placeRequest.addParameter( "init_path", projectPathString );
+            placeRequest.addParameter( "init_path",
+                                       projectPathString );
+        }
+        if ( projectEditorDisableBuild ) {
+            placeRequest.addParameter( "no_build",
+                                       "true" );
         }
 
-        placeRequest.addParameter( "no_context", "true" );
+        placeRequest.addParameter( "no_context",
+                                   "true" );
 
         west.addPart( new PartDefinitionImpl( placeRequest ) );
 
-        perspective.getRoot().insertChild( CompassPosition.WEST, west );
+        perspective.getRoot().insertChild( CompassPosition.WEST,
+                                           west );
 
         return perspective;
     }
