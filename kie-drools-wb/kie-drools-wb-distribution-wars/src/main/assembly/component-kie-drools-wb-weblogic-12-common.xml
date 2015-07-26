@@ -55,7 +55,6 @@
           <exclude>WEB-INF/classes/application-roles.properties</exclude>
           <exclude>WEB-INF/classes/application-users.properties</exclude>
 
-          <exclude>WEB-INF/classes/META-INF/kie-wb-deployment-descriptor.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/classes/META-INF/services/javax.enterprise.inject.spi.Extension</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/wildfly/</exclude>
