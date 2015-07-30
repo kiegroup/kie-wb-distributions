@@ -1110,6 +1110,12 @@
       <artifactId>lucene-core</artifactId>
     </dependency>
 
+    <!-- Uberfire Docks extension -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-simple-docks-client</artifactId>
+    </dependency>
+
     <!--JUnit for Test scenarios -->
     <dependency>
       <groupId>junit</groupId>
@@ -1650,6 +1656,7 @@
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-core-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-simple-docks-client</compileSourcesArtifact>
 
               <!-- Wires -->
               <compileSourcesArtifact>org.uberfire:uberfire-wires-core-api</compileSourcesArtifact>
