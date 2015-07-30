@@ -935,6 +935,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-simple-docks-client</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Errai -->
