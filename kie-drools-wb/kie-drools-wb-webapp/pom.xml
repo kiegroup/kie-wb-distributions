@@ -931,6 +931,12 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Uberfire Docks extension -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-simple-docks-client</artifactId>
+    </dependency>
+
     <!-- Errai -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -1402,6 +1408,7 @@
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-core-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-simple-docks-client</compileSourcesArtifact>
 
               <!-- Wires -->
               <compileSourcesArtifact>org.uberfire:uberfire-wires-core-api</compileSourcesArtifact>

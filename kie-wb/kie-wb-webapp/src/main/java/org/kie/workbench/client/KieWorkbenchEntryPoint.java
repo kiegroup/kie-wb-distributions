@@ -61,6 +61,9 @@ import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
+import org.uberfire.client.workbench.docks.UberfireDock;
+import org.uberfire.client.workbench.docks.UberfireDockPosition;
+import org.uberfire.client.workbench.docks.UberfireDocks;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
@@ -118,6 +121,9 @@ public class KieWorkbenchEntryPoint {
     @Inject
     private Caller<SocialConfigurationService> socialConfigurationService;
 
+    @Inject
+    private UberfireDocks uberfireDocks;
+
     private SuggestBox actionText;
     private TextBox textSuggestBox;
     DefaultSuggestionDisplay suggestionDisplay;
@@ -132,6 +138,7 @@ public class KieWorkbenchEntryPoint {
                 loadPreferences();
                 loadStyles();
                 setupMenu();
+                setupDocks();
                 hideLoadingPopup();
                 homeProducer.init();
             }
@@ -202,6 +209,14 @@ public class KieWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new LogoutCommand() ).endMenu().build().getItems().get( 0 ) );
 
         return result;
+    }
+
+    private void setupDocks() {
+        uberfireDocks.register(
+                new UberfireDock( UberfireDockPosition.EAST, new DefaultPlaceRequest( "DroolsDomainScreen" ), "AuthoringPerspective" ).withSize( 450 ),
+                new UberfireDock( UberfireDockPosition.EAST, new DefaultPlaceRequest( "JPADomainScreen" ), "AuthoringPerspective" ).withSize( 450 ),
+                new UberfireDock( UberfireDockPosition.EAST, new DefaultPlaceRequest( "AdvancedDomainScreen" ), "AuthoringPerspective" ).withSize( 450 )
+        );
     }
 
     private List<? extends MenuItem> getHomeViews( Boolean socialEnabled ) {
