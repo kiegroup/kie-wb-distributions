@@ -41,6 +41,9 @@ public class DashbuilderBootstrap {
 
     public static final String REQUEST_LIST_DATASET = "jbpmRequestList";
     public static final String REQUEST_LIST_TABLE = "RequestInfo";
+    
+    public static final String  PROCESS_INSTANCE_WITH_VARIABLES_DATASET = "jbpmProcessInstancesWithVariables";
+    
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
 
@@ -174,5 +177,21 @@ public class DashbuilderBootstrap {
                         .label( RequestListViewImpl.COLUMN_MESSAGE )
                         .label( RequestListViewImpl.COLUMN_BUSINESSKEY )
                         .buildDef() );
+         dataSetDefRegistry.registerDataSetDef(
+                        DataSetFactory.newSQLDataSetDef()
+                                .uuid( PROCESS_INSTANCE_WITH_VARIABLES_DATASET)
+                                .name( "Variable for Evalution Process Instances" )
+                                .dataSource( JBPM_DATASOURCE )
+                                .dbSQL("select pil.processInstanceId pid, pil.processId pname, v.id varid, v.variableId varname, v.value varvalue from ProcessInstanceLog pil, "
+                                        + "( select vil.variableId, max(vil.id) as maxvilid from VariableInstanceLog vil  group by vil.processInstanceId, vil.variableId) "
+                                        + "as x inner join VariableInstanceLog as v on "
+                                        + "v.variableId = x.variableId and v.processInstanceId = pil.processInstanceId and "
+                                        + "v.id = x.maxvilid", false )
+                                .label( "pid" )
+                                .label( "pname" )
+                                .label( "varid" )
+                                .label( "varname" )
+                                .label( "varvalue" )
+                                .buildDef() );
     }
 }
