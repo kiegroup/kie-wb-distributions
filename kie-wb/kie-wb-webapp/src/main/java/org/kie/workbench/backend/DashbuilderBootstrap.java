@@ -25,11 +25,12 @@ import org.uberfire.commons.services.cdi.Startup;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManagerFactory;
 
 @Startup
 @ApplicationScoped
 public class DashbuilderBootstrap {
-    public static final String JBPM_DATASOURCE = "java:jboss/datasources/ExampleDS";
+    private String jbpmDatasource = System.getProperty("org.kie.ds.jndi", "java:jboss/datasources/ExampleDS");
     public static final String HUMAN_TASKS_DATASET = "jbpmHumanTasks";
     public static final String HUMAN_TASKS_TABLE = "AuditTaskImpl";
 
@@ -47,17 +48,31 @@ public class DashbuilderBootstrap {
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
 
+    @Inject
+    protected EntityManagerFactory emf;
+
     @PostConstruct
     protected void init() {
+        // figure out data source JNDI name
+        Object ds = emf.getProperties().get("hibernate.connection.datasource");
+        if (ds != null && ds instanceof javax.naming.Referenceable) {
+            try {
+                jbpmDatasource = ((javax.naming.Referenceable) ds).getReference().getClassName();
+            } catch (Exception e) {
+
+            }
+        }
         registerDataSetDefinitions();
     }
 
     protected void registerDataSetDefinitions() {
+
+
         dataSetDefRegistry.registerDataSetDef(
                 DataSetFactory.newSQLDataSetDef()
                         .uuid( HUMAN_TASKS_DATASET )
                         .name( "Human tasks" )
-                        .dataSource( JBPM_DATASOURCE )
+                        .dataSource(jbpmDatasource)
                         .dbTable( HUMAN_TASKS_TABLE, false )
                         .date( DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME )
                         .label( DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER )
@@ -82,7 +97,7 @@ public class DashbuilderBootstrap {
                 DataSetFactory.newSQLDataSetDef()
                         .uuid( PROCESS_INSTANCE_DATASET)
                         .name( "Process Instances" )
-                        .dataSource( JBPM_DATASOURCE )
+                        .dataSource(jbpmDatasource)
                         .dbTable( PROCESS_INSTANCE_TABLE, false )
                         .label( DataSetProcessInstanceListViewImpl.COLUMN_PROCESSINSTANCEID )
                         .label( DataSetProcessInstanceListViewImpl.COLUMN_PROCESSID )
@@ -104,7 +119,7 @@ public class DashbuilderBootstrap {
                 DataSetFactory.newSQLDataSetDef()
                         .uuid( HUMAN_TASKS_WITH_USER_DATASET )
                         .name( "Human tasks and users" )
-                        .dataSource( JBPM_DATASOURCE )
+                        .dataSource(jbpmDatasource)
                         .dbSQL("select  t.activationtime, t.actualowner, t.createdby, "
                                 + "t.createdon, t.deploymentid, t.description, t.duedate, "
                                 + "t.name, t.parentid, t.priority, t.processid, t.processinstanceid, "
@@ -136,7 +151,7 @@ public class DashbuilderBootstrap {
                 DataSetFactory.newSQLDataSetDef()
                         .uuid( HUMAN_TASKS_WITH_ADMIN_DATASET )
                         .name( "Human tasks and admins" )
-                        .dataSource( JBPM_DATASOURCE )
+                        .dataSource(jbpmDatasource)
                         .dbSQL("select t.activationtime, t.actualowner, t.createdby, "
                                 + "t.createdon, t.deploymentid, t.description, t.duedate, "
                                 + "t.name, t.parentid, t.priority, t.processid, t.processinstanceid, "
@@ -168,7 +183,7 @@ public class DashbuilderBootstrap {
                 DataSetFactory.newSQLDataSetDef()
                         .uuid( REQUEST_LIST_DATASET )
                         .name( "Request List" )
-                        .dataSource( JBPM_DATASOURCE )
+                        .dataSource(jbpmDatasource)
                         .dbTable( REQUEST_LIST_TABLE, false )
                         .label( RequestListViewImpl.COLUMN_ID )
                         .date( RequestListViewImpl.COLUMN_TIMESTAMP )
@@ -181,7 +196,7 @@ public class DashbuilderBootstrap {
                         DataSetFactory.newSQLDataSetDef()
                                 .uuid( PROCESS_INSTANCE_WITH_VARIABLES_DATASET)
                                 .name( "Variable for Evalution Process Instances" )
-                                .dataSource( JBPM_DATASOURCE )
+                                .dataSource(jbpmDatasource)
                                 .dbSQL("select pil.processInstanceId pid, pil.processId pname, v.id varid, v.variableId varname, v.value varvalue from ProcessInstanceLog pil, "
                                         + "( select vil.variableId, max(vil.id) as maxvilid from VariableInstanceLog vil  group by vil.processInstanceId, vil.variableId) "
                                         + "as x inner join VariableInstanceLog as v on "
