@@ -42,9 +42,9 @@ public class DashbuilderBootstrap {
 
     public static final String REQUEST_LIST_DATASET = "jbpmRequestList";
     public static final String REQUEST_LIST_TABLE = "RequestInfo";
-    
+
     public static final String  PROCESS_INSTANCE_WITH_VARIABLES_DATASET = "jbpmProcessInstancesWithVariables";
-    
+
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
 
@@ -55,7 +55,9 @@ public class DashbuilderBootstrap {
     protected void init() {
         // figure out data source JNDI name
         Object ds = emf.getProperties().get("hibernate.connection.datasource");
-        if (ds != null && ds instanceof javax.naming.Referenceable) {
+        if (ds != null && ds instanceof String) {
+            jbpmDatasource = (String) ds;
+        } else if (ds != null && ds instanceof javax.naming.Referenceable) {
             try {
                 jbpmDatasource = ((javax.naming.Referenceable) ds).getReference().getClassName();
             } catch (Exception e) {
