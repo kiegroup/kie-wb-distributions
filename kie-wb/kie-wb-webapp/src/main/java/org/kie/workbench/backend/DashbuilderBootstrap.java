@@ -27,6 +27,15 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 
+/**
+ * <p>Bootstrap class for the jBPM integration with Dashbuilder data sets.</p>
+ * <p>By default, the jBPM Data Sets are fetch using an SQL connection that comes from:</p>
+ * <ul>
+ *     <li>By default, uses same JDBC connection specified in the JPA descriptor for the jBPM application (persistence.xml).</li>
+ *     <li>You can provide an external Data Source JNDI connection by setting the system property <code>org.kie.ds.jndi</code>.</li>
+ *     <li>If any of the above options matches, it uses by default the Data Source JNDI connection for the URL <code>java:jboss/datasources/ExampleDS</code>.</li>
+ * </ul>
+ */
 @Startup
 @ApplicationScoped
 public class DashbuilderBootstrap {
@@ -53,8 +62,12 @@ public class DashbuilderBootstrap {
 
     @PostConstruct
     protected void init() {
-        // figure out data source JNDI name
-        Object ds = emf.getProperties().get("hibernate.connection.datasource");
+	// Figure out data source JNDI name if using JTA Data Source property available.	
+	Object ds = emf.getProperties().get("javax.persistence.jtaDataSource");
+	if (ds == null) {
+		// Figure out data source JNDI name if using Hibernate property available.
+	        ds = emf.getProperties().get("hibernate.connection.datasource");
+	}
         if (ds != null && ds instanceof String) {
             jbpmDatasource = (String) ds;
         } else if (ds != null && ds instanceof javax.naming.Referenceable) {
