@@ -15,21 +15,29 @@
  */
 package org.kie.workbench.backend;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
 import org.dashbuilder.dataset.DataSetFactory;
 import org.dashbuilder.dataset.def.DataSetDefRegistry;
 import org.jbpm.console.ng.es.client.editors.requestlist.RequestListViewImpl;
 import org.jbpm.console.ng.ht.client.editors.taskslist.grid.dash.DataSetTasksListGridViewImpl;
 import org.jbpm.console.ng.pr.client.editors.instance.list.dash.DataSetProcessInstanceListViewImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.uberfire.commons.services.cdi.Startup;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
 
 @Startup
 @ApplicationScoped
 public class DashbuilderBootstrap {
+
+    private static final Logger logger = LoggerFactory.getLogger(DashbuilderBootstrap.class);
+
     private String jbpmDatasource = System.getProperty("org.kie.ds.jndi", "java:jboss/datasources/ExampleDS");
     public static final String HUMAN_TASKS_DATASET = "jbpmHumanTasks";
     public static final String HUMAN_TASKS_TABLE = "AuditTaskImpl";
@@ -48,22 +56,10 @@ public class DashbuilderBootstrap {
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
 
-    @Inject
-    protected EntityManagerFactory emf;
-
     @PostConstruct
     protected void init() {
         // figure out data source JNDI name
-        Object ds = emf.getProperties().get("hibernate.connection.datasource");
-        if (ds != null && ds instanceof String) {
-            jbpmDatasource = (String) ds;
-        } else if (ds != null && ds instanceof javax.naming.Referenceable) {
-            try {
-                jbpmDatasource = ((javax.naming.Referenceable) ds).getReference().getClassName();
-            } catch (Exception e) {
-
-            }
-        }
+        findDataSourceJNDI();
         registerDataSetDefinitions();
     }
 
@@ -210,5 +206,28 @@ public class DashbuilderBootstrap {
                                 .label( "varname" )
                                 .label( "varvalue" )
                                 .buildDef() );
+    }
+
+    protected void findDataSourceJNDI() {
+        try {
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+            XMLStreamReader reader = factory.createXMLStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("META-INF/persistence.xml"));
+
+            while (reader.hasNext()) {
+                int event = reader.next();
+
+                switch (event) {
+                    case XMLStreamConstants.START_ELEMENT:
+                        if ("jta-data-source".equals(reader.getLocalName())) {
+
+                            jbpmDatasource = reader.getElementText();
+                            return;
+                        }
+                        break;
+                    }
+                }
+        } catch (XMLStreamException e) {
+            logger.warn("Unable to find out JNDI name fo data source to be used for data sets due to {} using default {}", e.getMessage(), jbpmDatasource, e);
+        }
     }
 }
