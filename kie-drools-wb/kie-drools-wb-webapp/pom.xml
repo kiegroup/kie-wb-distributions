@@ -914,6 +914,11 @@
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-workbench-client-views-patternfly</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
       <artifactId>uberfire-backend-server</artifactId>
     </dependency>
     <dependency>
@@ -1031,8 +1036,14 @@
     </dependency>
 
     <dependency>
-      <groupId>com.github.gwtbootstrap</groupId>
-      <artifactId>gwt-bootstrap</artifactId>
+      <groupId>org.gwtbootstrap3</groupId>
+      <artifactId>gwtbootstrap3</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.gwtbootstrap3</groupId>
+      <artifactId>gwtbootstrap3-extras</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -1267,8 +1278,8 @@
           <configuration>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
-            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} 
-              -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true 
+            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home}
+              -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true
               -Dorg.kie.clean.onstartup=true -Dorg.jbpm.designer.perspective=ruleflow -Djava.util.prefs.syncInterval=2000000
             </extraJvmArgs>
             <draftCompile>true</draftCompile>
@@ -1415,7 +1426,7 @@
               <compileSourcesArtifact>org.uberfire:uberfire-workbench-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-backend</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-views-bs2</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-views-patternfly</compileSourcesArtifact>
 
               <!-- UberFire Extensions -->
               <compileSourcesArtifact>org.uberfire:uberfire-commons-editor-api</compileSourcesArtifact>

@@ -18,7 +18,6 @@ package org.kie.workbench.drools.client.navbar;
 
 import javax.annotation.PostConstruct;
 
-import com.github.gwtbootstrap.client.ui.Label;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -27,6 +26,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import org.gwtbootstrap3.client.ui.Label;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 
 /**

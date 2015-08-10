@@ -23,8 +23,6 @@ import com.google.gwt.user.client.ui.Widget;
 import org.uberfire.client.workbench.Header;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 
-import static java.lang.Integer.MAX_VALUE;
-
 @ApplicationScoped
 public class AppNavBar
         extends Composite implements Header {

@@ -280,8 +280,12 @@
       <artifactId>guvnor-m2repo-editor-backend</artifactId>
       <exclusions>
         <exclusion>
-          <groupId>com.github.gwtbootstrap</groupId>
-          <artifactId>gwt-bootstrap</artifactId>
+          <groupId>org.gwtbootstrap3</groupId>
+          <artifactId>gwtbootstrap3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.gwtbootstrap3</groupId>
+          <artifactId>gwtbootstrap3-extras</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.uberfire</groupId>
