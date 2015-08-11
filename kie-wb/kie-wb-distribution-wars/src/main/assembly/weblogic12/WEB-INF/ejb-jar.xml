@@ -22,6 +22,18 @@
       <ejb-class>org.jbpm.services.cdi.impl.audit.AuditJMSProcessor</ejb-class>
       <transaction-type>Container</transaction-type>
       <message-destination-type>javax.jms.Queue</message-destination-type>
-    </message-driven>  
+    </message-driven>
+    <message-driven>
+      <ejb-name>JmsAvailableJobsExecutor</ejb-name>
+      <ejb-class>org.jbpm.executor.cdi.impl.jms.JmsAvailableJobsExecutorCDIImpl</ejb-class>
+      <transaction-type>Bean</transaction-type>
+      <message-destination-type>javax.jms.Queue</message-destination-type>
+    </message-driven>
+    <message-driven>
+      <ejb-name>JMSSignalReceiver</ejb-name>
+      <ejb-class>org.jbpm.process.workitem.jms.JMSSignalReceiver</ejb-class>
+      <transaction-type>Bean</transaction-type>
+      <message-destination-type>javax.jms.Queue</message-destination-type>
+    </message-driven>
   </enterprise-beans>
 </ejb-jar>

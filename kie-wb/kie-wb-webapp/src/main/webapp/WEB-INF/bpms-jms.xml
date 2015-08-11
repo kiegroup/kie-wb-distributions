@@ -22,6 +22,19 @@
         <entry name="queue/KIE.AUDIT.ALL" />
         <entry name="java:jboss/exported/jms/queue/KIE.AUDIT" />
       </jms-queue>
+
+      <!-- JMS queue for executor -->
+      <jms-queue name="KIE.EXECUTOR">
+        <entry name="queue/KIE.EXECUTOR" />
+        <entry name="java:jboss/exported/jms/queue/KIE.EXECUTOR" />
+      </jms-queue>
+
+      <!-- JMS queue for signals -->
+      <jms-queue name="KIE.SIGNAL.QUEUE">
+        <entry name="queue/KIE.SIGNAL" />
+        <entry name="java:jboss/exported/jms/queue/KIE.SIGNAL" />
+      </jms-queue>
+
     </jms-destinations>
   </hornetq-server>
 </messaging-deployment>
