@@ -24,6 +24,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.dashbuilder.dataset.DataSetFactory;
+import org.dashbuilder.dataset.def.DataSetDef;
 import org.dashbuilder.dataset.def.DataSetDefRegistry;
 import org.jbpm.console.ng.es.client.editors.requestlist.RequestListViewImpl;
 import org.jbpm.console.ng.ht.client.editors.taskslist.grid.dash.DataSetTasksListGridViewImpl;
@@ -52,6 +53,9 @@ public class DashbuilderBootstrap {
     public static final String REQUEST_LIST_TABLE = "RequestInfo";
 
     public static final String  PROCESS_INSTANCE_WITH_VARIABLES_DATASET = "jbpmProcessInstancesWithVariables";
+
+    public static final String TASKS_MONITORING_DATASET = "tasksMonitoring";
+    public static final String PROCESSES_MONITORING_DATASET = "processesMonitoring";
 
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
@@ -206,7 +210,30 @@ public class DashbuilderBootstrap {
                                 .label( "varname" )
                                 .label( "varvalue" )
                                 .buildDef() );
-    }
+
+        // Process && Task dashboard related
+
+        DataSetDef processMonitoringDef = DataSetFactory.newSQLDataSetDef()
+                .uuid(PROCESSES_MONITORING_DATASET)
+                .name("Processes monitoring")
+                .dataSource(jbpmDatasource)
+                .dbTable(PROCESS_INSTANCE_TABLE, true)
+                .buildDef();
+
+        DataSetDef taskMonitoringDef = DataSetFactory.newSQLDataSetDef()
+                .uuid(TASKS_MONITORING_DATASET)
+                .name("Tasks monitoring")
+                .dataSource(jbpmDatasource)
+                .dbSQL("select p.processname, t.* " +
+                        "from processinstancelog p inner join bamtasksummary t " +
+                        "on (t.processinstanceid = p.processinstanceid)", true)
+                .buildDef();
+
+        processMonitoringDef.setPublic(false);
+        taskMonitoringDef.setPublic(false);
+
+        dataSetDefRegistry.registerDataSetDef(processMonitoringDef);
+        dataSetDefRegistry.registerDataSetDef(taskMonitoringDef);}
 
     protected void findDataSourceJNDI() {
         try {
