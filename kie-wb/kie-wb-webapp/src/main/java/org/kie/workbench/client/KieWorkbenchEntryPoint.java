@@ -298,7 +298,7 @@ public class KieWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.Process_Instances() ).withRoles( kieACL.getGrantedRoles( F_PROCESS_INSTANCES ) ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "DataSet Process Instances With Variables" ) );
+                placeManager.goTo( new DefaultPlaceRequest( "Process Instances" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
@@ -369,7 +369,7 @@ public class KieWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).withRoles( kieACL.getGrantedRoles( F_TASKS ) ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "DataSet Tasks" ) );
+                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
         return result;

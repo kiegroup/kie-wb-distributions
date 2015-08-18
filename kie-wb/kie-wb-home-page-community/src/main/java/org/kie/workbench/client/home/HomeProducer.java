@@ -152,7 +152,7 @@ public class HomeProducer {
 
                                                              @Override
                                                              public void execute() {
-                                                                 placeManager.goTo( "DataSet Process Instances With Variables" );
+                                                                 placeManager.goTo( "Process Instances" );
                                                              }
                                                          } );
 
@@ -163,7 +163,7 @@ public class HomeProducer {
 
                                                              @Override
                                                              public void execute() {
-                                                                 placeManager.goTo( "DataSet Tasks" );
+                                                                 placeManager.goTo( "Tasks" );
                                                              }
                                                          } );
 
