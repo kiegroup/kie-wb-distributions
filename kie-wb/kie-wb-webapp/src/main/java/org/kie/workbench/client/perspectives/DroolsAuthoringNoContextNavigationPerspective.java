@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import com.google.gwt.user.client.Window;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
+import org.kie.workbench.client.docks.AuthoringWorkbenchDocks;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.uberfire.backend.vfs.Path;
@@ -35,16 +36,12 @@ import org.uberfire.client.annotations.WorkbenchPerspective;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.PanelManager;
 import org.uberfire.client.workbench.panels.impl.MultiListWorkbenchPanelPresenter;
-import org.uberfire.client.workbench.panels.impl.SimpleWorkbenchPanelPresenter;
 import org.uberfire.lifecycle.OnOpen;
 import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
-import org.uberfire.workbench.model.CompassPosition;
 import org.uberfire.workbench.model.PanelDefinition;
 import org.uberfire.workbench.model.PartDefinition;
 import org.uberfire.workbench.model.PerspectiveDefinition;
-import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
-import org.uberfire.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.Menus;
@@ -67,6 +64,9 @@ public class DroolsAuthoringNoContextNavigationPerspective {
     @Inject
     private Caller<VFSService> vfsServices;
 
+    @Inject
+    private AuthoringWorkbenchDocks docks;
+
     private String explorerMode;
     private String projectPathString;
     private boolean projectEditorDisableBuild;
@@ -78,36 +78,37 @@ public class DroolsAuthoringNoContextNavigationPerspective {
         explorerMode = ( ( Window.Location.getParameterMap().containsKey( "explorer_mode" ) ) ? Window.Location.getParameterMap().get( "explorer_mode" ).get( 0 ) : "" ).trim();
         projectPathString = ( ( ( Window.Location.getParameterMap().containsKey( "path" ) ) ? Window.Location.getParameterMap().get( "path" ).get( 0 ) : "" ) ).trim();
         projectEditorDisableBuild = Window.Location.getParameterMap().containsKey( "no_build" );
+
+        final PlaceRequest placeRequest = generateProjectExplorerPlaceRequest();
+
+        docks.setup("AuthoringPerspectiveNoContext", placeRequest);
+
+    }
+
+    private PlaceRequest generateProjectExplorerPlaceRequest() {
+        final PlaceRequest placeRequest = new DefaultPlaceRequest( "org.kie.guvnor.explorer" );
+        if ( !explorerMode.isEmpty() ) {
+            placeRequest.addParameter( "mode",
+                    explorerMode );
+        }
+        if ( !projectPathString.isEmpty() ) {
+            placeRequest.addParameter( "init_path",
+                    projectPathString );
+        }
+        if ( projectEditorDisableBuild ) {
+            placeRequest.addParameter( "no_build",
+                    "true" );
+        }
+
+        placeRequest.addParameter( "no_context",
+                "true" );
+        return placeRequest;
     }
 
     @Perspective
     public PerspectiveDefinition getPerspective() {
         final PerspectiveDefinitionImpl perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
-        perspective.setName( constants.Project_Authoring() );
-
-        final PanelDefinition west = new PanelDefinitionImpl( SimpleWorkbenchPanelPresenter.class.getName() );
-        west.setWidth( 400 );
-        final PlaceRequest placeRequest = new DefaultPlaceRequest( "org.kie.guvnor.explorer" );
-        if ( !explorerMode.isEmpty() ) {
-            placeRequest.addParameter( "mode",
-                                       explorerMode );
-        }
-        if ( !projectPathString.isEmpty() ) {
-            placeRequest.addParameter( "init_path",
-                                       projectPathString );
-        }
-        if ( projectEditorDisableBuild ) {
-            placeRequest.addParameter( "no_build",
-                                       "true" );
-        }
-
-        placeRequest.addParameter( "no_context",
-                                   "true" );
-
-        west.addPart( new PartDefinitionImpl( placeRequest ) );
-
-        perspective.getRoot().insertChild( CompassPosition.WEST,
-                                           west );
+        perspective.setName(constants.Project_Authoring());
 
         return perspective;
     }
