@@ -15,6 +15,7 @@
  */
 package org.kie.workbench.drools.client.perspectives;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -22,6 +23,7 @@ import org.guvnor.inbox.client.InboxPresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
+import org.kie.workbench.drools.client.docks.AuthoringWorkbenchDocks;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
@@ -62,16 +64,18 @@ public class DroolsAuthoringPerspective {
     @Inject
     private RepositoryMenu repositoryMenu;
 
+    @Inject
+    private AuthoringWorkbenchDocks docks;
+
+    @PostConstruct
+    public void setup() {
+        docks.setup("AuthoringPerspective", new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) );
+    }
+
     @Perspective
     public PerspectiveDefinition getPerspective() {
         final PerspectiveDefinition perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
         perspective.setName( constants.project_authoring() );
-
-        final PanelDefinition west = new PanelDefinitionImpl( SimpleWorkbenchPanelPresenter.class.getName() );
-        west.setWidth( 400 );
-        west.addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) ) );
-
-        perspective.getRoot().insertChild( CompassPosition.WEST, west );
 
         return perspective;
     }

@@ -26,6 +26,7 @@ import com.google.gwt.user.client.Window;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
+import org.kie.workbench.drools.client.docks.AuthoringWorkbenchDocks;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.backend.vfs.Path;
 import org.uberfire.backend.vfs.VFSService;
@@ -67,6 +68,9 @@ public class DroolsAuthoringNoContextNavigationPerspective {
     @Inject
     private Caller<VFSService> vfsServices;
 
+    @Inject
+    private AuthoringWorkbenchDocks docks;
+
     private String explorerMode;
     private String projectPathString;
     private boolean projectEditorDisableBuild;
@@ -77,37 +81,38 @@ public class DroolsAuthoringNoContextNavigationPerspective {
     public void init() {
         explorerMode = ( ( Window.Location.getParameterMap().containsKey( "explorer_mode" ) ) ? Window.Location.getParameterMap().get( "explorer_mode" ).get( 0 ) : "" ).trim();
         projectPathString = ( ( ( Window.Location.getParameterMap().containsKey( "path" ) ) ? Window.Location.getParameterMap().get( "path" ).get( 0 ) : "" ) ).trim();
-        projectEditorDisableBuild = Window.Location.getParameterMap().containsKey( "no_build" );
+        projectEditorDisableBuild = Window.Location.getParameterMap().containsKey("no_build");
+
+        final PlaceRequest placeRequest = generateProjectExplorerPlaceRequest();
+
+        docks.setup("AuthoringPerspectiveNoContext", placeRequest);
+
+    }
+
+    private PlaceRequest generateProjectExplorerPlaceRequest() {
+        final PlaceRequest placeRequest = new DefaultPlaceRequest( "org.kie.guvnor.explorer" );
+        if ( !explorerMode.isEmpty() ) {
+            placeRequest.addParameter( "mode",
+                    explorerMode );
+        }
+        if ( !projectPathString.isEmpty() ) {
+            placeRequest.addParameter( "init_path",
+                    projectPathString );
+        }
+        if ( projectEditorDisableBuild ) {
+            placeRequest.addParameter( "no_build",
+                    "true" );
+        }
+
+        placeRequest.addParameter("no_context",
+                "true");
+        return placeRequest;
     }
 
     @Perspective
     public PerspectiveDefinition getPerspective() {
         final PerspectiveDefinitionImpl perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
         perspective.setName( constants.project_authoring() );
-
-        final PanelDefinition west = new PanelDefinitionImpl( SimpleWorkbenchPanelPresenter.class.getName() );
-        west.setWidth( 400 );
-        final PlaceRequest placeRequest = new DefaultPlaceRequest( "org.kie.guvnor.explorer" );
-        if ( !explorerMode.isEmpty() ) {
-            placeRequest.addParameter( "mode",
-                                       explorerMode );
-        }
-        if ( !projectPathString.isEmpty() ) {
-            placeRequest.addParameter( "init_path",
-                                       projectPathString );
-        }
-        if ( projectEditorDisableBuild ) {
-            placeRequest.addParameter( "no_build",
-                                       "true" );
-        }
-
-        placeRequest.addParameter( "no_context",
-                                   "true" );
-
-        west.addPart( new PartDefinitionImpl( placeRequest ) );
-
-        perspective.getRoot().insertChild( CompassPosition.WEST,
-                                           west );
 
         return perspective;
     }

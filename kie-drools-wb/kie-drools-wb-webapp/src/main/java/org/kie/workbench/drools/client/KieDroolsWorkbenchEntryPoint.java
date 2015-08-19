@@ -115,9 +115,6 @@ public class KieDroolsWorkbenchEntryPoint {
     @Inject
     private Caller<SocialConfigurationService> socialConfigurationService;
 
-    @Inject
-    private UberfireDocks uberfireDocks;
-
     @AfterInitialization
     public void startApp() {
         kieSecurityService.call( new RemoteCallback<String>() {
@@ -127,7 +124,6 @@ public class KieDroolsWorkbenchEntryPoint {
                 loadPreferences();
                 loadStyles();
                 setupMenu();
-                setupDocks();
                 hideLoadingPopup();
                 homeProducer.init();
             }
@@ -206,13 +202,6 @@ public class KieDroolsWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new LogoutCommand() ).endMenu().build().getItems().get( 0 ) );
 
         return result;
-    }
-
-    private void setupDocks() {
-        uberfireDocks.register(
-                new UberfireDock( UberfireDockPosition.EAST, new DefaultPlaceRequest( "DroolsDomainScreen" ), "AuthoringPerspective" ).withSize( 450 ),
-                new UberfireDock( UberfireDockPosition.EAST, new DefaultPlaceRequest( "AdvancedDomainScreen" ), "AuthoringPerspective" ).withSize( 450 )
-        );
     }
 
     private List<? extends MenuItem> getHomeViews( Boolean socialEnabled ) {

@@ -138,7 +138,6 @@ public class KieWorkbenchEntryPoint {
                 loadPreferences();
                 loadStyles();
                 setupMenu();
-                setupDocks();
                 hideLoadingPopup();
                 homeProducer.init();
             }
@@ -209,14 +208,6 @@ public class KieWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new LogoutCommand() ).endMenu().build().getItems().get( 0 ) );
 
         return result;
-    }
-
-    private void setupDocks() {
-        uberfireDocks.register(
-                new UberfireDock( UberfireDockPosition.EAST, new DefaultPlaceRequest( "DroolsDomainScreen" ), "AuthoringPerspective" ).withSize( 450 ),
-                new UberfireDock( UberfireDockPosition.EAST, new DefaultPlaceRequest( "JPADomainScreen" ), "AuthoringPerspective" ).withSize( 450 ),
-                new UberfireDock( UberfireDockPosition.EAST, new DefaultPlaceRequest( "AdvancedDomainScreen" ), "AuthoringPerspective" ).withSize( 450 )
-        );
     }
 
     private List<? extends MenuItem> getHomeViews( Boolean socialEnabled ) {
