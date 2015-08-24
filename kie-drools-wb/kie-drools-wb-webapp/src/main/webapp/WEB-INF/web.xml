@@ -15,6 +15,10 @@
     <servlet-name>javax.ws.rs.core.Application</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+  <context-param>
+    <param-name>resteasy.role.based.security</param-name>
+    <param-value>true</param-value>
+  </context-param>
 
   <filter>
     <filter-name>request-capture</filter-name>
