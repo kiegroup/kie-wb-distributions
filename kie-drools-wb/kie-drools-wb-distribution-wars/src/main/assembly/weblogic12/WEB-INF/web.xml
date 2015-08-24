@@ -116,6 +116,11 @@
   <servlet>
     <servlet-name>RestServlet</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <!-- REST Permissions -->
+    <init-param>
+      <param-name>jersey.config.server.provider.classnames</param-name>
+      <param-value>org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>RestServlet</servlet-name>

@@ -5,4 +5,14 @@
     <class>org.jbpm.services.cdi.producer.JAASUserGroupInfoProducer</class>
   </alternatives>
 
+  <!-- REST permissions -->
+  <bean class="org.guvnor.rest.backend.ProjectResource"              id="projectResource"/>
+
+  <jaxrs:serviceBeans>
+    <ref bean="projectResource"/>
+  </jaxrs:serviceBeans>
+
+  <bean id="authorizationInterceptor" class="org.apache.cxf.interceptor.security.SecureAnnotationsInterceptor">
+    <property name="securedObject" ref="projectResource"/>
+  </bean>
 </beans>
