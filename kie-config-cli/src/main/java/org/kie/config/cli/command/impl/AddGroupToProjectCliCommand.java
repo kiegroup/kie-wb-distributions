@@ -30,6 +30,7 @@ import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
 import org.kie.config.cli.support.InputReader;
 import org.kie.workbench.common.screens.explorer.model.ProjectExplorerContent;
+import org.kie.workbench.common.screens.explorer.service.ActiveOptions;
 import org.kie.workbench.common.screens.explorer.service.ExplorerService;
 import org.kie.workbench.common.screens.explorer.service.Option;
 import org.kie.workbench.common.screens.explorer.service.ProjectExplorerContentQuery;
@@ -75,7 +76,7 @@ public class AddGroupToProjectCliCommand implements CliCommand {
 
         ArrayList<Project> projects = new ArrayList<Project>();
         ProjectExplorerContentQuery query = new ProjectExplorerContentQuery( ou, repo );
-        query.setOptions( new HashSet<Option>() );
+        query.setOptions( new ActiveOptions() );
         ProjectExplorerContent content = projectExplorerService.getContent( query );
         projects.addAll( content.getProjects() );
         if ( projects.size() == 0 ) {
