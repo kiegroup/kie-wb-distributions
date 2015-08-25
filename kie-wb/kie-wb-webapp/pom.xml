@@ -41,6 +41,7 @@
     <gwt.memory.settings>-Xmx4g -Xms1g -XX:MaxPermSize=256m -XX:PermSize=128m -Xss1M</gwt.memory.settings>
   </properties>
 
+
   <dependencies>
     <dependency>
       <groupId>org.jboss.spec.javax.annotation</groupId>
@@ -1462,11 +1463,29 @@
       <artifactId>org.eclipse.sisu.inject</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <!-- test -->
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
     <finalName>${project.artifactId}</finalName>
     <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
 
     <pluginManagement>
       <plugins>
