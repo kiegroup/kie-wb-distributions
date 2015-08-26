@@ -36,6 +36,9 @@
   <role rolename="developer"/>
   <role rolename="user"/>
   <role rolename="manager"/>
+
+  <!-- REST roles-->
+  <role rolename="rest-all"/>
   
   <!-- test roles -->
   <role rolename="HR"/>
@@ -45,9 +48,9 @@
    <!-- users --> 
   <user username="tomcat" password="tomcat" roles="manager-script, manager-jmx, manager-gui"/>
   
-  <user username="mary" password="mary123@" roles="admin,analyst,HR,engineering"/>
-  <user username="salaboy" password="sala123@" roles="admin"/>
-  <user username="john" password="john123@" roles="admin,analyst,PM,engineering"/>
-  <user username="krisv" password="krisv123@" roles="admin,developer,engineering"/>
+  <user username="mary" password="mary123@" roles="admin,analyst,HR,engineering,rest-all"/>
+  <user username="salaboy" password="sala123@" roles="admin,rest-all"/>
+  <user username="john" password="john123@" roles="admin,analyst,PM,engineering,rest-all"/>
+  <user username="krisv" password="krisv123@" roles="admin,developer,engineering,rest-all"/>
 
 </tomcat-users>
