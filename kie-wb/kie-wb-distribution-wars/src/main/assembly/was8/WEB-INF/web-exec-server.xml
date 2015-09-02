@@ -136,7 +136,12 @@
   </filter>
   <filter-mapping>
     <filter-name>Dynamic JAXBContext Filter</filter-name>
-    <url-pattern>/rest/*</url-pattern>
+    <url-pattern>/rest/deployment/*</url-pattern>
+    <url-pattern>/rest/history*</url-pattern>
+    <url-pattern>/rest/task/*</url-pattern>
+    <url-pattern>/rest/runtime/*</url-pattern>
+    <url-pattern>/rest/query/*</url-pattern>
+    <url-pattern>/rest/execute/*</url-pattern>
   </filter-mapping>
 
   <!-- web services -->
