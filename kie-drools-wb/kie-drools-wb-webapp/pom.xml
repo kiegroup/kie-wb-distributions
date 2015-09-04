@@ -1235,12 +1235,12 @@
     <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
-      <scope>test</scope>
+      <!--<scope>test</scope>--> <!-- Required at runtime as well (transitive dep), so can't have test scope -->
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
-      <scope>test</scope>
+      <!--<scope>test</scope>--> <!-- Required at runtime as well (transitive dep), so can't have test scope -->
     </dependency>
   </dependencies>
 
