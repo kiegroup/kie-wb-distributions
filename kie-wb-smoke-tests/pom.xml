@@ -286,6 +286,9 @@
 
     <profile>
       <id>kie-wb</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
         <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
@@ -599,6 +602,9 @@
 
     <profile>
       <id>wildfly8x</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <wildfly8x.download.url>http://download.jboss.org/wildfly/${version.wildfly8}/wildfly-${version.wildfly8}.zip</wildfly8x.download.url>
       </properties>
@@ -665,7 +671,6 @@
     <profile>
       <id>custom-container</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
         <property>
           <name>custom-container</name>
         </property>
@@ -691,25 +696,6 @@
             </executions>
           </plugin>
         </plugins>
-      </build>
-    </profile>
-    <profile>
-      <!-- Integration tests are skipped by default. They are activated when specific container profile is used. -->
-      <id>skipITs-by-default</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <artifactId>maven-failsafe-plugin</artifactId>
-              <configuration>
-                <skipITs>true</skipITs>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
       </build>
     </profile>
   </profiles>
