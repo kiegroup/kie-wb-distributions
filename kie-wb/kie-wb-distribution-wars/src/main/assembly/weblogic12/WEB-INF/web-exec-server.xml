@@ -77,7 +77,6 @@
     <web-resource-collection>
       <web-resource-name>rest</web-resource-name>
       <url-pattern>/rest/*</url-pattern>
-      <url-pattern>/ws/*</url-pattern>
       <url-pattern>/maven2/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
@@ -141,12 +140,11 @@
   <filter-mapping>
     <filter-name>Dynamic JAXBContext Filter</filter-name>
     <url-pattern>/rest/deployment/*</url-pattern>
-    <url-pattern>/rest/history/*</url-pattern>
+    <url-pattern>/rest/history*</url-pattern>
     <url-pattern>/rest/task/*</url-pattern>
     <url-pattern>/rest/runtime/*</url-pattern>
     <url-pattern>/rest/query/*</url-pattern>
-    <url-pattern>/rest/execute</url-pattern>
-    <url-pattern>/ws/*</url-pattern>
+    <url-pattern>/rest/execute/*</url-pattern>
   </filter-mapping>
 
   <!-- web services -->
