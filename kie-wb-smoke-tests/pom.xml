@@ -18,6 +18,7 @@
     <version.tomcat7>7.0.55</version.tomcat7>
     <version.tomcat8>8.0.14</version.tomcat8>
     <version.wildfly8>8.1.0.Final</version.wildfly8>
+    <version.wildfly9>9.0.0.Final</version.wildfly9>
 
     <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.4.x -->
     <!-- These properties are overriden in profiles kie-drools-wb and kie-wb -->
@@ -633,6 +634,68 @@
                 <type>installed</type>
                 <zipUrlInstaller>
                   <url>${wildfly8x.download.url}</url>
+                </zipUrlInstaller>
+              </container>
+              <configuration>
+                <properties>
+                  <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
+                </properties>
+                <configfiles>
+                  <configfile>
+                    <file>${project.build.testOutputDirectory}/eap-jbossas-wildfly-shared/config</file>
+                    <todir>configuration</todir>
+                    <overwrite>true</overwrite>
+                  </configfile>
+                  <configfile>
+                    <file>${project.build.testOutputDirectory}/ssl/server</file>
+                    <todir>configuration/ssl</todir>
+                    <overwrite>true</overwrite>
+                  </configfile>
+                </configfiles>
+              </configuration>
+              <deployables>
+                <deployable>
+                  <groupId>${deployable.groupId}</groupId>
+                  <artifactId>${deployable.artifactId}</artifactId>
+                  <classifier>wildfly8</classifier>
+                  <type>war</type>
+                </deployable>
+              </deployables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>wildfly9x</id>
+      <properties>
+        <wildfly9x.download.url>http://download.jboss.org/wildfly/${version.wildfly9}/wildfly-${version.wildfly9}.zip</wildfly9x.download.url>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>wildfly8</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>wildfly8</classifier>
+          <type>war</type>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>wildfly9x</containerId>
+                <type>installed</type>
+                <zipUrlInstaller>
+                  <url>${wildfly9x.download.url}</url>
                 </zipUrlInstaller>
               </container>
               <configuration>
