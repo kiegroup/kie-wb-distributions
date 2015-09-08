@@ -15,9 +15,9 @@
   <description>Integration smoke tests for KIE Workbench and KIE Drools Workbench</description>
 
   <properties>
-    <version.tomcat7>7.0.55</version.tomcat7>
-    <version.tomcat8>8.0.14</version.tomcat8>
-    <version.wildfly8>8.1.0.Final</version.wildfly8>
+    <version.tomcat7>7.0.64</version.tomcat7>
+    <version.tomcat8>8.0.26</version.tomcat8>
+    <version.wildfly8>8.2.1.Final</version.wildfly8>
 
     <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.4.x -->
     <!-- These properties are overriden in profiles kie-drools-wb and kie-wb -->
