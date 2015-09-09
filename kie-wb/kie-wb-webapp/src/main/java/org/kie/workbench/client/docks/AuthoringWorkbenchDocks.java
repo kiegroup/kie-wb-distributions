@@ -18,6 +18,7 @@ package org.kie.workbench.client.docks;
 import org.kie.workbench.common.screens.datamodeller.client.DataModelerContext;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchContext;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchContextChangeEvent;
+import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchFocusEvent;
 import org.uberfire.client.workbench.docks.UberfireDock;
 import org.uberfire.client.workbench.docks.UberfireDockPosition;
 import org.uberfire.client.workbench.docks.UberfireDockReadyEvent;
@@ -25,7 +26,6 @@ import org.uberfire.client.workbench.docks.UberfireDocks;
 import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -42,6 +42,8 @@ public class AuthoringWorkbenchDocks {
     private String authoringPerspectiveIdentifier;
 
     private UberfireDock projectExplorerDock;
+
+    private boolean dataModelerIsHidden;
 
 
     public void perspectiveChangeEvent(@Observes UberfireDockReadyEvent dockReadyEvent) {
@@ -66,11 +68,25 @@ public class AuthoringWorkbenchDocks {
     }
 
     public void onContextChange(@Observes DataModelerWorkbenchContextChangeEvent contextEvent) {
+        handleDocks();
+    }
+
+    private void handleDocks() {
         DataModelerContext context = dataModelerWBContext.getActiveContext();
-        if (shouldDisplayWestDocks(context)) {
+        if (!dataModelerIsHidden && shouldDisplayWestDocks(context)) {
             uberfireDocks.enable(UberfireDockPosition.EAST, authoringPerspectiveIdentifier);
         } else {
             uberfireDocks.disable(UberfireDockPosition.EAST, authoringPerspectiveIdentifier);
+        }
+    }
+
+    public void onDataModelerWorkbenchFocusEvent( @Observes DataModelerWorkbenchFocusEvent event ) {
+        if ( !event.isFocused() ) {
+            this.dataModelerIsHidden = true;
+            uberfireDocks.disable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );
+        } else {
+            this.dataModelerIsHidden = false;
+            handleDocks();
         }
     }
 
