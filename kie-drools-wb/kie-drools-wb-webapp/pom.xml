@@ -38,7 +38,7 @@
     <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
     <errai.jboss.home>${project.build.directory}/wildfly-${as.version}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
-    <gwt.memory.settings>-Xmx4g -Xms1g -XX:MaxPermSize=256m -XX:PermSize=128m -Xss1M</gwt.memory.settings>
+    <gwt.memory.settings>-Xmx4g -Xms1g -XX:MaxPermSize=512m -XX:PermSize=128m -Xss1M</gwt.memory.settings>
   </properties>
 
   <dependencies>
