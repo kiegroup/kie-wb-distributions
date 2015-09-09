@@ -375,9 +375,6 @@
     </profile>
     <profile>
       <id>tomcat7x</id>
-      <properties>
-        <tomcat7x.download.url>https://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip</tomcat7x.download.url>
-      </properties>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
@@ -402,9 +399,11 @@
               <container>
                 <containerId>tomcat7x</containerId>
                 <type>installed</type>
-                <zipUrlInstaller>
-                  <url>${tomcat7x.download.url}</url>
-                </zipUrlInstaller>
+                <artifactInstaller>
+                  <groupId>org.apache.tomcat</groupId>
+                  <artifactId>tomcat</artifactId>
+                  <version>${version.tomcat7}</version>
+                </artifactInstaller>
                 <systemProperties>
                   <tomcat.home>${project.build.directory}/cargo/configurations/tomcat7x</tomcat.home>
                   <bitronix.tm.configuration>
@@ -487,9 +486,6 @@
 
     <profile>
       <id>tomcat8x</id>
-      <properties>
-        <tomcat8x.download.url>https://archive.apache.org/dist/tomcat/tomcat-8/v${version.tomcat8}/bin/apache-tomcat-${version.tomcat8}.zip</tomcat8x.download.url>
-      </properties>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
@@ -514,9 +510,11 @@
                 <container>
                   <containerId>tomcat8x</containerId>
                   <type>installed</type>
-                  <zipUrlInstaller>
-                    <url>${tomcat8x.download.url}</url>
-                  </zipUrlInstaller>
+                  <artifactInstaller>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat</artifactId>
+                    <version>${version.tomcat8}</version>
+                  </artifactInstaller>
                   <systemProperties>
                     <tomcat.home>${project.build.directory}/cargo/configurations/tomcat8x</tomcat.home>
                     <bitronix.tm.configuration>
@@ -599,9 +597,6 @@
 
     <profile>
       <id>wildfly8x</id>
-      <properties>
-        <wildfly8x.download.url>http://download.jboss.org/wildfly/${version.wildfly8}/wildfly-${version.wildfly8}.zip</wildfly8x.download.url>
-      </properties>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
@@ -625,9 +620,11 @@
               <container>
                 <containerId>wildfly8x</containerId>
                 <type>installed</type>
-                <zipUrlInstaller>
-                  <url>${wildfly8x.download.url}</url>
-                </zipUrlInstaller>
+                <artifactInstaller>
+                  <groupId>org.wildfly</groupId>
+                  <artifactId>wildfly-dist</artifactId>
+                  <version>${version.wildfly8}</version>
+                </artifactInstaller>
               </container>
               <configuration>
                 <properties>
