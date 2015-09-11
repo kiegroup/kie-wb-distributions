@@ -34,6 +34,7 @@ import org.uberfire.client.workbench.panels.impl.MultiListWorkbenchPanelPresente
 import org.uberfire.client.workbench.panels.impl.SimpleWorkbenchPanelPresenter;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.security.annotations.Roles;
 import org.uberfire.workbench.model.CompassPosition;
 import org.uberfire.workbench.model.PanelDefinition;
 import org.uberfire.workbench.model.PerspectiveDefinition;
@@ -48,6 +49,7 @@ import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.*;
 /**
  * A Perspective for Administrators
  */
+@Roles({ "admin" })
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "AdministrationPerspective")
 public class AdministrationPerspective {
