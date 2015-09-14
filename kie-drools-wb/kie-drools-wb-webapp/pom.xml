@@ -660,6 +660,18 @@
           <groupId>commons-logging</groupId>
           <artifactId>commons-logging</artifactId>
         </exclusion>
+        <!-- designer-backend already brings avalon-framework which contains the same classes as avalon-framework-api.
+             This should be fixed directly in designer-backed. -->
+        <exclusion>
+          <groupId>org.apache.avalon.framework</groupId>
+          <artifactId>avalon-framework-api</artifactId>
+        </exclusion>
+        <!-- Not needed at runtime. Clashes with com.google.code.findbugs:annotations. Should be probably fixed directly
+             in designer-backed. -->
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -994,6 +1006,13 @@
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-data-binding</artifactId>
       <scope>provided</scope>
+      <exclusions>
+        <!-- This is a transitive dependency of guava-gwt. It is not needed at runtime (nor for GWT compile) -->
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Errai AS -->
