@@ -73,11 +73,16 @@ Connection factories and queues are created inside JMS module.
   - Provide the name, JNDI name (e.g. _KIE.RESPONSE.ALL_ and _jms/cf/KIE.RESPONSE.ALL_)
   - Follow instructions on the screen
 
+  - KIE.EXECUTOR - for kie executor service assigned JNDI name needs to be set as one of JVM custom properties (org.kie.executor.jms.queue)
+  - KIE.SIGNAL - for sending external signals to jBPM processes
+
 **Create JMS Queues**
 - KIE.AUDIT - for asynchronous audit log
 - KIE.RESPONSE.ALL - for bpms responses
 - KIE.SESSION - for ksession based operations
 - KIE.TASK - for task based operations
+- KIE.EXECUTOR - for kie executor service
+- KIE.SIGNAL - for sending external signals to jBPM processes
 
   - Left side panel click on _Services > Messaging > JMS Modules > {name of the jms module}_
   - Click new and select Queue as type
@@ -92,13 +97,15 @@ JVM Custom properties
 --------------------------
 **Additional JVM properties**
 - kie.services.jms.queues.response - {JNDI_NAME} -- JNDI name of the response queue for JMS remote API
+- org.kie.executor.jms.queue - {JNDI_NAME} -- JNDI name of the kie executor service JMS queue
+- org.kie.executor.jms.cf - {JNDI_NAME} -- JNDI name of the kie executor service JMS connection factory
 - javax.xml.bind.context.factory - value must be com.sun.xml.bind.v2.ContextFactory
 - org.uberfire.start.method - value must be ejb
 - org.uberfire.domain - value must be OracleDefaultLoginConfiguration
 
 all properties can be set by configuring environment variable as follows:
 
-_JAVA_OPTIONS="-Dkie.services.jms.queues.response=jms/KIE.RESPONSE.ALL -Djavax.xml.bind.context.factory=com.sun.xml.bind.v2.ContextFactory -Dorg.uberfire.start.method=ejb -Dorg.uberfire.domain=OracleDefaultLoginConfiguration"_
+_JAVA_OPTIONS="-Dkie.services.jms.queues.response=jms/KIE.RESPONSE.ALL -Dorg.kie.executor.jms.queue=jms/KIE.EXECUTOR -Dorg.kie.executor.jms.cf=jms/cf/KIE.EXECUTOR -Djavax.xml.bind.context.factory=com.sun.xml.bind.v2.ContextFactory -Dorg.uberfire.start.method=ejb -Dorg.uberfire.domain=OracleDefaultLoginConfiguration"_
 
 Deploy the application
 --------------------------
