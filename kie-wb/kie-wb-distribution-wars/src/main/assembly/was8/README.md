@@ -106,6 +106,8 @@ Note: These are just example names and they can be configured as needed
     assigned JNDI name needs to be set as one of JVM custom properties (kie.services.jms.queues.response)
 - KIE.INPUT  - to send messages to bpms
     assigned JNDI name will be used when sending messages over JMS
+- KIE.EXECUTOR - to send messages to a kie executor service
+    assigned JNDI name needs to be set as one of JVM custom properties (org.kie.executor.jms.cf)
 
   - Left side panel click on *Resources > JMS > Connection factories > New > Default messaging provider*
   - Provide the name, JNDI name (e.g. _KIE.RESPONSE.ALL_ and _jms/conn/KIE.RESPONSE.ALL_)
@@ -116,6 +118,9 @@ Note: These are just example names and they can be configured as needed
 - KIE.RESPONSE.ALL - for bpms responses
 - KIE.SESSION - for ksession based operations
 - KIE.TASK - for task based operations
+- KIE.EXECUTOR - for kie executor service
+    assigned JNDI name needs to be set as one of JVM custom properties (org.kie.executor.jms.queue)
+- KIE.SIGNAL - for sending external signals to jBPM processes
 
   - Left side panel click on _Resources > JMS > Queues > New_, select _Default messaging provider_
   - Provide a name, JNDI name (e.g. _KIE.AUDIT_ and _jms/queue/KIE.AUDIT_)
@@ -127,6 +132,8 @@ Note: These are just example names and they can be configured as needed
 - KIE.AUDIT - for asynchronous audit log
 - KIE.SESSION - for ksession based operations
 - KIE.TASK - for task based operations
+- KIE.EXECUTOR - for kie executor service
+- KIE.SIGNAL - for sending external signals to jBPM processes
 
   - Left side panel click on _Resources > JMS > Activation specifications > New_, select _Default messaging provider_
   - Provide a name, JNDI name (e.g. _KIE.AUDIT_ and _jms/activation/KIE.AUDIT_)
@@ -139,6 +146,8 @@ JVM Custom properties
 **Additional JVM properties**
 - jbpm.ut.jndi.lookup  - jta/usertransaction -- allows to look up user transaction from within non managed threads, e.g. timers
 - kie.services.jms.queues.response - {JNDI_NAME} -- JNDI name of the response queue for JMS remote API
+- org.kie.executor.jms.queue - {JNDI_NAME} -- JNDI name of the kie executor service JMS queue
+- org.kie.executor.jms.cf - {JNDI_NAME} -- JNDI name of the kie executor service JMS connection factory
 - kie.services.rest.deploy.async - false -- instructs REST service to use synchronous mode to process deployments must be set for WebSphere due to issues with CDI on WAS 8.5
 
 Deploy the application
