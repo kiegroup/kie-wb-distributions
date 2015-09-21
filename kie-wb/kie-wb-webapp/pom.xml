@@ -628,12 +628,6 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-contributors-backend</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.dashbuilder</groupId>
-          <artifactId>dashbuilder-dataset-elasticsearch</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
