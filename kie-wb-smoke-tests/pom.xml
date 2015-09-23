@@ -19,6 +19,9 @@
     <version.tomcat8>8.0.26</version.tomcat8>
     <version.wildfly8>8.2.1.Final</version.wildfly8>
 
+    <tomcat7x.deployable.classifier>tomcat7</tomcat7x.deployable.classifier>
+    <wildfly8x.deplyoble.classifier>wildfly8</wildfly8x.deplyoble.classifier>
+    <eap64x.deployable.classifier>eap6_4</eap64x.deployable.classifier>
     <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.4.x -->
     <!-- These properties are overriden in profiles kie-drools-wb and kie-wb -->
     <deployable.groupId>org.kie</deployable.groupId>
@@ -32,6 +35,39 @@
     <deployment.timeout.millis>120000</deployment.timeout.millis>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
+        <version>${version.org.kie}</version>
+        <type>war</type>
+        <classifier>tomcat7-redhat</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb-distribution-wars</artifactId>
+        <version>${version.org.kie}</version>
+        <type>war</type>
+        <classifier>tomcat7-redhat</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
+        <version>${version.org.kie}</version>
+        <type>war</type>
+        <classifier>eap6_4-redhat</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb-distribution-wars</artifactId>
+        <version>${version.org.kie}</version>
+        <type>war</type>
+        <classifier>eap6_4-redhat</classifier>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  
   <dependencies>
     <!-- utilities -->
     <dependency>
@@ -287,7 +323,9 @@
     <profile>
       <id>kie-wb</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
+        <property>
+          <name>full</name>
+        </property>
       </activation>
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
@@ -322,13 +360,13 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>eap6_4</classifier>
+          <classifier>${eap64x.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>eap6_4</classifier>
+          <classifier>${eap64x.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
       </dependencies>
@@ -367,7 +405,7 @@
                 <deployable>
                   <groupId>${deployable.groupId}</groupId>
                   <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>eap6_4</classifier>
+                  <classifier>${eap64x.deployable.classifier}</classifier>
                   <type>war</type>
                 </deployable>
               </deployables>
@@ -378,17 +416,22 @@
     </profile>
     <profile>
       <id>tomcat7x</id>
+      <activation>
+        <property>
+          <name>full</name>
+        </property>
+      </activation>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>tomcat7</classifier>
+          <classifier>${tomcat7x.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>tomcat7</classifier>
+          <classifier>${tomcat7x.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
       </dependencies>
@@ -468,7 +511,7 @@
                 <deployable>
                   <groupId>${deployable.groupId}</groupId>
                   <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>tomcat7</classifier>
+                  <classifier>${tomcat7x.deployable.classifier}</classifier>
                   <type>war</type>
                 </deployable>
               </deployables>
@@ -600,20 +643,17 @@
 
     <profile>
       <id>wildfly8x</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>wildfly8</classifier>
+          <classifier>${wildfly8x.deplyoble.classifier}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>wildfly8</classifier>
+          <classifier>${wildfly8x.deplyoble.classifier}</classifier>
           <type>war</type>
         </dependency>
       </dependencies>
@@ -653,7 +693,7 @@
                 <deployable>
                   <groupId>${deployable.groupId}</groupId>
                   <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>wildfly8</classifier>
+                  <classifier>${wildfly8x.deplyoble.classifier}</classifier>
                   <type>war</type>
                 </deployable>
               </deployables>
@@ -662,9 +702,46 @@
         </plugins>
       </build>
     </profile>
-    <!-- This profile basically disables any cargo related execution. It can be used when the tests should run on
-         a container that has already been started and it is not managed by cargo. It can also be used when doing
-         a "no-test" build, as the container should not be used in that case. -->
+    <!-- Tests are disabled by default. They run with "full" build (e.g. mvn clean install -Dfull) -->
+    <profile>
+      <id>disable-cargo-and-tests</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>none</phase>
+                <!-- do nothing, container is not managed by Cargo! -->
+                <goals/>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>none</phase>
+                <!-- do nothing, container is not managed by Cargo! -->
+                <goals/>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <skipITs>true</skipITs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- This profile basically disables any Cargo related execution, but runs the tests. It can be used when the tests
+         should run on a container that has already been started and it is not managed by Cargo. It can also be used
+         when doing a "no-test" build, as the container should not be used in that case. -->
     <profile>
       <id>custom-container</id>
       <activation>
@@ -681,18 +758,64 @@
               <execution>
                 <id>start-container</id>
                 <phase>none</phase>
-                <!-- do nothing, container is not managed by cargo! -->
+                <!-- do nothing, container is not managed by Cargo! -->
                 <goals/>
               </execution>
               <execution>
                 <id>stop-container</id>
                 <phase>none</phase>
-                <!-- do nothing, container is not managed by cargo! -->
+                <!-- do nothing, container is not managed by Cargo! -->
                 <goals/>
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <skipITs>false</skipITs>
+            </configuration>
+          </plugin>
         </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>productized</id>
+      <activation>
+        <property>
+          <name>productized</name>
+        </property>
+      </activation>
+
+      <properties>
+        <tomcat7x.deployable.classifier>tomcat7-redhat</tomcat7x.deployable.classifier>
+        <!-- There is no WildFly 8 productized WAR -->
+        <wildlfy8x.deployable.classifier>NONE</wildlfy8x.deployable.classifier>
+        <eap64x.deployable.classifier>eap6_4-redhat</eap64x.deployable.classifier>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>full</id>
+      <activation>
+        <property>
+          <name>full</name>
+        </property>
+      </activation>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <configuration>
+                <skipITs>false</skipITs>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
       </build>
     </profile>
   </profiles>
