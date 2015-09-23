@@ -25,3 +25,17 @@ different port.
 You can now run (and debug) the tests easily from IDE by just executing the `@Test` annotated
 methods.
 
+How to execute tests for different containers and apps
+======================================================
+By default, when you run `mvn clean install` _no_ tests will be executed. Tests are executed either when specifying `full`
+profile (by setting `-Dfull`) or when configuring explicit container and deployable profiles. The tests can be also executed
+on the productized binaries (by setting `-Dproductized`).
+
+Examples of different scenarios:
+
+  * `mvn clean install` - tests are only compiled. Execution is skipped.
+  * `mvn clean install -Dfull` - default configuration is used. The tests are executed on KIE Workbench deployed to Tomcat 7.
+  * `mvn clean install -Dfull -Dproductized` - same as above, but productized WAR (e.g. tomcat7-redhat) is used.
+  * `mvn clean install -Pwildfly8x,kie-drools-wb` - tests are executed on KIE Drools Workbench deployed to WildFly 8.
+  * `mvn clean install -Peap64x,kie-wb -Dproductized` - tests are executed on productized KIE Workbench (eap6_4-redhat) deployed to EAP 6.4.
+  * `mvn clean install -Dcustom-container -Ddeployable.base.uri=<value>` - tests will be executed on custom container, which needs to be already running.
