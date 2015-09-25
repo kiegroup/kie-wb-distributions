@@ -289,7 +289,7 @@ public class KieDroolsWorkbenchEntryPoint {
         result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).respondsWith( new Command() {
             @Override
             public void execute() {
-                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
+                placeManager.goTo( new DefaultPlaceRequest( "DataSet Tasks" ) );
             }
         } ).endMenu().build().getItems().get( 0 ) );
 
