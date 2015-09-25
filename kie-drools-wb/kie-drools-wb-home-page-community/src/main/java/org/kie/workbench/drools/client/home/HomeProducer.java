@@ -110,7 +110,7 @@ public class HomeProducer {
 
                                                                    @Override
                                                                    public void execute() {
-                                                                       placeManager.goTo( "Tasks" );
+                                                                       placeManager.goTo( "DataSet Tasks" );
                                                                    }
                                                                } );
 
