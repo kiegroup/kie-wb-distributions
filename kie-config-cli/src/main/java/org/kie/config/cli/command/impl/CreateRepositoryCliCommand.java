@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.RepositoryService;
+import org.guvnor.structure.repositories.EnvironmentParameters;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
@@ -78,6 +79,8 @@ public class CreateRepositoryCliCommand implements CliCommand {
         if ( origin.trim().length() > 0 ) {
             env.put( "origin", origin );
         }
+
+        env.put( EnvironmentParameters.MANAGED, false );
 
         //Mark this Repository as being created by the kie-config-cli tool. This has no affect on the operation
         //of the Repository in the workbench, but it does indicate to kie-config-cli that the Repository should

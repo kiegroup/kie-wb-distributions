@@ -24,7 +24,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.guvnor.structure.backend.repositories.EnvironmentParameters;
+import org.guvnor.structure.repositories.EnvironmentParameters;
 import org.guvnor.structure.repositories.PublicURI;
 import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.impl.DefaultPublicURI;
