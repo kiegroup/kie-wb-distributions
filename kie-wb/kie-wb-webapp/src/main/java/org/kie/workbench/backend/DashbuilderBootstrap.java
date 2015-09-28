@@ -69,13 +69,11 @@ public class DashbuilderBootstrap {
 
     protected void registerDataSetDefinitions() {
 
-
-        dataSetDefRegistry.registerDataSetDef(
-                DataSetFactory.newSQLDataSetDef()
-                        .uuid( HUMAN_TASKS_DATASET )
-                        .name( "Human tasks" )
+        DataSetDef humanTasksDef = DataSetFactory.newSQLDataSetDef()
+                        .uuid(HUMAN_TASKS_DATASET)
+                        .name("Human tasks")
                         .dataSource(jbpmDatasource)
-                        .dbTable( HUMAN_TASKS_TABLE, false )
+                        .dbTable(HUMAN_TASKS_TABLE, false)
                         .date(DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME)
                         .label(DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER)
                         .label(DataSetTasksListGridViewImpl.COLUMN_CREATEDBY)
@@ -84,43 +82,40 @@ public class DashbuilderBootstrap {
                         .text(DataSetTasksListGridViewImpl.COLUMN_DESCRIPTION)
                         .date(DataSetTasksListGridViewImpl.COLUMN_DUEDATE)
                         .label(DataSetTasksListGridViewImpl.COLUMN_NAME)
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PARENTID )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PRIORITY )
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PARENTID)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PRIORITY)
                         .label(DataSetTasksListGridViewImpl.COLUMN_PROCESSID)
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PROCESSINSTANCEID )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PROCESSSESSIONID )
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PROCESSINSTANCEID)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PROCESSSESSIONID)
                         .label(DataSetTasksListGridViewImpl.COLUMN_STATUS)
-                        .number( DataSetTasksListGridViewImpl.COLUMN_TASKID )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_WORKITEMID )
+                        .number(DataSetTasksListGridViewImpl.COLUMN_TASKID)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_WORKITEMID)
+                        .buildDef();
 
-                        .buildDef() );
-
-        dataSetDefRegistry.registerDataSetDef(
-                DataSetFactory.newSQLDataSetDef()
-                        .uuid( PROCESS_INSTANCE_DATASET)
-                        .name( "Process Instances" )
+        DataSetDef processInstancesDef = DataSetFactory.newSQLDataSetDef()
+                        .uuid(PROCESS_INSTANCE_DATASET)
+                        .name("Process Instances")
                         .dataSource(jbpmDatasource)
-                        .dbTable( PROCESS_INSTANCE_TABLE, false )
-                        .number( DataSetProcessInstanceListViewImpl.COLUMN_PROCESSINSTANCEID )
+                        .dbTable(PROCESS_INSTANCE_TABLE, false)
+                        .number(DataSetProcessInstanceListViewImpl.COLUMN_PROCESSINSTANCEID)
                         .label(DataSetProcessInstanceListViewImpl.COLUMN_PROCESSID)
                         .date(DataSetProcessInstanceListViewImpl.COLUMN_START)
                         .date(DataSetProcessInstanceListViewImpl.COLUMN_END)
-                        .number( DataSetProcessInstanceListViewImpl.COLUMN_STATUS )
-                        .number( DataSetProcessInstanceListViewImpl.COLUMN_PARENTPROCESSINSTANCEID )
+                        .number(DataSetProcessInstanceListViewImpl.COLUMN_STATUS)
+                        .number(DataSetProcessInstanceListViewImpl.COLUMN_PARENTPROCESSINSTANCEID)
                         .label(DataSetProcessInstanceListViewImpl.COLUMN_OUTCOME)
-                        .number( DataSetProcessInstanceListViewImpl.COLUMN_DURATION )
+                        .number(DataSetProcessInstanceListViewImpl.COLUMN_DURATION)
                         .label(DataSetProcessInstanceListViewImpl.COLUMN_IDENTITY)
                         .label(DataSetProcessInstanceListViewImpl.COLUMN_PROCESSVERSION)
                         .label(DataSetProcessInstanceListViewImpl.COLUMN_PROCESSNAME)
                         .label(DataSetProcessInstanceListViewImpl.COLUMN_CORRELATIONKEY)
                         .label(DataSetProcessInstanceListViewImpl.COLUMN_EXTERNALID)
                         .label(DataSetProcessInstanceListViewImpl.COLUMN_PROCESSINSTANCEDESCRIPTION)
-                        .buildDef() );
+                        .buildDef();
 
-        dataSetDefRegistry.registerDataSetDef(
-                DataSetFactory.newSQLDataSetDef()
-                        .uuid( HUMAN_TASKS_WITH_USER_DATASET )
-                        .name( "Human tasks and users" )
+        DataSetDef humanTasksWithUserDef = DataSetFactory.newSQLDataSetDef()
+                        .uuid(HUMAN_TASKS_WITH_USER_DATASET)
+                        .name("Human tasks and users")
                         .dataSource(jbpmDatasource)
                         .dbSQL("select  t.activationtime, t.actualowner, t.createdby, "
                                 + "t.createdon, t.deploymentid, t.description, t.duedate, "
@@ -130,7 +125,7 @@ public class DashbuilderBootstrap {
                                 + "peopleassignments_potowners po, "
                                 + "organizationalentity oe "
                                 + "where t.id = po.task_id and po.entity_id = oe.id", false)
-                        .date( DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME )
+                        .date(DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME)
                         .label(DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER)
                         .label(DataSetTasksListGridViewImpl.COLUMN_CREATEDBY)
                         .date(DataSetTasksListGridViewImpl.COLUMN_CREATEDON)
@@ -138,21 +133,20 @@ public class DashbuilderBootstrap {
                         .text(DataSetTasksListGridViewImpl.COLUMN_DESCRIPTION)
                         .date(DataSetTasksListGridViewImpl.COLUMN_DUEDATE)
                         .label(DataSetTasksListGridViewImpl.COLUMN_NAME)
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PARENTID )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PRIORITY )
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PARENTID)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PRIORITY)
                         .label(DataSetTasksListGridViewImpl.COLUMN_PROCESSID)
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PROCESSINSTANCEID )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PROCESSSESSIONID )
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PROCESSINSTANCEID)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PROCESSSESSIONID)
                         .label(DataSetTasksListGridViewImpl.COLUMN_STATUS)
                         .label(DataSetTasksListGridViewImpl.COLUMN_TASKID)   //declaring as label(even though it's numeric) because needs apply groupby and  Group by number not supported
-                        .number( DataSetTasksListGridViewImpl.COLUMN_WORKITEMID )
+                        .number(DataSetTasksListGridViewImpl.COLUMN_WORKITEMID)
                         .label(DataSetTasksListGridViewImpl.COLUMN_ORGANIZATIONAL_ENTITY)
-                        .buildDef() );
+                        .buildDef();
 
-        dataSetDefRegistry.registerDataSetDef(
-                DataSetFactory.newSQLDataSetDef()
-                        .uuid( HUMAN_TASKS_WITH_ADMIN_DATASET )
-                        .name( "Human tasks and admins" )
+        DataSetDef humanTaskWithAdminDef = DataSetFactory.newSQLDataSetDef()
+                        .uuid(HUMAN_TASKS_WITH_ADMIN_DATASET)
+                        .name("Human tasks and admins")
                         .dataSource(jbpmDatasource)
                         .dbSQL("select t.activationtime, t.actualowner, t.createdby, "
                                 + "t.createdon, t.deploymentid, t.description, t.duedate, "
@@ -162,40 +156,39 @@ public class DashbuilderBootstrap {
                                 + "peopleassignments_bas bas, "
                                 + "organizationalentity oe "
                                 + "where t.id = bas.task_id and bas.entity_id = oe.id", false)
-                        .date( DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME )
+                        .date(DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME)
                         .label(DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER)
                         .label(DataSetTasksListGridViewImpl.COLUMN_CREATEDBY)
                         .date(DataSetTasksListGridViewImpl.COLUMN_CREATEDON)
                         .label(DataSetTasksListGridViewImpl.COLUMN_DEPLOYMENTID)
                         .text(DataSetTasksListGridViewImpl.COLUMN_DESCRIPTION)
                         .date(DataSetTasksListGridViewImpl.COLUMN_DUEDATE)
-                        .label(DataSetTasksListGridViewImpl.COLUMN_NAME )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PARENTID )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PRIORITY )
-                        .label(DataSetTasksListGridViewImpl.COLUMN_PROCESSID )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PROCESSINSTANCEID )
-                        .number( DataSetTasksListGridViewImpl.COLUMN_PROCESSSESSIONID )
+                        .label(DataSetTasksListGridViewImpl.COLUMN_NAME)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PARENTID)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PRIORITY)
+                        .label(DataSetTasksListGridViewImpl.COLUMN_PROCESSID)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PROCESSINSTANCEID)
+                        .number(DataSetTasksListGridViewImpl.COLUMN_PROCESSSESSIONID)
                         .label(DataSetTasksListGridViewImpl.COLUMN_STATUS)
-                        .label( DataSetTasksListGridViewImpl.COLUMN_TASKID )     //declaring as label(even though it's numeric) because needs apply groupby and  Group by number not supported
-                        .number( DataSetTasksListGridViewImpl.COLUMN_WORKITEMID )
+                        .label(DataSetTasksListGridViewImpl.COLUMN_TASKID)     //declaring as label(even though it's numeric) because needs apply groupby and  Group by number not supported
+                        .number(DataSetTasksListGridViewImpl.COLUMN_WORKITEMID)
                         .label(DataSetTasksListGridViewImpl.COLUMN_ORGANIZATIONAL_ENTITY)
-                        .buildDef() );
+                        .buildDef();
 
-        dataSetDefRegistry.registerDataSetDef(
-                DataSetFactory.newSQLDataSetDef()
-                        .uuid( REQUEST_LIST_DATASET )
-                        .name( "Request List" )
+        DataSetDef requestListDef = DataSetFactory.newSQLDataSetDef()
+                        .uuid(REQUEST_LIST_DATASET)
+                        .name("Request List")
                         .dataSource(jbpmDatasource)
-                        .dbTable( REQUEST_LIST_TABLE, false )
+                        .dbTable(REQUEST_LIST_TABLE, false)
                         .number( RequestListViewImpl.COLUMN_ID )
                         .date(RequestListViewImpl.COLUMN_TIMESTAMP)
                         .label(RequestListViewImpl.COLUMN_STATUS)
                         .label(RequestListViewImpl.COLUMN_COMMANDNAME)
                         .label(RequestListViewImpl.COLUMN_MESSAGE)
                         .label(RequestListViewImpl.COLUMN_BUSINESSKEY)
-                        .buildDef() );
-         dataSetDefRegistry.registerDataSetDef(
-                        DataSetFactory.newSQLDataSetDef()
+                        .buildDef();
+
+        DataSetDef processWithVariablesDef = DataSetFactory.newSQLDataSetDef()
                                 .uuid( PROCESS_INSTANCE_WITH_VARIABLES_DATASET)
                                 .name( "Variable for Evalution Process Instances" )
                                 .dataSource(jbpmDatasource)
@@ -209,9 +202,7 @@ public class DashbuilderBootstrap {
                                 .number("varid")
                                 .label("varname")
                                 .label("varvalue")
-                                .buildDef() );
-
-        // Process && Task dashboard related
+                                .buildDef();
 
         DataSetDef processMonitoringDef = DataSetFactory.newSQLDataSetDef()
                 .uuid(PROCESSES_MONITORING_DATASET)
@@ -229,11 +220,27 @@ public class DashbuilderBootstrap {
                         "on (t.processinstanceid = p.processinstanceid)", true)
                 .buildDef();
 
+
+        // Hide all these internal data set from end user view
+        humanTasksDef.setPublic(false);
+        processInstancesDef.setPublic(false);
+        humanTasksWithUserDef.setPublic(false);
+        humanTaskWithAdminDef.setPublic(false);
+        requestListDef.setPublic(false);
+        processWithVariablesDef.setPublic(false);
         processMonitoringDef.setPublic(false);
         taskMonitoringDef.setPublic(false);
 
+        // Register the data set definitions
+        dataSetDefRegistry.registerDataSetDef(humanTasksDef);
+        dataSetDefRegistry.registerDataSetDef(processInstancesDef);
+        dataSetDefRegistry.registerDataSetDef(humanTasksWithUserDef);
+        dataSetDefRegistry.registerDataSetDef(humanTaskWithAdminDef);
+        dataSetDefRegistry.registerDataSetDef(requestListDef);
+        dataSetDefRegistry.registerDataSetDef(processWithVariablesDef);
         dataSetDefRegistry.registerDataSetDef(processMonitoringDef);
-        dataSetDefRegistry.registerDataSetDef(taskMonitoringDef);}
+        dataSetDefRegistry.registerDataSetDef(taskMonitoringDef);
+    }
 
     protected void findDataSourceJNDI() {
         try {
