@@ -74,7 +74,6 @@
           <exclude>WEB-INF/lib/org.osgi.core-*.jar</exclude>
           <exclude>WEB-INF/lib/javassist-*.jar</exclude>
           <exclude>WEB-INF/lib/jgroups-*.jar</exclude>
-          <exclude>WEB-INF/lib/jackson-*.jar</exclude>
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
