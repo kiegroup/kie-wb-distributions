@@ -130,6 +130,43 @@
     </description>
     <role-name>manager</role-name>
   </security-role>
+  <!-- rest api security roles -->
+  <security-role>
+   <description></description>
+   <role-name>rest-all</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-project</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-deployment</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-process</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-process-read-only</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-task</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-task-read-only</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-query</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-client</role-name>
+  </security-role>  
 
   <filter>
     <filter-name>Dynamic JAXBContext Filter</filter-name>
