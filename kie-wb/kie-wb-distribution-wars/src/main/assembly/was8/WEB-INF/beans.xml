@@ -1,41 +1,8 @@
-<beans xmlns="http://java.sun.com/xml/ns/javaee" 
+<beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://docs.jboss.org/cdi/beans_1_0.xsd">
 
   <alternatives>
     <class>org.jbpm.services.cdi.producer.JAASUserGroupInfoProducer</class>
   </alternatives>
-
-  <!-- REST permissions -->
-  <bean class="org.guvnor.rest.backend.ProjectResource"              id="projectResource"/>
-  <bean class="org.kie.remote.services.rest.DeploymentResourceImpl"  id="deploymentResource"/>
-  <bean class="org.kie.remote.services.rest.DeploymentsResourceImpl" id="deploymentsResource"/>
-  <bean class="org.kie.remote.services.rest.ExecuteResourceImpl"     id="executeResource"/>
-  <bean class="org.kie.remote.services.rest.HistoryResourceImpl"     id="historyResource"/>
-  <bean class="org.kie.remote.services.rest.QueryResourceImpl"       id="queryResource"/>
-  <bean class="org.kie.remote.services.rest.RuntimeResourceImpl"     id="runtimeResource"/>
-  <bean class="org.kie.remote.services.rest.TaskResourceImpl"        id="taskResource"/>
-
-  <jaxrs:serviceBeans>
-    <ref bean="projectResource"/>
-    <ref bean="deploymentResource"/>
-    <ref bean="deploymentsResource"/>
-    <ref bean="executeResource"/>
-    <ref bean="historyResource"/>
-    <ref bean="queryResource"/>
-    <ref bean="runtimeResource"/>
-    <ref bean="taskResource"/>
-  </jaxrs:serviceBeans>
-
-  <bean id="authorizationInterceptor" class="org.apache.cxf.interceptor.security.SecureAnnotationsInterceptor">
-    <property name="securedObject" ref="projectResource"/>
-    <property name="securedObject" ref="deploymentResource"/>
-    <property name="securedObject" ref="deploymentsResource"/>
-    <property name="securedObject" ref="executeResource"/>
-    <property name="securedObject" ref="historyResource"/>
-    <property name="securedObject" ref="queryResource"/>
-    <property name="securedObject" ref="runtimeResource"/>
-    <property name="securedObject" ref="taskResource"/>
-  </bean>
 </beans>
