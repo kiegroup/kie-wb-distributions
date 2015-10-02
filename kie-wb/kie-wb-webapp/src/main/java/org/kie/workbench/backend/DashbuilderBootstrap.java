@@ -114,14 +114,14 @@ public class DashbuilderBootstrap {
                 .uuid(HUMAN_TASKS_WITH_USER_DATASET)
                 .name("Human tasks and users")
                 .dataSource(jbpmDatasource)
-                .dbSQL("select  t.activationtime, t.actualowner, t.createdby, "
-                        + "t.createdon, t.deploymentid, t.description, t.duedate, "
-                        + "t.name, t.parentid, t.priority, t.processid, t.processinstanceid, "
-                        + "t.processsessionid, t.status, t.taskid, t.workitemid, oe.id oeid "
+                .dbSQL( "select  t.activationTime, t.actualOwner, t.createdBy, "
+                        + "t.createdOn, t.deploymentId, t.description, t.dueDate, "
+                        + "t.name, t.parentId, t.priority, t.processId, t.processInstanceId, "
+                        + "t.processSessionId, t.status, t.taskId, t.workItemId, oe.id oeid "
                         + "from AuditTaskImpl t, "
-                        + "peopleassignments_potowners po, "
-                        + "organizationalentity oe "
-                        + "where t.id = po.task_id and po.entity_id = oe.id", false)
+                        + "PeopleAssignments_PotOwners po, "
+                        + "OrganizationalEntity oe "
+                        + "where t.id = po.task_id and po.entity_id = oe.id", false )
                 .date(DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME)
                 .label(DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER)
                 .label(DataSetTasksListGridViewImpl.COLUMN_CREATEDBY)
@@ -145,13 +145,13 @@ public class DashbuilderBootstrap {
                 .uuid(HUMAN_TASKS_WITH_ADMIN_DATASET)
                 .name("Human tasks and admins")
                 .dataSource(jbpmDatasource)
-                .dbSQL("select t.activationtime, t.actualowner, t.createdby, "
-                        + "t.createdon, t.deploymentid, t.description, t.duedate, "
-                        + "t.name, t.parentid, t.priority, t.processid, t.processinstanceid, "
-                        + "t.processsessionid, t.status, t.taskid, t.workitemid, oe.id oeid "
+                .dbSQL("select t.activationTime, t.actualOwner, t.createdBy, "
+                        + "t.createdOn, t.deploymentId, t.description, t.dueDate, "
+                        + "t.name, t.parentId, t.priority, t.processId, t.processInstanceId, "
+                        + "t.processSessionId, t.status, t.taskId, t.workItemId, oe.id oeid "
                         + "from AuditTaskImpl t, "
-                        + "peopleassignments_bas bas, "
-                        + "organizationalentity oe "
+                        + "PeopleAssignments_BAs bas, "
+                        + "OrganizationalEntity oe "
                         + "where t.id = bas.task_id and bas.entity_id = oe.id", false)
                 .date(DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME)
                 .label(DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER)
