@@ -49,6 +49,7 @@ Installation notes
     -Djava.security.auth.login.config=$CATALINA_HOME/webapps/kie-drools-wb/WEB-INF/classes/login.config \
     -Dorg.jboss.logging.provider=jdk"
 
+    NOTE: On Debian based systems $CATALINA_HOME needs to be replaced with $CATALINA_BASE. ($CATALINA_HOME defaults to /usr/share/tomcat7 and $CATALINA_BASE defaults to /var/lib/tomcat7/)
     NOTE: this is an example for unix like systems for Windows $CATALINA_HOME needs to be replaced with windows env variable or absolute path
     NOTE: java.security.auth.login.config value includes name of the folder in which application is deployed by default it assumes kie-drools-wb so ensure that matches real installation.
     login.config file can be externalized as well meaning be placed outside of war file.
