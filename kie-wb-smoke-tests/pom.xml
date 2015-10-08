@@ -80,6 +80,24 @@
       <artifactId>slf4j-api</artifactId>
     </dependency>
 
+    <!-- deps for selenium smoke tests -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-support</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-firefox-driver</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+
     <!--  Stay with httpcomponents: it will save us pain (as opposed to changing from resteasy to cxf to cxf 3.0, etc. --> 
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
@@ -341,6 +359,30 @@
               <artifactId>maven-failsafe-plugin</artifactId>
               <configuration>
                 <groups>org.kie.smoke.wb.category.KieWbSmoke</groups>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+
+    <profile>
+      <!-- Enable selenium-based smoke tests to run. E.g.
+           mvn clean install -Pwildfly8x,selenium,kie-wb  -->
+      <id>selenium</id>
+      <activation>
+        <property>
+          <name>selenium</name>
+        </property>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <configuration>
+                <groups>org.kie.smoke.wb.category.KieWbSeleniumSmoke</groups>
               </configuration>
             </plugin>
           </plugins>
