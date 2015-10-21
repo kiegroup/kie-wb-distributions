@@ -189,16 +189,22 @@ public class DashbuilderBootstrap {
                         .buildDef();
 
         DataSetDef processWithVariablesDef = DataSetFactory.newSQLDataSetDef()
-                                .uuid( PROCESS_INSTANCE_WITH_VARIABLES_DATASET)
-                                .name( "Variable for Evalution Process Instances" )
+                                .uuid(PROCESS_INSTANCE_WITH_VARIABLES_DATASET)
+                                .name("Variable for Evalution Process Instances")
                                 .dataSource(jbpmDatasource)
-                                .dbSQL("select pil.processInstanceId pid, pil.processId pname, v.id varid, v.variableId varname, v.value varvalue from ProcessInstanceLog pil, "
-                                        + "( select vil.variableId, max(vil.id) as maxvilid from VariableInstanceLog vil  group by vil.processInstanceId, vil.variableId) "
-                                        + "as x inner join VariableInstanceLog as v on "
-                                        + "v.variableId = x.variableId and v.processInstanceId = pil.processInstanceId and "
-                                        + "v.id = x.maxvilid", false )
+                                .dbSQL("select pil.processInstanceId pid,\n" +
+                                        "       pil.processId pname,\n" +
+                                        "       v.id varid,\n" +
+                                        "       v.variableId varname,\n" +
+                                        "       v.value varvalue\n" +
+                                        "from ProcessInstancelog pil\n" +
+                                        "  inner join (select vil.processInstanceId ,vil.variableId, MAX(vil.ID) maxvilid  FROM VariableInstanceLog vil\n" +
+                                        "  GROUP BY vil.processInstanceId, vil.variableId)  x\n" +
+                                        "    on (x.processInstanceId =pil.processInstanceId)\n" +
+                                        "  INNER JOIN VariableInstanceLog v\n" +
+                                        "    ON (v.variableId = x.variableId  AND v.id = x.maxvilid )", false)
                                 .number("pid")
-                                .label("pname" )
+                                .label("pname")
                                 .number("varid")
                                 .label("varname")
                                 .label("varvalue")
