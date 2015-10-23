@@ -19,7 +19,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.kie.smoke.wb.selenium.util.PageObjectFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class KieSeleniumTest {
 
@@ -28,14 +27,14 @@ public class KieSeleniumTest {
 
     @BeforeClass
     public static void startWebDriver() {
-        //TODO - logic to choose WebDriver implementation based on configuration
-        //TODO - InternetExplorerDriver & ChromeDriver require additional binary file to run
-        driver = new FirefoxDriver();
+        driver = WebDriverFactory.create();
         pof = new PageObjectFactory(driver);
     }
 
     @AfterClass
     public static void stopWebDriver() {
-        driver.close();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
