@@ -1549,6 +1549,7 @@
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-data-filters-client</compileSourcesArtifact>
 
               <!-- Dashbuilder -->
+              <compileSourcesArtifact>org.dashbuilder:dashbuilder-json</compileSourcesArtifact>
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-widgets</compileSourcesArtifact>
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-validations</compileSourcesArtifact>
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-common-client</compileSourcesArtifact>
