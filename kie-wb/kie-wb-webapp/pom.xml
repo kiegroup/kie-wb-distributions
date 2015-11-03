@@ -39,6 +39,7 @@
     <errai.jboss.home>${project.build.directory}/wildfly-${as.version}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
     <gwt.memory.settings>-Xmx4g -Xms1g -XX:MaxPermSize=512m -XX:PermSize=128m -Xss1M</gwt.memory.settings>
+    <webapp.dir>src/main/webapp</webapp.dir>
   </properties>
 
   <dependencies>
@@ -1493,9 +1494,7 @@
           <configuration>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
-            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} 
-              -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true 
-              -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000
+            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000 -Derrai.jboss.home=${errai.jboss.home}
             </extraJvmArgs>
             <draftCompile>true</draftCompile>
             <module>org.kie.workbench.FastCompiledKIEWebapp</module>
@@ -1504,7 +1503,7 @@
             <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>
             <disableCastChecking>true</disableCastChecking>
             <runTarget>kie-wb.html</runTarget>
-            <hostedWebapp>src/main/webapp</hostedWebapp>
+            <hostedWebapp>${webapp.dir}</hostedWebapp>
             <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile, see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
             <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
             <compileSourcesArtifacts>
@@ -1938,6 +1937,53 @@
             </plugin>
           </plugins>
         </pluginManagement>
+      </build>
+    </profile>
+
+    <!-- Hosted mode profile to allow use of standalone full provide
+         and store web app content in .war directory
+         Can be removed when following jiras are resolved that will replace this:
+         https://issues.jboss.org/browse/ERRAI-887
+         https://issues.jboss.org/browse/ERRAI-888
+        -->
+    <profile>
+      <id>hostedMode</id>
+      <activation>
+        <property>
+          <name>hosted</name>
+        </property>
+      </activation>
+      <properties>
+        <webapp.dir>${project.build.directory}/kie-wb.war</webapp.dir>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-webapp-config</id>
+                <phase>process-classes</phase>
+                <configuration>
+                  <target>
+                    <copy
+                      file="${project.build.directory}/wildfly-${as.version}/standalone/configuration/standalone-full.xml"
+                      tofile="${project.build.directory}/wildfly-${as.version}/standalone/configuration/standalone.xml"
+                      overwrite="true"/>
+                    <copy
+                      todir="${project.build.directory}/kie-wb.war"
+                      overwrite="true">
+                      <fileset dir="src/main/webapp"/>
+                    </copy>
+                  </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
     </profile>
 
