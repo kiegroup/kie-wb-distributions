@@ -499,3 +499,8 @@ a.serviceTab:active {
 	border-radius: 4px;
 	overflow: hidden;
 }
+
+/* Override PatternFly default css so border isn't duplicated */
+.navbar-pf {
+    border-top: none;
+}
