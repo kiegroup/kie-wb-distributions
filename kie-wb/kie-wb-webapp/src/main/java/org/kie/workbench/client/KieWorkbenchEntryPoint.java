@@ -17,7 +17,6 @@ package org.kie.workbench.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +29,6 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
-import com.google.gwt.user.client.ui.TextBox;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
@@ -61,7 +57,9 @@ import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
+import org.uberfire.client.views.pfly.menu.UserMenu;
 import org.uberfire.client.workbench.docks.UberfireDocks;
+import org.uberfire.client.workbench.widgets.menu.UtilityMenuBar;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
@@ -122,10 +120,11 @@ public class KieWorkbenchEntryPoint {
     @Inject
     private UberfireDocks uberfireDocks;
 
-    private SuggestBox actionText;
-    private TextBox textSuggestBox;
-    DefaultSuggestionDisplay suggestionDisplay;
-    Map<String, String> actions = new HashMap<String, String>();
+    @Inject
+    private UtilityMenuBar utilityMenuBar;
+
+    @Inject
+    private UserMenu userMenu;
 
     @AfterInitialization
     public void startApp() {
@@ -170,41 +169,47 @@ public class KieWorkbenchEntryPoint {
                                 .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
                                 .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
                                 .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
-                                .newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                                .build();
+
+                menubar.addMenus( menus );
+
+                for( Menus roleMenus : getRoles() ){
+                    userMenu.addMenus( roleMenus );
+                }
+
+                final Menus utilityMenus =
+                        MenuFactory.newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
                             @Override
                             public void execute() {
                                 placeManager.goTo( "FindForm" );
                             }
                         } )
-                                .endMenu()
-                                .newTopLevelMenu( constants.User() + ": " + identity.getIdentifier() )
-                                .position( MenuPosition.RIGHT )
-                                .withItems( getRoles() )
-                                .endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( WorkbenchConfigurationMenuBuilder.class ).getInstance() )
-                                .endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
-                                .endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
-                                .endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
-                                .endMenu()
-                                .build();
+                        .endMenu()
+                        .newTopLevelCustomMenu( iocManager.lookupBean( WorkbenchConfigurationMenuBuilder.class ).getInstance() )
+                        .endMenu()
+                        .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
+                        .endMenu()
+                        .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
+                        .endMenu()
+                        .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
+                        .endMenu()
+                        .newTopLevelCustomMenu( userMenu )
+                        .endMenu()
+                        .build();
 
-                menubar.addMenus( menus );
+                utilityMenuBar.addMenus( utilityMenus );
             }
         } ).isSocialEnable();
     }
 
-    private List<? extends MenuItem> getRoles() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( identity.getRoles().size() );
+    private List<Menus> getRoles() {
+        final List<Menus> result = new ArrayList<Menus>( identity.getRoles().size() );
+        result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new LogoutCommand() ).endMenu().build() );
         for ( final Role role : identity.getRoles() ) {
             if ( !role.getName().equals( "IS_REMEMBER_ME" ) ) {
-                result.add( MenuFactory.newSimpleItem( constants.Role() + ": " + role.getName() ).endMenu().build().getItems().get( 0 ) );
+                result.add( MenuFactory.newSimpleItem( constants.Role() + ": " + role.getName() ).endMenu().build() );
             }
         }
-        result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new LogoutCommand() ).endMenu().build().getItems().get( 0 ) );
-
         return result;
     }
 
