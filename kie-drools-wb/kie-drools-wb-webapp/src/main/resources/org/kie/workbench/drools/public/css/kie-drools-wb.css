@@ -504,3 +504,7 @@ a.serviceTab:active {
 .navbar-pf {
     border-top: none;
 }
+
+.navbar-pf ul.navbar-utility {
+    top: -25px;
+}
