@@ -62,6 +62,7 @@ import org.uberfire.client.workbench.docks.UberfireDocks;
 import org.uberfire.client.workbench.widgets.menu.UtilityMenuBar;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.mvp.Command;
+import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
@@ -166,7 +167,7 @@ public class KieWorkbenchEntryPoint {
                                 .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
                                 .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
                                 .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
-                                .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( G_TASKS ) ).withItems( getTasksViews() ).endMenu()
+                                .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( F_TASKS ) ).place(  getTasksView() ).endMenu()
                                 .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
                                 .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
                                 .build();
@@ -270,17 +271,8 @@ public class KieWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getTasksViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
-
-//        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).withRoles( kieACL.getGrantedRoles( F_TASKS ) ).respondsWith( new Command() {
-//            @Override
-//            public void execute() {
-//                placeManager.goTo( new DefaultPlaceRequest( "Tasks" ) );
-//            }
-//        } ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).withRoles( kieACL.getGrantedRoles( F_TASKS ) ).place( new DefaultPlaceRequest( "DataSet Tasks" ) ).endMenu().build().getItems().get( 0 ) );
-        return result;
+    private PlaceRequest getTasksView() {
+        return new DefaultPlaceRequest( "DataSet Tasks" );
     }
 
     private List<? extends MenuItem> getDashboardViews() {
