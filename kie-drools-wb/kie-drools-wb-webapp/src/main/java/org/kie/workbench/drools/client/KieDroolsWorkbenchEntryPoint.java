@@ -58,6 +58,7 @@ import org.uberfire.client.views.pfly.menu.UserMenu;
 import org.uberfire.client.workbench.widgets.menu.UtilityMenuBar;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.mvp.Command;
+import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
@@ -167,7 +168,7 @@ public class KieDroolsWorkbenchEntryPoint {
                         MenuFactory.newTopLevelMenu( constants.home() ).withItems( getHomeViews( socialEnabled ) ).endMenu()
                                 .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
                                 .newTopLevelMenu( constants.deploy() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
-                                .newTopLevelMenu( constants.tasks() ).withItems( getTasksViews() ).endMenu()
+                                .newTopLevelMenu( constants.tasks() ).place( getTasksView() ).endMenu()
                                 .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
                                 .build();
 
@@ -248,12 +249,8 @@ public class KieDroolsWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getTasksViews() {
-        final List<MenuItem> result = new ArrayList<MenuItem>( 2 );
-
-        result.add( MenuFactory.newSimpleItem( constants.Tasks_List() ).place( new DefaultPlaceRequest( "DataSet Tasks" ) ).endMenu().build().getItems().get( 0 ) );
-
-        return result;
+    private PlaceRequest getTasksView() {
+        return new DefaultPlaceRequest( "DataSet Tasks" );
     }
 
     private List<? extends MenuItem> getExtensionsViews() {
