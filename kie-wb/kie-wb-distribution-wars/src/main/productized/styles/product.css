@@ -37,3 +37,9 @@
     border-bottom-color: #6B6F74;
     box-shadow: none;
 }
+
+.navbar-pf ul.navbar-primary .uf-perspective-context-menu.open > a,
+.navbar-pf ul.navbar-primary .uf-perspective-context-menu > a:hover,
+.navbar-pf ul.navbar-primary .uf-perspective-context-menu > a:focus {
+    color: #7DC3E8;
+}
