@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.guvnor.structure.backend.repositories.EnvironmentParameters;
 import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.jboss.weld.environment.se.WeldContainer;
@@ -43,22 +44,22 @@ public class CreateRepositoryCliCommand implements CliCommand {
         String alias = null;
 
         InputReader input = context.getInput();
-        while (alias == null) {
-            System.out.print(">>Repository alias:");
+        while ( alias == null ) {
+            System.out.print( ">>Repository alias:" );
             alias = input.nextLine();
 
             try {
-                new URI("default://localhost/" + alias);
-            } catch (URISyntaxException e) {
-                System.err.print(">> Invalid value for repository alias: '" + alias + "'");
+                new URI( "default://localhost/" + alias );
+            } catch ( URISyntaxException e ) {
+                System.err.print( ">> Invalid value for repository alias: '" + alias + "'" );
                 alias = null;
             }
 
         }
 
-        Repository repoCheck = repositoryService.getRepository(alias);
-        if (repoCheck != null) {
-            result.append(" Repository with alias: '" + alias + "' already exists, cannot proceed");
+        Repository repoCheck = repositoryService.getRepository( alias );
+        if ( repoCheck != null ) {
+            result.append( " Repository with alias: '" + alias + "' already exists, cannot proceed" );
             return result.toString();
         }
 
@@ -78,6 +79,9 @@ public class CreateRepositoryCliCommand implements CliCommand {
         if ( origin.trim().length() > 0 ) {
             env.put( "origin", origin );
         }
+
+        env.put( EnvironmentParameters.MANAGED,
+                 false );
 
         //Mark this Repository as being created by the kie-config-cli tool. This has no affect on the operation
         //of the Repository in the workbench, but it does indicate to kie-config-cli that the Repository should
