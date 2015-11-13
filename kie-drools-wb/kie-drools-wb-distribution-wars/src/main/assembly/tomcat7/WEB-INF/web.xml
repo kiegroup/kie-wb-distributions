@@ -26,13 +26,18 @@
   </filter-mapping>
 
   <filter>
-    <filter-name>Avoid Host Page Cache</filter-name>
+    <filter-name>Cache Filter</filter-name>
     <filter-class>org.uberfire.ext.security.server.CacheHeadersFilter</filter-class>
   </filter>
 
   <filter-mapping>
-    <filter-name>Avoid Host Page Cache</filter-name>
+    <filter-name>Cache Filter</filter-name>
     <url-pattern>/kie-drools-wb.html</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>Cache Filter</filter-name>
+    <url-pattern>*.js</url-pattern>
   </filter-mapping>
 
   <filter>
