@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -76,8 +76,8 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
     private static final Random random = new Random();
 
     // Test methods ---------------------------------------------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Tests the following REST urls:
      * <p/>
@@ -95,22 +95,6 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
      */
     @Test
     public void testManipulatingRepositoriesAndProjects() throws Exception {
-        {
-            // rest/repositories GET
-            Collection<RepositoryResponse> repoResponses = get(deploymentUrl,
-                    "rest/repositories", mediaType,
-                    200, user, password, 
-                    Collection.class, RepositoryResponse.class);
-            assertFalse("Empty repository list", repoResponses.isEmpty());
-            String ufPlaygroundUrl = null;
-            for( RepositoryResponse repo : repoResponses ) {
-                if ("uf-playground".equals(repo.getName()) ) {
-                    ufPlaygroundUrl = repo.getGitURL();
-                }
-            }
-            assertEquals("UF-Playground Git URL", "git://uf-playground", ufPlaygroundUrl);
-        }
-
         String orgUnitName = "repo-user-" + ouSdf.format(new Date());
         {
             // rest/organizationalunit POST
@@ -120,8 +104,8 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             orgUnit.setDescription("Test user for the Kie Workbench smoke tests");
             orgUnit.setOwner(this.getClass().getName());
 
-            CreateOrganizationalUnitRequest createOuRequest = postEntity(deploymentUrl, "rest/organizationalunits", mediaType, 
-                    202, user, password, 
+            CreateOrganizationalUnitRequest createOuRequest = postEntity(deploymentUrl, "rest/organizationalunits", mediaType,
+                    202, user, password,
                     orgUnit, CreateOrganizationalUnitRequest.class);
             assertNotNull("create org unit request", createOuRequest);
             assertEquals("job request status", JobStatus.APPROVED, createOuRequest.getStatus());
@@ -141,7 +125,7 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             newRepo.setOrganizationalUnitName(orgUnitName);
 
             CreateOrCloneRepositoryRequest createJobRequest = postEntity(deploymentUrl, "rest/repositories", mediaType,
-                    202, user, password, 1d, 
+                    202, user, password, 1d,
                     newRepo, CreateOrCloneRepositoryRequest.class);
             assertNotNull("create repo job request", createJobRequest);
             JobStatus requestStatus = createJobRequest.getStatus();
@@ -151,7 +135,7 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             waitForJobToComplete(deploymentUrl, createJobRequest.getJobId(), createJobRequest.getStatus());
         }
 
-        { 
+        {
             // rest/repositories/{repoName}/projects POST
             // - backwards compatibility
             Entity project = new Entity();
@@ -160,13 +144,13 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             project.setName(testProjectName);
 
             CreateProjectRequest createProjectRequest = postEntity(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType,
-                    202, user, password, 0.5, 
+                    202, user, password, 0.5,
                     project, CreateProjectRequest.class);
 
             // rest/jobs/{jobId} GET
             waitForJobToComplete(deploymentUrl, createProjectRequest.getJobId(), createProjectRequest.getStatus());
         }
-       
+
         String testProjectName = UUID.randomUUID().toString();
         ProjectRequest newProject = new ProjectRequest();
         {
@@ -178,36 +162,36 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             String testVersion = "1.0";
             newProject.setVersion(testVersion);
             CreateProjectRequest createProjectRequest = postEntity(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType,
-                    202, user, password, 0.5, 
+                    202, user, password, 0.5,
                     newProject, CreateProjectRequest.class);
 
             // rest/jobs/{jobId} GET
             waitForJobToComplete(deploymentUrl, createProjectRequest.getJobId(), createProjectRequest.getStatus());
-        } 
-      
+        }
+
         // rest/repositories/{repoName}/projects GET
         Collection<ProjectResponse> projectResponses = get(deploymentUrl,
                 "rest/repositories/" + repoName + "/projects", mediaType,
-                200, user, password, 
+                200, user, password,
                 Collection.class, ProjectResponse.class);
-        
+
         assertNotNull( "Null project request list", projectResponses );
         assertFalse( "Empty project request list", projectResponses.isEmpty() );
         ProjectRequest foundProjReq = null;
-        for( ProjectRequest projReq : projectResponses ) { 
-           if( testProjectName.equals(projReq.getName()) ) { 
+        for( ProjectRequest projReq : projectResponses ) {
+           if( testProjectName.equals(projReq.getName()) ) {
               foundProjReq = projReq;
               break;
            }
         }
-        assertNotNull( "Could not find project", foundProjReq ); 
+        assertNotNull( "Could not find project", foundProjReq );
         assertEquals( "Project group id", newProject.getGroupId(), foundProjReq.getGroupId() );
         assertEquals( "Project version", newProject.getVersion(), foundProjReq.getVersion() );
-      
-        
+
+
         {
             // rest/repositories/{repoName}/projects/{projectName} DELETE
-            DeleteProjectRequest delProjectRequest = delete(deploymentUrl, 
+            DeleteProjectRequest delProjectRequest = delete(deploymentUrl,
                     "rest/repositories/" + repoName + "/projects/" + testProjectName, mediaType,
                     202, user, password,
                     DeleteProjectRequest.class);
@@ -216,19 +200,19 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             // rest/jobs/{jobId} GET
             waitForJobToComplete(deploymentUrl, jobId, delProjectRequest.getStatus());
         }
-      
+
         {
             // rest/repositories/{repoName}/projects/{projectName} GET
-            Collection<ProjectResponse> projectList = get(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType, 
+            Collection<ProjectResponse> projectList = get(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType,
                     200, user, password,
                     Collection.class, ProjectResponse.class);
             assertNotNull( "Null project list", projectList );
 
-            for( ProjectResponse project : projectList ) { 
+            for( ProjectResponse project : projectList ) {
                assertNotEquals( "Test project should have been deleted", testProjectName, project.getName() );
             }
         }
-        
+
         {
             // rest/organizationalunits/{ouName}/repositories/{repoName} DELETE
             RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRequest = delete(deploymentUrl,
@@ -240,27 +224,45 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             // rest/jobs/{jobId} GET
             waitForJobToComplete(deploymentUrl, jobId, remRepoFromOuRequest.getStatus());
         }
-       
+
+        {
+            // rest/repositories GET
+            Collection<RepositoryResponse> repoList = get(deploymentUrl, "rest/repositories/", mediaType,
+                    200, user, password,
+                   Collection.class, RepositoryResponse.class);
+
+            assertNotNull( "Null repo list", repoList );
+            assertFalse( "Empty repo list", repoList.isEmpty() );
+            boolean repoFound = false;
+            for( RepositoryResponse repo : repoList ) {
+               if( repoName.equals(repo.getName()) ) {
+                   repoFound = true;
+                   assertTrue( "Empty URL for repo '" + repoName + "'", repo.getGitURL() != null && ! repo.getGitURL().isEmpty() );
+               }
+            }
+            assertTrue( "Could not find repo '" + repoName + "'", repoFound );
+        }
+
         {
             // rest/repositories/{repoName} DELETE
             RemoveRepositoryRequest delRepoRequest = delete(deploymentUrl, "rest/repositories/" + repoName, mediaType,
-                    202, user, password, 
+                    202, user, password,
                     RemoveRepositoryRequest.class);
             String jobId = delRepoRequest.getJobId();
 
             // rest/jobs/{jobId} GET
             waitForJobToComplete(deploymentUrl, jobId, delRepoRequest.getStatus());
         }
-        
+
         {
             // rest/repositories GET
             Collection<RepositoryResponse> repoList = get(deploymentUrl, "rest/repositories/", mediaType,
-                    200, user, password, 
+                    200, user, password,
                    Collection.class, RepositoryResponse.class);
 
             assertNotNull( "Null repo list", repoList );
             assertFalse( "Empty repo list", repoList.isEmpty() );
-            for( RepositoryResponse repo : repoList ) { 
+            for( RepositoryResponse repo : repoList ) {
                assertNotEquals( "Repository should have been deleted", repoName, repo.getName() );
             }
         }
@@ -294,12 +296,12 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             project.setName(projectName);
             project.setGroupId(groupId);
             project.setVersion(version);
-            
-            CreateProjectRequest createProjectRequest = postEntity(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType, 
-                    202, user, password, 
-                    project, 
+
+            CreateProjectRequest createProjectRequest = postEntity(deploymentUrl, "rest/repositories/" + repoName + "/projects", mediaType,
+                    202, user, password,
+                    project,
                     CreateProjectRequest.class);
-                
+
             // rest/jobs/{jobId} GET
             waitForJobToComplete(deploymentUrl, createProjectRequest.getJobId(), createProjectRequest.getStatus());
         }
@@ -308,7 +310,7 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             // rest/repositories/{repoName}/projects POST
             CompileProjectRequest compileRequest = post(deploymentUrl,
                     "rest/repositories/" + repoName + "/projects/" + projectName + "/maven/compile", mediaType,
-                    202, user, password, 
+                    202, user, password,
                     CompileProjectRequest.class);
 
             // rest/jobs/{jobId} GET
@@ -320,9 +322,9 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
     private JobResult waitForJobToComplete(URL deploymentUrl, String jobId, JobStatus jobStatus) throws Exception {
         return waitForJobToHaveStatus(deploymentUrl, jobId, jobStatus, JobStatus.SUCCESS);
     }
-    
+
     private JobResult waitForJobToHaveStatus(URL deploymentUrl, String jobId, JobStatus jobStatus, JobStatus expectedStatus ) throws Exception {
-        assertTrue( "Initial status of request should be ACCEPTED or APROVED: " + jobStatus, 
+        assertTrue( "Initial status of request should be ACCEPTED or APROVED: " + jobStatus,
                 jobStatus.equals(JobStatus.ACCEPTED) || jobStatus.equals(JobStatus.APPROVED) );
         int wait = 0;
         JobResult jobResult = null;
@@ -331,16 +333,16 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             jobResult = get(deploymentUrl, "rest/jobs/" + jobId, mediaType, 200, user, password, JobResult.class);
             assertEquals( jobResult.getJobId(), jobId );
             jobStatus = jobResult.getStatus();
-            if( jobStatus.equals(expectedStatus) ) { 
+            if( jobStatus.equals(expectedStatus) ) {
                 break;
-            } else if( jobStatus.equals(JobStatus.FAIL) ) { 
+            } else if( jobStatus.equals(JobStatus.FAIL) ) {
                 fail( "Request failed." );
             }
             ++wait;
             Thread.sleep(3*1000);
         }
         assertTrue( "Too many tries!", wait < maxTries );
-        
+
         return jobResult;
     }
 
@@ -365,13 +367,13 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
 
         {
             // rest/organizationalunits POST
-            for( int i = 0; i < 2; ++i ) { 
+            for( int i = 0; i < 2; ++i ) {
                 OrganizationalUnit orgUnit = new OrganizationalUnit();
                 orgUnit.setDescription("Smoke Tests OU");
                 orgUnit.setName(UUID.randomUUID().toString());
                 orgUnit.setOwner(this.getClass().getSimpleName());
-                CreateOrganizationalUnitRequest createOURequest = postEntity(deploymentUrl, "rest/organizationalunits", mediaType, 
-                        202, user, password,  
+                CreateOrganizationalUnitRequest createOURequest = postEntity(deploymentUrl, "rest/organizationalunits", mediaType,
+                        202, user, password,
                         orgUnit, CreateOrganizationalUnitRequest.class);
 
                 // rest/jobs/{jobId}
@@ -384,7 +386,7 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
         {
             // rest/organizaionalunits GET
             Collection<OrganizationalUnit> orgUnits = get(deploymentUrl, "rest/organizationalunits",  mediaType,
-                    200, user, password, 
+                    200, user, password,
                     Collection.class, OrganizationalUnit.class);
             assertEquals("Exepcted an OU to be added.", origUnitsSize + 2, orgUnits.size());
         }
@@ -399,7 +401,7 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             newRepo.setOrganizationalUnitName(ouList.get(0).getName());
 
             CreateOrCloneRepositoryRequest createRepoRequest = postEntity(deploymentUrl, "rest/repositories", mediaType,
-                    202, user, password, 
+                    202, user, password,
                     newRepo, CreateOrCloneRepositoryRequest.class);
             assertNotNull("create repo job request", createRepoRequest);
             assertEquals("job request status", JobStatus.APPROVED, createRepoRequest.getStatus());
@@ -407,10 +409,10 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
             // rest/jobs/{jobId}
            waitForJobToComplete(deploymentUrl, createRepoRequest.getJobId(), createRepoRequest.getStatus());
         }
-       
+
         {
             // rest/organizationalunits/{ou}/repositories/{repoName} POST
-            AddRepositoryToOrganizationalUnitRequest addRepoToOuRequest = post(deploymentUrl, 
+            AddRepositoryToOrganizationalUnitRequest addRepoToOuRequest = post(deploymentUrl,
                     "rest/organizationalunits/" + ouList.get(1).getName() + "/repositories/" + repoName, mediaType,
                     202, user, password,
                     AddRepositoryToOrganizationalUnitRequest.class);
@@ -425,8 +427,8 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
         {
             // rest/organizationalunits/{ou} GET
             OrganizationalUnit orgUnitRequest = get(deploymentUrl,
-                     "rest/organizationalunits/" + ouList.get(1).getName(), mediaType, 
-                    200, user, password, 
+                     "rest/organizationalunits/" + ouList.get(1).getName(), mediaType,
+                    200, user, password,
                     OrganizationalUnit.class);
             assertNotNull("organizational unit request", orgUnitRequest);
 
@@ -435,9 +437,9 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
 
         {
             // rest/organizationalunits/{ou}/repositories/{repoName} DELETE
-            RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRquest = delete(deploymentUrl, 
+            RemoveRepositoryFromOrganizationalUnitRequest remRepoFromOuRquest = delete(deploymentUrl,
                     "rest/organizationalunits/" + ouList.get(1).getName() + "/repositories/" + repoName, mediaType,
-                    202, user, password, 
+                    202, user, password,
                     RemoveRepositoryFromOrganizationalUnitRequest.class);
             assertNotNull("delete repo from ou job request", remRepoFromOuRquest);
             assertEquals("job request status", JobStatus.APPROVED, remRepoFromOuRquest.getStatus());
@@ -454,19 +456,19 @@ public class GuvnorRestSmokeIntegrationTest extends AbstractWorkbenchIntegration
 
             assertFalse("repository should have been deleted from organizational unit", orgUnitRequest.getRepositories().contains(repoName));
         }
-        
+
         {
             // rest/organizationalunits/{ou} DELETE
-            RemoveOrganizationalUnitRequest removeOrgUnitRequest = delete(deploymentUrl, "rest/organizationalunits/" + ouList.get(1).getName(), mediaType, 
-                    202, user, password, 
+            RemoveOrganizationalUnitRequest removeOrgUnitRequest = delete(deploymentUrl, "rest/organizationalunits/" + ouList.get(1).getName(), mediaType,
+                    202, user, password,
                     RemoveOrganizationalUnitRequest.class);
             assertNotNull("organizational unit request", removeOrgUnitRequest);
             waitForJobToComplete(deploymentUrl, removeOrgUnitRequest.getJobId(), removeOrgUnitRequest.getStatus());
         }
-        
+
         {
             // verify the OU was deleted - the GET request should return 404
-            get(deploymentUrl, "rest/organizationalunits/" + ouList.get(1).getName(), mediaType, 
+            get(deploymentUrl, "rest/organizationalunits/" + ouList.get(1).getName(), mediaType,
                     404, user, password);
         }
     }
