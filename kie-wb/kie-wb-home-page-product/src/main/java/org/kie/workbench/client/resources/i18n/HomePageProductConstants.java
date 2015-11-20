@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.workbench.drools.client.resources.i18n;
+package org.kie.workbench.client.resources.i18n;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.Messages;
@@ -21,29 +21,41 @@ import com.google.gwt.i18n.client.Messages;
 /**
  * i18n constants for the Home Page
  */
-public interface HomeConstants
+public interface HomePageProductConstants
         extends
         Messages {
 
-    HomeConstants INSTANCE = GWT.create( HomeConstants.class );
+    HomePageProductConstants INSTANCE = GWT.create( HomePageProductConstants.class );
 
     String authoring_header();
 
     String deploy_header();
 
-    String analyze_header();
+    String process_Management_header();
+
+    String tasks_header();
+
+    String dashboards_header();
 
     String authoring_paragraph();
 
     String deploy_paragraph();
 
-    String analyze_paragraph();
+    String process_Management_paragraph();
+
+    String tasks_paragraph();
+
+    String dashboards_paragraph();
 
     String authoring_image();
 
     String deploy_image();
 
-    String analyze_image();
+    String process_Management_image();
+
+    String tasks_image();
+
+    String dashboards_image();
 
     String home_title();
 

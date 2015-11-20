@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import com.google.gwt.core.client.GWT;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
-import org.kie.workbench.drools.client.resources.i18n.HomeConstants;
+import org.kie.workbench.drools.client.resources.i18n.HomePageProductConstants;
 import org.uberfire.client.mvp.PlaceManager;
 
 /**
@@ -32,7 +32,7 @@ import org.uberfire.client.mvp.PlaceManager;
 @ApplicationScoped
 public class HomeProducer {
 
-    private HomeConstants homeConstants = HomeConstants.INSTANCE;
+    private HomePageProductConstants homeConstants = HomePageProductConstants.INSTANCE;
 
     private HomeModel model;
 
