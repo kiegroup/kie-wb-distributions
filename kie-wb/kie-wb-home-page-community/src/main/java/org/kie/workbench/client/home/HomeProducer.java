@@ -23,7 +23,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
-import org.kie.workbench.client.resources.i18n.HomeConstants;
+import org.kie.workbench.client.resources.i18n.HomePageCommunityConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
@@ -40,7 +40,7 @@ import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
 @ApplicationScoped
 public class HomeProducer {
 
-    private HomeConstants constants = HomeConstants.INSTANCE;
+    private HomePageCommunityConstants constants = HomePageCommunityConstants.INSTANCE;
 
     private HomeModel model;
 

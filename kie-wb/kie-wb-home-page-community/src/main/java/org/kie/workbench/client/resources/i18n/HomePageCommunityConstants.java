@@ -28,11 +28,11 @@ import com.google.gwt.i18n.client.Messages;
  * properties file can still be used on the server). To use this, use
  * <code>GWT.create(Constants.class)</code>.
  */
-public interface HomeConstants
+public interface HomePageCommunityConstants
         extends
         Messages {
 
-    HomeConstants INSTANCE = GWT.create( HomeConstants.class );
+    HomePageCommunityConstants INSTANCE = GWT.create( HomePageCommunityConstants.class );
 
     String homeTheKnowledgeLifeCycle();
 
