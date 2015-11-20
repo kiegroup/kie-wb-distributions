@@ -25,7 +25,7 @@ import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.Section;
 import org.kie.workbench.common.screens.home.model.SectionEntry;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
-import org.kie.workbench.drools.client.resources.i18n.HomeConstants;
+import org.kie.workbench.drools.client.resources.i18n.HomePageCommunityConstants;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 
@@ -37,7 +37,7 @@ import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.*;
 @ApplicationScoped
 public class HomeProducer {
 
-    private HomeConstants constants = HomeConstants.INSTANCE;
+    private HomePageCommunityConstants constants = HomePageCommunityConstants.INSTANCE;
 
     private HomeModel model;
 

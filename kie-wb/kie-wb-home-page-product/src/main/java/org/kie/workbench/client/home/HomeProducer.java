@@ -23,7 +23,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.LocaleInfo;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
-import org.kie.workbench.client.resources.i18n.HomeConstants;
+import org.kie.workbench.client.resources.i18n.HomePageProductConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
 import org.uberfire.client.mvp.PlaceManager;
@@ -36,7 +36,7 @@ import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
 @ApplicationScoped
 public class HomeProducer {
 
-    private HomeConstants homeConstants = HomeConstants.INSTANCE;
+    private HomePageProductConstants homeConstants = HomePageProductConstants.INSTANCE;
 
     private HomeModel model;
 
