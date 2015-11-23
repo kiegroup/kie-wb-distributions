@@ -47,12 +47,13 @@ import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 @ApplicationScoped
 public class ApplicationScopedProducer {
 
+    private IOService ioService;
+    private IOSearchService ioSearchService;
+    private AuthorizationManager authorizationManager = new RuntimeAuthorizationManager();
+
     @Inject
     @Named("luceneConfig")
     private LuceneConfig config;
-
-    private IOService ioService;
-    private IOSearchService ioSearchService;
 
     @Inject
     private IOWatchServiceNonDotImpl watchService;
@@ -111,7 +112,7 @@ public class ApplicationScopedProducer {
 
     @Produces
     public AuthorizationManager getAuthManager() {
-        return new RuntimeAuthorizationManager();
+        return authorizationManager;
     }
 
     @Produces
