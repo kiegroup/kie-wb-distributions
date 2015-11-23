@@ -60,12 +60,18 @@ public class DashbuilderBootstrap {
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
 
+
+    public void setDataSetDefRegistry(DataSetDefRegistry dataSetDefRegistry){
+        this.dataSetDefRegistry = dataSetDefRegistry;
+    }
+
     @PostConstruct
     protected void init() {
         // figure out data source JNDI name
         findDataSourceJNDI();
         registerDataSetDefinitions();
     }
+
 
     protected void registerDataSetDefinitions() {
 
@@ -117,14 +123,14 @@ public class DashbuilderBootstrap {
                         .uuid(HUMAN_TASKS_WITH_USER_DATASET)
                         .name("Human tasks and users")
                         .dataSource(jbpmDatasource)
-                        .dbSQL( "select  t.activationTime, t.actualOwner, t.createdBy, "
+                        .dbSQL("select  t.activationTime, t.actualOwner, t.createdBy, "
                                 + "t.createdOn, t.deploymentId, t.description, t.dueDate, "
                                 + "t.name, t.parentId, t.priority, t.processId, t.processInstanceId, "
                                 + "t.processSessionId, t.status, t.taskId, t.workItemId, oe.id oeid "
                                 + "from AuditTaskImpl t, "
                                 + "PeopleAssignments_PotOwners po, "
                                 + "OrganizationalEntity oe "
-                                + "where t.id = po.task_id and po.entity_id = oe.id", false )
+                                + "where t.id = po.task_id and po.entity_id = oe.id", false)
                         .date(DataSetTasksListGridViewImpl.COLUMN_ACTIVATIONTIME)
                         .label(DataSetTasksListGridViewImpl.COLUMN_ACTUALOWNER)
                         .label(DataSetTasksListGridViewImpl.COLUMN_CREATEDBY)
@@ -180,7 +186,7 @@ public class DashbuilderBootstrap {
                         .name("Request List")
                         .dataSource(jbpmDatasource)
                         .dbTable(REQUEST_LIST_TABLE, false)
-                        .number( RequestListViewImpl.COLUMN_ID )
+                        .number(RequestListViewImpl.COLUMN_ID)
                         .date(RequestListViewImpl.COLUMN_TIMESTAMP)
                         .label(RequestListViewImpl.COLUMN_STATUS)
                         .label(RequestListViewImpl.COLUMN_COMMANDNAME)
@@ -197,7 +203,7 @@ public class DashbuilderBootstrap {
                                         "       v.id varid,\n" +
                                         "       v.variableId varname,\n" +
                                         "       v.value varvalue\n" +
-                                        "from ProcessInstancelog pil\n" +
+                                        "from ProcessInstanceLog pil\n" +
                                         "  inner join (select vil.processInstanceId ,vil.variableId, MAX(vil.ID) maxvilid  FROM VariableInstanceLog vil\n" +
                                         "  GROUP BY vil.processInstanceId, vil.variableId)  x\n" +
                                         "    on (x.processInstanceId =pil.processInstanceId)\n" +
@@ -222,8 +228,8 @@ public class DashbuilderBootstrap {
                 .name("Tasks monitoring")
                 .dataSource(jbpmDatasource)
                 .dbSQL("select p.processname, t.* " +
-                        "from processinstancelog p inner join bamtasksummary t " +
-                        "on (t.processinstanceid = p.processinstanceid)", true)
+                        "from ProcessInstanceLog p inner join BAMTaskSummary t " +
+                        "on (t.processInstanceId = p.processInstanceId)", true)
                 .buildDef();
 
 

@@ -50,6 +50,10 @@ public class DashbuilderBootstrap {
     @Inject
     protected DataSetDefRegistry dataSetDefRegistry;
 
+    public void setDataSetDefRegistry(DataSetDefRegistry dataSetDefRegistry){
+        this.dataSetDefRegistry = dataSetDefRegistry;
+    }
+
     @PostConstruct
     protected void init() {
         // figure out data source JNDI name
@@ -154,7 +158,7 @@ public class DashbuilderBootstrap {
                                 "       v.id varid,\n" +
                                 "       v.variableId varname,\n" +
                                 "       v.value varvalue\n" +
-                                "from ProcessInstancelog pil\n" +
+                                "from ProcessInstanceLog pil\n" +
                                 "  inner join (select vil.processInstanceId ,vil.variableId, MAX(vil.ID) maxvilid  FROM VariableInstanceLog vil\n" +
                                 "  GROUP BY vil.processInstanceId, vil.variableId)  x\n" +
                                 "    on (x.processInstanceId =pil.processInstanceId)\n" +
