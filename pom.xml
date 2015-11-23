@@ -129,18 +129,6 @@
       </modules>
     </profile>
 
-    <profile>
-      <id>functionalTests</id>
-      <activation>
-        <property>
-          <name>functionalTests</name>
-        </property>
-      </activation>
-      <modules>
-        <module>kie-wb-webapp-test</module>
-      </modules>
-    </profile>
-
   </profiles>
 
 </project>
