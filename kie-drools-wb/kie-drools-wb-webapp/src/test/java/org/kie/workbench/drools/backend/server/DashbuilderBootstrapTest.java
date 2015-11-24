@@ -15,36 +15,30 @@
  */
 package org.kie.workbench.drools.backend.server;
 
-import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.dashbuilder.dataset.def.DataSetDef;
 import org.dashbuilder.dataset.def.DataSetDefRegistry;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(GwtMockitoTestRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class DashbuilderBootstrapTest {
 
     @Mock
     DataSetDefRegistry dataSetDefRegistryMock;
 
+    @InjectMocks
     DashbuilderBootstrap dashbuilderBootstrap;
-
-    @Before
-    public void setupMocks() {
-        dashbuilderBootstrap = new DashbuilderBootstrap();
-        dashbuilderBootstrap.setDataSetDefRegistry(dataSetDefRegistryMock);
-
-    }
 
     @Test
     public void registerDataSetDefinitionsTest() {
         dashbuilderBootstrap.registerDataSetDefinitions();
-        verify(dataSetDefRegistryMock,times(4)).registerDataSetDef(any(DataSetDef.class));
+        verify(dashbuilderBootstrap.dataSetDefRegistry,times(4)).registerDataSetDef(any(DataSetDef.class));
     }
 
 
