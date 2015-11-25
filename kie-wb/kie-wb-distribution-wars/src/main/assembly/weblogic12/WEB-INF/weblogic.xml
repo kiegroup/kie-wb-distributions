@@ -30,4 +30,41 @@
     <wls:role-name>analyst</wls:role-name>
     <wls:principal-name>analyst</wls:principal-name>
   </wls:security-role-assignment>
+  <!-- rest security -->
+  <wls:security-role-assignment>
+    <wls:role-name>rest-all</wls:role-name>
+    <wls:principal-name>rest-all</wls:principal-name>
+  </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>rest-project</wls:role-name>
+    <wls:principal-name>rest-project</wls:principal-name>
+  </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>rest-deployment</wls:role-name>
+    <wls:principal-name>rest-deployment</wls:principal-name>
+  </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>rest-process</wls:role-name>
+    <wls:principal-name>rest-process</wls:principal-name>
+  </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>rest-process-read-only</wls:role-name>
+    <wls:principal-name>rest-process-read-only</wls:principal-name>
+  </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>rest-task</wls:role-name>
+    <wls:principal-name>rest-task</wls:principal-name>
+  </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>rest-task-read-only</wls:role-name>
+    <wls:principal-name>rest-task-read-only</wls:principal-name>
+  </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>rest-query</wls:role-name>
+    <wls:principal-name>rest-query</wls:principal-name>
+  </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>rest-client</wls:role-name>
+    <wls:principal-name>rest-client</wls:principal-name>
+  </wls:security-role-assignment>
 </wls:weblogic-web-app>
