@@ -115,8 +115,8 @@
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
     <!-- REST Permissions -->
     <init-param>
-      <param-name>jersey.config.server.provider.classnames</param-name>
-      <param-value>org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature</param-value>
+      <param-name>com.sun.jersey.spi.container.ResourceFilters</param-name>
+      <param-value>com.sun.jersey.api.container.filter.RolesAllowedResourceFilterFactory</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
@@ -687,6 +687,44 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       reporting of the system and people who interact with the system.
     </description>
     <role-name>manager</role-name>
+  </security-role>
+
+  <!-- rest api security roles -->
+  <security-role>
+    <description></description>
+    <role-name>rest-all</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-project</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-deployment</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-process</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-process-read-only</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-task</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-task-read-only</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-query</role-name>
+  </security-role>
+  <security-role>
+    <description></description>
+    <role-name>rest-client</role-name>
   </security-role>
 
   <error-page>
