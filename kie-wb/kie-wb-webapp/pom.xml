@@ -1727,7 +1727,8 @@
           <execution>
             <id>gwt-compile</id>
             <goals>
-              <goal>resources</goal>
+              <!-- Do not use 'resources' goal as it does not play well with resource filtering and is adding Java
+                   source files into the build output directory (and they then end up in the WAR). -->
               <goal>compile</goal>
             </goals>
           </execution>
@@ -1737,10 +1738,12 @@
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <packagingExcludes>
-            **/javax/**/*.*,
-            **/client/**/*.class,
-            **/*.symbolMap,
-            WEB-INF/classes/logback.xml
+            WEB-INF/classes/javax/**/*.*,
+            WEB-INF/classes/**/client/**/*.class,
+            WEB-INF/classes/**/public/**,
+            WEB-INF/classes/logback.xml,
+            **/*.gwt.xml,
+            **/*.symbolMap
           </packagingExcludes>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
