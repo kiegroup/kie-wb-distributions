@@ -1515,6 +1515,7 @@
             <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} 
               -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true 
               -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000
+              -Dorg.uberfire.async.executor.safemode=true
             </extraJvmArgs>
             <draftCompile>true</draftCompile>
             <module>org.kie.workbench.FastCompiledKIEWebapp</module>
