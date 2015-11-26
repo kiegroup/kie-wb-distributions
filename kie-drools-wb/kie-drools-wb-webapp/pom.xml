@@ -127,6 +127,11 @@
       <artifactId>javax.inject</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.github.gwtbootstrap</groupId>
+      <artifactId>gwt-bootstrap</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
