@@ -378,10 +378,12 @@
     </profile>
 
     <profile>
-      <!-- Enable selenium UI smoke tests to be run with Firefox. 
-      Example usage: mvn clean install -Pwildfly8x,kie-wb,selenium
-           
-      To use Internet Explorer see profile ie -->
+      <!-- Enable selenium UI smoke tests to be run with Firefox.
+
+           Example usage: mvn clean install -Pwildfly8x,kie-wb,selenium (executes all default smoke tests + UI ones)
+                          mvn clean install -Pwildfly8x,kie-wb,selenium -Dit.test=LoginIntegrationTest (executes just one test)
+
+           To use Internet Explorer see profile 'ie' -->
       <id>selenium</id>
       <activation>
         <property>
@@ -393,9 +395,18 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
-            <configuration>
-              <groups>org.kie.smoke.wb.category.KieWbSeleniumSmoke</groups>
-            </configuration>
+            <executions>
+              <execution>
+                <id>selenium-tests</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>integration-test</goal>
+                </goals>
+                <configuration>
+                  <groups>org.kie.smoke.wb.category.KieWbSeleniumSmoke</groups>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
