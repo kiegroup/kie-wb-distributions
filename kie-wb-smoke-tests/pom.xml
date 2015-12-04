@@ -101,6 +101,10 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
     </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
 
     <!--  Stay with httpcomponents: it will save us pain (as opposed to changing from resteasy to cxf to cxf 3.0, etc. --> 
     <dependency>
@@ -397,6 +401,10 @@
                 </goals>
                 <configuration>
                   <groups>org.kie.smoke.wb.category.KieWbSeleniumSmoke</groups>
+                  <systemPropertyVariables>
+                    <!-- directory where screenshots taken by webdriver will be placed -->
+                    <selenium.screenshots.dir>${project.build.directory}/screenshots</selenium.screenshots.dir>
+                  </systemPropertyVariables>
                 </configuration>
               </execution>
             </executions>

@@ -17,13 +17,17 @@ package org.kie.smoke.wb.selenium.model;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.kie.smoke.wb.selenium.util.PageObjectFactory;
+import org.kie.smoke.wb.selenium.util.ScreenshotOnFailure;
 import org.openqa.selenium.WebDriver;
 
 public class KieSeleniumTest {
 
     protected static WebDriver driver;
     protected static PageObjectFactory pof;
+    @Rule
+    public ScreenshotOnFailure screenshotter = new ScreenshotOnFailure(driver);
 
     @BeforeClass
     public static void startWebDriver() {
