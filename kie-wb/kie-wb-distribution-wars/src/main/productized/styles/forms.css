@@ -60,7 +60,9 @@ input[type="checkbox"] {
     margin-right: 6px;
 }
 
-.login{
+.login {
     margin: 20px 4px 0 0;
     float: right;
+    font: inherit;    
+    line-height: 1.3333333;
 }
