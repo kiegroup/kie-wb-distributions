@@ -24,6 +24,10 @@
     letter-spacing: 0.03em;
 }
 
+#rcue-login-screen h3#logout {
+    color: #ffffff;    
+}
+
 #rcue-login-screen form {
     position: absolute;
     bottom: 15%;

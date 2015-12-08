@@ -43,7 +43,7 @@
         <fieldset>
           <legend><img src="images/RH_JBoss_BPMS_Logo.png" alt="RED HAT JBOSS BPM SUITE" title="RED HAT JBOSS BPM SUITE"/></legend>
 
-          <h3><i18n:message key="logoutSuccssful">Logout successful</i18n:message></h3>
+          <h3 id="logout"><i18n:message key="logoutSuccssful">Logout successful</i18n:message></h3>
           <p>
             <input class="button login" type="submit" value='<i18n:message key="loginAgain">Login again</i18n:message>'/>
           </p>
