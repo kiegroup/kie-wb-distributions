@@ -29,9 +29,15 @@ public class KieSeleniumTest {
     @Rule
     public ScreenshotOnFailure screenshotter = new ScreenshotOnFailure(driver);
 
+    //Credentials based on from src/test/filtered-resources/eap-jbossas-wildfly-shared/config/application-users.properties
+    public final static String KIE_PASS = "mary123@";
+    public final static String KIE_USER = "mary";
+
     @BeforeClass
     public static void startWebDriver() {
         driver = WebDriverFactory.create();
+        driver.manage().window().maximize();
+
         pof = new PageObjectFactory(driver);
     }
 

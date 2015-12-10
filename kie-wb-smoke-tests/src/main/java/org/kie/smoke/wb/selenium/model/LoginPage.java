@@ -15,6 +15,7 @@
  */
 package org.kie.smoke.wb.selenium.model;
 
+import org.kie.smoke.wb.selenium.model.persps.HomePerspective;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,10 +32,10 @@ public class LoginPage extends PageObject {
 
     public LoginPage(WebDriver driver) {
         super(driver);
-        driver.get(BASE_URL);
     }
 
     public HomePerspective loginAs(String username, String password) {
+        driver.get(BASE_URL);
         submitCredentials(username, password);
         HomePerspective hp = new HomePerspective(driver);
         hp.waitForLoaded();
