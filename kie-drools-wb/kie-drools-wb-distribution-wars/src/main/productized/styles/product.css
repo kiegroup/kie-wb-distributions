@@ -43,3 +43,11 @@
 .navbar-pf ul.navbar-primary .uf-perspective-context-menu > a:focus {
     color: #7DC3E8;
 }
+
+.navbar-pf ul.navbar-primary > .active > a,
+.navbar-pf ul.navbar-primary > .active > a:hover,
+.navbar-pf ul.navbar-primary > .active > a:focus {
+    background-image: linear-gradient(to bottom, #72757a, #64686c);
+    border-top-color: #949699;
+    border-bottom-color: #6B6F74;
+}
