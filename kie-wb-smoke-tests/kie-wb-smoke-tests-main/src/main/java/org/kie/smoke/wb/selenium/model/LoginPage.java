@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 JBoss by Red Hat.
+ * Copyright 2015 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.kie.smoke.wb.selenium.model;
 
+import org.kie.smoke.wb.selenium.model.persps.HomePerspective;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,10 +32,10 @@ public class LoginPage extends PageObject {
 
     public LoginPage(WebDriver driver) {
         super(driver);
-        driver.get(BASE_URL);
     }
 
     public HomePerspective loginAs(String username, String password) {
+        driver.get(BASE_URL);
         submitCredentials(username, password);
         HomePerspective hp = new HomePerspective(driver);
         hp.waitForLoaded();

@@ -13,14 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.smoke.wb.selenium.util;
+package org.kie.smoke.wb.selenium.model.persps;
 
+import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-public class ByUtil {
+public class HomePerspective extends AbstractPerspective {
 
-    public static By xpath(String format, Object... params) {
-        String xpathStr = String.format(format, params);
-        return By.xpath(xpathStr);
+    private static final By CAROUSEL = By.className("carousel-caption");
+
+    public HomePerspective(WebDriver driver) {
+        super(driver);
+    }
+
+    @Override
+    public void waitForLoaded() {
+        Waits.elementPresent(driver, CAROUSEL);
+    }
+
+    @Override
+    public boolean isDisplayed() {
+        return Waits.isElementPresent(driver, CAROUSEL);
     }
 }

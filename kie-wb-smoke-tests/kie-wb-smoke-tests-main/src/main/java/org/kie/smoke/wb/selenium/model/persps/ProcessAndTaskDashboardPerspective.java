@@ -13,14 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.smoke.wb.selenium.util;
+package org.kie.smoke.wb.selenium.model.persps;
 
+import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-public class ByUtil {
+public class ProcessAndTaskDashboardPerspective extends AbstractPerspective {
 
-    public static By xpath(String format, Object... params) {
-        String xpathStr = String.format(format, params);
-        return By.xpath(xpathStr);
+    private static final By PROCESSES_TAB = By.id("processes");
+
+    public ProcessAndTaskDashboardPerspective(WebDriver driver) {
+        super(driver);
+    }
+
+    @Override
+    public boolean isDisplayed() {
+        return Waits.isElementPresent(driver, PROCESSES_TAB);
     }
 }

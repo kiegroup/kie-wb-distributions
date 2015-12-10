@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 JBoss by Red Hat.
+ * Copyright 2015 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,9 +29,15 @@ public class KieSeleniumTest {
     @Rule
     public ScreenshotOnFailure screenshotter = new ScreenshotOnFailure(driver);
 
+    //Credentials based on from src/test/filtered-resources/eap-wildfly-shared/config/application-users.properties
+    public final static String KIE_PASS = "mary123@";
+    public final static String KIE_USER = "mary";
+
     @BeforeClass
     public static void startWebDriver() {
         driver = WebDriverFactory.create();
+        driver.manage().window().maximize();
+
         pof = new PageObjectFactory(driver);
     }
 
