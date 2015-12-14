@@ -13,37 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.smoke.wb.selenium.model;
+package org.kie.smoke.wb.selenium.model.persps;
 
+import org.kie.smoke.wb.selenium.model.LoginPage;
+import org.kie.smoke.wb.selenium.model.PageObject;
+import org.kie.smoke.wb.selenium.model.PrimaryNavbar;
 import org.kie.smoke.wb.selenium.util.PageObjectFactory;
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class HomePerspective extends PageObject {
+public abstract class AbstractPerspective extends PageObject {
 
     private final PrimaryNavbar navbar;
-    private static final By CAROUSEL = By.className("carousel-caption");
 
-    public HomePerspective(WebDriver driver) {
+    public AbstractPerspective(WebDriver driver) {
         super(driver);
         navbar = PageFactory.initElements(driver, PrimaryNavbar.class);
     }
 
-    public void waitForLoaded() {
-        Waits.elementPresent(driver, CAROUSEL);
+    public PrimaryNavbar getNavbar() {
+        return navbar;
     }
 
-    public boolean isDisplayed() {
-        try {
-            Waits.elementPresent(driver, CAROUSEL, 2);
-            return true;
-        } catch (NoSuchElementException nse) {
-            return false;
-        }
+    /**
+     * Waiting for the perspective to be fully loaded. No-op by default.
+     */
+    public void waitForLoaded() {
     }
 
     public LoginPage logout() {
@@ -53,4 +51,6 @@ public class HomePerspective extends PageObject {
         loginAgainButton.click();
         return new PageObjectFactory(driver).createLoginPage();
     }
+
+    public abstract boolean isDisplayed();
 }

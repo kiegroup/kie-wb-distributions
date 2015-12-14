@@ -21,7 +21,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * Utility for creating page objects without having to explicitly manipulate WebDriver.
+ * Utility for creating page objects without having to explicitly manipulate
+ * WebDriver.
  */
 public class PageObjectFactory {
 
