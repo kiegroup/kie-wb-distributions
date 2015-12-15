@@ -26,6 +26,8 @@ public class KieSeleniumTest {
 
     protected static WebDriver driver;
     protected static PageObjectFactory pof;
+    public static final boolean IS_KIE_WB = isKieWb();
+
     @Rule
     public ScreenshotOnFailure screenshotter = new ScreenshotOnFailure(driver);
 
@@ -46,5 +48,13 @@ public class KieSeleniumTest {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    private static boolean isKieWb() {
+        String prop = System.getProperty("app.name");
+        if (!("kie-wb".equals(prop) || "kie-drools-wb".equals(prop))) {
+            throw new IllegalStateException("Invalid app.name='" + prop + "' Expecting kie-wb or kie-drools-wb");
+        }
+        return "kie-wb".equals(prop);
     }
 }

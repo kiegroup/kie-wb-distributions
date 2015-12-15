@@ -50,6 +50,9 @@ public class LoadAllPerspectivesIntegrationTest extends KieSeleniumTest {
     public static List<Object[]> perspectives() {
         List<Object[]> params = new ArrayList<Object[]>();
         for (Persp<?> p : Persp.getAllPerspectives()) {
+            if (!IS_KIE_WB && p.isKieWbOnly()) {
+                continue; //Don't add kie-wb specific perspectives when running against kie-drools-wb
+            }
             params.add(new Object[]{p});
         }
         return params;
