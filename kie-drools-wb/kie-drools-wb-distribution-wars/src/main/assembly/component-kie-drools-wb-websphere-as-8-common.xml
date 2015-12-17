@@ -74,6 +74,12 @@
           <exclude>WEB-INF/lib/org.osgi.core-*.jar</exclude>
           <exclude>WEB-INF/lib/javassist-*.jar</exclude>
           <exclude>WEB-INF/lib/jgroups-*.jar</exclude>
+
+          <!-- Exclude the UF Security management provider for Wildfly, the default one in the workbench, and provide the one for this distro, if any.-->
+          <exclude>WEB-INF/lib/uberfire-security-management-wildfly-*.jar</exclude>
+          <!-- Exclude the default security management settings and provide a custom ones for this distro, if any. -->
+          <exclude>WEB-INF/classes/security-management.properties</exclude>
+
         </excludes>
       </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>

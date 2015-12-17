@@ -26,6 +26,10 @@
             <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
             <!-- Errai 1.1+ CDI Compat -->
             <exclude>WEB-INF/lib/errai-weld-integration-*.jar</exclude>
+            
+            <!-- Exclude the default security management settings and provide a custom ones for this distro. -->
+            <exclude>WEB-INF/classes/security-management.properties</exclude>
+            
           </excludes>
         </unpackOptions>
         <useStrictFiltering>true</useStrictFiltering>

@@ -99,6 +99,9 @@
   <inherits name="org.jboss.errai.ui.UI"/>
   <inherits name="org.jboss.errai.enterprise.CDI"/>
 
+  <!-- Security management. -->
+  <inherits name="org.uberfire.ext.security.management.UberfireSecurityManagementWorkbench"/>
+  
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/kie-wb.css'/>
 

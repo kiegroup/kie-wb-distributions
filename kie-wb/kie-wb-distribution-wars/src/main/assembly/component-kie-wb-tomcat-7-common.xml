@@ -62,6 +62,10 @@
           <include>xalan:serializer</include>
           <include>xerces:xercesImpl</include>
           <include>xml-resolver:xml-resolver</include>
+          
+          <!-- UF Security management provider for Tomcat. -->
+          <include>org.uberfire:uberfire-security-management-tomcat</include>
+          
         </includes>
         <unpack>false</unpack>
         <outputDirectory>WEB-INF/lib</outputDirectory>
@@ -94,6 +98,12 @@
             <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
             <!-- Errai 1.1+ CDI Compat -->
             <exclude>WEB-INF/lib/errai-weld-integration-*.jar</exclude>
+            
+            <!-- Exclude the UF Security management provider for Wildfly, the default one in the workbench, and provide the one for this distro.-->
+            <exclude>WEB-INF/lib/uberfire-security-management-wildfly-*.jar</exclude>
+            <!-- Exclude the default security management settings and provide a custom ones for this distro. -->
+            <exclude>WEB-INF/classes/security-management.properties</exclude>
+            
           </excludes>
         </unpackOptions>
         <useStrictFiltering>true</useStrictFiltering>

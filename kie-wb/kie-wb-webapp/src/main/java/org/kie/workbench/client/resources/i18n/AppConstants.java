@@ -48,6 +48,10 @@ public interface AppConstants
 
     String People();
 
+    String userManagement();
+    
+    String groupManagement();
+
     String Authoring();
 
     String Process_Management();
