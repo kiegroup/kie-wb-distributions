@@ -49,6 +49,10 @@ public interface AppConstants
     String timeline();
 
     String people();
+    
+    String userManagement();
+    
+    String groupManagement();
 
     String deploy();
 

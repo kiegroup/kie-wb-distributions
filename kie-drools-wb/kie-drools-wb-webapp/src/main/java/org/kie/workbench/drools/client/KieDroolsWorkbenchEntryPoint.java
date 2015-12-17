@@ -58,6 +58,7 @@ import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.views.pfly.menu.UserMenu;
 import org.uberfire.client.workbench.widgets.menu.UtilityMenuBar;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
+import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
@@ -120,6 +121,9 @@ public class KieDroolsWorkbenchEntryPoint {
     @Inject
     private UserMenu userMenu;
 
+    @Inject
+    private ClientUserSystemManager userSystemManager;
+
     @AfterInitialization
     public void startApp() {
         kieSecurityService.call( new RemoteCallback<String>() {
@@ -159,48 +163,62 @@ public class KieDroolsWorkbenchEntryPoint {
     }
 
     private void setupMenu() {
+
+        // Social services.
         socialConfigurationService.call( new RemoteCallback<Boolean>() {
             public void callback( final Boolean socialEnabled ) {
 
-                final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
+                // Wait for user management services to be initialized, if any.
+                userSystemManager.waitForInitialization(new Command() {
 
-                final Menus menus =
-                        MenuFactory.newTopLevelMenu( constants.home() ).withItems( getHomeViews( socialEnabled ) ).endMenu()
-                                .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
-                                .newTopLevelMenu( constants.deploy() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
-                                .newTopLevelMenu( constants.tasks() ).place( getTasksView() ).endMenu()
-                                .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
-                                .build();
+                    @Override
+                    public void execute() {
 
-                menubar.addMenus( menus );
+                        final boolean isUserSystemManagerActive = userSystemManager.isActive();
 
-                for ( Menus roleMenus : getRoles() ) {
-                    userMenu.addMenus( roleMenus );
-                }
+                        final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
 
-                final Menus utilityMenus =
-                        MenuFactory
-                                .newTopLevelCustomMenu( iocManager.lookupBean( WorkbenchConfigurationMenuBuilder.class ).getInstance() )
-                                .endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
-                                .endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
-                                .endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
-                                .endMenu()
-                                .newTopLevelCustomMenu( userMenu )
-                                .endMenu()
-                                .build();
+                        final Menus menus =
+                                MenuFactory.newTopLevelMenu(constants.home()).withItems(getHomeViews( socialEnabled, isUserSystemManagerActive )).endMenu()
+                                        .newTopLevelMenu(constants.authoring()).withRoles(kieACL.getGrantedRoles(G_AUTHORING)).withItems(getAuthoringViews()).endMenu()
+                                        .newTopLevelMenu(constants.deploy()).withRoles(kieACL.getGrantedRoles(G_AUTHORING)).withItems(getDeploymentViews()).endMenu()
+                                        .newTopLevelMenu(constants.tasks()).place(getTasksView()).endMenu()
+                                        .newTopLevelMenu(constants.extensions()).withRoles(kieACL.getGrantedRoles(F_EXTENSIONS)).withItems(getExtensionsViews()).endMenu()
+                                        .newTopLevelCustomMenu(iocManager.lookupBean(SearchMenuBuilder.class).getInstance()).endMenu()
+                                        .build();
 
-                utilityMenuBar.addMenus( utilityMenus );
+                        menubar.addMenus(menus);
+
+                        for (Menus roleMenus : getRoles()) {
+                            userMenu.addMenus(roleMenus);
+                        }
+
+                        final Menus utilityMenus =
+                                MenuFactory
+                                        .newTopLevelCustomMenu(iocManager.lookupBean(WorkbenchConfigurationMenuBuilder.class).getInstance())
+                                        .endMenu()
+                                        .newTopLevelCustomMenu(iocManager.lookupBean(CustomSplashHelp.class).getInstance())
+                                        .endMenu()
+                                        .newTopLevelCustomMenu(iocManager.lookupBean(AboutMenuBuilder.class).getInstance())
+                                        .endMenu()
+                                        .newTopLevelCustomMenu(iocManager.lookupBean(ResetPerspectivesMenuBuilder.class).getInstance())
+                                        .endMenu()
+                                        .newTopLevelCustomMenu(userMenu)
+                                        .endMenu()
+                                        .build();
+
+                        utilityMenuBar.addMenus(utilityMenus);
+
+                    }
+                });
+
             }
         } ).isSocialEnable();
     }
 
     private List<Menus> getRoles() {
         final List<Menus> result = new ArrayList<Menus>( identity.getRoles().size() );
-        result.add( MenuFactory.newSimpleItem( constants.LogOut() ).respondsWith( new LogoutCommand() ).endMenu().build() );
+        result.add(MenuFactory.newSimpleItem(constants.LogOut()).respondsWith(new LogoutCommand()).endMenu().build());
         for ( final Role role : identity.getRoles() ) {
             if ( !role.getName().equals( "IS_REMEMBER_ME" ) ) {
                 result.add( MenuFactory.newSimpleItem( constants.Role() + ": " + role.getName() ).endMenu().build() );
@@ -209,16 +227,25 @@ public class KieDroolsWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getHomeViews( Boolean socialEnabled ) {
+    private List<? extends MenuItem> getHomeViews( final Boolean socialEnabled, final boolean usersSystemActive  ) {
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
         result.add( MenuFactory.newSimpleItem( constants.homePage() ).place( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) ).endMenu().build().getItems().get( 0 ) );
-        if ( socialEnabled ) {
-            result.add( MenuFactory.newSimpleItem( constants.timeline() ).place( new DefaultPlaceRequest( "SocialHomePagePerspective" ) ).endMenu().build().getItems().get( 0 ) );
+
+        // Social menu items.
+        if ( socialEnabled) {
+            result.add( MenuFactory.newSimpleItem( constants.timeline() ).place( new DefaultPlaceRequest( "SocialHomePagePerspective" ) ).endMenu().build().getItems().get(0));
 
             result.add( MenuFactory.newSimpleItem( constants.people() ).place( new DefaultPlaceRequest( "UserHomePagePerspective" ) ).endMenu().build().getItems().get( 0 ) );
         }
+
+        // User management menu items (only if services are active and constrained to admin roles).
+        if ( usersSystemActive ) {
+            result.add( MenuFactory.newSimpleItem( constants.userManagement()).withRoles(kieACL.getGrantedRoles( F_ADMINISTRATION ) ).place( new DefaultPlaceRequest( "UsersManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
+            result.add( MenuFactory.newSimpleItem( constants.groupManagement()).withRoles(kieACL.getGrantedRoles( F_ADMINISTRATION ) ).place( new DefaultPlaceRequest( "GroupsManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
+        }
+
         return result;
     }
 
@@ -231,7 +258,7 @@ public class KieDroolsWorkbenchEntryPoint {
 
         result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) ).place( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.administration() ).withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) ).place( new DefaultPlaceRequest( "AdministrationPerspective" ) ).endMenu().build().getItems().get( 0 ) );
+        result.add(MenuFactory.newSimpleItem(constants.administration()).withRoles(kieACL.getGrantedRoles(F_ADMINISTRATION)).place(new DefaultPlaceRequest("AdministrationPerspective")).endMenu().build().getItems().get(0));
 
         return result;
     }

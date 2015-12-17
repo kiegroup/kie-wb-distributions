@@ -224,6 +224,12 @@
       <artifactId>hibernate-commons-annotations</artifactId>
     </dependency>
 
+    <!-- UF Security management provider for Tomcat. -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-security-management-tomcat</artifactId>
+    </dependency>
+    
     <!-- for tomcat and RestEasy -->
     <dependency>
       <groupId>org.scannotation</groupId>
