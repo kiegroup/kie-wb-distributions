@@ -23,6 +23,8 @@
     <version.wildfly10>10.0.0.CR4</version.wildfly10>
 
     <tomcat7.deployable.classifier>tomcat7</tomcat7.deployable.classifier>
+    <!-- There is no Tomcat 8 specific WAR, so use the one for Tomcat 7 -->
+    <tomcat8.deployable.classifier>tomcat7</tomcat8.deployable.classifier>
     <wildfly8.deployable.classifier>wildfly8</wildfly8.deployable.classifier>
     <!-- There is no specific deployble for WildFly 10 yet, so use the next best thing - WildFly 8 deployable-->
     <wildfly10.deployable.classifier>wildfly8</wildfly10.deployable.classifier>
@@ -100,9 +102,11 @@
       </activation>
 
       <properties>
-        <tomcat.deployable.classifier>tomcat7-redhat</tomcat.deployable.classifier>
+        <tomcat7.deployable.classifier>tomcat7-redhat</tomcat7.deployable.classifier>
+        <!-- There is no Tomcat 8 specific WAR, so use the one for Tomcat 7 -->
+        <tomcat8.deployable.classifier>tomcat7-redhat</tomcat8.deployable.classifier>
         <eap64.deployable.classifier>eap6_4-redhat</eap64.deployable.classifier>
-        <!-- There is no productized WAR for WildFlies-->
+        <!-- There is no productized WAR for WildFlies -->
         <wildlfy8.deployable.classifier>NONE</wildlfy8.deployable.classifier>
         <wildlfy10.deployable.classifier>NONE</wildlfy10.deployable.classifier>
       </properties>
