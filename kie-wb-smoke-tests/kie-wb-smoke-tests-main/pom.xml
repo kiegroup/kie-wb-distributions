@@ -687,7 +687,7 @@
                   <deployable>
                     <groupId>${deployable.groupId}</groupId>
                     <artifactId>${deployable.artifactId}</artifactId>
-                    <classifier>tomcat7</classifier> <!-- No Tomcat8 specific deployable needed (yet) -->
+                    <classifier>${tomcat8.deployable.classifier}</classifier>
                     <type>war</type>
                   </deployable>
                 </deployables>
