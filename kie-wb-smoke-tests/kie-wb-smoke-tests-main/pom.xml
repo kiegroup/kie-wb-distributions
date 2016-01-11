@@ -601,13 +601,13 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>tomcat7</classifier>
+          <classifier>${tomcat8.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>tomcat7</classifier>
+          <classifier>${tomcat8.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
       </dependencies>
