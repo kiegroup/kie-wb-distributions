@@ -15,7 +15,6 @@
  */
 package org.kie.workbench.client.perspectives;
 
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -32,22 +31,17 @@ import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.panels.impl.MultiListWorkbenchPanelPresenter;
-import org.uberfire.client.workbench.panels.impl.SimpleWorkbenchPanelPresenter;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
-import org.uberfire.workbench.model.CompassPosition;
-import org.uberfire.workbench.model.PanelDefinition;
 import org.uberfire.workbench.model.PerspectiveDefinition;
-import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
-import org.uberfire.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
-import org.uberfire.workbench.model.menu.MenuItem;
+import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "AuthoringPerspective", isTransient = false)
+@WorkbenchPerspective( identifier = "AuthoringPerspective", isTransient = false )
 public class DroolsAuthoringPerspective {
 
     private AppConstants constants = AppConstants.INSTANCE;
@@ -72,13 +66,13 @@ public class DroolsAuthoringPerspective {
 
     @PostConstruct
     public void setup() {
-        docks.setup("AuthoringPerspective", new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) );
+        docks.setup( "AuthoringPerspective", new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) );
     }
 
     @Perspective
     public PerspectiveDefinition getPerspective() {
         PerspectiveDefinitionImpl perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
-        perspective.setName(constants.Project_Authoring());
+        perspective.setName( constants.Project_Authoring() );
 
         return perspective;
     }
@@ -123,7 +117,15 @@ public class DroolsAuthoringPerspective {
                 .endMenu()
                 .newTopLevelMenu( AppConstants.INSTANCE.Repository() )
                 .withItems( repositoryMenu.getMenuItems() )
-                .endMenu().build();
+                .endMenu()
+                .newTopLevelMenu( constants.assetSearch() ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "FindForm" );
+                    }
+                } )
+                .endMenu()
+                .build();
     }
 
 }

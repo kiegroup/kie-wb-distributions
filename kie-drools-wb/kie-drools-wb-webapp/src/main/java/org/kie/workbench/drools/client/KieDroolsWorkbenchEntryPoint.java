@@ -41,6 +41,7 @@ import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
 import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.jbpm.console.ng.ga.forms.service.PlaceManagerActivityService;
+import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.menu.AboutMenuBuilder;
@@ -62,7 +63,6 @@ import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
-import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
 import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.*;
@@ -170,22 +170,17 @@ public class KieDroolsWorkbenchEntryPoint {
                                 .newTopLevelMenu( constants.deploy() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
                                 .newTopLevelMenu( constants.tasks() ).place( getTasksView() ).endMenu()
                                 .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
                                 .build();
 
                 menubar.addMenus( menus );
 
-                for( Menus roleMenus : getRoles() ){
+                for ( Menus roleMenus : getRoles() ) {
                     userMenu.addMenus( roleMenus );
                 }
 
                 final Menus utilityMenus =
-                        MenuFactory.newTopLevelMenu( constants.find() ).withRoles( kieACL.getGrantedRoles( F_SEARCH ) ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
-                            @Override
-                            public void execute() {
-                                placeManager.goTo( "FindForm" );
-                            }
-                        } )
-                                .endMenu()
+                        MenuFactory
                                 .newTopLevelCustomMenu( iocManager.lookupBean( WorkbenchConfigurationMenuBuilder.class ).getInstance() )
                                 .endMenu()
                                 .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
