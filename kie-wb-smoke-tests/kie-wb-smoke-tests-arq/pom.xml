@@ -871,7 +871,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
-              <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=512m</argLine>
+              <argLine>-Xms512m -Xmx1024m</argLine>
               <systemPropertyVariables>
                 <jboss.server.port>${jboss.server.port}</jboss.server.port>
                 <jboss.mgmt.server.port>${jboss.mgmt.server.port}</jboss.mgmt.server.port>
@@ -1074,7 +1074,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
-              <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=512m</argLine>
+              <argLine>-Xms512m -Xmx1024m</argLine>
               <systemPropertyVariables>
                 <jboss.server.port>${wildfly.server.port}</jboss.server.port>
                 <jboss.mgmt.server.port>${jv.mgmt.server.port}</jboss.mgmt.server.port>

@@ -16,7 +16,7 @@
 package org.kie.workbench.drools.client.perspectives;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
@@ -39,7 +39,7 @@ import org.uberfire.workbench.model.menu.Menus;
 /**
  * A Perspective to show M2_REPO related screen
  */
-@ApplicationScoped
+@Dependent
 @WorkbenchPerspective( identifier = M2RepoPerspective.PERSPECTIVE_ID, isDefault = false )
 public class M2RepoPerspective extends FlowPanel {
 
@@ -59,9 +59,8 @@ public class M2RepoPerspective extends FlowPanel {
     @Inject
     private SyncBeanManager iocManager;
 
-    @Inject
     @WorkbenchPanel( parts = "M2RepoEditor" )
-    FlowPanel m2RepoEditor;
+    FlowPanel m2RepoEditor = new FlowPanel();
 
     @PostConstruct
     private void init() {
