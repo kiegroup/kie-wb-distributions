@@ -215,7 +215,7 @@
             </container>
             <configuration>
               <properties>
-                <cargo.jvmargs>-Xmx1g -XX:MaxPermSize=512m</cargo.jvmargs>
+                <cargo.jvmargs>-Xmx1g</cargo.jvmargs>
               </properties>
             </configuration>
             <deployables>

@@ -300,10 +300,9 @@
       <artifactId>stax2-api</artifactId>
     </dependency>
 
-    <!-- Errai integration that supports CDI 1.0 -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-weld-integration</artifactId>
+      <artifactId>errai-cdi-server</artifactId>
     </dependency>
 
     <!-- UF Security management provider for Tomcat. -->
