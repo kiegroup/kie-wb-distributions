@@ -17,6 +17,8 @@ package org.kie.smoke.wb.selenium.util;
 
 import org.kie.smoke.wb.selenium.model.PrimaryNavbar;
 import org.kie.smoke.wb.selenium.model.LoginPage;
+import org.kie.smoke.wb.selenium.model.Notification;
+import org.kie.smoke.wb.selenium.model.SecondaryNavbar;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
@@ -36,8 +38,16 @@ public class PageObjectFactory {
         return createPageObject(LoginPage.class);
     }
 
-    public PrimaryNavbar createNavBar() {
+    public PrimaryNavbar createPrimaryNavbar() {
         return createPageObject(PrimaryNavbar.class);
+    }
+
+    public SecondaryNavbar createSecondaryNavbar() {
+        return createPageObject(SecondaryNavbar.class);
+    }
+
+    public Notification createNotification() {
+        return createPageObject(Notification.class);
     }
 
     private <T> T createPageObject(Class<T> pageObjectClass) {

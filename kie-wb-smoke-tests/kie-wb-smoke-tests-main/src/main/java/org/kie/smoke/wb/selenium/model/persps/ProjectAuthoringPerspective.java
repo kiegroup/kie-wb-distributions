@@ -15,9 +15,13 @@
  */
 package org.kie.smoke.wb.selenium.model.persps;
 
+import org.kie.smoke.wb.selenium.model.CreateNewItemModal;
+import org.kie.smoke.wb.selenium.model.EnumerationEditor;
+import org.kie.smoke.wb.selenium.model.SecondaryNavbar;
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 
 public class ProjectAuthoringPerspective extends AbstractPerspective {
 
@@ -25,8 +29,11 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
     //Project explorer bradcrumb toggle, whose presence indicates that PEX content has been loaded
     private static final By PEX_BREADCRUMB_TOGGLE = By.cssSelector(".fa-chevron-down");
 
+    private final SecondaryNavbar secondaryNavbar;
+
     public ProjectAuthoringPerspective(WebDriver driver) {
         super(driver);
+        secondaryNavbar = PageFactory.initElements(driver, SecondaryNavbar.class);
     }
 
     @Override
@@ -37,5 +44,20 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
     @Override
     public boolean isDisplayed() {
         return Waits.isElementPresent(driver, PROJECT_EXPLORER_TITLE);
+    }
+
+    public SecondaryNavbar getSecondaryNavbar() {
+        return secondaryNavbar;
+    }
+
+    public EnumerationEditor newEnumeration(String filename) {
+        CreateNewItemModal modal = secondaryNavbar.newItem(SecondaryNavbar.Item.Enumeration);
+        modal.create(filename);
+        return PageFactory.initElements(driver, EnumerationEditor.class);
+    }
+
+    public ProjectEditor openProjectEditor() {
+        driver.findElement(By.xpath("//button[contains(.,'Open Project Editor')]")).click();
+        return PageFactory.initElements(driver, ProjectEditor.class);
     }
 }

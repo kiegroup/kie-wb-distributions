@@ -26,8 +26,8 @@ public class Waits {
 
     private static final int DEFAULT_TIMEOUT = 15;
 
-    public static void elementVisible(WebDriver driver, By locator, int timeoutSeconds) {
-        new WebDriverWait(driver, timeoutSeconds)
+    public static WebElement elementVisible(WebDriver driver, By locator, int timeoutSeconds) {
+        return new WebDriverWait(driver, timeoutSeconds)
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
