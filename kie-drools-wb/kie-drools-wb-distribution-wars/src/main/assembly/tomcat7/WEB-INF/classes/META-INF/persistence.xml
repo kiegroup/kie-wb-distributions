@@ -80,8 +80,6 @@
 
     <!-- deployment store -->
     <class>org.jbpm.kie.services.impl.store.DeploymentStoreEntry</class>
-    <!-- query service storage -->
-    <class>org.jbpm.kie.services.impl.query.persistence.QueryDefinitionEntity</class>
 
     <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
     <properties>
