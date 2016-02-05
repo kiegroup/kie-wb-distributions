@@ -15,6 +15,8 @@
 
 package org.kie.smoke.arq.wb.rest;
 
+import java.net.URL;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -23,15 +25,9 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.kie.smoke.arq.wb.deploy.KieWbWarDeploy;
-import org.kie.smoke.wb.AbstractWorkbenchIntegrationTest;
-import org.kie.smoke.wb.category.KieDroolsWbSmoke;
-import org.kie.smoke.wb.category.KieWbSmoke;
 import org.kie.smoke.wb.rest.GuvnorRestSmokeIntegrationTest;
-
-import java.net.URL;
 
 @RunAsClient
 @RunWith(Arquillian.class)
@@ -51,12 +47,12 @@ public class GuvnorRestArquillianIntegrationTest {
     @BeforeClass
     public static void waitForServer() throws Exception {
         // the server needs time to process the deployment
-        Thread.sleep(3 * 1000);
+        Thread.sleep( 3 * 1000 );
     }
 
     @Before
     public void setupDeploymentUrl() {
-        mainTest.deploymentUrl = this. deploymentUrl;
+        mainTest.deploymentUrl = this.deploymentUrl;
     }
 
     @Test
@@ -65,8 +61,23 @@ public class GuvnorRestArquillianIntegrationTest {
     }
 
     @Test
-    public void testMavenOperations() throws Exception {
-        mainTest.testMavenOperations();
+    public void testMavenOperationsCompile() throws Exception {
+        mainTest.testMavenOperationsCompile();
+    }
+
+    @Test
+    public void testMavenOperationsInstall() throws Exception {
+        mainTest.testMavenOperationsInstall();
+    }
+
+    @Test
+    public void testMavenOperationsInstallClashingGAV() throws Exception {
+        mainTest.testMavenOperationsInstallClashingGAV();
+    }
+
+    @Test
+    public void testMavenOperationsNewProjectClashingGAV() throws Exception {
+        mainTest.testMavenOperationsNewProjectClashingGAV();
     }
 
     @Test
