@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -27,6 +27,7 @@ import java.util.Map;
 
 import javax.jms.Queue;
 import javax.naming.InitialContext;
+import javax.swing.text.html.HTMLDocument.RunElement;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -40,9 +41,8 @@ import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
 import org.kie.remote.client.api.RemoteJmsRuntimeEngineBuilder;
-import org.kie.remote.client.api.RemoteJmsRuntimeEngineFactory;
 import org.kie.remote.client.api.RemoteRuntimeEngineFactory;
-import org.kie.services.client.api.command.RemoteRuntimeEngine;
+import org.kie.remote.client.internal.command.RemoteRuntimeEngine;
 import org.kie.smoke.wb.AbstractWorkbenchIntegrationTest;
 import org.kie.smoke.wb.category.JMSSmoke;
 import org.kie.smoke.wb.category.KieWbSmoke;
@@ -67,7 +67,7 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
     public static void setupDeployment() throws Exception {
         deployJbpmPlayGroundIntegrationTests(deploymentUrl, RuntimeStrategy.SINGLETON);
     }
-    
+
     // Helper methods ------------------------------------------------------------------------------------------------------------
 
     /**
@@ -79,15 +79,13 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
      */
     public void remoteApiInitiatorIdentityTest(String user, String password) {
         // setup
-        RemoteJmsRuntimeEngineFactory remoteSessionFactory
-                = RemoteJmsRuntimeEngineFactory.newBuilder()
+        RuntimeEngine runtimeEngine
+                = RemoteRuntimeEngineFactory.newJmsBuilder()
                 .addDeploymentId(deploymentId)
                 .addRemoteInitialContext(remoteInitialContext)
                 .addUserName(user)
                 .addPassword(password)
-                .buildFactory();
-
-        RemoteRuntimeEngine runtimeEngine = remoteSessionFactory.newRuntimeEngine();
+                .build();
 
         KieSession ksession = runtimeEngine.getKieSession();
         ProcessInstance procInst = ksession.startProcess(TestConstants.HUMAN_TASK_PROCESS_ID);
@@ -110,7 +108,7 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
 
     public void remoteApiHumanTaskGroupIdTest(URL deploymentUrl) {
         RemoteJmsRuntimeEngineBuilder jreBuilder
-                = RemoteJmsRuntimeEngineFactory.newBuilder()
+                = RemoteRuntimeEngineFactory.newJmsBuilder()
                 .addDeploymentId(deploymentId)
                 .useSsl(true)
                 .addHostName("localhost")
