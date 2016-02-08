@@ -1700,6 +1700,7 @@
         </property>
       </activation>
       <properties>
+        <gwt.memory.settings>-Xmx3g -Xms1g -Xss1M</gwt.memory.settings>
         <gwt.compiler.localWorkers>4</gwt.compiler.localWorkers>
       </properties>
       <build>
