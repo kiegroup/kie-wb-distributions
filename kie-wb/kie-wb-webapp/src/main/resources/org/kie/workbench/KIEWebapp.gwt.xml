@@ -95,6 +95,9 @@
   <inherits name="org.drools.workbench.screens.scorecardxls.DroolsWorkbenchScoreCardXLSEditorClient"/>
   <inherits name="org.drools.workbench.screens.testscenario.DroolsWorkbenchTestScenarioEditorClient"/>
 
+  <!-- Optaplanner Workbench Screens -->
+  <inherits name="org.optaplanner.workbench.screens.domaineditor.OptaPlannerWorkbenchDomainEditorClient"/>
+
   <!-- Errai -->
   <inherits name="org.jboss.errai.ui.UI"/>
   <inherits name="org.jboss.errai.enterprise.CDI"/>
