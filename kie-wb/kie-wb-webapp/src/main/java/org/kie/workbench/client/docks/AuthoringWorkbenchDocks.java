@@ -15,10 +15,13 @@
  */
 package org.kie.workbench.client.docks;
 
+import java.util.Set;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import org.guvnor.common.services.shared.security.KieWorkbenchACL;
+import org.jboss.errai.security.shared.api.Role;
 import org.kie.workbench.common.screens.datamodeller.client.DataModelerContext;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchContext;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchContextChangeEvent;
@@ -29,6 +32,7 @@ import org.uberfire.client.workbench.docks.UberfireDockReadyEvent;
 import org.uberfire.client.workbench.docks.UberfireDocks;
 import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.rpc.SessionInfo;
 
 @Dependent
 public class AuthoringWorkbenchDocks {
@@ -47,8 +51,28 @@ public class AuthoringWorkbenchDocks {
 
     private DataModelerContext lastActiveContext;
 
+    @Inject
+    private KieWorkbenchACL kieACL;
+
+    @Inject
+    private SessionInfo sessionInfo;
+
+    private UberfireDock plannerDock = null;
+
     public void perspectiveChangeEvent( @Observes UberfireDockReadyEvent dockReadyEvent ) {
         if ( authoringPerspectiveIdentifier != null && dockReadyEvent.getCurrentPerspective().equals( authoringPerspectiveIdentifier ) ) {
+            if ( hasPlannerDomainGrant() ) {
+                if ( plannerDock == null ) {
+                    plannerDock = new UberfireDock( UberfireDockPosition.EAST, "CALCULATOR", new DefaultPlaceRequest( "PlannerDomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( "OptaPlanner" );
+                } else {
+                    //avoid duplications
+                    uberfireDocks.remove( plannerDock );
+                }
+                uberfireDocks.add( plannerDock );
+            } else if ( plannerDock != null ) {
+                uberfireDocks.remove( plannerDock );
+            }
+
             if ( projectExplorerDock != null ) {
                 uberfireDocks.expand( projectExplorerDock );
             }
@@ -68,7 +92,7 @@ public class AuthoringWorkbenchDocks {
         uberfireDocks.disable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );
     }
 
-    public void onContextChange(@Observes DataModelerWorkbenchContextChangeEvent contextEvent) {
+    public void onContextChange( @Observes DataModelerWorkbenchContextChangeEvent contextEvent ) {
         handleDocks();
     }
 
@@ -97,4 +121,18 @@ public class AuthoringWorkbenchDocks {
         return context != null && context.getEditionMode() == DataModelerContext.EditionMode.GRAPHICAL_MODE;
     }
 
+    private boolean hasPlannerDomainGrant() {
+        Set<String> grantedRoles = kieACL.getGrantedRoles( "wb_optaplanner_domain" );
+        boolean plannerGrant = false;
+
+        if ( sessionInfo != null && sessionInfo.getIdentity() != null && sessionInfo.getIdentity().getRoles() != null ) {
+            for ( Role role : sessionInfo.getIdentity().getRoles() ) {
+                if ( grantedRoles.contains( role.getName() ) ) {
+                    plannerGrant = true;
+                    break;
+                }
+            }
+        }
+        return plannerGrant;
+    }
 }
