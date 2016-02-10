@@ -40,9 +40,7 @@ import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
 import org.kie.remote.client.api.RemoteJmsRuntimeEngineBuilder;
-import org.kie.remote.client.api.RemoteJmsRuntimeEngineFactory;
 import org.kie.remote.client.api.RemoteRuntimeEngineFactory;
-import org.kie.services.client.api.command.RemoteRuntimeEngine;
 import org.kie.smoke.wb.AbstractWorkbenchIntegrationTest;
 import org.kie.smoke.wb.category.JMSSmoke;
 import org.kie.smoke.wb.category.KieWbSmoke;
@@ -79,15 +77,12 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
      */
     public void remoteApiInitiatorIdentityTest(String user, String password) {
         // setup
-        RemoteJmsRuntimeEngineFactory remoteSessionFactory
-                = RemoteJmsRuntimeEngineFactory.newBuilder()
+        RuntimeEngine runtimeEngine = RemoteRuntimeEngineFactory.newJmsBuilder()
                 .addDeploymentId(deploymentId)
                 .addRemoteInitialContext(remoteInitialContext)
                 .addUserName(user)
                 .addPassword(password)
-                .buildFactory();
-
-        RemoteRuntimeEngine runtimeEngine = remoteSessionFactory.newRuntimeEngine();
+                .build();
 
         KieSession ksession = runtimeEngine.getKieSession();
         ProcessInstance procInst = ksession.startProcess(TestConstants.HUMAN_TASK_PROCESS_ID);
@@ -109,8 +104,7 @@ public class KieRemoteJmsSmokeIntegrationTest extends AbstractWorkbenchIntegrati
     }
 
     public void remoteApiHumanTaskGroupIdTest(URL deploymentUrl) {
-        RemoteJmsRuntimeEngineBuilder jreBuilder
-                = RemoteJmsRuntimeEngineFactory.newBuilder()
+        RemoteJmsRuntimeEngineBuilder jreBuilder = RemoteRuntimeEngineFactory.newJmsBuilder()
                 .addDeploymentId(deploymentId)
                 .useSsl(true)
                 .addHostName("localhost")
