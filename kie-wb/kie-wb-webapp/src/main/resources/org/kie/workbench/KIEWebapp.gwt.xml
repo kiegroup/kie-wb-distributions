@@ -97,6 +97,7 @@
 
   <!-- Optaplanner Workbench Screens -->
   <inherits name="org.optaplanner.workbench.screens.domaineditor.OptaPlannerWorkbenchDomainEditorClient"/>
+  <inherits name="org.optaplanner.workbench.screens.solver.OptaPlannerWorkbenchSolverEditorClient"/>
 
   <!-- Errai -->
   <inherits name="org.jboss.errai.ui.UI"/>
