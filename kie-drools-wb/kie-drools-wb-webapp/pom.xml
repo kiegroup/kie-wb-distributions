@@ -651,6 +651,19 @@
       <groupId>org.optaplanner</groupId>
       <artifactId>optaplanner-wb-domain-editor-backend</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-solver-editor-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-solver-editor-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-solver-editor-backend</artifactId>
+    </dependency>
 
     <!-- jBPM Designer -->
     <dependency>
@@ -1478,6 +1491,8 @@
               <!-- OptaPlanner WB -->
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-domain-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-domain-editor-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.optaplanner:optaplanner-wb-solver-editor-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.optaplanner:optaplanner-wb-solver-editor-client</compileSourcesArtifact>
 
               <!-- UberFire -->
               <compileSourcesArtifact>org.uberfire:uberfire-commons</compileSourcesArtifact>
