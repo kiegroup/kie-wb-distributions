@@ -15,9 +15,11 @@
  */
 package org.kie.smoke.wb.selenium.model.persps;
 
+import org.kie.smoke.wb.selenium.util.LoadingIndicator;
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 
 public class ProcessAndTaskDashboardPerspective extends AbstractPerspective {
 
@@ -30,5 +32,11 @@ public class ProcessAndTaskDashboardPerspective extends AbstractPerspective {
     @Override
     public boolean isDisplayed() {
         return Waits.isElementPresent(driver, PROCESSES_TAB);
+    }
+
+    @Override
+    public void waitForLoaded() {
+        LoadingIndicator indicator = PageFactory.initElements(driver, LoadingIndicator.class);
+        indicator.disappear("Loading dashboard");
     }
 }
