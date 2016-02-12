@@ -1,12 +1,12 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
- *
+ * Copyright 2016 Red Hat, Inc. and/or its affiliates.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.kie.smoke.wb.selenium.util.PageObjectFactory;
 import org.kie.smoke.wb.selenium.util.ScreenshotOnFailure;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
 public class KieSeleniumTest {
@@ -38,7 +39,8 @@ public class KieSeleniumTest {
     @BeforeClass
     public static void startWebDriver() {
         driver = WebDriverFactory.create();
-        driver.manage().window().maximize();
+        // window().maximize() still too slow on some jenkins slaves
+        driver.manage().window().setSize(new Dimension(1920, 1080));
 
         pof = new PageObjectFactory(driver);
     }
