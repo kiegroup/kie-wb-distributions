@@ -21,7 +21,7 @@ import org.openqa.selenium.WebDriver;
 
 public class PeoplePerspective extends AbstractPerspective {
 
-    private static final By PROFILE_HOME_BUTTON = By.cssSelector("button[title=\"Go To User's Home\"]");
+    private static final By PROFILE_HOME_BUTTON = By.cssSelector("button[title^='Go To User']");
 
     public PeoplePerspective(WebDriver driver) {
         super(driver);
