@@ -1571,7 +1571,11 @@
         <configuration>
           <packagingExcludes>
             WEB-INF/classes/javax/**/*.*,
-            WEB-INF/classes/**/client/**/*.class,
+            WEB-INF/classes/org/kie/workbench/drools/client/**/*.class,
+            WEB-INF/classes/org/kie/workbench/drools/client/resources/i18n/App*.properties,
+            WEB-INF/classes/org/kie/workbench/drools/client/docks/**,
+            WEB-INF/classes/org/kie/workbench/drools/client/navbar/**,
+            WEB-INF/classes/org/kie/workbench/drools/client/perspectives/**,
             WEB-INF/classes/**/public/**,
             WEB-INF/classes/logback.xml,
             **/*.gwt.xml,
