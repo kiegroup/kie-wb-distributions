@@ -1821,7 +1821,12 @@
         <configuration>
           <packagingExcludes>
             WEB-INF/classes/javax/**/*.*,
-            WEB-INF/classes/**/client/**/*.class,
+            WEB-INF/classes/org/kie/workbench/client/**/*.class,
+            WEB-INF/classes/org/kie/workbench/client/resources/i18n/App*.properties,
+            WEB-INF/classes/org/kie/workbench/client/docks/**,
+            WEB-INF/classes/org/kie/workbench/client/navbar/**,
+            WEB-INF/classes/org/kie/workbench/client/perspectives/**,
+
             WEB-INF/classes/**/public/**,
             WEB-INF/classes/logback.xml,
             **/*.gwt.xml,
