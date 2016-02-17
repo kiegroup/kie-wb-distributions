@@ -1,0 +1,76 @@
+<div class="container-fluid" style="padding-top: 12px;">
+    <div class="row">
+        <h5 class="pull-left"><strong id="current-server-template-name">Server Template 1B</strong></h5>
+        <div class="btn-group pull-right" style="padding-top: 6px;">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-cog"></i> <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#" id="copy-current-server-template"><i class="fa fa-copy"></i> Copy</a></li>
+                <li><a href="#" id="remove-current-server-template"><i class="fa fa-trash"></i> Remove</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" style="border-top: 1px solid #d0d0d0; border-bottom: 1px solid #d0d0d0; margin-top: 10px; background-color: #efefef; margin-left:-40px; margin-right:-40px;">
+        <label style="padding-left: 5px;">Capabilities:</label>
+        <div class="col-md-12">
+            <div class="checkbox" id="rule-capability-checkbox">
+
+            </div>
+            <div class="checkbox" id="process-capability-checkbox">
+
+            </div>
+
+            <div class="checkbox" id="planning-capability-checkbox">
+
+            </div>
+        </div>
+    </div>
+    <div class="row navigation-area">
+        <div class="panel-group" id="server-template-accordion" style="padding-top:15px;">
+            <div>
+                <h4 class="panel-title">
+                    <a href="#" data-parent="#server-template-accordion" data-toggle="collapse" data-target="#server-template-containers" aria-expanded="true">KIE CONTAINERS</a>
+                </h4>
+                <div class="panel-collapse collapse in" id="server-template-containers" aria-expanded="true">
+                    <div class="panel-body container-nav">
+                        <div class="new-server-template">
+                            <a href="#" id="add-new-container">
+                                <i class="fa fa-plus"></i>
+                                Add Container
+                            </a>
+                        </div>
+                        <div class="server-navigation list-group" id="container-list-group">
+                            <a href="#" class="list-group-item">
+                                <i class="fa fa-fw fa-folder-o"></i>
+                                Container A
+                            </a>
+                            <a href="#" class="list-group-item active">
+                                <i class="fa fa-fw fa-folder-o"></i>
+                                Container B
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top: 15px;">
+                <h4 class="panel-title">
+                    <a href="#" class="collapsed" data-parent="#server-template-accordion" data-toggle="collapse" data-target="#server-template-remotes" aria-expanded="true">REMOTE SERVERS</a>
+                </h4>
+                <div class="panel-collapse collapse in" id="server-template-remotes" aria-expanded="true">
+                    <div class="panel-body container-nav">
+                        <div class="server-navigation list-group" id="remote-server-list-group">
+                            <a href="#" class="list-group-item">
+                                <i class="fa fa-server"></i>
+                                Server 1
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <i class="fa fa-server"></i>
+                                Server 2
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
