@@ -51,3 +51,13 @@
     border-top-color: #949699;
     border-bottom-color: #6B6F74;
 }
+
+.navbar-pf ul.navbar-utility > li > a {
+    margin-top: 6px;
+    padding-bottom: 5px;
+    padding-top: 4px;
+}
+
+.navbar-pf ul.navbar-utility li.dropdown > .dropdown-toggle .pficon-user {
+    top: 5px;
+}
