@@ -20,32 +20,27 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-import org.guvnor.m2repo.client.event.M2RepoRefreshEvent;
 import org.guvnor.m2repo.client.event.M2RepoSearchEvent;
-import org.guvnor.m2repo.client.upload.UploadFormPresenter;
-import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.search.ContextualSearch;
 import org.kie.workbench.common.widgets.client.search.SearchBehavior;
-import org.uberfire.client.annotations.WorkbenchMenu;
-import org.uberfire.client.annotations.WorkbenchPanel;
+import org.uberfire.client.annotations.Perspective;
+import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPerspective;
-import org.uberfire.client.util.Layouts;
-import org.uberfire.mvp.Command;
-import org.uberfire.workbench.model.menu.MenuFactory;
-import org.uberfire.workbench.model.menu.Menus;
+import org.uberfire.client.workbench.panels.impl.MultiListWorkbenchPanelPresenter;
+import org.uberfire.mvp.impl.DefaultPlaceRequest;
+import org.uberfire.workbench.model.PerspectiveDefinition;
+import org.uberfire.workbench.model.impl.PartDefinitionImpl;
+import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 
 /**
  * A Perspective to show M2_REPO related screen
  */
 @ApplicationScoped
-@WorkbenchPerspective( identifier = M2RepoPerspective.PERSPECTIVE_ID, isDefault = false )
-public class M2RepoPerspective extends FlowPanel {
+@WorkbenchPerspective(identifier = M2RepoPerspective.PERSPECTIVE_ID, isDefault = false)
+public class M2RepoPerspective {
 
     public static final String PERSPECTIVE_ID = "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective";
-
-    private AppConstants constants = AppConstants.INSTANCE;
 
     @Inject
     private ContextualSearch contextualSearch;
@@ -53,49 +48,28 @@ public class M2RepoPerspective extends FlowPanel {
     @Inject
     private Event<M2RepoSearchEvent> searchEvents;
 
-    @Inject
-    private Event<M2RepoRefreshEvent> refreshEvents;
-
-    @Inject
-    private SyncBeanManager iocManager;
-
-    @Inject
-    @WorkbenchPanel( parts = "M2RepoEditor" )
-    FlowPanel m2RepoEditor;
-
     @PostConstruct
     private void init() {
-        Layouts.setToFillParent( m2RepoEditor );
-        add( m2RepoEditor );
-        contextualSearch.setPerspectiveSearchBehavior( PERSPECTIVE_ID, new SearchBehavior() {
+        contextualSearch.setPerspectiveSearchBehavior(PERSPECTIVE_ID, new SearchBehavior() {
             @Override
-            public void execute( String searchFilter ) {
-                searchEvents.fire( new M2RepoSearchEvent( searchFilter ) );
+            public void execute(String searchFilter) {
+                searchEvents.fire(new M2RepoSearchEvent(searchFilter));
             }
 
-        } );
+        });
     }
 
-    @WorkbenchMenu
-    public Menus getMenus() {
-        return MenuFactory.newTopLevelMenu( constants.Upload() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        UploadFormPresenter uploadFormPresenter = iocManager.lookupBean( UploadFormPresenter.class ).getInstance();
-                        uploadFormPresenter.showView();
-                    }
-                } )
-                .endMenu()
-                .newTopLevelMenu( constants.Refresh() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        refreshEvents.fire( new M2RepoRefreshEvent() );
-                    }
-                } )
-                .endMenu()
-                .build();
+    @Perspective
+    public PerspectiveDefinition getPerspective() {
+        final PerspectiveDefinition p = new PerspectiveDefinitionImpl(MultiListWorkbenchPanelPresenter.class.getName());
+        p.setName(PERSPECTIVE_ID);
+        p.getRoot().addPart(new PartDefinitionImpl(new DefaultPlaceRequest("M2RepoEditor")));
+        return p;
+    }
+
+    @WorkbenchPartTitle
+    public String getTitleText() {
+        return AppConstants.INSTANCE.artifactRepository();
     }
 
 }
