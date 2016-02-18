@@ -29,10 +29,6 @@
   <name>KIE Workbench - Distributions</name>
   <description>KIE Workbench - Distributions</description>
 
-  <properties>
-    <jdk.min.version>1.7.0</jdk.min.version>
-  </properties>
-
   <repositories>
     <!-- Bootstrap repository to locate the parent pom when the parent pom has not been build locally. -->
     <repository>
