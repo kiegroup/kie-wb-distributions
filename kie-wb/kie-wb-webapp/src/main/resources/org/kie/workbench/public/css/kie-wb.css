@@ -509,3 +509,14 @@ a.serviceTab:active {
 .navbar-pf ul.navbar-utility {
     top: -25px;
 }
+
+/* Loading indicator at Startup */
+#loading {
+    position: absolute;
+    left: 45%;
+    top: 40%;
+    padding: 2px;
+    z-index: 20001;
+    height: auto;
+    border: 1px solid #ccc;
+}
