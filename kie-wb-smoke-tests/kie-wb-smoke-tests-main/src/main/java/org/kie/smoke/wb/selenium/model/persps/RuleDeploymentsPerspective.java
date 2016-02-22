@@ -21,14 +21,19 @@ import org.openqa.selenium.WebDriver;
 
 public class RuleDeploymentsPerspective extends AbstractPerspective {
 
-    private static final By SERVER_MGMT_TITLE = By.cssSelector("span[title='Server Management Browser']");
+    private static final By SERVER_MNGMT_SCREEN_ITEM = By.id( "template-server-list-group" );
 
-    public RuleDeploymentsPerspective(WebDriver driver) {
-        super(driver);
+    public RuleDeploymentsPerspective( WebDriver driver ) {
+        super( driver );
     }
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, SERVER_MGMT_TITLE);
+        try {
+            return Waits.isElementPresent( driver, SERVER_MNGMT_SCREEN_ITEM );
+        } catch ( Exception ex ) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }
