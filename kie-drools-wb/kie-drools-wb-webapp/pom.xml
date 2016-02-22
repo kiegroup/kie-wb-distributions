@@ -190,6 +190,17 @@
       </exclusions>
     </dependency>
 
+    <!-- Needed by new Exec Server UI -->
+    <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-controller-api</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-api</artifactId>
@@ -1360,6 +1371,11 @@
             <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile, see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
             <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
             <compileSourcesArtifacts>
+              <!-- Kie Server needed by Exec Server UI -->
+              <compileSourcesArtifact>org.kie:kie-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.server:kie-server-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.server:kie-server-controller-api</compileSourcesArtifact>
+
               <!-- jBPM Console NG -->
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-client</compileSourcesArtifact>
