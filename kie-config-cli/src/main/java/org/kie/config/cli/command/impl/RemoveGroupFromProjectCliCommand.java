@@ -70,7 +70,7 @@ public class RemoveGroupFromProjectCliCommand implements CliCommand {
             }
         }
         ArrayList<Project> projects = new ArrayList<Project>();
-        ProjectExplorerContentQuery query = new ProjectExplorerContentQuery( ou, repo );
+        ProjectExplorerContentQuery query = new ProjectExplorerContentQuery( ou, repo, "master" );
         query.setOptions( new ActiveOptions() );
         ProjectExplorerContent content = projectExplorerService.getContent( query );
         projects.addAll( content.getProjects() );
