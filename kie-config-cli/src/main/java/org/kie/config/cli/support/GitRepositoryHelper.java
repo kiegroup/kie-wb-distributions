@@ -74,19 +74,6 @@ public class GitRepositoryHelper implements RepositoryFactoryHelper {
     public Repository newRepository( final ConfigGroup repoConfig ) {
         validate( repoConfig );
 
-        String branch = repoConfig.getConfigItemValue( EnvironmentParameters.BRANCH );
-        if ( branch == null ) {
-            branch = "master";
-        }
-
-        return newRepository( repoConfig, branch );
-    }
-
-    public Repository newRepository( ConfigGroup repoConfig,
-                                     String branch ) {
-        validate( repoConfig );
-        checkNotNull( "branch", branch );
-
         final GitRepository repo = new GitRepository( repoConfig.getName() );
 
         for ( final ConfigItem item : repoConfig.getItems() ) {
@@ -131,16 +118,10 @@ public class GitRepositoryHelper implements RepositoryFactoryHelper {
             throw new RuntimeException( ex.getCause().getMessage(), ex );
         }
 
-        org.uberfire.backend.vfs.Path defaultRoot = convert( fs.getRootDirectories().iterator().next() );
         Map<String, org.uberfire.backend.vfs.Path> branches = getBranches( fs );
-        if ( branches.containsKey( branch ) ) {
-            defaultRoot = branches.get( branch );
-        }
         repo.setBranches( branches );
 
-        repo.setRoot( defaultRoot );
-
-        repo.changeBranch( branch );
+        repo.setRoot( getDefaultRoot( fs, branches ) );
 
         final String[] uris = fs.toString().split( "\\r?\\n" );
         final List<PublicURI> publicURIs = new ArrayList<PublicURI>( uris.length );
@@ -158,6 +139,15 @@ public class GitRepositoryHelper implements RepositoryFactoryHelper {
         repo.setPublicURIs( publicURIs );
 
         return repo;
+    }
+
+    private org.uberfire.backend.vfs.Path getDefaultRoot( final FileSystem fs,
+                                                          final Map<String, org.uberfire.backend.vfs.Path> branches ) {
+        if ( branches.containsKey( "master" ) ) {
+            return branches.get( "master" );
+        } else {
+            return convert( fs.getRootDirectories().iterator().next() );
+        }
     }
 
     /**
