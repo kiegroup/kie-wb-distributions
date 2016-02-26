@@ -50,7 +50,6 @@ public class ListProjectDetailsCliCommand implements CliCommand {
         OrganizationalUnitService organizationalUnitService = container.instance().select( OrganizationalUnitService.class ).get();
         RepositoryService repositoryService = container.instance().select( RepositoryService.class ).get();
         ExplorerService projectExplorerService = container.instance().select( ExplorerService.class ).get();
-        KieProjectService projectService = container.instance().select( KieProjectService.class ).get();
 
         InputReader input = context.getInput();
         System.out.print( ">>Repository alias:" );
@@ -74,7 +73,7 @@ public class ListProjectDetailsCliCommand implements CliCommand {
         }
 
         ArrayList<Project> projects = new ArrayList<Project>();
-        ProjectExplorerContentQuery query = new ProjectExplorerContentQuery( ou, repo );
+        ProjectExplorerContentQuery query = new ProjectExplorerContentQuery( ou, repo, "master" );
         query.setOptions( new ActiveOptions() );
         ProjectExplorerContent content = projectExplorerService.getContent( query );
         projects.addAll( content.getProjects() );
