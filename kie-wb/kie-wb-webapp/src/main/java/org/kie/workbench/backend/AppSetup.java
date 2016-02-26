@@ -33,6 +33,7 @@ import org.guvnor.common.services.shared.security.impl.KieWorkbenchACLImpl;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.Repository;
+import org.guvnor.structure.repositories.RepositoryEnvironmentConfigurations;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.guvnor.structure.server.config.ConfigGroup;
 import org.guvnor.structure.server.config.ConfigItem;
@@ -224,11 +225,11 @@ public class AppSetup {
                 Repository repository = repositoryService.getRepository( repositoryAlias );
                 if ( repository == null ) {
                     try {
+                        final RepositoryEnvironmentConfigurations configurations = new RepositoryEnvironmentConfigurations();
+                        configurations.setOrigin( repositoryOrigin );
                         repository = repositoryService.createRepository( "git",
                                                                          repositoryAlias,
-                                                                         new HashMap<String, Object>() {{
-                                                                             put( "origin", repositoryOrigin );
-                                                                         }} );
+                                                                         configurations );
                         organizationalUnitService.addRepository( organizationalUnit,
                                                                  repository );
                     } catch ( Exception e ) {

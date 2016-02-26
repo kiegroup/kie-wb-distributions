@@ -17,12 +17,10 @@ package org.kie.config.cli.command.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.guvnor.structure.repositories.Repository;
+import org.guvnor.structure.repositories.RepositoryEnvironmentConfigurations;
 import org.guvnor.structure.repositories.RepositoryService;
-import org.guvnor.structure.repositories.EnvironmentParameters;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.kie.config.cli.CliContext;
 import org.kie.config.cli.command.CliCommand;
@@ -72,23 +70,23 @@ public class CreateRepositoryCliCommand implements CliCommand {
         System.out.print( ">>Remote origin:" );
         String origin = input.nextLine();
 
-        Map<String, Object> env = new HashMap<String, Object>();
-        env.put( "username", user );
-        env.put( "crypt:password", password );
+        final RepositoryEnvironmentConfigurations configurations = new RepositoryEnvironmentConfigurations();
+        configurations.setUserName( user );
+        configurations.setPassword( password );
 
         if ( origin.trim().length() > 0 ) {
-            env.put( "origin", origin );
+            configurations.setOrigin( origin );
         }
 
-        env.put( EnvironmentParameters.MANAGED, false );
+        configurations.setManaged( false );
 
         //Mark this Repository as being created by the kie-config-cli tool. This has no affect on the operation
         //of the Repository in the workbench, but it does indicate to kie-config-cli that the Repository should
         //not have its origin overridden when cloning. A local clone is required to manipulate Projects.
-        env.put( "org.kie.config.cli.command.CliCommand",
-                 "CreateRepositoryCliCommand" );
+        configurations.getConfigurationMap().put( "org.kie.config.cli.command.CliCommand",
+                                                   "CreateRepositoryCliCommand" );
 
-        Repository repo = repositoryService.createRepository( "git", alias, env );
+        Repository repo = repositoryService.createRepository( "git", alias, configurations );
         result.append( "Repository with alias " + repo.getAlias() + " has been successfully created" );
 
         return result.toString();
