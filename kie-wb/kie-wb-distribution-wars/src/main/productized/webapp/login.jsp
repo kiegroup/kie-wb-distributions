@@ -16,41 +16,53 @@
              locale='<%= locale%>' />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" class="login-pf">
 <head>
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/forms.css">
-    <link rel="stylesheet" href="styles/login-screen.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/styles/rcue.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/styles/rcue-additions.min.css">
     <link rel="shortcut icon" href="favicon.ico" />
     <title>Red Hat JBoss BPM Suite :: Business central</title>
 </head>
-<body id="login">
-<div id="rcue-login-screen">
-    <img id="logo" src="<%=request.getContextPath()%>/images/login-screen-logo.png" alt="Red Hat Logo">
+<body>
+    <span id="badge">
+        <img id="logo" src="<%=request.getContextPath()%>/img/login-screen-logo.png" alt="Red Hat Logo">
+    </span>
 
-    <div id="login-wrapper" class="png_bg">
-
-        <div id="login-top">
-            <%--<img src="images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>--%>
-        </div>
-
-        <div id="login-content" class="png_bg">
-            <form action="j_security_check" method="POST">
-                <fieldset>
-                    <legend><img src="images/RH_JBoss_BPMS_Logo.png" alt="RED HAT JBOSS BPM SUITE" title="RED HAT JBOSS BPM SUITE"/></legend>
-                    <c:if test="${param.message != null}">
-                      <h3><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></h3><br/>
-                    </c:if>
-                    <label style="white-space: nowrap;"><i18n:message key="UserName">Username</i18n:message></label><input value="" name="j_username" class="text-input" type="text" autofocus/>
-                    <br style="clear: both;"/>
-                    <label style="white-space: nowrap;"><i18n:message key="Password">Password</i18n:message></label><input name="j_password" class="text-input" type="password"/>
-                    <br style="clear: both;"/>
-                    <input class="button login" type="submit" value='<i18n:message key="SignIn">Sign In</i18n:message>'/>
-                </fieldset>
-
-            </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="brand">
+                    <img src="<%=request.getContextPath()%>/img/RH_JBoss_BPMS_Logo.png" alt="RED HAT JBOSS BPM SUITE" title="RED HAT JBOSS BPM SUITE"/>
+                </div>
+            </div>
+            <div class="col-sm-7 col-md-6 col-lg-5 login">
+                <c:if test="${param.message != null}">
+                    <div class="alert alert-danger">
+                        <span class="pficon pficon-error-circle-o"></span>
+                        <strong><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></strong>
+                    </div>
+                </c:if>
+                <form class="form-horizontal" role="form" action="j_security_check" method="POST">
+                    <div class="form-group">
+                        <label for="j_username" class="col-sm-2 col-md-2 control-label"><i18n:message key="UserName">Username</i18n:message></label>
+                        <div class="col-sm-10 col-md-10">
+                            <input type="text" class="form-control" value="" name="j_username" id="j_username" placeholder="" tabindex="1" autofocus />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="j_password" class="col-sm-2 col-md-2 control-label"><i18n:message key="Password">Password</i18n:message></label>
+                        <div class="col-sm-10 col-md-10">
+                            <input type="password" class="form-control" id="j_password" name="j_password" placeholder="" tabindex="2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-8 col-xs-4 col-sm-offset-8 col-sm-4 col-md-offset-8 col-md-4 submit">
+                            <button type="submit" class="btn btn-primary btn-lg" tabindex="3"><i18n:message key="SignIn">Sign In</i18n:message></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </body>
 </html>
