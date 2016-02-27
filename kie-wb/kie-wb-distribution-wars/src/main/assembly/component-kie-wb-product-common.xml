@@ -7,8 +7,12 @@
       <outputDirectory>banner</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/src/main/productized/images</directory>
-      <outputDirectory>images</outputDirectory>
+      <directory>${project.basedir}/src/main/productized/img</directory>
+      <outputDirectory>img</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/src/main/productized/fonts</directory>
+      <outputDirectory>fonts</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>${project.basedir}/src/main/productized/styles</directory>
