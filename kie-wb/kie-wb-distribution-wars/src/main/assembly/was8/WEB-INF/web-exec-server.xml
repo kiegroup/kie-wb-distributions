@@ -130,6 +130,11 @@
     </description>
     <role-name>manager</role-name>
   </security-role>
+
+  <security-role>
+    <description></description>
+    <role-name>kiemgmt</role-name>
+  </security-role>
   <!-- rest api security roles -->
   <security-role>
    <description></description>
@@ -166,7 +171,7 @@
   <security-role>
     <description></description>
     <role-name>rest-client</role-name>
-  </security-role>  
+  </security-role>
 
   <filter>
     <filter-name>Dynamic JAXBContext Filter</filter-name>

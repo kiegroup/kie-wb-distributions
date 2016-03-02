@@ -680,6 +680,11 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </description>
     <role-name>manager</role-name>
   </security-role>
+
+  <security-role>
+    <description></description>
+    <role-name>kiemgmt</role-name>
+  </security-role>
   <!-- rest api security roles -->
   <security-role>
    <description></description>
