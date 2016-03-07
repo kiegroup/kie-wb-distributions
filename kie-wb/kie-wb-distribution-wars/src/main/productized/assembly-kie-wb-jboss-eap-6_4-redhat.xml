@@ -32,6 +32,7 @@
     <componentDescriptor>src/main/assembly/component-cdi1.0-libs.xml</componentDescriptor>
     <componentDescriptor>src/main/assembly/component-kie-wb-eap-6_4-common.xml</componentDescriptor>
     <componentDescriptor>src/main/assembly/component-kie-wb-product-common.xml</componentDescriptor>
+    <componentDescriptor>src/main/assembly/component-kie-wb-product-user_mgmt.xml</componentDescriptor>
   </componentDescriptors>
 
 </assembly>
