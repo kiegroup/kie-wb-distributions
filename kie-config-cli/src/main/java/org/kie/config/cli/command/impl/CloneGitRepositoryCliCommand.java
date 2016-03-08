@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.guvnor.structure.server.repositories.RepositoryFactoryHelper;
+import org.eclipse.jgit.transport.SshSessionFactory;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jboss.weld.literal.NamedLiteral;
 import org.kie.config.cli.CliContext;
@@ -75,6 +75,11 @@ public class CloneGitRepositoryCliCommand implements CliCommand {
         env.put( "origin", systemGitRepoUrl );
 
         if ( gitUri.getScheme().equalsIgnoreCase( "ssh" ) ) {
+            // JGitFileSystemProvider's initialization configures the SshSessionFactory to use a per-session CredentialsProvider
+            // expecting public-private keys for the SSH protocol. Revert the SshSessionFactory configuration to use the default
+            // Factory that uses the default CredentialsProvider configured below.
+            SshSessionFactory.setInstance( null );
+
             // use special credential provider to support prompt for SSH connections to unknown hosts
             CredentialsProvider.setDefault( new InteractiveUsernamePasswordCredentialsProvider( user, password, context.getInput() ) );
         } else {
