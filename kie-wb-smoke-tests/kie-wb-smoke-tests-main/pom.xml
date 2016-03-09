@@ -326,9 +326,10 @@
     <profile>
       <!-- Enable selenium UI smoke tests to be run with Firefox.
 
-           Example usage: mvn clean install -Pwildfly8,kie-wb,selenium (executes all default smoke tests + UI ones)
-                          mvn clean install -Pwildfly8,kie-wb,selenium -Dit.test=LoginIntegrationTest (executes just one test)
-
+           Simple usage: mvn clean install -Pwildfly8,kie-wb,selenium (executes all default smoke tests + UI ones)
+           Complex usage: mvn clean install -Pwildfly8,kie-wb,selenium -Dit.test=LoginIntegrationTest 
+                             -Dwebdriver.firefox.bin=<path-to-ff-binary> -Dselenium.homepage.loading.timeout=30
+                         
            To use Internet Explorer see profile 'ie' -->
       <id>selenium</id>
       <activation>
@@ -354,6 +355,7 @@
                     <!-- directory where screenshots taken by webdriver will be placed -->
                     <selenium.screenshots.dir>${project.build.directory}/screenshots</selenium.screenshots.dir>
                     <app.name>${app.name}</app.name>
+                    <selenium.homepage.loading.timeout>${selenium.homepage.loading.timeout}</selenium.homepage.loading.timeout>
                   </systemPropertyVariables>
                 </configuration>
               </execution>
