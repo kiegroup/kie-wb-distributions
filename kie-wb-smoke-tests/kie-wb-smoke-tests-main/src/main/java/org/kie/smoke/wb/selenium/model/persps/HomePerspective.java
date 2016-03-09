@@ -17,11 +17,14 @@ package org.kie.smoke.wb.selenium.model.persps;
 
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 public class HomePerspective extends AbstractPerspective {
 
     private static final By CAROUSEL = By.className("carousel-caption");
+    // Troubleshooting webapp loading issues on tomcat / jenkins slaves where the default 15 seconds is not enough
+    private static final int HOME_PERSP_LOADING_TIMEOUT = getTimeout();
 
     public HomePerspective(WebDriver driver) {
         super(driver);
@@ -29,11 +32,25 @@ public class HomePerspective extends AbstractPerspective {
 
     @Override
     public void waitForLoaded() {
-        Waits.elementPresent(driver, CAROUSEL);
+        Waits.elementPresent(driver, CAROUSEL, HOME_PERSP_LOADING_TIMEOUT);
     }
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, CAROUSEL);
+        try {
+            Waits.elementPresent(driver, CAROUSEL, 2);
+            return true;
+        } catch (NoSuchElementException nse) {
+            return false;
+        }
+    }
+
+    private static int getTimeout() {
+        String timeout = System.getProperty("selenium.homepage.loading.timeout");
+        try {
+            return Integer.parseInt(timeout);
+        } catch (NumberFormatException nfe) {
+            return 15;
+        }
     }
 }
