@@ -360,7 +360,7 @@ public class AppSetup {
 
                 String projectLocation = repository.getUri() + ioService.getFileSystem( URI.create( repository.getUri() ) ).getSeparator() + artifact;
                 if ( !ioService.exists( ioService.get( URI.create( projectLocation ) ) ) ) {
-                    projectService.newProject( repository, artifact, new POM( gav ), "/" );
+                    projectService.newProject( repository.getBranchRoot(repository.getDefaultBranch()), artifact, new POM( gav ), "/" );
                 }
             } else {
                 logger.error( "Repository was not found (is null), cannot add project" );
