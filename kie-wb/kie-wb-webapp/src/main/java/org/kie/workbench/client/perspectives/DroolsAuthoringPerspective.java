@@ -22,7 +22,10 @@ import javax.inject.Inject;
 import org.guvnor.inbox.client.InboxPresenter;
 import org.kie.workbench.client.docks.AuthoringWorkbenchDocks;
 import org.kie.workbench.client.resources.i18n.AppConstants;
+import org.kie.workbench.common.screens.examples.client.wizard.ExamplesWizard;
+import org.kie.workbench.common.screens.examples.service.ExamplesService;
 import org.kie.workbench.common.screens.projecteditor.client.menu.ProjectMenu;
+import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
@@ -41,7 +44,7 @@ import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
 @ApplicationScoped
-@WorkbenchPerspective( identifier = "AuthoringPerspective", isTransient = false )
+@WorkbenchPerspective(identifier = "AuthoringPerspective", isTransient = false)
 public class DroolsAuthoringPerspective {
 
     private AppConstants constants = AppConstants.INSTANCE;
@@ -64,6 +67,9 @@ public class DroolsAuthoringPerspective {
     @Inject
     private AuthoringWorkbenchDocks docks;
 
+    @Inject
+    private ExamplesWizard wizard;
+
     @PostConstruct
     public void setup() {
         docks.setup( "AuthoringPerspective", new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) );
@@ -79,6 +85,73 @@ public class DroolsAuthoringPerspective {
 
     @WorkbenchMenu
     public Menus getMenus() {
+        if ( !ApplicationPreferences.isProductized() && ApplicationPreferences.getBooleanPref( ExamplesService.EXAMPLES_SYSTEM_PROPERTY ) ) {
+            return buildMenuBarWithExamples();
+
+        } else {
+            return buildMenuBarWithoutExamples();
+        }
+    }
+
+    private Menus buildMenuBarWithExamples() {
+        return MenuFactory
+                .newTopLevelMenu( constants.Examples() )
+                .respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        wizard.start();
+                    }
+                } )
+                .endMenu()
+                .newTopLevelMenu( constants.explore() )
+                .menus()
+                .menu( constants.inboxIncomingChanges() )
+                .respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "Inbox" );
+                    }
+                } )
+                .endMenu()
+                .menu( constants.inboxRecentlyEdited() )
+                .respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        PlaceRequest p = new DefaultPlaceRequest( "Inbox" );
+                        p.addParameter( "inboxname", InboxPresenter.RECENT_EDITED_ID );
+                        placeManager.goTo( p );
+                    }
+                } )
+                .endMenu()
+                .menu( constants.inboxRecentlyOpened() )
+                .respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        PlaceRequest p = new DefaultPlaceRequest( "Inbox" );
+                        p.addParameter( "inboxname", InboxPresenter.RECENT_VIEWED_ID );
+                        placeManager.goTo( p );
+                    }
+                } )
+                .endMenu()
+                .endMenus()
+                .endMenu()
+                .newTopLevelMenu( constants.newItem() )
+                .withItems( newResourcesMenu.getMenuItems() )
+                .endMenu()
+                .newTopLevelMenu( AppConstants.INSTANCE.Repository() )
+                .withItems( repositoryMenu.getMenuItems() )
+                .endMenu()
+                .newTopLevelMenu( constants.assetSearch() ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "FindForm" );
+                    }
+                } )
+                .endMenu()
+                .build();
+    }
+
+    private Menus buildMenuBarWithoutExamples() {
         return MenuFactory
                 .newTopLevelMenu( constants.explore() )
                 .menus()
