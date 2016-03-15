@@ -45,7 +45,6 @@ import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
-import org.kie.internal.utils.KieMeta;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,12 +66,6 @@ public class AppSetup {
     // default repository section - start
     private static final String OU_NAME = "demo";
     private static final String OU_OWNER = "demo@demo.org";
-
-    private static final String DROOLS_WB_PLAYGROUND_SCHEME = "git";
-    private static final String DROOLS_WB_PLAYGROUND_ALIAS = "uf-playground";
-    private static final String DROOLS_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
-    private static final String DROOLS_WB_PLAYGROUND_UID = "guvnorngtestuser1";
-    private static final String DROOLS_WB_PLAYGROUND_PWD = "test1234";
 
     private static final String GLOBAL_SETTINGS = "settings";
     // default repository section - end
@@ -112,19 +105,6 @@ public class AppSetup {
             final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
             if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
                 loadExampleRepositories( exampleRepositoriesRoot );
-
-            } else if ( !KieMeta.isProductized() ) {
-                //Only clone examples for Community
-                if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-                    Repository repository = createRepository( DROOLS_WB_PLAYGROUND_ALIAS,
-                                                              DROOLS_WB_PLAYGROUND_SCHEME,
-                                                              DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                              DROOLS_WB_PLAYGROUND_UID,
-                                                              DROOLS_WB_PLAYGROUND_PWD );
-                    createOU( repository,
-                              OU_NAME,
-                              OU_OWNER );
-                }
 
             } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
 
@@ -360,7 +340,7 @@ public class AppSetup {
 
                 String projectLocation = repository.getUri() + ioService.getFileSystem( URI.create( repository.getUri() ) ).getSeparator() + artifact;
                 if ( !ioService.exists( ioService.get( URI.create( projectLocation ) ) ) ) {
-                    projectService.newProject( repository.getBranchRoot(repository.getDefaultBranch()),
+                    projectService.newProject( repository.getBranchRoot( repository.getDefaultBranch() ),
                                                new POM( gav ),
                                                "/" );
                 }

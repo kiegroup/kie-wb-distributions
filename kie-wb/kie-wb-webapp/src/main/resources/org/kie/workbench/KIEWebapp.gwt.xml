@@ -69,6 +69,7 @@
   <inherits name="org.kie.workbench.common.screens.contributors.KieWorkbenchContributorsClient"/>
   <inherits name="org.kie.workbench.common.screens.social.hp.SocialHomePageClient"/>
   <inherits name="org.kie.workbench.common.screens.defaulteditor.DroolsWorkbenchDefaultEditorClient"/>
+  <inherits name="org.kie.workbench.common.screens.examples.KieWorkbenchCommonExamplesClient"/>
 
   <!-- Common Services -->
   <inherits name="org.kie.workbench.common.services.datamodeller.DataModellerCore" />

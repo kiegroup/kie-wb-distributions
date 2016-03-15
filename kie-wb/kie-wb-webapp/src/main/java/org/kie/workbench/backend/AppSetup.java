@@ -18,7 +18,6 @@ package org.kie.workbench.backend;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -41,7 +40,6 @@ import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
-import org.kie.internal.utils.KieMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.uberfire.commons.services.cdi.ApplicationStarted;
@@ -61,16 +59,6 @@ public class AppSetup {
     // default repository section - start
     private static final String OU_NAME = "demo";
     private static final String OU_OWNER = "demo@demo.org";
-
-    private static final String JBPM_WB_PLAYGROUND_ALIAS = "jbpm-playground";
-    private static final String JBPM_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/jbpm-console-ng-playground-kjar.git";
-    private static final String JBPM_WB_PLAYGROUND_UID = "guvnorngtestuser1";
-    private static final String JBPM_WB_PLAYGROUND_PWD = "test1234";
-
-    private static final String DROOLS_WB_PLAYGROUND_ALIAS = "uf-playground";
-    private static final String DROOLS_WB_PLAYGROUND_ORIGIN = "https://github.com/guvnorngtestuser1/guvnorng-playground.git";
-    private static final String DROOLS_WB_PLAYGROUND_UID = "guvnorngtestuser1";
-    private static final String DROOLS_WB_PLAYGROUND_PWD = "test1234";
 
     private static final String GLOBAL_SETTINGS = "settings";
     // default repository section - end
@@ -104,22 +92,6 @@ public class AppSetup {
             final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
             if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
                 loadExampleRepositories( exampleRepositoriesRoot );
-
-            } else if ( !KieMeta.isProductized() ) {
-                //Only clone examples for Community
-                if ( !"false".equalsIgnoreCase( System.getProperty( "org.kie.demo" ) ) ) {
-                    administrationService.bootstrapRepository( OU_NAME,
-                                                               JBPM_WB_PLAYGROUND_ALIAS,
-                                                               JBPM_WB_PLAYGROUND_ORIGIN,
-                                                               JBPM_WB_PLAYGROUND_UID,
-                                                               JBPM_WB_PLAYGROUND_PWD );
-
-                    administrationService.bootstrapRepository( OU_NAME,
-                                                               DROOLS_WB_PLAYGROUND_ALIAS,
-                                                               DROOLS_WB_PLAYGROUND_ORIGIN,
-                                                               DROOLS_WB_PLAYGROUND_UID,
-                                                               DROOLS_WB_PLAYGROUND_PWD );
-                }
 
             } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
                 administrationService.bootstrapRepository( "example",

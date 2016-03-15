@@ -132,7 +132,6 @@ public class KieDroolsWorkbenchEntryPoint {
                 kieACL.activatePolicy( policy );
                 loadPreferences();
                 loadStyles();
-                setupMenu();
                 hideLoadingPopup();
                 homeProducer.init();
             }
@@ -152,6 +151,7 @@ public class KieDroolsWorkbenchEntryPoint {
             @Override
             public void callback( final Map<String, String> response ) {
                 ApplicationPreferences.setUp( response );
+                setupMenu();
             }
         } ).loadPreferences();
     }
