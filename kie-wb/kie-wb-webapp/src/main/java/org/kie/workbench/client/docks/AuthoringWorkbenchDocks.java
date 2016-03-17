@@ -59,7 +59,12 @@ public class AuthoringWorkbenchDocks {
 
     private UberfireDock plannerDock = null;
 
+    private String currentPerspectiveIdentifier = null;
+
+    private boolean dataModelerDocksEnabled = true;
+
     public void perspectiveChangeEvent( @Observes UberfireDockReadyEvent dockReadyEvent ) {
+        currentPerspectiveIdentifier = dockReadyEvent.getCurrentPerspective();
         if ( authoringPerspectiveIdentifier != null && dockReadyEvent.getCurrentPerspective().equals( authoringPerspectiveIdentifier ) ) {
             if ( hasPlannerDomainGrant() ) {
                 if ( plannerDock == null ) {
@@ -90,30 +95,51 @@ public class AuthoringWorkbenchDocks {
 
         );
         uberfireDocks.disable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );
+        dataModelerDocksEnabled = false;
     }
 
     public void onContextChange( @Observes DataModelerWorkbenchContextChangeEvent contextEvent ) {
-        handleDocks();
+        if ( isAuthoringActive() ) {
+            handleDocks();
+        }
     }
 
     private void handleDocks() {
         DataModelerContext context = dataModelerWBContext.getActiveContext();
         if ( !dataModelerIsHidden && shouldDisplayWestDocks( context ) && lastActiveContext != context ) {
-            uberfireDocks.enable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );
+            enableDocks( true );
             lastActiveContext = context;
         } else if ( dataModelerIsHidden || !shouldDisplayWestDocks( context ) ) {
-            uberfireDocks.disable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );
+            enableDocks( false );
             lastActiveContext = null;
         }
     }
 
     public void onDataModelerWorkbenchFocusEvent( @Observes DataModelerWorkbenchFocusEvent event ) {
-        if ( !event.isFocused() ) {
-            this.dataModelerIsHidden = true;
-            uberfireDocks.disable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );
-        } else {
-            this.dataModelerIsHidden = false;
-            handleDocks();
+        if ( isAuthoringActive() ) {
+            if ( !event.isFocused() ) {
+                this.dataModelerIsHidden = true;
+                enableDocks( false );
+            } else {
+                this.dataModelerIsHidden = false;
+                handleDocks();
+            }
+        }
+    }
+
+    private boolean isAuthoringActive() {
+        return authoringPerspectiveIdentifier != null &&
+                authoringPerspectiveIdentifier.equals( currentPerspectiveIdentifier );
+    }
+
+    private void enableDocks( boolean enabled ) {
+        if ( enabled != dataModelerDocksEnabled ) {
+            dataModelerDocksEnabled = enabled;
+            if ( enabled ) {
+                uberfireDocks.enable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );
+            } else {
+                uberfireDocks.disable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );
+            }
         }
     }
 
