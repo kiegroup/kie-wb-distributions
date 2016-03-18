@@ -39,12 +39,6 @@ public interface HomePageProductConstants
 
     String analyze_paragraph();
 
-    String authoring_image();
-
-    String deploy_image();
-
-    String analyze_image();
-
     String home_title();
 
     String home_subtitle();
