@@ -21,6 +21,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
+import org.kie.workbench.common.screens.home.client.widgets.home.HomeImagesHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
 import org.kie.workbench.drools.client.resources.i18n.HomePageProductConstants;
@@ -47,15 +48,15 @@ public class HomeProducer {
 
         final Section s1 = new Section( homeConstants.authoring_header(),
                                         homeConstants.authoring_paragraph(),
-                                        url + homeConstants.authoring_image() );
+                                        url + HomeImagesHelper.Images.Authoring.getLocalisedImageUrl() );
 
         final Section s2 = new Section( homeConstants.analyze_header(),
                                         homeConstants.analyze_paragraph(),
-                                        url + homeConstants.analyze_image() );
+                                        url + HomeImagesHelper.Images.Analyze.getLocalisedImageUrl() );
 
         final Section s3 = new Section( homeConstants.deploy_header(),
                                         homeConstants.deploy_paragraph(),
-                                        url + homeConstants.deploy_image() );
+                                        url + HomeImagesHelper.Images.Deploy.getLocalisedImageUrl() );
 
         model.addSection( s1 );
         model.addSection( s2 );

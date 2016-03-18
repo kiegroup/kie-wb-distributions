@@ -47,16 +47,6 @@ public interface HomePageProductConstants
 
     String dashboards_paragraph();
 
-    String authoring_image();
-
-    String deploy_image();
-
-    String process_Management_image();
-
-    String tasks_image();
-
-    String dashboards_image();
-
     String home_title();
 
     String home_subtitle();
