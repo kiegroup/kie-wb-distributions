@@ -24,6 +24,7 @@ import com.google.gwt.i18n.client.LocaleInfo;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.HomePageProductConstants;
+import org.kie.workbench.common.screens.home.client.widgets.home.HomeImagesHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
 import org.uberfire.client.mvp.PlaceManager;
@@ -53,23 +54,23 @@ public class HomeProducer {
 
         final Section s1 = new Section( homeConstants.authoring_header(),
                                         homeConstants.authoring_paragraph(),
-                                        url + homeConstants.authoring_image() );
+                                        url + HomeImagesHelper.Images.Authoring.getLocalisedImageUrl() );
 
         final Section s2 = new Section( homeConstants.deploy_header(),
                                         homeConstants.deploy_paragraph(),
-                                        url + homeConstants.deploy_image() );
+                                        url + HomeImagesHelper.Images.Deploy.getLocalisedImageUrl() );
 
         final Section s3 = new Section( homeConstants.process_Management_header(),
                                         homeConstants.process_Management_paragraph(),
-                                        url + homeConstants.process_Management_image() );
+                                        url + HomeImagesHelper.Images.ProcessManagement.getLocalisedImageUrl() );
 
         final Section s4 = new Section( homeConstants.tasks_header(),
                                         homeConstants.tasks_paragraph(),
-                                        url + homeConstants.tasks_image() );
+                                        url + HomeImagesHelper.Images.Tasks.getLocalisedImageUrl() );
 
         final Section s5 = new Section( homeConstants.dashboards_header(),
                                         homeConstants.dashboards_paragraph(),
-                                        url + homeConstants.dashboards_image() );
+                                        url + HomeImagesHelper.Images.Dashboard.getLocalisedImageUrl() );
 
         final String dashbuilderURL = DashboardURLBuilder.getDashboardURL( "/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName() );
 
