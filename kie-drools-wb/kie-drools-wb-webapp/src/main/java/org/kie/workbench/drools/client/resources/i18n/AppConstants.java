@@ -119,4 +119,7 @@ public interface AppConstants
     String logoBannerError();
 
     String assetSearch();
+
+    String Messages();
+
 }
