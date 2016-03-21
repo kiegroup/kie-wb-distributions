@@ -130,4 +130,6 @@ public interface AppConstants
 
     String logoBannerError();
 
+    String Messages();
+
 }
