@@ -125,6 +125,13 @@ public class DroolsAuthoringPerspective {
                     }
                 } )
                 .endMenu()
+                .newTopLevelMenu( constants.Messages() ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.kie.workbench.common.screens.messageconsole.MessageConsole" );
+                    }
+                } )
+                .endMenu()
                 .build();
     }
 
