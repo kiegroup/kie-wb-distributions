@@ -122,4 +122,6 @@ public interface AppConstants
 
     String Examples();
 
+    String Messages();
+
 }
