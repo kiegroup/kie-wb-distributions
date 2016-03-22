@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="brand">
-                    <img src="<%=request.getContextPath()%>/img/RH_JBoss_BPMS_Logo.png" alt="RED HAT JBOSS BPM SUITE" title="RED HAT JBOSS BPM SUITE"/>
+                    <img src="<%=request.getContextPath()%>/img/RH_JBoss_BPMS_Logo.svg" alt="RED HAT JBOSS BPM SUITE" title="RED HAT JBOSS BPM SUITE"/>
                 </div>
             </div>
             <div class="col-sm-7 col-md-6 col-lg-5 login">
