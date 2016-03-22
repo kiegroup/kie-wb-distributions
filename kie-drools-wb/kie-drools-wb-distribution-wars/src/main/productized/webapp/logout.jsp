@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="brand">
-                    <img src="<%=request.getContextPath()%>/img/RH_JBoss_BRMS_Logo.png" alt="RED HAT JBOSS BRMS" title="RED HAT JBOSS BRMS"/>
+                    <img src="<%=request.getContextPath()%>/img/RH_JBoss_BRMS_Logo.svg" alt="RED HAT JBOSS BRMS" title="RED HAT JBOSS BRMS"/>
                 </div>
             </div>
             <div class="col-sm-7 col-md-6 col-lg-5 login">
