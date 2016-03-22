@@ -53,9 +53,9 @@
 }
 
 .navbar-pf ul.navbar-utility > li > a {
-    margin-top: 6px;
-    padding-bottom: 5px;
-    padding-top: 4px;
+    margin-top: 2px;
+    padding-bottom: 7px;
+    padding-top: 5px;
 }
 
 .navbar-pf ul.navbar-utility li.dropdown > .dropdown-toggle .pficon-user {
