@@ -15,6 +15,10 @@
 
 package org.kie.config.cli.command.impl;
 
+import javax.enterprise.util.AnnotationLiteral;
+
+import org.guvnor.structure.backend.config.OrgUnit;
+import org.guvnor.structure.config.SystemRepositoryChangedEvent;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.jboss.weld.environment.se.WeldContainer;
@@ -54,7 +58,8 @@ public class RemoveGroupFromOrganizationalUnitCliCommand implements CliCommand {
                 result.append( "Group " + group + " removed successfully from Organizational Unit " + organizationalUnit.getName() + "\n" );
             }
         }
-
+        container.getBeanManager().fireEvent(new SystemRepositoryChangedEvent(), new AnnotationLiteral<org.guvnor.structure.backend.config.Repository>() {});
+        container.getBeanManager().fireEvent(new SystemRepositoryChangedEvent(), new AnnotationLiteral<OrgUnit>() {});
         return result.toString();
     }
 
