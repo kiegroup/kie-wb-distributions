@@ -65,10 +65,9 @@ public class EnvironmentProvider {
     }
 
     @Produces
-    @Alternative
     public SessionInfo getSessionInfo() {
-        CliIdentity identity = new CliIdentity();
-        return new SessionInfoImpl( identity.getIdentifier(), identity );
+
+        return new SessionInfoImpl( cliIdentity.getIdentifier(), cliIdentity );
     }
 
     @Produces
