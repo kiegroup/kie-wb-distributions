@@ -54,6 +54,7 @@ import org.kie.workbench.common.widgets.client.menu.ResetPerspectivesMenuBuilder
 import org.kie.workbench.common.widgets.client.menu.WorkbenchConfigurationMenuBuilder;
 import org.kie.workbench.common.widgets.client.resources.RoundedCornersResource;
 import org.uberfire.client.menu.CustomSplashHelp;
+import org.uberfire.client.menu.WorkbenchViewModeSwitcherMenuBuilder;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.mvp.ActivityManager;
@@ -194,6 +195,7 @@ public class KieWorkbenchEntryPoint {
                         for (Menus roleMenus : getRoles()) {
                             userMenu.addMenus(roleMenus);
                         }
+                        userMenu.addMenus(MenuFactory.newTopLevelCustomMenu(iocManager.lookupBean(WorkbenchViewModeSwitcherMenuBuilder.class).getInstance()).endMenu().build());
 
                         final Menus utilityMenus =
                                 MenuFactory.newTopLevelCustomMenu(iocManager.lookupBean(WorkbenchConfigurationMenuBuilder.class).getInstance())

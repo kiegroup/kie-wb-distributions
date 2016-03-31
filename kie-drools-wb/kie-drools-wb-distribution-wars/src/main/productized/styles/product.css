@@ -36,6 +36,7 @@
     border-top-color: #949699;
     border-bottom-color: #6B6F74;
     box-shadow: none;
+    color: #f1f1f1;
 }
 
 .navbar-pf ul.navbar-primary .uf-perspective-context-menu.open > a,
@@ -46,10 +47,15 @@
 
 .navbar-pf ul.navbar-primary > .active > a,
 .navbar-pf ul.navbar-primary > .active > a:hover,
-.navbar-pf ul.navbar-primary > .active > a:focus {
+.navbar-pf ul.navbar-primary > .active > a:focus,
+.navbar-pf .navbar-nav.uf-navbar-nav-compact > li:not(.uf-perspective-context-menu) > a,
+.navbar-pf .navbar-nav.uf-navbar-nav-compact > li.open > a,
+.navbar-pf .navbar-nav.uf-navbar-nav-compact > li > a:hover,
+.navbar-pf .navbar-nav.uf-navbar-nav-compact > li > a:focus {
     background-image: linear-gradient(to bottom, #72757a, #64686c);
     border-top-color: #949699;
     border-bottom-color: #6B6F74;
+    color: #f1f1f1;
 }
 
 .navbar-pf ul.navbar-utility > li > a {
@@ -60,4 +66,26 @@
 
 .navbar-pf ul.navbar-utility li.dropdown > .dropdown-toggle .pficon-user {
     top: 5px;
+}
+
+.navbar-pf .navbar-nav.uf-navbar-nav-compact {
+    left: 200px;
+    top: -25px;
+    position: absolute;
+    font-size: 11px;
+    margin-top: 1px;
+}
+
+.navbar-pf .navbar-nav.uf-navbar-nav-compact > li > a {
+    color: #cfcfcf;
+}
+
+.navbar-pf .navbar-nav.uf-navbar-nav-compact .uf-perspective-context-menu > ul > li > a,
+.navbar-pf .navbar-nav.uf-navbar-nav-compact .uf-perspective-context-menu > ul > li > a:hover,
+.navbar-pf .navbar-nav.uf-navbar-nav-compact .uf-perspective-context-menu > ul > li > a:focus {
+    color: #333;
+}
+
+.navbar-pf .navbar-nav.uf-navbar-nav-compact .uf-perspective-context-menu > ul > li.disabled > a.disabled {
+    color: #999;
 }
