@@ -15,6 +15,10 @@
 
 package org.kie.config.cli.command.impl;
 
+import javax.enterprise.util.AnnotationLiteral;
+
+import org.guvnor.structure.backend.config.OrgUnit;
+import org.guvnor.structure.config.SystemRepositoryChangedEvent;
 import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.jboss.weld.environment.se.WeldContainer;
@@ -58,6 +62,7 @@ public class RemoveGroupFromRepositoryCliCommand implements CliCommand {
             }
         }
 
+        container.getBeanManager().fireEvent(new SystemRepositoryChangedEvent(), new AnnotationLiteral<OrgUnit>() {});
         return result.toString();
     }
 

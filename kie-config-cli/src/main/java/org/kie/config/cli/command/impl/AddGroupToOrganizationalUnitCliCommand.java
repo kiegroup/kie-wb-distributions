@@ -15,6 +15,7 @@
 
 package org.kie.config.cli.command.impl;
 
+import org.guvnor.structure.config.SystemRepositoryChangedEvent;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.jboss.weld.environment.se.WeldContainer;
@@ -58,7 +59,6 @@ public class AddGroupToOrganizationalUnitCliCommand implements CliCommand {
                 result.append( "Group " + group + " added successfully to Organizational Unit " + organizationalUnit.getName() + "\n" );
             }
         }
-
         return result.toString();
     }
 

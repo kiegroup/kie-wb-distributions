@@ -16,6 +16,11 @@
 package org.kie.config.cli.command.impl;
 
 
+import javax.enterprise.event.Event;
+import javax.enterprise.util.AnnotationLiteral;
+
+import org.guvnor.structure.backend.config.OrgUnit;
+import org.guvnor.structure.config.SystemRepositoryChangedEvent;
 import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.jboss.weld.environment.se.WeldContainer;
@@ -58,7 +63,7 @@ public class AddGroupToRepositoryCliCommand implements CliCommand {
 				result.append("Group " + group + " added successfully to repository " + repo.getAlias() + "\n");
 			}
 		}
-		
+		container.getBeanManager().fireEvent(new SystemRepositoryChangedEvent(), new AnnotationLiteral<OrgUnit>() {});
 		return result.toString();
 	}
 
