@@ -15,6 +15,10 @@
  */
 package org.kie.config.cli.command.impl;
 
+import javax.enterprise.util.AnnotationLiteral;
+
+import org.guvnor.structure.backend.config.OrgUnit;
+import org.guvnor.structure.config.SystemRepositoryChangedEvent;
 import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.jboss.weld.environment.se.WeldContainer;
@@ -46,7 +50,8 @@ public class RemoveRepositoryCliCommand implements CliCommand {
 		}
 		repositoryService.removeRepository(alias);
 		result.append("Repository " + alias + " was removed successfully");
-		
+
+		container.getBeanManager().fireEvent(new SystemRepositoryChangedEvent(), new AnnotationLiteral<OrgUnit>() {});
 		return result.toString();
 	}
 
