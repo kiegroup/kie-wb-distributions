@@ -9,6 +9,7 @@
     <weld:exclude name="org.jbpm.kie.services.impl.form.FormProviderServiceImpl"/>
     <weld:exclude name="org.guvnor.structure.backend.repositories.git.GitRepositoryFactoryHelper"/>
     <weld:exclude name="org.uberfire.backend.server.LockClientNotifier"/>
+    <weld:exclude name="org.uberfire.server.cdi.UberFireGeneralFactory"/>
   </weld:scan>
 
   <alternatives>
