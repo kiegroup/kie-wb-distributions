@@ -92,6 +92,8 @@ public class CloneGitRepositoryCliCommand implements CliCommand {
             ioService.getFileSystem( URI.create( GIT_LOCAL + "?push=" + systemGitRepoUrl + "&force" ) );
         }
 
+        System.setProperty("logged.user", user);
+
         //Record credentials and base URL details for use in GitRepositoryHelper
         GitRepositoryHelperContext gitRepositoryHelperContext = container.instance().select( GitRepositoryHelperContext.class ).get();
         gitRepositoryHelperContext.setUser( user );

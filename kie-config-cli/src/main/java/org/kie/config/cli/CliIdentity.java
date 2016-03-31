@@ -45,7 +45,7 @@ public class CliIdentity implements User {
 
     @Override
     public String getIdentifier() {
-        return System.getProperty( "user.name" );
+        return System.getProperty( "logged.user", System.getProperty( "user.name" ) );
     }
 
     @Override
