@@ -20,7 +20,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
+import javax.enterprise.util.AnnotationLiteral;
+
 import org.guvnor.common.services.project.model.Project;
+import org.guvnor.structure.backend.config.OrgUnit;
+import org.guvnor.structure.config.SystemRepositoryChangedEvent;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.Repository;
@@ -108,7 +112,8 @@ public class RemoveGroupFromProjectCliCommand implements CliCommand {
                 result.append( "Group " + group + " removed successfully from project " + project.getProjectName() + "\n" );
             }
         }
-
+        container.getBeanManager().fireEvent(new SystemRepositoryChangedEvent(), new AnnotationLiteral<org.guvnor.structure.backend.config.Repository>() {});
+        container.getBeanManager().fireEvent(new SystemRepositoryChangedEvent(), new AnnotationLiteral<OrgUnit>() {});
         return result.toString();
     }
 
