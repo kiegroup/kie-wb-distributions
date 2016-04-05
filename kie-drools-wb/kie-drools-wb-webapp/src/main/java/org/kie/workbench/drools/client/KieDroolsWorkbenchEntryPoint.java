@@ -41,6 +41,7 @@ import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
 import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.jbpm.console.ng.ga.forms.service.PlaceManagerActivityService;
+import org.jbpm.console.ng.ht.client.perspectives.DroolsTasksListPerspective;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
@@ -274,7 +275,7 @@ public class KieDroolsWorkbenchEntryPoint {
     }
 
     private PlaceRequest getTasksView() {
-        return new DefaultPlaceRequest( "DataSet Tasks" );
+        return new DefaultPlaceRequest( DroolsTasksListPerspective.PERSPECTIVE_ID );
     }
 
     private List<? extends MenuItem> getExtensionsViews() {
