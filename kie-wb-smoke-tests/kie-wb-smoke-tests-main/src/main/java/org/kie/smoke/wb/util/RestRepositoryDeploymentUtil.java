@@ -82,15 +82,22 @@ public class RestRepositoryDeploymentUtil {
             JobRequest delRepoJob = deleteRepository(repositoryName);
             waitForJobsToFinish(sleepSecs, delRepoJob);
         }
-       
-        if( ! organizationalUnitExists(orgUnitName) ) { 
+
+        if( ! organizationalUnitExists(orgUnitName) ) {
             JobRequest createOrgUnitJob = createOrganizationalUnit(orgUnitName, user);
             waitForJobsToFinish(sleepSecs, createOrgUnitJob);
         }
         
         JobRequest createRepoJob = createRepository(repositoryName, orgUnitName, repoUrl);
         waitForJobsToFinish(sleepSecs, createRepoJob);
-        
+
+        // Extra wait..
+        try {
+            Thread.sleep(5000); // TODO don't use hardcoded wait, but rather polling
+        } catch (Exception e) {
+            // no op
+        }
+
         deploy(deploymentId);
     }
   

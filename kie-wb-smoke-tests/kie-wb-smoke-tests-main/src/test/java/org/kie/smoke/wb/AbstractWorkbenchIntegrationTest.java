@@ -61,7 +61,7 @@ abstract public class AbstractWorkbenchIntegrationTest {
     protected static void deployJbpmPlayGroundIntegrationTests(URL deploymentUrl, RuntimeStrategy strategy) {
         int sleepSecs = 5;
         RestRepositoryDeploymentUtil deployUtil = new RestRepositoryDeploymentUtil(deploymentUrl, MARY_USER, MARY_PASSWORD, sleepSecs, strategy);
-        deployUtil.setTotalTries(6);
+        deployUtil.setTotalTries(10);
 
         String repoUrl = "https://github.com/droolsjbpm/jbpm-playground.git";
         String repositoryName = "playground";
@@ -69,13 +69,6 @@ abstract public class AbstractWorkbenchIntegrationTest {
         String deploymentId = "org.test:kjar:1.0";
         String orgUnitName = "integTestUser";
         deployUtil.createRepositoryAndDeployProject(repoUrl, repositoryName, project, deploymentId, orgUnitName, MARY_USER);
-
-        // Extra wait.. 
-        try {
-            Thread.sleep(5000); // TODO don't use hardcoded wait, but rather polling
-        } catch (Exception e) {
-            // no op
-        }
     }
 
 }
