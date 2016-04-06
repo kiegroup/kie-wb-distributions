@@ -22,9 +22,9 @@ import org.openqa.selenium.WebDriver;
 
 public class HomePerspective extends AbstractPerspective {
 
-    private static final By CAROUSEL = By.className("carousel-caption");
-    private static final int DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS = 15;
-    // Troubleshooting webapp loading issues on tomcat / jenkins slaves where the default 15 seconds is not enough
+    private static final By CAROUSEL = By.className("carousel");
+    private static final int DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS = 300;
+    // Troubleshooting webapp loading issues on tomcat / jenkins slaves where the default 30 seconds is not enough
     private static final int HOME_PERSP_LOADING_TIMEOUT_SECONDS = getTimeoutSeconds();
 
     public HomePerspective(WebDriver driver) {
@@ -47,11 +47,11 @@ public class HomePerspective extends AbstractPerspective {
     }
 
     private static int getTimeoutSeconds() {
-        String timeout = System.getProperty("selenium.homepage.loading.timeout.seconds");
-        try {
-            return Integer.parseInt(timeout);
-        } catch (NumberFormatException nfe) {
+//        String timeout = System.getProperty("selenium.homepage.loading.timeout.seconds");
+//        try {
+//            return Integer.parseInt(timeout);
+//        } catch (NumberFormatException nfe) {
             return DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS;
-        }
+//        }
     }
 }
