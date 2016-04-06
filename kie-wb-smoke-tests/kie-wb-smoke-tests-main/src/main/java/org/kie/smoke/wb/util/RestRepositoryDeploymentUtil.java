@@ -82,15 +82,23 @@ public class RestRepositoryDeploymentUtil {
             JobRequest delRepoJob = deleteRepository(repositoryName);
             waitForJobsToFinish(sleepSecs, delRepoJob);
         }
-       
-        if( ! organizationalUnitExists(orgUnitName) ) { 
+
+        if( ! organizationalUnitExists(orgUnitName) ) {
             JobRequest createOrgUnitJob = createOrganizationalUnit(orgUnitName, user);
             waitForJobsToFinish(sleepSecs, createOrgUnitJob);
         }
         
         JobRequest createRepoJob = createRepository(repositoryName, orgUnitName, repoUrl);
         waitForJobsToFinish(sleepSecs, createRepoJob);
-        
+
+        // Extra wait to make sure the repo gets properly indexed
+        // TODO don't use hardcoded wait, but rather some way of polling
+        try {
+            Thread.sleep(5000);
+        } catch (Exception e) {
+            logger.warn("Interrupted while waiting (sleeping) for the repo to get indexed!", e);
+        }
+
         deploy(deploymentId);
     }
   
