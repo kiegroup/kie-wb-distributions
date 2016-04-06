@@ -39,16 +39,10 @@
     color: #f1f1f1;
 }
 
-.navbar-pf ul.navbar-primary .uf-perspective-context-menu.open > a,
-.navbar-pf ul.navbar-primary .uf-perspective-context-menu > a:hover,
-.navbar-pf ul.navbar-primary .uf-perspective-context-menu > a:focus {
-    color: #7DC3E8;
-}
-
 .navbar-pf ul.navbar-primary > .active > a,
 .navbar-pf ul.navbar-primary > .active > a:hover,
 .navbar-pf ul.navbar-primary > .active > a:focus,
-.navbar-pf .navbar-nav.uf-navbar-nav-compact > li:not(.uf-perspective-context-menu) > a,
+.navbar-pf .navbar-nav.uf-navbar-nav-compact > li:first-child > a,
 .navbar-pf .navbar-nav.uf-navbar-nav-compact > li.open > a,
 .navbar-pf .navbar-nav.uf-navbar-nav-compact > li > a:hover,
 .navbar-pf .navbar-nav.uf-navbar-nav-compact > li > a:focus {
@@ -68,24 +62,42 @@
     top: 5px;
 }
 
-.navbar-pf .navbar-nav.uf-navbar-nav-compact {
+.navbar-pf ul.navbar-nav.uf-navbar-nav-compact {
     left: 250px;
-    top: -25px;
-    position: absolute;
-    font-size: 11px;
     margin-top: 1px;
 }
 
-.navbar-pf .navbar-nav.uf-navbar-nav-compact > li > a {
-    color: #cfcfcf;
-}
+@media (max-width: 767px) {
+    .navbar-pf ul.navbar-nav.uf-navbar-nav-compact {
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
 
-.navbar-pf .navbar-nav.uf-navbar-nav-compact .uf-perspective-context-menu > ul > li > a,
-.navbar-pf .navbar-nav.uf-navbar-nav-compact .uf-perspective-context-menu > ul > li > a:hover,
-.navbar-pf .navbar-nav.uf-navbar-nav-compact .uf-perspective-context-menu > ul > li > a:focus {
-    color: #333;
-}
+    .navbar-pf.navbar-inverse {
+        background-color: #393f45;
+    }
 
-.navbar-pf .navbar-nav.uf-navbar-nav-compact .uf-perspective-context-menu > ul > li.disabled > a.disabled {
-    color: #999;
+    .navbar-pf.navbar-inverse .navbar-nav > .open .dropdown-menu,
+    .navbar-pf.navbar-inverse .navbar-nav > .open > a,
+    .navbar-pf.navbar-inverse .navbar-nav > .open > a:focus,
+    .navbar-pf.navbar-inverse .navbar-nav > .open > a:hover {
+        background-color: #393f45 !important;
+    }
+
+    .navbar-pf.navbar-inverse .navbar-nav > .open > .dropdown-menu > .active > a {
+        background-image: linear-gradient(to bottom, #72757a, #64686c);
+        border-bottom-color: #6b6f74;
+        border-top-color: #949699;
+        color: #f1f1f1;
+    }
+
+    .navbar-pf.navbar-inverse .navbar-utility > li + li {
+        border-top: 1px solid #393f45;
+    }
+
+    .navbar-pf.navbar-inverse .navbar-nav .navbar-utility {
+        border-bottom: 1px solid #393f45;
+    }
+
 }

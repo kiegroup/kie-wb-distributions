@@ -519,3 +519,17 @@ a.serviceTab:active {
     height: auto;
     border: 1px solid #ccc;
 }
+
+.navbar-pf .navbar-nav.uf-navbar-nav-compact {
+    left: 170px;
+    top: -25px;
+    position: absolute;
+}
+
+@media (max-width: 767px) {
+    .navbar-pf .navbar-nav.uf-navbar-nav-compact {
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+}
