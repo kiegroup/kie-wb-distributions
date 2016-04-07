@@ -134,12 +134,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-cdi</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
       <scope>provided</scope>
