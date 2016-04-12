@@ -97,6 +97,7 @@
 
           <!-- Errai -->
           <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
+          <exclude>WEB-INF/lib/errai-cdi-server-*.jar</exclude>
           <!-- Errai 1.1+ CDI Compat -->
           <exclude>WEB-INF/lib/errai-weld-integration-*.jar</exclude>
           
