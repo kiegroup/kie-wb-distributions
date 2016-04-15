@@ -38,5 +38,7 @@ public class TasksPerspective extends AbstractPerspective {
     public void waitForLoaded() {
         LoadingIndicator indicator = PageFactory.initElements(driver, LoadingIndicator.class);
         indicator.disappear("Loading");
+        // additional wait, because navigation to next persp occasionally fails on windows
+        Waits.pause(2000);
     }
 }
