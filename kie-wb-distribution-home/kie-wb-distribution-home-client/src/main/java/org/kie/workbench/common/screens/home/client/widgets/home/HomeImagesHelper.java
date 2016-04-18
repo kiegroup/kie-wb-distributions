@@ -73,10 +73,13 @@ public class HomeImagesHelper {
             if ( localeName.equalsIgnoreCase( "default" ) ) {
                 return "";
             }
+
             String language = localeName.toLowerCase();
+            if ( language.equals("zh_tw") || language.equals("zh_cn") ){
+                return language;
+            }
             if ( language.contains( "_" ) ) {
-                language = language.substring( 0,
-                                               language.indexOf( "_" ) );
+                language = language.substring( 0, language.indexOf( "_" ) );
             }
             if ( language.equals( "en" ) ) {
                 return "";
