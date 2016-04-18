@@ -27,4 +27,8 @@
     <wls:role-name>rest-project</wls:role-name>
     <wls:principal-name>rest-project</wls:principal-name>
   </wls:security-role-assignment>
+  <wls:security-role-assignment>
+    <wls:role-name>kiemgmt</wls:role-name>
+    <wls:principal-name>kiemgmt</wls:principal-name>
+  </wls:security-role-assignment>
 </wls:weblogic-web-app>
