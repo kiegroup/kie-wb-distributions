@@ -56,6 +56,8 @@
           <include>org.jboss.weld.se:weld-se-core</include>
           <include>org.jboss.weld.servlet:weld-servlet-core</include>
           <include>org.jboss.weld:weld-spi</include>
+          <include>org.jboss.weld.environment:weld-environment-common</include>
+          <include>org.jboss.classfilewriter:jboss-classfilewriter</include>
 
           <include>net.jcip:jcip-annotations</include>
           <include>xalan:xalan</include>
@@ -96,10 +98,7 @@
 
             <!-- Errai -->
             <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
-            <exclude>WEB-INF/lib/errai-cdi-server-*.jar</exclude>
-            <!-- Errai 1.1+ CDI Compat -->
-            <exclude>WEB-INF/lib/errai-weld-integration-*.jar</exclude>
-            
+
             <!-- Exclude the UF Security management provider for Wildfly, the default one in the workbench, and provide the one for this distro.-->
             <exclude>WEB-INF/lib/uberfire-security-management-wildfly-*.jar</exclude>
             <!-- Exclude the default security management settings and provide a custom ones for this distro. -->

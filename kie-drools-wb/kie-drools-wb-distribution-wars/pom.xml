@@ -252,6 +252,10 @@
       <artifactId>stax2-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.jboss.classfilewriter</groupId>
+      <artifactId>jboss-classfilewriter</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

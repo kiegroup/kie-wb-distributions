@@ -920,6 +920,7 @@
     <dependency>
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-cdi-client</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -1616,7 +1617,7 @@
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
             <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} 
-              -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true 
+              -Derrai.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true 
               -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000
               -Dorg.uberfire.async.executor.safemode=true
             </extraJvmArgs>

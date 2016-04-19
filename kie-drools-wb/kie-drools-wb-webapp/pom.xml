@@ -137,6 +137,12 @@
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-cdi</artifactId>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>javassist</artifactId>
+          <groupId>javassist</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -1068,6 +1074,7 @@
     <dependency>
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-cdi-client</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -1377,7 +1384,7 @@
           <configuration>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
-            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.jbpm.designer.perspective=ruleflow -Djava.util.prefs.syncInterval=2000000 -Dorg.uberfire.async.executor.safemode=true</extraJvmArgs>
+            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Derrai.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.jbpm.designer.perspective=ruleflow -Djava.util.prefs.syncInterval=2000000 -Dorg.uberfire.async.executor.safemode=true</extraJvmArgs>
             <draftCompile>true</draftCompile>
             <module>org.kie.workbench.drools.FastCompiledKIEDroolsWebapp</module>
             <logLevel>INFO</logLevel>
