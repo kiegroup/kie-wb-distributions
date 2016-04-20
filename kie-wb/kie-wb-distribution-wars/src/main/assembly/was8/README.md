@@ -149,6 +149,7 @@ JVM Custom properties
 - org.kie.executor.jms.queue - {JNDI_NAME} -- JNDI name of the kie executor service JMS queue
 - org.kie.executor.jms.cf - {JNDI_NAME} -- JNDI name of the kie executor service JMS connection factory
 - kie.services.rest.deploy.async - false -- instructs REST service to use synchronous mode to process deployments must be set for WebSphere due to issues with CDI on WAS 8.5
+- org.apache.wink.jaxbcontextcache - off -- makes sure that the websphere apache wink framework does not cache JAXBContexts. This is unnecessary for performance and also interferes with the custom-type serialization for the REST APi
 
 Deploy the application
 --------------------------
