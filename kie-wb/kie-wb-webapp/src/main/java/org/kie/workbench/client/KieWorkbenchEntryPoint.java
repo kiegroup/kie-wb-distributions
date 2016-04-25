@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import com.google.gwt.animation.client.Animation;
@@ -60,6 +61,7 @@ import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.views.pfly.menu.UserMenu;
+import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.docks.UberfireDocks;
 import org.uberfire.client.workbench.widgets.menu.UtilityMenuBar;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
@@ -131,6 +133,14 @@ public class KieWorkbenchEntryPoint {
 
     @Inject
     private ClientUserSystemManager userSystemManager;
+
+    @Inject
+    private Workbench workbench;
+
+    @PostConstruct
+    public void init() {
+        workbench.addStartupBlocker( KieWorkbenchEntryPoint.class );
+    }
 
     @AfterInitialization
     public void startApp() {
@@ -212,7 +222,7 @@ public class KieWorkbenchEntryPoint {
 
                         utilityMenuBar.addMenus(utilityMenus);
 
-
+                        workbench.removeStartupBlocker( KieWorkbenchEntryPoint.class );
                     }
                 });
 
