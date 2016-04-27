@@ -19,6 +19,7 @@ package org.kie.workbench.drools.client.docks;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
@@ -29,10 +30,10 @@ import org.kie.workbench.common.screens.datamodeller.client.DataModelerContext;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchContext;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchContextChangeEvent;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchFocusEvent;
+import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.uberfire.client.workbench.docks.UberfireDock;
 import org.uberfire.client.workbench.docks.UberfireDockPosition;
 import org.uberfire.client.workbench.docks.UberfireDockReadyEvent;
@@ -43,7 +44,7 @@ import org.uberfire.rpc.SessionInfo;
 
 import static org.mockito.Mockito.*;
 
-@RunWith( MockitoJUnitRunner.class )
+@RunWith( GwtMockitoTestRunner.class )
 public class AuthoringWorkbenchDocksTest {
 
     @Mock
@@ -81,7 +82,7 @@ public class AuthoringWorkbenchDocksTest {
         plannerDock = new UberfireDock( UberfireDockPosition.EAST,
                 "CALCULATOR",
                 new DefaultPlaceRequest( "PlannerDomainScreen" ),
-                "authoring" ).withSize( 450 ).withLabel( "OptaPlanner" );
+                "authoring" ).withSize( 450 ).withLabel( AppConstants.INSTANCE.DocksOptaPlannerTitle() );
 
     }
 
