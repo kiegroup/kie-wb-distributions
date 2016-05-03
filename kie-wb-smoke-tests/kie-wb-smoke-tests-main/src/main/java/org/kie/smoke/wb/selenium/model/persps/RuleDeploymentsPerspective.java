@@ -15,25 +15,26 @@
  */
 package org.kie.smoke.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class RuleDeploymentsPerspective extends AbstractPerspective {
 
-    private static final By SERVER_MNGMT_SCREEN_ITEM = By.id( "template-server-list-group" );
-
-    public RuleDeploymentsPerspective( WebDriver driver ) {
-        super( driver );
-    }
+    private static final By SERVER_MNGMT_SCREEN_ITEM = By.id("template-server-list-group");
 
     @Override
     public boolean isDisplayed() {
         try {
-            return Waits.isElementPresent( driver, SERVER_MNGMT_SCREEN_ITEM );
-        } catch ( Exception ex ) {
+            return Waits.isElementPresent(driver, SERVER_MNGMT_SCREEN_ITEM);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public void waitForLoaded() {
+        Graphene.waitModel().until().element(By.cssSelector(".alert-dismissable")).is().not().present();
     }
 }

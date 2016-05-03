@@ -15,6 +15,7 @@
  */
 package org.kie.smoke.wb.selenium.util;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.By;
 
 public class ByUtil {
@@ -22,5 +23,10 @@ public class ByUtil {
     public static By xpath(String format, Object... params) {
         String xpathStr = String.format(format, params);
         return By.xpath(xpathStr);
+    }
+
+    public static By jquery(String format, Object... params) {
+        String jqueryStr = String.format(format, params);
+        return ByJQuery.selector(jqueryStr);
     }
 }

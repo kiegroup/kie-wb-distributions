@@ -15,6 +15,7 @@
  */
 package org.kie.smoke.wb.selenium.model;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -22,9 +23,6 @@ import org.openqa.selenium.WebDriver;
  */
 public abstract class PageObject {
 
-    protected final WebDriver driver;
-
-    public PageObject(WebDriver driver) {
-        this.driver = driver;
-    }
+    @Drone
+    protected WebDriver driver;
 }

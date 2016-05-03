@@ -14,6 +14,8 @@
  */
 package org.kie.smoke.wb.selenium.model;
 
+import org.jboss.arquillian.graphene.Graphene;
+import static org.kie.smoke.wb.selenium.model.KieSeleniumTest.driver;
 import org.kie.smoke.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.smoke.wb.selenium.model.persps.AdministrationPerspective;
 import org.kie.smoke.wb.selenium.model.persps.AppsPerspective;
@@ -32,30 +34,31 @@ import org.kie.smoke.wb.selenium.model.persps.ProjectAuthoringPerspective;
 import org.kie.smoke.wb.selenium.model.persps.RuleDeploymentsPerspective;
 import org.kie.smoke.wb.selenium.model.persps.TasksPerspective;
 import org.kie.smoke.wb.selenium.model.persps.TimelinePerspective;
-import static org.kie.smoke.wb.selenium.util.ByUtil.xpath;
+import org.kie.smoke.wb.selenium.model.widgets.DropdownMenu;
+import static org.kie.smoke.wb.selenium.util.ByUtil.jquery;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class PrimaryNavbar extends PageObject {
+public class PrimaryNavbar {
 
-    private static final String NAV_MENU //Contains both the link to expand menu as well as menu item links
-            = "//nav//li[contains(@class,'dropdown')][a[contains(text(),'%s')]]";
+    private static final Logger LOG = LoggerFactory.getLogger(PrimaryNavbar.class);
+    //Contains both the link to expand menu as well as menu item links
+    private static final String NAVBAR_MENU = ".navbar-primary > li.dropdown:has(a:contains('%s'))";
+
+    @FindBy(linkText = "Tasks")
+    private WebElement tasksLink;
 
     @FindBy(css = "li[title='Reset all Perspective layouts']+li")
-    private WebElement logoutMenu;
+    private DropdownMenu logoutMenu;
 
-    public PrimaryNavbar(WebDriver driver) {
-        super(driver);
-    }
+    @FindBy(css = ".uf-workbench-layout > div:last-child")
+    private WebElement perspectiveRoot;
 
     public void logout() {
-        //Logou menu has no stable title (just username)
-        logoutMenu.findElement(By.tagName("a")).click();
-        selectItem(logoutMenu, "Log Out");
+        logoutMenu.selectItem("Log Out");
     }
 
     public HomePerspective homePage() {
@@ -127,26 +130,24 @@ public class PrimaryNavbar extends PageObject {
     }
 
     public <T extends AbstractPerspective> T navigateTo(Persp<T> p) {
+        LOG.info("Navigating to {}", p);
         if (p == Persp.TASKS) {
-            //Tasks is not a menu, just a link
-            driver.findElement(By.linkText("Tasks")).click();
+            tasksLink.click(); //Tasks is not a menu, just a link
         } else {
-            WebElement menu = openMenu(p.getMenu());
-            selectItem(menu, p.getName());
+            selectMenuItem(p.getMenu(), p.getName());
         }
-        T perspective = PageFactory.initElements(driver, p.getPerspectivePageObjectClass());
+        return initPerspective(p);
+    }
+
+    private void selectMenuItem(String menuName, String itemName) {
+        WebElement menuRoot = driver.findElement(jquery(NAVBAR_MENU, menuName));
+        DropdownMenu menu = Graphene.createPageFragment(DropdownMenu.class, menuRoot);
+        menu.selectItem(itemName);
+    }
+
+    private <T extends AbstractPerspective> T initPerspective(Persp<T> p) {
+        T perspective = Graphene.createPageFragment(p.getPerspectivePageObjectClass(), perspectiveRoot);
         perspective.waitForLoaded();
         return perspective;
-    }
-
-    private WebElement openMenu(String menuTitle) {
-        WebElement menu = driver.findElement(xpath(NAV_MENU, menuTitle));
-        menu.findElement(By.tagName("a")).click();
-        return menu;
-    }
-
-    private void selectItem(WebElement openedMenu, String itemText) {
-        WebElement menuItem = openedMenu.findElement(By.linkText(itemText));
-        menuItem.click();
     }
 }

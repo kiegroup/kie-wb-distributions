@@ -18,6 +18,8 @@ package org.kie.smoke.wb.selenium.util;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
+import org.jboss.arquillian.drone.api.annotation.Default;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.openqa.selenium.OutputType;
@@ -30,13 +32,7 @@ import org.openqa.selenium.WebDriver;
  */
 public class ScreenshotOnFailure extends TestWatcher {
 
-    private final WebDriver driver;
-    private final File screenshotDir;
-
-    public ScreenshotOnFailure(WebDriver driver) {
-        this.driver = driver;
-        this.screenshotDir = initScreenshotDir();
-    }
+    private final File screenshotDir = initScreenshotDir();
 
     @Override
     protected void failed(Throwable e, Description description) {
@@ -48,7 +44,7 @@ public class ScreenshotOnFailure extends TestWatcher {
     }
 
     private void takeScreenshot(String filename) {
-        File tmpScreenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File tmpScreenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
         File targetScreenshot = new File(screenshotDir, filename + ".png");
         try {
             FileUtils.copyFile(tmpScreenshot, targetScreenshot);
@@ -59,7 +55,7 @@ public class ScreenshotOnFailure extends TestWatcher {
     }
 
     private void savePageHtmlSource(String filename) {
-        String pageSource = driver.getPageSource();
+        String pageSource = getDriver().getPageSource();
         File targetFile = new File(screenshotDir, filename + ".html");
         try {
             FileUtils.writeStringToFile(targetFile, pageSource, "UTF-8");
@@ -86,5 +82,9 @@ public class ScreenshotOnFailure extends TestWatcher {
             throw new IllegalStateException("The screenshotDir must be writable" + scd);
         }
         return scd;
+    }
+
+    private WebDriver getDriver() {
+        return GrapheneContext.getContextFor(Default.class).getWebDriver(TakesScreenshot.class);
     }
 }

@@ -17,15 +17,10 @@ package org.kie.smoke.wb.selenium.model.persps;
 
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class AppsPerspective extends AbstractPerspective {
 
     private static final By HOME_LINK = By.linkText("home");
-
-    public AppsPerspective(WebDriver driver) {
-        super(driver);
-    }
 
     @Override
     public boolean isDisplayed() {

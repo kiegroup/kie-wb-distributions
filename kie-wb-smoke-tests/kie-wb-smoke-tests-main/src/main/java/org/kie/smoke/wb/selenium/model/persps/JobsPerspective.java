@@ -17,15 +17,10 @@ package org.kie.smoke.wb.selenium.model.persps;
 
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class JobsPerspective extends AbstractPerspective {
 
     private static final By ID_COLUMN_HEADER = By.xpath("//th[contains(text(), 'Id')]");
-
-    public JobsPerspective(WebDriver driver) {
-        super(driver);
-    }
 
     @Override
     public boolean isDisplayed() {
