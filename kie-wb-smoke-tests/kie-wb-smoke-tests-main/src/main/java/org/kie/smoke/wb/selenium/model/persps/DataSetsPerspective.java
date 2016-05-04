@@ -17,15 +17,10 @@ package org.kie.smoke.wb.selenium.model.persps;
 
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class DataSetsPerspective extends AbstractPerspective {
 
     private static final By NEW_DS_LINK = By.linkText("new data set");
-
-    public DataSetsPerspective(WebDriver driver) {
-        super(driver);
-    }
 
     @Override
     public boolean isDisplayed() {

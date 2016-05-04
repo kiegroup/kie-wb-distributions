@@ -15,8 +15,8 @@
  */
 package org.kie.smoke.wb.selenium.model;
 
+import org.jboss.arquillian.graphene.page.Page;
 import org.kie.smoke.wb.selenium.model.persps.HomePerspective;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -30,16 +30,22 @@ public class LoginPage extends PageObject {
     private WebElement loginButton;
     public final static String BASE_URL = System.getProperty("deployable.base.uri");
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+    //Credentials based on from src/test/filtered-resources/eap-wildfly-shared/config/application-users.properties
+    public final static String KIE_PASS = "mary123@";
+    public final static String KIE_USER = "mary";
+
+    @Page
+    private HomePerspective home;
+
+    public HomePerspective loginDefaultUser() {
+        return loginAs(KIE_USER, KIE_PASS);
     }
 
     public HomePerspective loginAs(String username, String password) {
         driver.get(BASE_URL);
         submitCredentials(username, password);
-        HomePerspective hp = new HomePerspective(driver);
-        hp.waitForLoaded();
-        return hp;
+        home.waitForLoaded();
+        return home;
     }
 
     private void submitCredentials(String username, String password) {

@@ -18,7 +18,6 @@ package org.kie.smoke.wb.selenium.model.persps;
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 
 public class HomePerspective extends AbstractPerspective {
 
@@ -26,10 +25,6 @@ public class HomePerspective extends AbstractPerspective {
     private static final int DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS = 15;
     // Troubleshooting webapp loading issues on tomcat / jenkins slaves where the default 15 seconds is not enough
     private static final int HOME_PERSP_LOADING_TIMEOUT_SECONDS = getTimeoutSeconds();
-
-    public HomePerspective(WebDriver driver) {
-        super(driver);
-    }
 
     @Override
     public void waitForLoaded() {

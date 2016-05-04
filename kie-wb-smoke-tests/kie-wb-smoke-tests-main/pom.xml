@@ -16,8 +16,40 @@
   <properties>
     <app.name>kie-wb</app.name><!-- for tests to know if they are running against kie-wb or kie-drools-wb -->
     <selenium.homepage.loading.timeout.seconds>15</selenium.homepage.loading.timeout.seconds>
+    <!-- default browser to be used by selenium tests -->
+    <browser>firefox</browser>
   </properties>
   
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.arquillian.extension</groupId>
+        <artifactId>arquillian-drone-bom</artifactId>
+        <version>${version.org.jboss.arquillian.extension.drone}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.selenium</groupId>
+        <artifactId>selenium-bom</artifactId>
+        <version>${version.org.jboss.arquillian.selenium}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.graphene</groupId>
+        <artifactId>graphene-webdriver</artifactId>
+        <version>${version.org.jboss.arquillian.graphene}</version>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+      <groupId>org.jboss.arquillian.graphene</groupId>
+      <artifactId>graphene-webdriver-api</artifactId>
+      <version>${version.org.jboss.arquillian.graphene}</version>
+    </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <!-- utilities -->
     <dependency>
@@ -53,6 +85,27 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.graphene</groupId>
+      <artifactId>graphene-webdriver</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.extension</groupId>
+      <artifactId>arquillian-drone-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.graphene</groupId>
+      <artifactId>graphene-webdriver-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-standalone</artifactId>
     </dependency>
 
     <!--  Stay with httpcomponents: it will save us pain (as opposed to changing from resteasy to cxf to cxf 3.0, etc. --> 
@@ -375,6 +428,9 @@
           <name>ie</name>
         </property>
       </activation>
+      <properties>
+        <browser>internetExplorer</browser>
+      </properties>
       <build>
         <plugins>
           <plugin> <!-- Downloads and unzips IEDriverServer.exe and then sets the
@@ -403,8 +459,6 @@
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
               <systemPropertyVariables>
-                <!-- property to let the tests know which browser we're using -->
-                <browser>ie</browser>
                 <!-- The following maven property is set by driver-binary-downloader-maven-plugin.
                 Copy it as system property for InternetExplorerDriver-->
                 <webdriver.ie.driver>${webdriver.ie.driver}</webdriver.ie.driver>                
@@ -505,95 +559,95 @@
       </dependencies>
       <build>
         <pluginManagement>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-maven2-plugin</artifactId>
-            <configuration>
-              <container>
-                <containerId>tomcat7x</containerId>
-                <type>installed</type>
-                <artifactInstaller>
-                  <groupId>org.apache.tomcat</groupId>
-                  <artifactId>tomcat</artifactId>
-                  <version>${version.tomcat7}</version>
-                </artifactInstaller>
-                <systemProperties>
-                  <tomcat.home>${project.build.directory}/cargo/configurations/tomcat7x</tomcat.home>
-                  <bitronix.tm.configuration>
-                    ${project.build.directory}/cargo/configurations/tomcat7x/conf/btm-config.properties
-                  </bitronix.tm.configuration>
-                  <jbpm.tsr.jndi.lookup>java:comp/env/TransactionSynchronizationRegistry</jbpm.tsr.jndi.lookup>
-                  <org.jboss.logging.provider>jdk</org.jboss.logging.provider>
-                </systemProperties>
-                <dependencies>
-                  <dependency>
-                    <groupId>org.codehaus.btm</groupId>
-                    <artifactId>btm</artifactId>
-                  </dependency>
-                  <dependency>
-                    <groupId>org.codehaus.btm</groupId>
-                    <artifactId>btm-tomcat55-lifecycle</artifactId>
-                  </dependency>
-                  <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                  </dependency>
-                  <dependency>
-                    <groupId>org.jboss.spec.javax.transaction</groupId>
-                    <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-                  </dependency>
-                  <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                  </dependency>
-                  <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-jdk14</artifactId>
-                  </dependency>
-                  <dependency>
-                    <groupId>org.kie</groupId>
-                    <artifactId>kie-tomcat-integration</artifactId>
-                  </dependency>
-                  <dependency>
-                    <groupId>org.jboss.spec.javax.security.jacc</groupId>
-                    <artifactId>jboss-jacc-api_1.4_spec</artifactId>
-                  </dependency>
-                </dependencies>
-              </container>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.cargo</groupId>
+              <artifactId>cargo-maven2-plugin</artifactId>
               <configuration>
-                <configfiles>
-                  <configfile>
-                    <file>${project.build.testOutputDirectory}/tomcat-shared/config</file>
-                    <todir>conf</todir>
-                    <overwrite>true</overwrite>
-                  </configfile>
-                  <configfile>
-                    <file>${project.build.testOutputDirectory}/tomcat7/config</file>
-                    <todir>conf</todir>
-                    <overwrite>true</overwrite>
-                  </configfile>
-                </configfiles>
+                <container>
+                  <containerId>tomcat7x</containerId>
+                  <type>installed</type>
+                  <artifactInstaller>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat</artifactId>
+                    <version>${version.tomcat7}</version>
+                  </artifactInstaller>
+                  <systemProperties>
+                    <tomcat.home>${project.build.directory}/cargo/configurations/tomcat7x</tomcat.home>
+                    <bitronix.tm.configuration>
+                      ${project.build.directory}/cargo/configurations/tomcat7x/conf/btm-config.properties
+                    </bitronix.tm.configuration>
+                    <jbpm.tsr.jndi.lookup>java:comp/env/TransactionSynchronizationRegistry</jbpm.tsr.jndi.lookup>
+                    <org.jboss.logging.provider>jdk</org.jboss.logging.provider>
+                  </systemProperties>
+                  <dependencies>
+                    <dependency>
+                      <groupId>org.codehaus.btm</groupId>
+                      <artifactId>btm</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.codehaus.btm</groupId>
+                      <artifactId>btm-tomcat55-lifecycle</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>com.h2database</groupId>
+                      <artifactId>h2</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.jboss.spec.javax.transaction</groupId>
+                      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.slf4j</groupId>
+                      <artifactId>slf4j-api</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.slf4j</groupId>
+                      <artifactId>slf4j-jdk14</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.kie</groupId>
+                      <artifactId>kie-tomcat-integration</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.jboss.spec.javax.security.jacc</groupId>
+                      <artifactId>jboss-jacc-api_1.4_spec</artifactId>
+                    </dependency>
+                  </dependencies>
+                </container>
+                <configuration>
+                  <configfiles>
+                    <configfile>
+                      <file>${project.build.testOutputDirectory}/tomcat-shared/config</file>
+                      <todir>conf</todir>
+                      <overwrite>true</overwrite>
+                    </configfile>
+                    <configfile>
+                      <file>${project.build.testOutputDirectory}/tomcat7/config</file>
+                      <todir>conf</todir>
+                      <overwrite>true</overwrite>
+                    </configfile>
+                  </configfiles>
+                </configuration>
+                <deployables>
+                  <deployable>
+                    <groupId>${deployable.groupId}</groupId>
+                    <artifactId>${deployable.artifactId}</artifactId>
+                    <classifier>${tomcat7.deployable.classifier}</classifier>
+                    <type>war</type>
+                  </deployable>
+                </deployables>
               </configuration>
-              <deployables>
-                <deployable>
-                  <groupId>${deployable.groupId}</groupId>
-                  <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>${tomcat7.deployable.classifier}</classifier>
-                  <type>war</type>
-                </deployable>
-              </deployables>
-            </configuration>
-          </plugin>
-          <plugin>
-            <!-- Tomcat is not (yet?) configured with JMS, so exclude the JMS tests. -->
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <configuration>
-              <excludedGroups>org.kie.smoke.wb.category.JMSSmoke</excludedGroups>
-            </configuration>
-          </plugin>
-        </plugins>
+            </plugin>
+            <plugin>
+              <!-- Tomcat is not (yet?) configured with JMS, so exclude the JMS tests. -->
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <configuration>
+                <excludedGroups>org.kie.smoke.wb.category.JMSSmoke</excludedGroups>
+              </configuration>
+            </plugin>
+          </plugins>
         </pluginManagement>
       </build>
     </profile>

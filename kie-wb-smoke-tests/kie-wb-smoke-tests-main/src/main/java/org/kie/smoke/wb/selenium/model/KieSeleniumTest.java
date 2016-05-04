@@ -15,46 +15,38 @@
  */
 package org.kie.smoke.wb.selenium.model;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Rule;
-import org.kie.smoke.wb.selenium.util.PageObjectFactory;
+import org.junit.runner.RunWith;
 import org.kie.smoke.wb.selenium.util.ScreenshotOnFailure;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@RunWith(Arquillian.class)
 public class KieSeleniumTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(KieSeleniumTest.class);
+
+    @Drone
     protected static WebDriver driver;
-    protected static PageObjectFactory pof;
+
+    @Page
+    protected LoginPage login;
+
     public static final boolean IS_KIE_WB = isKieWb();
 
     @Rule
-    public ScreenshotOnFailure screenshotter = new ScreenshotOnFailure(driver);
-
-    //Credentials based on from src/test/filtered-resources/eap-wildfly-shared/config/application-users.properties
-    public final static String KIE_PASS = "mary123@";
-    public final static String KIE_USER = "mary";
-
-    @BeforeClass
-    public static void startWebDriver() {
-        driver = WebDriverFactory.create();
-        driver.manage().window().maximize();
-
-        pof = new PageObjectFactory(driver);
-    }
-
-    @AfterClass
-    public static void stopWebDriver() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+    public ScreenshotOnFailure screenshotter = new ScreenshotOnFailure();
 
     private static boolean isKieWb() {
         String prop = System.getProperty("app.name");
         if (!("kie-wb".equals(prop) || "kie-drools-wb".equals(prop))) {
             throw new IllegalStateException("Invalid app.name='" + prop + "' Expecting kie-wb or kie-drools-wb");
         }
+        LOG.info("Tested application: {}", prop);
         return "kie-wb".equals(prop);
     }
 }

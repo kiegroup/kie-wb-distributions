@@ -17,15 +17,10 @@ package org.kie.smoke.wb.selenium.model.persps;
 
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class ProcessDefinitionsPerspective extends AbstractPerspective {
 
     private static final By PROC_DEFS_TITLE = By.cssSelector("span[title='Process Definitions']");
-
-    public ProcessDefinitionsPerspective(WebDriver driver) {
-        super(driver);
-    }
 
     @Override
     public boolean isDisplayed() {

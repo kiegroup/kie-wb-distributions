@@ -15,20 +15,25 @@
  */
 package org.kie.smoke.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.page.Page;
+import org.kie.smoke.wb.selenium.util.BusyPopup;
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class ProcessInstancesPerspective extends AbstractPerspective {
 
     private static final By PROC_INST_TITLE = By.cssSelector("span[title='Process Instances']");
 
-    public ProcessInstancesPerspective(WebDriver driver) {
-        super(driver);
-    }
+    @Page
+    private BusyPopup busyPopup;
 
     @Override
     public boolean isDisplayed() {
         return Waits.isElementPresent(driver, PROC_INST_TITLE);
+    }
+
+    @Override
+    public void waitForLoaded() {
+        busyPopup.waitForDisappearance();
     }
 }

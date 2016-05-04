@@ -15,42 +15,36 @@
  */
 package org.kie.smoke.wb.selenium.model.persps;
 
-import org.kie.smoke.wb.selenium.model.LoginPage;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.page.Page;
 import org.kie.smoke.wb.selenium.model.PageObject;
 import org.kie.smoke.wb.selenium.model.PrimaryNavbar;
-import org.kie.smoke.wb.selenium.util.PageObjectFactory;
-import org.kie.smoke.wb.selenium.util.Waits;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.FindBy;
 
 public abstract class AbstractPerspective extends PageObject {
 
-    private final PrimaryNavbar navbar;
-
-    public AbstractPerspective(WebDriver driver) {
-        super(driver);
-        navbar = PageFactory.initElements(driver, PrimaryNavbar.class);
-    }
+    @Page
+    private PrimaryNavbar navbar;
+    @FindBy(css = "input[value='Login again']")
+    private WebElement loginAgainButton;
 
     public PrimaryNavbar getNavbar() {
         return navbar;
     }
+
+    public void logout() {
+        navbar.logout();
+        // Click 'Login again' to get back to login page
+        Graphene.waitModel().until().element(loginAgainButton).is().present();
+        loginAgainButton.click();
+    }
+
+    public abstract boolean isDisplayed();
 
     /**
      * Waiting for the perspective to be fully loaded. No-op by default.
      */
     public void waitForLoaded() {
     }
-
-    public LoginPage logout() {
-        navbar.logout();
-        // Click 'Login again' to get back to login page
-        WebElement loginAgainButton = Waits.elementClickable(driver, By.cssSelector("input[value='Login again']"));
-        loginAgainButton.click();
-        return new PageObjectFactory(driver).createLoginPage();
-    }
-
-    public abstract boolean isDisplayed();
 }

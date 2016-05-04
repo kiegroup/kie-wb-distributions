@@ -15,19 +15,16 @@
  */
 package org.kie.smoke.wb.selenium.model.persps;
 
-import org.kie.smoke.wb.selenium.util.LoadingIndicator;
+import org.jboss.arquillian.graphene.page.Page;
+import org.kie.smoke.wb.selenium.util.BusyPopup;
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 
 public class TasksPerspective extends AbstractPerspective {
 
     private static final By ACTIVE_FILTER_TITLE = By.xpath("//h4[contains(text(),'Filter Active')]");
-
-    public TasksPerspective(WebDriver driver) {
-        super(driver);
-    }
+    @Page
+    private BusyPopup loadingIndicator;
 
     @Override
     public boolean isDisplayed() {
@@ -36,7 +33,6 @@ public class TasksPerspective extends AbstractPerspective {
 
     @Override
     public void waitForLoaded() {
-        LoadingIndicator indicator = PageFactory.initElements(driver, LoadingIndicator.class);
-        indicator.disappear("Loading");
+        loadingIndicator.waitForDisappearance();
     }
 }

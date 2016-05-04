@@ -19,7 +19,6 @@ import org.junit.experimental.categories.Category;
 import org.kie.smoke.wb.category.KieWbSeleniumSmoke;
 import org.kie.smoke.wb.selenium.model.persps.HomePerspective;
 import org.kie.smoke.wb.selenium.model.KieSeleniumTest;
-import org.kie.smoke.wb.selenium.model.LoginPage;
 import static org.junit.Assert.assertTrue;
 
 @Category(KieWbSeleniumSmoke.class)
@@ -27,12 +26,10 @@ public class LoginIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void loginAndLogout() {
-        LoginPage login = pof.createLoginPage();
-
-        HomePerspective home = login.loginAs(KIE_USER, KIE_PASS);
+        HomePerspective home = login.loginDefaultUser();
         assertTrue(home.isDisplayed());
 
-        login = home.logout();
+        home.logout();
         assertTrue(login.isDisplayed());
     }
 }

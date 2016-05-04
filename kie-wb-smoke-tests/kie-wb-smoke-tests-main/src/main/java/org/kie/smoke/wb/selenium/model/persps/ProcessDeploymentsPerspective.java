@@ -17,15 +17,10 @@ package org.kie.smoke.wb.selenium.model.persps;
 
 import org.kie.smoke.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class ProcessDeploymentsPerspective extends AbstractPerspective {
 
     private static final By PROC_DEPLS_TITLE = By.cssSelector("span[title='Deployed Units']");
-
-    public ProcessDeploymentsPerspective(WebDriver driver) {
-        super(driver);
-    }
 
     @Override
     public boolean isDisplayed() {

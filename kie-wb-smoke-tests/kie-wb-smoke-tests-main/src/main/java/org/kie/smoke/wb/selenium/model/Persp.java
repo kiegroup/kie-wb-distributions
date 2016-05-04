@@ -40,55 +40,55 @@ import org.kie.smoke.wb.selenium.model.persps.TimelinePerspective;
 public class Persp<T extends AbstractPerspective> {
 
     public static final Persp<HomePerspective> HOME_PAGE
-            = new Persp<HomePerspective>("Home", "Home Page", HomePerspective.class);
+            = new Persp<>("Home", "Home Page", HomePerspective.class);
 
     public static final Persp<TimelinePerspective> TIMELINE
-            = new Persp<TimelinePerspective>("Home", "Timeline", TimelinePerspective.class);
+            = new Persp<>("Home", "Timeline", TimelinePerspective.class);
 
     public static final Persp<PeoplePerspective> PEOPLE
-            = new Persp<PeoplePerspective>("Home", "People", PeoplePerspective.class);
+            = new Persp<>("Home", "People", PeoplePerspective.class);
 
     public static final Persp<ProjectAuthoringPerspective> PROJECT_AUTHORING
-            = new Persp<ProjectAuthoringPerspective>("Authoring", "Project Authoring", ProjectAuthoringPerspective.class);
+            = new Persp<>("Authoring", "Project Authoring", ProjectAuthoringPerspective.class);
 
     public static final Persp<ContributorsPerspective> CONTRIBUTORS
-            = new Persp<ContributorsPerspective>("Authoring", "Contributors", ContributorsPerspective.class);
+            = new Persp<>("Authoring", "Contributors", ContributorsPerspective.class);
 
     public static final Persp<ArtifactRepositoryPerspective> ARTIFACT_REPOSITORY
-            = new Persp<ArtifactRepositoryPerspective>("Authoring", "Artifact repository", ArtifactRepositoryPerspective.class);
+            = new Persp<>("Authoring", "Artifact repository", ArtifactRepositoryPerspective.class);
 
     public static final Persp<AdministrationPerspective> ADMINISTRATION
-            = new Persp<AdministrationPerspective>("Authoring", "Administration", AdministrationPerspective.class);
+            = new Persp<>("Authoring", "Administration", AdministrationPerspective.class);
 
     public static final Persp<ProcessDeploymentsPerspective> PROCESS_DEPLOYMENTS
-            = new Persp<ProcessDeploymentsPerspective>("Deploy", "Process Deployments", ProcessDeploymentsPerspective.class, true);
+            = new Persp<>("Deploy", "Process Deployments", ProcessDeploymentsPerspective.class, true);
 
     public static final Persp<RuleDeploymentsPerspective> RULE_DEPLOYMENTS
-            = new Persp<RuleDeploymentsPerspective>("Deploy", "Rule Deployments", RuleDeploymentsPerspective.class);
+            = new Persp<>("Deploy", "Rule Deployments", RuleDeploymentsPerspective.class);
 
     public static final Persp<JobsPerspective> JOBS
-            = new Persp<JobsPerspective>("Deploy", "Jobs", JobsPerspective.class, true);
+            = new Persp<>("Deploy", "Jobs", JobsPerspective.class, true);
 
     public static final Persp<ProcessDefinitionsPerspective> PROCESS_DEFINITIONS
-            = new Persp<ProcessDefinitionsPerspective>("Process Management", "Process Definitions", ProcessDefinitionsPerspective.class, true);
+            = new Persp<>("Process Management", "Process Definitions", ProcessDefinitionsPerspective.class, true);
 
     public static final Persp<ProcessInstancesPerspective> PROCESS_INSTANCES
-            = new Persp<ProcessInstancesPerspective>("Process Management", "Process Instances", ProcessInstancesPerspective.class, true);
+            = new Persp<>("Process Management", "Process Instances", ProcessInstancesPerspective.class, true);
 
     public static final Persp<TasksPerspective> TASKS
-            = new Persp<TasksPerspective>("N/A", "Tasks", TasksPerspective.class);
+            = new Persp<>("N/A", "Tasks", TasksPerspective.class);
 
     public static final Persp<ProcessAndTaskDashboardPerspective> PROCESS_AND_TASK_DASHBOARD
-            = new Persp<ProcessAndTaskDashboardPerspective>("Dashboards", "Process & Task Dashboard", ProcessAndTaskDashboardPerspective.class, true);
+            = new Persp<>("Dashboards", "Process & Task Dashboard", ProcessAndTaskDashboardPerspective.class, true);
 
     public static final Persp<PluginManagementPerspective> PLUGIN_MANAGEMENT
-            = new Persp<PluginManagementPerspective>("Extensions", "PlugIn Management", PluginManagementPerspective.class);
+            = new Persp<>("Extensions", "PlugIn Management", PluginManagementPerspective.class);
 
     public static final Persp<AppsPerspective> APPS
-            = new Persp<AppsPerspective>("Extensions", "Apps", AppsPerspective.class);
+            = new Persp<>("Extensions", "Apps", AppsPerspective.class);
 
     public static final Persp<DataSetsPerspective> DATA_SETS
-            = new Persp<DataSetsPerspective>("Extensions", "Data Sets", DataSetsPerspective.class);
+            = new Persp<>("Extensions", "Data Sets", DataSetsPerspective.class);
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPS = Collections.unmodifiableList(Arrays.asList(
             HOME_PAGE, TIMELINE, PEOPLE, PROJECT_AUTHORING, CONTRIBUTORS, ARTIFACT_REPOSITORY, ADMINISTRATION,
