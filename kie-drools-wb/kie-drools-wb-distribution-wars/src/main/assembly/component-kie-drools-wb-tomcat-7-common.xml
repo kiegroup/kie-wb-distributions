@@ -13,11 +13,6 @@
         <include>antlr:antlr</include>
         <include>dom4j:dom4j</include>
         <include>org.apache.neethi:neethi</include>
-        <include>org.hibernate.javax.persistence:hibernate-jpa-2.0-api</include>
-        <include>org.hibernate:hibernate-entitymanager</include>
-        <include>org.hibernate:hibernate-core</include>
-        <include>org.hibernate:hibernate-validator</include>
-        <include>org.hibernate.common:hibernate-commons-annotations</include>
         <include>com.sun.xml.bind:jaxb-xjc</include>
         <include>org.jboss.logging:jboss-logging</include>
         <include>org.slf4j:jcl-over-slf4j</include>
@@ -50,6 +45,7 @@
         <include>org.jboss.resteasy:resteasy-jackson-provider</include>
         <include>org.jboss.resteasy:resteasy-jaxb-provider</include>
         <include>org.scannotation:scannotation</include>
+        <include>org.codehaus.jackson:jackson-jaxrs</include>
 
         <include>org.jboss.weld:weld-api</include>
         <include>org.jboss.weld:weld-core</include>

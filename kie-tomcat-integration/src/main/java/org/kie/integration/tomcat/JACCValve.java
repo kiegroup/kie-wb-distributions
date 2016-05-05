@@ -16,9 +16,11 @@
 package org.kie.integration.tomcat;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.security.acl.Group;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -71,15 +73,25 @@ public class JACCValve extends ValveBase {
 				
 				public Object getContext(String key, Object data)
 						throws PolicyContextException {
-				    
-				    Request req = currentRequest.get();
-				    if (req == null || req.getPrincipal() == null) {
-				        return null;
-				    }
 
-				    Set<Principal> principals = new HashSet<Principal>();
-			        principals.add(req.getPrincipal());
-		            principals.add(getGroup(req.getPrincipal()));
+                    Request req = currentRequest.get();
+                    if (req == null || req.getPrincipal() == null) {
+                        return null;
+                    }
+
+                    Set<Principal> principals = new HashSet<Principal>();
+                    principals.add(req.getPrincipal());
+                    principals.add(getGroup(req.getPrincipal()));
+                    if (req.getPrincipal() instanceof GenericPrincipal) {
+                        try {
+                            String name = ((GenericPrincipal) req.getPrincipal()).getName();
+                            String password = ((GenericPrincipal) req.getPrincipal()).getPassword();
+                            String basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString((name + ":" + password).getBytes("UTF-8"));
+                            principals.add(new BasicAuthorizationPrincipal(basicAuthHeader));
+                        } catch (UnsupportedEncodingException e) {
+                            logger.warn("UnsupportedEncodingException while preparing basic auth principal");
+                        }
+                    }
 
 			        final Subject s = new Subject(false, principals , Collections.EMPTY_SET, Collections.EMPTY_SET);
 					return s;

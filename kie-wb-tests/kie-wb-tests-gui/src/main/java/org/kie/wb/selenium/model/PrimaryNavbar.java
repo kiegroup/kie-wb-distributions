@@ -94,7 +94,7 @@ public class PrimaryNavbar {
     }
 
     public RuleDeploymentsPerspective ruleDeployments() {
-        return navigateTo(Persp.RULE_DEPLOYMENTS);
+        return navigateTo(Persp.EXECUTION_SERVERS);
     }
 
     public JobsPerspective jobs() {

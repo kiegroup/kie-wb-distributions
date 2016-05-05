@@ -16,7 +16,6 @@
 
 package org.kie.workbench.drools.backend.server;
 
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
@@ -25,18 +24,13 @@ import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.backend.server.WorkbenchConfigurationHelper;
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
-import org.guvnor.common.services.project.model.GAV;
-import org.guvnor.common.services.project.model.POM;
-import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.guvnor.structure.server.config.ConfigGroup;
-import org.guvnor.structure.server.config.ConfigItem;
 import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
-import org.jbpm.console.ng.bd.service.AdministrationService;
 import org.kie.workbench.common.services.shared.project.KieProjectService;
 import org.kie.workbench.screens.workbench.backend.BaseAppSetup;
 import org.slf4j.Logger;
@@ -62,8 +56,6 @@ public class AppSetup extends BaseAppSetup {
 
     private Event<ApplicationStarted> applicationStartedEvent;
 
-    private AdministrationService administrationService;
-
     private WorkbenchConfigurationHelper workbenchConfigurationHelper;
 
     protected AppSetup() {
@@ -76,11 +68,9 @@ public class AppSetup extends BaseAppSetup {
                      final KieProjectService projectService,
                      final ConfigurationService configurationService,
                      final ConfigurationFactory configurationFactory,
-                     final AdministrationService administrationService,
                      final Event<ApplicationStarted> applicationStartedEvent,
                      final WorkbenchConfigurationHelper workbenchConfigurationHelper ) {
         super( ioService, repositoryService, organizationalUnitService, projectService, configurationService, configurationFactory );
-        this.administrationService = administrationService;
         this.applicationStartedEvent = applicationStartedEvent;
         this.workbenchConfigurationHelper = workbenchConfigurationHelper;
     }
@@ -113,22 +103,17 @@ public class AppSetup extends BaseAppSetup {
             }
 
             // Setup mandatory properties for Drools-Workbench
-            final ConfigItem<String> supportRuntimeDeployConfigItem = new ConfigItem<>();
-            supportRuntimeDeployConfigItem.setName( "support.runtime.deploy" );
-            supportRuntimeDeployConfigItem.setValue( "false" );
+
             setupConfigurationGroup( ConfigType.GLOBAL,
                                      GLOBAL_SETTINGS,
-                                     getGlobalConfiguration(),
-                                     supportRuntimeDeployConfigItem );
+                                     getGlobalConfiguration() );
 
             // Setup properties required by the Work Items Editor
             setupConfigurationGroup( ConfigType.EDITOR,
                                      WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS,
                                      workbenchConfigurationHelper.getWorkItemElementDefinitions() );
 
-            // rest of jbpm wb bootstrap
-            administrationService.bootstrapConfig();
-            administrationService.bootstrapDeployments();
+
             // notify components that bootstrap is completed to start post setups
             applicationStartedEvent.fire( new ApplicationStarted() );
         } catch ( final Exception e ) {

@@ -34,13 +34,6 @@
     <module>kie-wb-distribution-wars</module>
   </modules>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-runtime-manager</artifactId>
-    </dependency>
-  </dependencies>
-
   <build>
 
     <plugins>

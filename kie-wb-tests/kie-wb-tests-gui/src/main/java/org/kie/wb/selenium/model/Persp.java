@@ -63,7 +63,7 @@ public class Persp<T extends AbstractPerspective> {
     public static final Persp<ProcessDeploymentsPerspective> PROCESS_DEPLOYMENTS
             = new Persp<>("Deploy", "Process Deployments", ProcessDeploymentsPerspective.class, true);
 
-    public static final Persp<RuleDeploymentsPerspective> RULE_DEPLOYMENTS
+    public static final Persp<RuleDeploymentsPerspective> EXECUTION_SERVERS
             = new Persp<>("Deploy", "Execution Servers", RuleDeploymentsPerspective.class);
 
     public static final Persp<JobsPerspective> JOBS
@@ -92,7 +92,7 @@ public class Persp<T extends AbstractPerspective> {
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPS = Collections.unmodifiableList(Arrays.asList(
             HOME_PAGE, TIMELINE, PEOPLE, PROJECT_AUTHORING, CONTRIBUTORS, ARTIFACT_REPOSITORY, ADMINISTRATION,
-            PROCESS_DEPLOYMENTS, RULE_DEPLOYMENTS, JOBS, PROCESS_DEFINITIONS, PROCESS_INSTANCES, TASKS,
+            EXECUTION_SERVERS, JOBS, PROCESS_DEFINITIONS, PROCESS_INSTANCES, TASKS,
             PROCESS_AND_TASK_DASHBOARD, PLUGIN_MANAGEMENT, APPS, DATA_SETS
     ));
 

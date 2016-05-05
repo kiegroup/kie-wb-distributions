@@ -263,27 +263,6 @@
       <artifactId>wsdl4j</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.hibernate.javax.persistence</groupId>
-      <artifactId>hibernate-jpa-2.0-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-entitymanager</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate.common</groupId>
-      <artifactId>hibernate-commons-annotations</artifactId>
-    </dependency>
-
     <!-- for tomcat and RestEasy -->
     <dependency>
       <groupId>org.scannotation</groupId>
@@ -296,6 +275,10 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-jaxrs</artifactId>
+    </dependency>
 
     <!-- For WAS8 shading -->
     <dependency>
@@ -303,11 +286,6 @@
       <artifactId>sisu-inject-bean</artifactId>
     </dependency>
     <!-- WAS8 uses JUL, so just bind slf4j to that -->
-    <!-- use ejb timer service for WAS as otherwise there is not access to UserTransaction or TransactionSyncRegistry -->
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-services-ejb-timer</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.codehaus.woodstox</groupId>
       <artifactId>stax2-api</artifactId>

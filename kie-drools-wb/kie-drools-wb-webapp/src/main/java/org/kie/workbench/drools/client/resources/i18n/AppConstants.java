@@ -108,10 +108,6 @@ public interface AppConstants
 
     String Asset_Management();
 
-    String tasks();
-
-    String Tasks_List();
-
     String Apps();
 
     String DataSets();
