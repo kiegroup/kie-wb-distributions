@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+  <id>assembly-droolsjbpm-uber</id>
+  <formats>
+    <format>dir</format>
+  </formats>
+
+  <includeBaseDirectory>false</includeBaseDirectory>
+
+  <fileSets>
+    <fileSet>
+      <directory>src/main/assembly/filtered-resources</directory>
+      <filtered>true</filtered>
+      <outputDirectory/>
+    </fileSet>
+  </fileSets>
+
+  <dependencySets>
+    <dependencySet>
+      <includes>
+        <include>org.drools:drools-distribution:zip</include>
+        <include>org.drools:droolsjbpm-integration-distribution:zip</include>
+        <include>org.drools:droolsjbpm-tools-distribution:zip</include>
+      </includes>
+      <unpack>false</unpack>
+      <outputDirectory>downloads_htdocs/drools/release/${project.version}</outputDirectory>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>org.optaplanner:optaplanner-distribution:zip</include>
+      </includes>
+      <unpack>false</unpack>
+      <outputDirectory>downloads_htdocs/optaplanner/release/${project.version}</outputDirectory>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>org.drools:org.drools.updatesite:zip</include>
+      </includes>
+      <unpack>true</unpack>
+      <outputDirectory>downloads_htdocs/drools/release/${project.version}/org.drools.updatesite</outputDirectory>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+
+    <!-- Reference manual -->
+    <dependencySet>
+      <includes>
+        <include>org.drools:drools-docs:jdocbook</include>
+      </includes>
+      <outputDirectory>docs_htdocs/drools/release/${project.version}/drools-docs</outputDirectory>
+      <unpack>true</unpack>
+      <unpackOptions>
+        <excludes>
+          <exclude>META-INF/**</exclude>
+        </excludes>
+      </unpackOptions>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>org.optaplanner:optaplanner-docs:jdocbook</include>
+      </includes>
+      <outputDirectory>docs_htdocs/optaplanner/release/${project.version}/optaplanner-docs</outputDirectory>
+      <unpack>true</unpack>
+      <unpackOptions>
+        <excludes>
+          <exclude>META-INF/**</exclude>
+        </excludes>
+      </unpackOptions>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>org.jbpm:jbpm-docs:jdocbook</include>
+      </includes>
+      <outputDirectory>docs_htdocs/jbpm/release/${project.version}/jbpm-docs</outputDirectory>
+      <unpack>true</unpack>
+      <unpackOptions>
+        <excludes>
+          <exclude>META-INF/**</exclude>
+        </excludes>
+      </unpackOptions>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+
+    <!-- Javadocs -->
+    <dependencySet>
+      <includes>
+        <include>org.optaplanner:optaplanner-core:*:javadoc</include>
+      </includes>
+      <outputDirectory>docs_htdocs/optaplanner/release/${project.version}/optaplanner-javadoc</outputDirectory>
+      <unpack>true</unpack>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>org.kie:kie-api:*:javadoc</include>
+      </includes>
+      <outputDirectory>docs_htdocs/drools/release/${project.version}/kie-api-javadoc</outputDirectory>
+      <unpack>true</unpack>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+  </dependencySets>
+
+</assembly>
