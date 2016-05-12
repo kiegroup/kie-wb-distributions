@@ -43,10 +43,10 @@
         <type>pom</type>
       </dependency>
       <dependency>
-      <groupId>org.jboss.arquillian.graphene</groupId>
-      <artifactId>graphene-webdriver-api</artifactId>
-      <version>${version.org.jboss.arquillian.graphene}</version>
-    </dependency>
+        <groupId>org.jboss.arquillian.graphene</groupId>
+        <artifactId>graphene-webdriver-api</artifactId>
+        <version>${version.org.jboss.arquillian.graphene}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
