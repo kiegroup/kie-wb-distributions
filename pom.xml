@@ -125,6 +125,19 @@
       </modules>
     </profile>
 
+    <!-- This profile needs to be triggered only during releases. -->
+    <profile>
+      <id>releaseProfile</id>
+      <activation>
+        <property>
+          <name>release</name>
+        </property>
+      </activation>
+      <modules>
+        <module>droolsjbpm-uber-distribution</module>
+      </modules>
+    </profile>
+
   </profiles>
 
 </project>
