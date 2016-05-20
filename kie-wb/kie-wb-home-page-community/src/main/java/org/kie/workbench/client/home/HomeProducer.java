@@ -32,7 +32,7 @@ import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.Command;
 
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
+import static org.kie.workbench.common.workbench.client.menu.KieWorkbenchFeatures.*;
 
 /**
  * Producer method for the Home Page content

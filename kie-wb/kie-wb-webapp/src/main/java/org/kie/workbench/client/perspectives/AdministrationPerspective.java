@@ -43,7 +43,7 @@ import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.Menus;
 
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
+import static org.kie.workbench.common.workbench.client.menu.KieWorkbenchFeatures.*;
 
 /**
  * A Perspective for Administrators
