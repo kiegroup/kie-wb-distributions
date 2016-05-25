@@ -26,13 +26,12 @@ import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.HomePageCommunityConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
-import org.kie.workbench.common.screens.home.model.Section;
 import org.kie.workbench.common.screens.home.model.SectionEntry;
-import org.guvnor.common.services.shared.security.KieWorkbenchACL;
+import org.kie.workbench.common.workbench.client.authz.WorkbenchFeatures;
 import org.uberfire.client.mvp.PlaceManager;
-import org.uberfire.mvp.Command;
 
-import static org.kie.workbench.common.workbench.client.menu.KieWorkbenchFeatures.*;
+import static org.uberfire.workbench.model.ActivityResourceType.*;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
 
 /**
  * Producer method for the Home Page content
@@ -46,9 +45,6 @@ public class HomeProducer {
 
     @Inject
     private PlaceManager placeManager;
-
-    @Inject
-    private KieWorkbenchACL kieACL;
 
     public void init() {
         final String url = GWT.getModuleBaseURL();
@@ -69,162 +65,63 @@ public class HomeProducer {
                                                               constants.homeImproveCaption(),
                                                               url + "/images/HandHome.jpg" ) );
 
-        final Section s1 = new Section( constants.Authoring() );
+        final SectionEntry s1 = ModelUtils.makeSectionEntry( constants.Authoring() );
 
-        SectionEntry s1_a = ModelUtils.makeSectionEntry( constants.Project_Authoring(),
-                                                         new Command() {
+        s1.addChild( ModelUtils.makeSectionEntry( constants.Project_Authoring(),
+                () -> placeManager.goTo( AUTHORING ),
+                AUTHORING, PERSPECTIVE ) );
 
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "AuthoringPerspective" );
-                                                             }
-                                                         } );
+        s1.addChild( ModelUtils.makeSectionEntry( constants.Contributors(),
+                () -> placeManager.goTo( CONTRIBUTORS ),
+                CONTRIBUTORS, PERSPECTIVE ) );
 
-        SectionEntry s1_b = ModelUtils.makeSectionEntry( constants.Contributors(),
-                                                         new Command() {
+        s1.addChild( ModelUtils.makeSectionEntry( constants.artifactRepository(),
+                () -> placeManager.goTo( GUVNOR_M2REPO ),
+                GUVNOR_M2REPO , PERSPECTIVE ) );
 
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "ContributorsPerspective" );
-                                                             }
-                                                         } );
+        s1.addChild( ModelUtils.makeSectionEntry( constants.Administration(),
+                () -> placeManager.goTo( ADMINISTRATION ),
+                ADMINISTRATION , PERSPECTIVE ) );
 
-        SectionEntry s1_d = ModelUtils.makeSectionEntry( constants.artifactRepository(),
-                                                         new Command() {
+        final SectionEntry s2 = ModelUtils.makeSectionEntry( constants.Deploy() );
 
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" );
-                                                             }
-                                                         } );
+        s2.addChild( ModelUtils.makeSectionEntry( constants.Process_Deployments(),
+                () -> placeManager.goTo( DEPLOYMENTS ),
+                DEPLOYMENTS , PERSPECTIVE ) );
 
-        SectionEntry s1_e = ModelUtils.makeSectionEntry( constants.Administration(),
-                                                         new Command() {
+        s2.addChild( ModelUtils.makeSectionEntry( constants.Rule_Deployments(),
+                () -> placeManager.goTo( SERVER_MANAGEMENT ),
+                SERVER_MANAGEMENT , PERSPECTIVE ) );
 
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "AdministrationPerspective" );
-                                                             }
-                                                         } );
+        s2.addChild( ModelUtils.makeSectionEntry( constants.Jobs(),
+                () -> placeManager.goTo( JOBS ),
+                JOBS , PERSPECTIVE ) );
 
-        final Section s2 = new Section( constants.Deploy() );
+        final SectionEntry s3 = ModelUtils.makeSectionEntry( constants.Process_Management() );
 
-        SectionEntry s2_a = ModelUtils.makeSectionEntry( constants.Process_Deployments(),
-                                                         new Command() {
+        s3.addChild( ModelUtils.makeSectionEntry( constants.Process_Definitions(),
+                () -> placeManager.goTo( PROCESS_DEFINITIONS ),
+                PROCESS_DEFINITIONS , PERSPECTIVE ) );
 
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "Deployments" );
-                                                             }
-                                                         } );
+        s3.addChild( ModelUtils.makeSectionEntry( constants.Process_Instances(),
+                () -> placeManager.goTo( DATASET_PROC_INST_VARS ),
+                DATASET_PROC_INST_VARS , PERSPECTIVE ) );
 
-        SectionEntry s2_b = ModelUtils.makeSectionEntry( constants.Rule_Deployments(),
-                                                         new Command() {
+        final SectionEntry s4 = ModelUtils.makeSectionEntry( constants.Tasks() );
 
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "ServerManagementPerspective" );
-                                                             }
-                                                         } );
+        s4.addChild( ModelUtils.makeSectionEntry( constants.Tasks_List(),
+                () -> placeManager.goTo( DATASET_TASKS ),
+                DATASET_TASKS , PERSPECTIVE ) );
 
-        SectionEntry s2_c = ModelUtils.makeSectionEntry( constants.Jobs(),
-                                                         new Command() {
+        final SectionEntry s5 = ModelUtils.makeSectionEntry( constants.Dashboards() );
 
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "Jobs" );
-                                                             }
-                                                         } );
-
-        final Section s3 = new Section( constants.Process_Management() );
-
-        SectionEntry s3_a = ModelUtils.makeSectionEntry( constants.Process_Definitions(),
-                                                         new Command() {
-
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "Process Definitions" );
-                                                             }
-                                                         } );
-
-        SectionEntry s3_b = ModelUtils.makeSectionEntry( constants.Process_Instances(),
-                                                         new Command() {
-
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "DataSet Process Instances With Variables" );
-                                                             }
-                                                         } );
-
-        final Section s4 = new Section( constants.Tasks() );
-
-        SectionEntry s4_a = ModelUtils.makeSectionEntry( constants.Tasks_List(),
-                                                         new Command() {
-
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "DataSet Tasks" );
-                                                             }
-                                                         } );
-
-        final Section s5 = new Section( constants.Dashboards() );
-
-        SectionEntry s5_a = ModelUtils.makeSectionEntry( constants.Process_Dashboard(),
-                                                         new Command() {
-
-                                                             @Override
-                                                             public void execute() {
-                                                                 placeManager.goTo( "DashboardPerspective" );
-                                                             }
-                                                         } );
+        s5.addChild( ModelUtils.makeSectionEntry( constants.Process_Dashboard(),
+                () -> placeManager.goTo( PROCESS_DASHBOARD ),
+                PROCESS_DASHBOARD , PERSPECTIVE ) );
 
         final String dashbuilderURL = DashboardURLBuilder.getDashboardURL( "/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName() );
-        SectionEntry s5_b = ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
-                                                         new Command() {
-                                                             @Override
-                                                             public void execute() {
-                                                                 Window.open( dashbuilderURL, "_blank", "" );
-                                                             }
-                                                         } );
-
-        s1.setRoles( kieACL.getGrantedRoles( G_AUTHORING ) );
-        s1_a.setRoles( kieACL.getGrantedRoles( F_PROJECT_AUTHORING ) );
-        s1_b.setRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) );
-        s1_d.setRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) );
-        s1_e.setRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) );
-
-        s2.setRoles( kieACL.getGrantedRoles( G_DEPLOY ) );
-        s2_a.setRoles( kieACL.getGrantedRoles( F_DEPLOYMENTS ) );
-        s2_b.setRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) );
-        s2_c.setRoles( kieACL.getGrantedRoles( F_JOBS ) );
-
-        s3.setRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) );
-        s3_a.setRoles( kieACL.getGrantedRoles( F_PROCESS_DEFINITIONS ) );
-        s3_b.setRoles( kieACL.getGrantedRoles( F_PROCESS_INSTANCES ) );
-
-        s4.setRoles( kieACL.getGrantedRoles( G_TASKS ) );
-        s4_a.setRoles( kieACL.getGrantedRoles( F_TASKS ) );
-
-        s5.setRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) );
-        s5_a.setRoles( kieACL.getGrantedRoles( F_PROCESS_DASHBOARD ) );
-        s5_b.setRoles( kieACL.getGrantedRoles( F_DASHBOARD_BUILDER ) );
-
-        s1.addEntry( s1_a );
-        s1.addEntry( s1_b );
-        s1.addEntry( s1_d );
-        s1.addEntry( s1_e );
-
-        s2.addEntry( s2_a );
-        s2.addEntry( s2_b );
-        s2.addEntry( s2_c );
-
-        s3.addEntry( s3_a );
-        s3.addEntry( s3_b );
-
-        s4.addEntry( s4_a );
-
-        s5.addEntry( s5_a );
-        s5.addEntry( s5_b );
+        s5.addChild( ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
+                () -> Window.open( dashbuilderURL, "_blank", "" ), WorkbenchFeatures.MANAGE_DASHBOARDS ) );
 
         model.addSection( s1 );
         model.addSection( s2 );

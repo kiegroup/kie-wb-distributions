@@ -20,11 +20,15 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.guvnor.asset.management.client.editors.repository.wizard.CreateRepositoryWizard;
-import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.guvnor.structure.client.editors.repository.clone.CloneRepositoryPresenter;
+import org.guvnor.structure.organizationalunit.OrganizationalUnit;
+import org.guvnor.structure.repositories.Repository;
+import org.guvnor.structure.security.OrganizationalUnitAction;
+import org.guvnor.structure.security.RepositoryAction;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
+import org.kie.workbench.common.workbench.client.PerspectiveIds;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -43,13 +47,11 @@ import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.Menus;
 
-import static org.kie.workbench.common.workbench.client.menu.KieWorkbenchFeatures.*;
-
 /**
  * A Perspective for Administrators
  */
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "AdministrationPerspective")
+@WorkbenchPerspective(identifier = PerspectiveIds.ADMINISTRATION)
 public class AdministrationPerspective {
 
     private AppConstants constants = AppConstants.INSTANCE;
@@ -62,9 +64,6 @@ public class AdministrationPerspective {
 
     @Inject
     private SyncBeanManager iocManager;
-
-    @Inject
-    private KieWorkbenchACL kieACL;
 
     @Inject
     private CloneRepositoryPresenter cloneRepositoryPresenter;
@@ -98,33 +97,25 @@ public class AdministrationPerspective {
     public Menus getMenus() {
         return MenuFactory
                 .newTopLevelMenu( constants.MenuOrganizationalUnits() )
-                .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
+                .withPermission( OrganizationalUnit.RESOURCE_TYPE, OrganizationalUnitAction.READ )
                 .menus()
                 .menu( constants.MenuManageOrganizationalUnits() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.kie.workbench.common.screens.organizationalunit.manager.OrganizationalUnitManager" );
-                    }
-                } )
+                .respondsWith( () -> placeManager.goTo( "org.kie.workbench.common.screens.organizationalunit.manager.OrganizationalUnitManager" ) )
                 .endMenu()
                 .endMenus()
                 .endMenu()
                 .newTopLevelMenu( constants.repositories() )
-                .withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) )
                 .menus()
                 .menu( constants.listRepositories() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "RepositoriesEditor" );
-                    }
-                } )
+                .withPermission( Repository.RESOURCE_TYPE, RepositoryAction.READ )
+                .respondsWith( () -> placeManager.goTo( "RepositoriesEditor" ) )
                 .endMenu()
                 .menu( constants.cloneRepository() )
+                .withPermission( Repository.RESOURCE_TYPE, RepositoryAction.READ )
                 .respondsWith( cloneRepoCommand )
                 .endMenu()
                 .menu( constants.newRepository() )
+                .withPermission( Repository.RESOURCE_TYPE, RepositoryAction.CREATE )
                 .respondsWith( newRepoCommand )
                 .endMenu()
                 .endMenus()

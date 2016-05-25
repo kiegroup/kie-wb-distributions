@@ -25,6 +25,7 @@ import javax.enterprise.inject.Alternative;
 
 import org.jboss.errai.security.shared.api.Group;
 import org.jboss.errai.security.shared.api.Role;
+import org.jboss.errai.security.shared.api.RoleImpl;
 import org.jboss.errai.security.shared.api.identity.User;
 
 /**
@@ -34,13 +35,15 @@ import org.jboss.errai.security.shared.api.identity.User;
 @ApplicationScoped
 public class CliIdentity implements User {
 
+    public static final Role ADMIN_ROLE = new RoleImpl("admin");
+
     private static final long serialVersionUID = -9178650167557721039L;
 
     private Set<Role> roles = new HashSet<Role>();
 
     @PostConstruct
     public void setup() {
-        roles.add( EnvironmentProvider.ADMIN_ROLE );
+        roles.add( ADMIN_ROLE );
     }
 
     @Override

@@ -24,9 +24,7 @@ import javax.inject.Named;
 
 import org.drools.workbench.screens.workitems.backend.server.WorkbenchConfigurationHelper;
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
-import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
-import org.guvnor.common.services.shared.security.KieWorkbenchSecurityService;
-import org.guvnor.common.services.shared.security.impl.KieWorkbenchACLImpl;
+import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.guvnor.structure.server.config.ConfigGroup;
@@ -42,7 +40,6 @@ import org.slf4j.LoggerFactory;
 import org.uberfire.commons.services.cdi.ApplicationStarted;
 import org.uberfire.commons.services.cdi.Startup;
 import org.uberfire.commons.services.cdi.StartupType;
-import org.uberfire.ext.security.server.RolesRegistry;
 import org.uberfire.io.IOService;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
@@ -63,8 +60,6 @@ public class AppSetup extends BaseAppSetup {
 
     private Event<ApplicationStarted> applicationStartedEvent;
 
-    private KieWorkbenchSecurityService securityService;
-
     private WorkbenchConfigurationHelper workbenchConfigurationHelper;
 
     protected AppSetup() {
@@ -79,12 +74,10 @@ public class AppSetup extends BaseAppSetup {
                      final ConfigurationFactory configurationFactory,
                      final AdministrationService administrationService,
                      final Event<ApplicationStarted> applicationStartedEvent,
-                     final KieWorkbenchSecurityService securityService,
                      final WorkbenchConfigurationHelper workbenchConfigurationHelper ) {
         super( ioService, repositoryService, organizationalUnitService, projectService, configurationService, configurationFactory );
         this.administrationService = administrationService;
         this.applicationStartedEvent = applicationStartedEvent;
-        this.securityService = securityService;
         this.workbenchConfigurationHelper = workbenchConfigurationHelper;
     }
 
@@ -126,14 +119,6 @@ public class AppSetup extends BaseAppSetup {
                                      WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS,
                                      workbenchConfigurationHelper.getWorkItemElementDefinitions() );
 
-            final KieWorkbenchPolicy policy = new KieWorkbenchPolicy( securityService.loadPolicy() );
-            // register roles
-            for ( final Map.Entry<String, String> entry : policy.entrySet() ) {
-                if ( entry.getKey().startsWith( KieWorkbenchACLImpl.PREFIX_ROLES ) ) {
-                    String role = entry.getValue();
-                    RolesRegistry.get().registerRole( role );
-                }
-            }
             // rest of jbpm wb bootstrap
             administrationService.bootstrapConfig();
             administrationService.bootstrapDeployments();

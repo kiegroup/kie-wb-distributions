@@ -27,7 +27,7 @@ import com.google.gwt.user.client.ui.Widget;
 import org.jboss.errai.security.shared.api.identity.User;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
-import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
+import org.uberfire.security.authz.AuthorizationManager;
 
 public class HomeViewImpl extends Composite
         implements
@@ -43,9 +43,8 @@ public class HomeViewImpl extends Composite
 
     private HomePresenter presenter;
 
-
     @Inject
-    private RuntimeAuthorizationManager authzManager;
+    private AuthorizationManager authzManager;
 
     @Inject
     private User identity;
@@ -89,8 +88,7 @@ public class HomeViewImpl extends Composite
         //Add Sections
         int i=1;
         for ( Section section : model.getSections() ) {
-            if ( authzManager.authorize( section,
-                                         identity ) ) {
+            if ( authorize( section ) ) {
                 //final SectionWidget sectionWidget = makeSection(section.getHeading(),section.getDescription(),section.getImageUrl(),false);
                 //this.columns.add( sectionWidget );
                 htmlLIs+="<li>\n" +
@@ -113,9 +111,17 @@ public class HomeViewImpl extends Composite
         //htmlContent
         HTML html = new HTML(htmlLIs);
         homeHtml.add(html);
-
-
     }
 
-
+    private boolean authorize( final Section section ) {
+        if (section.getResource() != null) {
+            return authzManager.authorize( section.getResource(), section.getResourceAction(), identity );
+        }
+        else if (section.getPermission() != null) {
+            return authzManager.authorize( section.getPermission(), identity );
+        }
+        else {
+            return true;
+        }
+    }
 }

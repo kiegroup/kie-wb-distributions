@@ -19,14 +19,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
-import org.jboss.errai.security.shared.exception.UnauthorizedException;
 import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.kie.workbench.common.services.refactoring.model.index.terms.IndexTerm;
 import org.kie.workbench.common.services.refactoring.model.index.terms.valueterms.ValueIndexTerm;
@@ -38,22 +35,11 @@ import org.uberfire.io.impl.IOServiceDotFileImpl;
 import org.uberfire.paging.PageResponse;
 import org.uberfire.rpc.SessionInfo;
 import org.uberfire.rpc.impl.SessionInfoImpl;
-import org.uberfire.security.Resource;
-import org.uberfire.security.authz.AuthorizationManager;
-import org.uberfire.security.authz.RuntimeResource;
-import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 
 @ApplicationScoped
 public class EnvironmentProvider {
 
     private final IOService ioService = new IOServiceDotFileImpl();
-
-    public static final Role ADMIN_ROLE = new Role() {
-        @Override
-        public String getName() {
-            return "admin";
-        }
-    };
 
     @Inject
     CliIdentity cliIdentity;
@@ -66,27 +52,7 @@ public class EnvironmentProvider {
 
     @Produces
     public SessionInfo getSessionInfo() {
-
         return new SessionInfoImpl( cliIdentity.getIdentifier(), cliIdentity );
-    }
-
-    @Produces
-    public AuthorizationManager getAuthManager() {
-        return new RuntimeAuthorizationManager() {
-            @Override
-            public boolean supports( Resource resource ) {
-                if ( resource instanceof RuntimeResource ) {
-                    return true;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean authorize( Resource resource,
-                                      User subject ) throws UnauthorizedException {
-                return subject.getRoles().contains( ADMIN_ROLE );
-            }
-        };
     }
 
     @Produces

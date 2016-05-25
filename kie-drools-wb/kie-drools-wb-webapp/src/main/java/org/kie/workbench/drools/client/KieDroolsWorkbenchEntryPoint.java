@@ -21,7 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.guvnor.common.services.shared.config.AppConfigService;
-import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.EntryPoint;
@@ -29,8 +28,8 @@ import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.jbpm.console.ng.ht.client.perspectives.DroolsTasksListPerspective;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
-import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
+import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.kie.workbench.drools.client.home.HomeProducer;
@@ -39,13 +38,11 @@ import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
-import org.uberfire.mvp.PlaceRequest;
-import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.Menus;
 
-import static org.kie.workbench.common.workbench.client.menu.KieWorkbenchFeatures.*;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
 
 @EntryPoint
 public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
@@ -66,11 +63,11 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected Workbench workbench;
 
+    protected PermissionTreeSetup permissionTreeSetup;
+
     @Inject
     public KieDroolsWorkbenchEntryPoint( final Caller<AppConfigService> appConfigService,
-                                         final Caller<KieWorkbenchSecurityService> kieSecurityService,
                                          final Caller<PlaceManagerActivityService> pmas,
-                                         final KieWorkbenchACL kieACL,
                                          final ActivityBeansCache activityBeansCache,
                                          final HomeProducer homeProducer,
                                          final Caller<SocialConfigurationService> socialConfigurationService,
@@ -78,8 +75,9 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                          final ClientUserSystemManager userSystemManager,
                                          final WorkbenchMenuBarPresenter menuBar,
                                          final SyncBeanManager iocManager,
-                                         final Workbench workbench ) {
-        super( appConfigService, kieSecurityService, pmas, kieACL, activityBeansCache );
+                                         final Workbench workbench,
+                                         final PermissionTreeSetup permissionTreeSetup ) {
+        super( appConfigService,  pmas, activityBeansCache );
         this.homeProducer = homeProducer;
         this.socialConfigurationService = socialConfigurationService;
         this.menusHelper = menusHelper;
@@ -87,13 +85,14 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.menuBar = menuBar;
         this.iocManager = iocManager;
         this.workbench = workbench;
-
-        addCustomSecurityLoadedCallback( policy -> homeProducer.init() );
+        this.permissionTreeSetup = permissionTreeSetup;
     }
 
     @PostConstruct
     public void init() {
         workbench.addStartupBlocker( KieDroolsWorkbenchEntryPoint.class );
+        homeProducer.init();
+        permissionTreeSetup.configureTree();
     }
 
     @Override
@@ -102,42 +101,33 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         socialConfigurationService.call( new RemoteCallback<Boolean>() {
             public void callback( final Boolean socialEnabled ) {
 
-                // Wait for user management services to be initialized, if any.
-                userSystemManager.waitForInitialization( () -> {
+                final Menus menus =
+                        MenuFactory.newTopLevelMenu( constants.home() ).withItems( menusHelper.getHomeViews( socialEnabled ) ).endMenu()
+                                .newTopLevelMenu( constants.authoring() ).withItems( menusHelper.getAuthoringViews() ).endMenu()
+                                .newTopLevelMenu( constants.deploy() ).withItems( getDeploymentViews() ).endMenu()
+                                .newTopLevelMenu( constants.tasks() ).perspective( DroolsTasksListPerspective.PERSPECTIVE_ID ).endMenu()
+                                .newTopLevelMenu( constants.extensions() ).withItems( menusHelper.getExtensionsViews() ).endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
+                                .build();
 
-                    final boolean isUserSystemManagerActive = userSystemManager.isActive();
+                menuBar.addMenus( menus );
 
-                    final Menus menus =
-                            MenuFactory.newTopLevelMenu( constants.home() ).withItems( menusHelper.getHomeViews( socialEnabled, isUserSystemManagerActive ) ).endMenu()
-                                    .newTopLevelMenu( constants.authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( menusHelper.getAuthoringViews() ).endMenu()
-                                    .newTopLevelMenu( constants.deploy() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getDeploymentViews() ).endMenu()
-                                    .newTopLevelMenu( constants.tasks() ).place( getTasksView() ).endMenu()
-                                    .newTopLevelMenu( constants.extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( menusHelper.getExtensionsViews() ).endMenu()
-                                    .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
-                                    .build();
+                menusHelper.addRolesMenuItems();
+                menusHelper.addWorkbenchViewModeSwitcherMenuItem();
+                menusHelper.addWorkbenchConfigurationMenuItem();
+                menusHelper.addUtilitiesMenuItems();
 
-                    menuBar.addMenus( menus );
-
-                    menusHelper.addRolesMenuItems();
-                    menusHelper.addWorkbenchViewModeSwitcherMenuItem();
-                    menusHelper.addWorkbenchConfigurationMenuItem();
-                    menusHelper.addUtilitiesMenuItems();
-
-                    workbench.removeStartupBlocker( KieDroolsWorkbenchEntryPoint.class );
-                } );
-
+                workbench.removeStartupBlocker( KieDroolsWorkbenchEntryPoint.class );
             }
         } ).isSocialEnable();
-    }
-
-    protected PlaceRequest getTasksView() {
-        return new DefaultPlaceRequest( DroolsTasksListPerspective.PERSPECTIVE_ID );
     }
 
     protected List<MenuItem> getDeploymentViews() {
         final List<MenuItem> result = new ArrayList<>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.ruleDeployments() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).place( new DefaultPlaceRequest( "ServerManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.ruleDeployments() )
+                .perspective( SERVER_MANAGEMENT )
+                .endMenu().build().getItems().get( 0 ) );
 
         return result;
     }

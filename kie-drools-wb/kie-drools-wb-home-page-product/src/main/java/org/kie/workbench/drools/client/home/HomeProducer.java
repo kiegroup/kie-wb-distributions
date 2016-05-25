@@ -24,6 +24,7 @@ import com.google.gwt.core.client.GWT;
 import org.kie.workbench.common.screens.home.client.widgets.home.HomeImagesHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
+import org.kie.workbench.common.workbench.client.PerspectiveIds;
 import org.kie.workbench.drools.client.resources.i18n.HomePageProductConstants;
 import org.uberfire.client.mvp.PlaceManager;
 
@@ -57,6 +58,10 @@ public class HomeProducer {
         final Section s3 = new Section( homeConstants.deploy_header(),
                                         homeConstants.deploy_paragraph(),
                                         url + HomeImagesHelper.Images.Deploy.getLocalisedImageUrl() );
+
+        s1.setPerspectiveId( PerspectiveIds.AUTHORING);
+        s2.setPerspectiveId( PerspectiveIds.DEPLOYMENTS );
+        s3.setPerspectiveId( PerspectiveIds.PROCESS_DEFINITIONS );
 
         model.addSection( s1 );
         model.addSection( s2 );

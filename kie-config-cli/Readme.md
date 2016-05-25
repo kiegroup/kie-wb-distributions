@@ -27,12 +27,6 @@ Available commands
 * remove-repo - remove existing repository from config only
 * add-repo-org-unit - add repository to the organizational unit
 * remove-repo-org-unit - remove repository from the organizational unit
-* add-role-repo - add role(s) to repository
-* remove-role-repo - remove role(s) from repository
-* add-role-org-unit - add role(s) to organizational unit
-* remove-role-org-unit - remove role(s) from organizational unit
-* add-role-project - add role(s) to project
-* remove-role-project - remove role(s) from project
 * push-changes - pushes changes to upstream repository (only online mode)
 
 

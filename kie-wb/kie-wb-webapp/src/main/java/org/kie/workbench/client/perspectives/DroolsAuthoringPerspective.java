@@ -28,6 +28,7 @@ import org.kie.workbench.common.services.shared.preferences.ApplicationPreferenc
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
+import org.kie.workbench.common.workbench.client.PerspectiveIds;
 import org.kie.workbench.common.workbench.client.docks.AuthoringWorkbenchDocks;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
@@ -44,7 +45,7 @@ import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "AuthoringPerspective", isTransient = false)
+@WorkbenchPerspective(identifier = PerspectiveIds.AUTHORING, isTransient = false)
 public class DroolsAuthoringPerspective {
 
     private AppConstants constants = AppConstants.INSTANCE;

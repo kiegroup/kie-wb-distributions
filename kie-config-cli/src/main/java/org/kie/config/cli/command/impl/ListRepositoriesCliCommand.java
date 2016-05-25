@@ -43,7 +43,6 @@ public class ListRepositoriesCliCommand extends AbstractCliCommand {
 			result.append("\t scheme: " + config.getScheme() + "\n");
 			result.append("\t uri: " + config.getUri() + "\n");
 			result.append("\t environment: " + printEnvironment(config.getEnvironment()) + "\n");
-			result.append("\t groups: " + config.getGroups() + "\n");
 		}
 		return result.toString();
 	}

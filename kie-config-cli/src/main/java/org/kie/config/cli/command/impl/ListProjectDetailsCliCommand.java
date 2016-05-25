@@ -103,7 +103,6 @@ public class ListProjectDetailsCliCommand implements CliCommand {
         result.append("\t Modules: " + project.getModules() + "\n");
         result.append("\t Root path: " + project.getRootPath().toURI() + "\n");
         result.append("\t Pom path: " + project.getPomXMLPath().toURI() + "\n");
-        result.append("\t Groups: " + project.getGroups() + "\n");
 
 
         return result.toString();
