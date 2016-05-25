@@ -31,12 +31,13 @@
 .navbar-pf ul.navbar-primary > .open > a:hover,
 .navbar-pf ul.navbar-primary > .open > a:focus,
 .navbar-pf ul.navbar-primary > .open > a {
-    background-color: #6B6F74;
-    background-image: linear-gradient(to bottom, #72757a, #64686c);
+    background-color: #4b5053;
     border-top-color: #949699;
-    border-bottom-color: #6B6F74;
-    box-shadow: none;
-    color: #f1f1f1;
+    color: #dbdada;
+    background-image: -webkit-linear-gradient(top, #5c6165 0%, #4b5053 100%);
+    background-image: -o-linear-gradient(top, #5c6165 0%, #4b5053 100%);
+    background-image: linear-gradient(to bottom, #5c6165 0%, #4b5053 100%);
+    background-repeat: repeat-x;
 }
 
 .navbar-pf ul.navbar-primary > .active > a,
