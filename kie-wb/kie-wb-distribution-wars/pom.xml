@@ -32,6 +32,14 @@
       <artifactId>kie-wb-webapp</artifactId>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-workbench-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-business-domain-backend</artifactId>
+    </dependency>
 
     <!-- External dependencies -->
     <!--tomcat-->

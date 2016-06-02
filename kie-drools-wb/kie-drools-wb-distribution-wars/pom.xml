@@ -256,6 +256,12 @@
       <groupId>org.jboss.classfilewriter</groupId>
       <artifactId>jboss-classfilewriter</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-workbench-backend</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>
