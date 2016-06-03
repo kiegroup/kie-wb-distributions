@@ -37,7 +37,6 @@ import org.kie.workbench.common.services.shared.security.KieWorkbenchSecuritySer
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
-import org.uberfire.client.callbacks.Callback;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;

@@ -15,24 +15,19 @@
  */
 package org.kie.workbench.backend;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import org.drools.workbench.screens.workitems.backend.server.WorkbenchConfigurationHelper;
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.guvnor.common.services.shared.security.KieWorkbenchPolicy;
 import org.guvnor.common.services.shared.security.KieWorkbenchSecurityService;
 import org.guvnor.common.services.shared.security.impl.KieWorkbenchACLImpl;
-import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
-import org.guvnor.structure.repositories.Repository;
-import org.guvnor.structure.repositories.RepositoryEnvironmentConfigurations;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.guvnor.structure.server.config.ConfigGroup;
 import org.guvnor.structure.server.config.ConfigItem;
@@ -40,49 +35,58 @@ import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
 import org.jbpm.console.ng.bd.service.AdministrationService;
+import org.kie.workbench.common.services.shared.project.KieProjectService;
+import org.kie.workbench.screens.workbench.backend.BaseAppSetup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.uberfire.commons.services.cdi.ApplicationStarted;
 import org.uberfire.commons.services.cdi.Startup;
 import org.uberfire.commons.services.cdi.StartupType;
 import org.uberfire.ext.security.server.RolesRegistry;
+import org.uberfire.io.IOService;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
 //is not deployed to the Application Servers /bin folder. This will be remedied when an
 //installer is written to create the system.git repository in the correct location.
 @Startup(StartupType.BOOTSTRAP)
 @ApplicationScoped
-public class AppSetup {
+public class AppSetup extends BaseAppSetup {
 
     private static final Logger logger = LoggerFactory.getLogger( AppSetup.class );
 
     // default repository section - start
     private static final String OU_NAME = "demo";
     private static final String OU_OWNER = "demo@demo.org";
-
-    private static final String GLOBAL_SETTINGS = "settings";
     // default repository section - end
 
-    @Inject
-    private RepositoryService repositoryService;
-
-    @Inject
-    private OrganizationalUnitService organizationalUnitService;
-
-    @Inject
-    private ConfigurationService configurationService;
-
-    @Inject
-    private ConfigurationFactory configurationFactory;
-
-    @Inject
     private AdministrationService administrationService;
 
-    @Inject
     private Event<ApplicationStarted> applicationStartedEvent;
 
-    @Inject
     private KieWorkbenchSecurityService securityService;
+
+    private WorkbenchConfigurationHelper workbenchConfigurationHelper;
+
+    protected AppSetup() {
+    }
+
+    @Inject
+    public AppSetup( @Named("ioStrategy") final IOService ioService,
+                     final RepositoryService repositoryService,
+                     final OrganizationalUnitService organizationalUnitService,
+                     final KieProjectService projectService,
+                     final ConfigurationService configurationService,
+                     final ConfigurationFactory configurationFactory,
+                     final AdministrationService administrationService,
+                     final Event<ApplicationStarted> applicationStartedEvent,
+                     final KieWorkbenchSecurityService securityService,
+                     final WorkbenchConfigurationHelper workbenchConfigurationHelper ) {
+        super( ioService, repositoryService, organizationalUnitService, projectService, configurationService, configurationFactory );
+        this.administrationService = administrationService;
+        this.applicationStartedEvent = applicationStartedEvent;
+        this.securityService = securityService;
+        this.workbenchConfigurationHelper = workbenchConfigurationHelper;
+    }
 
     @PostConstruct
     public void assertPlayground() {
@@ -91,7 +95,10 @@ public class AppSetup {
 
             final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
             if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
-                loadExampleRepositories( exampleRepositoriesRoot );
+                loadExampleRepositories( exampleRepositoriesRoot,
+                                         OU_NAME,
+                                         OU_OWNER,
+                                         GIT_SCHEME );
 
             } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
                 administrationService.bootstrapRepository( "example",
@@ -106,38 +113,18 @@ public class AppSetup {
             }
 
             // Setup mandatory properties for Drools-Workbench
-            List<ConfigGroup> configGroups = configurationService.getConfiguration( ConfigType.GLOBAL );
-            boolean globalSettingsDefined = false;
-            for ( ConfigGroup configGroup : configGroups ) {
-                if ( GLOBAL_SETTINGS.equals( configGroup.getName() ) ) {
-                    globalSettingsDefined = true;
-                    ConfigItem<String> runtimeDeployConfig = configGroup.getConfigItem( "support.runtime.deploy" );
-                    if ( runtimeDeployConfig == null ) {
-                        configGroup.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy", "true" ) );
-                        configurationService.updateConfiguration( configGroup );
-                    } else if ( !runtimeDeployConfig.getValue().equalsIgnoreCase( "true" ) ) {
-                        runtimeDeployConfig.setValue( "true" );
-                        configurationService.updateConfiguration( configGroup );
-                    }
-                    break;
-                }
-            }
-            if ( !globalSettingsDefined ) {
-                configurationService.addConfiguration( getGlobalConfiguration() );
-            }
+            final ConfigItem<String> supportRuntimeDeployConfigItem = new ConfigItem<>();
+            supportRuntimeDeployConfigItem.setName( "support.runtime.deploy" );
+            supportRuntimeDeployConfigItem.setValue( "true" );
+            setupConfigurationGroup( ConfigType.GLOBAL,
+                                     GLOBAL_SETTINGS,
+                                     getGlobalConfiguration(),
+                                     supportRuntimeDeployConfigItem );
 
             // Setup properties required by the Work Items Editor
-            List<ConfigGroup> editorConfigGroups = configurationService.getConfiguration( ConfigType.EDITOR );
-            boolean workItemsEditorSettingsDefined = false;
-            for ( ConfigGroup editorConfigGroup : editorConfigGroups ) {
-                if ( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS.equals( editorConfigGroup.getName() ) ) {
-                    workItemsEditorSettingsDefined = true;
-                    break;
-                }
-            }
-            if ( !workItemsEditorSettingsDefined ) {
-                configurationService.addConfiguration( getWorkItemElementDefinitions() );
-            }
+            setupConfigurationGroup( ConfigType.EDITOR,
+                                     WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS,
+                                     workbenchConfigurationHelper.getWorkItemElementDefinitions() );
 
             final KieWorkbenchPolicy policy = new KieWorkbenchPolicy( securityService.loadPolicy() );
             // register roles
@@ -161,62 +148,7 @@ public class AppSetup {
         }
     }
 
-    private void loadExampleRepositories( final String exampleRepositoriesRoot ) {
-        final File root = new File( exampleRepositoriesRoot );
-        if ( !root.isDirectory() ) {
-            logger.error( "System Property 'org.kie.example.repositories' does not point to a folder." );
-
-        } else {
-            //Create a new Organizational Unit
-            logger.info( "Creating Organizational Unit '" + OU_NAME + "'." );
-            OrganizationalUnit organizationalUnit = organizationalUnitService.getOrganizationalUnit( OU_NAME );
-            if ( organizationalUnit == null ) {
-                final List<Repository> repositories = new ArrayList<Repository>();
-                organizationalUnit = organizationalUnitService.createOrganizationalUnit( OU_NAME,
-                                                                                         OU_OWNER,
-                                                                                         null,
-                                                                                         repositories );
-                logger.info( "Created Organizational Unit '" + OU_NAME + "'." );
-
-            } else {
-                logger.info( "Organizational Unit '" + OU_NAME + "' already exists." );
-            }
-
-            final FileFilter filter = new FileFilter() {
-                @Override
-                public boolean accept( final File pathName ) {
-                    return pathName.isDirectory();
-                }
-            };
-
-            logger.info( "Cloning Example Repositories." );
-            for ( File child : root.listFiles( filter ) ) {
-                final String repositoryAlias = child.getName();
-                final String repositoryOrigin = child.getAbsolutePath();
-                logger.info( "Cloning Repository '" + repositoryAlias + "' from '" + repositoryOrigin + "'." );
-                Repository repository = repositoryService.getRepository( repositoryAlias );
-                if ( repository == null ) {
-                    try {
-                        final RepositoryEnvironmentConfigurations configurations = new RepositoryEnvironmentConfigurations();
-                        configurations.setOrigin( repositoryOrigin );
-                        repository = repositoryService.createRepository( "git",
-                                                                         repositoryAlias,
-                                                                         configurations );
-                        organizationalUnitService.addRepository( organizationalUnit,
-                                                                 repository );
-                    } catch ( Exception e ) {
-                        logger.error( "Failed to clone Repository '" + repositoryAlias + "'",
-                                      e );
-                    }
-                } else {
-                    logger.info( "Repository '" + repositoryAlias + "' already exists." );
-                }
-            }
-            logger.info( "Example Repositories cloned." );
-        }
-    }
-
-    private ConfigGroup getGlobalConfiguration() {
+    protected ConfigGroup getGlobalConfiguration() {
         final ConfigGroup group = configurationFactory.newConfigGroup( ConfigType.GLOBAL,
                                                                        GLOBAL_SETTINGS,
                                                                        "" );
@@ -240,44 +172,4 @@ public class AppSetup {
                                                                  "true" ) );
         return group;
     }
-
-    private ConfigGroup getWorkItemElementDefinitions() {
-        // Work Item Definition elements used when creating Work Item Definitions.
-        // Each entry in this file represents a Button in the Editor's Palette:-
-        //   - Underscores ('_') in the key will be converted in whitespaces (' ') and
-        //     will be used as Button's labels.
-        //   - The value will be the text pasted into the editor when an element in the
-        //     palette is selected. You can use a pipe ('|') to specify the place where
-        //     the cursor should be put after pasting the element into the editor.
-        final ConfigGroup group = configurationFactory.newConfigGroup( ConfigType.EDITOR,
-                                                                       WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS,
-                                                                       "" );
-        group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_DEFINITION,
-                                                                 "import org.drools.core.process.core.datatype.impl.type.StringDataType;\n" +
-                                                                         "import org.drools.core.process.core.datatype.impl.type.ObjectDataType;\n" +
-                                                                         "\n" +
-                                                                         "[\n" +
-                                                                         "  [\n" +
-                                                                         "    \"name\" : \"MyTask|\", \n" +
-                                                                         "    \"parameters\" : [ \n" +
-                                                                         "        \"MyFirstParam\" : new StringDataType(), \n" +
-                                                                         "        \"MySecondParam\" : new StringDataType(), \n" +
-                                                                         "        \"MyThirdParam\" : new ObjectDataType() \n" +
-                                                                         "    ], \n" +
-                                                                         "    \"results\" : [ \n" +
-                                                                         "        \"Result\" : new ObjectDataType(\"java.util.Map\") \n" +
-                                                                         "    ], \n" +
-                                                                         "    \"displayName\" : \"My Task\", \n" +
-                                                                         "    \"icon\" : \"\" \n" +
-                                                                         "  ]\n" +
-                                                                         "]" ) );
-        group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_PARAMETER,
-                                                                 "\"MyParam|\" : new StringDataType()" ) );
-        group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_RESULT,
-                                                                 "\"Result|\" : new ObjectDataType()" ) );
-        group.addConfigItem( configurationFactory.newConfigItem( WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS_DISPLAY_NAME,
-                                                                 "\"displayName\" : \"My Task|\"" ) );
-        return group;
-    }
-
 }
