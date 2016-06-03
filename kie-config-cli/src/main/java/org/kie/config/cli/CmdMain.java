@@ -31,15 +31,17 @@ import org.kie.config.cli.support.InputReader;
 public class CmdMain {
 
     public static void main( String[] args ) {
-        InputReader reader = ConfigurationManager.configure();
+        InputReader reader = null;
 
-        // ask for niogit parent folder so it will operate on the right system repo
+                // ask for niogit parent folder so it will operate on the right system repo
         System.out.println( "********************************************************\n" );
         System.out.println( "************* Welcome to Kie config CLI ****************\n" );
         System.out.println( "********************************************************\n" );
         CliContext context = null;
 
         if ( args != null && args.length > 0 && "offline".equalsIgnoreCase( args[ 0 ] ) ) {
+
+            reader = ConfigurationManager.configure();
             // use kie-config-cli in offline mode - server that owns the .niogit is down
             //  to avoid conflicts on concurrent updates
             System.out.println( ">>Please specify location of the parent folder of .niogit" );
@@ -79,6 +81,7 @@ public class CmdMain {
             }
             f.mkdir();
             System.setProperty( "org.uberfire.nio.git.dir", niogitPath );
+            reader = ConfigurationManager.configure();
             context = CliContext.buildContext( reader );
             context.addParameter( "tmp-dir", niogitPath );
             CliCommand command = new CloneGitRepositoryCliCommand();

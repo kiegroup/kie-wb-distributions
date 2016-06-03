@@ -26,6 +26,7 @@ import javax.inject.Named;
 
 import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
+import org.jboss.errai.security.shared.api.identity.UserImpl;
 import org.jboss.errai.security.shared.exception.UnauthorizedException;
 import org.jboss.errai.security.shared.service.AuthenticationService;
 import org.kie.workbench.common.services.refactoring.model.index.terms.IndexTerm;
@@ -64,10 +65,15 @@ public class EnvironmentProvider {
         return ioService;
     }
 
-    @Produces
-    public SessionInfo getSessionInfo() {
+//    @Produces
+//    public SessionInfo getSessionInfo() {
+//
+//        return new SessionInfoImpl( cliIdentity.getIdentifier(), cliIdentity );
+//    }
 
-        return new SessionInfoImpl( cliIdentity.getIdentifier(), cliIdentity );
+    @Produces
+    public User getUser() {
+        return new UserImpl(cliIdentity.getIdentifier());
     }
 
     @Produces

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.uberfire.java.nio.file.api.FileSystemProviders;
 
 public class ConfigurationManager {
 
@@ -34,6 +35,7 @@ public class ConfigurationManager {
         System.setProperty("org.uberfire.nio.git.daemon.enabled", "false");
         System.setProperty("org.uberfire.nio.git.ssh.enabled", "false");
         System.setProperty("java.awt.headless", "true");
+        System.setProperty("org.uberfire.start.method", "none");
         // switch terminal to proper mode to support history and tabs
         String osname = System.getProperty("os.name").toLowerCase();
         // to be able to use fully featured console, it needs to be unix and true console not within IDE
@@ -55,6 +57,8 @@ public class ConfigurationManager {
                 throw new IllegalStateException("Configuration failed due to " + e.getMessage(), e);
             }
         }
+
+        FileSystemProviders.getDefaultProvider();
         // operate on complete lines
         return new InputReader(System.in, true);
     }
