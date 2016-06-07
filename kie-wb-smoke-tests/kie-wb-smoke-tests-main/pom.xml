@@ -181,12 +181,6 @@
       </exclusions>
     </dependency>
 
-    <!-- REST -->
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>jaxrs-api</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
@@ -222,7 +216,7 @@
     </dependency>
     <dependency>
       <groupId>org.jboss.spec.javax.transaction</groupId>
-      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+      <artifactId>jboss-transaction-api_1.2_spec</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -236,7 +230,7 @@
     </dependency>
     <dependency>
       <groupId>org.jboss.spec.javax.security.jacc</groupId>
-      <artifactId>jboss-jacc-api_1.4_spec</artifactId>
+      <artifactId>jboss-jacc-api_1.5_spec</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -528,7 +522,7 @@
                     </dependency>
                     <dependency>
                       <groupId>org.jboss.spec.javax.transaction</groupId>
-                      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+                      <artifactId>jboss-transaction-api_1.2_spec</artifactId>
                     </dependency>
                     <dependency>
                       <groupId>org.slf4j</groupId>
@@ -544,7 +538,7 @@
                     </dependency>
                     <dependency>
                       <groupId>org.jboss.spec.javax.security.jacc</groupId>
-                      <artifactId>jboss-jacc-api_1.4_spec</artifactId>
+                      <artifactId>jboss-jacc-api_1.5_spec</artifactId>
                     </dependency>
                   </dependencies>
                 </container>
@@ -639,7 +633,7 @@
                     </dependency>
                     <dependency>
                       <groupId>org.jboss.spec.javax.transaction</groupId>
-                      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+                      <artifactId>jboss-transaction-api_1.2_spec</artifactId>
                     </dependency>
                     <dependency>
                       <groupId>org.slf4j</groupId>
@@ -655,7 +649,7 @@
                     </dependency>
                     <dependency>
                       <groupId>org.jboss.spec.javax.security.jacc</groupId>
-                      <artifactId>jboss-jacc-api_1.4_spec</artifactId>
+                      <artifactId>jboss-jacc-api_1.5_spec</artifactId>
                     </dependency>
                   </dependencies>
                 </container>

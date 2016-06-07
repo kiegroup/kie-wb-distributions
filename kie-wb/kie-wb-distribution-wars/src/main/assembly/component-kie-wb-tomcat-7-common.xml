@@ -35,16 +35,16 @@
           <include>javax.mail:mail</include>
           <include>javax.validation:validation-api</include>
 
-          <include>org.jboss.spec.javax.annotation:jboss-annotations-api_1.1_spec</include>
-          <include>org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.1_spec</include>
+          <include>org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec</include>
+          <include>org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec</include>
           <include>org.jboss.spec.javax.servlet.jstl:jboss-jstl-api_1.2_spec</include>
-          <include>org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec</include>
+          <include>org.jboss.spec.javax.jms:jboss-jms-api_2.0_spec</include>
           <include>org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.2_spec</include>
+          <include>org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.0_spec</include>
           <include>org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec</include>
-          <include>org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec</include>
+          <include>org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec</include>
 
           <include>org.jboss.logging:jboss-logging</include>
-          <include>org.jboss.resteasy:jaxrs-api</include>
           <include>org.jboss.resteasy:resteasy-jaxrs</include>
           <include>org.jboss.resteasy:resteasy-cdi</include>
           <include>org.jboss.resteasy:resteasy-jackson-provider</include>
