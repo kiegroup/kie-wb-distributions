@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>kie-wb-distributions</artifactId>
+    <groupId>org.kie</groupId>
+    <version>7.0.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>kie-wb-tests</artifactId>
+  <packaging>pom</packaging>
+
+  <name>KIE (Drools) Workbench Tests :: Parent</name>
+  <description>Parent for integration tests for KIE Workbench and KIE Drools Workbench</description>
+
+  <modules>
+    <module>kie-wb-tests-rest</module>
+  </modules>
+
+  <properties>
+    <deployable.classifier.tomcat8>tomcat7</deployable.classifier.tomcat8>
+    <deployable.classifier.wildfly10>wildfly10</deployable.classifier.wildfly10>
+    <deployable.context>kie-wb</deployable.context>
+
+    <deployable.groupId>org.kie</deployable.groupId>
+    <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
+    <deployable.version>${version.org.kie}</deployable.version>
+
+    <deployment.timeout>90000</deployment.timeout>
+
+    <container.host>localhost</container.host>
+    <container.port>8080</container.port>
+    <kie.wb.url>http://${container.host}:${container.port}/${deployable.context}</kie.wb.url>
+
+    <version.tomcat8>8.0.36</version.tomcat8>
+    <version.wildfly10>10.0.0.Final</version.wildfly10>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-tests-rest</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>link.bek.tools</groupId>
+      <artifactId>issue-keeper-junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven2-plugin</artifactId>
+          <configuration>
+            <container>
+              <containerId>${cargo.container.id}</containerId>
+              <systemProperties>
+                <kie.maven.settings.custom>${project.build.testOutputDirectory}/settings.xml</kie.maven.settings.custom>
+                <!-- Fixes issue when Tomcat hangs during deployment due to insufficient amount of entropy.
+                     The property specifies less secure source of entropy, which is fine for testing.
+                     See https://wiki.apache.org/tomcat/HowTo/FasterStartUp#Entropy_Source for more info -->
+                <java.security.egd>file:/dev/./urandom</java.security.egd>
+              </systemProperties>
+            </container>
+            <deployables>
+              <deployable>
+                <groupId>${deployable.groupId}</groupId>
+                <artifactId>${deployable.artifactId}</artifactId>
+                <!-- default, may be overridden in container specific profiles -->
+                <classifier>${deployable.classifier}</classifier>
+                <type>war</type>
+                <properties>
+                  <context>${deployable.context}</context>
+                </properties>
+                <pingURL>${kie.wb.url}</pingURL>
+                <pingTimeout>${deployment.timeout}</pingTimeout>
+              </deployable>
+            </deployables>
+            <configuration>
+              <properties>
+                <cargo.servlet.port>${container.port}</cargo.servlet.port>
+                <cargo.servlet.users>
+                  restAll:restAll1234;:admin,rest-all|restProject:restProject1234;:admin,rest-project|noRest:noRest1234;:admin
+                </cargo.servlet.users>
+              </properties>
+            </configuration>
+          </configuration>
+          <executions>
+            <execution>
+              <id>start-container</id>
+              <phase>pre-integration-test</phase>
+              <goals>
+                <goal>start</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>stop-container</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>stop</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <configuration>
+            <systemPropertyVariables>
+              <kie.wb.url>${kie.wb.url}</kie.wb.url>
+            </systemPropertyVariables>
+            <failIfNoTests>false</failIfNoTests>
+            <argLine>-Xmx1024m -Dfile.encoding=UTF-8</argLine>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>reserve-network-port</id>
+              <goals>
+                <goal>reserve-network-port</goal>
+              </goals>
+              <phase>pre-integration-test</phase>
+              <configuration>
+                <portNames>
+                  <portName>container.port</portName>
+                </portNames>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>kie-drools-wb</id>
+      <properties>
+        <deployable.groupId>org.kie</deployable.groupId>
+        <deployable.artifactId>kie-drools-wb-distribution-wars</deployable.artifactId>
+        <deployable.context>kie-drools-wb</deployable.context>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>kie-wb</id>
+      <properties>
+        <deployable.groupId>org.kie</deployable.groupId>
+        <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
+        <deployable.context>kie-wb</deployable.context>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>wildfly10</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>${deployable.classifier.wildfly10}</classifier>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>${deployable.classifier.wildfly10}</classifier>
+          <type>war</type>
+        </dependency>
+      </dependencies>
+      <properties>
+        <cargo.container.id>wildfly10x</cargo.container.id>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.cargo</groupId>
+              <artifactId>cargo-maven2-plugin</artifactId>
+              <configuration>
+                <container>
+                  <type>installed</type>
+                  <artifactInstaller>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-dist</artifactId>
+                    <version>${version.wildfly10}</version>
+                  </artifactInstaller>
+                </container>
+                <configuration>
+                  <properties>
+                    <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
+                    <cargo.jvmargs>-Xmx1024m</cargo.jvmargs>
+                  </properties>
+                </configuration>
+                <deployables>
+                  <deployable>
+                    <groupId>${deployable.groupId}</groupId>
+                    <artifactId>${deployable.artifactId}</artifactId>
+                    <classifier>${deployable.classifier.wildfly10}</classifier>
+                    <type>war</type>
+                  </deployable>
+                </deployables>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+
+    <!-- Tests are disabled by default. They can be run using the specific profiles. -->
+    <profile>
+      <id>disable-cargo-and-tests</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>none</phase>
+                <!-- do nothing, container is not managed by Cargo! -->
+                <goals/>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>none</phase>
+                <!-- do nothing, container is not managed by Cargo! -->
+                <goals/>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <skipITs>true</skipITs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
