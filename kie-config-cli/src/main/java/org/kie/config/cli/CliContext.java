@@ -57,7 +57,7 @@ public class CliContext {
 		
 		Weld weld = new Weld();
 		WeldContainer container = weld.initialize();
-		
+
 		CliContext context = new CliContext(weld, container, input);
 		
 		return context;
