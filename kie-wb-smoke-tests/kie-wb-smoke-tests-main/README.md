@@ -36,6 +36,6 @@ Examples of different scenarios:
   * `mvn clean install` - tests are only compiled. Execution is skipped.
   * `mvn clean install -Dfull` - default configuration is used. The tests are executed on KIE Workbench deployed to Tomcat 7.
   * `mvn clean install -Dfull -Dproductized` - same as above, but productized WAR (e.g. tomcat7-redhat) is used.
-  * `mvn clean install -Pwildfly8,kie-drools-wb` - tests are executed on KIE Drools Workbench deployed to WildFly 8.
+  * `mvn clean install -Pwildfly10,kie-drools-wb` - tests are executed on KIE Drools Workbench deployed to WildFly 10.
   * `mvn clean install -Peap64,kie-wb -Dproductized` - tests are executed on productized KIE Workbench (eap6_4-redhat) deployed to EAP 6.4.
   * `mvn clean install -Dcustom-container -Ddeployable.base.uri=<value>` - tests will be executed on custom container, which needs to be already running.

@@ -380,8 +380,8 @@
     <profile>
       <!-- Enable selenium UI smoke tests to be run with Firefox.
 
-           Simple usage: mvn clean install -Pwildfly8,kie-wb,selenium (executes all default smoke tests + UI ones)
-           Complex usage: mvn clean install -Pwildfly8,kie-wb,selenium -Dit.test=LoginIntegrationTest 
+           Simple usage: mvn clean install -Pwildfly10,kie-wb,selenium (executes all default smoke tests + UI ones)
+           Complex usage: mvn clean install -Pwildfly10,kie-wb,selenium -Dit.test=LoginIntegrationTest
                              -Dwebdriver.firefox.bin=<path-to-ff-binary> -Dselenium.homepage.loading.timeout.seconds=30
                          
            To use Internet Explorer see profile 'ie' -->
@@ -421,7 +421,7 @@
     
     <profile>
       <!--  Enable selenium UI smoke tests to be run with Internet Explorer.
-      Example usage: mvn clean install -Pwildfly8,kie-wb,selenium,ie -->
+      Example usage: mvn clean install -Pwildfly10,kie-wb,selenium,ie -->
       <id>ie</id>
       <activation>
         <property>
@@ -764,18 +764,18 @@
     </profile>
 
     <profile>
-      <id>wildfly8</id>
+      <id>wildfly10</id>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
+          <classifier>${wildfly10.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
+          <classifier>${wildfly10.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
       </dependencies>
@@ -786,12 +786,12 @@
             <artifactId>cargo-maven2-plugin</artifactId>
             <configuration>
               <container>
-                <containerId>wildfly8x</containerId>
+                <containerId>wildfly10x</containerId>
                 <type>installed</type>
                 <artifactInstaller>
                   <groupId>org.wildfly</groupId>
                   <artifactId>wildfly-dist</artifactId>
-                  <version>${version.wildfly8}</version>
+                  <version>${version.wildfly10}</version>
                 </artifactInstaller>
               </container>
               <configuration>
@@ -815,7 +815,7 @@
                 <deployable>
                   <groupId>${deployable.groupId}</groupId>
                   <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>${wildfly8.deployable.classifier}</classifier>
+                  <classifier>${wildfly10.deployable.classifier}</classifier>
                   <type>war</type>
                 </deployable>
               </deployables>
@@ -830,13 +830,13 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
+          <classifier>${wildfly10.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
+          <classifier>${wildfly10.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
       </dependencies>
@@ -876,7 +876,7 @@
                 <deployable>
                   <groupId>${deployable.groupId}</groupId>
                   <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>${wildfly8.deplyoble.classifier}</classifier>
+                  <classifier>${wildfly10.deplyoble.classifier}</classifier>
                   <type>war</type>
                 </deployable>
               </deployables>
