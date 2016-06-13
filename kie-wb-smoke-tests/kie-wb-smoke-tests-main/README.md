@@ -8,11 +8,7 @@ Workbench WAR. The server will run until manually (Ctrl+C) stopped:
         $ mvn clean package cargo:run -Pkie-wb,tomcat7
 
 You can of course choose `kie-drools-wb` instead of `kie-wb` and also different container to deploy
-to (see the profiles in `pom.xml` for the list of supported containers). For some containers,
-you also need to supply correct download URL, e.g. for EAP 6.4
-`-Deap64x.download.url=file:///home/user/some/path/jboss-eap-6.4.0.zip` (just an example, update
-the path to reflect the real location on your filesystem).
-
+to (see the profiles in `pom.xml` for the list of supported containers).
 
 The base application URI is by default `http://localhost:8080/kie-wb`. The cargo also automatically
 configures the server (users, groups, JMS queues, etc). After executing the `cargo:run` the
@@ -37,5 +33,4 @@ Examples of different scenarios:
   * `mvn clean install -Dfull` - default configuration is used. The tests are executed on KIE Workbench deployed to Tomcat 7.
   * `mvn clean install -Dfull -Dproductized` - same as above, but productized WAR (e.g. tomcat7-redhat) is used.
   * `mvn clean install -Pwildfly10,kie-drools-wb` - tests are executed on KIE Drools Workbench deployed to WildFly 10.
-  * `mvn clean install -Peap64,kie-wb -Dproductized` - tests are executed on productized KIE Workbench (eap6_4-redhat) deployed to EAP 6.4.
   * `mvn clean install -Dcustom-container -Ddeployable.base.uri=<value>` - tests will be executed on custom container, which needs to be already running.

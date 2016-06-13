@@ -8,31 +8,6 @@
     <property name="deploymentExportPath">target/wars</property>
   </engine>
 
-  <container qualifier="eap6">
-    <configuration>
-      <property name="jbossHome">target/${jboss.server.name}</property>
-      <property name="allowConnectingToRunningServer">false</property>
-      <property name="serverConfig">${jboss.server.config.file.name:standalone-full.xml}</property>
-      
-      <!-- normal -->
-      <property name="javaVmArguments">-ea -Xms512m -Xmx1024m -XX:MaxPermSize=512m 
-      -Dorg.kie.xml.encode=true</property>
-      
-      <!-- debug
-      <property name="javaVmArguments">-ea -Xms512m -Xmx1024m -XX:MaxPermSize=512m 
-      -Dorg.kie.xml.encode=true 
-      -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n</property>
-       -->
-      
-      <!-- byteman
-      <property name="javaVmArguments">-Xms512m -Xmx1024m -XX:MaxPermSize=512m
-      -javaagent:target/byteman.jar=script:src/test/resources/byteman/SecurityLogging.btm,boot:target/byteman.jar,boot:target/${jboss.server.name}/jboss-modules.jar 
-      -Dorg.jboss.byteman.transform.all 
-      -Djboss.modules.system.pkgs=org.jboss.byteman</property>
-       -->
-    </configuration>
-  </container>
-
   <container qualifier="tomcat">
     <configuration>
       <property name="startupTimeoutInSeconds">10</property>
