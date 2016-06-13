@@ -254,228 +254,6 @@
     </profile>
 
     <profile>
-      <id>arquillian-eap64x</id>
-      <properties>
-        <override.version.org.jboss.as>7.5.4.Final-redhat-3</override.version.org.jboss.as>
-        <version.org.jboss.as.dist>7.5.4.Final-redhat-3</version.org.jboss.as.dist>
-        <jboss.server.name>jboss-eap-6.4</jboss.server.name>
-        <deployable.classifier>${eap64.deployable.classifier}</deployable.classifier>
-
-        <arquillian.launch>eap6</arquillian.launch>
-      </properties>
-
-      <dependencies>
-        <!--  wars -->
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>${eap64.deployable.classifier}</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>${eap64.deployable.classifier}</classifier>
-          <type>war</type>
-        </dependency>
-
-        <!--  arquilian -->
-        <dependency>
-          <groupId>org.jboss.as</groupId>
-          <artifactId>jboss-as-arquillian-container-managed</artifactId>
-          <scope>test</scope>
-        </dependency>
-
-        <!-- jboss as/eap -->
-        <dependency>
-          <groupId>org.jboss.as</groupId>
-          <artifactId>jboss-as-dist</artifactId>
-          <type>zip</type>
-        </dependency>
-      </dependencies>
-
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-dist</artifactId>
-            <version>${version.org.jboss.as.dist}</version>
-            <type>zip</type>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
-
-      <build>
-        <plugins>
-          <!-- 1. install server in the build/target dir -->
-          <plugin>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>unpack-jboss</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>unpack</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>org.jboss.as</groupId>
-                      <artifactId>jboss-as-dist</artifactId>
-                      <version>${version.org.jboss.as.dist}</version>
-                      <type>zip</type>
-                      <overWrite>false</overWrite>
-                      <outputDirectory>${project.build.directory}</outputDirectory>
-                    </artifactItem>
-                  </artifactItems>
-                </configuration>
-              </execution>
-              <execution>
-                <id>copy-byteman-agent</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>copy</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>org.jboss.byteman</groupId>
-                      <artifactId>byteman</artifactId>
-                      <version>${version.org.jboss.byteman}</version>
-                      <type>jar</type>
-                      <overWrite>true</overWrite>
-                      <outputDirectory>target/</outputDirectory>
-                      <destFileName>byteman.jar</destFileName>
-                    </artifactItem>
-                  </artifactItems>
-                </configuration>
-              </execution>
-              <execution>
-                <id>get-eap-kie-wb-war</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>copy</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>${deployable.groupId}</groupId>
-                      <artifactId>${deployable.artifactId}</artifactId>
-                      <classifier>${eap64.deployable.classifier}</classifier>
-                      <type>war</type>
-                      <overWrite>false</overWrite>
-                    </artifactItem>
-                  </artifactItems>
-                  <outputDirectory>${project.build.directory}/wars</outputDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- 2. install files with user/password information in the server dir -->
-          <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>copy-user-config</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/eap-wildfly-shared/config</directory>
-                      <filtering>false</filtering>
-                    </resource>
-                  </resources>
-                  <overwrite>true</overwrite>
-                </configuration>
-              </execution>
-              <execution>
-                <id>copy-ssl-files</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${project.build.directory}/${jboss.server.name}/standalone/configuration/ssl</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/ssl/server</directory>
-                      <filtering>false</filtering>
-                    </resource>
-                  </resources>
-                  <overwrite>true</overwrite>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- 3. modify server configuration -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>xml-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>modify-standalone-full</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>transform</goal>
-                </goals>
-                <configuration>
-                  <transformationSets>
-                    <transformationSet>
-                      <dir>${project.build.directory}/${jboss.server.name}/standalone/configuration</dir>
-                      <outputDir>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDir>
-                      <includes>
-                        <include>standalone-full.xml</include>
-                      </includes>
-                      <stylesheet>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/eap6/xslt/addDebugLogging.xslt</stylesheet>
-                    </transformationSet>
-                    <transformationSet>
-                      <dir>${project.build.directory}/${jboss.server.name}/standalone/configuration</dir>
-                      <outputDir>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDir>
-                      <includes>
-                        <include>standalone-full.xml</include>
-                      </includes>
-                      <stylesheet>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/eap6/xslt/changeJmsMessagingConfig.xslt</stylesheet>
-                    </transformationSet>
-                  </transformationSets>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- 4. clean up -->
-          <plugin>
-            <groupId>com.google.code.maven-replacer-plugin</groupId>
-            <artifactId>replacer</artifactId>
-            <executions>
-              <execution>
-                <id>fix-broken-junit-reports</id>
-                <phase>post-integration-test</phase>
-                <goals>
-                  <goal>replace</goal>
-                </goals>
-                <configuration>
-                  <basedir>${project.build.directory}/failsafe-reports</basedir>
-                  <includes>
-                    <include>TEST*xml</include>
-                  </includes>
-                  <unescape>true</unescape>
-                  <tokenValueMap>${basedir}/replace-tokenFile.txt</tokenValueMap>
-                  <ignoreErrors>true</ignoreErrors>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
       <id>arquillian-tomcat8x</id>
 
       <properties>
@@ -774,11 +552,11 @@
     </profile>
 
     <profile>
-      <id>arquillian-wildfly8x</id>
+      <id>arquillian-wildfly10x</id>
 
       <properties>
-        <wildfly.server.name>wildfly-${version.wildfly8}</wildfly.server.name>
-        <deployable.classifier>${wildfly8.deployable.classifier}</deployable.classifier>
+        <wildfly.server.name>wildfly-${version.wildfly10}</wildfly.server.name>
+        <deployable.classifier>${wildfly10.deployable.classifier}</deployable.classifier>
 
         <arquillian.launch>wildfly</arquillian.launch>
       </properties>
@@ -788,13 +566,13 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
+          <classifier>${wildfly10.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
+          <classifier>${wildfly10.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
 
@@ -818,14 +596,14 @@
           <dependency>
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-dist</artifactId>
-            <version>${version.wildfly8}</version>
+            <version>${version.wildfly10}</version>
             <scope>test</scope>
             <type>zip</type>
           </dependency>
           <dependency>
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-arquillian-container-managed</artifactId>
-            <version>${version.wildfly8}</version>
+            <version>${version.wildfly10}</version>
             <scope>test</scope>
           </dependency>
         </dependencies>
@@ -873,9 +651,9 @@
             <configuration>
               <argLine>-Xms512m -Xmx1024m</argLine>
               <systemPropertyVariables>
-                <jboss.server.port>${jboss.server.port}</jboss.server.port>
-                <jboss.mgmt.server.port>${jboss.mgmt.server.port}</jboss.mgmt.server.port>
-                <arquillian.launch>wildfly8</arquillian.launch>
+                <jboss.server.port>${wildfly.server.port}</jboss.server.port>
+                <jboss.mgmt.server.port>${wildfly.mgmt.server.port}</jboss.mgmt.server.port>
+                <arquillian.launch>wildfly10</arquillian.launch>
               </systemPropertyVariables>
             </configuration>
           </plugin>
@@ -886,209 +664,6 @@
             <executions>
               <execution>
                 <id>unpack-wildfly-10</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>unpack</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>org.wildfly</groupId>
-                      <artifactId>wildfly-dist</artifactId>
-                      <version>${version.wildfly8}</version>
-                      <type>zip</type>
-                      <overWrite>false</overWrite>
-                      <outputDirectory>${project.build.directory}</outputDirectory>
-                    </artifactItem>
-                  </artifactItems>
-                </configuration>
-              </execution>
-              <execution>
-                <id>get-wildfly-8-kie-wb-war</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>copy</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>org.kie</groupId>
-                      <artifactId>kie-wb-distribution-wars</artifactId>
-                      <classifier>${wildfly8.deployable.classifier}</classifier>
-                      <type>war</type>
-                      <overWrite>false</overWrite>
-                    </artifactItem>
-                  </artifactItems>
-                  <outputDirectory>${project.build.directory}/wars</outputDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- 2. install files with user/password information in the server dir -->
-          <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>copy-user-config</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${project.build.directory}/${wildfly.server.name}/standalone/configuration</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/eap-wildfly-shared/config</directory>
-                      <filtering>false</filtering>
-                    </resource>
-                  </resources>
-                  <overwrite>true</overwrite>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- 3. modify server configuration -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>xml-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>modify-standalone-full</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>transform</goal>
-                </goals>
-                <configuration>
-                  <transformationSets>
-                    <transformationSet>
-                      <dir>${project.build.directory}/${wildfly.server.name}/standalone/configuration</dir>
-                      <outputDir>${project.build.directory}/${wildfly.server.name}/standalone/configuration</outputDir>
-                      <includes>
-                        <include>standalone-full.xml</include>
-                      </includes>
-                      <stylesheet>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/wildfly8/xslt/addDebugLogging.xslt</stylesheet>
-                    </transformationSet>
-                    <transformationSet>
-                      <dir>${project.build.directory}/${wildfly.server.name}/standalone/configuration</dir>
-                      <outputDir>${project.build.directory}/${wildfly.server.name}/standalone/configuration</outputDir>
-                      <includes>
-                        <include>standalone-full.xml</include>
-                      </includes>
-                      <stylesheet>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/wildfly8/xslt/changeJmsMessagingConfig.xslt</stylesheet>
-                    </transformationSet>
-                  </transformationSets>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>arquillian-wildfly10x</id>
-
-      <properties>
-        <wildfly.server.name>wildfly-${version.wildfly10}</wildfly.server.name>
-        <deployable.classifier>${wildfly10.deployable.classifier}</deployable.classifier>
-        <arquillian.launch>wildfly</arquillian.launch>
-      </properties>
-
-      <dependencies>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>${wildfly10.deployable.classifier}</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>${wildfly10.deployable.classifier}</classifier>
-          <type>war</type>
-        </dependency>
-
-        <dependency>
-          <groupId>org.wildfly</groupId>
-          <artifactId>wildfly-dist</artifactId>
-          <type>zip</type>
-        </dependency>
-      </dependencies>
-
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-dist</artifactId>
-            <version>${version.wildfly10}</version>
-            <type>zip</type>
-          </dependency>
-          <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-arquillian-container-managed</artifactId>
-            <version>${version.wildfly10}</version>
-            <scope>test</scope>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
-
-      <build>
-        <!-- running tests -->
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>reserve-network-ports</id>
-                <goals>
-                  <goal>reserve-network-port</goal>
-                </goals>
-                <phase>initialize</phase>
-                <configuration>
-                  <portNames>
-                    <portName>wildfly.server.port</portName>
-                    <portName>wildfly.mgmt.server.port</portName>
-                  </portNames>
-                  <outputFile>src/test/resources/port.properties</outputFile>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- test configuration -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <systemPropertyVariables>
-                <jboss.server.port>${wildfly.server.port}</jboss.server.port>
-                <jboss.mgmt.server.port>${wildfly.mgmt.server.port}</jboss.mgmt.server.port>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <configuration>
-              <argLine>-Xms512m -Xmx1024m</argLine>
-              <systemPropertyVariables>
-                <jboss.server.port>${wildfly.server.port}</jboss.server.port>
-                <jboss.mgmt.server.port>${jv.mgmt.server.port}</jboss.mgmt.server.port>
-                <arquillian.launch>wildfly8</arquillian.launch>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-
-          <!-- 1. install server in the build/target dir -->
-          <plugin>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>unpack-jboss</id>
                 <phase>generate-test-resources</phase>
                 <goals>
                   <goal>unpack</goal>
@@ -1171,7 +746,7 @@
                       <includes>
                         <include>standalone-full.xml</include>
                       </includes>
-                      <stylesheet>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/wildfly-8/xslt/addDebugLogging.xslt</stylesheet>
+                      <stylesheet>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/wildfly10/xslt/addDebugLogging.xslt</stylesheet>
                     </transformationSet>
                     <transformationSet>
                       <dir>${project.build.directory}/${wildfly.server.name}/standalone/configuration</dir>
@@ -1179,7 +754,7 @@
                       <includes>
                         <include>standalone-full.xml</include>
                       </includes>
-                      <stylesheet>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/wildfly-8/xslt/changeJmsMessagingConfig.xslt</stylesheet>
+                      <stylesheet>${project.basedir}/../kie-wb-smoke-tests-main/src/test/resources/wildfly10/xslt/changeJmsMessagingConfig.xslt</stylesheet>
                     </transformationSet>
                   </transformationSets>
                 </configuration>

@@ -33,10 +33,8 @@
   <description>KIE Workbench - Webapp</description>
 
   <properties>
-    <errai.version>${version.org.jboss.errai}</errai.version>
-    <as.version>8.1.0.Final</as.version>
     <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
-    <errai.jboss.home>${project.build.directory}/wildfly-${as.version}</errai.jboss.home>
+    <errai.jboss.home>${project.build.directory}/wildfly-${version.org.wildfly.gwt.sdm}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
     <gwt.memory.settings>-Xmx4g -Xms1g -Xss1M</gwt.memory.settings>
   </properties>
@@ -1652,8 +1650,7 @@
             <disableCastChecking>true</disableCastChecking>
             <runTarget>kie-wb.html</runTarget>
             <hostedWebapp>src/main/webapp</hostedWebapp>
-            <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile, see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
-            <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
+            <gwtSdkFirstInClasspath>false</gwtSdkFirstInClasspath>
             <compileSourcesArtifacts>
               <!-- Kie Server needed by Exec Server UI -->
               <compileSourcesArtifact>org.kie:kie-api</compileSourcesArtifact>
@@ -1944,7 +1941,7 @@
                 <artifactItem>
                   <groupId>org.wildfly</groupId>
                   <artifactId>wildfly-dist</artifactId>
-                  <version>${as.version}</version>
+                  <version>${version.org.wildfly.gwt.sdm}</version>
                   <type>zip</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}</outputDirectory>

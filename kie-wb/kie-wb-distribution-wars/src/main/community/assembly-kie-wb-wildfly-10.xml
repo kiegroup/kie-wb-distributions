@@ -20,7 +20,7 @@
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
   <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name/id of the artifact -->
-  <id>eap6_4-redhat</id>
+  <id>wildfly10</id>
   <formats>
     <format>war</format>
     <format>dir</format>
@@ -28,11 +28,27 @@
 
   <includeBaseDirectory>false</includeBaseDirectory>
 
-  <componentDescriptors>
-    <componentDescriptor>src/main/assembly/component-cdi1.0-libs.xml</componentDescriptor>
-    <componentDescriptor>src/main/assembly/component-kie-drools-wb-eap-6_4-common.xml</componentDescriptor>
-    <componentDescriptor>src/main/assembly/component-kie-drools-wb-product-common.xml</componentDescriptor>
-    <componentDescriptor>src/main/assembly/component-kie-drools-wb-product-user_mgmt.xml</componentDescriptor>
-  </componentDescriptors>
+  <fileSets>
+    <fileSet>
+      <directory>${project.basedir}/src/main/assembly/wildfly10</directory>
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <includes>
+        <include>org.kie:kie-wb-webapp:war</include>
+      </includes>
+      <outputDirectory>.</outputDirectory>
+      <unpack>true</unpack>
+      <unpackOptions>
+        <excludes>
+          <exclude>WEB-INF/classes/application-roles.properties</exclude>
+          <exclude>WEB-INF/classes/application-users.properties</exclude>
+        </excludes>
+      </unpackOptions>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+  </dependencySets>
 
 </assembly>

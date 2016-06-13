@@ -380,8 +380,8 @@
     <profile>
       <!-- Enable selenium UI smoke tests to be run with Firefox.
 
-           Simple usage: mvn clean install -Pwildfly8,kie-wb,selenium (executes all default smoke tests + UI ones)
-           Complex usage: mvn clean install -Pwildfly8,kie-wb,selenium -Dit.test=LoginIntegrationTest 
+           Simple usage: mvn clean install -Pwildfly10,kie-wb,selenium (executes all default smoke tests + UI ones)
+           Complex usage: mvn clean install -Pwildfly10,kie-wb,selenium -Dit.test=LoginIntegrationTest
                              -Dwebdriver.firefox.bin=<path-to-ff-binary> -Dselenium.homepage.loading.timeout.seconds=30
                          
            To use Internet Explorer see profile 'ie' -->
@@ -421,7 +421,7 @@
     
     <profile>
       <!--  Enable selenium UI smoke tests to be run with Internet Explorer.
-      Example usage: mvn clean install -Pwildfly8,kie-wb,selenium,ie -->
+      Example usage: mvn clean install -Pwildfly10,kie-wb,selenium,ie -->
       <id>ie</id>
       <activation>
         <property>
@@ -469,73 +469,6 @@
       </build>
     </profile>
 
-    <profile>
-      <id>eap64</id>
-      <properties>
-        <!-- The EAP 6.4.x binary can't be anonymously downloaded due to license issues. It can be downloaded manually
-             and for free (e.g. from http://www.jboss.org/products/eap/download/) and the zip location needs to be specified
-             here or via system property when running the build (don't forget to use the `file://` prefix when
-             referencing the zip from local filesystem). -->
-        <eap64.download.url>valid-url-for-eap-6.4-zip-needs-to-be-specified-here-or-via-cmd-line</eap64.download.url>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>${eap64.deployable.classifier}</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>${eap64.deployable.classifier}</classifier>
-          <type>war</type>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-maven2-plugin</artifactId>
-            <configuration>
-              <container>
-                <!-- jboss74x works for now, but should be updated to jboss75x once Cargo supports EAP 6.4 -->
-                <containerId>jboss74x</containerId>
-                <type>installed</type>
-                <zipUrlInstaller>
-                  <url>${eap64.download.url}</url>
-                </zipUrlInstaller>
-              </container>
-              <configuration>
-                <properties>
-                  <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
-                </properties>
-                <configfiles>
-                  <configfile>
-                    <file>${project.build.testOutputDirectory}/eap-wildfly-shared/config</file>
-                    <todir>configuration</todir>
-                    <overwrite>true</overwrite>
-                  </configfile>
-                  <configfile>
-                    <file>${project.build.testOutputDirectory}/ssl/server</file>
-                    <todir>configuration/ssl</todir>
-                    <overwrite>true</overwrite>
-                  </configfile>
-                </configfiles>
-              </configuration>
-              <deployables>
-                <deployable>
-                  <groupId>${deployable.groupId}</groupId>
-                  <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>${eap64.deployable.classifier}</classifier>
-                  <type>war</type>
-                </deployable>
-              </deployables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <id>tomcat7</id>
       <activation>
@@ -764,18 +697,18 @@
     </profile>
 
     <profile>
-      <id>wildfly8</id>
+      <id>wildfly10</id>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
+          <classifier>${wildfly10.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
+          <classifier>${wildfly10.deployable.classifier}</classifier>
           <type>war</type>
         </dependency>
       </dependencies>
@@ -786,12 +719,12 @@
             <artifactId>cargo-maven2-plugin</artifactId>
             <configuration>
               <container>
-                <containerId>wildfly8x</containerId>
+                <containerId>wildfly10x</containerId>
                 <type>installed</type>
                 <artifactInstaller>
                   <groupId>org.wildfly</groupId>
                   <artifactId>wildfly-dist</artifactId>
-                  <version>${version.wildfly8}</version>
+                  <version>${version.wildfly10}</version>
                 </artifactInstaller>
               </container>
               <configuration>
@@ -815,68 +748,7 @@
                 <deployable>
                   <groupId>${deployable.groupId}</groupId>
                   <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>${wildfly8.deployable.classifier}</classifier>
-                  <type>war</type>
-                </deployable>
-              </deployables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>wildfly9</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
-          <classifier>${wildfly8.deployable.classifier}</classifier>
-          <type>war</type>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-maven2-plugin</artifactId>
-            <configuration>
-              <container>
-                <containerId>wildfly9x</containerId>
-                <type>installed</type>
-                <artifactInstaller>
-                  <groupId>org.wildfly</groupId>
-                  <artifactId>wildfly-dist</artifactId>
-                  <version>${version.wildfly9}</version>
-                </artifactInstaller>
-              </container>
-              <configuration>
-                <properties>
-                  <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
-                </properties>
-                <configfiles>
-                  <configfile>
-                    <file>${project.build.testOutputDirectory}/eap-wildfly-shared/config</file>
-                    <todir>configuration</todir>
-                    <overwrite>true</overwrite>
-                  </configfile>
-                  <configfile>
-                    <file>${project.build.testOutputDirectory}/ssl/server</file>
-                    <todir>configuration/ssl</todir>
-                    <overwrite>true</overwrite>
-                  </configfile>
-                </configfiles>
-              </configuration>
-              <deployables>
-                <deployable>
-                  <groupId>${deployable.groupId}</groupId>
-                  <artifactId>${deployable.artifactId}</artifactId>
-                  <classifier>${wildfly8.deplyoble.classifier}</classifier>
+                  <classifier>${wildfly10.deployable.classifier}</classifier>
                   <type>war</type>
                 </deployable>
               </deployables>
