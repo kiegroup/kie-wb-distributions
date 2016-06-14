@@ -1,2 +1,0 @@
-org.drools.compiler.cdi.KieCDIExtension
-org.kie.internal.runtime.cdi.BootOnLoadExtension
