@@ -24,6 +24,7 @@ import org.guvnor.m2repo.client.event.M2RepoSearchEvent;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.widgets.client.search.ContextualSearch;
 import org.kie.workbench.common.widgets.client.search.SearchBehavior;
+import org.kie.workbench.common.workbench.client.PerspectiveIds;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -37,10 +38,8 @@ import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
  * A Perspective to show M2_REPO related screen
  */
 @Dependent
-@WorkbenchPerspective(identifier = M2RepoPerspective.PERSPECTIVE_ID, isDefault = false)
+@WorkbenchPerspective(identifier = PerspectiveIds.GUVNOR_M2REPO, isDefault = false)
 public class M2RepoPerspective {
-
-    public static final String PERSPECTIVE_ID = "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective";
 
     @Inject
     private ContextualSearch contextualSearch;
@@ -50,7 +49,7 @@ public class M2RepoPerspective {
 
     @PostConstruct
     private void init() {
-        contextualSearch.setPerspectiveSearchBehavior(PERSPECTIVE_ID, new SearchBehavior() {
+        contextualSearch.setPerspectiveSearchBehavior(PerspectiveIds.GUVNOR_M2REPO, new SearchBehavior() {
             @Override
             public void execute(String searchFilter) {
                 searchEvents.fire(new M2RepoSearchEvent(searchFilter));
@@ -62,7 +61,7 @@ public class M2RepoPerspective {
     @Perspective
     public PerspectiveDefinition getPerspective() {
         final PerspectiveDefinition p = new PerspectiveDefinitionImpl(MultiListWorkbenchPanelPresenter.class.getName());
-        p.setName(PERSPECTIVE_ID);
+        p.setName(PerspectiveIds.GUVNOR_M2REPO);
         p.getRoot().addPart(new PartDefinitionImpl(new DefaultPlaceRequest("M2RepoEditor")));
         return p;
     }

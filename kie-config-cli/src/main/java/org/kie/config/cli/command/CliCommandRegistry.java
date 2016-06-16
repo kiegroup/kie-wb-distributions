@@ -22,9 +22,6 @@ import java.util.Map;
 
 import org.kie.config.cli.command.impl.AddDeploymentConfigCliCommand;
 import org.kie.config.cli.command.impl.AddRepositoryToOrganizationalUnitCliCommand;
-import org.kie.config.cli.command.impl.AddGroupToOrganizationalUnitCliCommand;
-import org.kie.config.cli.command.impl.AddGroupToProjectCliCommand;
-import org.kie.config.cli.command.impl.AddGroupToRepositoryCliCommand;
 import org.kie.config.cli.command.impl.CreateOrganizationalUnitCliCommand;
 import org.kie.config.cli.command.impl.CreateRepositoryCliCommand;
 import org.kie.config.cli.command.impl.DiscardCliCommand;
@@ -40,9 +37,6 @@ import org.kie.config.cli.command.impl.RemoveDeploymentConfigCliCommand;
 import org.kie.config.cli.command.impl.RemoveOrganizationalUnitCliCommand;
 import org.kie.config.cli.command.impl.RemoveRepositoryCliCommand;
 import org.kie.config.cli.command.impl.RemoveRepositoryFromOrganizationalUnitCliCommand;
-import org.kie.config.cli.command.impl.RemoveGroupFromOrganizationalUnitCliCommand;
-import org.kie.config.cli.command.impl.RemoveGroupFromProjectCliCommand;
-import org.kie.config.cli.command.impl.RemoveGroupFromRepositoryCliCommand;
 
 public class CliCommandRegistry {
 
@@ -65,12 +59,6 @@ public class CliCommandRegistry {
         commands.put("remove-repo", new RemoveRepositoryCliCommand());
         commands.put("add-repo-org-unit", new AddRepositoryToOrganizationalUnitCliCommand());
         commands.put("remove-repo-org-unit", new RemoveRepositoryFromOrganizationalUnitCliCommand());
-        commands.put("add-group-repo", new AddGroupToRepositoryCliCommand());
-        commands.put("remove-group-repo", new RemoveGroupFromRepositoryCliCommand());
-        commands.put("add-group-org-unit", new AddGroupToOrganizationalUnitCliCommand());
-        commands.put("remove-group-org-unit", new RemoveGroupFromOrganizationalUnitCliCommand());
-        commands.put("add-group-project", new AddGroupToProjectCliCommand());
-        commands.put("remove-group-project", new RemoveGroupFromProjectCliCommand());
         commands.put("push-changes", new PushGitRepositoryCliCommand());
 		commands.put("fetch-changes", new FetchGitRepositoryCliCommand());
 		commands.put("list-project-details", new ListProjectDetailsCliCommand());

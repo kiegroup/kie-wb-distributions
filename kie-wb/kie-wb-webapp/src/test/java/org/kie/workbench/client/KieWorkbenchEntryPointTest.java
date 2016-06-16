@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.guvnor.common.services.shared.config.AppConfigService;
-import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,8 +28,8 @@ import org.junit.runner.RunWith;
 import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
-import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
+import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -57,13 +56,6 @@ public class KieWorkbenchEntryPointTest {
     private CallerMock<AppConfigService> appConfigServiceCallerMock;
 
     @Mock
-    private KieWorkbenchSecurityService kieSecurityService;
-    private CallerMock<KieWorkbenchSecurityService> kieSecurityServiceCallerMock;
-
-    @Mock
-    private KieWorkbenchACL kieACL;
-
-    @Mock
     private HomeProducer homeProducer;
 
     @Mock
@@ -86,6 +78,9 @@ public class KieWorkbenchEntryPointTest {
     protected Workbench workbench;
 
     @Mock
+    protected PermissionTreeSetup permissionTreeSetup;
+
+    @Mock
     private PlaceManagerActivityService pmas;
     private CallerMock<PlaceManagerActivityService> pmasCallerMock;
 
@@ -105,14 +100,11 @@ public class KieWorkbenchEntryPointTest {
         } ).when( userSystemManager ).waitForInitialization( any( Command.class ) );
 
         appConfigServiceCallerMock = new CallerMock<>( appConfigService );
-        kieSecurityServiceCallerMock = new CallerMock<>( kieSecurityService );
         socialConfigurationServiceCallerMock = new CallerMock<>( socialConfigurationService );
         pmasCallerMock = new CallerMock<>( pmas );
 
         kieWorkbenchEntryPoint = spy( new KieWorkbenchEntryPoint( appConfigServiceCallerMock,
-                                                                  kieSecurityServiceCallerMock,
                                                                   pmasCallerMock,
-                                                                  kieACL,
                                                                   activityBeansCache,
                                                                   homeProducer,
                                                                   socialConfigurationServiceCallerMock,
@@ -120,10 +112,10 @@ public class KieWorkbenchEntryPointTest {
                                                                   userSystemManager,
                                                                   menuBar,
                                                                   iocManager,
-                                                                  workbench ) );
+                                                                  workbench,
+                                                                  permissionTreeSetup) );
         mockMenuHelper();
         mockConstants();
-        mockKieSecurityService();
         IocTestingUtils.mockIocManager( iocManager );
 
         doNothing().when( kieWorkbenchEntryPoint ).hideLoadingPopup();
@@ -134,12 +126,6 @@ public class KieWorkbenchEntryPointTest {
         kieWorkbenchEntryPoint.init();
 
         verify( workbench ).addStartupBlocker( KieWorkbenchEntryPoint.class );
-    }
-
-    @Test
-    public void startDefaultWorkbenchWithCustomSecurityLoadedCallbackTest() {
-        kieWorkbenchEntryPoint.startDefaultWorkbench();
-
         verify( homeProducer ).init();
     }
 
@@ -181,13 +167,6 @@ public class KieWorkbenchEntryPointTest {
     }
 
     @Test
-    public void getTasksViewTest() {
-        final PlaceRequest tasksView = kieWorkbenchEntryPoint.getTasksView();
-
-        assertNotNull( tasksView );
-    }
-
-    @Test
     public void getDashboardViewsTest() {
         List<? extends MenuItem> deploymentMenuItems = kieWorkbenchEntryPoint.getDashboardViews();
 
@@ -199,7 +178,7 @@ public class KieWorkbenchEntryPointTest {
     private void mockMenuHelper() {
         final ArrayList<MenuItem> menuItems = new ArrayList<>();
         menuItems.add( mock( MenuItem.class ) );
-        doReturn( menuItems ).when( menusHelper ).getHomeViews( anyBoolean(), anyBoolean() );
+        doReturn( menuItems ).when( menusHelper ).getHomeViews( anyBoolean() );
         doReturn( menuItems ).when( menusHelper ).getAuthoringViews();
         doReturn( menuItems ).when( menusHelper ).getProcessManagementViews();
         doReturn( menuItems ).when( menusHelper ).getExtensionsViews();
@@ -207,10 +186,5 @@ public class KieWorkbenchEntryPointTest {
 
     private void mockConstants() {
         kieWorkbenchEntryPoint.constants = mock( AppConstants.class, new ConstantsAnswerMock() );
-    }
-
-    private void mockKieSecurityService() {
-        doReturn( "key=value" ).when( kieSecurityService ).loadPolicy();
-        kieSecurityServiceCallerMock = new CallerMock<>( kieSecurityService );
     }
 }

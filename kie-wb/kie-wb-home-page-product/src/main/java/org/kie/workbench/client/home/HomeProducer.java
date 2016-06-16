@@ -20,16 +20,13 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.LocaleInfo;
-import org.guvnor.common.services.shared.security.KieWorkbenchACL;
-import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.HomePageProductConstants;
 import org.kie.workbench.common.screens.home.client.widgets.home.HomeImagesHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.Section;
+import org.kie.workbench.common.workbench.client.PerspectiveIds;
+import org.kie.workbench.common.workbench.client.authz.WorkbenchFeatures;
 import org.uberfire.client.mvp.PlaceManager;
-
-import static org.kie.workbench.client.security.KieWorkbenchFeatures.*;
 
 /**
  * * Producer method for the Home Page content
@@ -43,9 +40,6 @@ public class HomeProducer {
 
     @Inject
     private PlaceManager placeManager;
-
-    @Inject
-    private KieWorkbenchACL kieACL;
 
     public void init() {
         final String url = GWT.getModuleBaseURL();
@@ -72,17 +66,11 @@ public class HomeProducer {
                                         homeConstants.dashboards_paragraph(),
                                         url + HomeImagesHelper.Images.Dashboard.getLocalisedImageUrl() );
 
-        final String dashbuilderURL = DashboardURLBuilder.getDashboardURL( "/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName() );
-
-        s1.setRoles( kieACL.getGrantedRoles( G_AUTHORING ) );
-
-        s2.setRoles( kieACL.getGrantedRoles( G_DEPLOY ) );
-
-        s3.setRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) );
-
-        s4.setRoles( kieACL.getGrantedRoles( G_TASKS ) );
-
-        s5.setRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) );
+        s1.setPerspectiveId( PerspectiveIds.AUTHORING);
+        s2.setPerspectiveId( PerspectiveIds.DEPLOYMENTS );
+        s3.setPerspectiveId( PerspectiveIds.PROCESS_DEFINITIONS );
+        s4.setPerspectiveId( PerspectiveIds.DATASET_TASKS );
+        s5.setPermission( WorkbenchFeatures.MANAGE_DASHBOARDS );
 
         model.addSection( s1 );
         model.addSection( s2 );

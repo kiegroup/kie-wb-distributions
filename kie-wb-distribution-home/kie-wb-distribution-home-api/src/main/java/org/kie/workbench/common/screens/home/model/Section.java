@@ -15,23 +15,23 @@
 
 package org.kie.workbench.common.screens.home.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.uberfire.commons.validation.PortablePreconditions;
-import org.uberfire.security.authz.RuntimeFeatureResource;
-
-import static java.util.Collections.*;
+import org.uberfire.security.Resource;
+import org.uberfire.security.ResourceAction;
+import org.uberfire.security.ResourceRef;
+import org.uberfire.workbench.model.ActivityResourceType;
 
 /**
  * A Section on the Home Page
  */
-public class Section implements RuntimeFeatureResource {
+public class Section {
 
     private final String heading;
-    private Collection<String> roles = new ArrayList<String>();
     private final String description;
     private final String imageUrl;
+    private String permission = null;
+    private Resource resource = null;
+    private ResourceAction resourceAction = null;
 
     public Section( final String heading,
                     final String description,
@@ -56,23 +56,31 @@ public class Section implements RuntimeFeatureResource {
         return imageUrl;
     }
 
-    public void setRoles( Collection<String> roles ) {
-        this.roles = PortablePreconditions.checkNotNull( "roles", roles );
+    public String getPermission() {
+        return permission;
     }
 
-    @Override
-    public String getSignatureId() {
-        return getClass().getName() + "#" + heading;
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
-    @Override
-    public Collection<String> getRoles() {
-        return roles;
+    public Resource getResource() {
+        return resource;
     }
 
-    @Override
-    public Collection<String> getTraits() {
-        return emptyList();
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
+    public void setPerspectiveId(String perspectiveId) {
+        this.resource = new ResourceRef(perspectiveId, ActivityResourceType.PERSPECTIVE );
+    }
+
+    public ResourceAction getResourceAction() {
+        return resourceAction;
+    }
+
+    public void setResourceAction(ResourceAction resourceAction) {
+        this.resourceAction = resourceAction;
+    }
 }

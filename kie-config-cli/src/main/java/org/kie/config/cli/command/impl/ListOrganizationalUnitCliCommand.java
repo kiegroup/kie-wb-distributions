@@ -42,7 +42,6 @@ public class ListOrganizationalUnitCliCommand extends AbstractCliCommand {
         for ( OrganizationalUnit config : groups ) {
             result.append( "\tOrganizational Unit " + config.getName() + "\n" );
             result.append( "\towner: " + config.getOwner() + "\n" );
-            result.append( "\tgroups: " + config.getGroups() + "\n" );
             result.append( "\trepositories: \n" );
             for ( Repository repository : config.getRepositories() ) {
                 result.append( "\t\tRepository " + repository.getAlias() + "\n" );

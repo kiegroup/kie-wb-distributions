@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import org.guvnor.common.services.shared.config.AppConfigService;
-import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.EntryPoint;
@@ -33,21 +32,20 @@ import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
-import org.kie.workbench.common.services.shared.security.KieWorkbenchSecurityService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
+import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
+import org.kie.workbench.common.workbench.client.authz.WorkbenchFeatures;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
-import org.uberfire.mvp.PlaceRequest;
-import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.Menus;
 
-import static org.kie.workbench.common.workbench.client.menu.KieWorkbenchFeatures.*;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
 
 @EntryPoint
 public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
@@ -68,11 +66,11 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected Workbench workbench;
 
+    protected PermissionTreeSetup permissionTreeSetup;
+
     @Inject
     public KieWorkbenchEntryPoint( final Caller<AppConfigService> appConfigService,
-                                   final Caller<KieWorkbenchSecurityService> kieSecurityService,
                                    final Caller<PlaceManagerActivityService> pmas,
-                                   final KieWorkbenchACL kieACL,
                                    final ActivityBeansCache activityBeansCache,
                                    final HomeProducer homeProducer,
                                    final Caller<SocialConfigurationService> socialConfigurationService,
@@ -80,8 +78,9 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                    final ClientUserSystemManager userSystemManager,
                                    final WorkbenchMenuBarPresenter menuBar,
                                    final SyncBeanManager iocManager,
-                                   final Workbench workbench ) {
-        super( appConfigService, kieSecurityService, pmas, kieACL, activityBeansCache );
+                                   final Workbench workbench,
+                                   final PermissionTreeSetup permissionTreeSetup ) {
+        super( appConfigService, pmas, activityBeansCache );
         this.homeProducer = homeProducer;
         this.socialConfigurationService = socialConfigurationService;
         this.menusHelper = menusHelper;
@@ -89,13 +88,14 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.menuBar = menuBar;
         this.iocManager = iocManager;
         this.workbench = workbench;
-
-        addCustomSecurityLoadedCallback( policy -> homeProducer.init() );
+        this.permissionTreeSetup = permissionTreeSetup;
     }
 
     @PostConstruct
     public void init() {
         workbench.addStartupBlocker( KieWorkbenchEntryPoint.class );
+        homeProducer.init();
+        permissionTreeSetup.configureTree();
     }
 
     @Override
@@ -105,32 +105,25 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         socialConfigurationService.call( new RemoteCallback<Boolean>() {
             public void callback( final Boolean socialEnabled ) {
 
-                // Wait for user management services to be initialized, if any.
-                userSystemManager.waitForInitialization( () -> {
+                final Menus menus =
+                        MenuFactory.newTopLevelMenu( constants.Home() ).withItems( menusHelper.getHomeViews( socialEnabled ) ).endMenu()
+                                .newTopLevelMenu( constants.Authoring() ).withItems( menusHelper.getAuthoringViews() ).endMenu()
+                                .newTopLevelMenu( constants.Deploy() ).withItems( getDeploymentViews() ).endMenu()
+                                .newTopLevelMenu( constants.Process_Management() ).withItems( menusHelper.getProcessManagementViews() ).endMenu()
+                                .newTopLevelMenu( constants.Tasks() ).perspective( DATASET_TASKS ).endMenu()
+                                .newTopLevelMenu( constants.Dashboards() ).withItems( getDashboardViews() ).endMenu()
+                                .newTopLevelMenu( constants.Extensions() ).withItems( menusHelper.getExtensionsViews() ).endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
+                                .build();
 
-                    final boolean isUserSystemManagerActive = userSystemManager.isActive();
+                menuBar.addMenus( menus );
 
-                    final Menus menus =
-                            MenuFactory.newTopLevelMenu( constants.Home() ).withItems( menusHelper.getHomeViews( socialEnabled, isUserSystemManagerActive ) ).endMenu()
-                                    .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( menusHelper.getAuthoringViews() ).endMenu()
-                                    .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
-                                    .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( menusHelper.getProcessManagementViews() ).endMenu()
-                                    .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( F_TASKS ) ).place( getTasksView() ).endMenu()
-                                    .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
-                                    .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( menusHelper.getExtensionsViews() ).endMenu()
-                                    .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
-                                    .build();
+                menusHelper.addRolesMenuItems();
+                menusHelper.addWorkbenchViewModeSwitcherMenuItem();
+                menusHelper.addWorkbenchConfigurationMenuItem();
+                menusHelper.addUtilitiesMenuItems();
 
-                    menuBar.addMenus( menus );
-
-                    menusHelper.addRolesMenuItems();
-                    menusHelper.addWorkbenchViewModeSwitcherMenuItem();
-                    menusHelper.addWorkbenchConfigurationMenuItem();
-                    menusHelper.addUtilitiesMenuItems();
-
-                    workbench.removeStartupBlocker( KieWorkbenchEntryPoint.class );
-                } );
-
+                workbench.removeStartupBlocker( KieWorkbenchEntryPoint.class );
             }
         } ).isSocialEnable();
     }
@@ -138,22 +131,24 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     protected List<? extends MenuItem> getDeploymentViews() {
         final List<MenuItem> result = new ArrayList<>( 3 );
 
-        result.add( MenuFactory.newSimpleItem( constants.Process_Deployments() ).withRoles( kieACL.getGrantedRoles( F_DEPLOYMENTS ) ).place( new DefaultPlaceRequest( "Deployments" ) ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Rule_Deployments() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).place( new DefaultPlaceRequest( "ServerManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Jobs() ).withRoles( kieACL.getGrantedRoles( F_JOBS ) ).place( new DefaultPlaceRequest( "Jobs" ) ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.Process_Deployments() ).perspective( DEPLOYMENTS ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.Rule_Deployments() ).perspective( SERVER_MANAGEMENT ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.Jobs() ).perspective( JOBS ).endMenu().build().getItems().get( 0 ) );
 
         return result;
-    }
-
-    protected PlaceRequest getTasksView() {
-        return new DefaultPlaceRequest( "DataSet Tasks" );
     }
 
     protected List<? extends MenuItem> getDashboardViews() {
         final List<MenuItem> result = new ArrayList<>( 2 );
 
-        result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() ).withRoles( kieACL.getGrantedRoles( F_PROCESS_DASHBOARD ) ).place( new DefaultPlaceRequest( "DashboardPerspective" ) ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Business_Dashboard() ).withRoles( kieACL.getGrantedRoles( F_DASHBOARD_BUILDER ) ).respondsWith( () -> Window.open( DashboardURLBuilder.getDashboardURL( "/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName() ), "_blank", "" ) ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() )
+                .perspective( PROCESS_DASHBOARD )
+                .endMenu().build().getItems().get( 0 ) );
+
+        result.add( MenuFactory.newSimpleItem( constants.Business_Dashboard() )
+                .withPermission( WorkbenchFeatures.MANAGE_DASHBOARDS )
+                .respondsWith( () -> Window.open( DashboardURLBuilder.getDashboardURL( "/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName() ), "_blank", "" ) )
+                .endMenu().build().getItems().get( 0 ) );
 
         return result;
     }

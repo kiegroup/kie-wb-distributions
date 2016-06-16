@@ -25,12 +25,13 @@ import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.PerspectiveDefinition;
 import org.uberfire.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
+import org.kie.workbench.common.workbench.client.PerspectiveIds;
 
 /**
  * A Perspective to show the Home Page
  */
 @ApplicationScoped
-@WorkbenchPerspective(identifier = "org.kie.workbench.common.screens.home.client.perspectives.HomePerspective", isDefault = true)
+@WorkbenchPerspective(identifier = PerspectiveIds.HOME, isDefault = true)
 public class HomePerspective {
 
     @Perspective
