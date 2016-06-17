@@ -1,0 +1,231 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.kie</groupId>
+    <artifactId>kie-wb-tests</artifactId>
+    <version>7.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>kie-wb-tests-gui</artifactId>
+
+  <name>KIE (Drools) Workbench Tests :: GUI</name>
+  <description>GUI tests for KIE Workbench and KIE Drools Workbench</description>
+
+  <properties>
+    <app.name>kie-wb</app.name><!-- for tests to know if they are running against kie-wb or kie-drools-wb -->
+    <selenium.homepage.loading.timeout.seconds>15</selenium.homepage.loading.timeout.seconds>
+    <!-- default browser to be used by selenium tests -->
+    <browser>firefox</browser>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.arquillian.extension</groupId>
+        <artifactId>arquillian-drone-bom</artifactId>
+        <version>${version.org.jboss.arquillian.extension.drone}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.selenium</groupId>
+        <artifactId>selenium-bom</artifactId>
+        <version>${version.org.jboss.arquillian.selenium}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.graphene</groupId>
+        <artifactId>graphene-webdriver</artifactId>
+        <version>${version.org.jboss.arquillian.graphene}</version>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.graphene</groupId>
+        <artifactId>graphene-webdriver-api</artifactId>
+        <version>${version.org.jboss.arquillian.graphene}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- utilities -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <!-- deps for selenium smoke tests -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-support</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-firefox-driver</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-ie-driver</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.graphene</groupId>
+      <artifactId>graphene-webdriver</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.extension</groupId>
+      <artifactId>arquillian-drone-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.graphene</groupId>
+      <artifactId>graphene-webdriver-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-standalone</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Artificial dependency on REST tests module to make sure GUI and REST tests are not executed in parallel
+         (during Maven parallel execution) -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-wb-tests-rest</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>false</filtering>
+      </testResource>
+      <testResource>
+        <directory>src/test/filtered-resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven2-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <!-- Enable selenium UI smoke tests to be run with Firefox.
+
+           Simple usage: mvn clean install -Pwildfly10,kie-wb (executes all Selenium GUI tests)
+           Complex usage: mvn clean install -Pwildfly10,kie-wb -Dit.test=LoginIntegrationTest
+                             -Dwebdriver.firefox.bin=<path-to-ff-binary> -Dselenium.homepage.loading.timeout.seconds=30
+
+           To use Internet Explorer see profile 'ie' -->
+        <configuration>
+          <systemPropertyVariables>
+            <!-- directory where screenshots taken by webdriver will be placed -->
+            <selenium.screenshots.dir>${project.build.directory}/screenshots</selenium.screenshots.dir>
+            <app.name>${app.name}</app.name>
+            <selenium.homepage.loading.timeout.seconds>${selenium.homepage.loading.timeout.seconds}</selenium.homepage.loading.timeout.seconds>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>kie-drools-wb</id>
+      <properties>
+        <app.name>kie-drools-wb</app.name>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>kie-wb</id>
+      <properties>
+        <app.name>kie-wb</app.name>
+      </properties>
+    </profile>
+
+    <profile>
+      <!--  Enable selenium UI smoke tests to be run with Internet Explorer.
+      Example usage: mvn clean install -Pwildfly10,kie-wb,selenium,ie -->
+      <id>ie</id>
+      <activation>
+        <property>
+          <name>ie</name>
+        </property>
+      </activation>
+      <properties>
+        <browser>internetExplorer</browser>
+      </properties>
+      <build>
+        <plugins>
+          <plugin> <!-- Downloads and unzips IEDriverServer.exe and then sets the
+            system property 'webdriver.ie.driver' needed to instantiate InternetExplorerDriver -->
+            <groupId>com.lazerycode.selenium</groupId>
+            <artifactId>driver-binary-downloader-maven-plugin</artifactId>
+            <version>1.0.7</version>
+            <configuration>
+              <!-- Where to download zips with selenium binaries -->
+              <downloadedZipFileDirectory>${java.io.tmpdir}/selenium_zips</downloadedZipFileDirectory>
+              <!-- Where to unzip browser specific binaries (IEDriverServer.exe, chromedriver) -->
+              <rootStandaloneServerDirectory>${project.build.directory}/selenium_binaries</rootStandaloneServerDirectory>
+              <!-- Config specifying download urls / md5 hashes for selenium binaries -->
+              <customRepositoryMap>${project.build.testOutputDirectory}/driver-binary-urls.xml</customRepositoryMap>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>selenium</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <systemPropertyVariables>
+                <!-- The following maven property is set by driver-binary-downloader-maven-plugin.
+                Copy it as system property for InternetExplorerDriver-->
+                <webdriver.ie.driver>${webdriver.ie.driver}</webdriver.ie.driver>
+              </systemPropertyVariables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
+
+</project>

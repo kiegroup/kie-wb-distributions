@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>kie-wb-distributions</artifactId>
     <groupId>org.kie</groupId>
+    <artifactId>kie-wb-distributions</artifactId>
     <version>7.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -17,6 +17,7 @@
 
   <modules>
     <module>kie-wb-tests-rest</module>
+    <module>kie-wb-tests-gui</module>
   </modules>
 
   <properties>
@@ -43,6 +44,11 @@
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-wb-tests-rest</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-tests-gui</artifactId>
         <version>${version.org.kie}</version>
       </dependency>
     </dependencies>
@@ -101,7 +107,7 @@
               <properties>
                 <cargo.servlet.port>${container.port}</cargo.servlet.port>
                 <cargo.servlet.users>
-                  restAll:restAll1234;:admin,rest-all|restProject:restProject1234;:admin,rest-project|noRest:noRest1234;:admin
+                  admin:admin1234;:admin|restAll:restAll1234;:admin,rest-all|restProject:restProject1234;:admin,rest-project|noRest:noRest1234;:admin
                 </cargo.servlet.users>
               </properties>
             </configuration>
