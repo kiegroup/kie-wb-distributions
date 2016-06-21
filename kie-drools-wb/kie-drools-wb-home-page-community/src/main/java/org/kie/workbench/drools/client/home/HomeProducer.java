@@ -72,7 +72,7 @@ public class HomeProducer {
 
         final SectionEntry s2 = ModelUtils.makeSectionEntry( constants.deploy() );
 
-        s2.addChild( ModelUtils.makeSectionEntry( constants.ruleDeployments(),
+        s2.addChild( ModelUtils.makeSectionEntry( constants.executionServers(),
                 () -> placeManager.goTo( SERVER_MANAGEMENT ),
                 SERVER_MANAGEMENT, PERSPECTIVE ) );
 

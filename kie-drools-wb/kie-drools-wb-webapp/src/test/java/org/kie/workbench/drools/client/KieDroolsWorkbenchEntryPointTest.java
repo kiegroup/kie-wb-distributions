@@ -159,7 +159,7 @@ public class KieDroolsWorkbenchEntryPointTest {
         List<? extends MenuItem> deploymentMenuItems = kieDroolsWorkbenchEntryPoint.getDeploymentViews();
 
         assertEquals( 1, deploymentMenuItems.size() );
-        assertEquals( kieDroolsWorkbenchEntryPoint.constants.ruleDeployments(), deploymentMenuItems.get( 0 ).getCaption() );
+        assertEquals( kieDroolsWorkbenchEntryPoint.constants.ExecutionServers(), deploymentMenuItems.get( 0 ).getCaption() );
     }
 
     private void mockMenuHelper() {

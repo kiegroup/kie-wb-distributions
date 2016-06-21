@@ -125,7 +125,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     protected List<MenuItem> getDeploymentViews() {
         final List<MenuItem> result = new ArrayList<>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.ruleDeployments() )
+        result.add( MenuFactory.newSimpleItem( constants.ExecutionServers() )
                 .perspective( SERVER_MANAGEMENT )
                 .endMenu().build().getItems().get( 0 ) );
 

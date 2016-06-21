@@ -64,7 +64,7 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Deploy", "Process Deployments", ProcessDeploymentsPerspective.class, true);
 
     public static final Persp<RuleDeploymentsPerspective> RULE_DEPLOYMENTS
-            = new Persp<>("Deploy", "Rule Deployments", RuleDeploymentsPerspective.class);
+            = new Persp<>("Deploy", "Execution Servers", RuleDeploymentsPerspective.class);
 
     public static final Persp<JobsPerspective> JOBS
             = new Persp<>("Deploy", "Jobs", JobsPerspective.class, true);
