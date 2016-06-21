@@ -89,7 +89,7 @@ public class HomeProducer {
                 () -> placeManager.goTo( DEPLOYMENTS ),
                 DEPLOYMENTS , PERSPECTIVE ) );
 
-        s2.addChild( ModelUtils.makeSectionEntry( constants.Rule_Deployments(),
+        s2.addChild( ModelUtils.makeSectionEntry( constants.ExecutionServers(),
                 () -> placeManager.goTo( SERVER_MANAGEMENT ),
                 SERVER_MANAGEMENT , PERSPECTIVE ) );
 

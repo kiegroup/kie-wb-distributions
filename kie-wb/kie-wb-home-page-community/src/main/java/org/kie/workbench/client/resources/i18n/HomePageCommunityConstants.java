@@ -72,7 +72,7 @@ public interface HomePageCommunityConstants
 
     String Process_Deployments();
 
-    String Rule_Deployments();
+    String ExecutionServers();
 
     String Jobs();
 

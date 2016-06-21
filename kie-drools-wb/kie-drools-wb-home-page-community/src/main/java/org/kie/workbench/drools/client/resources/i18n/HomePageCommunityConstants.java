@@ -44,7 +44,7 @@ public interface HomePageCommunityConstants
 
     String deploy();
 
-    String ruleDeployments();
+    String executionServers();
 
     String artifactRepository();
 

@@ -132,7 +132,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         final List<MenuItem> result = new ArrayList<>( 3 );
 
         result.add( MenuFactory.newSimpleItem( constants.Process_Deployments() ).perspective( DEPLOYMENTS ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Rule_Deployments() ).perspective( SERVER_MANAGEMENT ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.ExecutionServers() ).perspective( SERVER_MANAGEMENT ).endMenu().build().getItems().get( 0 ) );
         result.add( MenuFactory.newSimpleItem( constants.Jobs() ).perspective( JOBS ).endMenu().build().getItems().get( 0 ) );
 
         return result;

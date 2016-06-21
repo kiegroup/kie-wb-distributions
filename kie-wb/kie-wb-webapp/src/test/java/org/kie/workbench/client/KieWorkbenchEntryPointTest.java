@@ -162,7 +162,7 @@ public class KieWorkbenchEntryPointTest {
 
         assertEquals( 3, deploymentMenuItems.size() );
         assertEquals( kieWorkbenchEntryPoint.constants.Process_Deployments(), deploymentMenuItems.get( 0 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Rule_Deployments(), deploymentMenuItems.get( 1 ).getCaption() );
+        assertEquals( kieWorkbenchEntryPoint.constants.ExecutionServers(), deploymentMenuItems.get( 1 ).getCaption() );
         assertEquals( kieWorkbenchEntryPoint.constants.Jobs(), deploymentMenuItems.get( 2 ).getCaption() );
     }
 
