@@ -91,6 +91,12 @@
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxrs</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
@@ -230,6 +236,13 @@
     <dependency>
       <groupId>org.scannotation</groupId>
       <artifactId>scannotation</artifactId>
+      <exclusions>
+        <!-- Replaced by 'org.javassist:javassist' -->
+        <exclusion>
+          <groupId>javassist</groupId>
+          <artifactId>javassist</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- For WAS8 shading -->
