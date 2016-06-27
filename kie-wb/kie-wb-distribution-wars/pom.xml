@@ -306,6 +306,11 @@
       <artifactId>errai-weld-integration</artifactId>
     </dependency>
 
+    <!-- UF Security management provider for WFLY10/EAP7. -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-security-management-wildfly10</artifactId>
+    </dependency>
     <!-- UF Security management provider for Tomcat. -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -388,7 +393,9 @@
           <finalName>kie-wb-${project.version}</finalName>
           <descriptors>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-wildfly-8.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-wildfly-10.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-eap-6_4.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-eap-7.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-tomcat-7.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-websphere-as-8.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-weblogic-12.xml</descriptor>
@@ -479,6 +486,7 @@
               <finalName>kie-wb-${project.version}</finalName>
               <descriptors>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-jboss-eap-6_4-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-jboss-eap-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-tomcat-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-websphere-as-8-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-weblogic-12-redhat.xml</descriptor>

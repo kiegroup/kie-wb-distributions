@@ -224,6 +224,12 @@
       <artifactId>hibernate-commons-annotations</artifactId>
     </dependency>
 
+    <!-- UF Security management provider for WFLY10/EAP7. -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-security-management-wildfly10</artifactId>
+    </dependency>
+
     <!-- UF Security management provider for Tomcat. -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -328,7 +334,9 @@
           <finalName>kie-drools-wb-${project.version}</finalName>
           <descriptors>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-wildfly-8.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-wildfly-10.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-eap-6_4.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-jboss-eap-7.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-tomcat-7.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-websphere-as-8.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-weblogic-12.xml</descriptor>
@@ -415,6 +423,7 @@
               <finalName>kie-drools-wb-${project.version}</finalName>
               <descriptors>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-jboss-eap-6_4-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-jboss-eap-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-tomcat-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-websphere-as-8-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-weblogic-12-redhat.xml</descriptor>
