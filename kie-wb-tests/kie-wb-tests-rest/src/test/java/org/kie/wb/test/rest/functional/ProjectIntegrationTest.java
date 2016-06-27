@@ -18,6 +18,8 @@ package org.kie.wb.test.rest.functional;
 
 import java.util.Collection;
 
+import javax.ws.rs.NotFoundException;
+
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.guvnor.rest.client.CompileProjectRequest;
@@ -26,17 +28,13 @@ import org.guvnor.rest.client.DeleteProjectRequest;
 import org.guvnor.rest.client.DeployProjectRequest;
 import org.guvnor.rest.client.InstallProjectRequest;
 import org.guvnor.rest.client.JobStatus;
-import org.guvnor.rest.client.OrganizationalUnit;
 import org.guvnor.rest.client.ProjectRequest;
 import org.guvnor.rest.client.ProjectResponse;
-import org.guvnor.rest.client.RepositoryRequest;
 import org.guvnor.rest.client.TestProjectRequest;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
-import org.kie.wb.test.rest.exception.NotFoundException;
 import qa.tools.ikeeper.annotation.Jira;
 
 import static org.assertj.core.api.Assertions.*;
@@ -54,23 +52,9 @@ public class ProjectIntegrationTest extends RestTestBase {
     private static final String DEFAULT_VERSION = "1.0";
 
     @BeforeClass
-    public static void setUp() {
-        OrganizationalUnit orgUnit = new OrganizationalUnit();
-        orgUnit.setName(ORG_UNIT);
-        orgUnit.setOwner(USER_ID);
-        client.createOrganizationalUnit(orgUnit);
-
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(REPOSITORY);
-        repository.setOrganizationalUnitName(ORG_UNIT);
-        repository.setRequestType("new");
-        client.createOrCloneRepository(repository);
-    }
-
-    @AfterClass
-    public static void cleanUp() {
-        client.deleteRepository(REPOSITORY);
-        client.deleteOrganizationalUnit(ORG_UNIT);
+    public static void createRepository() {
+        createOrganizationalUnit(ORG_UNIT);
+        createNewRepository(ORG_UNIT, REPOSITORY);
     }
 
     @Test

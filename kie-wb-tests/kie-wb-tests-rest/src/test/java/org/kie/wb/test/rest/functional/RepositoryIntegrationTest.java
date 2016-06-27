@@ -17,21 +17,19 @@
 package org.kie.wb.test.rest.functional;
 
 import java.util.Collection;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.guvnor.rest.client.CreateOrCloneRepositoryRequest;
 import org.guvnor.rest.client.JobStatus;
-import org.guvnor.rest.client.OrganizationalUnit;
 import org.guvnor.rest.client.RepositoryRequest;
 import org.guvnor.rest.client.RepositoryResponse;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
-import org.kie.wb.test.rest.exception.BadRequestException;
-import org.kie.wb.test.rest.exception.NotFoundException;
 import qa.tools.ikeeper.annotation.Jira;
 
 import static org.assertj.core.api.Assertions.*;
@@ -39,24 +37,10 @@ import static org.assertj.core.api.Assertions.*;
 public class RepositoryIntegrationTest extends RestTestBase {
 
     private static final String ORG_UNIT = "repoTestOrgUnit";
-    private static final String GIT_URL_REMOTE = "https://github.com/droolsjbpm/jbpm-playground.git";
 
     @BeforeClass
     public static void createOrganizationalUnit() {
-        OrganizationalUnit orgUnit = new OrganizationalUnit();
-        orgUnit.setName(ORG_UNIT);
-        orgUnit.setOwner(USER_ID);
-
-        client.createOrganizationalUnit(orgUnit);
-
-        deleteAllRepositories();
-    }
-
-    @AfterClass
-    public static void deleteOrganizationalUnit() {
-        deleteAllRepositories();
-
-        client.deleteOrganizationalUnit(ORG_UNIT);
+        createOrganizationalUnit(ORG_UNIT);
     }
 
     @Test
@@ -130,7 +114,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
         repository.setName("createdRepoWithGitUrl");
         repository.setOrganizationalUnitName(ORG_UNIT);
         repository.setRequestType("new");
-        repository.setGitURL(GIT_URL_REMOTE);
+        repository.setGitURL(getLocalGitRepositoryUrl());
 
         testCreateOrCloneRepository(repository);
     }
@@ -158,7 +142,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
         repository.setName("clonedRepoWithNotExistingUrl");
         repository.setOrganizationalUnitName(ORG_UNIT);
         repository.setRequestType("clone");
-        repository.setGitURL(GIT_URL_REMOTE + "xyz");
+        repository.setGitURL(getLocalGitRepositoryUrl() + "xyz");
 
         try {
             client.createOrCloneRepository(repository);
@@ -169,29 +153,20 @@ public class RepositoryIntegrationTest extends RestTestBase {
     }
 
     @Test
-    public void testCloneRepositoryRemote() {
+    public void testCloneRepositoryLocalFileSystem() {
         RepositoryRequest repository = new RepositoryRequest();
         repository.setName("clonedRemoteRepo");
         repository.setOrganizationalUnitName(ORG_UNIT);
         repository.setRequestType("clone");
-        repository.setGitURL(GIT_URL_REMOTE);
+        repository.setGitURL(getLocalGitRepositoryUrl());
 
         testCreateOrCloneRepository(repository);
-    }
-
-    private RepositoryRequest prepareRepository(String name) {
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(name);
-        repository.setOrganizationalUnitName(ORG_UNIT);
-        repository.setRequestType("new");
-
-        return client.createOrCloneRepository(repository).getRepository();
     }
 
     @Test
     public void testCloneRepositoryInternal() {
         String originalRepo = "repoToBeCloned";
-        prepareRepository(originalRepo);
+        createNewRepository(ORG_UNIT, originalRepo);
 
         RepositoryRequest repository = new RepositoryRequest();
         repository.setName("clonedInternalRepo");
@@ -205,7 +180,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
     @Test
     public void testDeleteRepository() {
         String name = "repoToBeDeleted";
-        prepareRepository(name);
+        createNewRepository(ORG_UNIT, name);
 
         client.deleteRepository(name);
 
@@ -226,7 +201,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
     @Test
     public void testGetExistingRepository() {
         String name = "getExistingRepo";
-        prepareRepository(name);
+        createNewRepository(ORG_UNIT, name);
 
         RepositoryResponse repository = client.getRepository(name);
         assertThat(repository.getName()).isEqualTo(name);
@@ -240,7 +215,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
     @Test
     public void testGetRepositories() {
         String name = "oneOfManyRepos";
-        prepareRepository(name);
+        createNewRepository(ORG_UNIT, name);
 
         Collection<RepositoryResponse> repositories = client.getRepositories();
         assertThat(repositories).extracting(RepositoryResponse::getName).contains(name);

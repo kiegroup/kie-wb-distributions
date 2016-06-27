@@ -16,6 +16,18 @@
 
 package org.kie.wb.test.rest;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.guvnor.rest.client.CreateOrCloneRepositoryRequest;
+import org.guvnor.rest.client.CreateOrganizationalUnitRequest;
+import org.guvnor.rest.client.OrganizationalUnit;
+import org.guvnor.rest.client.RepositoryRequest;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
@@ -28,15 +40,40 @@ import qa.tools.ikeeper.test.IKeeperJUnitConnector;
 
 public abstract class RestTestBase {
 
-    private static final String URL = System.getProperty("kie.wb.url", "http://localhost:8080/kie-wb");
+    protected static final String URL = System.getProperty("kie.wb.url", "http://localhost:8080/kie-wb");
     protected static final String USER_ID = System.getProperty("kie.wb.user.name", User.REST_ALL.getUserName());
-    private static final String PASSWORD = System.getProperty("kie.wb.user.password", User.REST_ALL.getPassword());
+    protected static final String PASSWORD = System.getProperty("kie.wb.user.password", User.REST_ALL.getPassword());
 
     protected static WorkbenchClient client;
+
+    private static File gitRepository;
 
     @BeforeClass
     public static void createWorkbenchClient() {
         client = RestWorkbenchClient.createWorkbenchClient(URL, USER_ID, PASSWORD);
+    }
+
+    @BeforeClass
+    public static void createGitRepository() throws GitAPIException, IOException {
+        gitRepository = new File(System.getProperty("user.dir"), "target/git-repository/");
+        Git git = Git.init().setDirectory(gitRepository).call();
+
+        URL pomUrl = RestTestBase.class.getResource("/pom.xml");
+        File pomFile = new File(gitRepository, "pom.xml");
+        FileUtils.copyURLToFile(pomUrl, pomFile);
+
+        git.add().addFilepattern("pom.xml").call();
+        git.commit().setMessage("Add pom.xml").call();
+    }
+
+    @AfterClass
+    public static void cleanUp() throws IOException {
+        deleteAllRepositories();
+        deleteAllOrganizationalUnits();
+
+        if (gitRepository != null) {
+            FileUtils.deleteDirectory(gitRepository);
+        }
     }
 
     @Rule
@@ -57,12 +94,31 @@ public abstract class RestTestBase {
     @Rule
     public IKeeperJUnitConnector issueKeeper = new IKeeperJUnitConnector(new JiraClient("https://issues.jboss.org"));
 
+    protected static CreateOrganizationalUnitRequest createOrganizationalUnit(String name) {
+        OrganizationalUnit orgUnit = new OrganizationalUnit();
+        orgUnit.setName(name);
+        orgUnit.setOwner(USER_ID);
+        return client.createOrganizationalUnit(orgUnit);
+    }
+
+    protected static CreateOrCloneRepositoryRequest createNewRepository(String orgUnitName, String repositoryName) {
+        RepositoryRequest repository = new RepositoryRequest();
+        repository.setName(repositoryName);
+        repository.setOrganizationalUnitName(orgUnitName);
+        repository.setRequestType("new");
+        return client.createOrCloneRepository(repository);
+    }
+
     protected static void deleteAllOrganizationalUnits() {
         client.getOrganizationalUnits().forEach(orgUnit -> client.deleteOrganizationalUnit(orgUnit.getName()));
     }
 
     protected static void deleteAllRepositories() {
         client.getRepositories().forEach(repository -> client.deleteRepository(repository.getName()));
+    }
+
+    protected static String getLocalGitRepositoryUrl() {
+        return "file://" + gitRepository.getAbsolutePath();
     }
 
 }

@@ -120,8 +120,7 @@ public interface WorkbenchClient {
     /**
      * [DELETE] /organizationalunits/{organizationalUnitName}/repositories/{repositoryName}
      */
-    RemoveRepositoryFromOrganizationalUnitRequest removeRepositoryFromOrganizationalUnit(String orgUnitName,
-                                                                                         String repositoryName);
+    RemoveRepositoryFromOrganizationalUnitRequest removeRepositoryFromOrganizationalUnit(String orgUnitName, String repositoryName);
 
     /**
      * [POST] /repositories/{repositoryName}/projects/{projectName}/maven/compile

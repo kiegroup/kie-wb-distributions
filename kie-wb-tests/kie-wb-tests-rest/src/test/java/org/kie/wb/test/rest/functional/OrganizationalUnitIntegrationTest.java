@@ -19,6 +19,7 @@ package org.kie.wb.test.rest.functional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.ws.rs.NotFoundException;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -27,13 +28,10 @@ import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.OrganizationalUnit;
 import org.guvnor.rest.client.RepositoryRequest;
 import org.guvnor.rest.client.UpdateOrganizationalUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.User;
 import org.kie.wb.test.rest.client.NotSuccessException;
-import org.kie.wb.test.rest.exception.NotFoundException;
 import qa.tools.ikeeper.annotation.Jira;
 
 public class OrganizationalUnitIntegrationTest extends RestTestBase {
@@ -45,18 +43,6 @@ public class OrganizationalUnitIntegrationTest extends RestTestBase {
     private static final String DESCRIPTION2 = "Modified testing organizational unit";
     private static final String GROUP_ID2 = "org.kie.wb.test.other";
     private static final String OWNER2 = User.NO_REST.getUserName();
-
-    @BeforeClass
-    public static void preCleanUp() {
-        deleteAllRepositories();
-        deleteAllOrganizationalUnits();
-    }
-
-    @AfterClass
-    public static void postCleanUp() {
-        deleteAllRepositories();
-        deleteAllOrganizationalUnits();
-    }
 
     @Test
     public void testCreateEmptyName() {
@@ -249,6 +235,9 @@ public class OrganizationalUnitIntegrationTest extends RestTestBase {
         prepareOrganizationalUnit(name);
 
         Collection<OrganizationalUnit> orgUnits = client.getOrganizationalUnits();
+        for (OrganizationalUnit orgUnit : orgUnits) {
+            System.out.println(orgUnit);
+        }
         Assertions.assertThat(orgUnits).extracting(OrganizationalUnit::getName).contains(name);
     }
 
