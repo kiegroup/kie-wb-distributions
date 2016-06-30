@@ -18,16 +18,18 @@ package org.kie.wb.test.rest;
 
 public enum User {
 
-    REST_ALL("restAll", "restAll1234;"),
-    REST_PROJECT("restProject", "restProject1234;"),
-    NO_REST("noRest", "noRest1234;");
+    REST_ALL("restAll", "restAll1234;", true),
+    REST_PROJECT("restProject", "restProject1234;", true),
+    NO_REST("noRest", "noRest1234;", false);
 
     private final String userName;
     private final String password;
+    private final boolean authorized;
 
-    User(String userName, String password) {
+    User(String userName, String password, boolean authorized) {
         this.userName = userName;
         this.password = password;
+        this.authorized = authorized;
     }
 
     public String getUserName() {
@@ -38,4 +40,7 @@ public enum User {
         return password;
     }
 
+    public boolean isAuthorized() {
+        return authorized;
+    }
 }
