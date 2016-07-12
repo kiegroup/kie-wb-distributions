@@ -28,27 +28,8 @@
 
   <includeBaseDirectory>false</includeBaseDirectory>
 
-  <fileSets>
-    <fileSet>
-      <directory>${project.basedir}/src/main/assembly/wildfly10</directory>
-      <outputDirectory>.</outputDirectory>
-    </fileSet>
-  </fileSets>
-  <dependencySets>
-    <dependencySet>
-      <includes>
-        <include>org.kie:kie-wb-webapp:war</include>
-      </includes>
-      <outputDirectory>.</outputDirectory>
-      <unpack>true</unpack>
-      <unpackOptions>
-        <excludes>
-          <exclude>WEB-INF/classes/application-roles.properties</exclude>
-          <exclude>WEB-INF/classes/application-users.properties</exclude>
-        </excludes>
-      </unpackOptions>
-      <useStrictFiltering>true</useStrictFiltering>
-    </dependencySet>
-  </dependencySets>
+  <componentDescriptors>
+    <componentDescriptor>src/main/assembly/component-kie-wb-wildfly-10-eap-7-common.xml</componentDescriptor>
+  </componentDescriptors>
 
 </assembly>

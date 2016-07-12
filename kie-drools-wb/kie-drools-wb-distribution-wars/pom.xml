@@ -432,6 +432,7 @@
             <configuration>
               <finalName>kie-drools-wb-${project.version}</finalName>
               <descriptors>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-eap-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-tomcat-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-websphere-as-8-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-weblogic-12-redhat.xml</descriptor>
