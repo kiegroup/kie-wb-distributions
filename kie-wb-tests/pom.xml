@@ -182,6 +182,9 @@
 
     <profile>
       <id>kie-wb</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
         <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
@@ -191,6 +194,9 @@
 
     <profile>
       <id>wildfly10</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
@@ -244,12 +250,11 @@
       </build>
     </profile>
 
-    <!-- Tests are disabled by default. They can be run using the specific profiles. -->
+    <!-- Tests are enabled by default. Specific modules (like Selenium UI tests) may disable them as they require
+         additional resources (e.g. browser) which are not always available. Such additional tests are then enabled
+         by specific profile. -->
     <profile>
       <id>disable-cargo-and-tests</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <build>
         <plugins>
           <plugin>
