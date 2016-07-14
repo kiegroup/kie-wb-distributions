@@ -17,8 +17,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" class="login-pf">
 <head>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/styles/rcue.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/styles/rcue-additions.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/org.kie.workbench.drools.KIEDroolsWebapp/css/rcue.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/org.kie.workbench.drools.KIEDroolsWebapp/css/rcue-additions.min.css">
     <link rel="shortcut icon" href="favicon.ico" />
     <title>Red Hat JBoss BRMS :: Business central</title>
 </head>

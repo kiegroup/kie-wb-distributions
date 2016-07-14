@@ -604,6 +604,16 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </auth-constraint>
   </security-constraint>
 
+  <!-- public resources -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>public</web-resource-name>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/css/*</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/fonts/*</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/img/*</url-pattern>
+    </web-resource-collection>
+  </security-constraint>
+
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
