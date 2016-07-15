@@ -2012,6 +2012,11 @@
           <artifactId>kie-wb-common-home-client</artifactId>
           <scope>provided</scope>
         </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-theme-community</artifactId>
+          <scope>provided</scope>
+        </dependency>
       </dependencies>
 
       <build>
@@ -2022,6 +2027,8 @@
               <artifactId>gwt-maven-plugin</artifactId>
               <configuration>
                 <compileSourcesArtifacts combine.children="append">
+                  <!-- Community Theme -->
+                  <compileSourcesArtifact>org.kie:kie-wb-theme-community</compileSourcesArtifact>
                   <!-- Community Home Page -->
                   <compileSourcesArtifact>org.kie:kie-wb-home-page-community</compileSourcesArtifact>
                   <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-api</compileSourcesArtifact>
@@ -2053,6 +2060,11 @@
           <artifactId>kie-wb-distribution-home-client</artifactId>
           <scope>provided</scope>
         </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-theme-product</artifactId>
+          <scope>provided</scope>
+        </dependency>
       </dependencies>
 
       <build>
@@ -2063,6 +2075,8 @@
               <artifactId>gwt-maven-plugin</artifactId>
               <configuration>
                 <compileSourcesArtifacts combine.children="append">
+                  <!-- Product Theme -->
+                  <compileSourcesArtifact>org.kie:kie-wb-theme-product</compileSourcesArtifact>
                   <!-- Product Home Page -->
                   <compileSourcesArtifact>org.kie:kie-wb-home-page-product</compileSourcesArtifact>
                   <compileSourcesArtifact>org.kie:kie-wb-distribution-home-api</compileSourcesArtifact>
