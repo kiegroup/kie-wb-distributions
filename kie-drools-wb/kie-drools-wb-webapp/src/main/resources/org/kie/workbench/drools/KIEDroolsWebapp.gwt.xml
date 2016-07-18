@@ -25,14 +25,6 @@
   <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
   <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
 
-  <!-- jbpm-wb -->
-  <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksClient"/>
-  <inherits name="org.jbpm.console.ng.gc.JbpmConsoleNGGenericClient"/>
-  <inherits name="org.jbpm.console.ng.bd.JbpmConsoleNGBusinessDomainAPI"/>
-  <inherits name="org.jbpm.console.ng.pr.JbpmConsoleNGProcessRuntimeAPI"/>
-  <inherits name="org.jbpm.console.ng.ht.forms.JbpmConsoleNGHumanTasksFormsClient"/>
-  <inherits name="org.jbpm.console.ng.df.JbpmConsoleNGDataFiltersClient"/>
-
   <!-- Form-Modeler -->
   <inherits name="org.jbpm.formModeler.renderer.FormRendererAPI"/>
   <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>

@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -84,10 +84,6 @@ public class HomeProducer {
                 ADMINISTRATION , PERSPECTIVE ) );
 
         final SectionEntry s2 = ModelUtils.makeSectionEntry( constants.Deploy() );
-
-        s2.addChild( ModelUtils.makeSectionEntry( constants.Process_Deployments(),
-                () -> placeManager.goTo( DEPLOYMENTS ),
-                DEPLOYMENTS , PERSPECTIVE ) );
 
         s2.addChild( ModelUtils.makeSectionEntry( constants.ExecutionServers(),
                 () -> placeManager.goTo( SERVER_MANAGEMENT ),

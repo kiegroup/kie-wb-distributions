@@ -17,6 +17,7 @@ package org.kie.integration.tomcat;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.Map;
 
 import javax.security.auth.Subject;
@@ -39,6 +40,7 @@ public class TomcatRealmLoginModule implements LoginModule {
     protected boolean committed = false;
     protected Principal principal = null;
     protected Principal rolePrincipal = null;
+    protected Principal clientPrincipal = null;
 
     private static Realm applicationRealm;
 
@@ -68,6 +70,9 @@ public class TomcatRealmLoginModule implements LoginModule {
             principal = applicationRealm.authenticate(name, password);
 
             if (principal != null) {
+
+                String basicAuthHeader = "Basic " + Base64.getEncoder().encodeToString((name + ":" + password).getBytes("UTF-8"));
+                clientPrincipal = new BasicAuthorizationPrincipal(basicAuthHeader);
                 return true;
             }
 
@@ -99,6 +104,10 @@ public class TomcatRealmLoginModule implements LoginModule {
                 rolePrincipal = new SimpleRolePrincipal(roles);
                 subject.getPrincipals().add(rolePrincipal);
             }
+        }
+        // add client (kie server) principal
+        if (!subject.getPrincipals().contains(clientPrincipal)) {
+            subject.getPrincipals().add(clientPrincipal);
         }
 
         committed = true;

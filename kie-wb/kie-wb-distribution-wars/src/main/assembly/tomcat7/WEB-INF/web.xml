@@ -114,7 +114,6 @@
     <filter-name>HTTP Basic Auth Filter</filter-name>
     <url-pattern>/rest/*</url-pattern>
     <url-pattern>/maven2/*</url-pattern>
-    <url-pattern>/ws/*</url-pattern>
   </filter-mapping>
 
   <!-- RESTEasy configurations -->
@@ -141,6 +140,11 @@
   <context-param>
     <param-name>resteasy.document.expand.entity.references</param-name>
     <param-value>false</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>resteasy.resources</param-name>
+    <param-value>org.kie.server.controller.rest.RestKieServerControllerImpl,org.kie.server.controller.rest.RestSpecManagementServiceImpl,org.guvnor.rest.backend.ProjectResource,org.kie.server.controller.rest.RestKieServerControllerAdminImpl</param-value>
   </context-param>
 
   <servlet>
@@ -730,40 +734,15 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <role-name>manager</role-name>
   </security-role>
 
+  <security-role>
+    <description></description>
+    <role-name>kiemgmt</role-name>
+  </security-role>
+
   <error-page>
     <error-code>403</error-code>
     <location>/not_authorized.jsp</location>
   </error-page>
 
-  <context-param>
-    <param-name>resteasy.document.expand.entity.references</param-name>
-    <param-value>false</param-value>
-  </context-param>
-
-  <filter>
-    <filter-name>Dynamic JAXBContext Filter</filter-name>
-    <filter-class>org.kie.remote.services.rest.jaxb.DynamicJaxbContextFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>Dynamic JAXBContext Filter</filter-name>
-    <url-pattern>/rest/deployment/*</url-pattern>
-    <url-pattern>/rest/history/*</url-pattern>
-    <url-pattern>/rest/task/*</url-pattern>
-    <url-pattern>/rest/runtime/*</url-pattern>
-    <url-pattern>/rest/query/*</url-pattern>
-    <url-pattern>/rest/execute</url-pattern>
-    <url-pattern>/ws/*</url-pattern>
-  </filter-mapping>
-
-  <!-- web services -->
-  <servlet>
-    <servlet-name>CommandWebService</servlet-name>
-    <servlet-class>org.kie.remote.services.ws.command.CommandWebServiceImpl</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>CommandWebService</servlet-name>
-    <url-pattern>/ws/CommandService</url-pattern>
-  </servlet-mapping>
 
 </web-app>

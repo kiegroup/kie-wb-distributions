@@ -106,22 +106,15 @@ public class AppSetup extends BaseAppSetup {
             }
 
             // Setup mandatory properties for Drools-Workbench
-            final ConfigItem<String> supportRuntimeDeployConfigItem = new ConfigItem<>();
-            supportRuntimeDeployConfigItem.setName( "support.runtime.deploy" );
-            supportRuntimeDeployConfigItem.setValue( "true" );
+
             setupConfigurationGroup( ConfigType.GLOBAL,
                                      GLOBAL_SETTINGS,
-                                     getGlobalConfiguration(),
-                                     supportRuntimeDeployConfigItem );
+                                     getGlobalConfiguration() );
 
             // Setup properties required by the Work Items Editor
             setupConfigurationGroup( ConfigType.EDITOR,
                                      WorkItemsEditorService.WORK_ITEMS_EDITOR_SETTINGS,
                                      workbenchConfigurationHelper.getWorkItemElementDefinitions() );
-
-            // rest of jbpm wb bootstrap
-            administrationService.bootstrapConfig();
-            administrationService.bootstrapDeployments();
 
             // notify components that bootstrap is completed to start post setups
             applicationStartedEvent.fire( new ApplicationStarted() );

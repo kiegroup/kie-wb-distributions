@@ -137,6 +137,11 @@
     <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
   </context-param>
 
+  <context-param>
+    <param-name>resteasy.resources</param-name>
+    <param-value>org.kie.server.controller.rest.RestKieServerControllerImpl,org.kie.server.controller.rest.RestSpecManagementServiceImpl,org.guvnor.rest.backend.ProjectResource,org.kie.server.controller.rest.RestKieServerControllerAdminImpl</param-value>
+  </context-param>
+
   <servlet>
     <servlet-name>Resteasy</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
@@ -577,18 +582,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <resource-env-ref-name>ErraiService</resource-env-ref-name>
     <resource-env-ref-type>org.jboss.errai.bus.server.service.ErraiService</resource-env-ref-type>
   </resource-env-ref>
-
-  <resource-ref>
-    <description>Console DS</description>
-    <res-ref-name>jdbc/jbpm</res-ref-name>
-    <res-type>javax.sql.DataSource</res-type>
-    <res-auth>Container</res-auth>
-  </resource-ref>
-
-  <context-param>
-    <param-name>org.jboss.seam.transaction.disableListener</param-name>
-    <param-value>true</param-value>
-  </context-param>
 
   <security-constraint>
     <web-resource-collection>
