@@ -83,14 +83,6 @@ public class WorkbenchACLTest {
             "perspective.read.ServerManagementPerspective",
             "dataobject.edit");
 
-    static final List<String> KIEMGMT_GRANTED = Arrays.asList(
-            "asset.promote",
-            "project.release",
-            "repository.configure");
-
-    static final List<String> PLANNERMGMT_GRANTED = Arrays.asList(
-            "planner.available");
-
     @Mock
     AuthorizationPolicyStorage storage;
 
@@ -119,7 +111,7 @@ public class WorkbenchACLTest {
     @Test
     public void testPolicyDeployment() {
         assertNotNull(policy);
-        assertEquals(policy.getRoles().size(), 4);
+        assertEquals(policy.getRoles().size(), 2);
 
         verify(storage).savePolicy(policy);
         verify(deployedEvent).fire(any());
@@ -145,16 +137,6 @@ public class WorkbenchACLTest {
     @Test
     public void testAnalystPermissions() {
         testPermissions(new RoleImpl("analyst"), ANALYST_DENIED, HOME_PERSPECTIVE, ACCESS_GRANTED, ACCESS_DENIED);
-    }
-
-    @Test
-    public void testKiemgmtPermissions() {
-        testPermissions(new RoleImpl("kiemgmt"), KIEMGMT_GRANTED, HOME_PERSPECTIVE, ACCESS_DENIED, ACCESS_GRANTED);
-    }
-
-    @Test
-    public void testPlanermgmtPermissions() {
-        testPermissions(new RoleImpl("plannermgmt"), PLANNERMGMT_GRANTED, HOME_PERSPECTIVE, ACCESS_DENIED, ACCESS_GRANTED);
     }
 
     public void testPermissions(Role role,
