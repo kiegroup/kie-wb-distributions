@@ -703,11 +703,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <role-name>rest-project</role-name>
   </security-role>
 
-  <security-role>
-    <description></description>
-    <role-name>kiemgmt</role-name>
-  </security-role>
-
   <error-page>
     <error-code>403</error-code>
     <location>/not_authorized.jsp</location>
