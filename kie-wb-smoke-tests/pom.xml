@@ -39,7 +39,6 @@
 
   <modules>
     <module>kie-wb-smoke-tests-main</module>
-    <module>kie-wb-smoke-tests-arq</module>
   </modules>
 
   <dependencyManagement>
