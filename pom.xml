@@ -54,9 +54,6 @@
     <module>kie-wb</module>
     <module>kie-drools-wb</module>
     <module>kie-tomcat-integration</module>
-    <!-- TODO remove the kie-wb-smoke-tests as it was replaced by kie-wb-tests. Before removing we need to make sure
-         no test coverage was lost. -->
-    <!--<module>kie-wb-smoke-tests</module>-->
     <module>kie-wb-tests</module>
   </modules>
 

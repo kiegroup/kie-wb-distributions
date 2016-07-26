@@ -61,7 +61,7 @@
       <artifactId>slf4j-api</artifactId>
     </dependency>
 
-    <!-- deps for selenium smoke tests -->
+    <!-- deps for selenium tests -->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-api</artifactId>
@@ -154,7 +154,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <!-- Enable selenium UI smoke tests to be run with Firefox.
+        <!-- Enable selenium UI tests to be run with Firefox.
 
            Simple usage: mvn clean install -Pwildfly10,kie-wb (executes all Selenium GUI tests)
            Complex usage: mvn clean install -Pwildfly10,kie-wb -Dit.test=LoginIntegrationTest
@@ -201,7 +201,7 @@
     </profile>
 
     <profile>
-      <!--  Enable selenium UI smoke tests to be run with Internet Explorer.
+      <!--  Enable selenium UI tests to be run with Internet Explorer.
       Example usage: mvn clean install -Pwildfly10,kie-wb,selenium,ie -->
       <id>ie</id>
       <activation>

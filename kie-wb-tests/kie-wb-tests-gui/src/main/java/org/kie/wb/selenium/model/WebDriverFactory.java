@@ -30,7 +30,7 @@ public class WebDriverFactory {
             return new FirefoxDriver();
         } else if ("ie".equalsIgnoreCase(browser)) {
             // System property "webdriver.ie.driver" specifying path to IEDriverServer.exe
-            // is set by failsafe plugin configuration kie-wb-smoke-tests's pom.xml in "ie" profile
+            // is set by failsafe plugin in "ie" profile
             return new InternetExplorerDriver();
         } else {
             throw new IllegalArgumentException("Unrecognized value of property browser='" + browser
