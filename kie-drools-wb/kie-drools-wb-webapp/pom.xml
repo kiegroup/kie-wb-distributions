@@ -1313,7 +1313,7 @@
     <!-- UF Security management provider for Wildfly / EAP. -->
     <dependency>
       <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-security-management-wildfly</artifactId>
+      <artifactId>uberfire-security-management-wildfly8</artifactId>
     </dependency>
 
     <!-- test -->

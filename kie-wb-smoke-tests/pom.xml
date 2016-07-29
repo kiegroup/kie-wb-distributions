@@ -20,17 +20,17 @@
     <version.tomcat8>8.0.26</version.tomcat8>
     <version.wildfly8>8.2.1.Final</version.wildfly8>
     <version.wildfly9>9.0.2.Final</version.wildfly9>
-    <version.wildfly10>10.0.0.CR4</version.wildfly10>
+    <version.wildfly10>10.0.0.Final</version.wildfly10>
 
     <tomcat7.deployable.classifier>tomcat7</tomcat7.deployable.classifier>
     <!-- There is no Tomcat 8 specific WAR, so use the one for Tomcat 7 -->
     <tomcat8.deployable.classifier>tomcat7</tomcat8.deployable.classifier>
     <wildfly8.deployable.classifier>wildfly8</wildfly8.deployable.classifier>
-    <!-- There is no specific deployble for WildFly 10 yet, so use the next best thing - WildFly 8 deployable-->
-    <wildfly10.deployable.classifier>wildfly8</wildfly10.deployable.classifier>
+    <wildfly10.deployable.classifier>wildfly10</wildfly10.deployable.classifier>
     <eap64.deployable.classifier>eap6_4</eap64.deployable.classifier>
-    <!-- The default setup (if not overidden by specific profile) will execute kie-wb smoke tests on EAP 6.4.x -->
-    <!-- These properties are overriden in profiles kie-drools-wb and kie-wb -->
+    <eap7.deployable.classifier>eap7</eap7.deployable.classifier>
+    <!-- The default setup (if not overridden by specific profile) will execute kie-wb smoke tests on EAP 6.4.x -->
+    <!-- These properties are overridden in profiles kie-drools-wb and kie-wb -->
     <deployable.groupId>org.kie</deployable.groupId>
     <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
     <deployable.version>${project.version}</deployable.version>
@@ -77,6 +77,20 @@
         <type>war</type>
         <classifier>eap6_4-redhat</classifier>
       </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-distribution-wars</artifactId>
+        <version>${version.org.kie}</version>
+        <type>war</type>
+        <classifier>eap7-redhat</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb-distribution-wars</artifactId>
+        <version>${version.org.kie}</version>
+        <type>war</type>
+        <classifier>eap7-redhat</classifier>
+      </dependency>
 
       <dependency>
         <groupId>org.kie.smoke</groupId>
@@ -106,6 +120,7 @@
         <!-- There is no Tomcat 8 specific WAR, so use the one for Tomcat 7 -->
         <tomcat8.deployable.classifier>tomcat7-redhat</tomcat8.deployable.classifier>
         <eap64.deployable.classifier>eap6_4-redhat</eap64.deployable.classifier>
+        <eap7.deployable.classifier>eap7-redhat</eap7.deployable.classifier>
         <!-- There is no productized WAR for WildFlies -->
         <wildlfy8.deployable.classifier>NONE</wildlfy8.deployable.classifier>
         <wildlfy10.deployable.classifier>NONE</wildlfy10.deployable.classifier>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ JBoss, Home of Professional Open Source
-  ~ Copyright 2011 Red Hat Inc. and/or its affiliates and other contributors
+  ~ Copyright 2015 Red Hat Inc. and/or its affiliates and other contributors
   ~ as indicated by the @author tags. All rights reserved.
   ~ See the copyright.txt in the distribution for a
   ~ full listing of individual contributors.
@@ -19,29 +19,24 @@
   -->
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
   <deployment>
-    <exclusions>
-      <!-- Need to exclude the ecj jar in WildFly 8 that does not support Java 8. -->
-      <module name="io.undertow.jsp"/>
-    </exclusions>
     <dependencies>
       <!-- IMPORTANT: when adding dependency (module) here, make sure it is a public one.
            Do not add private modules as there is no guarantee they won't be changed or
            removed in future. WildFly also generates warning(s) during the deployment if
            the WAR depends on private modules. -->
       <!-- Keep the alphabetical order! -->
-      <module name="deployment.jsp"/>
       <module name="javax.activation.api"/>
       <module name="javax.ejb.api"/>
       <module name="javax.faces.api"/>
       <module name="javax.jms.api"/>
+      <module name="javax.validation.api"/>
       <module name="javax.persistence.api"/>
       <module name="javax.servlet.api"/>
       <module name="javax.transaction.api"/>
-      <module name="javax.validation.api"/>
       <module name="javax.wsdl4j.api"/>
+      <module name="org.apache.cxf"/>
       <module name="org.apache.xalan"/>
       <module name="org.apache.xerces"/>
-      <module name="org.apache.cxf"/>
       <module name="org.hibernate"/>
       <module name="org.hibernate.commons-annotations"/>
       <module name="org.hibernate.validator"/>
@@ -56,15 +51,10 @@
       <module name="org.slf4j.ext"/>
       <module name="org.slf4j.jcl-over-slf4j"/>
 
+
       <!-- ******************************************************************************************** -->
       <!-- EXCEPTIONS - private/unsupported modules that can not be directly added into the WEB-INF/lib -->
       <!-- ******************************************************************************************** -->
-      
-      <!-- CXF is used both by kie-remote as framework for WS interface and by jbpm-workitems
-           to call remote WS endpoints. The jbpm-workitems artifact needs the actual CXF
-           implementation classes, not just the standard interfaces. Adding CXF impl classes
-           into the WEB-INF/lib directly would cause clashes as the EAP uses them as well. -->
-      <module name="org.apache.cxf.impl" meta-inf="export"/>
       
       <!-- Dom4j is a transitive dependency of drools-decisiontables and needs to be on classpath.
            It is also used by Hibernate and adding it directly into WEB-INF/lib results in
@@ -72,7 +62,7 @@
            Depending on the EAP module seems to be the only way.
            See https://developer.jboss.org/thread/173306 for more info. -->
       <module name="org.dom4j"/>
-
+      
       <!-- Wildfly / EAP security management provider's client dependencies. 
            These modules provides the wildfly/eap libraries for the properties realm management, 
            required if using the concrete Wildfly/EAP provider for the user system management, as this webapp does by default. -->
@@ -84,15 +74,4 @@
       
     </dependencies>
   </deployment>
-
-  <!-- A dependency for all classes in io.undertow.jsp *except* those in Wildfly's ecj jar. -->
-  <module name="deployment.jsp">
-    <dependencies>
-      <module name="io.undertow.jsp" export="true">
-        <imports>
-          <exclude path="org/eclipse/jdt/**"/>
-        </imports>
-      </module>
-    </dependencies>
-  </module>
 </jboss-deployment-structure>
