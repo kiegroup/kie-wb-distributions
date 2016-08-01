@@ -120,14 +120,4 @@ public interface AppConstants
 
     String Messages();
 
-    String DocksOptaPlannerTitle();
-
-    String DocksProjectExplorerTitle();
-
-    String DocksDroolsJBPMTitle();
-
-    String DocksPersistenceTitle();
-
-    String DocksAdvancedTitle();
-
 }
