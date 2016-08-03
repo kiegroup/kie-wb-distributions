@@ -6,10 +6,6 @@
       <directory>${project.basedir}/src/main/assembly/wildfly10-eap7</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/src/main/assembly/wildfly-shared</directory>
-      <outputDirectory>.</outputDirectory>
-    </fileSet>
   </fileSets>
   <dependencySets>
     <dependencySet>

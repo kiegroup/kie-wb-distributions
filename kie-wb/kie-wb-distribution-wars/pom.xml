@@ -392,7 +392,6 @@
         <configuration>
           <finalName>kie-wb-${project.version}</finalName>
           <descriptors>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-wildfly-8.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-wildfly-10.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-eap-6_4.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-jboss-eap-7.xml</descriptor>
