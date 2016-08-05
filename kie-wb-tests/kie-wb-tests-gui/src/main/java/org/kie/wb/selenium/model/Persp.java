@@ -76,7 +76,7 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Process Management", "Process Instances", ProcessInstancesPerspective.class, true);
 
     public static final Persp<TasksPerspective> TASKS
-            = new Persp<>("N/A", "Tasks", TasksPerspective.class);
+            = new Persp<>("N/A", "Tasks", TasksPerspective.class, true);
 
     public static final Persp<ProcessAndTaskDashboardPerspective> PROCESS_AND_TASK_DASHBOARD
             = new Persp<>("Dashboards", "Process & Task Dashboard", ProcessAndTaskDashboardPerspective.class, true);
