@@ -105,7 +105,7 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-docs</artifactId>
-      <type>jdocbook</type>
+      <type>zip</type>
     </dependency>
     <dependency>
       <groupId>org.optaplanner</groupId>
@@ -115,7 +115,7 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-docs</artifactId>
-      <type>jdocbook</type>
+      <type>zip</type>
     </dependency>
 
     <dependency>

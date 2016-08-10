@@ -48,7 +48,7 @@
     <!-- Reference manual -->
     <dependencySet>
       <includes>
-        <include>org.drools:drools-docs:jdocbook</include>
+        <include>org.drools:drools-docs:zip</include>
       </includes>
       <outputDirectory>docs_htdocs/drools/release/${project.version}/drools-docs</outputDirectory>
       <unpack>true</unpack>
@@ -74,7 +74,7 @@
     </dependencySet>
     <dependencySet>
       <includes>
-        <include>org.jbpm:jbpm-docs:jdocbook</include>
+        <include>org.jbpm:jbpm-docs:zip</include>
       </includes>
       <outputDirectory>docs_htdocs/jbpm/release/${project.version}/jbpm-docs</outputDirectory>
       <unpack>true</unpack>
