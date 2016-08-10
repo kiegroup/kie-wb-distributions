@@ -53,7 +53,6 @@
     <module>kie-wb-theme</module>
     <module>kie-wb</module>
     <module>kie-drools-wb</module>
-    <module>kie-tomcat-integration</module>
     <module>kie-wb-tests</module>
   </modules>
 
