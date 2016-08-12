@@ -82,12 +82,6 @@ public interface AppConstants
 
     String newRepository();
 
-    String inboxIncomingChanges();
-
-    String inboxRecentlyEdited();
-
-    String inboxRecentlyOpened();
-
     String tools();
 
     String Role();
