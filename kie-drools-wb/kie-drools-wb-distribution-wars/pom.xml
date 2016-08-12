@@ -159,7 +159,6 @@
       <artifactId>xml-resolver</artifactId>
     </dependency>
 
-    <!--weblogic & was-->
     <dependency>
       <groupId>antlr</groupId>
       <artifactId>antlr</artifactId>
@@ -228,12 +227,6 @@
       <artifactId>jackson-jaxrs</artifactId>
     </dependency>
 
-    <!-- For WAS8 shading -->
-    <dependency>
-      <groupId>org.sonatype.sisu</groupId>
-      <artifactId>sisu-inject-bean</artifactId>
-    </dependency>
-    <!-- WAS8 uses JUL, so just bind slf4j to that -->
     <!-- use ejb timer service for WAS as otherwise there is not access to UserTransaction or TransactionSyncRegistry -->
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -258,63 +251,6 @@
 
   <build>
     <plugins>
-      <!-- special handling for WAS8.5 as sisu-inject-bean:2.2.3 contains javax.inject classes which conflicts with WAS-->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>2.2</version>
-        <executions>
-          <execution>
-            <id>was-specific</id>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <outputFile>${project.build.directory}/lib/was/nojavax-sisu-inject-bean.jar</outputFile>
-              <artifactSet>
-                <includes>
-                  <include>org.sonatype.sisu:sisu-inject-bean</include>
-                </includes>
-              </artifactSet>
-              <filters>
-                <filter>
-                  <artifact>org.sonatype.sisu:sisu-inject-bean</artifact>
-                  <excludes>
-                    <exclude>javax/**</exclude>
-                  </excludes>
-                </filter>
-              </filters>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- end of WAS 8.5 specific handling -->
-      <!-- CDI 1.0 specific configuration -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>prepare-cdi1.0-libs</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.jboss.errai</groupId>
-                  <artifactId>errai-weld-integration</artifactId>
-                  <version>${version.org.jboss.errai.cdi10-compatible}</version>
-                  <type>jar</type>
-                </artifactItem>
-              </artifactItems>
-              <outputDirectory>${project.build.directory}/cdi1.0-libs</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -331,8 +267,6 @@
           <descriptors>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-wildfly-10.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-tomcat-7.xml</descriptor>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-websphere-as-8.xml</descriptor>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-weblogic-12.xml</descriptor>
           </descriptors>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
@@ -417,8 +351,6 @@
               <descriptors>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-eap-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-tomcat-7-redhat.xml</descriptor>
-                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-websphere-as-8-redhat.xml</descriptor>
-                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-weblogic-12-redhat.xml</descriptor>
               </descriptors>
               <archive>
                 <addMavenDescriptor>false</addMavenDescriptor>
