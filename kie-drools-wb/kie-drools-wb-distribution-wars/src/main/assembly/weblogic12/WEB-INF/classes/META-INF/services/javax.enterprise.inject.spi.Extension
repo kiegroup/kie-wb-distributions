@@ -1,2 +1,0 @@
-#weblogic specific setup - swap classloader for startup operation
-org.kie.workbench.screens.workbench.backend.weblogic.SwapClassloaderExtension
