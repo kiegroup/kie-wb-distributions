@@ -314,6 +314,7 @@
           <finalName>kie-wb-${project.version}</finalName>
           <descriptors>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-wildfly-10.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-eap-7.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-tomcat-7.xml</descriptor>
           </descriptors>
           <archive>
