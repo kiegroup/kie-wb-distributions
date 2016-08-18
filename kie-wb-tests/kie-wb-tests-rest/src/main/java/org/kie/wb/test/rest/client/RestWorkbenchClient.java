@@ -17,6 +17,7 @@
 package org.kie.wb.test.rest.client;
 
 import java.util.Collection;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -53,9 +54,12 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
     private static final Logger log = LoggerFactory.getLogger(RestWorkbenchClient.class);
 
-    private static final int JOB_TIMEOUT_SECONDS = 10;
-    private static final int PROJECT_JOB_TIMEOUT_SECONDS = 60;
-    private static final int CLONE_REPO_TIMEOUT_SECONDS = 60;
+    private static final int DEFAULT_JOB_TIMEOUT_SECONDS = 10;
+    private static final int DEFAULT_PROJECT_JOB_TIMEOUT_SECONDS = 60;
+    private static final int DEFAULT_CLONE_REPO_TIMEOUT_SECONDS = 60;
+    private final int jobTimeoutSeconds;
+    private final int projectJobTimeoutSeconds;
+    private final int cloneRepoTimeoutSeconds;
 
     private static final MediaType MEDIA_TYPE = MediaType.APPLICATION_JSON_TYPE;
 
@@ -63,11 +67,22 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
     private final WebTarget target;
 
-    private RestWorkbenchClient(String appUrl, String userId, String password, boolean async) {
+    private RestWorkbenchClient(String appUrl, String userId, String password, boolean async,
+            int jobTimeoutSeconds, int projectJobTimeoutSeconds, int cloneRepoTimeoutSeconds) {
         this.async = async;
 
         Client client = ClientBuilder.newClient().register(new Authenticator(userId, password));
         target = client.target(appUrl).path("rest");
+
+        this.jobTimeoutSeconds = jobTimeoutSeconds;
+        this.projectJobTimeoutSeconds = projectJobTimeoutSeconds;
+        this.cloneRepoTimeoutSeconds = cloneRepoTimeoutSeconds;
+    }
+
+    private RestWorkbenchClient(String appUrl, String userId, String password, boolean async) {
+        this(appUrl, userId, password, async,
+                DEFAULT_JOB_TIMEOUT_SECONDS, DEFAULT_PROJECT_JOB_TIMEOUT_SECONDS, DEFAULT_CLONE_REPO_TIMEOUT_SECONDS
+        );
     }
 
     /**
@@ -79,10 +94,19 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     /**
-     * Creates KIE Workbench REST client which will wait for completion of each operation.
+     * Creates KIE Workbench REST client which will wait for successful completion of each operation.
      */
     public static WorkbenchClient createWorkbenchClient(String appUrl, String userId, String password) {
         return new RestWorkbenchClient(appUrl, userId, password, false);
+    }
+
+    /**
+     * Creates KIE Workbench REST client which will wait for successful completion of each operation using specified timeouts.
+     */
+    public static WorkbenchClient createWorkbenchClient(String appUrl, String userId, String password,
+            int jobTimeoutSeconds, int projectJobTimeoutSeconds, int cloneRepoTimeoutSeconds) {
+        return new RestWorkbenchClient(appUrl, userId, password, false
+                , jobTimeoutSeconds, projectJobTimeoutSeconds, cloneRepoTimeoutSeconds);
     }
 
     @Override
@@ -128,7 +152,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
                 .post(createEntity(repository), CreateOrCloneRepositoryRequest.class);
 
         if (request.getRepository().getRequestType().equals("clone")) {
-            return waitUntilJobFinished(request, CLONE_REPO_TIMEOUT_SECONDS);
+            return waitUntilJobFinished(request, cloneRepoTimeoutSeconds);
         } else {
             return waitUntilJobFinished(request);
         }
@@ -153,7 +177,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
                 .resolveTemplate("repositoryName", repositoryName)
                 .request().post(createEntity(project), CreateProjectRequest.class);
 
-        return waitUntilJobFinished(request, PROJECT_JOB_TIMEOUT_SECONDS);
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
 
     @Override
@@ -165,7 +189,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
                 .resolveTemplate("projectName", projectName)
                 .request().delete(DeleteProjectRequest.class);
 
-        return waitUntilJobFinished(request, PROJECT_JOB_TIMEOUT_SECONDS);
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
 
     @Override
@@ -265,7 +289,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
         CompileProjectRequest request = postMavenRequest(repositoryName, projectName, "compile", CompileProjectRequest.class);
 
-        return waitUntilJobFinished(request, PROJECT_JOB_TIMEOUT_SECONDS);
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
 
     @Override
@@ -274,7 +298,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
         InstallProjectRequest request = postMavenRequest(repositoryName, projectName, "install", InstallProjectRequest.class);
 
-        return waitUntilJobFinished(request, PROJECT_JOB_TIMEOUT_SECONDS);
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
 
     @Override
@@ -283,7 +307,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
         TestProjectRequest request = postMavenRequest(repositoryName, projectName, "test", TestProjectRequest.class);
 
-        return waitUntilJobFinished(request, PROJECT_JOB_TIMEOUT_SECONDS);
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
 
     @Override
@@ -292,11 +316,11 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
         DeployProjectRequest request = postMavenRequest(repositoryName, projectName, "deploy", DeployProjectRequest.class);
 
-        return waitUntilJobFinished(request, PROJECT_JOB_TIMEOUT_SECONDS);
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
 
     private <T extends JobRequest> T waitUntilJobFinished(T request) {
-        return waitUntilJobFinished(request, JOB_TIMEOUT_SECONDS);
+        return waitUntilJobFinished(request, jobTimeoutSeconds);
     }
 
     private <T extends JobRequest> T waitUntilJobFinished(T request, int seconds) {
@@ -305,20 +329,25 @@ public class RestWorkbenchClient implements WorkbenchClient {
         }
 
         JobResult jobResult;
+        int totalSecondsWaited = 0;
         while ((jobResult = getJob(request.getJobId())).getStatus() != JobStatus.SUCCESS && seconds-- > 0) {
             switch (jobResult.getStatus()) {
                 case ACCEPTED:
                 case APPROVED:
                     sleepForSecond();
+                    totalSecondsWaited++;
                     break;
                 case SUCCESS:
+                    log.info("  It took {} seconds to complete the job", totalSecondsWaited);
                     return request;
                 default:
+                    log.warn("  Timeout waiting {} seconds for job to succeed", totalSecondsWaited);
                     throw new NotSuccessException(jobResult);
             }
         }
 
         if (jobResult.getStatus() != JobStatus.SUCCESS) {
+            log.warn("  Timeout waiting {} seconds for job to succeed", totalSecondsWaited);
             throw new NotSuccessException(jobResult);
         }
 
