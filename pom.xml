@@ -60,6 +60,22 @@
     <module>kie-wb-smoke-tests</module>
   </modules>
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- TODO Move this exclusion to kie-platform-bom -->
+      <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-cdi</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
     <plugins>
 
