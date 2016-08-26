@@ -30,6 +30,7 @@ import org.kie.workbench.common.services.refactoring.model.index.terms.valueterm
 import org.kie.workbench.common.services.refactoring.model.query.RefactoringPageRequest;
 import org.kie.workbench.common.services.refactoring.model.query.RefactoringPageRow;
 import org.kie.workbench.common.services.refactoring.service.RefactoringQueryService;
+import org.kie.workbench.common.services.refactoring.service.impact.QueryOperationRequest;
 import org.uberfire.io.IOService;
 import org.uberfire.io.impl.IOServiceDotFileImpl;
 import org.uberfire.paging.PageResponse;
@@ -56,17 +57,9 @@ public class EnvironmentProvider {
     }
 
     @Produces
+    @SuppressWarnings("rawtypes")
     public RefactoringQueryService getRefactoringQueryService() {
         return new RefactoringQueryService() {
-            @Override
-            public Set<String> getQueries() {
-                return Collections.emptySet();
-            }
-
-            @Override
-            public Set<IndexTerm> getTerms( String queryName ) {
-                return Collections.emptySet();
-            }
 
             @Override
             public PageResponse<RefactoringPageRow> query( RefactoringPageRequest request ) {
@@ -75,8 +68,17 @@ public class EnvironmentProvider {
 
             @Override
             public List<RefactoringPageRow> query( String queryName,
-                                                   Set<ValueIndexTerm> queryTerms,
-                                                   boolean useWildcards ) {
+                                                   Set<ValueIndexTerm> queryTerms ) {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public PageResponse<RefactoringPageRow> queryToPageResponse( QueryOperationRequest request ) {
+                return new PageResponse<RefactoringPageRow>();
+            }
+
+            @Override
+            public List<RefactoringPageRow> queryToList( QueryOperationRequest request ) {
                 return Collections.emptyList();
             }
         };
