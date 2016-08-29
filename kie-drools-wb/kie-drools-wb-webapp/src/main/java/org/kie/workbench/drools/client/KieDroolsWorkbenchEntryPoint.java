@@ -269,7 +269,7 @@ public class KieDroolsWorkbenchEntryPoint {
     private List<MenuItem> getDeploymentViews() {
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
-        result.add( MenuFactory.newSimpleItem( constants.ruleDeployments() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).place( new DefaultPlaceRequest( "ServerManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.executionServers() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).place( new DefaultPlaceRequest( "ServerManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }

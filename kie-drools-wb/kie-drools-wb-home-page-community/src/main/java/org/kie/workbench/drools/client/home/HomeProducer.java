@@ -95,7 +95,7 @@ public class HomeProducer {
                                                                } );
 
         final Section s2 = new Section( constants.deploy() );
-        final SectionEntry s2_a = ModelUtils.makeSectionEntry( constants.ruleDeployments(),
+        final SectionEntry s2_a = ModelUtils.makeSectionEntry( constants.executionServers(),
                                                                new Command() {
 
                                                                    @Override
