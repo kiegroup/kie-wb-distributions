@@ -118,7 +118,7 @@ public class HomeProducer {
                                                              }
                                                          } );
 
-        SectionEntry s2_b = ModelUtils.makeSectionEntry( constants.Rule_Deployments(),
+        SectionEntry s2_b = ModelUtils.makeSectionEntry( constants.ExecutionServers(),
                                                          new Command() {
 
                                                              @Override

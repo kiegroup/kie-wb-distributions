@@ -56,7 +56,7 @@ public interface AppConstants
 
     String deploy();
 
-    String ruleDeployments();
+    String executionServers();
 
     String artifactRepository();
 

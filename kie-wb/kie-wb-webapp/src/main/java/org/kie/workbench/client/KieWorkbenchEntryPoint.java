@@ -281,7 +281,7 @@ public class KieWorkbenchEntryPoint {
 
         result.add( MenuFactory.newSimpleItem( constants.Process_Deployments() ).withRoles( kieACL.getGrantedRoles( F_DEPLOYMENTS ) ).place( new DefaultPlaceRequest( "Deployments" ) ).endMenu().build().getItems().get( 0 ) );
 
-        result.add( MenuFactory.newSimpleItem( constants.Rule_Deployments() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).place( new DefaultPlaceRequest( "ServerManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
+        result.add( MenuFactory.newSimpleItem( constants.ExecutionServers() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).place( new DefaultPlaceRequest( "ServerManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
 
         result.add(MenuFactory.newSimpleItem(constants.Jobs()).withRoles(kieACL.getGrantedRoles(F_JOBS)).place(new DefaultPlaceRequest("Jobs")).endMenu().build().getItems().get(0));
 

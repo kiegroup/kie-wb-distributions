@@ -72,7 +72,7 @@ public interface AppConstants
 
     String Deploy();
 
-    String Rule_Deployments();
+    String ExecutionServers();
 
     String Process_Deployments();
 
