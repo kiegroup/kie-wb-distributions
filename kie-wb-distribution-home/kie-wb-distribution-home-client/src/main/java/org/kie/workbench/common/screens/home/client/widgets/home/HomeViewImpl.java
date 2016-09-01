@@ -95,7 +95,7 @@ public class HomeViewImpl extends Composite
                 //this.columns.add( sectionWidget );
                 htmlLIs+="<li>\n" +
                         "    \t<input type=\"radio\" id=\"s"+i+"\" name=\"num\" "+ (i==1? "checked=\"true\"":"") +" />\n" +
-                        "\t\t<label for=\"s"+i+"\"><h2>"+section.getHeading()+"</h2><br><p>"+section.getDescription() +"</p></label>\n" +
+                        "\t\t<label for=\"s"+i+"\"><h2 title=\""+section.getHeading()+"\">"+section.getHeading()+"</h2><br><p>"+section.getDescription() +"</p></label>\n" +
                         "\t\t<a href=\"javascript:void(0);\">\n" +
                         "\t\t\t<img src=\""+section.getImageUrl()+"\" />\n" +
                         "\t\t</a>\n" +
