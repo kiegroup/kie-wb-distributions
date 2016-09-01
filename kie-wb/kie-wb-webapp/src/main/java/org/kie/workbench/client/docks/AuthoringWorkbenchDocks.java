@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jboss.errai.security.shared.api.Role;
+import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.screens.datamodeller.client.DataModelerContext;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchContext;
 import org.kie.workbench.common.screens.datamodeller.client.context.DataModelerWorkbenchContextChangeEvent;
@@ -36,6 +37,8 @@ import org.uberfire.rpc.SessionInfo;
 
 @Dependent
 public class AuthoringWorkbenchDocks {
+
+    private AppConstants constants = AppConstants.INSTANCE;
 
     @Inject
     private UberfireDocks uberfireDocks;
@@ -68,7 +71,7 @@ public class AuthoringWorkbenchDocks {
         if ( authoringPerspectiveIdentifier != null && dockReadyEvent.getCurrentPerspective().equals( authoringPerspectiveIdentifier ) ) {
             if ( hasPlannerDomainGrant() ) {
                 if ( plannerDock == null ) {
-                    plannerDock = new UberfireDock( UberfireDockPosition.EAST, "CALCULATOR", new DefaultPlaceRequest( "PlannerDomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( "OptaPlanner" );
+                    plannerDock = new UberfireDock( UberfireDockPosition.EAST, "CALCULATOR", new DefaultPlaceRequest( "PlannerDomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( constants.OptaPlanner() );
                 } else {
                     //avoid duplications
                     uberfireDocks.remove( plannerDock );
@@ -86,12 +89,12 @@ public class AuthoringWorkbenchDocks {
 
     public void setup( String authoringPerspectiveIdentifier, PlaceRequest projectExplorerPlaceRequest ) {
         this.authoringPerspectiveIdentifier = authoringPerspectiveIdentifier;
-        projectExplorerDock = new UberfireDock( UberfireDockPosition.WEST, "ADJUST", projectExplorerPlaceRequest, authoringPerspectiveIdentifier ).withSize( 400 ).withLabel( "Project Explorer" );
+        projectExplorerDock = new UberfireDock( UberfireDockPosition.WEST, "ADJUST", projectExplorerPlaceRequest, authoringPerspectiveIdentifier ).withSize( 400 ).withLabel( constants.ProjectExplorer() );
         uberfireDocks.add(
                 projectExplorerDock,
-                new UberfireDock( UberfireDockPosition.EAST, "RANDOM", new DefaultPlaceRequest( "DroolsDomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( "Drools & jBPM" ),
-                new UberfireDock( UberfireDockPosition.EAST, "BRIEFCASE", new DefaultPlaceRequest( "JPADomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( "Persistence" ),
-                new UberfireDock( UberfireDockPosition.EAST, "COG", new DefaultPlaceRequest( "AdvancedDomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( "Advanced" )
+                new UberfireDock( UberfireDockPosition.EAST, "RANDOM", new DefaultPlaceRequest( "DroolsDomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( constants.DroolsJBPM() ),
+                new UberfireDock( UberfireDockPosition.EAST, "BRIEFCASE", new DefaultPlaceRequest( "JPADomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( constants.Persistence() ),
+                new UberfireDock( UberfireDockPosition.EAST, "COG", new DefaultPlaceRequest( "AdvancedDomainScreen" ), authoringPerspectiveIdentifier ).withSize( 450 ).withLabel( constants.Advanced() )
 
         );
         uberfireDocks.disable( UberfireDockPosition.EAST, authoringPerspectiveIdentifier );

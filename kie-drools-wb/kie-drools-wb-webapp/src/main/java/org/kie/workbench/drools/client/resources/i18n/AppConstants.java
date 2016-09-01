@@ -122,4 +122,14 @@ public interface AppConstants
 
     String Messages();
 
+    String OptaPlanner();
+
+    String ProjectExplorer();
+
+    String DroolsJBPM();
+
+    String Persistence();
+
+    String Advanced();
+
 }
