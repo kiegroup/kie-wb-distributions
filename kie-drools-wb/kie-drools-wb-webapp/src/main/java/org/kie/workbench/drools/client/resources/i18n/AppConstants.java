@@ -122,4 +122,12 @@ public interface AppConstants
 
     String Messages();
 
+    String ProjectExplorer();
+
+    String DroolsAndJBPM();
+
+    String Persistence();
+
+    String Advanced();
+
 }
