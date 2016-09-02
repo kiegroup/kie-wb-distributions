@@ -19,6 +19,7 @@ package org.kie.workbench.client.docks;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.guvnor.common.services.shared.security.KieWorkbenchACL;
 import org.jboss.errai.security.shared.api.Role;
 import org.jboss.errai.security.shared.api.identity.User;
@@ -43,7 +44,7 @@ import org.uberfire.rpc.SessionInfo;
 
 import static org.mockito.Mockito.*;
 
-@RunWith( MockitoJUnitRunner.class )
+@RunWith( GwtMockitoTestRunner.class )
 public class AuthoringWorkbenchDocksTest {
 
     @Mock
