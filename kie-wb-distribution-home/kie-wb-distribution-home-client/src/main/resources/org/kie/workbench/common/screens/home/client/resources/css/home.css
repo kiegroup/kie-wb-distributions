@@ -24,11 +24,9 @@ h2 {
 
 /* General */
 #image-slider {
-
     padding:0px !important;
     margin: 0px !important;
     width:1164px;
-    height:-385px;
     position:relative;
 }
 
@@ -42,6 +40,8 @@ h2 {
     font-weight: lighter !important;
     font-size: 32px !important;
     line-height: 29px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #image-slider P{
@@ -59,7 +59,6 @@ h2 {
     left:10px;
     z-index:999;
     background-color: #ededed;
-    cursorointer;
     height: 115px;
     width: 194px;
     color:#969696;
@@ -100,7 +99,7 @@ h2 {
 }
 
 #image-slider li a span {
-    cursorefault;
+    cursor: default;
     display:block;
     position:absolute;
     right:0px;
