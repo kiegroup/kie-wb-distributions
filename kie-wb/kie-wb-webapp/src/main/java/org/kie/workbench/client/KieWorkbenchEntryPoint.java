@@ -58,6 +58,7 @@ import org.uberfire.client.menu.WorkbenchViewModeSwitcherMenuBuilder;
 import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.mvp.ActivityManager;
+import org.uberfire.client.mvp.PerspectiveManager;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.views.pfly.menu.UserMenu;
 import org.uberfire.client.workbench.docks.UberfireDocks;
@@ -131,6 +132,9 @@ public class KieWorkbenchEntryPoint {
 
     @Inject
     private ClientUserSystemManager userSystemManager;
+
+    @Inject
+    private PerspectiveManager perspectiveManager;
 
     @AfterInitialization
     public void startApp() {
@@ -350,17 +354,21 @@ public class KieWorkbenchEntryPoint {
         }.run( 500 );
     }
 
-    private class LogoutCommand implements Command {
+    protected class LogoutCommand implements Command {
 
         @Override
         public void execute() {
-            authService.call( new RemoteCallback<Void>() {
-                @Override
-                public void callback( Void response ) {
-                    final String location = GWT.getModuleBaseURL().replaceFirst( "/" + GWT.getModuleName() + "/", "/logout.jsp" );
-                    redirect( location );
+            perspectiveManager.savePerspectiveState( new Command() {
+                public void execute() {
+                    authService.call( new RemoteCallback<Void>() {
+                        @Override
+                        public void callback( Void response ) {
+                            final String location = GWT.getModuleBaseURL().replaceFirst( "/" + GWT.getModuleName() + "/", "/logout.jsp" );
+                            redirect( location );
+                        }
+                    } ).logout();
                 }
-            } ).logout();
+            } );
         }
     }
 
