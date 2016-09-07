@@ -34,7 +34,7 @@
     </div>
 
     <div id="login-content" class="png_bg">    
-      <form action="<%= request.getContextPath() %>/kie-wb.html" method="GET">
+      <form action="<%= request.getContextPath() %>/kie-wb.html?locale=<%=locale%>" method="GET">
         <fieldset>
           <h3><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></h3>            
           <% if (request.getParameter("gwt.codesvr") != null) { %>

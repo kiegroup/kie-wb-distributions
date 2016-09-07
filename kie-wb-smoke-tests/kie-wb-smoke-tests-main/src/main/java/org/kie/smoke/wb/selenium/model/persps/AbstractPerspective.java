@@ -47,7 +47,7 @@ public abstract class AbstractPerspective extends PageObject {
     public LoginPage logout() {
         navbar.logout();
         // Click 'Login again' to get back to login page
-        WebElement loginAgainButton = Waits.elementClickable(driver, By.cssSelector("input[value='Login again']"));
+        WebElement loginAgainButton = Waits.elementClickable(driver, By.cssSelector("input[type='submit']"));
         loginAgainButton.click();
         return new PageObjectFactory(driver).createLoginPage();
     }

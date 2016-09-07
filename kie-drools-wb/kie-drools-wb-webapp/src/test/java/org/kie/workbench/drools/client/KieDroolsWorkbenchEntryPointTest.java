@@ -17,26 +17,46 @@
 package org.kie.workbench.drools.client;
 
 import com.google.gwtmockito.GwtMockitoTestRunner;
+import org.jboss.errai.common.client.api.Caller;
+import org.jboss.errai.common.client.api.RemoteCallback;
+import org.jboss.errai.security.shared.service.AuthenticationService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.uberfire.client.mvp.PerspectiveManager;
 import org.uberfire.mvp.Command;
 
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith( GwtMockitoTestRunner.class )
+@RunWith(GwtMockitoTestRunner.class)
 public class KieDroolsWorkbenchEntryPointTest {
 
     @Mock
     private PerspectiveManager perspectiveManager;
 
+    @Mock
+    private Caller<AuthenticationService> authService;
+
+    @Mock
+    private AuthenticationService authServiceImpl;
+
     @Spy
     @InjectMocks
     private KieDroolsWorkbenchEntryPoint entryPoint;
+
+    @Before
+    public void setup() {
+        //@InjectMocks is only setting the first Caller<..> which is not AuthenticationService so set it manually.
+        entryPoint.authService = authService;
+    }
 
     @Test
     public void logoutCommandTest() {
@@ -46,4 +66,56 @@ public class KieDroolsWorkbenchEntryPointTest {
 
         verify( perspectiveManager ).savePerspectiveState( any( Command.class ) );
     }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void logoutCommandRedirectIncludesLocaleTest() throws Throwable {
+        final KieDroolsWorkbenchEntryPoint.LogoutCommand logoutCommand = spy( entryPoint.new LogoutCommand() {
+
+            @Override
+            void doRedirect( final String url ) {
+                //Do nothing
+            }
+
+            @Override
+            String getGWTModuleBaseURL() {
+                return "/gwtModule/";
+            }
+
+            @Override
+            String getGWTModuleName() {
+                return "gwtModule";
+            }
+
+            @Override
+            String getLocale() {
+                return "en_GB";
+            }
+        } );
+
+        logoutCommand.execute();
+
+        final ArgumentCaptor<Command> postSaveStateCommandCaptor = ArgumentCaptor.forClass( Command.class );
+        final ArgumentCaptor<String> redirectURLCaptor = ArgumentCaptor.forClass( String.class );
+
+        when( authService.call( any( RemoteCallback.class ) ) ).thenAnswer( new Answer<AuthenticationService>() {
+            @Override
+            public AuthenticationService answer( InvocationOnMock invocation ) throws Throwable {
+                ( (RemoteCallback) invocation.getArguments()[ 0 ] ).callback( null );
+                return authServiceImpl;
+            }
+        } );
+        verify( perspectiveManager ).savePerspectiveState( postSaveStateCommandCaptor.capture() );
+
+        final Command postSaveStateCommand = postSaveStateCommandCaptor.getValue();
+        postSaveStateCommand.execute();
+
+        verify( logoutCommand ).getRedirectURL();
+        verify( logoutCommand ).doRedirect( redirectURLCaptor.capture() );
+        verify( authServiceImpl ).logout();
+
+        final String redirectURL = redirectURLCaptor.getValue();
+        assertTrue( redirectURL.contains( "/logout.jsp?locale=en_GB" ) );
+    }
+
 }

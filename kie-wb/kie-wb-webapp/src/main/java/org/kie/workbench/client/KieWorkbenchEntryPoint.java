@@ -116,7 +116,7 @@ public class KieWorkbenchEntryPoint {
     private ActivityBeansCache activityBeansCache;
 
     @Inject
-    private Caller<AuthenticationService> authService;
+    protected Caller<AuthenticationService> authService;
 
     @Inject
     private Caller<SocialConfigurationService> socialConfigurationService;
@@ -150,7 +150,7 @@ public class KieWorkbenchEntryPoint {
             }
         } ).loadPolicy();
 
-        pmas.call().initActivities(activityBeansCache.getActivitiesById());
+        pmas.call().initActivities( activityBeansCache.getActivitiesById() );
     }
 
     private void loadPreferences() {
@@ -174,9 +174,8 @@ public class KieWorkbenchEntryPoint {
         socialConfigurationService.call( new RemoteCallback<Boolean>() {
             public void callback( final Boolean socialEnabled ) {
 
-
                 // Wait for user management services to be initialized, if any.
-                userSystemManager.waitForInitialization(new Command() {
+                userSystemManager.waitForInitialization( new Command() {
 
                     @Override
                     public void execute() {
@@ -184,41 +183,40 @@ public class KieWorkbenchEntryPoint {
                         final boolean isUserSystemManagerActive = userSystemManager.isActive();
 
                         final Menus menus =
-                                MenuFactory.newTopLevelMenu(constants.Home()).withItems(getHomeViews( socialEnabled, isUserSystemManagerActive )).endMenu()
-                                        .newTopLevelMenu(constants.Authoring()).withRoles(kieACL.getGrantedRoles(G_AUTHORING)).withItems(getAuthoringViews()).endMenu()
-                                        .newTopLevelMenu(constants.Deploy()).withRoles(kieACL.getGrantedRoles(G_DEPLOY)).withItems(getDeploymentViews()).endMenu()
-                                        .newTopLevelMenu(constants.Process_Management()).withRoles(kieACL.getGrantedRoles(G_PROCESS_MANAGEMENT)).withItems(getProcessMGMTViews()).endMenu()
-                                        .newTopLevelMenu(constants.Tasks()).withRoles(kieACL.getGrantedRoles(F_TASKS)).place(getTasksView()).endMenu()
-                                        .newTopLevelMenu(constants.Dashboards()).withRoles(kieACL.getGrantedRoles(G_DASHBOARDS)).withItems(getDashboardViews()).endMenu()
-                                        .newTopLevelMenu(constants.Extensions()).withRoles(kieACL.getGrantedRoles(F_EXTENSIONS)).withItems(getExtensionsViews()).endMenu()
-                                        .newTopLevelCustomMenu(iocManager.lookupBean(SearchMenuBuilder.class).getInstance()).endMenu()
+                                MenuFactory.newTopLevelMenu( constants.Home() ).withItems( getHomeViews( socialEnabled, isUserSystemManagerActive ) ).endMenu()
+                                        .newTopLevelMenu( constants.Authoring() ).withRoles( kieACL.getGrantedRoles( G_AUTHORING ) ).withItems( getAuthoringViews() ).endMenu()
+                                        .newTopLevelMenu( constants.Deploy() ).withRoles( kieACL.getGrantedRoles( G_DEPLOY ) ).withItems( getDeploymentViews() ).endMenu()
+                                        .newTopLevelMenu( constants.Process_Management() ).withRoles( kieACL.getGrantedRoles( G_PROCESS_MANAGEMENT ) ).withItems( getProcessMGMTViews() ).endMenu()
+                                        .newTopLevelMenu( constants.Tasks() ).withRoles( kieACL.getGrantedRoles( F_TASKS ) ).place( getTasksView() ).endMenu()
+                                        .newTopLevelMenu( constants.Dashboards() ).withRoles( kieACL.getGrantedRoles( G_DASHBOARDS ) ).withItems( getDashboardViews() ).endMenu()
+                                        .newTopLevelMenu( constants.Extensions() ).withRoles( kieACL.getGrantedRoles( F_EXTENSIONS ) ).withItems( getExtensionsViews() ).endMenu()
+                                        .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
                                         .build();
 
-                        menubar.addMenus(menus);
+                        menubar.addMenus( menus );
 
-                        for (Menus roleMenus : getRoles()) {
-                            userMenu.addMenus(roleMenus);
+                        for ( Menus roleMenus : getRoles() ) {
+                            userMenu.addMenus( roleMenus );
                         }
-                        userMenu.addMenus(MenuFactory.newTopLevelCustomMenu(iocManager.lookupBean(WorkbenchViewModeSwitcherMenuBuilder.class).getInstance()).endMenu().build());
+                        userMenu.addMenus( MenuFactory.newTopLevelCustomMenu( iocManager.lookupBean( WorkbenchViewModeSwitcherMenuBuilder.class ).getInstance() ).endMenu().build() );
 
                         final Menus utilityMenus =
-                                MenuFactory.newTopLevelCustomMenu(iocManager.lookupBean(WorkbenchConfigurationMenuBuilder.class).getInstance())
+                                MenuFactory.newTopLevelCustomMenu( iocManager.lookupBean( WorkbenchConfigurationMenuBuilder.class ).getInstance() )
                                         .endMenu()
-                                        .newTopLevelCustomMenu(iocManager.lookupBean(CustomSplashHelp.class).getInstance())
+                                        .newTopLevelCustomMenu( iocManager.lookupBean( CustomSplashHelp.class ).getInstance() )
                                         .endMenu()
-                                        .newTopLevelCustomMenu(iocManager.lookupBean(AboutMenuBuilder.class).getInstance())
+                                        .newTopLevelCustomMenu( iocManager.lookupBean( AboutMenuBuilder.class ).getInstance() )
                                         .endMenu()
-                                        .newTopLevelCustomMenu(iocManager.lookupBean(ResetPerspectivesMenuBuilder.class).getInstance())
+                                        .newTopLevelCustomMenu( iocManager.lookupBean( ResetPerspectivesMenuBuilder.class ).getInstance() )
                                         .endMenu()
-                                        .newTopLevelCustomMenu(userMenu)
+                                        .newTopLevelCustomMenu( userMenu )
                                         .endMenu()
                                         .build();
 
-                        utilityMenuBar.addMenus(utilityMenus);
-
+                        utilityMenuBar.addMenus( utilityMenus );
 
                     }
-                });
+                } );
 
             }
         } ).isSocialEnable();
@@ -235,7 +233,8 @@ public class KieWorkbenchEntryPoint {
         return result;
     }
 
-    private List<? extends MenuItem> getHomeViews( final Boolean socialEnabled, final boolean usersSystemActive ) {
+    private List<? extends MenuItem> getHomeViews( final Boolean socialEnabled,
+                                                   final boolean usersSystemActive ) {
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
         final List<MenuItem> result = new ArrayList<MenuItem>( 1 );
 
@@ -243,14 +242,14 @@ public class KieWorkbenchEntryPoint {
 
         // Social menu items.
         if ( socialEnabled ) {
-            result.add( MenuFactory.newSimpleItem(constants.Timeline()).place( new DefaultPlaceRequest( "SocialHomePagePerspective" ) ).endMenu().build().getItems().get( 0 ) );
-            result.add( MenuFactory.newSimpleItem(constants.People()).place( new DefaultPlaceRequest( "UserHomePagePerspective" ) ).endMenu().build().getItems().get( 0 ) );
+            result.add( MenuFactory.newSimpleItem( constants.Timeline() ).place( new DefaultPlaceRequest( "SocialHomePagePerspective" ) ).endMenu().build().getItems().get( 0 ) );
+            result.add( MenuFactory.newSimpleItem( constants.People() ).place( new DefaultPlaceRequest( "UserHomePagePerspective" ) ).endMenu().build().getItems().get( 0 ) );
         }
 
         // User management menu items (only if services are active and constrained to admin roles).
         if ( usersSystemActive ) {
-            result.add( MenuFactory.newSimpleItem( constants.userManagement()).withRoles(kieACL.getGrantedRoles(F_ADMINISTRATION)).place( new DefaultPlaceRequest( "UsersManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
-            result.add( MenuFactory.newSimpleItem( constants.groupManagement()).withRoles(kieACL.getGrantedRoles(F_ADMINISTRATION)).place( new DefaultPlaceRequest( "GroupsManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
+            result.add( MenuFactory.newSimpleItem( constants.userManagement() ).withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) ).place( new DefaultPlaceRequest( "UsersManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
+            result.add( MenuFactory.newSimpleItem( constants.groupManagement() ).withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) ).place( new DefaultPlaceRequest( "GroupsManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
         }
 
         return result;
@@ -263,9 +262,9 @@ public class KieWorkbenchEntryPoint {
 
         result.add( MenuFactory.newSimpleItem( constants.Contributors() ).withRoles( kieACL.getGrantedRoles( F_CONTRIBUTORS ) ).place( new DefaultPlaceRequest( "ContributorsPerspective" ) ).endMenu().build().getItems().get( 0 ) );
 
-        result.add(MenuFactory.newSimpleItem(constants.artifactRepository()).withRoles(kieACL.getGrantedRoles(F_ARTIFACT_REPO)).place(new DefaultPlaceRequest("org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective")).endMenu().build().getItems().get(0));
+        result.add( MenuFactory.newSimpleItem( constants.artifactRepository() ).withRoles( kieACL.getGrantedRoles( F_ARTIFACT_REPO ) ).place( new DefaultPlaceRequest( "org.guvnor.m2repo.client.perspectives.GuvnorM2RepoPerspective" ) ).endMenu().build().getItems().get( 0 ) );
 
-        result.add(MenuFactory.newSimpleItem(constants.Administration()).withRoles(kieACL.getGrantedRoles(F_ADMINISTRATION)).place(new DefaultPlaceRequest("AdministrationPerspective")).endMenu().build().getItems().get(0));
+        result.add( MenuFactory.newSimpleItem( constants.Administration() ).withRoles( kieACL.getGrantedRoles( F_ADMINISTRATION ) ).place( new DefaultPlaceRequest( "AdministrationPerspective" ) ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
@@ -275,7 +274,7 @@ public class KieWorkbenchEntryPoint {
 
         result.add( MenuFactory.newSimpleItem( constants.Process_Definitions() ).withRoles( kieACL.getGrantedRoles( F_PROCESS_DEFINITIONS ) ).place( new DefaultPlaceRequest( "Process Definitions" ) ).endMenu().build().getItems().get( 0 ) );
 
-        result.add(MenuFactory.newSimpleItem(constants.Process_Instances()).withRoles(kieACL.getGrantedRoles(F_PROCESS_INSTANCES)).place(new DefaultPlaceRequest("DataSet Process Instances With Variables")).endMenu().build().getItems().get(0));
+        result.add( MenuFactory.newSimpleItem( constants.Process_Instances() ).withRoles( kieACL.getGrantedRoles( F_PROCESS_INSTANCES ) ).place( new DefaultPlaceRequest( "DataSet Process Instances With Variables" ) ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
@@ -287,7 +286,7 @@ public class KieWorkbenchEntryPoint {
 
         result.add( MenuFactory.newSimpleItem( constants.ExecutionServers() ).withRoles( kieACL.getGrantedRoles( F_MANAGEMENT ) ).place( new DefaultPlaceRequest( "ServerManagementPerspective" ) ).endMenu().build().getItems().get( 0 ) );
 
-        result.add(MenuFactory.newSimpleItem(constants.Jobs()).withRoles(kieACL.getGrantedRoles(F_JOBS)).place(new DefaultPlaceRequest("Jobs")).endMenu().build().getItems().get(0));
+        result.add( MenuFactory.newSimpleItem( constants.Jobs() ).withRoles( kieACL.getGrantedRoles( F_JOBS ) ).place( new DefaultPlaceRequest( "Jobs" ) ).endMenu().build().getItems().get( 0 ) );
 
         return result;
     }
@@ -363,13 +362,37 @@ public class KieWorkbenchEntryPoint {
                     authService.call( new RemoteCallback<Void>() {
                         @Override
                         public void callback( Void response ) {
-                            final String location = GWT.getModuleBaseURL().replaceFirst( "/" + GWT.getModuleName() + "/", "/logout.jsp" );
-                            redirect( location );
+                            doRedirect( getRedirectURL() );
                         }
                     } ).logout();
                 }
             } );
         }
+
+        void doRedirect( final String url ) {
+            redirect( url );
+        }
+
+        String getRedirectURL() {
+            final String gwtModuleBaseURL = getGWTModuleBaseURL();
+            final String gwtModuleName = getGWTModuleName();
+            final String locale = getLocale();
+            final String url = gwtModuleBaseURL.replaceFirst( "/" + gwtModuleName + "/", "/logout.jsp?locale=" + locale );
+            return url;
+        }
+
+        String getGWTModuleBaseURL() {
+            return GWT.getModuleBaseURL();
+        }
+
+        String getGWTModuleName() {
+            return GWT.getModuleName();
+        }
+
+        String getLocale() {
+            return LocaleInfo.getCurrentLocale().getLocaleName();
+        }
+
     }
 
     public static native void redirect( String url )/*-{
