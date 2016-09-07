@@ -34,7 +34,7 @@
     </div>
 
     <div id="login-content" class="png_bg">      
-      <form action="j_security_check" method="POST">
+      <form action="j_security_check?locale=<%=locale%>" method="POST">
         <fieldset>
           <c:if test="${param.message != null}">
             <h3><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></h3><br/>

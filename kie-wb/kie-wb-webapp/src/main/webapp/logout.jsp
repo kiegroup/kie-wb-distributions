@@ -46,7 +46,7 @@
     </div>
 
     <div id="login-content" class="png_bg">    
-      <form action="<%= request.getContextPath() %>" method="POST">
+      <form action="<%= request.getContextPath() %>/kie-wb.html?locale=<%=locale%>" method="POST">
         <fieldset>
           <h3 id="logout"><i18n:message key="logoutSuccssful">Logout successful</i18n:message></h3>          
           <% if (request.getParameter("gwt.codesvr") != null) { %>
