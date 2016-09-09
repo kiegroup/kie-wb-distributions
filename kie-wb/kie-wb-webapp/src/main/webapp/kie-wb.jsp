@@ -1,3 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ page import="java.util.Locale" %>
+<%@ page import="org.apache.commons.lang3.LocaleUtils" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
+<%
+  Locale locale= null;
+  try{
+    locale = LocaleUtils.toLocale( request.getParameter( "locale" ) );
+  } catch(Exception e){
+    locale= request.getLocale();
+  }
+%>
+<i18n:bundle id="bundle" baseName="org.kie.workbench.client.resources.i18n.LoginConstants"
+             locale='<%= locale%>' />
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +23,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <title>Red Hat JBoss BPM Suite :: Business central</title>
+    <title>KIE Workbench</title>
 
      <!--[if lt IE 9]>
      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,9 +35,9 @@
     <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/Forms.css">
     <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/HumanTasks.css">
     <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/ProcessList.css">
-    <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/timebox.css">
-    <link rel="stylesheet" href="styles/product.css">
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/timebox.css">    
+    <link rel="shortcut icon" href="images/drools.gif" type="image/gif"/>
+    <link rel="icon" href="images/drools.gif" type="image/gif"/>
 
 </head>
 <body>
@@ -36,12 +53,12 @@
           </div>
           <div class="col-lg-12">
               <div class="center-block text-center">
-                  <h3>Please wait</h3>
+                  <h3><i18n:message key="loadingPleaseWait">Please wait</i18n:message></h3>
               </div>
           </div>
           <div class="col-lg-12">
               <div class="center-block text-center">
-                  <span>Loading application...</span>
+                  <span><i18n:message key="loadingApplication">Loading application...</i18n:message></span>
               </div>
           </div>
       </div>
