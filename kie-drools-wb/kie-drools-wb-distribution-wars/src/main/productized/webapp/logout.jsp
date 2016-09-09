@@ -52,7 +52,7 @@
                     <span class="pficon pficon-ok"></span>
                     <strong><i18n:message key="logoutSuccssful">Logout successful</i18n:message></strong>
                 </div>
-                <form class="form-horizontal" role="form" action="<%= request.getContextPath() %>" method="POST">
+                <form class="form-horizontal" role="form" action="<%= request.getContextPath() %>/kie-drools-wb.html?locale=<%=locale%>" method="POST">
                     <div class="form-group">
                         <div class="col-xs-offset-8 col-xs-4 col-sm-offset-8 col-sm-4 col-md-offset-8 col-md-4 submit">
                             <button type="submit" class="btn btn-primary btn-lg" tabindex="1"><i18n:message key="loginAgain">Login again</i18n:message></button>
