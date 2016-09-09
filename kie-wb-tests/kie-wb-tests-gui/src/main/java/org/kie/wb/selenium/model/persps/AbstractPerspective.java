@@ -26,7 +26,7 @@ public abstract class AbstractPerspective extends PageObject {
 
     @Page
     private PrimaryNavbar navbar;
-    @FindBy(css = "input[value='Login again']")
+    @FindBy(css = "input[type='submit']")
     private WebElement loginAgainButton;
 
     public PrimaryNavbar getNavbar() {

@@ -41,7 +41,7 @@
                         <strong><i18n:message key="loginFailed">Login failed: Not Authorized</i18n:message></strong>
                     </div>
                 </c:if>
-                <form class="form-horizontal" role="form" action="j_security_check" method="POST">
+                <form class="form-horizontal" role="form" action="j_security_check?locale=<%=locale%>" method="POST">
                     <div class="form-group">
                         <label for="j_username" class="col-sm-2 col-md-2 control-label"><i18n:message key="UserName">Username</i18n:message></label>
                         <div class="col-sm-10 col-md-10">
