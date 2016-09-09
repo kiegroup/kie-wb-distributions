@@ -1606,7 +1606,7 @@
             <noServer>false</noServer>
             <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>
             <disableCastChecking>true</disableCastChecking>
-            <runTarget>kie-wb.html</runTarget>
+            <runTarget>kie-wb.jsp</runTarget>
             <hostedWebapp>src/main/webapp</hostedWebapp>
             <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile, see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
             <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
