@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.Locale" %>
+<%@ page import="org.apache.commons.lang3.LocaleUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
 <%
   Locale locale= null;
   try{
-    locale = new Locale(request.getParameter("locale"));
+    locale = LocaleUtils.toLocale( request.getParameter( "locale" ) );
   } catch(Exception e){
     locale= request.getLocale();
   }
