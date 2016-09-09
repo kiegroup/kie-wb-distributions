@@ -1240,7 +1240,7 @@
             <noServer>false</noServer>
             <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>
             <disableCastChecking>true</disableCastChecking>
-            <runTarget>kie-drools-wb.html</runTarget>
+            <runTarget>kie-drools-wb.jsp</runTarget>
             <hostedWebapp>src/main/webapp</hostedWebapp>            
             <compileSourcesArtifacts>
               <!-- Kie Server needed by Exec Server UI -->
