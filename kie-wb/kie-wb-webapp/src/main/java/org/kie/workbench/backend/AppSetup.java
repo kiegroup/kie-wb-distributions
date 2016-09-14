@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 import org.uberfire.commons.services.cdi.ApplicationStarted;
 import org.uberfire.commons.services.cdi.Startup;
 import org.uberfire.commons.services.cdi.StartupType;
-import org.uberfire.ext.security.server.RolesRegistry;
+import org.uberfire.backend.server.security.RoleRegistry;
 
 //This is a temporary solution when running in PROD-MODE as /webapp/.niogit/system.git folder
 //is not deployed to the Application Servers /bin folder. This will be remedied when an
@@ -172,7 +172,7 @@ public class AppSetup {
             for ( final Map.Entry<String, String> entry : policy.entrySet() ) {
                 if ( entry.getKey().startsWith( KieWorkbenchACLImpl.PREFIX_ROLES ) ) {
                     String role = entry.getValue();
-                    RolesRegistry.get().registerRole( role );
+                    RoleRegistry.get().registerRole( role );
                 }
             }
             // rest of jbpm wb bootstrap
