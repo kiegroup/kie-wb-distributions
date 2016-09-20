@@ -39,6 +39,7 @@ import org.kie.workbench.common.services.refactoring.model.index.terms.TypeIndex
 import org.uberfire.ext.metadata.backend.lucene.LuceneConfig;
 import org.uberfire.ext.metadata.backend.lucene.LuceneConfigBuilder;
 import org.uberfire.ext.metadata.backend.lucene.analyzer.FilenameAnalyzer;
+import org.uberfire.ext.metadata.backend.lucene.index.LuceneIndex;
 
 import static org.apache.lucene.util.Version.*;
 
@@ -63,7 +64,7 @@ public class LuceneConfigProducer {
         return this.config;
     }
 
-    private Map<String, Analyzer> getAnalyzers() {
+    Map<String, Analyzer> getAnalyzers() {
         return new HashMap<String, Analyzer>() {{
             put( RuleIndexTerm.TERM,
                  new RuleAttributeNameAnalyzer( LUCENE_40 ) );
@@ -73,6 +74,8 @@ public class LuceneConfigProducer {
                  new RuleAttributeNameAnalyzer( LUCENE_40 ) );
 
             put( ProjectRootPathIndexTerm.TERM,
+                 new FilenameAnalyzer( LUCENE_40 ) );
+            put( LuceneIndex.CUSTOM_FIELD_FILENAME,
                  new FilenameAnalyzer( LUCENE_40 ) );
 
             put( PackageNameIndexTerm.TERM,

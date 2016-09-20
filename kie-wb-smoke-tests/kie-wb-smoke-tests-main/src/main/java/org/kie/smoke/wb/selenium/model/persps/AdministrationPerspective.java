@@ -21,7 +21,7 @@ import org.openqa.selenium.WebDriver;
 
 public class AdministrationPerspective extends AbstractPerspective {
 
-    private static final By REPOSITORY_EDITOR_TITLE = By.cssSelector("span[title='RepositoryEditor']");
+    private static final By REPOSITORY_EDITOR_TITLE = By.cssSelector("span[title='Repository Editor']");
     private static final By FILE_EXPLORER_CONTENT = By.cssSelector(" .fa-folder,.fa-folder-open");
 
     public AdministrationPerspective(WebDriver driver) {
