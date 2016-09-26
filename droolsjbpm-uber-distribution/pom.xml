@@ -110,7 +110,7 @@
     <dependency>
       <groupId>org.optaplanner</groupId>
       <artifactId>optaplanner-docs</artifactId>
-      <type>jdocbook</type>
+      <type>zip</type>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
