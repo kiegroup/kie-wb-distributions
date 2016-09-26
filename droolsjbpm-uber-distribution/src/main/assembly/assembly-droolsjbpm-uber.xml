@@ -52,24 +52,14 @@
       </includes>
       <outputDirectory>docs_htdocs/drools/release/${project.version}/drools-docs</outputDirectory>
       <unpack>true</unpack>
-      <unpackOptions>
-        <excludes>
-          <exclude>META-INF/**</exclude>
-        </excludes>
-      </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
     </dependencySet>
     <dependencySet>
       <includes>
-        <include>org.optaplanner:optaplanner-docs:jdocbook</include>
+        <include>org.optaplanner:optaplanner-docs:zip</include>
       </includes>
       <outputDirectory>docs_htdocs/optaplanner/release/${project.version}/optaplanner-docs</outputDirectory>
       <unpack>true</unpack>
-      <unpackOptions>
-        <excludes>
-          <exclude>META-INF/**</exclude>
-        </excludes>
-      </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
     </dependencySet>
     <dependencySet>
@@ -78,11 +68,6 @@
       </includes>
       <outputDirectory>docs_htdocs/jbpm/release/${project.version}/jbpm-docs</outputDirectory>
       <unpack>true</unpack>
-      <unpackOptions>
-        <excludes>
-          <exclude>META-INF/**</exclude>
-        </excludes>
-      </unpackOptions>
       <useStrictFiltering>true</useStrictFiltering>
     </dependencySet>
 
