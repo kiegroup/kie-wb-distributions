@@ -92,7 +92,6 @@
           </execution>
         </executions>
         <configuration>
-          <finalName>kie-wb-${project.version}</finalName>
           <descriptors>
             <descriptor>src/main/assembly/assembly-kie-wb-example-repositories.xml</descriptor>
           </descriptors>
