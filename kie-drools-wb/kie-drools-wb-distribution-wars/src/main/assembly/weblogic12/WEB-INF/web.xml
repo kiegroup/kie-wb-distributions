@@ -123,8 +123,8 @@
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
     <!-- REST Permissions -->
     <init-param>
-      <param-name>jersey.config.server.provider.classnames</param-name>
-      <param-value>org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature</param-value>
+      <param-name>com.sun.jersey.spi.container.ResourceFilters</param-name>
+      <param-value>com.sun.jersey.api.container.filter.RolesAllowedResourceFilterFactory</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
