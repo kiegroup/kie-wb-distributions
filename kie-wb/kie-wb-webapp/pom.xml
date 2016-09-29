@@ -308,6 +308,10 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-generic-forms-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-process-runtime-forms-client</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -335,6 +339,22 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-dashboard-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-workbench-forms-integration-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-workbench-forms-integration-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-console-ng-workbench-forms-integration-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -1235,10 +1255,6 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-form-provider</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-data-modeler</artifactId>
     </dependency>
     <dependency>
@@ -1452,6 +1468,10 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-form-modeler-bpmn-form-builder</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
       <artifactId>jbpm-console-ng-generic-api</artifactId>
     </dependency>
     <dependency>
@@ -1556,22 +1576,10 @@
       <artifactId>uberfire-security-management-wildfly</artifactId>
     </dependency>
 
-    <!-- Form modeler. -->
-    <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
-      <artifactId>kie-wb-common-forms-crud-component</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
+    <!-- Start Forms Engine -->
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
       <artifactId>kie-wb-common-forms-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
-      <artifactId>kie-wb-common-forms-processing-engine</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -1587,6 +1595,33 @@
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
       <artifactId>kie-wb-common-dynamic-forms-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-editor-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-editor-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-editor-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-layout-generator</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-serialization</artifactId>
     </dependency>
 
     <dependency>
@@ -1601,20 +1636,47 @@
     </dependency>
 
     <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-      <classifier>sources</classifier>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-crud-component</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-processing-engine</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <classifier>sources</classifier>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-data-modeller-integration-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-data-modeller-integration-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-data-modeller-integration-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-jbpm-integration-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-jbpm-integration-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-jbpm-integration-client</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Stunner and BPMN set. -->
@@ -1817,7 +1879,7 @@
             <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>
             <disableCastChecking>true</disableCastChecking>
             <runTarget>kie-wb.jsp</runTarget>
-            <hostedWebapp>src/main/webapp</hostedWebapp>            
+            <hostedWebapp>src/main/webapp</hostedWebapp>
             <compileSourcesArtifacts>
               <!-- Kie Server needed by Exec Server UI -->
               <compileSourcesArtifact>org.kie:kie-api</compileSourcesArtifact>
@@ -1844,6 +1906,8 @@
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-integration-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-executor-service-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-console-ng-executor-service-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-forms-integration-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-forms-integration-client</compileSourcesArtifact>
 
               <!-- jBPM Designer -->
               <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
@@ -2020,7 +2084,7 @@
               <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-social-activities-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-social-activities-client</compileSourcesArtifact>
 
-              <!-- Forms -->
+              <!-- Forms Engine -->
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-processing-engine</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-common-rendering-shared</compileSourcesArtifact>
@@ -2028,6 +2092,12 @@
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-crud-component</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-dynamic-forms-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-dynamic-forms-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-editor-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-editor-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-data-modeller-integration-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-data-modeller-integration-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-jbpm-integration-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-jbpm-integration-client</compileSourcesArtifact>
 
               <!-- Stunner and BPMN -->
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-core-api</compileSourcesArtifact>
@@ -2117,7 +2187,7 @@
                 <include>src/main/webapp/WEB-INF/deploy/</include>
                 <include>src/main/webapp/WEB-INF/classes/</include>
                 <include>src/main/webapp/WEB-INF/lib/</include>
-                <include>src/main/webapp/WEB-INF/tlds/</include>                
+                <include>src/main/webapp/WEB-INF/tlds/</include>
                 <include>repositories/</include>
                 <include>.errai/</include>
                 <include>.niogit/**</include>
