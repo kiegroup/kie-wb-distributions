@@ -41,6 +41,7 @@ import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
 import org.uberfire.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
+import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
 /**
@@ -120,7 +121,15 @@ public class DroolsAuthoringPerspective {
                 .endMenu()
                 .newTopLevelMenu( constants.Repository() )
                 .withItems( repositoryMenu.getMenuItems() )
-                .endMenu().build();
+                .endMenu()
+                .newTopLevelMenu( constants.Messages() ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo( "org.kie.workbench.common.screens.messageconsole.MessageConsole" );
+                    }
+                } )
+                .endMenu()
+                .build();
     }
 
 }
