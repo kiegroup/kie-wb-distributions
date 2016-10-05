@@ -2,7 +2,7 @@
 <root>
   <windows>
     <driver id="internetexplorer">
-      <version id="2.46.0"> <!-- The versions of these binaries are unfortunately
+      <version id="2.53.1 "> <!-- The versions of these binaries are unfortunately
          NOT kept in sync with selenium version. E.g. we can have selenium version 2.46.2,
          but we have to use IEDriverServer version 2.46.0-->
         <bitrate sixtyfourbit="true" thirtytwobit="true">
@@ -10,8 +10,8 @@
            There is a known issue with 64bit binary that makes typing into input elements very slow (1 character per 5 seconds)
            https://code.google.com/p/selenium/issues/detail?id=5116
           -->
-          <filelocation>http://selenium-release.storage.googleapis.com/2.46/IEDriverServer_Win32_2.46.0.zip</filelocation>
-          <hash>93616ec22088413ff9d8dec978d94474</hash>
+          <filelocation>http://selenium-release.storage.googleapis.com/2.53/IEDriverServer_Win32_2.53.1.zip</filelocation>
+          <hash>35ac005f9088f2995d6a1cdc384fe4cb</hash>
           <hashtype>md5</hashtype>
         </bitrate>
       </version>

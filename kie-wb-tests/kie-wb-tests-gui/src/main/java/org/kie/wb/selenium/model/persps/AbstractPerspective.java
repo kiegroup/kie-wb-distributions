@@ -15,10 +15,15 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import static org.kie.wb.selenium.util.ByUtil.jquery;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.model.PageObject;
 import org.kie.wb.selenium.model.PrimaryNavbar;
+import org.kie.wb.selenium.model.widgets.Panel;
+import org.kie.wb.selenium.util.Waits;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -46,5 +51,11 @@ public abstract class AbstractPerspective extends PageObject {
      * Waiting for the perspective to be fully loaded. No-op by default.
      */
     public void waitForLoaded() {
+    }
+
+    public <T extends Panel> T createPanel(Class<T> panelClass, String title) {
+        By panelLoc = jquery(".uf-listbar-panel:contains('%s')", title);
+        WebElement panelRoot = Waits.elementPresent(panelLoc, 3);
+        return Graphene.createPageFragment(panelClass, panelRoot);
     }
 }

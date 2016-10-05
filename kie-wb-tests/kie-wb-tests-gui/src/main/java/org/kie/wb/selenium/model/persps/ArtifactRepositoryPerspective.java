@@ -15,6 +15,8 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import static org.kie.wb.selenium.util.ByUtil.jquery;
+
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
@@ -24,6 +26,10 @@ public class ArtifactRepositoryPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, NAME_COLUMN_HEADER);
+        return Waits.isElementPresent(NAME_COLUMN_HEADER);
+    }
+
+    public boolean isArtifactPresent(String gav) {
+        return Waits.isElementPresent(jquery("tr[__gwt_row]:contains('%s')", gav), 5);
     }
 }

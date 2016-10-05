@@ -26,7 +26,7 @@ public class ProcessAndTaskDashboardPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, PROCESSES_TAB);
+        return Waits.isElementPresent(PROCESSES_TAB);
     }
 
     @Override

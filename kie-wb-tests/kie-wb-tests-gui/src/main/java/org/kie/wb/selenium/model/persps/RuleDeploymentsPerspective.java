@@ -26,7 +26,7 @@ public class RuleDeploymentsPerspective extends AbstractPerspective {
     @Override
     public boolean isDisplayed() {
         try {
-            return Waits.isElementPresent(driver, SERVER_MNGMT_SCREEN_ITEM);
+            return Waits.isElementPresent(SERVER_MNGMT_SCREEN_ITEM);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

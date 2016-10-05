@@ -24,6 +24,6 @@ public class PeoplePerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, PROFILE_HOME_BUTTON);
+        return Waits.isElementPresent(PROFILE_HOME_BUTTON);
     }
 }

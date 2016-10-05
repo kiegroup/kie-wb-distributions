@@ -24,6 +24,6 @@ public class PluginManagementPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, PLUGINS_EXPLORER_TITLE);
+        return Waits.isElementPresent(PLUGINS_EXPLORER_TITLE);
     }
 }

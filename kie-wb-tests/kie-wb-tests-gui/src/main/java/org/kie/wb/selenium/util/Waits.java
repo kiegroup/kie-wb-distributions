@@ -17,7 +17,6 @@ package org.kie.wb.selenium.util;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -26,39 +25,53 @@ public class Waits {
 
     private static final int DEFAULT_TIMEOUT = 15;
 
-    public static void elementVisible(WebDriver driver, By locator, int timeoutSeconds) {
-        new WebDriverWait(driver, timeoutSeconds)
+    public static void elementVisible(By locator, int timeoutSeconds) {
+        new WebDriverWait(GrapheneUtil.getDriver(), timeoutSeconds)
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static WebElement elementPresent(WebDriver driver, By locator, int timeoutSeconds) {
-        WebElement elementPresent = new WebDriverWait(driver, timeoutSeconds)
+    public static WebElement elementPresent(By locator, int timeoutSeconds) {
+        WebElement elementPresent = new WebDriverWait(GrapheneUtil.getDriver(), timeoutSeconds)
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
         return elementPresent;
     }
 
-    public static WebElement elementPresent(WebDriver driver, By locator) {
-        return elementPresent(driver, locator, DEFAULT_TIMEOUT);
+    public static WebElement elementPresent(By locator) {
+        return elementPresent(locator, DEFAULT_TIMEOUT);
     }
 
-    public static WebElement elementClickable(WebDriver driver, By locator) {
-        WebElement clickableElement = new WebDriverWait(driver, DEFAULT_TIMEOUT)
+    public static WebElement elementPresent(WebElement element) {
+        return new WebDriverWait(GrapheneUtil.getDriver(), DEFAULT_TIMEOUT)
+                .until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static void elementAbsent(By locator) {
+        new WebDriverWait(GrapheneUtil.getDriver(), DEFAULT_TIMEOUT)
+                .until(ExpectedConditions.numberOfElementsToBe(locator, 0));
+    }
+
+    public static WebElement elementClickable(By locator) {
+        WebElement clickableElement = new WebDriverWait(GrapheneUtil.getDriver(), DEFAULT_TIMEOUT)
                 .until(ExpectedConditions.elementToBeClickable(locator));
         return clickableElement;
     }
 
-    public static boolean isElementPresent(WebDriver driver, By locator) {
+    public static boolean isElementPresent(By locator, int timeoutSeconds) {
         try {
-            elementPresent(driver, locator);
+            elementPresent(locator, timeoutSeconds);
             return true;
         } catch (NoSuchElementException nse) {
             return false;
         }
     }
 
-    public static void pause(int miliseconds) {
+    public static boolean isElementPresent(By locator) {
+        return isElementPresent(locator, DEFAULT_TIMEOUT);
+    }
+
+    public static void pause(int milliseconds) {
         try {
-            Thread.sleep(miliseconds);
+            Thread.sleep(milliseconds);
         } catch (InterruptedException ex) {
             System.err.println("Pause interrupted");
         }

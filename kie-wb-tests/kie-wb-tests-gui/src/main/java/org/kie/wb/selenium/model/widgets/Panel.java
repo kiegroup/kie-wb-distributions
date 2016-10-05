@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2016 JBoss by Red Hat.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.wb.selenium.model.persps;
+package org.kie.wb.selenium.model.widgets;
 
-import org.kie.wb.selenium.util.Waits;
-import org.openqa.selenium.By;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
-public class DataSetsPerspective extends AbstractPerspective {
+public class Panel {
 
-    private static final By NEW_DS_LINK = By.linkText("new data set");
+    @FindByJQuery(".uf-listbar-panel-header-toolbar")
+    private PanelToolbar toolbar;
 
-    @Override
-    public boolean isDisplayed() {
-        return Waits.isElementPresent(NEW_DS_LINK);
+    public PanelToolbar getToolbar() {
+        return toolbar;
     }
 }

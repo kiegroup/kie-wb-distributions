@@ -28,13 +28,13 @@ public class HomePerspective extends AbstractPerspective {
 
     @Override
     public void waitForLoaded() {
-        Waits.elementPresent(driver, CAROUSEL, HOME_PERSP_LOADING_TIMEOUT_SECONDS);
+        Waits.elementPresent(CAROUSEL, HOME_PERSP_LOADING_TIMEOUT_SECONDS);
     }
 
     @Override
     public boolean isDisplayed() {
         try {
-            Waits.elementPresent(driver, CAROUSEL, 2);
+            Waits.elementPresent(CAROUSEL, 2);
             return true;
         } catch (NoSuchElementException nse) {
             return false;
