@@ -93,8 +93,6 @@
             <include>**/*_pt_BR.properties</include>
           </includes>
           <excludes>
-            <exclude>kie-wb/kie-wb-webapp/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants*.properties</exclude>
-            <exclude>kie-drools-wb-webapp/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants*.properties</exclude>
             <exclude>**/ErraiApp.properties</exclude>
           </excludes>
           <replacements>
