@@ -24,6 +24,6 @@ public class TimelinePerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, LATEST_CHANGES_TITLE);
+        return Waits.isElementPresent(LATEST_CHANGES_TITLE);
     }
 }

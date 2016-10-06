@@ -19,5 +19,8 @@ limitations under the License.
   <extension qualifier="webdriver">
     <property name="browser">${browser}</property>
     <property name="waitModelInterval">15</property>
+    <!-- IE specific -->
+    <property name="ignoreProtectedModeSettings">false</property>
+    <property name="ie.ensureCleanSession">true</property>
   </extension>
 </arquillian>

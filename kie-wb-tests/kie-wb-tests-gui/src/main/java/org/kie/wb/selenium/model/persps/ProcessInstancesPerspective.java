@@ -29,7 +29,7 @@ public class ProcessInstancesPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, PROC_INST_TITLE);
+        return Waits.isElementPresent(PROC_INST_TITLE);
     }
 
     @Override

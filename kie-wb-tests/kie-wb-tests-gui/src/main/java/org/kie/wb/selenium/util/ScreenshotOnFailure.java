@@ -15,16 +15,16 @@
  */
 package org.kie.wb.selenium.util;
 
+import static org.kie.wb.selenium.util.GrapheneUtil.getDriver;
+
 import java.io.File;
 import java.io.IOException;
+
 import org.apache.commons.io.FileUtils;
-import org.jboss.arquillian.drone.api.annotation.Default;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 
 /**
  * JUnit Rule for taking screenshots/saving page HTML source of browser content
@@ -55,7 +55,7 @@ public class ScreenshotOnFailure extends TestWatcher {
     }
 
     private void savePageHtmlSource(String filename) {
-        String pageSource = getDriver().getPageSource();
+        String pageSource = GrapheneUtil.getDriver().getPageSource();
         File targetFile = new File(screenshotDir, filename + ".html");
         try {
             FileUtils.writeStringToFile(targetFile, pageSource, "UTF-8");
@@ -82,9 +82,5 @@ public class ScreenshotOnFailure extends TestWatcher {
             throw new IllegalStateException("The screenshotDir must be writable" + scd);
         }
         return scd;
-    }
-
-    private WebDriver getDriver() {
-        return GrapheneContext.getContextFor(Default.class).getWebDriver(TakesScreenshot.class);
     }
 }

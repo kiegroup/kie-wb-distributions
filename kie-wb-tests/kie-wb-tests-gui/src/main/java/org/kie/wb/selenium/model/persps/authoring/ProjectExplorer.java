@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2016 JBoss by Red Hat.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.wb.selenium.model.persps;
+package org.kie.wb.selenium.model.persps.authoring;
 
-import org.kie.wb.selenium.util.Waits;
-import org.openqa.selenium.By;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
 
-public class ProcessDeploymentsPerspective extends AbstractPerspective {
+public class ProjectExplorer {
 
-    private static final By PROC_DEPLS_TITLE = By.cssSelector("span[title='Deployed Units']");
+    @FindByJQuery("button:contains('Open Project Editor')")
+    private WebElement openPexButton;
 
-    @Override
-    public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, PROC_DEPLS_TITLE);
+    public void openProjectEditor() {
+        openPexButton.click();
     }
 }

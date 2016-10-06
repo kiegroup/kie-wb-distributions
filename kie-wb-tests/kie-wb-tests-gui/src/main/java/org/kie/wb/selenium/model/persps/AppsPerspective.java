@@ -24,6 +24,6 @@ public class AppsPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, HOME_LINK);
+        return Waits.isElementPresent(HOME_LINK);
     }
 }

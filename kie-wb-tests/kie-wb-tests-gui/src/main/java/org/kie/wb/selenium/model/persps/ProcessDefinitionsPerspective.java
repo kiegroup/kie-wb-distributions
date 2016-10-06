@@ -24,6 +24,6 @@ public class ProcessDefinitionsPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, PROC_DEFS_TITLE);
+        return Waits.isElementPresent(PROC_DEFS_TITLE);
     }
 }

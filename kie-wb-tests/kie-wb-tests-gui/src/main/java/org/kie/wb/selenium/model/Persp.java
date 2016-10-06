@@ -18,6 +18,7 @@ package org.kie.wb.selenium.model;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.wb.selenium.model.persps.AdministrationPerspective;
 import org.kie.wb.selenium.model.persps.AppsPerspective;
@@ -30,7 +31,6 @@ import org.kie.wb.selenium.model.persps.PeoplePerspective;
 import org.kie.wb.selenium.model.persps.PluginManagementPerspective;
 import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
-import org.kie.wb.selenium.model.persps.ProcessDeploymentsPerspective;
 import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
 import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
 import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
@@ -59,9 +59,6 @@ public class Persp<T extends AbstractPerspective> {
 
     public static final Persp<AdministrationPerspective> ADMINISTRATION
             = new Persp<>("Authoring", "Administration", AdministrationPerspective.class);
-
-    public static final Persp<ProcessDeploymentsPerspective> PROCESS_DEPLOYMENTS
-            = new Persp<>("Deploy", "Process Deployments", ProcessDeploymentsPerspective.class, true);
 
     public static final Persp<RuleDeploymentsPerspective> EXECUTION_SERVERS
             = new Persp<>("Deploy", "Execution Servers", RuleDeploymentsPerspective.class);

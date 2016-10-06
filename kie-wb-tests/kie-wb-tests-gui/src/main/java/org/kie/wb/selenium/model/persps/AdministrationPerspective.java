@@ -25,12 +25,12 @@ public class AdministrationPerspective extends AbstractPerspective {
 
     @Override
     public void waitForLoaded() {
-        Waits.elementPresent(driver, FILE_EXPLORER_CONTENT);
+        Waits.elementPresent(FILE_EXPLORER_CONTENT);
         Waits.pause(1000);
     }
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, REPOSITORY_EDITOR_TITLE);
+        return Waits.isElementPresent(REPOSITORY_EDITOR_TITLE);
     }
 }

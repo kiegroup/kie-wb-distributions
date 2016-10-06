@@ -14,8 +14,10 @@
  */
 package org.kie.wb.selenium.model;
 
-import org.jboss.arquillian.graphene.Graphene;
 import static org.kie.wb.selenium.model.KieSeleniumTest.driver;
+import static org.kie.wb.selenium.util.ByUtil.jquery;
+
+import org.jboss.arquillian.graphene.Graphene;
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.wb.selenium.model.persps.AdministrationPerspective;
 import org.kie.wb.selenium.model.persps.AppsPerspective;
@@ -28,15 +30,12 @@ import org.kie.wb.selenium.model.persps.PeoplePerspective;
 import org.kie.wb.selenium.model.persps.PluginManagementPerspective;
 import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
-import org.kie.wb.selenium.model.persps.ProcessDeploymentsPerspective;
 import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
 import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
 import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
 import org.kie.wb.selenium.model.persps.TasksPerspective;
 import org.kie.wb.selenium.model.persps.TimelinePerspective;
 import org.kie.wb.selenium.model.widgets.DropdownMenu;
-import static org.kie.wb.selenium.util.ByUtil.jquery;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
@@ -54,7 +53,7 @@ public class PrimaryNavbar {
     @FindBy(css = "li[title='Reset all Perspective layouts']+li")
     private DropdownMenu logoutMenu;
 
-    @FindBy(css = ".uf-workbench-layout > div:last-child")
+    @FindBy(css = ".uf-workbench-layout")
     private WebElement perspectiveRoot;
 
     public void logout() {
@@ -87,10 +86,6 @@ public class PrimaryNavbar {
 
     public AdministrationPerspective administration() {
         return navigateTo(Persp.ADMINISTRATION);
-    }
-
-    public ProcessDeploymentsPerspective processDeployments() {
-        return navigateTo(Persp.PROCESS_DEPLOYMENTS);
     }
 
     public RuleDeploymentsPerspective ruleDeployments() {

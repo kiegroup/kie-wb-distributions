@@ -24,6 +24,6 @@ public class JobsPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, ID_COLUMN_HEADER);
+        return Waits.isElementPresent(ID_COLUMN_HEADER);
     }
 }

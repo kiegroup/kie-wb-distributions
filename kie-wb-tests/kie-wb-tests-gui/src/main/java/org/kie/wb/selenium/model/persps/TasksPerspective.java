@@ -28,7 +28,7 @@ public class TasksPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, ACTIVE_FILTER_TITLE);
+        return Waits.isElementPresent(ACTIVE_FILTER_TITLE);
     }
 
     @Override

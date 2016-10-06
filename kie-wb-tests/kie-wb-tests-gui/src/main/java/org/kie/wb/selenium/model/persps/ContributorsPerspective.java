@@ -24,6 +24,6 @@ public class ContributorsPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, CHART_TITLE);
+        return Waits.isElementPresent(CHART_TITLE);
     }
 }
