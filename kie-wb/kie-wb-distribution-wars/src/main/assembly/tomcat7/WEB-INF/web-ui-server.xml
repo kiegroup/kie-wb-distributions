@@ -31,7 +31,7 @@
 
   <filter-mapping>
     <filter-name>Avoid Host Page Cache</filter-name>
-    <url-pattern>/kie-wb.html</url-pattern>
+    <url-pattern>/kie-wb.jsp</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -41,7 +41,7 @@
 
   <filter-mapping>
     <filter-name>Host Page Patch</filter-name>
-    <url-pattern>/kie-wb.html</url-pattern>
+    <url-pattern>/kie-wb.jsp</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -51,7 +51,7 @@
 
   <filter-mapping>
     <filter-name>GWT Locale Filter</filter-name>
-    <url-pattern>/kie-wb.html</url-pattern>
+    <url-pattern>/kie-wb.jsp</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -81,7 +81,7 @@
     <servlet-class>org.uberfire.ext.security.server.LoginRedirectServlet</servlet-class>
     <init-param>
       <param-name>display-after-login</param-name>
-      <param-value>/kie-wb.html</param-value>
+      <param-value>/kie-wb.jsp</param-value>
     </init-param>
   </servlet>
 
@@ -549,7 +549,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>console</web-resource-name>
-      <url-pattern>/kie-wb.html</url-pattern>
+      <url-pattern>/kie-wb.jsp</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/*</url-pattern>
       <url-pattern>*.erraiBus</url-pattern>
       <url-pattern>/resourceList</url-pattern>
