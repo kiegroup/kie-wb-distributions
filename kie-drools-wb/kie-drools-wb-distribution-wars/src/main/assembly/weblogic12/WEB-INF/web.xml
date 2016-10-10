@@ -28,7 +28,7 @@
 
   <filter-mapping>
     <filter-name>Cache Filter</filter-name>
-    <url-pattern>/kie-drools-wb.html</url-pattern>
+    <url-pattern>/kie-drools-wb.jsp</url-pattern>
   </filter-mapping>
 
   <filter-mapping>
@@ -43,7 +43,7 @@
 
   <filter-mapping>
     <filter-name>Host Page Patch</filter-name>
-    <url-pattern>/kie-drools-wb.html</url-pattern>
+    <url-pattern>/kie-drools-wb.jsp</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -53,7 +53,7 @@
 
   <filter-mapping>
     <filter-name>GWT Locale Filter</filter-name>
-    <url-pattern>/kie-drools-wb.html</url-pattern>
+    <url-pattern>/kie-drools-wb.jsp</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -83,7 +83,7 @@
     <servlet-class>org.uberfire.ext.security.server.LoginRedirectServlet</servlet-class>
     <init-param>
       <param-name>display-after-login</param-name>
-      <param-value>/kie-drools-wb.html</param-value>
+      <param-value>/kie-drools-wb.jsp</param-value>
     </init-param>
     <init-param>
       <param-name>display-when-not-authenticated</param-name>
@@ -574,7 +574,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>console</web-resource-name>
-      <url-pattern>/kie-drools-wb.html</url-pattern>
+      <url-pattern>/kie-drools-wb.jsp</url-pattern>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/*</url-pattern>
       <url-pattern>*.erraiBus</url-pattern>
       <url-pattern>/resourceList</url-pattern>
