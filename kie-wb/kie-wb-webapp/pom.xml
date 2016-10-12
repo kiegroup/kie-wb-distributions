@@ -624,6 +624,13 @@
       <artifactId>kie-wb-common-workbench-backend</artifactId>
     </dependency>
 
+    <!-- Drools Workbench Services -->
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-verifier-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Drools Workbench Screens -->
     <dependency>
       <groupId>org.drools</groupId>
@@ -1683,6 +1690,7 @@
               <compileSourcesArtifact>org.drools:drools-workbench-models-test-scenarios</compileSourcesArtifact>
 
               <!-- Drools WB -->
+              <compileSourcesArtifact>org.drools:drools-wb-verifier-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-enum-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-enum-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-drl-text-editor-api</compileSourcesArtifact>
