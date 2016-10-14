@@ -31,6 +31,7 @@ import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationServ
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
+import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.uberfire.client.mvp.ActivityBeansCache;
@@ -41,7 +42,6 @@ import org.uberfire.mocks.CallerMock;
 import org.uberfire.mocks.ConstantsAnswerMock;
 import org.uberfire.mocks.IocTestingUtils;
 import org.uberfire.mvp.Command;
-import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.Menus;
 
@@ -87,6 +87,9 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     private ActivityBeansCache activityBeansCache;
 
+    @Mock
+    private DefaultAdminPageHelper adminPageHelper;
+
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     @Before
@@ -113,7 +116,8 @@ public class KieWorkbenchEntryPointTest {
                                                                   menuBar,
                                                                   iocManager,
                                                                   workbench,
-                                                                  permissionTreeSetup) );
+                                                                  permissionTreeSetup,
+                                                                  adminPageHelper ) );
         mockMenuHelper();
         mockConstants();
         IocTestingUtils.mockIocManager( iocManager );
@@ -138,7 +142,7 @@ public class KieWorkbenchEntryPointTest {
 
         Menus menus = menusCaptor.getValue();
 
-        assertEquals( 8, menus.getItems().size() );
+        assertEquals( 9, menus.getItems().size() );
 
         assertEquals( kieWorkbenchEntryPoint.constants.Home(), menus.getItems().get( 0 ).getCaption() );
         assertEquals( kieWorkbenchEntryPoint.constants.Authoring(), menus.getItems().get( 1 ).getCaption() );
@@ -147,6 +151,7 @@ public class KieWorkbenchEntryPointTest {
         assertEquals( kieWorkbenchEntryPoint.constants.Tasks(), menus.getItems().get( 4 ).getCaption() );
         assertEquals( kieWorkbenchEntryPoint.constants.Dashboards(), menus.getItems().get( 5 ).getCaption() );
         assertEquals( kieWorkbenchEntryPoint.constants.Extensions(), menus.getItems().get( 6 ).getCaption() );
+        assertEquals( kieWorkbenchEntryPoint.constants.Admin(), menus.getItems().get( 7 ).getCaption() );
 
         verify( menusHelper ).addRolesMenuItems();
         verify( menusHelper ).addWorkbenchViewModeSwitcherMenuItem();

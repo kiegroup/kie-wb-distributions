@@ -134,4 +134,5 @@ public interface AppConstants
 
     String Messages();
 
+    String Admin();
 }

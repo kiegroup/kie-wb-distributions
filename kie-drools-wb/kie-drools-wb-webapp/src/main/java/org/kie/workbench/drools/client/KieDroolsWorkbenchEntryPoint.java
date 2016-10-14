@@ -31,6 +31,7 @@ import org.kie.workbench.common.services.shared.service.PlaceManagerActivityServ
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
+import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.drools.client.home.HomeProducer;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.mvp.ActivityBeansCache;
@@ -64,6 +65,8 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected PermissionTreeSetup permissionTreeSetup;
 
+    protected DefaultAdminPageHelper adminPageHelper;
+
     @Inject
     public KieDroolsWorkbenchEntryPoint( final Caller<AppConfigService> appConfigService,
                                          final Caller<PlaceManagerActivityService> pmas,
@@ -75,7 +78,8 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                          final WorkbenchMenuBarPresenter menuBar,
                                          final SyncBeanManager iocManager,
                                          final Workbench workbench,
-                                         final PermissionTreeSetup permissionTreeSetup ) {
+                                         final PermissionTreeSetup permissionTreeSetup,
+                                         final DefaultAdminPageHelper adminPageHelper ) {
         super( appConfigService,  pmas, activityBeansCache );
         this.homeProducer = homeProducer;
         this.socialConfigurationService = socialConfigurationService;
@@ -85,6 +89,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.iocManager = iocManager;
         this.workbench = workbench;
         this.permissionTreeSetup = permissionTreeSetup;
+        this.adminPageHelper = adminPageHelper;
     }
 
     @PostConstruct
@@ -104,7 +109,8 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                         MenuFactory.newTopLevelMenu(constants.home()).withItems( menusHelper.getHomeViews(socialEnabled) ).endMenu()
                                 .newTopLevelMenu( constants.authoring() ).withItems( menusHelper.getAuthoringViews() ).endMenu()
                                 .newTopLevelMenu( constants.deploy() ).withItems(getDeploymentViews()).endMenu()
-                                .newTopLevelMenu(constants.extensions()).withItems( menusHelper.getExtensionsViews() ).endMenu()
+                                .newTopLevelMenu( constants.extensions() ).withItems( menusHelper.getExtensionsViews() ).endMenu()
+                                .newTopLevelMenu( constants.Admin() ).perspective( ADMIN ).endMenu()
                                 .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
                                 .build();
 
@@ -118,6 +124,11 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                 workbench.removeStartupBlocker( KieDroolsWorkbenchEntryPoint.class );
             }
         } ).isSocialEnable();
+    }
+
+    @Override
+    protected void setupAdminPage() {
+        adminPageHelper.setup();
     }
 
     protected List<MenuItem> getDeploymentViews() {
