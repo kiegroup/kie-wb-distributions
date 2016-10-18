@@ -8,6 +8,9 @@
   <listener>
     <listener-class>org.uberfire.backend.server.io.DisposableShutdownService</listener-class>
   </listener>
+  <listener>
+    <listener-class>org.uberfire.backend.server.LockCleanupSessionListener</listener-class>
+  </listener>
 
   <listener>
     <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
