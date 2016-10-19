@@ -37,6 +37,7 @@ import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.authz.WorkbenchFeatures;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
+import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
@@ -68,6 +69,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected PermissionTreeSetup permissionTreeSetup;
 
+    protected DefaultAdminPageHelper adminPageHelper;
+
     @Inject
     public KieWorkbenchEntryPoint( final Caller<AppConfigService> appConfigService,
                                    final Caller<PlaceManagerActivityService> pmas,
@@ -79,7 +82,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                    final WorkbenchMenuBarPresenter menuBar,
                                    final SyncBeanManager iocManager,
                                    final Workbench workbench,
-                                   final PermissionTreeSetup permissionTreeSetup ) {
+                                   final PermissionTreeSetup permissionTreeSetup,
+                                   final DefaultAdminPageHelper adminPageHelper ) {
         super( appConfigService, pmas, activityBeansCache );
         this.homeProducer = homeProducer;
         this.socialConfigurationService = socialConfigurationService;
@@ -89,6 +93,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.iocManager = iocManager;
         this.workbench = workbench;
         this.permissionTreeSetup = permissionTreeSetup;
+        this.adminPageHelper = adminPageHelper;
     }
 
     @PostConstruct
@@ -113,6 +118,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                 .newTopLevelMenu( constants.Tasks() ).perspective( DATASET_TASKS ).endMenu()
                                 .newTopLevelMenu( constants.Dashboards() ).withItems( getDashboardViews() ).endMenu()
                                 .newTopLevelMenu( constants.Extensions() ).withItems( menusHelper.getExtensionsViews() ).endMenu()
+                                .newTopLevelMenu( constants.Admin() ).perspective( ADMIN ).endMenu()
                                 .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
                                 .build();
 
@@ -126,6 +132,11 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                 workbench.removeStartupBlocker( KieWorkbenchEntryPoint.class );
             }
         } ).isSocialEnable();
+    }
+
+    @Override
+    protected void setupAdminPage() {
+        adminPageHelper.setup();
     }
 
     protected List<? extends MenuItem> getDeploymentViews() {

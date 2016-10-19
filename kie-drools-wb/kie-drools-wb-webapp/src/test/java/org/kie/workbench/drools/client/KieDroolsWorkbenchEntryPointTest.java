@@ -29,6 +29,7 @@ import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationServ
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
+import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.drools.client.home.HomeProducer;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.mockito.ArgumentCaptor;
@@ -41,7 +42,6 @@ import org.uberfire.mocks.CallerMock;
 import org.uberfire.mocks.ConstantsAnswerMock;
 import org.uberfire.mocks.IocTestingUtils;
 import org.uberfire.mvp.Command;
-import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.Menus;
 
@@ -87,6 +87,9 @@ public class KieDroolsWorkbenchEntryPointTest {
     @Mock
     protected PermissionTreeSetup permissionTreeSetup;
 
+    @Mock
+    protected DefaultAdminPageHelper adminPageHelper;
+
     private KieDroolsWorkbenchEntryPoint kieDroolsWorkbenchEntryPoint;
 
     @Before
@@ -113,7 +116,8 @@ public class KieDroolsWorkbenchEntryPointTest {
                                                                               menuBar,
                                                                               iocManager,
                                                                               workbench,
-                                                                              permissionTreeSetup) );
+                                                                              permissionTreeSetup,
+                                                                              adminPageHelper ) );
         mockMenuHelper();
         mockConstants();
         IocTestingUtils.mockIocManager( iocManager );
@@ -138,12 +142,13 @@ public class KieDroolsWorkbenchEntryPointTest {
 
         Menus menus = menusCaptor.getValue();
 
-        assertEquals( 5, menus.getItems().size() );
+        assertEquals( 6, menus.getItems().size() );
 
         assertEquals( kieDroolsWorkbenchEntryPoint.constants.home(), menus.getItems().get( 0 ).getCaption() );
         assertEquals( kieDroolsWorkbenchEntryPoint.constants.authoring(), menus.getItems().get( 1 ).getCaption() );
         assertEquals( kieDroolsWorkbenchEntryPoint.constants.deploy(), menus.getItems().get( 2 ).getCaption() );
         assertEquals( kieDroolsWorkbenchEntryPoint.constants.extensions(), menus.getItems().get( 3 ).getCaption() );
+        assertEquals( kieDroolsWorkbenchEntryPoint.constants.Admin(), menus.getItems().get( 4 ).getCaption() );
 
         verify( menusHelper ).addRolesMenuItems();
         verify( menusHelper ).addWorkbenchViewModeSwitcherMenuItem();

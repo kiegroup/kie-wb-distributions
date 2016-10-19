@@ -13,6 +13,9 @@
   <inherits name="org.uberfire.ext.widgets.core.UberfireWidgetsCore"/>
   <inherits name="org.uberfire.UberfireDocksClient"/>
 
+  <!-- Uberfire Extensions - Preferences -->
+  <inherits name="org.uberfire.ext.preferences.UberfirePreferences"/>
+
   <!-- Uberfire Extensions - Runtime Plugin -->
   <inherits name="org.uberfire.ext.plugin.RuntimePluginClient"/>
 
