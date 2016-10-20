@@ -1,24 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ page import="java.util.Locale" %>
-<%@ page import="org.slf4j.Logger" %>
-<%@ page import="org.slf4j.LoggerFactory" %>
 <%@ page import="org.apache.commons.lang3.LocaleUtils" %>
+<%@ page import="org.kie.workbench.backend.LogoutHelper" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
 <%
-  final Logger logger = LoggerFactory.getLogger( "logout.jsp" );
-  try {
-    request.logout();
-    javax.servlet.http.HttpSession httpSession = request.getSession(false);
-    if (httpSession != null) {
-      httpSession.invalidate();
-    }
-  } catch ( SecurityException e ) {
-    //The only case we know that this  happens is when java security manager is enabled on EAP.
-    logger.debug( "Security exception happened, without consequences, during logout.", e );
-  }
+  // Do logout
+  LogoutHelper.logout(request, response);
+
   Locale locale = null;
   try {
     locale = LocaleUtils.toLocale( request.getParameter( "locale" ) );
