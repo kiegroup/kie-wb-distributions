@@ -118,7 +118,6 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                 .newTopLevelMenu( constants.Tasks() ).perspective( DATASET_TASKS ).endMenu()
                                 .newTopLevelMenu( constants.Dashboards() ).withItems( getDashboardViews() ).endMenu()
                                 .newTopLevelMenu( constants.Extensions() ).withItems( menusHelper.getExtensionsViews() ).endMenu()
-                                .newTopLevelMenu( constants.Admin() ).perspective( ADMIN ).endMenu()
                                 .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
                                 .build();
 

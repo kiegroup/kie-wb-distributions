@@ -142,7 +142,7 @@ public class KieWorkbenchEntryPointTest {
 
         Menus menus = menusCaptor.getValue();
 
-        assertEquals( 9, menus.getItems().size() );
+        assertEquals( 8, menus.getItems().size() );
 
         assertEquals( kieWorkbenchEntryPoint.constants.Home(), menus.getItems().get( 0 ).getCaption() );
         assertEquals( kieWorkbenchEntryPoint.constants.Authoring(), menus.getItems().get( 1 ).getCaption() );
@@ -151,7 +151,6 @@ public class KieWorkbenchEntryPointTest {
         assertEquals( kieWorkbenchEntryPoint.constants.Tasks(), menus.getItems().get( 4 ).getCaption() );
         assertEquals( kieWorkbenchEntryPoint.constants.Dashboards(), menus.getItems().get( 5 ).getCaption() );
         assertEquals( kieWorkbenchEntryPoint.constants.Extensions(), menus.getItems().get( 6 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Admin(), menus.getItems().get( 7 ).getCaption() );
 
         verify( menusHelper ).addRolesMenuItems();
         verify( menusHelper ).addWorkbenchViewModeSwitcherMenuItem();
