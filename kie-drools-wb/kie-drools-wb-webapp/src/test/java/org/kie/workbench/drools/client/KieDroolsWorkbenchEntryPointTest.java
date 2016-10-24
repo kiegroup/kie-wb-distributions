@@ -142,13 +142,12 @@ public class KieDroolsWorkbenchEntryPointTest {
 
         Menus menus = menusCaptor.getValue();
 
-        assertEquals( 6, menus.getItems().size() );
+        assertEquals( 5, menus.getItems().size() );
 
         assertEquals( kieDroolsWorkbenchEntryPoint.constants.home(), menus.getItems().get( 0 ).getCaption() );
         assertEquals( kieDroolsWorkbenchEntryPoint.constants.authoring(), menus.getItems().get( 1 ).getCaption() );
         assertEquals( kieDroolsWorkbenchEntryPoint.constants.deploy(), menus.getItems().get( 2 ).getCaption() );
         assertEquals( kieDroolsWorkbenchEntryPoint.constants.extensions(), menus.getItems().get( 3 ).getCaption() );
-        assertEquals( kieDroolsWorkbenchEntryPoint.constants.Admin(), menus.getItems().get( 4 ).getCaption() );
 
         verify( menusHelper ).addRolesMenuItems();
         verify( menusHelper ).addWorkbenchViewModeSwitcherMenuItem();

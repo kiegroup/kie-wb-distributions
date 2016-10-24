@@ -110,7 +110,6 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                 .newTopLevelMenu( constants.authoring() ).withItems( menusHelper.getAuthoringViews() ).endMenu()
                                 .newTopLevelMenu( constants.deploy() ).withItems(getDeploymentViews()).endMenu()
                                 .newTopLevelMenu( constants.extensions() ).withItems( menusHelper.getExtensionsViews() ).endMenu()
-                                .newTopLevelMenu( constants.Admin() ).perspective( ADMIN ).endMenu()
                                 .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
                                 .build();
 
