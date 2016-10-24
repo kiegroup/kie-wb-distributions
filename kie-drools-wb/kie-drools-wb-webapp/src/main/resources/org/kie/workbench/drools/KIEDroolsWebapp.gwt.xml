@@ -95,7 +95,14 @@
 
   <!-- Security management. -->
   <inherits name="org.uberfire.ext.security.management.UberfireSecurityManagementWorkbench"/>
-  
+
+  <!-- Form modeler.-->
+  <inherits name="org.kie.workbench.common.forms.dynamic.DynamicFormsClient"/>
+
+  <!-- Stunner. -->
+  <inherits name="org.kie.workbench.common.stunner.project.StunnerProjectClient"/>
+  <inherits name="org.kie.workbench.common.stunner.bpmn.StunnerBpmnProject"/>
+
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/kie-drools-wb.css'/>
 
