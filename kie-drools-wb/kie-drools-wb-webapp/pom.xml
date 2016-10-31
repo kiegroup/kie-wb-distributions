@@ -523,6 +523,33 @@
       <artifactId>kie-wb-common-workbench-backend</artifactId>
     </dependency>
 
+    <!-- Datasource management -->
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-datasource-mgmt-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-datasource-mgmt-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-datasource-mgmt-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-datasource-mgmt-wildfly</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-datasource-mgmt-dbcp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-datasource-mgmt-dashbuilder</artifactId>
+    </dependency>
+
     <!-- Drools Workbench Services -->
     <dependency>
       <groupId>org.drools</groupId>
@@ -1346,6 +1373,10 @@
               <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-examples-screen-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-examples-screen-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-workbench-client</compileSourcesArtifact>
+
+              <!-- Datasource management -->
+              <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-datasource-mgmt-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-datasource-mgmt-client</compileSourcesArtifact>
 
               <!-- Models for Drools WB -->
               <compileSourcesArtifact>org.drools:drools-workbench-models-commons</compileSourcesArtifact>
