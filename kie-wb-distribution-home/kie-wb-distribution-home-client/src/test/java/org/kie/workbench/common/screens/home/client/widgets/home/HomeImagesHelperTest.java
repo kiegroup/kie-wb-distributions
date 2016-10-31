@@ -31,9 +31,8 @@ public class HomeImagesHelperTest {
     private static final String JA_JP = "ja_JP";
     private static final String PT_BR = "pt_BR";
     private static final String ZH_CN = "zh_CN";
-    private static final String ZH_TW = "zh_TW";
 
-    private String[] availableLocaleNames = new String[]{ EN_US, JA_JP, ZH_CN, ZH_TW };
+    private String[] availableLocaleNames = new String[]{ EN_US, JA_JP, ZH_CN };
 
     @Before
     public void setup() {
@@ -78,14 +77,6 @@ public class HomeImagesHelperTest {
         PowerMockito.when( HomeImagesHelper.getLocaleName() ).thenReturn( ZH_CN );
         final String url = HomeImagesHelper.Images.Analyze.getLocalisedImageUrl();
         assertEquals( "images/home/zh_cn/06_Analyze_Graphic-zh_cn.png",
-                url );
-    }
-
-    @Test
-    public void testAvailableLocaleZh_TW() {
-        PowerMockito.when( HomeImagesHelper.getLocaleName() ).thenReturn( ZH_TW );
-        final String url = HomeImagesHelper.Images.Analyze.getLocalisedImageUrl();
-        assertEquals( "images/home/zh_tw/06_Analyze_Graphic-zh_tw.png",
                 url );
     }
 

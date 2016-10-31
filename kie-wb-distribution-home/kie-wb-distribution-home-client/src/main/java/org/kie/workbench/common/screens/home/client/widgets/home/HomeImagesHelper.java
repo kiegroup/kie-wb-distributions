@@ -75,7 +75,7 @@ public class HomeImagesHelper {
             }
 
             String language = localeName.toLowerCase();
-            if ( language.equals("zh_tw") || language.equals("zh_cn") ){
+            if ( language.equals("zh_cn") ){
                 return language;
             }
             if ( language.contains( "_" ) ) {
