@@ -25,7 +25,9 @@ import javax.inject.Inject;
 import com.google.gwt.user.client.Window;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
+import org.kie.workbench.common.stunner.project.client.screens.ProjectDiagramWorkbenchDocks;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
+import org.kie.workbench.common.workbench.client.PerspectiveIds;
 import org.kie.workbench.common.workbench.client.docks.AuthoringWorkbenchDocks;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.backend.vfs.Path;
@@ -67,6 +69,9 @@ public class DroolsAuthoringNoContextNavigationPerspective {
     @Inject
     private AuthoringWorkbenchDocks docks;
 
+    @Inject
+    private ProjectDiagramWorkbenchDocks stunnerWorkbenchEditorDocks;
+
     private String explorerMode;
     private String projectPathString;
     private boolean projectEditorDisableBuild;
@@ -82,6 +87,7 @@ public class DroolsAuthoringNoContextNavigationPerspective {
         final PlaceRequest placeRequest = generateProjectExplorerPlaceRequest();
 
         docks.setup("AuthoringPerspectiveNoContext", placeRequest);
+        stunnerWorkbenchEditorDocks.setup( "AuthoringPerspectiveNoContext" );
 
     }
 
