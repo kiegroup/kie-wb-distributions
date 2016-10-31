@@ -73,6 +73,7 @@
           </includes>
           <excludes>
             <exclude>**/ErraiApp.properties</exclude>
+            <exclude>**/LoginConstants*.properties</exclude>
           </excludes>
           <replacements>
             <replacement>
@@ -100,7 +101,7 @@
         <configuration>
           <includes>
             <include>kie-wb/kie-wb-webapp/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants*.properties</include>
-            <include>kie-drools-wb-webapp/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants*.properties</include>
+            <include>kie-drools-wb/kie-drools-wb-webapp/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants*.properties</include>
           </includes>
           <workDir>.</workDir>
           <tempDir>.</tempDir>
