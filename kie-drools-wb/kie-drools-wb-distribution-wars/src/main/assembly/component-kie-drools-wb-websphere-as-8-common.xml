@@ -61,8 +61,6 @@
           <exclude>WEB-INF/classes/org/kie/workbench/backend/wildfly/</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
 
-          <exclude>WEB-INF/lib/xmlbeans-*.jar</exclude>
-
           <!-- transitive dependencies -->
           <exclude>WEB-INF/lib/sisu-inject-bean*.jar</exclude>
           <exclude>WEB-INF/lib/stax-*.jar</exclude>
