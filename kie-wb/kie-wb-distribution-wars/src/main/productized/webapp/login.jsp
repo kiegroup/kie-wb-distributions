@@ -2,6 +2,7 @@
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.Locale" %>
 <%@ page import="org.apache.commons.lang3.LocaleUtils" %>
+<%@ page import="org.uberfire.ext.security.server.SecureHeadersFilter" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
@@ -12,6 +13,7 @@
   } catch(Exception e){
     locale= request.getLocale();
   }
+  SecureHeadersFilter.applyHeaders( request, response );
 %>
 <i18n:bundle id="bundle" baseName="org.kie.workbench.client.resources.i18n.LoginConstants"
              locale='<%= locale%>' />
