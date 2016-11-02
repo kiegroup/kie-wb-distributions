@@ -79,13 +79,15 @@ public class WorkbenchACLTest {
             "perspective.read.AdministrationPerspective",
             "perspective.read.AppsPerspective",
             "perspective.read.PlugInAuthoringPerspective",
-            "perspective.read.DataSetAuthoringPerspective");
+            "perspective.read.DataSetAuthoringPerspective",
+            "perspective.read.DataSourceManagementPerspective");
 
     static final List<String> ANALYST_DENIED = Arrays.asList(
             "perspective.read.AdministrationPerspective",
             "perspective.read.AppsPerspective",
             "perspective.read.PlugInAuthoringPerspective",
             "perspective.read.DataSetAuthoringPerspective",
+            "perspective.read.DataSourceManagementPerspective",
             "perspective.read.GuvnorM2RepoPerspective",
             "perspective.read.Deployments",
             "perspective.read.ServerManagementPerspective",
