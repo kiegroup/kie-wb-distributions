@@ -426,6 +426,10 @@
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-project-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
       <artifactId>guvnor-workingset-api</artifactId>
     </dependency>
     <dependency>
@@ -786,6 +790,14 @@
     </dependency>
 
     <!-- OptaPlanner Workbench Screens -->
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-common-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-upstream-model</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.optaplanner</groupId>
       <artifactId>optaplanner-wb-domain-editor-api</artifactId>
@@ -1969,6 +1981,8 @@
               <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-client</compileSourcesArtifact>
 
               <!-- OptaPlanner WB -->
+              <compileSourcesArtifact>org.optaplanner:optaplanner-wb-common-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.optaplanner:optaplanner-wb-upstream-model</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-domain-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-domain-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-solver-editor-api</compileSourcesArtifact>

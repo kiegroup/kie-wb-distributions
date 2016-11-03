@@ -135,4 +135,51 @@ public interface AppConstants
     String Messages();
 
     String Admin();
+
+    String WorkbenchRootNodeName();
+
+    String WorkbenchRootNodeHelp();
+
+    String PermissionAllow();
+
+    String PermissionDeny();
+
+    String ConfigureRepositories();
+
+    String ConfigureRepositoriesHelp();
+
+    String DataModelerEditSources();
+
+    String DataModelerEditSourcesHelp();
+
+    String ManageDashboards();
+
+    String ManageDashboardsHelp();
+
+    String Planner();
+
+    String PlannerHelp();
+
+    String HomePage();
+
+    String SecurityManagement();
+
+    String ProjectAuthoring();
+
+    String ArtifactRepository();
+
+    String DroolsAdministration();
+
+    String PlannerAdministration();
+
+    String ProcessDefinitions();
+
+    String ProcessInstances();
+
+    String Plugins();
+
+    String DataSources();
+
+    String Rule_Deployments();
+
 }

@@ -29,13 +29,13 @@ import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
 import org.kie.workbench.common.workbench.client.PerspectiveIds;
 import org.kie.workbench.common.workbench.client.docks.AuthoringWorkbenchDocks;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
+import org.optaplanner.workbench.screens.common.client.docks.PlannerWorkbenchDocks;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.panels.impl.MultiListWorkbenchPanelPresenter;
 import org.uberfire.mvp.Command;
-import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
 import org.uberfire.workbench.model.PerspectiveDefinition;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
@@ -71,12 +71,16 @@ public class DroolsAuthoringPerspective {
     private ProjectDiagramWorkbenchDocks stunnerWorkbenchEditorDocks;
 
     @Inject
+    private PlannerWorkbenchDocks plannerWorkbenchDocks;
+
+    @Inject
     private ExamplesWizard wizard;
 
     @PostConstruct
     public void setup() {
         docks.setup( PerspectiveIds.AUTHORING, new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) );
         stunnerWorkbenchEditorDocks.setup( PerspectiveIds.AUTHORING );
+        plannerWorkbenchDocks.setup( PerspectiveIds.AUTHORING );
     }
 
     @Perspective
