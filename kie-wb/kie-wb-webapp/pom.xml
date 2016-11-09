@@ -1679,6 +1679,11 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-bpmn-api</artifactId>
+    </dependency>
+
     <!-- Stunner and BPMN set. -->
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
