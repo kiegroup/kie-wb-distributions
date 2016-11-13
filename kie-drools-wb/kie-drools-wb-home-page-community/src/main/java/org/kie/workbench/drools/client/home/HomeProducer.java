@@ -58,6 +58,10 @@ public class HomeProducer {
                 () -> placeManager.goTo( AUTHORING ),
                 AUTHORING, PERSPECTIVE ) );
 
+        s1.addChild( ModelUtils.makeSectionEntry( constants.library(),
+                                                  () -> placeManager.goTo( LIBRARY ),
+                                                  LIBRARY, PERSPECTIVE ) );
+
         s1.addChild( ModelUtils.makeSectionEntry( constants.contributors(),
                 () -> placeManager.goTo( CONTRIBUTORS ),
                 CONTRIBUTORS, PERSPECTIVE ) );

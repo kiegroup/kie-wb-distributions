@@ -36,6 +36,8 @@ public interface HomePageCommunityConstants
 
     String authoring();
 
+    String library();
+
     String project_authoring();
 
     String administration();
