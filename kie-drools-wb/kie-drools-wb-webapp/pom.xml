@@ -40,7 +40,7 @@
   </properties>
 
   <dependencies>
-    
+
     <!-- errai-cdi-jboss provides gwt-dev with the proper dependency exclusions and should be first on the classpath -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -1492,7 +1492,7 @@
             <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>
             <disableCastChecking>true</disableCastChecking>
             <runTarget>kie-drools-wb.jsp</runTarget>
-            <hostedWebapp>src/main/webapp</hostedWebapp>            
+            <hostedWebapp>src/main/webapp</hostedWebapp>
             <compileSourcesArtifacts>
               <!-- Kie Server needed by Exec Server UI -->
               <compileSourcesArtifact>org.kie:kie-api</compileSourcesArtifact>
@@ -1713,43 +1713,64 @@
         <groupId>com.coderplus.maven.plugins</groupId>
         <artifactId>copy-rename-maven-plugin</artifactId>
         <version>1.0</version>
-        <configuration>
-          <fileSets>
-            <!-- kie-drools-wb -->
-            <fileSet>
-              <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_de.properties</sourceFile>
-              <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_de.properties</destinationFile>
-            </fileSet>
-            <fileSet>
-              <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_es.properties</sourceFile>
-              <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_es.properties</destinationFile>
-            </fileSet>
-            <fileSet>
-              <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_fr.properties</sourceFile>
-              <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_fr.properties</destinationFile>
-            </fileSet>
-            <fileSet>
-              <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_ja.properties</sourceFile>
-              <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_ja.properties</destinationFile>
-            </fileSet>
-            <fileSet>
-              <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_pt_BR.properties</sourceFile>
-              <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_pt_BR.properties</destinationFile>
-            </fileSet>
-            <fileSet>
-              <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_ru.properties</sourceFile>
-              <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_ru.properties</destinationFile>
-            </fileSet>
-            <fileSet>
-              <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_zh_CN.properties</sourceFile>
-              <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_zh_CN.properties</destinationFile>
-            </fileSet>
-            <fileSet>
-              <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_zh_TW.properties</sourceFile>
-              <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_zh_TW.properties</destinationFile>
-            </fileSet>
-          </fileSets>
-        </configuration>
+        <executions>
+          <execution>
+            <id>copy-zanata-files</id>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <fileSets>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants.properties</destinationFile>
+                </fileSet>
+              </fileSets>
+            </configuration>
+          </execution>
+          <execution>
+            <id>rename-zanata-files</id>
+            <goals>
+              <goal>rename</goal>
+            </goals>
+            <configuration>
+              <fileSets>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_de.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_de.properties</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_es.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_es.properties</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_fr.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_fr.properties</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_ja.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_ja.properties</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_pt_BR.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_pt_BR.properties</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_ru.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_ru.properties</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_zh_CN.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_zh_CN.properties</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_en_zh_TW.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants_zh_TW.properties</destinationFile>
+                </fileSet>
+              </fileSets>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
@@ -1803,7 +1824,7 @@
                 <include>src/main/webapp/org.kie.workbench.drools.KIEDroolsWebapp/</include>
                 <include>src/main/webapp/WEB-INF/deploy/</include>
                 <include>src/main/webapp/WEB-INF/classes/</include>
-                <include>src/main/webapp/WEB-INF/lib/</include>                
+                <include>src/main/webapp/WEB-INF/lib/</include>
                 <include>repositories/</include>
                 <include>.errai/</include>
                 <include>.niogit/**</include>
