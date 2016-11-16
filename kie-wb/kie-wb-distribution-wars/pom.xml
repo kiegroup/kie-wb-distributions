@@ -38,7 +38,7 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-business-domain-backend</artifactId>
+      <artifactId>jbpm-console-ng-kie-server-backend</artifactId>
     </dependency>
 
     <!-- External dependencies -->
