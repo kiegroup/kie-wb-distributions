@@ -40,7 +40,7 @@
   </properties>
 
   <dependencies>
-    
+
     <!-- errai-cdi-jboss provides gwt-dev with the proper dependency exclusions and should be first on the classpath -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -1484,7 +1484,7 @@
           <configuration>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
-            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Derrai.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.jbpm.designer.perspective=ruleflow -Djava.util.prefs.syncInterval=2000000 -Dorg.uberfire.async.executor.safemode=true</extraJvmArgs>
+            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Derrai.server.classOutput=${project.build.outputDirectory} -Derrai.dynamic_validation.enabled=true -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.jbpm.designer.perspective=ruleflow -Djava.util.prefs.syncInterval=2000000 -Dorg.uberfire.async.executor.safemode=true</extraJvmArgs>
             <draftCompile>true</draftCompile>
             <module>org.kie.workbench.drools.FastCompiledKIEDroolsWebapp</module>
             <logLevel>INFO</logLevel>
@@ -1492,7 +1492,7 @@
             <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>
             <disableCastChecking>true</disableCastChecking>
             <runTarget>kie-drools-wb.jsp</runTarget>
-            <hostedWebapp>src/main/webapp</hostedWebapp>            
+            <hostedWebapp>src/main/webapp</hostedWebapp>
             <compileSourcesArtifacts>
               <!-- Kie Server needed by Exec Server UI -->
               <compileSourcesArtifact>org.kie:kie-api</compileSourcesArtifact>
@@ -1803,7 +1803,7 @@
                 <include>src/main/webapp/org.kie.workbench.drools.KIEDroolsWebapp/</include>
                 <include>src/main/webapp/WEB-INF/deploy/</include>
                 <include>src/main/webapp/WEB-INF/classes/</include>
-                <include>src/main/webapp/WEB-INF/lib/</include>                
+                <include>src/main/webapp/WEB-INF/lib/</include>
                 <include>repositories/</include>
                 <include>.errai/</include>
                 <include>.niogit/**</include>
