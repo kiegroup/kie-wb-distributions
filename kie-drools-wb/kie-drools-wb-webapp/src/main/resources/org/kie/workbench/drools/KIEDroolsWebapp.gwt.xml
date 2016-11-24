@@ -106,7 +106,7 @@
 
   <!-- Stunner. -->
   <inherits name="org.kie.workbench.common.stunner.project.StunnerProjectClient"/>
-  <inherits name="org.kie.workbench.common.stunner.bpmn.StunnerBpmnProject"/>
+  <inherits name="org.kie.workbench.common.stunner.bpmn.StunnerBpmnProjectClient"/>
 
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/kie-drools-wb.css'/>
