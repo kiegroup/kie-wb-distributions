@@ -219,6 +219,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>VerifierWebWorkerServlet</servlet-name>
+    <servlet-class>org.drools.workbench.services.verifier.plugin.backend.VerifierWebWorkerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VerifierWebWorkerServlet</servlet-name>
+    <url-pattern>/verifier/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>PluginMediaServlet</servlet-name>
     <servlet-class>org.uberfire.ext.plugin.backend.PluginMediaServlet</servlet-class>
     <init-param>
@@ -601,6 +610,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/stencilset/*</url-pattern>
       <url-pattern>/plugins/*</url-pattern>
       <url-pattern>/maven2wb/*</url-pattern>
+      <url-pattern>/verifier/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
