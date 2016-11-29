@@ -15,33 +15,54 @@
  */
 package org.kie.wb.selenium.ui;
 
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.Persp;
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.wb.selenium.model.persps.HomePerspective;
+import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.*;
 
 /**
  * Login and verify each perspective can be navigated to and loads some content.
  */
 public class LoadAllPerspectivesIntegrationTest extends KieSeleniumTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger( LoadAllPerspectivesIntegrationTest.class );
+
     @Test
     public void allPerspectivesCanBeLoaded() {
         HomePerspective home = login.loginDefaultUser();
 
-        for (Persp<?> p : Persp.getAllPerspectives()) {
-            if (perspectiveInCurrentWebApp(p)) {
-                AbstractPerspective perspective = home.getNavbar().navigateTo(p);
-                assertTrue("Perspective " + p.getName() + " should be loaded", perspective.isDisplayed());
+        for ( Persp<?> p : Persp.getAllPerspectives() ) {
+            if ( perspectiveInCurrentWebApp( p ) ) {
+
+                Persp<?> _p = p;
+                LOG.info( "Checking perspective '" + p.getName() + ".." );
+                AbstractPerspective perspective = home.getNavbar().navigateTo( _p );
+
+                //ProjectAuthoring will direct to ProjectLibrary if there are no Projects in the workbench
+                if ( perspective instanceof ProjectAuthoringPerspective ) {
+                    if ( !perspective.isDisplayed() ) {
+                        LOG.info( "ProjectAuthoringPerspective not displayed. Trying fallback ProjectLibraryPerspective.." );
+                        _p = Persp.PROJECT_LIBRARY;
+                        perspective = home.getNavbar().navigateTo( _p );
+                    }
+                }
+                LOG.info( "Navigated to perspective '" + _p.getName() + ".." );
+
+                assertTrue( "Perspective " + _p.getName() + " should be loaded", perspective.isDisplayed() );
             }
         }
 
         home.logout();
     }
 
-    private boolean perspectiveInCurrentWebApp(Persp persp) {
+    private boolean perspectiveInCurrentWebApp( Persp persp ) {
         return IS_KIE_WB || !persp.isKieWbOnly();
     }
+
 }

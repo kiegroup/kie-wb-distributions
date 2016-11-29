@@ -20,46 +20,49 @@ import org.kie.wb.selenium.model.widgets.ModalDialog;
 import org.kie.wb.selenium.util.ByUtil;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-
-
 
 public class ImportExampleModal extends ModalDialog {
 
     @FindByJQuery("#repositoryDropdown > input")
     private WebElement repoUrlInput;
+
     @FindByJQuery("#targetRepositoryTextBox")
     private WebElement targetRepoInput;
+
     @FindByJQuery("#organizationalUnitsDropdown > input")
     private WebElement targetOrgUnit;
 
     public static ImportExampleModal newInstance() {
-        return ModalDialog.newInstance(ImportExampleModal.class, "Import Example");
+        return ModalDialog.newInstance( ImportExampleModal.class, "Import Example" );
     }
 
-    public void selectRepo(String repoUrl) {
+    public void selectRepo( String repoUrl ) {
         repoUrlInput.clear();
-        repoUrlInput.sendKeys(repoUrl);
+        repoUrlInput.sendKeys( repoUrl );
+        repoUrlInput.sendKeys( Keys.TAB );
         next();
-        Waits.elementPresent(By.id("projects"));
+        Waits.elementPresent( By.id( "projects" ) );
     }
 
-    public void selectProjects(String... projects) {
-        for (String proj : projects) {
-            selectProject(proj);
+    public void selectProjects( String... projects ) {
+        for ( String proj : projects ) {
+            selectProject( proj );
         }
         next();
     }
 
-    private void selectProject(String project) {
-        By projCheckboxLoc = ByUtil.xpath("//input[following-sibling::span[contains(text(),'%s')]]", project);
-        WebElement checkbox = Waits.elementPresent(projCheckboxLoc, 10);
+    private void selectProject( String project ) {
+        By projCheckboxLoc = ByUtil.xpath( "//input[following-sibling::span[contains(text(),'%s')]]", project );
+        WebElement checkbox = Waits.elementPresent( projCheckboxLoc, 10 );
         checkbox.click();
     }
 
-    public void setTargetRepoAndOrgUnit(String repoName, String orgUnit) {
-        targetRepoInput.sendKeys(repoName);
-        targetOrgUnit.sendKeys(orgUnit);
+    public void setTargetRepoAndOrgUnit( String repoName,
+                                         String orgUnit ) {
+        targetRepoInput.sendKeys( repoName );
+        targetOrgUnit.sendKeys( orgUnit );
         targetRepoInput.click(); //workaround to fire onchange event or something //TODO report not user friendly
         finish();
     }
