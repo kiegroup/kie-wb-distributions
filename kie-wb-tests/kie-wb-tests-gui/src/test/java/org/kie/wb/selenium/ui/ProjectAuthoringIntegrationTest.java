@@ -15,30 +15,45 @@
  */
 package org.kie.wb.selenium.ui;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
 import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
+import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.persps.authoring.ProjectEditor;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class ProjectAuthoringIntegrationTest extends KieSeleniumTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger( ProjectAuthoringIntegrationTest.class );
 
     @Test
     public void importAndBuildProject() {
         HomePerspective home = login.loginDefaultUser();
         ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
-        authoring.importExampleProject(Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation");
+
+        //ProjectAuthoring will direct to ProjectLibrary if there are no Projects in the workbench
+        if ( !authoring.isDisplayed() ) {
+            LOG.info( "ProjectAuthoringPerspective not displayed. Trying fallback ProjectLibraryPerspective.." );
+            ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
+            library.importExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
+        } else {
+            authoring.importExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
+        }
+
+        authoring = home.getNavbar().projectAuthoring();
         ProjectEditor pe = authoring.openProjectEditor();
         pe.buildAndDeploy();
-        Waits.pause(10_000); //Wait for project to build/deploy and appear in artifact repository perspective
+        Waits.pause( 10_000 ); //Wait for project to build/deploy and appear in artifact repository perspective
 
         ArtifactRepositoryPerspective artifactRepo = authoring.getNavbar().artifactRepository();
-        assertThat(artifactRepo.isArtifactPresent("org.jbpm:Evaluation:1.0"))
-                .as("project artifact should be present after build & deploy").isTrue();
+        assertThat( artifactRepo.isArtifactPresent( "org.jbpm:Evaluation:1.0" ) )
+                .as( "project artifact should be present after build & deploy" ).isTrue();
     }
 }

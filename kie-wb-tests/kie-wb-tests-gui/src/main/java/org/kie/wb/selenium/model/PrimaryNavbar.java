@@ -32,6 +32,7 @@ import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
 import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
 import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
+import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
 import org.kie.wb.selenium.model.persps.TasksPerspective;
 import org.kie.wb.selenium.model.persps.TimelinePerspective;
@@ -74,6 +75,10 @@ public class PrimaryNavbar {
 
     public ProjectAuthoringPerspective projectAuthoring() {
         return navigateTo(Persp.PROJECT_AUTHORING);
+    }
+
+    public ProjectLibraryPerspective projectLibrary() {
+        return navigateTo(Persp.PROJECT_LIBRARY);
     }
 
     public ContributorsPerspective contributors() {

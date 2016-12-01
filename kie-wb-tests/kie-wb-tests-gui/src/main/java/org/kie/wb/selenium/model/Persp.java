@@ -33,6 +33,7 @@ import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
 import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
 import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
+import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
 import org.kie.wb.selenium.model.persps.TasksPerspective;
 import org.kie.wb.selenium.model.persps.TimelinePerspective;
@@ -50,6 +51,9 @@ public class Persp<T extends AbstractPerspective> {
 
     public static final Persp<ProjectAuthoringPerspective> PROJECT_AUTHORING
             = new Persp<>("Authoring", "Project Authoring", ProjectAuthoringPerspective.class);
+
+    public static final Persp<ProjectLibraryPerspective> PROJECT_LIBRARY
+            = new Persp<>("Authoring", "Project Authoring", ProjectLibraryPerspective.class);
 
     public static final Persp<ContributorsPerspective> CONTRIBUTORS
             = new Persp<>("Authoring", "Contributors", ContributorsPerspective.class);

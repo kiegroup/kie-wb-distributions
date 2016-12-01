@@ -27,30 +27,34 @@ import org.openqa.selenium.support.FindBy;
 
 public class ProjectAuthoringPerspective extends AbstractPerspective {
 
-    private static final By PROJECT_EXPLORER_TITLE = By.xpath("//h3[contains(text(),'Project Explorer')]");
-    //Project explorer breadcrumb toggle, whose presence indicates that PEX content has been loaded
-    private static final By PEX_BREADCRUMB_TOGGLE = By.cssSelector(".fa-chevron-down");
+    private static final By PROJECT_EXPLORER_TITLE = By.xpath( "//h3[contains(text(),'Project Explorer')]" );
 
     @FindByJQuery(".nav.uf-perspective-context-menu")
     private ContextNavbar contextNavbar;
+
     @FindBy(xpath = "//div[div/h3[contains(text(),'Project Explorer')]]")
     private ProjectExplorer projectExplorer;
 
     @Override
     public void waitForLoaded() {
-        Waits.elementPresent(PEX_BREADCRUMB_TOGGLE, 10);
+        //Don't check for specific elements to appear as the ProjectLibraryPerspective may have been shown
+        Waits.pause( 500 );
     }
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(PROJECT_EXPLORER_TITLE);
+        //Wait, with time-out, in case the ProjectLibraryPerspective was shown instead
+        return Waits.isElementPresent( PROJECT_EXPLORER_TITLE, 2 );
     }
 
-    public void importExampleProject(Repository repo, String targetRepo, String targetOrgUnit, String... projects) {
+    public void importExampleProject( Repository repo,
+                                      String targetRepo,
+                                      String targetOrgUnit,
+                                      String... projects ) {
         ImportExampleModal modal = contextNavbar.importExample();
-        modal.selectRepo(repo.getUrl());
-        modal.selectProjects(projects);
-        modal.setTargetRepoAndOrgUnit(targetRepo, targetOrgUnit);
+        modal.selectRepo( repo.getUrl() );
+        modal.selectProjects( projects );
+        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
     }
 
     public ProjectExplorer getProjectExplorer() {
@@ -59,6 +63,6 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
 
     public ProjectEditor openProjectEditor() {
         getProjectExplorer().openProjectEditor();
-        return createPanel(ProjectEditor.class, "Project:");
+        return createPanel( ProjectEditor.class, "Project:" );
     }
 }
