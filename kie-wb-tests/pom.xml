@@ -202,12 +202,14 @@
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-distribution-wars</artifactId>
           <classifier>${deployable.classifier.wildfly10}</classifier>
+          <scope>test</scope>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-distribution-wars</artifactId>
           <classifier>${deployable.classifier.wildfly10}</classifier>
+          <scope>test</scope>
           <type>war</type>
         </dependency>
       </dependencies>
