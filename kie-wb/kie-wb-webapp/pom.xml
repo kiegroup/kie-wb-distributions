@@ -668,11 +668,6 @@
     <!-- Drools Workbench Services -->
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-wb-verifier-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.drools</groupId>
       <artifactId>drools-wb-verifier-backend</artifactId>
     </dependency>
 

@@ -573,11 +573,6 @@
     <!-- Drools Workbench Services -->
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-wb-verifier-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.drools</groupId>
       <artifactId>drools-wb-verifier-backend</artifactId>
     </dependency>
 
@@ -1322,6 +1317,7 @@
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
       <artifactId>kie-wb-common-dynamic-forms-client</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
