@@ -139,7 +139,7 @@
 
   <context-param>
     <param-name>resteasy.resources</param-name>
-    <param-value>org.kie.server.controller.rest.RestKieServerControllerImpl,org.kie.server.controller.rest.RestSpecManagementServiceImpl,org.guvnor.rest.backend.ProjectResource,org.kie.server.controller.rest.RestKieServerControllerAdminImpl</param-value>
+    <param-value>org.kie.server.controller.rest.RestKieServerControllerImpl,org.kie.server.controller.rest.RestSpecManagementServiceImpl,org.guvnor.rest.backend.ProjectResource</param-value>
   </context-param>
 
   <servlet>
