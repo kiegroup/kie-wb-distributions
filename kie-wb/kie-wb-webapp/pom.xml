@@ -668,8 +668,12 @@
     <!-- Drools Workbench Services -->
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-wb-verifier-api</artifactId>
+      <artifactId>drools-wb-verifier-client</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-verifier-backend</artifactId>
     </dependency>
 
     <!-- Drools Workbench Screens -->
@@ -2053,6 +2057,7 @@
 
               <!-- Drools WB -->
               <compileSourcesArtifact>org.drools:drools-wb-verifier-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.drools:drools-wb-verifier-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-enum-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-enum-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-drl-text-editor-api</compileSourcesArtifact>
