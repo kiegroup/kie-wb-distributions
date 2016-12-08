@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
+import org.kie.wb.selenium.model.persps.AdminPagePerspective;
 import org.kie.wb.selenium.model.persps.AdministrationPerspective;
 import org.kie.wb.selenium.model.persps.AppsPerspective;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
@@ -48,6 +49,9 @@ public class Persp<T extends AbstractPerspective> {
 
     public static final Persp<PeoplePerspective> PEOPLE
             = new Persp<>("Home", "People", PeoplePerspective.class);
+
+    public static final Persp<AdminPagePerspective> ADMIN
+            = new Persp<>("Home", "Admin", AdminPagePerspective.class);
 
     public static final Persp<ProjectAuthoringPerspective> PROJECT_AUTHORING
             = new Persp<>("Authoring", "Project Authoring", ProjectAuthoringPerspective.class);
@@ -92,7 +96,7 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Extensions", "Data Sets", DataSetsPerspective.class);
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPS = Collections.unmodifiableList(Arrays.asList(
-            HOME_PAGE, TIMELINE, PEOPLE, PROJECT_AUTHORING, CONTRIBUTORS, ARTIFACT_REPOSITORY, ADMINISTRATION,
+            HOME_PAGE, TIMELINE, PEOPLE, ADMIN, PROJECT_AUTHORING, CONTRIBUTORS, ARTIFACT_REPOSITORY, ADMINISTRATION,
             EXECUTION_SERVERS, JOBS, PROCESS_DEFINITIONS, PROCESS_INSTANCES, TASKS,
             PROCESS_AND_TASK_DASHBOARD, PLUGIN_MANAGEMENT, APPS, DATA_SETS
     ));
