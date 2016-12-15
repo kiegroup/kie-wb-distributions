@@ -19,6 +19,7 @@
           <exclude>WEB-INF/classes/application-roles.properties</exclude>
           <exclude>WEB-INF/classes/application-users.properties</exclude>
 
+          <exclude>WEB-INF/classes/META-INF/persistence.xml</exclude>
           <exclude>WEB-INF/bpms-jms.xml</exclude>
           <exclude>WEB-INF/jboss-deployment-structure.xml</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
@@ -30,6 +31,13 @@
     </dependencySet>
     <dependencySet>
       <includes>
+        <!-- Transitive deps of Hibernate 4 -->
+        <include>antlr:antlr</include>
+        <!-- End of Hibernate 4 transitive deps -->
+        <include>org.hibernate:hibernate-entitymanager</include>
+        <include>org.hibernate:hibernate-core</include>
+        <include>org.hibernate.common:hibernate-commons-annotations</include>
+
         <include>org.uberfire:uberfire-security-management-wildfly10</include>
       </includes>
       <outputDirectory>WEB-INF/lib</outputDirectory>

@@ -94,7 +94,7 @@ public abstract class AbstractResponseHandler<T,P> implements ResponseHandler<T>
       
         if( status != responseStatus ) { 
             if( ! myContentType.equals(contentType) ) { 
-                if( contentType.toString().contains("text/html") ) { 
+                if( contentType.toString().contains("text/html") || contentType.toString().contains("text/plain") ) {
                     StringWriter writer = new StringWriter();
                     char[] buffer = new char[1024];
                     for (int n; (n = reader.read(buffer)) != -1; ) {
@@ -105,7 +105,7 @@ public abstract class AbstractResponseHandler<T,P> implements ResponseHandler<T>
                     Document doc = Jsoup.parse(content);
                     String errorBody = doc.body().text();
                     fail( responseStatus + ": " + errorBody + " [expected " + status + "]" );
-                }  else { 
+                }  else {
                     assertEquals("Response status [content type: " + contentType.toString() + "]", status, responseStatus);
                 }
             } else if( contentType.toString().contains("text/plain") ) { 
