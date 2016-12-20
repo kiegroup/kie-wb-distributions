@@ -471,6 +471,9 @@ profile in pom.xml to use that. -->
 minutes. it is now 24 hours. -->
   <session-config>
     <session-timeout>1440</session-timeout>
+    <cookie-config>
+      <http-only>true</http-only>
+    </cookie-config>
   </session-config>
   <!-- jBoss' default mapping is to "image/svg", which causes the client
 not to parse the SVG content as XML. However, the Oryx Editor client relies
