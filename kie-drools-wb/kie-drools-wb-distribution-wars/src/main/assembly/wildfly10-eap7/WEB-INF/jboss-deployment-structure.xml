@@ -19,6 +19,11 @@
   -->
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
   <deployment>
+    <exclusions>
+      <!-- Hibernate 4 is bundled in the WAR, so the default Hibernate 5 needs to be excluded (disabled) -->
+      <module name="org.hibernate" slot="main"/>
+      <module name="org.hibernate.commons-annotations" slot="main"/>
+    </exclusions>
     <dependencies>
       <!-- IMPORTANT: when adding dependency (module) here, make sure it is a public one.
            Do not add private modules as there is no guarantee they won't be changed or
@@ -37,8 +42,6 @@
       <module name="org.apache.cxf"/>
       <module name="org.apache.xalan"/>
       <module name="org.apache.xerces"/>
-      <module name="org.hibernate"/>
-      <module name="org.hibernate.commons-annotations"/>
       <module name="org.hibernate.validator"/>
       <module name="org.jboss.ejb-client"/>
       <module name="org.jboss.logging"/>
