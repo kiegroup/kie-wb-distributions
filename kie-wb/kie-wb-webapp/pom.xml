@@ -1599,6 +1599,7 @@
               -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Dorg.kie.demo=true 
               -Dorg.kie.clean.onstartup=true -Dorg.uberfire.nio.git.ssh.enabled=false -Djava.util.prefs.syncInterval=2000000
               -Dorg.uberfire.async.executor.safemode=true
+              -Derrai.marshalling.very_short_names=${errai.marshalling.very_short_names}
             </extraJvmArgs>
             <draftCompile>true</draftCompile>
             <module>org.kie.workbench.FastCompiledKIEWebapp</module>
