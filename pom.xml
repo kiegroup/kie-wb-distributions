@@ -31,6 +31,7 @@
 
   <properties>
     <jdk.min.version>1.7.0</jdk.min.version>
+    <errai.marshalling.very_short_names>false</errai.marshalling.very_short_names>
   </properties>
 
   <repositories>
@@ -147,6 +148,9 @@
           <name>productized</name>
         </property>
       </activation>
+      <properties>
+        <errai.marshalling.very_short_names>true</errai.marshalling.very_short_names>
+      </properties>
       <modules>
         <module>kie-wb-distribution-home</module>
       </modules>
