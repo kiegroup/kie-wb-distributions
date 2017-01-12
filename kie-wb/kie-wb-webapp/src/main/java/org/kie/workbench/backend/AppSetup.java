@@ -24,7 +24,6 @@ import javax.inject.Named;
 import org.drools.workbench.screens.workitems.backend.server.WorkbenchConfigurationHelper;
 import org.drools.workbench.screens.workitems.service.WorkItemsEditorService;
 import org.guvnor.structure.organizationalunit.OrganizationalUnitService;
-import org.guvnor.structure.repositories.Repository;
 import org.guvnor.structure.repositories.RepositoryService;
 import org.guvnor.structure.server.config.ConfigGroup;
 import org.guvnor.structure.server.config.ConfigType;
@@ -48,11 +47,6 @@ public class AppSetup extends BaseAppSetup {
 
     private static final Logger logger = LoggerFactory.getLogger( AppSetup.class );
 
-    // default repository section - start
-    private static final String OU_NAME = "demo";
-    private static final String OU_OWNER = "demo@demo.org";
-    // default repository section - end
-
     private Event<ApplicationStarted> applicationStartedEvent;
 
     private WorkbenchConfigurationHelper workbenchConfigurationHelper;
@@ -75,32 +69,11 @@ public class AppSetup extends BaseAppSetup {
     }
 
     @PostConstruct
-    public void assertPlayground() {
+    public void init() {
         try {
             configurationService.startBatch();
 
-            final String exampleRepositoriesRoot = System.getProperty( "org.kie.example.repositories" );
-            if ( !( exampleRepositoriesRoot == null || "".equalsIgnoreCase( exampleRepositoriesRoot ) ) ) {
-                loadExampleRepositories( exampleRepositoriesRoot,
-                                         OU_NAME,
-                                         OU_OWNER,
-                                         GIT_SCHEME );
-
-            } else if ( "true".equalsIgnoreCase( System.getProperty( "org.kie.example" ) ) ) {
-                final Repository repository = createRepository( "repository1", GIT_SCHEME, null, "", "" );
-
-                createOU( repository,
-                        "example",
-                        "" );
-
-                createProject( repository,
-                                "org.kie.example",
-                                "project1",
-                                "1.0.0-SNAPSHOT" );
-            }
-
             // Setup mandatory properties for Drools-Workbench
-
             setupConfigurationGroup( ConfigType.GLOBAL,
                                      GLOBAL_SETTINGS,
                                      getGlobalConfiguration() );

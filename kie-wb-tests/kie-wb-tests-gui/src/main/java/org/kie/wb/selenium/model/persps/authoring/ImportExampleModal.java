@@ -25,7 +25,13 @@ import org.openqa.selenium.WebElement;
 
 public class ImportExampleModal extends ModalDialog {
 
-    @FindByJQuery("#repositoryDropdown > input")
+    @FindByJQuery( "#stockRadio" )
+    private WebElement stockRepositoryRadioOption;
+
+    @FindByJQuery( "#customRadio" )
+    private WebElement customRepositoryRadioOption;
+
+    @FindByJQuery("#repositoryUrlInput")
     private WebElement repoUrlInput;
 
     @FindByJQuery("#targetRepositoryTextBox")
@@ -38,7 +44,14 @@ public class ImportExampleModal extends ModalDialog {
         return ModalDialog.newInstance( ImportExampleModal.class, "Import Example" );
     }
 
-    public void selectRepo( String repoUrl ) {
+    public void selectStockRepository() {
+        stockRepositoryRadioOption.click();
+        next();
+        Waits.elementPresent( By.id( "projects" ) );
+    }
+
+    public void selectCustomRepository( String repoUrl ) {
+        customRepositoryRadioOption.click();
         repoUrlInput.clear();
         repoUrlInput.sendKeys( repoUrl );
         repoUrlInput.sendKeys( Keys.TAB );

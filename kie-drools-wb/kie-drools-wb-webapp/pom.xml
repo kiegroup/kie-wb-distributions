@@ -565,6 +565,12 @@
       <artifactId>kie-wb-common-datasource-mgmt-dashbuilder</artifactId>
     </dependency>
 
+    <!-- KIE Workbench Playground Repository -->
+    <dependency>
+      <groupId>org.kie.workbench.playground</groupId>
+      <artifactId>playground-parent</artifactId>
+    </dependency>
+
     <!-- Drools Workbench Services -->
     <dependency>
       <groupId>org.drools</groupId>

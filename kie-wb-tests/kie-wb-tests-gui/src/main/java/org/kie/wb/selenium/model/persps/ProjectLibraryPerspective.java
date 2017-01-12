@@ -40,12 +40,21 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
         return Waits.isElementPresent( PROJECT_LIBRARY_HOLDER );
     }
 
-    public void importExampleProject( final Repository repo,
-                                      final String targetRepo,
-                                      final String targetOrgUnit,
-                                      final String... projects ) {
+    public void importStockExampleProject( String targetRepo,
+                                           String targetOrgUnit,
+                                           String... projects ) {
         ImportExampleModal modal = importExample();
-        modal.selectRepo( repo.getUrl() );
+        modal.selectStockRepository();
+        modal.selectProjects( projects );
+        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
+    }
+
+    public void importCustomExampleProject( Repository repo,
+                                            String targetRepo,
+                                            String targetOrgUnit,
+                                            String... projects ) {
+        ImportExampleModal modal = importExample();
+        modal.selectCustomRepository( repo.getUrl() );
         modal.selectProjects( projects );
         modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
     }
