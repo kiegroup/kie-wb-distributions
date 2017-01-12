@@ -240,111 +240,111 @@
     <!-- jBPM Console Panels -->
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-client</artifactId>
+      <artifactId>jbpm-wb-human-tasks-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-backend</artifactId>
+      <artifactId>jbpm-wb-human-tasks-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-kie-server-backend</artifactId>
+      <artifactId>jbpm-wb-kie-server-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-process-runtime-client</artifactId>
+      <artifactId>jbpm-wb-process-runtime-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-process-runtime-backend</artifactId>
+      <artifactId>jbpm-wb-process-runtime-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-forms-api</artifactId>
+      <artifactId>jbpm-wb-human-tasks-forms-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-forms-client</artifactId>
+      <artifactId>jbpm-wb-human-tasks-forms-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-forms-backend</artifactId>
+      <artifactId>jbpm-wb-human-tasks-forms-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-executor-service-client</artifactId>
+      <artifactId>jbpm-wb-executor-service-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-executor-service-backend</artifactId>
+      <artifactId>jbpm-wb-executor-service-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-generic-client</artifactId>
+      <artifactId>jbpm-wb-generic-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-generic-forms-client</artifactId>
+      <artifactId>jbpm-wb-generic-forms-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-generic-forms-api</artifactId>
+      <artifactId>jbpm-wb-generic-forms-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-generic-forms-backend</artifactId>
+      <artifactId>jbpm-wb-generic-forms-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-process-runtime-forms-client</artifactId>
+      <artifactId>jbpm-wb-process-runtime-forms-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-process-runtime-forms-backend</artifactId>
+      <artifactId>jbpm-wb-process-runtime-forms-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-workbench-integration-client</artifactId>
+      <artifactId>jbpm-wb-workbench-integration-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-workbench-integration-backend</artifactId>
+      <artifactId>jbpm-wb-workbench-integration-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-dashboard-api</artifactId>
+      <artifactId>jbpm-wb-dashboard-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-dashboard-backend</artifactId>
+      <artifactId>jbpm-wb-dashboard-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-dashboard-client</artifactId>
+      <artifactId>jbpm-wb-dashboard-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-workbench-forms-integration-api</artifactId>
+      <artifactId>jbpm-wb-workbench-forms-integration-api</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-workbench-forms-integration-backend</artifactId>
+      <artifactId>jbpm-wb-workbench-forms-integration-backend</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-workbench-forms-integration-client</artifactId>
+      <artifactId>jbpm-wb-workbench-forms-integration-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -1256,21 +1256,21 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-forms-modeler-client</artifactId>
+      <artifactId>jbpm-wb-human-tasks-forms-modeler-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-forms-modeler-api</artifactId>
+      <artifactId>jbpm-wb-human-tasks-forms-modeler-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-forms-modeler-backend</artifactId>
+      <artifactId>jbpm-wb-human-tasks-forms-modeler-backend</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-data-filters-client</artifactId>
+      <artifactId>jbpm-wb-data-filters-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -1441,19 +1441,19 @@
     <!-- org.jbpm -->
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-kie-server-api</artifactId>
+      <artifactId>jbpm-wb-kie-server-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-executor-service-api</artifactId>
+      <artifactId>jbpm-wb-executor-service-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-human-tasks-api</artifactId>
+      <artifactId>jbpm-wb-human-tasks-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-workbench-integration-api</artifactId>
+      <artifactId>jbpm-wb-workbench-integration-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -1465,11 +1465,11 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-generic-api</artifactId>
+      <artifactId>jbpm-wb-generic-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-process-runtime-api</artifactId>
+      <artifactId>jbpm-wb-process-runtime-api</artifactId>
     </dependency>
 
     <!-- org.kie.uberfire -->
@@ -1939,35 +1939,35 @@
               <compileSourcesArtifact>org.kie.server:kie-server-controller-api</compileSourcesArtifact>
 
               <!-- jBPM Console -->
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-forms-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-forms-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-forms-modeler-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-forms-modeler-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-forms-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-kie-server-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-forms-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-generic-forms-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-integration-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-integration-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-executor-service-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-executor-service-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-forms-integration-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-workbench-forms-integration-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-modeler-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-modeler-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-forms-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-kie-server-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-forms-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-forms-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-integration-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-integration-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-executor-service-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-executor-service-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-forms-integration-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-forms-integration-client</compileSourcesArtifact>
 
               <!-- jBPM Designer -->
               <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
 
               <!-- jBPM Dashboard integration-->
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-dashboard-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-dashboard-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-console-ng-data-filters-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-dashboard-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-dashboard-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-data-filters-client</compileSourcesArtifact>
 
               <!-- Dashbuilder -->
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-json</compileSourcesArtifact>

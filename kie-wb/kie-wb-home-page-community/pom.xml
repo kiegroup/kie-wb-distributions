@@ -33,7 +33,7 @@
 
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-console-ng-dashboard-api</artifactId>
+      <artifactId>jbpm-wb-dashboard-api</artifactId>
     </dependency>
 
     <dependency>
