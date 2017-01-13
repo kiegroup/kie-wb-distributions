@@ -311,12 +311,12 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-workbench-integration-client</artifactId>
+      <artifactId>jbpm-wb-integration-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-workbench-integration-backend</artifactId>
+      <artifactId>jbpm-wb-integration-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -1453,7 +1453,7 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-workbench-integration-api</artifactId>
+      <artifactId>jbpm-wb-integration-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -1953,8 +1953,8 @@
               <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-forms-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-forms-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-integration-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-integration-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-integration-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-integration-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-executor-service-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-executor-service-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-forms-integration-api</compileSourcesArtifact>
