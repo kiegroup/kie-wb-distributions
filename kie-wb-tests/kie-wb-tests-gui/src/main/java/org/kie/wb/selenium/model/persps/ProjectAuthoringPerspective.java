@@ -47,12 +47,21 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
         return Waits.isElementPresent( PROJECT_EXPLORER_TITLE, 2 );
     }
 
-    public void importExampleProject( Repository repo,
-                                      String targetRepo,
-                                      String targetOrgUnit,
-                                      String... projects ) {
+    public void importStockExampleProject( String targetRepo,
+                                           String targetOrgUnit,
+                                           String... projects ) {
         ImportExampleModal modal = contextNavbar.importExample();
-        modal.selectRepo( repo.getUrl() );
+        modal.selectStockRepository();
+        modal.selectProjects( projects );
+        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
+    }
+
+    public void importCustomExampleProject( Repository repo,
+                                            String targetRepo,
+                                            String targetOrgUnit,
+                                            String... projects ) {
+        ImportExampleModal modal = contextNavbar.importExample();
+        modal.selectCustomRepository( repo.getUrl() );
         modal.selectProjects( projects );
         modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
     }

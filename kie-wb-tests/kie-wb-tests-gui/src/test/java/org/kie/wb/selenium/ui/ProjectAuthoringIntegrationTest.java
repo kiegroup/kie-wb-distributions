@@ -34,7 +34,7 @@ public class ProjectAuthoringIntegrationTest extends KieSeleniumTest {
     private static final Logger LOG = LoggerFactory.getLogger( ProjectAuthoringIntegrationTest.class );
 
     @Test
-    public void importAndBuildProject() {
+    public void importAndBuildProjectFromStockRepository() {
         HomePerspective home = login.loginDefaultUser();
         ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
 
@@ -42,18 +42,41 @@ public class ProjectAuthoringIntegrationTest extends KieSeleniumTest {
         if ( !authoring.isDisplayed() ) {
             LOG.info( "ProjectAuthoringPerspective not displayed. Trying fallback ProjectLibraryPerspective.." );
             ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
-            library.importExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
+            library.importStockExampleProject( "MyRepo", "MyOrgUnit", "optacloud" );
         } else {
-            authoring.importExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
+            authoring.importStockExampleProject( "MyRepo", "MyOrgUnit", "optacloud" );
         }
+        deployAndCheckArtifact( home, "optacloud:optacloud:1.0.0-SNAPSHOT" );
 
-        authoring = home.getNavbar().projectAuthoring();
+        home.logout();
+    }
+
+    private void deployAndCheckArtifact(HomePerspective home, String artifact) {
+        ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
         ProjectEditor pe = authoring.openProjectEditor();
         pe.buildAndDeploy();
         Waits.pause( 10_000 ); //Wait for project to build/deploy and appear in artifact repository perspective
 
         ArtifactRepositoryPerspective artifactRepo = authoring.getNavbar().artifactRepository();
-        assertThat( artifactRepo.isArtifactPresent( "org.jbpm:Evaluation:1.0" ) )
+        assertThat( artifactRepo.isArtifactPresent( artifact ) )
                 .as( "project artifact should be present after build & deploy" ).isTrue();
+    }
+
+    @Test
+    public void importAndBuildProjectFromCustomRepository() {
+        HomePerspective home = login.loginDefaultUser();
+        ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
+
+        //ProjectAuthoring will direct to ProjectLibrary if there are no Projects in the workbench
+        if ( !authoring.isDisplayed() ) {
+            LOG.info( "ProjectAuthoringPerspective not displayed. Trying fallback ProjectLibraryPerspective.." );
+            ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
+            library.importCustomExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
+        } else {
+            authoring.importCustomExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
+        }
+        deployAndCheckArtifact( home, "org.jbpm:Evaluation:1.0" );
+
+        home.logout();
     }
 }
