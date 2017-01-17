@@ -33,7 +33,7 @@
   <inherits name="org.jbpm.console.ng.es.JbpmConsoleNGExecutorServiceClient"/>
   <inherits name="org.jbpm.console.ng.gc.JbpmConsoleNGGenericClient"/>
   <inherits name="org.jbpm.console.ng.ht.forms.JbpmConsoleNGHumanTasksFormsClient"/>
-  <inherits name="org.jbpm.console.ng.ht.forms.modeler.JbpmConsoleNGHumanTasksFormsModelerClient"/>
+  <inherits name="org.jbpm.workbench.forms.modeler.JbpmWorkbenchFormsModelerClient"/>
   <inherits name="org.jbpm.workbench.wi.JbpmWorkbenchIntegrationClient"/>
   <inherits name="org.jbpm.console.ng.df.JbpmConsoleNGDataFiltersClient"/>
   <inherits name="org.jbpm.console.ng.workbench.forms.display.JBPMConsoleNGWorkbenchFormsIntegrationClient"/>

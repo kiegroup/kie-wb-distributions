@@ -1256,16 +1256,16 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-human-tasks-forms-modeler-client</artifactId>
+      <artifactId>jbpm-wb-forms-modeler-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-human-tasks-forms-modeler-api</artifactId>
+      <artifactId>jbpm-wb-forms-modeler-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-human-tasks-forms-modeler-backend</artifactId>
+      <artifactId>jbpm-wb-forms-modeler-backend</artifactId>
     </dependency>
 
     <dependency>
@@ -1943,8 +1943,8 @@
               <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-modeler-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-modeler-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-forms-modeler-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-forms-modeler-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-forms-client</compileSourcesArtifact>
