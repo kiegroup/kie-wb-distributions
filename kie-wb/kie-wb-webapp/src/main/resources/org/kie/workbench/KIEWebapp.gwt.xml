@@ -27,7 +27,7 @@
   <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
 
   <!-- jbpm-wb -->
-  <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksClient"/>
+  <inherits name="org.jbpm.workbench.ht.JbpmWorkbenchHumanTasksClient"/>
   <inherits name="org.jbpm.workbench.pr.JbpmWorkbenchProcessRuntimeClient"/>
   <inherits name="org.jbpm.console.ng.ks.JbpmConsoleNGKieServerAPI"/>
   <inherits name="org.jbpm.workbench.es.JbpmWorkbenchExecutorServiceClient"/>
