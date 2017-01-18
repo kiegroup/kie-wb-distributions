@@ -262,19 +262,6 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-human-tasks-forms-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-human-tasks-forms-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-human-tasks-forms-backend</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
       <artifactId>jbpm-wb-executor-service-client</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -289,25 +276,16 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-generic-forms-client</artifactId>
+      <artifactId>jbpm-wb-forms-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-generic-forms-api</artifactId>
+      <artifactId>jbpm-wb-forms-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-generic-forms-backend</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-process-runtime-forms-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-process-runtime-forms-backend</artifactId>
+      <artifactId>jbpm-wb-forms-backend</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -329,22 +307,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-wb-dashboard-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-workbench-forms-integration-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-workbench-forms-integration-backend</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-wb-workbench-forms-integration-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -1947,24 +1909,19 @@
               <!-- jBPM Console -->
               <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-human-tasks-forms-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-forms-modeler-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-forms-modeler-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-process-runtime-forms-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-kie-server-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-forms-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-generic-forms-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-forms-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.jbpm:jbpm-wb-forms-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-integration-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-integration-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-executor-service-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-wb-executor-service-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-forms-integration-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-wb-workbench-forms-integration-client</compileSourcesArtifact>
 
               <!-- jBPM Designer -->
               <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
