@@ -970,14 +970,14 @@
       <artifactId>uberfire-apps-backend</artifactId>
     </dependency>
 
-    <!-- Kie UF Extensions -->
+    <!-- UF Extensions -->
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-social-activities-api</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-social-activities-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-social-activities-client</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-social-activities-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -1707,9 +1707,9 @@
               <compileSourcesArtifact>org.uberfire:uberfire-wires-core-trees</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-wires-core-grids</compileSourcesArtifact>
 
-              <!-- KIE UberFire extensions -->
-              <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-social-activities-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-social-activities-client</compileSourcesArtifact>
+              <!-- Social UberFire extensions -->
+              <compileSourcesArtifact>org.uberfire:uberfire-social-activities-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-social-activities-client</compileSourcesArtifact>
 
               <!-- Forms -->
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-api</compileSourcesArtifact>

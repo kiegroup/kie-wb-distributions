@@ -1440,10 +1440,9 @@
       <artifactId>jbpm-wb-process-runtime-api</artifactId>
     </dependency>
 
-    <!-- org.kie.uberfire -->
     <dependency>
-      <groupId>org.kie.uberfire</groupId>
-      <artifactId>kie-uberfire-social-activities-api</artifactId>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-social-activities-api</artifactId>
     </dependency>
 
     <!-- org.kie.workbench -->
@@ -2098,8 +2097,8 @@
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-security-management</compileSourcesArtifact>
 
               <!-- KIE UberFire extensions -->
-              <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-social-activities-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.kie.uberfire:kie-uberfire-social-activities-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-social-activities-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-social-activities-client</compileSourcesArtifact>
 
               <!-- Forms Engine -->
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-api</compileSourcesArtifact>
