@@ -29,7 +29,7 @@
   <!-- jbpm-wb -->
   <inherits name="org.jbpm.workbench.ht.JbpmWorkbenchHumanTasksClient"/>
   <inherits name="org.jbpm.workbench.pr.JbpmWorkbenchProcessRuntimeClient"/>
-  <inherits name="org.jbpm.console.ng.ks.JbpmConsoleNGKieServerAPI"/>
+  <inherits name="org.jbpm.workbench.ks.JbpmWorkbenchKieServerAPI"/>
   <inherits name="org.jbpm.workbench.es.JbpmWorkbenchExecutorServiceClient"/>
   <inherits name="org.jbpm.workbench.common.JbpmWorkbenchCommonClient"/>
   <inherits name="org.jbpm.workbench.wi.JbpmWorkbenchIntegrationClient"/>
