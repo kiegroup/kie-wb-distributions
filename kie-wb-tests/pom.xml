@@ -23,6 +23,7 @@
   <properties>
     <deployable.classifier.tomcat8>tomcat7</deployable.classifier.tomcat8>
     <deployable.classifier.wildfly10>wildfly10</deployable.classifier.wildfly10>
+    <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
     <deployable.context>kie-wb</deployable.context>
 
     <deployable.groupId>org.kie</deployable.groupId>
@@ -242,6 +243,73 @@
                     <groupId>${deployable.groupId}</groupId>
                     <artifactId>${deployable.artifactId}</artifactId>
                     <classifier>${deployable.classifier.wildfly10}</classifier>
+                    <type>war</type>
+                  </deployable>
+                </deployables>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+    <profile>
+      <id>eap7</id>
+      <activation>
+        <property>
+          <name>container</name>
+          <value>eap7</value>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-distribution-wars</artifactId>
+          <classifier>${deployable.classifier.eap7}</classifier>
+          <scope>test</scope>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <classifier>${deployable.classifier.eap7}</classifier>
+          <scope>test</scope>
+          <type>war</type>
+        </dependency>
+      </dependencies>
+      <properties>
+        <!-- The EAP 7.x binary can't be anonymously downloaded due to license issues. It can be downloaded manually
+             and for free (e.g. from http://www.jboss.org/products/eap/download/) and the zip location needs to be specified
+             here or via system property when running the build (don't forget to use the `file://` prefix when
+             referencing the zip from local filesystem). -->
+        <eap7.download.url>valid-url-for-eap-7-zip-needs-to-be-specified-here-or-via-cmd-line</eap7.download.url>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.cargo</groupId>
+              <artifactId>cargo-maven2-plugin</artifactId>
+              <configuration>
+                <container>
+                  <type>installed</type>
+                  <!-- WildFly ~= EAP 7, so just reuse the wildfly10x containerId -->
+                  <containerId>wildfly10x</containerId>
+                  <type>installed</type>
+                  <zipUrlInstaller>
+                    <url>${eap7.download.url}</url>
+                  </zipUrlInstaller>
+                </container>
+                <configuration>
+                  <properties>
+                    <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
+                    <cargo.jvmargs>-Xmx1024m</cargo.jvmargs>
+                  </properties>
+                </configuration>
+                <deployables>
+                  <deployable>
+                    <groupId>${deployable.groupId}</groupId>
+                    <artifactId>${deployable.artifactId}</artifactId>
+                    <classifier>${deployable.classifier.eap7}</classifier>
                     <type>war</type>
                   </deployable>
                 </deployables>
