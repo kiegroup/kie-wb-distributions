@@ -57,7 +57,7 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Authoring", "Project Authoring", ProjectAuthoringPerspective.class);
 
     public static final Persp<ProjectLibraryPerspective> PROJECT_LIBRARY
-            = new Persp<>("Authoring", "Project Authoring", ProjectLibraryPerspective.class);
+            = new Persp<>("Authoring", "Library", ProjectLibraryPerspective.class);
 
     public static final Persp<ContributorsPerspective> CONTRIBUTORS
             = new Persp<>("Authoring", "Contributors", ContributorsPerspective.class);

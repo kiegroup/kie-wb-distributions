@@ -31,7 +31,7 @@ public class ModalDialog extends PageObject {
 
     public static <T extends ModalDialog> T newInstance(Class<T> pageFragmentClass, String modalTitle) {
         By modalRootLocator = jquery(".modal-content:has(.modal-header:contains('%s'))", modalTitle);
-        WebElement modalRoot = Waits.elementPresent(modalRootLocator, 3);
+        WebElement modalRoot = Waits.elementPresent(modalRootLocator);
         return Graphene.createPageFragment(pageFragmentClass, modalRoot);
     }
 
