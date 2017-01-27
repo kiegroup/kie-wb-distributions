@@ -15,6 +15,8 @@
  */
 package org.kie.wb.selenium.ui;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
@@ -33,19 +35,24 @@ public class ProjectAuthoringIntegrationTest extends KieSeleniumTest {
 
     private static final Logger LOG = LoggerFactory.getLogger( ProjectAuthoringIntegrationTest.class );
 
+    private HomePerspective home;
+
+    @Before
+    public void setup() {
+        home = login.loginDefaultUser();
+        ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
+        library.importMortgagesProject();
+        Waits.pause( 5_000 );
+        home.logout();
+    }
+
     @Test
     public void importAndBuildProjectFromStockRepository() {
-        HomePerspective home = login.loginDefaultUser();
+        home = login.loginDefaultUser();
+
         ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
 
-        //ProjectAuthoring will direct to ProjectLibrary if there are no Projects in the workbench
-        if ( !authoring.isDisplayed() ) {
-            LOG.info( "ProjectAuthoringPerspective not displayed. Trying fallback ProjectLibraryPerspective.." );
-            ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
-            library.importStockExampleProject( "MyRepo", "MyOrgUnit", "optacloud" );
-        } else {
-            authoring.importStockExampleProject( "MyRepo", "MyOrgUnit", "optacloud" );
-        }
+        authoring.importStockExampleProject( "MyRepo", "MyOrgUnit", "optacloud" );
         deployAndCheckArtifact( home, "optacloud:optacloud:1.0.0-SNAPSHOT" );
 
         home.logout();
@@ -64,17 +71,11 @@ public class ProjectAuthoringIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void importAndBuildProjectFromCustomRepository() {
-        HomePerspective home = login.loginDefaultUser();
+        home = login.loginDefaultUser();
+
         ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
 
-        //ProjectAuthoring will direct to ProjectLibrary if there are no Projects in the workbench
-        if ( !authoring.isDisplayed() ) {
-            LOG.info( "ProjectAuthoringPerspective not displayed. Trying fallback ProjectLibraryPerspective.." );
-            ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
-            library.importCustomExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
-        } else {
-            authoring.importCustomExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
-        }
+        authoring.importCustomExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
         deployAndCheckArtifact( home, "org.jbpm:Evaluation:1.0" );
 
         home.logout();

@@ -23,17 +23,22 @@ import org.kie.wb.selenium.model.widgets.ContextNavbar;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ProjectAuthoringPerspective extends AbstractPerspective {
 
     private static final By PROJECT_EXPLORER_TITLE = By.xpath( "//h3[contains(text(),'Project Explorer')]" );
+    private static final By NEW_ITEM_MENU = By.xpath( "//a[contains(text(),'New Item')]" );
 
     @FindByJQuery(".nav.uf-perspective-context-menu")
     private ContextNavbar contextNavbar;
 
     @FindBy(xpath = "//div[div/h3[contains(text(),'Project Explorer')]]")
     private ProjectExplorer projectExplorer;
+
+    @FindByJQuery("button:has(i.fa-chevron-right)")
+    private WebElement projectExplorerExpandButton;
 
     @Override
     public void waitForLoaded() {
@@ -44,7 +49,7 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
     @Override
     public boolean isDisplayed() {
         //Wait, with time-out, in case the ProjectLibraryPerspective was shown instead
-        return Waits.isElementPresent( PROJECT_EXPLORER_TITLE, 2 );
+        return Waits.isElementPresent( NEW_ITEM_MENU, 2 );
     }
 
     public void importStockExampleProject( String targetRepo,
@@ -71,6 +76,10 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
     }
 
     public ProjectEditor openProjectEditor() {
+        if ( !Waits.isElementPresent( PROJECT_EXPLORER_TITLE, 50 ) ) {
+            projectExplorerExpandButton.click();
+        }
+        Waits.isElementPresent( PROJECT_EXPLORER_TITLE, 50 );
         getProjectExplorer().openProjectEditor();
         return createPanel( ProjectEditor.class, "Project:" );
     }

@@ -23,6 +23,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+import static org.kie.wb.selenium.util.ByUtil.jquery;
+
 public class ImportExampleModal extends ModalDialog {
 
     @FindByJQuery( "#stockRadio" )
@@ -41,6 +43,10 @@ public class ImportExampleModal extends ModalDialog {
     private WebElement targetOrgUnit;
 
     public static ImportExampleModal newInstance() {
+        if ( Waits.isElementPresent( jquery( ".modal-content:has(.modal-header:contains('ExamplesWizard'))", 40 ) ) ) {
+            return ModalDialog.newInstance( ImportExampleModal.class, "ExamplesWizard" );
+        }
+
         return ModalDialog.newInstance( ImportExampleModal.class, "Import Example" );
     }
 

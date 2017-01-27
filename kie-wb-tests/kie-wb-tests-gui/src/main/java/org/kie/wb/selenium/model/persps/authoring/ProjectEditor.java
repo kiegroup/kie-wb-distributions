@@ -16,6 +16,8 @@
 package org.kie.wb.selenium.model.persps.authoring;
 
 import org.kie.wb.selenium.model.widgets.Panel;
+import org.kie.wb.selenium.util.Waits;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.slf4j.Logger;
@@ -25,7 +27,10 @@ public class ProjectEditor extends Panel {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectEditor.class);
 
+    private static final By LOADING = By.cssSelector( "div.gwt-PopupPanelGlass" );
+
     public void buildAndDeploy() {
+        Waits.elementAbsent( LOADING );
         getToolbar().buildAndDeploy();
         possiblyOverrideGavConflict();
     }

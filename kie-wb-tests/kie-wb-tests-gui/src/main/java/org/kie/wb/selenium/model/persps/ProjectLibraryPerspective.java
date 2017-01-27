@@ -15,8 +15,6 @@
  */
 package org.kie.wb.selenium.model.persps;
 
-import org.kie.wb.selenium.model.persps.authoring.ImportExampleModal;
-import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -24,44 +22,28 @@ import org.openqa.selenium.support.FindBy;
 
 public class ProjectLibraryPerspective extends AbstractPerspective {
 
-    //<div class="full" data-field="emptyLibrary">
-    private static final By PROJECT_LIBRARY_HOLDER = By.xpath( "//div[@data-field='emptyLibrary']" );
+    private static final String OU_REPO_BREADCRUMB_XPATH_SELECTOR = "//a[text()='myteam (myrepo)']";
+    private static final String MORTGAGES_BUTTON_XPATH_SELECTOR = "//button[text()='mortgages']";
 
-    @FindBy(xpath = "//button[@id='example']")
+    private static final By MORTGAGES_IMPORT_BUTTON = By.xpath(MORTGAGES_BUTTON_XPATH_SELECTOR);
+    private static final By OU_REPO_BREADCRUMB = By.xpath(OU_REPO_BREADCRUMB_XPATH_SELECTOR);
+
+    @FindBy(xpath = MORTGAGES_BUTTON_XPATH_SELECTOR)
     private WebElement exampleButton;
 
     @Override
     public void waitForLoaded() {
-        Waits.pause( 500 );
+        Waits.isElementPresent( OU_REPO_BREADCRUMB );
     }
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent( PROJECT_LIBRARY_HOLDER );
+        return Waits.isElementPresent( OU_REPO_BREADCRUMB );
     }
 
-    public void importStockExampleProject( String targetRepo,
-                                           String targetOrgUnit,
-                                           String... projects ) {
-        ImportExampleModal modal = importExample();
-        modal.selectStockRepository();
-        modal.selectProjects( projects );
-        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
+    public void importMortgagesProject() {
+        if ( Waits.isElementPresent( MORTGAGES_IMPORT_BUTTON, 20 ) ) {
+            exampleButton.click();
+        }
     }
-
-    public void importCustomExampleProject( Repository repo,
-                                            String targetRepo,
-                                            String targetOrgUnit,
-                                            String... projects ) {
-        ImportExampleModal modal = importExample();
-        modal.selectCustomRepository( repo.getUrl() );
-        modal.selectProjects( projects );
-        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
-    }
-
-    private ImportExampleModal importExample() {
-        exampleButton.click();
-        return ImportExampleModal.newInstance();
-    }
-
 }

@@ -19,7 +19,7 @@ package org.kie.workbench.drools.client.home;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.workbench.common.screens.library.client.monitor.LibraryMonitor;
+import org.kie.workbench.common.workbench.client.library.LibraryMonitor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.uberfire.client.mvp.PlaceManager;
