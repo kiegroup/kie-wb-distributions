@@ -32,10 +32,6 @@
     <script src="org.kie.workbench.KIEWebapp/zeroclipboard/ZeroClipboard.min.js"></script>
     <script src="org.kie.workbench.KIEWebapp/zeroclipboard/ZeroClipboardLoader.js"></script>
 
-    <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/Forms.css">
-    <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/HumanTasks.css">
-    <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/ProcessList.css">
-    <link rel="stylesheet" href="org.kie.workbench.KIEWebapp/css/timebox.css">
     <link rel="stylesheet" href="styles/product.css">
     <link rel="shortcut icon" href="favicon.ico"/>
 
