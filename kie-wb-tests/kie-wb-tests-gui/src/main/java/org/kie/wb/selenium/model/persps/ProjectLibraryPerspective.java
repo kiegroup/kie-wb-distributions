@@ -15,35 +15,26 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class ProjectLibraryPerspective extends AbstractPerspective {
 
-    private static final String OU_REPO_BREADCRUMB_XPATH_SELECTOR = "//a[text()='myteam (myrepo)']";
-    private static final String MORTGAGES_BUTTON_XPATH_SELECTOR = "//button[text()='mortgages']";
-
-    private static final By MORTGAGES_IMPORT_BUTTON = By.xpath(MORTGAGES_BUTTON_XPATH_SELECTOR);
-    private static final By OU_REPO_BREADCRUMB = By.xpath(OU_REPO_BREADCRUMB_XPATH_SELECTOR);
-
-    @FindBy(xpath = MORTGAGES_BUTTON_XPATH_SELECTOR)
-    private WebElement exampleButton;
+    private static final By OU_REPO_BREADCRUMB = ByJQuery.selector("a:contains('myteam (myrepo)')");
 
     @Override
     public void waitForLoaded() {
-        Waits.isElementPresent( OU_REPO_BREADCRUMB );
+        isDisplayed();
     }
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent( OU_REPO_BREADCRUMB );
+        return Waits.isElementPresent(OU_REPO_BREADCRUMB);
     }
 
-    public void importMortgagesProject() {
-        if ( Waits.isElementPresent( MORTGAGES_IMPORT_BUTTON, 20 ) ) {
-            exampleButton.click();
-        }
+    public void importDemoProject(String projectName){
+        Waits.elementPresent(ByJQuery.selector("button:contains('" + projectName + "')"), 20)
+                .click();
     }
 }

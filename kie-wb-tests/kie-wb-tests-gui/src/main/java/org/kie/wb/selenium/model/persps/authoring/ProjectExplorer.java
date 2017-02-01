@@ -16,20 +16,16 @@
 package org.kie.wb.selenium.model.persps.authoring;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.kie.wb.selenium.util.Waits;
-import org.openqa.selenium.By;
+import org.kie.wb.selenium.util.BusyPopup;
 import org.openqa.selenium.WebElement;
 
 public class ProjectExplorer {
 
-    private static final By LOADING = By.cssSelector( "div.gwt-PopupPanelGlass" );
-
     @FindByJQuery("button:contains('Open Project Editor')")
     private WebElement openPexButton;
 
-
     public void openProjectEditor() {
-        Waits.elementAbsent( LOADING );
+        BusyPopup.waitForDisappearance();
         openPexButton.click();
     }
 }

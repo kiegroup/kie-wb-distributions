@@ -17,6 +17,7 @@ package org.kie.wb.selenium.model.widgets;
 
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.kie.wb.selenium.model.persps.authoring.ImportExampleModal;
+import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,8 +32,7 @@ public class ContextNavbar {
 
     public ImportExampleModal importExample() {
         Waits.elementPresent(navbarRoot);
-        navbarRoot.isDisplayed();
-
+        BusyPopup.waitForDisappearance();
         exampleButton.click();
         return ImportExampleModal.newInstance();
     }

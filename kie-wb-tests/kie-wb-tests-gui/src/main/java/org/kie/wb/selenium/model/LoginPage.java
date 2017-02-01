@@ -17,6 +17,8 @@ package org.kie.wb.selenium.model;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.model.persps.HomePerspective;
+import org.kie.wb.selenium.util.Waits;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -28,6 +30,7 @@ public class LoginPage extends PageObject {
     private WebElement passwordInput;
     @FindBy(className = "button")
     private WebElement loginButton;
+
     public final static String BASE_URL = System.getProperty("kie.wb.url");
 
     // Credentials based on Cargo Maven plugin config in ../kie-wb-tests/pom.xml
@@ -42,10 +45,13 @@ public class LoginPage extends PageObject {
     }
 
     public HomePerspective loginAs(String username, String password) {
-        driver.get(BASE_URL);
         submitCredentials(username, password);
         home.waitForLoaded();
         return home;
+    }
+
+    public void getLoginPage(){
+        driver.get(BASE_URL);
     }
 
     private void submitCredentials(String username, String password) {
@@ -55,6 +61,6 @@ public class LoginPage extends PageObject {
     }
 
     public boolean isDisplayed() {
-        return usernameInput.isDisplayed();
+        return Waits.isElementPresent(By.name("j_username"));
     }
 }

@@ -20,7 +20,7 @@ import org.openqa.selenium.By;
 
 public class BusyPopup extends PageObject {
 
-    public void waitForDisappearance() {
+    public static void waitForDisappearance() {
         By glass = By.cssSelector(".gwt-PopupPanelGlass");
         Graphene.waitModel().until().element(glass).is().not().present();
         Waits.pause(500);
