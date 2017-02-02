@@ -169,6 +169,12 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 
   <profiles>
@@ -410,6 +416,109 @@
                   </deployable>
                 </deployables>
               </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+
+    <profile>
+      <id>wildfly-swarm</id>
+      <activation>
+        <property>
+          <name>container</name>
+          <value>wildfly-swarm</value>
+        </property>
+      </activation>
+      <properties>
+        <deployable.context/>
+        <cargo.maven.skip>true</cargo.maven.skip>
+      </properties>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-drools-wb-webapp</artifactId>
+            <classifier>swarm</classifier>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-wb-webapp</artifactId>
+            <classifier>swarm</classifier>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-drools-wb-webapp</artifactId>
+          <classifier>swarm</classifier>
+          <exclusions>
+            <exclusion>
+              <groupId>*</groupId>
+              <artifactId>*</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+        <dependency>
+          <groupId>org.kie</groupId>
+          <artifactId>kie-wb-webapp</artifactId>
+          <classifier>swarm</classifier>
+          <exclusions>
+            <exclusion>
+              <groupId>*</groupId>
+              <artifactId>*</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+      </dependencies>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.wildfly.swarm</groupId>
+              <artifactId>wildfly-swarm-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>start</id>
+                  <phase>pre-integration-test</phase>
+                  <goals>
+                    <goal>multistart</goal>
+                  </goals>
+                  <configuration>
+                    <properties>
+                      <!-- Not ideal as it relies on the module structure, but for now it is safe to assume that all testing modules
+                           are children of this one.-->
+                      <swarm.project.stage.file>${project.build.testOutputDirectory}/sample-swarm-config.yml</swarm.project.stage.file>
+                      <swarm.logging>INFO</swarm.logging>
+                      <swarm.bind.address>127.0.0.1</swarm.bind.address>
+                      <org.uberfire.nio.git.dir>${project.build.directory}/wb-dirs</org.uberfire.nio.git.dir>
+                      <org.uberfire.nio.git.ssh.cert.dir>${project.build.directory}/wb-dirs</org.uberfire.nio.git.ssh.cert.dir>
+                      <org.uberfire.metadata.index.dir>${project.build.directory}/wb-dirs</org.uberfire.metadata.index.dir>
+                      <org.guvnor.m2repo.dir>${project.build.directory}/wb-dirs</org.guvnor.m2repo.dir>
+                    </properties>
+                    <processes>
+                      <process>
+                        <groupId>org.kie</groupId>
+                        <artifactId>${deployable.artifactId}-webapp</artifactId>
+                        <classifier>swarm</classifier>
+                      </process>
+                      <properties>
+                        <start.timeout.seconds>120</start.timeout.seconds>
+                      </properties>
+                    </processes>
+                  </configuration>
+                </execution>
+                <execution>
+                  <id>stop</id>
+                  <phase>post-integration-test</phase>
+                  <goals>
+                    <goal>stop</goal>
+                  </goals>
+                </execution>
+              </executions>
             </plugin>
           </plugins>
         </pluginManagement>
