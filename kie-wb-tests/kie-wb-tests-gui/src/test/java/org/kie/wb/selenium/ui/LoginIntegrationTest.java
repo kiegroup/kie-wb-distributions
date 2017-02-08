@@ -23,6 +23,7 @@ public class LoginIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void loginAndLogout() {
+        login.getLoginPage();
         HomePerspective home = login.loginDefaultUser();
         assertTrue(home.isDisplayed());
 

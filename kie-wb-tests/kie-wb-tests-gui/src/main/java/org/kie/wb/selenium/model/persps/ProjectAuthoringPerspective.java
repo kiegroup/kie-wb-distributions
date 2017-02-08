@@ -28,6 +28,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class ProjectAuthoringPerspective extends AbstractPerspective {
 
+    private static final By WELCOME_MESSAGE_HOLDER = By.id("welcome");
     private static final By PROJECT_EXPLORER_TITLE = By.xpath( "//h3[contains(text(),'Project Explorer')]" );
     private static final By NEW_ITEM_MENU = By.xpath( "//a[contains(text(),'New Item')]" );
 
@@ -48,8 +49,11 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        //Wait, with time-out, in case the ProjectLibraryPerspective was shown instead
-        return Waits.isElementPresent( NEW_ITEM_MENU, 2 );
+        return Waits.isElementPresent(NEW_ITEM_MENU);
+    }
+
+    public boolean isAuthoringDisabled(){
+        return Waits.isElementPresent(WELCOME_MESSAGE_HOLDER);
     }
 
     public void importStockExampleProject( String targetRepo,
@@ -76,11 +80,11 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
     }
 
     public ProjectEditor openProjectEditor() {
-        if ( !Waits.isElementPresent( PROJECT_EXPLORER_TITLE, 50 ) ) {
+        if (!Waits.isElementPresent(PROJECT_EXPLORER_TITLE)){
             projectExplorerExpandButton.click();
+            Waits.elementPresent(PROJECT_EXPLORER_TITLE);
         }
-        Waits.isElementPresent( PROJECT_EXPLORER_TITLE, 50 );
         getProjectExplorer().openProjectEditor();
-        return createPanel( ProjectEditor.class, "Project:" );
+        return createPanel(ProjectEditor.class, "Project:");
     }
 }

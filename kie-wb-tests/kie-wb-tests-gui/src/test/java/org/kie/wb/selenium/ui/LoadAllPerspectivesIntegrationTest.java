@@ -35,6 +35,7 @@ public class LoadAllPerspectivesIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void allPerspectivesCanBeLoaded() {
+        login.getLoginPage();
         HomePerspective home = login.loginDefaultUser();
 
         for ( Persp<?> p : Persp.getAllPerspectives() ) {
@@ -45,11 +46,10 @@ public class LoadAllPerspectivesIntegrationTest extends KieSeleniumTest {
                 AbstractPerspective perspective = home.getNavbar().navigateTo( _p );
 
                 //ProjectAuthoring will direct to ProjectLibrary if there are no Projects in the workbench
-                if ( perspective instanceof ProjectAuthoringPerspective ) {
-                    if ( !perspective.isDisplayed() ) {
-                        LOG.info( "ProjectAuthoringPerspective not displayed. Trying fallback ProjectLibraryPerspective.." );
-                        _p = Persp.PROJECT_LIBRARY;
-                        perspective = home.getNavbar().navigateTo( _p );
+                if (perspective instanceof ProjectAuthoringPerspective) {
+                    if (((ProjectAuthoringPerspective) perspective).isAuthoringDisabled()) {
+                        LOG.info("No projects in Workbench. Redirected to ProjectLibraryPerspective.");
+                        continue;
                     }
                 }
                 LOG.info( "Navigated to perspective '" + _p.getName() + ".." );

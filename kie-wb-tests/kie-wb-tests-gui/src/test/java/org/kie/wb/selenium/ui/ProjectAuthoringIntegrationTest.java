@@ -15,8 +15,8 @@
  */
 package org.kie.wb.selenium.ui;
 
+import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
@@ -26,58 +26,59 @@ import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.persps.authoring.ProjectEditor;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class ProjectAuthoringIntegrationTest extends KieSeleniumTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger( ProjectAuthoringIntegrationTest.class );
+    private static final String MORTGAGES_PROJECT = "mortgages";
 
     private HomePerspective home;
+    private ProjectAuthoringPerspective projectAuthoring;
 
     @Before
-    public void setup() {
-        home = login.loginDefaultUser();
-        ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
-        library.importMortgagesProject();
-        Waits.pause( 5_000 );
+    public void setUp() {
+        login.getLoginPage();
+        if(login.isDisplayed()){
+            home = login.loginDefaultUser();
+        }
+
+        projectAuthoring = home.getNavbar().projectAuthoring();
+
+        if(projectAuthoring.isAuthoringDisabled()){
+            ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
+            library.importDemoProject(MORTGAGES_PROJECT);
+            Waits.pause(5_000);
+            projectAuthoring = home.getNavbar().projectAuthoring();
+        }
+    }
+
+    @After
+    public void cleanUp(){
         home.logout();
     }
 
     @Test
     public void importAndBuildProjectFromStockRepository() {
-        home = login.loginDefaultUser();
-
-        ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
-
-        authoring.importStockExampleProject( "MyRepo", "MyOrgUnit", "optacloud" );
-        deployAndCheckArtifact( home, "optacloud:optacloud:1.0.0-SNAPSHOT" );
-
-        home.logout();
-    }
-
-    private void deployAndCheckArtifact(HomePerspective home, String artifact) {
-        ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
-        ProjectEditor pe = authoring.openProjectEditor();
-        pe.buildAndDeploy();
-        Waits.pause( 10_000 ); //Wait for project to build/deploy and appear in artifact repository perspective
-
-        ArtifactRepositoryPerspective artifactRepo = authoring.getNavbar().artifactRepository();
-        assertThat( artifactRepo.isArtifactPresent( artifact ) )
-                .as( "project artifact should be present after build & deploy" ).isTrue();
+        projectAuthoring
+                .importStockExampleProject("MyRepo", "MyOrgUnit", "optacloud");
+        deployAndCheckArtifact("optacloud:optacloud:1.0.0-SNAPSHOT");
     }
 
     @Test
     public void importAndBuildProjectFromCustomRepository() {
-        home = login.loginDefaultUser();
+        projectAuthoring
+                .importCustomExampleProject(Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation");
+        deployAndCheckArtifact("org.jbpm:Evaluation:1.0");
+    }
 
-        ProjectAuthoringPerspective authoring = home.getNavbar().projectAuthoring();
+    private void deployAndCheckArtifact(String artifact) {
+        ProjectEditor pe = projectAuthoring.openProjectEditor();
+        pe.buildAndDeploy();
+        Waits.pause(10_000); //Wait for project to build/deploy and appear in artifact repository perspective
 
-        authoring.importCustomExampleProject( Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation" );
-        deployAndCheckArtifact( home, "org.jbpm:Evaluation:1.0" );
-
-        home.logout();
+        ArtifactRepositoryPerspective artifactRepo = projectAuthoring.getNavbar().artifactRepository();
+        assertThat(artifactRepo.isArtifactPresent(artifact))
+                .as("Project artifact should be present after Build & Deploy").isTrue();
     }
 }

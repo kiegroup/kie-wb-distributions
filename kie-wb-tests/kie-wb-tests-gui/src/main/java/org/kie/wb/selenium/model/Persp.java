@@ -96,9 +96,13 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Extensions", "Data Sets", DataSetsPerspective.class);
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPS = Collections.unmodifiableList(Arrays.asList(
-            HOME_PAGE, TIMELINE, PEOPLE, ADMIN, PROJECT_AUTHORING, CONTRIBUTORS, ARTIFACT_REPOSITORY, ADMINISTRATION,
-            EXECUTION_SERVERS, JOBS, PROCESS_DEFINITIONS, PROCESS_INSTANCES, TASKS,
-            PROCESS_AND_TASK_DASHBOARD, PLUGIN_MANAGEMENT, APPS, DATA_SETS
+            HOME_PAGE, ADMIN, TIMELINE, PEOPLE,
+            PROJECT_AUTHORING, CONTRIBUTORS, ARTIFACT_REPOSITORY, ADMINISTRATION, PROJECT_LIBRARY,
+            EXECUTION_SERVERS, JOBS,
+            PROCESS_DEFINITIONS, PROCESS_INSTANCES,
+            TASKS,
+            PROCESS_AND_TASK_DASHBOARD,
+            PLUGIN_MANAGEMENT, APPS, DATA_SETS
     ));
 
     public static List<Persp<? extends AbstractPerspective>> getAllPerspectives() {

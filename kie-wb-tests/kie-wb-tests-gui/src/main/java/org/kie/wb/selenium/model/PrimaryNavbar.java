@@ -37,6 +37,7 @@ import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
 import org.kie.wb.selenium.model.persps.TasksPerspective;
 import org.kie.wb.selenium.model.persps.TimelinePerspective;
 import org.kie.wb.selenium.model.widgets.DropdownMenu;
+import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ public class PrimaryNavbar {
     private static final Logger LOG = LoggerFactory.getLogger(PrimaryNavbar.class);
     //Contains both the link to expand menu as well as menu item links
     private static final String NAVBAR_MENU = ".navbar-primary > li.dropdown:has(a:contains('%s'))";
+    private static final String INFO_ALERT = "div[class*='alert-info']";
 
     @FindBy(linkText = "Tasks")
     private WebElement tasksLink;
@@ -140,6 +142,7 @@ public class PrimaryNavbar {
     }
 
     private void selectMenuItem(String menuName, String itemName) {
+        Waits.elementAbsent(jquery(INFO_ALERT));
         WebElement menuRoot = driver.findElement(jquery(NAVBAR_MENU, menuName));
         DropdownMenu menu = Graphene.createPageFragment(DropdownMenu.class, menuRoot);
         menu.selectItem(itemName);
