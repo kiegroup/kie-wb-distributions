@@ -352,6 +352,10 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
         </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </dependency>
       </dependencies>
       <properties>
         <cargo.container.id>tomcat8x</cargo.container.id>
@@ -377,6 +381,10 @@
                     <dependency>
                       <groupId>org.slf4j</groupId>
                       <artifactId>slf4j-api</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.slf4j</groupId>
+                      <artifactId>slf4j-jdk14</artifactId>
                     </dependency>
                     <dependency>
                       <groupId>org.kie</groupId>
