@@ -5,12 +5,16 @@
 
   <distributable/>
   <listener>
-    <listener-class>org.uberfire.backend.server.io.DisposableShutdownService</listener-class>
+    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
   </listener>
 
   <listener>
-    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+    <!-- Important: order of the listeners matters! The DisposableShutdownService needs to be specified
+                    _after_ the Weld servlet listener. Otherwise the disposable service will fail as
+                    "systemFS" will be closed by the Weld listener.-->
+    <listener-class>org.uberfire.backend.server.io.DisposableShutdownService</listener-class>
   </listener>
+
   <listener>
     <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
   </listener>
