@@ -3,7 +3,7 @@
   <!-- Assembly configuration for Tomcat 7, shared between the community and product assemblies. -->
   <fileSets>
       <fileSet>
-        <directory>${project.basedir}/src/main/assembly/tomcat7</directory>
+        <directory>${project.basedir}/src/main/assembly/tomcat8</directory>
         <outputDirectory>.</outputDirectory>
       </fileSet>
     </fileSets>
