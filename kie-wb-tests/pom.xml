@@ -36,8 +36,8 @@
     <container.port>8080</container.port>
     <kie.wb.url>http://${container.host}:${container.port}/${deployable.context}</kie.wb.url>
 
-    <version.tomcat8>8.0.39</version.tomcat8>
-    <version.wildfly10>10.0.0.Final</version.wildfly10>
+    <version.tomcat8>8.5.11</version.tomcat8>
+    <version.wildfly10>10.1.0.Final</version.wildfly10>
   </properties>
 
   <dependencyManagement>
