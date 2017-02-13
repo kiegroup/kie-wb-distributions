@@ -21,7 +21,7 @@
   </modules>
 
   <properties>
-    <deployable.classifier.tomcat8>tomcat7</deployable.classifier.tomcat8>
+    <deployable.classifier.tomcat8>tomcat8</deployable.classifier.tomcat8>
     <deployable.classifier.wildfly10>wildfly10</deployable.classifier.wildfly10>
     <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
     <deployable.context>kie-wb</deployable.context>
