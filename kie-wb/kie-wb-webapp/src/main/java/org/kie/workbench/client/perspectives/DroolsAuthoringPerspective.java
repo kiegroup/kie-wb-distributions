@@ -27,6 +27,7 @@ import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
 import org.kie.workbench.common.workbench.client.PerspectiveIds;
 import org.kie.workbench.common.workbench.client.docks.AuthoringWorkbenchDocks;
+import org.optaplanner.workbench.screens.common.client.docks.PlannerWorkbenchDocks;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -73,12 +74,16 @@ public class DroolsAuthoringPerspective {
     private ProjectDiagramWorkbenchDocks stunnerWorkbenchEditorDocks;
 
     @Inject
+    private PlannerWorkbenchDocks plannerWorkbenchDocks;
+
+    @Inject
     private ExamplesWizard wizard;
 
     @PostConstruct
     public void setup() {
         docks.setup( PerspectiveIds.AUTHORING, new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) );
         stunnerWorkbenchEditorDocks.setup( PerspectiveIds.AUTHORING );
+        plannerWorkbenchDocks.setup( PerspectiveIds.AUTHORING );
     }
 
     @Perspective
