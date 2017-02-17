@@ -23,11 +23,11 @@
     <version>7.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>kie-drools-wb</artifactId>
+  <artifactId>kie-drools-wb-parent</artifactId>
 
   <packaging>pom</packaging>
-  <name>KIE Drools Workbench</name>
-  <description>KIE Drools Workbench</description>
+  <name>KIE Drools Workbench Parent</name>
+  <description>KIE Drools Workbench Parent</description>
 
   <modules>
     <module>kie-drools-wb-webapp</module>

@@ -27,7 +27,7 @@
     <deployable.context>kie-wb</deployable.context>
 
     <deployable.groupId>org.kie</deployable.groupId>
-    <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
+    <deployable.artifactId>kie-wb</deployable.artifactId>
     <deployable.version>${version.org.kie}</deployable.version>
 
     <deployment.timeout>90000</deployment.timeout>
@@ -176,7 +176,7 @@
       <id>kie-drools-wb</id>
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
-        <deployable.artifactId>kie-drools-wb-distribution-wars</deployable.artifactId>
+        <deployable.artifactId>kie-drools-wb</deployable.artifactId>
         <deployable.context>kie-drools-wb</deployable.context>
       </properties>
     </profile>
@@ -188,7 +188,7 @@
       </activation>
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
-        <deployable.artifactId>kie-wb-distribution-wars</deployable.artifactId>
+        <deployable.artifactId>kie-wb</deployable.artifactId>
         <deployable.context>kie-wb</deployable.context>
       </properties>
     </profile>
@@ -201,14 +201,14 @@
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
+          <artifactId>kie-wb</artifactId>
           <classifier>${deployable.classifier.wildfly10}</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <artifactId>kie-drools-wb</artifactId>
           <classifier>${deployable.classifier.wildfly10}</classifier>
           <scope>test</scope>
           <type>war</type>
@@ -263,14 +263,14 @@
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
+          <artifactId>kie-wb</artifactId>
           <classifier>${deployable.classifier.eap7}</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <artifactId>kie-drools-wb</artifactId>
           <classifier>${deployable.classifier.eap7}</classifier>
           <scope>test</scope>
           <type>war</type>
@@ -330,13 +330,13 @@
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-wars</artifactId>
+          <artifactId>kie-wb</artifactId>
           <classifier>${deployable.classifier.tomcat8}</classifier>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-distribution-wars</artifactId>
+          <artifactId>kie-drools-wb</artifactId>
           <classifier>${deployable.classifier.tomcat8}</classifier>
           <type>war</type>
         </dependency>

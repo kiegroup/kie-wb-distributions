@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.kie</groupId>
-    <artifactId>kie-drools-wb</artifactId>
+    <artifactId>kie-drools-wb-parent</artifactId>
     <version>7.0.0-SNAPSHOT</version>
   </parent>
 
@@ -1562,7 +1562,7 @@
         <plugin>
           <!-- Default configuration used for FastCompiled build. Includes the common GWT source artifacts and plugin
                config. Product X community specific artifacts (e.g. home page) are specified using
-               profiles "producized" and "notProductized".
+               profiles "productized" and "notProductized".
 
                Keep the configuration here (pluginManagement) instead of directly in <plugins>. -->
           <groupId>org.codehaus.mojo</groupId>
