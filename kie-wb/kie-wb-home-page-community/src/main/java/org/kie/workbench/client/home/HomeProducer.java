@@ -112,14 +112,14 @@ public class HomeProducer {
                 PROCESS_DEFINITIONS , PERSPECTIVE ) );
 
         s3.addChild( ModelUtils.makeSectionEntry( constants.Process_Instances(),
-                () -> placeManager.goTo( DATASET_PROC_INST_VARS ),
-                DATASET_PROC_INST_VARS , PERSPECTIVE ) );
+                () -> placeManager.goTo( PROCESS_INSTANCES ),
+                PROCESS_INSTANCES , PERSPECTIVE ) );
 
         final SectionEntry s4 = ModelUtils.makeSectionEntry( constants.Tasks() );
 
         s4.addChild( ModelUtils.makeSectionEntry( constants.Tasks_List(),
-                () -> placeManager.goTo( DATASET_TASKS ),
-                DATASET_TASKS , PERSPECTIVE ) );
+                () -> placeManager.goTo( TASKS ),
+                TASKS , PERSPECTIVE ) );
 
         final SectionEntry s5 = ModelUtils.makeSectionEntry( constants.Dashboards() );
 
