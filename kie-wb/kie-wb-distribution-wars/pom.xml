@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.kie</groupId>
-    <artifactId>kie-wb</artifactId>
+    <artifactId>kie-wb-parent</artifactId>
     <version>7.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>kie-wb-distribution-wars</artifactId>
+  <artifactId>kie-wb</artifactId>
   <packaging>pom</packaging>
 
   <name>KIE Workbench - Distribution Wars</name>
