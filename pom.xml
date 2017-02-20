@@ -49,8 +49,8 @@
 
   <modules>
     <module>kie-wb-theme</module>
-    <module>kie-wb</module>
-    <module>kie-drools-wb</module>
+    <module>kie-wb-parent</module>
+    <module>kie-drools-wb-parent</module>
     <module>kie-tomcat-integration</module>
     <module>kie-wb-tests</module>
   </modules>
