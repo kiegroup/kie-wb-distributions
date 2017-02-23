@@ -26,7 +26,7 @@ public class LoginPage extends PageObject {
     private WebElement usernameInput;
     @FindBy(name = "j_password")
     private WebElement passwordInput;
-    @FindBy(className = "button")
+    @FindBy(css = "button,.button")
     private WebElement loginButton;
     public final static String BASE_URL = System.getProperty("deployable.base.uri");
 
