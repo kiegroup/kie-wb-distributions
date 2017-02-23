@@ -21,7 +21,7 @@ import org.openqa.selenium.WebDriver;
 
 public class HomePerspective extends AbstractPerspective {
 
-    private static final By CAROUSEL = By.className("carousel-caption");
+    private static final By HOMEPAGE_CONTENT = By.cssSelector(".carousel-caption,.IntroHome");
 
     public HomePerspective(WebDriver driver) {
         super(driver);
@@ -29,11 +29,11 @@ public class HomePerspective extends AbstractPerspective {
 
     @Override
     public void waitForLoaded() {
-        Waits.elementPresent(driver, CAROUSEL);
+        Waits.elementPresent(driver, HOMEPAGE_CONTENT);
     }
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(driver, CAROUSEL);
+        return Waits.isElementPresent(driver, HOMEPAGE_CONTENT);
     }
 }
