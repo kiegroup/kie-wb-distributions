@@ -21,7 +21,6 @@ import org.kie.workbench.common.screens.examples.service.ExamplesService;
 import org.kie.workbench.common.screens.library.api.LibraryContextSwitchEvent;
 import org.kie.workbench.common.screens.projecteditor.client.menu.ProjectMenu;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
-import org.kie.workbench.common.stunner.project.client.screens.ProjectDiagramWorkbenchDocks;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
@@ -70,15 +69,11 @@ public class DroolsAuthoringPerspective {
     private AuthoringWorkbenchDocks docks;
 
     @Inject
-    private ProjectDiagramWorkbenchDocks stunnerWorkbenchEditorDocks;
-
-    @Inject
     private ExamplesWizard wizard;
 
     @PostConstruct
     public void setup() {
         docks.setup( PerspectiveIds.AUTHORING, new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) );
-        stunnerWorkbenchEditorDocks.setup( PerspectiveIds.AUTHORING );
     }
 
     @Perspective
