@@ -766,6 +766,12 @@
       <artifactId>drools-wb-workitems-editor-backend</artifactId>
     </dependency>
 
+    <!-- Models for OptaPlanner Workbench Screens -->
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-upstream-model</artifactId>
+    </dependency>
+
     <!-- OptaPlanner Workbench Screens -->
     <dependency>
       <groupId>org.optaplanner</groupId>
@@ -2090,6 +2096,9 @@
               <compileSourcesArtifact>org.drools:drools-wb-workitems-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-client</compileSourcesArtifact>
+
+              <!-- Models for OptaPlanner Workbench Screens -->
+              <compileSourcesArtifact>org.optaplanner:optaplanner-wb-upstream-model</compileSourcesArtifact>
 
               <!-- OptaPlanner WB -->
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-domain-editor-api</compileSourcesArtifact>

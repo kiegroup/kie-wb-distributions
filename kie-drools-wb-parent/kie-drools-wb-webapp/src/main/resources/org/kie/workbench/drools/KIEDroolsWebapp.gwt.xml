@@ -94,6 +94,9 @@
   <inherits name="org.drools.workbench.screens.scorecardxls.DroolsWorkbenchScoreCardXLSEditorClient"/>
   <inherits name="org.drools.workbench.screens.testscenario.DroolsWorkbenchTestScenarioEditorClient"/>
 
+  <!-- Models for OptaPlanner Workbench Screens -->
+  <inherits name="org.optaplanner.workbench.upstream.model.OptaPlannerUpstreamModelAPI"/>
+
   <!-- Optaplanner Workbench Screens -->
   <inherits name="org.optaplanner.workbench.screens.domaineditor.OptaPlannerWorkbenchDomainEditorClient"/>
   <inherits name="org.optaplanner.workbench.screens.solver.OptaPlannerWorkbenchSolverEditorClient"/>
