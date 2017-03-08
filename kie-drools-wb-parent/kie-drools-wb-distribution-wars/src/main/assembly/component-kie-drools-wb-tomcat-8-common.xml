@@ -48,7 +48,7 @@
         <include>org.codehaus.jackson:jackson-jaxrs</include>
 
         <include>org.jboss.weld:weld-api</include>
-        <include>org.jboss.weld:weld-core</include>
+        <include>org.jboss.weld:weld-core-impl</include>
         <include>org.jboss.weld.se:weld-se-core</include>
         <include>org.jboss.weld.servlet:weld-servlet-core</include>
         <include>org.jboss.weld:weld-spi</include>

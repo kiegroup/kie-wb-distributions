@@ -22,16 +22,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-home-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.guvnor</groupId>
-      <artifactId>guvnor-services-api</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-wb-dashboard-api</artifactId>
     </dependency>
@@ -51,11 +41,6 @@
       <artifactId>kie-wb-common-workbench-client</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.kie.workbench.screens</groupId>
-      <artifactId>kie-wb-common-library-client</artifactId>
-    </dependency>
-
     <!-- GWT and GWT Extensions -->
     <dependency>
       <groupId>com.google.gwt</groupId>
@@ -67,6 +52,12 @@
       <groupId>com.google.gwt.gwtmockito</groupId>
       <artifactId>gwtmockito</artifactId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>ant</groupId>
+          <artifactId>ant</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
   </dependencies>
