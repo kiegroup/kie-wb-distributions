@@ -132,7 +132,7 @@ public class WorkbenchACLTest {
     @Test
     public void testPolicyDeployment() {
         assertNotNull(policy);
-        assertEquals(policy.getRoles().size(), 5);
+        assertEquals(policy.getRoles().size(), 6);
 
         verify(storage).savePolicy(policy);
         verify(deployedEvent).fire(any());
