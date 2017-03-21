@@ -621,6 +621,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <role-name>developer</role-name>
       <role-name>user</role-name>
       <role-name>manager</role-name>
+      <role-name>process-admin</role-name>
     </auth-constraint>
   </security-constraint>
 
@@ -635,6 +636,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <role-name>developer</role-name>
       <role-name>user</role-name>
       <role-name>manager</role-name>
+      <role-name>process-admin</role-name>
     </auth-constraint>
   </security-constraint>
 
@@ -695,6 +697,13 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       reporting of the system and people who interact with the system.
     </description>
     <role-name>manager</role-name>
+  </security-role>
+
+  <security-role>
+    <description>Process Administrator - can access and manage the process related activities like process
+      definitions and process instances.
+    </description>
+    <role-name>process-admin</role-name>
   </security-role>
 
   <error-page>
