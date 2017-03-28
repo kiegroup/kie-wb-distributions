@@ -5,10 +5,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
 <%
-  request.logout();
-  javax.servlet.http.HttpSession httpSession = request.getSession(false);
-  if (httpSession != null) {
-    httpSession.invalidate();
+  try {
+    request.logout();
+    javax.servlet.http.HttpSession httpSession = request.getSession(false);
+    if (httpSession != null) {
+      httpSession.invalidate();
+    }
+  } catch ( Exception e ) {
   }
   Locale locale = null;
   try {
