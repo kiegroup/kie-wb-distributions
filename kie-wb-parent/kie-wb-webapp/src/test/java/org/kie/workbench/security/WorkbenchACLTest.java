@@ -100,6 +100,8 @@ public class WorkbenchACLTest {
     static final List<String> USER_GRANTED = Arrays.asList(
             "perspective.read.SocialHomePagePerspective",
             "perspective.read.UserHomePagePerspective",
+            "perspective.read.ProcessDefinitions",
+            "perspective.read.ProcessInstances",
             "perspective.read.Tasks",
             "perspective.read.DashboardPerspective",
             "dashboard.manage");
