@@ -113,11 +113,6 @@
       <artifactId>jboss-ejb-api_3.2_spec</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>com.github.gwtbootstrap</groupId>
-      <artifactId>gwt-bootstrap</artifactId>
-      <scope>provided</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
@@ -127,52 +122,6 @@
         <exclusion>
           <groupId>javassist</groupId>
           <artifactId>javassist</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>dom4j</groupId>
-      <artifactId>dom4j</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>xalan</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>serializer</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.abdera</groupId>
-      <artifactId>abdera-i18n</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.geronimo.specs</groupId>
-          <artifactId>geronimo-activation_1.1_spec</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.abdera</groupId>
-      <artifactId>abdera-core</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.geronimo.specs</groupId>
-          <artifactId>geronimo-stax-api_1.0_spec</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.geronimo.specs</groupId>
-          <artifactId>geronimo-activation_1.1_spec</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -208,34 +157,10 @@
       <artifactId>kie-security</artifactId>
     </dependency>
 
-    <!-- dependencies added because of new illegal transitive dependency check -->
-
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-ci</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <!--Logs-->
+    <!-- Logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <!-- jBPM Console Panels -->
@@ -848,16 +773,6 @@
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-ui</artifactId>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -883,11 +798,6 @@
 
     <!-- GWT and GWT Extensions -->
     <dependency>
-      <groupId>de.benediktmeurer.gwt-slf4j</groupId>
-      <artifactId>gwt-slf4j</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
       <scope>provided</scope>
@@ -903,11 +813,6 @@
       <artifactId>gwtbootstrap3</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.gwtbootstrap3</groupId>
-      <artifactId>gwtbootstrap3-extras</artifactId>
-      <scope>provided</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.owasp.encoder</groupId>
@@ -919,16 +824,6 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-client</artifactId>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>slf4j-jdk14</artifactId>
-          <groupId>org.slf4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>log4j-over-slf4j</artifactId>
-          <groupId>org.slf4j</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
@@ -937,20 +832,6 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-backend</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-jdk14</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>log4j-over-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -1040,12 +921,6 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-io</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -1180,10 +1055,11 @@
       <scope>provided</scope>
     </dependency>
 
-    <!--JUnit for Test scenarios -->
+    <!-- JUnit for Test scenarios -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- form-modeler dependencies -->
@@ -1296,16 +1172,6 @@
       <groupId>org.dashbuilder</groupId>
       <artifactId>dashbuilder-dataset-client</artifactId>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -1348,16 +1214,6 @@
       <groupId>org.dashbuilder</groupId>
       <artifactId>dashbuilder-widgets</artifactId>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <!-- org.drools -->
@@ -1903,24 +1759,7 @@
       <artifactId>kie-wb-common-library-backend</artifactId>
     </dependency>
 
-    <!-- test -->
-    <dependency>
-      <groupId>org.reflections</groupId>
-      <artifactId>reflections</artifactId>
-      <!--<scope>test</scope>--> <!-- Required at runtime as well (transitive dep), so can't have test scope -->
-    </dependency>
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <!--<scope>test</scope>--> <!-- Required at runtime as well (transitive dep), so can't have test scope -->
-    </dependency>
-
     <!-- Test deps -->
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>com.google.gwt.gwtmockito</groupId>
       <artifactId>gwtmockito</artifactId>
@@ -1937,7 +1776,6 @@
       <artifactId>uberfire-testing-utils</artifactId>
       <scope>test</scope>
     </dependency>
-
 
   </dependencies>
 
@@ -1956,7 +1794,7 @@
         <plugin>
           <!-- Default configuration used for FastCompiled build. Includes the common GWT source artifacts and plugin
                config. Product X community specific artifacts (e.g. home page) are specified using
-               profiles "producized" and "notProductized".
+               profiles "productized" and "notProductized".
 
                Keep the configuration here (pluginManagement) instead of directly in <plugins>. -->
           <groupId>org.codehaus.mojo</groupId>
@@ -2143,8 +1981,6 @@
               <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-backend</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-views-patternfly</compileSourcesArtifact>
-
-              <!-- UberFire Extensions -->
               <compileSourcesArtifact>org.uberfire:uberfire-commons-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-commons-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-preferences-api</compileSourcesArtifact>
@@ -2161,6 +1997,8 @@
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-simple-docks-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-social-activities-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-social-activities-client</compileSourcesArtifact>
 
               <!-- Wires -->
               <compileSourcesArtifact>org.uberfire:uberfire-wires-core-api</compileSourcesArtifact>
@@ -2173,10 +2011,6 @@
               <compileSourcesArtifact>org.uberfire:uberfire-security-management-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-security-management-client-wb</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-widgets-security-management</compileSourcesArtifact>
-
-              <!-- KIE UberFire extensions -->
-              <compileSourcesArtifact>org.uberfire:uberfire-social-activities-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.uberfire:uberfire-social-activities-client</compileSourcesArtifact>
 
               <!-- Forms Engine -->
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-api</compileSourcesArtifact>
