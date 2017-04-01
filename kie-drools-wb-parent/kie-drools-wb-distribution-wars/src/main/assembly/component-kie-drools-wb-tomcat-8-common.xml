@@ -92,6 +92,10 @@
           <exclude>WEB-INF/classes/org/kie/workbench/backend/wildfly/</exclude>
           <exclude>WEB-INF/classes/org/kie/workbench/backend/weblogic/</exclude>
 
+          <!-- slf4j-api is supposed to be included in the TOMCAT_HOME/lib during the installation. Having it duplicated
+               in the WAR causes java.lang.LinkageError during deployment. -->
+          <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
+
           <!-- Errai -->
           <exclude>WEB-INF/lib/errai-jboss-as-support-*.jar</exclude>
 
