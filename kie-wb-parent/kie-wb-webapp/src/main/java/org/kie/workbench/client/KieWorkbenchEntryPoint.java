@@ -15,26 +15,22 @@
  */
 package org.kie.workbench.client;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import com.google.gwt.i18n.client.LocaleInfo;
-import com.google.gwt.user.client.Window;
+import org.dashbuilder.client.navigation.NavigationManager;
+import org.dashbuilder.client.navigation.event.NavTreeChangedEvent;
+import org.dashbuilder.navigation.NavTree;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.jboss.errai.common.client.api.Caller;
-import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.EntryPoint;
-import org.jboss.errai.ioc.client.container.SyncBeanManager;
-import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.home.HomeProducer;
-import org.kie.workbench.client.resources.i18n.AppConstants;
+import org.kie.workbench.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
-import org.kie.workbench.common.workbench.client.authz.WorkbenchFeatures;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
@@ -42,16 +38,14 @@ import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
-import org.uberfire.workbench.model.menu.MenuFactory;
-import org.uberfire.workbench.model.menu.MenuItem;
+import org.uberfire.ext.security.management.client.widgets.management.events.SaveGroupEvent;
+import org.uberfire.ext.security.management.client.widgets.management.events.SaveRoleEvent;
 import org.uberfire.workbench.model.menu.Menus;
 
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
+import static org.uberfire.workbench.model.menu.MenuFactory.*;
 
 @EntryPoint
 public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
-
-    protected AppConstants constants = AppConstants.INSTANCE;
 
     protected HomeProducer homeProducer;
 
@@ -63,13 +57,17 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected WorkbenchMenuBarPresenter menuBar;
 
-    protected SyncBeanManager iocManager;
-
     protected Workbench workbench;
 
     protected PermissionTreeSetup permissionTreeSetup;
 
     protected DefaultAdminPageHelper adminPageHelper;
+
+    protected NavTreeDefinitions navTreeDefinitions;
+
+    protected NavigationManager navigationManager;
+
+    protected SearchMenuBuilder searchMenuBuilder;
 
     @Inject
     public KieWorkbenchEntryPoint( final Caller<AppConfigService> appConfigService,
@@ -80,20 +78,24 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                    final DefaultWorkbenchFeaturesMenusHelper menusHelper,
                                    final ClientUserSystemManager userSystemManager,
                                    final WorkbenchMenuBarPresenter menuBar,
-                                   final SyncBeanManager iocManager,
                                    final Workbench workbench,
                                    final PermissionTreeSetup permissionTreeSetup,
-                                   final DefaultAdminPageHelper adminPageHelper ) {
+                                   final DefaultAdminPageHelper adminPageHelper,
+                                   final NavTreeDefinitions navTreeDefinitions,
+                                   final NavigationManager navigationManager,
+                                   SearchMenuBuilder searchMenuBuilder ) {
         super( appConfigService, pmas, activityBeansCache );
         this.homeProducer = homeProducer;
         this.socialConfigurationService = socialConfigurationService;
         this.menusHelper = menusHelper;
         this.userSystemManager = userSystemManager;
         this.menuBar = menuBar;
-        this.iocManager = iocManager;
         this.workbench = workbench;
         this.permissionTreeSetup = permissionTreeSetup;
         this.adminPageHelper = adminPageHelper;
+        this.navTreeDefinitions = navTreeDefinitions;
+        this.navigationManager = navigationManager;
+        this.searchMenuBuilder = searchMenuBuilder;
     }
 
     @PostConstruct
@@ -105,31 +107,18 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     @Override
     public void setupMenu() {
+        socialConfigurationService.call((Boolean socialEnabled) -> {
+            navigationManager.init(() -> {
 
-        // Social services.
-        socialConfigurationService.call( new RemoteCallback<Boolean>() {
-            public void callback( final Boolean socialEnabled ) {
+                // Set the default nav tree
+                NavTree navTree = navTreeDefinitions.buildDefaultNavTree(socialEnabled);
+                navigationManager.setDefaultNavTree(navTree);
 
-                final Menus menus =
-                        MenuFactory.newTopLevelMenu( constants.Home() ).withItems( menusHelper.getHomeViews( socialEnabled ) ).endMenu()
-                                .newTopLevelMenu( constants.Authoring() ).withItems( menusHelper.getAuthoringViews() ).endMenu()
-                                .newTopLevelMenu( constants.Deploy() ).withItems( getDeploymentViews() ).endMenu()
-                                .newTopLevelMenu( constants.Process_Management() ).withItems( menusHelper.getProcessManagementViews() ).endMenu()
-                                .newTopLevelMenu( constants.Tasks() ).perspective( TASKS ).endMenu()
-                                .newTopLevelMenu( constants.Dashboards() ).withItems( getDashboardViews() ).endMenu()
-                                .newTopLevelMenu( constants.Extensions() ).withItems( menusHelper.getExtensionsViews() ).endMenu()
-                                .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
-                                .build();
-
-                menuBar.addMenus( menus );
-
-                menusHelper.addRolesMenuItems();
-                menusHelper.addWorkbenchViewModeSwitcherMenuItem();
-                menusHelper.addWorkbenchConfigurationMenuItem();
-                menusHelper.addUtilitiesMenuItems();
+                // Initialize the  menu bar
+                initMenuBar();
 
                 workbench.removeStartupBlocker( KieWorkbenchEntryPoint.class );
-            }
+            });
         } ).isSocialEnable();
     }
 
@@ -138,27 +127,42 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         adminPageHelper.setup();
     }
 
-    protected List<? extends MenuItem> getDeploymentViews() {
-        final List<MenuItem> result = new ArrayList<>( 3 );
-
-        result.add( MenuFactory.newSimpleItem( constants.ExecutionServers() ).perspective( SERVER_MANAGEMENT ).endMenu().build().getItems().get( 0 ) );
-        result.add( MenuFactory.newSimpleItem( constants.Jobs() ).perspective( JOBS ).endMenu().build().getItems().get( 0 ) );
-
-        return result;
+    protected void initMenuBar() {
+        menusHelper.addRolesMenuItems();
+        menusHelper.addWorkbenchViewModeSwitcherMenuItem();
+        refreshMenuBar();
     }
 
-    protected List<? extends MenuItem> getDashboardViews() {
-        final List<MenuItem> result = new ArrayList<>( 2 );
+    protected void refreshMenuBar() {
 
-        result.add( MenuFactory.newSimpleItem( constants.Process_Dashboard() )
-                .perspective( PROCESS_DASHBOARD )
-                .endMenu().build().getItems().get( 0 ) );
+        // Turn the workbench nav tree into a Menus instance that is passed as input to the workbench's menu bar
+        NavTree workbenchNavTree = navigationManager.getNavTree().getItemAsTree(NavTreeDefinitions.GROUP_WORKBENCH);
+        TopLevelMenusBuilder<MenuBuilder> builder = menusHelper.buildMenusFromNavTree(workbenchNavTree);
 
-        result.add( MenuFactory.newSimpleItem( constants.Business_Dashboard() )
-                .withPermission( WorkbenchFeatures.MANAGE_DASHBOARDS )
-                .respondsWith( () -> Window.open( DashboardURLBuilder.getDashboardURL( "/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName() ), "_blank", "" ) )
-                .endMenu().build().getItems().get( 0 ) );
+        // Append the search menu item & build the menus
+        Menus menus = builder == null ? newTopLevelCustomMenu(searchMenuBuilder).endMenu().build() :
+                builder.newTopLevelCustomMenu(searchMenuBuilder).endMenu().build();
 
-        return result;
+        // Refresh the menu bar
+        menuBar.clear();
+        menuBar.addMenus(menus);
+        menusHelper.addWorkbenchConfigurationMenuItem();
+        menusHelper.addUtilitiesMenuItems();
+    }
+
+    // Listen to changes in the navigation tree
+
+    public void onNavTreeChanged(@Observes final NavTreeChangedEvent event) {
+        refreshMenuBar();
+    }
+
+    // Listen to authorization policy changes as it might impact the menu items shown
+
+    public void onAuthzPolicyChanged(@Observes final SaveRoleEvent event) {
+        refreshMenuBar();
+    }
+
+    public void onAuthzPolicyChanged(@Observes final SaveGroupEvent event) {
+        refreshMenuBar();
     }
 }

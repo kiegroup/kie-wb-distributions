@@ -34,65 +34,13 @@ public interface AppConstants
 
     AppConstants INSTANCE = GWT.create( AppConstants.class );
 
-    String Process_Dashboard();
-
-    String Business_Dashboard();
-
     String Project_Authoring();
 
     String Administration();
 
-    String Contributors();
-
-    String Timeline();
-
-    String People();
-
-    String userManagement();
-    
-    String groupManagement();
-
-    String Authoring();
-
-    String Process_Management();
-
-    String Tasks();
-
     String artifactRepository();
 
-    String LogOut();
-
-    String Home();
-
-    String Home_Page();
-
-    String Process_Definitions();
-
-    String Process_Instances();
-
-    String Deploy();
-
-    String ExecutionServers();
-
-    String Process_Deployments();
-
     String newItem();
-
-    String Search();
-
-    String Tasks_List();
-
-    String Dashboards();
-
-    String find();
-
-    String PlugIns();
-
-    String Extensions();
-
-    String missingDefaultPerspective();
-
-    String explore();
 
     String repositories();
 
@@ -102,29 +50,11 @@ public interface AppConstants
 
     String newRepository();
 
-    String tools();
-
-    String User();
-
-    String Role();
-
-    String Jobs();
-
     String MenuOrganizationalUnits();
 
     String MenuManageOrganizationalUnits();
 
     String Repository();
-
-    String Upload();
-
-    String Refresh();
-
-    String Asset_Management();
-
-    String Apps();
-
-    String DataSets();
 
     String logoBannerError();
 
@@ -133,6 +63,4 @@ public interface AppConstants
     String Examples();
 
     String Messages();
-
-    String Admin();
 }

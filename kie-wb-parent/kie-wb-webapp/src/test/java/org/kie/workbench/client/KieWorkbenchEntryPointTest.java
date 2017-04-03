@@ -16,34 +16,33 @@
 
 package org.kie.workbench.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gwtmockito.GwtMockitoTestRunner;
+import org.dashbuilder.client.navigation.NavigationManager;
+import org.dashbuilder.client.navigation.impl.NavigationManagerImpl;
+import org.dashbuilder.navigation.NavGroup;
+import org.dashbuilder.navigation.NavItem;
+import org.dashbuilder.navigation.NavTree;
+import org.dashbuilder.navigation.service.NavigationServices;
 import org.guvnor.common.services.shared.config.AppConfigService;
-import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.workbench.client.home.HomeProducer;
-import org.kie.workbench.client.resources.i18n.AppConstants;
+import org.kie.workbench.client.navigation.NavTreeDefinitions;
+import org.kie.workbench.client.resources.i18n.NavigationConstants;
+import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.mocks.CallerMock;
-import org.uberfire.mocks.ConstantsAnswerMock;
-import org.uberfire.mocks.IocTestingUtils;
 import org.uberfire.mvp.Command;
-import org.uberfire.workbench.model.menu.MenuItem;
-import org.uberfire.workbench.model.menu.Menus;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -53,14 +52,12 @@ public class KieWorkbenchEntryPointTest {
 
     @Mock
     private AppConfigService appConfigService;
-    private CallerMock<AppConfigService> appConfigServiceCallerMock;
 
     @Mock
     private HomeProducer homeProducer;
 
     @Mock
     private SocialConfigurationService socialConfigurationService;
-    private CallerMock<SocialConfigurationService> socialConfigurationServiceCallerMock;
 
     @Mock
     private DefaultWorkbenchFeaturesMenusHelper menusHelper;
@@ -72,9 +69,6 @@ public class KieWorkbenchEntryPointTest {
     protected WorkbenchMenuBarPresenter menuBar;
 
     @Mock
-    protected SyncBeanManager iocManager;
-
-    @Mock
     protected Workbench workbench;
 
     @Mock
@@ -82,7 +76,6 @@ public class KieWorkbenchEntryPointTest {
 
     @Mock
     private PlaceManagerActivityService pmas;
-    private CallerMock<PlaceManagerActivityService> pmasCallerMock;
 
     @Mock
     private ActivityBeansCache activityBeansCache;
@@ -90,21 +83,37 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     private DefaultAdminPageHelper adminPageHelper;
 
+    @Mock
+    protected NavigationConstants navigationConstants;
+
+    @Mock
+    protected NavigationServices navigationServices;
+
+    @Mock
+    protected SearchMenuBuilder searchMenuBuilder;
+
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
+
+    private NavTreeDefinitions navTreeDefinitions;
+
+    private NavigationManager navigationManager;
+
 
     @Before
     public void setup() {
-        doNothing().when( pmas ).initActivities( anyList() );
+        navTreeDefinitions = new NavTreeDefinitions();
+        navigationManager = new NavigationManagerImpl(new CallerMock<>(navigationServices), null, null, null);
 
+        doNothing().when( pmas ).initActivities( anyList() );
         doReturn( Boolean.TRUE ).when( socialConfigurationService ).isSocialEnable();
         doAnswer( invocationOnMock -> {
             ( (Command) invocationOnMock.getArguments()[0] ).execute();
             return null;
         } ).when( userSystemManager ).waitForInitialization( any( Command.class ) );
 
-        appConfigServiceCallerMock = new CallerMock<>( appConfigService );
-        socialConfigurationServiceCallerMock = new CallerMock<>( socialConfigurationService );
-        pmasCallerMock = new CallerMock<>( pmas );
+        CallerMock<AppConfigService> appConfigServiceCallerMock = new CallerMock<>( appConfigService );
+        CallerMock<SocialConfigurationService> socialConfigurationServiceCallerMock = new CallerMock<>( socialConfigurationService );
+        CallerMock<PlaceManagerActivityService> pmasCallerMock = new CallerMock<>( pmas );
 
         kieWorkbenchEntryPoint = spy( new KieWorkbenchEntryPoint( appConfigServiceCallerMock,
                                                                   pmasCallerMock,
@@ -114,13 +123,12 @@ public class KieWorkbenchEntryPointTest {
                                                                   menusHelper,
                                                                   userSystemManager,
                                                                   menuBar,
-                                                                  iocManager,
                                                                   workbench,
                                                                   permissionTreeSetup,
-                                                                  adminPageHelper ) );
-        mockMenuHelper();
-        mockConstants();
-        IocTestingUtils.mockIocManager( iocManager );
+                                                                  adminPageHelper,
+                                                                  navTreeDefinitions,
+                                                                  navigationManager,
+                                                                  searchMenuBuilder ) );
 
         doNothing().when( kieWorkbenchEntryPoint ).hideLoadingPopup();
     }
@@ -131,27 +139,14 @@ public class KieWorkbenchEntryPointTest {
 
         verify( workbench ).addStartupBlocker( KieWorkbenchEntryPoint.class );
         verify( homeProducer ).init();
+        verify( permissionTreeSetup ).configureTree();
     }
 
     @Test
     public void setupMenuTest() {
         kieWorkbenchEntryPoint.setupMenu();
 
-        ArgumentCaptor<Menus> menusCaptor = ArgumentCaptor.forClass( Menus.class );
-        verify( menuBar ).addMenus( menusCaptor.capture() );
-
-        Menus menus = menusCaptor.getValue();
-
-        assertEquals( 8, menus.getItems().size() );
-
-        assertEquals( kieWorkbenchEntryPoint.constants.Home(), menus.getItems().get( 0 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Authoring(), menus.getItems().get( 1 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Deploy(), menus.getItems().get( 2 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Process_Management(), menus.getItems().get( 3 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Tasks(), menus.getItems().get( 4 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Dashboards(), menus.getItems().get( 5 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Extensions(), menus.getItems().get( 6 ).getCaption() );
-
+        verify( menuBar ).addMenus(any());
         verify( menusHelper ).addRolesMenuItems();
         verify( menusHelper ).addWorkbenchViewModeSwitcherMenuItem();
         verify( menusHelper ).addWorkbenchConfigurationMenuItem();
@@ -161,33 +156,105 @@ public class KieWorkbenchEntryPointTest {
     }
 
     @Test
-    public void getDeploymentViewsTest() {
-        List<? extends MenuItem> deploymentMenuItems = kieWorkbenchEntryPoint.getDeploymentViews();
+    public void defaultNavTreeTest() {
+        kieWorkbenchEntryPoint.setupMenu();
 
-        assertEquals( 2, deploymentMenuItems.size() );
-        assertEquals( kieWorkbenchEntryPoint.constants.ExecutionServers(), deploymentMenuItems.get( 0 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Jobs(), deploymentMenuItems.get( 1 ).getCaption() );
-    }
+        NavTree navTree = navigationManager.getNavTree();
 
-    @Test
-    public void getDashboardViewsTest() {
-        List<? extends MenuItem> deploymentMenuItems = kieWorkbenchEntryPoint.getDashboardViews();
+        NavGroup workbench = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_WORKBENCH);
 
-        assertEquals( 2, deploymentMenuItems.size() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Process_Dashboard(), deploymentMenuItems.get( 0 ).getCaption() );
-        assertEquals( kieWorkbenchEntryPoint.constants.Business_Dashboard(), deploymentMenuItems.get( 1 ).getCaption() );
-    }
+        NavGroup home = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_HOME);
+        NavItem homePage = navTree.getItemById(NavTreeDefinitions.ENTRY_HOME);
+        NavItem preferences = navTree.getItemById(NavTreeDefinitions.ENTRY_PREFERENCES);
+        NavItem timeline = navTree.getItemById(NavTreeDefinitions.ENTRY_TIMELINE);
+        NavItem people = navTree.getItemById(NavTreeDefinitions.ENTRY_PEOPLE);
 
-    private void mockMenuHelper() {
-        final ArrayList<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add( mock( MenuItem.class ) );
-        doReturn( menuItems ).when( menusHelper ).getHomeViews( anyBoolean() );
-        doReturn( menuItems ).when( menusHelper ).getAuthoringViews();
-        doReturn( menuItems ).when( menusHelper ).getProcessManagementViews();
-        doReturn( menuItems ).when( menusHelper ).getExtensionsViews();
-    }
+        NavGroup authoring = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_AUTHORING);
+        NavItem projectAuthoring = navTree.getItemById(NavTreeDefinitions.ENTRY_PROJECT_AUTHORING);
+        NavItem contributors = navTree.getItemById(NavTreeDefinitions.ENTRY_CONTRIBUTORS);
+        NavItem artifacts = navTree.getItemById(NavTreeDefinitions.ENTRY_ARTIFACTS);
+        NavItem administration = navTree.getItemById(NavTreeDefinitions.ENTRY_ADMINISTRATION);
+        NavItem library = navTree.getItemById(NavTreeDefinitions.ENTRY_LIBRARY);
 
-    private void mockConstants() {
-        kieWorkbenchEntryPoint.constants = mock( AppConstants.class, new ConstantsAnswerMock() );
+        NavGroup deploy = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEPLOY);
+        NavItem execServers = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_SERVERS);
+        NavItem jobs = navTree.getItemById(NavTreeDefinitions.ENTRY_JOBS);
+
+        NavGroup processMgmt = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_PROCESS_MANAGEMENT);
+        NavItem processDef = navTree.getItemById(NavTreeDefinitions.ENTRY_PROCESS_DEFINITIONS);
+        NavItem processInst = navTree.getItemById(NavTreeDefinitions.ENTRY_PROCESS_INSTANCES);
+
+        NavItem tasks = navTree.getItemById(NavTreeDefinitions.ENTRY_TASKS);
+
+        NavGroup dashboards = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DASHBOARDS);
+        NavItem businessDashboards = navTree.getItemById(NavTreeDefinitions.ENTRY_PROCESS_DASHBOARD);
+        NavItem processDashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_BUSINESS_DASHBOARDS);
+
+        NavGroup extensions = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_EXTENSIONS);
+        NavItem pluginMgmt = navTree.getItemById(NavTreeDefinitions.ENTRY_PLUGIN_MANAGEMENT);
+        NavItem apps = navTree.getItemById(NavTreeDefinitions.ENTRY_APPS);
+        NavItem datasets = navTree.getItemById(NavTreeDefinitions.ENTRY_DATASETS);
+        NavItem datasources = navTree.getItemById(NavTreeDefinitions.ENTRY_DATA_SOURCES);
+
+        assertNotNull(workbench);
+        assertEquals(home.getParent(), workbench);
+        assertEquals(authoring.getParent(), workbench);
+        assertEquals(deploy.getParent(), workbench);
+        assertEquals(tasks.getParent(), workbench);
+        assertEquals(dashboards.getParent(), workbench);
+        assertEquals(extensions.getParent(), workbench);
+
+        assertNotNull(home);
+        assertNotNull(homePage);
+        assertNotNull(preferences);
+        assertNotNull(timeline);
+        assertNotNull(people);
+        assertEquals(homePage.getParent(), home);
+        assertEquals(preferences.getParent(), home);
+        assertEquals(timeline.getParent(), home);
+        assertEquals(people.getParent(), home);
+
+        assertNotNull(authoring);
+        assertNotNull(projectAuthoring);
+        assertNotNull(contributors);
+        assertNotNull(artifacts);
+        assertNotNull(administration);
+        assertNotNull(library);
+        assertEquals(projectAuthoring.getParent(), authoring);
+        assertEquals(contributors.getParent(), authoring);
+        assertEquals(artifacts.getParent(), authoring);
+        assertEquals(administration.getParent(), authoring);
+        assertEquals(library.getParent(), authoring);
+
+        assertNotNull(deploy);
+        assertNotNull(execServers);
+        assertNotNull(jobs);
+        assertEquals(execServers.getParent(), deploy);
+        assertEquals(jobs.getParent(), deploy);
+
+        assertNotNull(processMgmt);
+        assertNotNull(processDef);
+        assertNotNull(processInst);
+        assertEquals(processDef.getParent(), processMgmt);
+        assertEquals(processInst.getParent(), processMgmt);
+
+        assertNotNull(tasks);
+        assertEquals(tasks.getParent(), workbench);
+
+        assertNotNull(dashboards);
+        assertNotNull(businessDashboards);
+        assertNotNull(processDashboard);
+        assertEquals(businessDashboards.getParent(), dashboards);
+        assertEquals(processDashboard.getParent(), dashboards);
+
+        assertNotNull(extensions);
+        assertNotNull(pluginMgmt);
+        assertNotNull(apps);
+        assertNotNull(datasets);
+        assertNotNull(datasources);
+        assertEquals(pluginMgmt.getParent(), extensions);
+        assertEquals(apps.getParent(), extensions);
+        assertEquals(datasets.getParent(), extensions);
+        assertEquals(datasources.getParent(), extensions);
     }
 }

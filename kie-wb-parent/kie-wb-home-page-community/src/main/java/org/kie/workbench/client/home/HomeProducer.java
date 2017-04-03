@@ -127,9 +127,9 @@ public class HomeProducer {
                 () -> placeManager.goTo( PROCESS_DASHBOARD ),
                 PROCESS_DASHBOARD , PERSPECTIVE ) );
 
-        final String dashbuilderURL = DashboardURLBuilder.getDashboardURL( "/dashbuilder/workspace", "showcase", LocaleInfo.getCurrentLocale().getLocaleName() );
         s5.addChild( ModelUtils.makeSectionEntry( constants.Business_Dashboard(),
-                () -> Window.open( dashbuilderURL, "_blank", "" ), WorkbenchFeatures.MANAGE_DASHBOARDS ) );
+                () -> placeManager.goTo( BUSINESS_DASHBOARDS ),
+                BUSINESS_DASHBOARDS, PERSPECTIVE ) );
 
         model.addSection( s1 );
         model.addSection( s2 );

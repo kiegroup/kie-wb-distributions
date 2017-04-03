@@ -63,7 +63,7 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Authoring", "Contributors", ContributorsPerspective.class);
 
     public static final Persp<ArtifactRepositoryPerspective> ARTIFACT_REPOSITORY
-            = new Persp<>("Authoring", "Artifact repository", ArtifactRepositoryPerspective.class);
+            = new Persp<>("Authoring", "Artifact Repository", ArtifactRepositoryPerspective.class);
 
     public static final Persp<AdministrationPerspective> ADMINISTRATION
             = new Persp<>("Authoring", "Administration", AdministrationPerspective.class);
@@ -87,7 +87,7 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Dashboards", "Process & Task Dashboard", ProcessAndTaskDashboardPerspective.class, true);
 
     public static final Persp<PluginManagementPerspective> PLUGIN_MANAGEMENT
-            = new Persp<>("Extensions", "PlugIn Management", PluginManagementPerspective.class);
+            = new Persp<>("Extensions", "Plugin Management", PluginManagementPerspective.class);
 
     public static final Persp<AppsPerspective> APPS
             = new Persp<>("Extensions", "Apps", AppsPerspective.class);
