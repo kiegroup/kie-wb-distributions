@@ -1663,6 +1663,10 @@
               <compileSourcesArtifact>org.uberfire:uberfire-social-activities-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-social-activities-client</compileSourcesArtifact>
 
+              <!-- Dashbuilder -->
+              <compileSourcesArtifact>org.dashbuilder:dashbuilder-json</compileSourcesArtifact>
+              <compileSourcesArtifact>org.dashbuilder:dashbuilder-navigation-api</compileSourcesArtifact>
+
               <!-- Forms -->
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-adf-base</compileSourcesArtifact>

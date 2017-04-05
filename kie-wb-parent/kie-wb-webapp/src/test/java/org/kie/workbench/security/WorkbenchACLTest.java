@@ -72,7 +72,6 @@ public class WorkbenchACLTest {
             "asset.promote",
             "project.release",
             "repository.configure",
-            "dashboard.manage",
             "planner.available");
 
     static final List<String> DEVELOPER_DENIED = Arrays.asList(
