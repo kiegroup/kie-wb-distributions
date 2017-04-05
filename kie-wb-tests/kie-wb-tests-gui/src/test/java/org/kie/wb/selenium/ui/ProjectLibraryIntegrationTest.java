@@ -21,35 +21,33 @@ import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
 import org.kie.wb.selenium.model.persps.HomePerspective;
-import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
 import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
-import org.kie.wb.selenium.model.persps.authoring.ProjectEditor;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class ProjectAuthoringIntegrationTest extends KieSeleniumTest {
+public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
 
     private static final String MORTGAGES_PROJECT = "mortgages";
 
     private HomePerspective home;
-    private ProjectAuthoringPerspective projectAuthoring;
+    private ProjectLibraryPerspective projectLibrary;
 
     @Before
     public void setUp() {
         login.getLoginPage();
-        if(login.isDisplayed()){
+        if (login.isDisplayed()){
             home = login.loginDefaultUser();
         }
 
-        projectAuthoring = home.getNavbar().projectAuthoring();
+        projectLibrary = home.getNavbar().projectLibrary();
 
-        if(projectAuthoring.isAuthoringDisabled()){
+        if (projectLibrary.isProjectListEmpty()){
             ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
             library.importDemoProject(MORTGAGES_PROJECT);
             Waits.pause(5_000);
-            projectAuthoring = home.getNavbar().projectAuthoring();
+            projectLibrary.openProjectList();
         }
     }
 
@@ -60,24 +58,23 @@ public class ProjectAuthoringIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void importAndBuildProjectFromStockRepository() {
-        projectAuthoring
+        projectLibrary
                 .importStockExampleProject("MyRepo", "MyOrgUnit", "optacloud");
         deployAndCheckArtifact("optacloud:optacloud:1.0.0-SNAPSHOT");
     }
 
     @Test
     public void importAndBuildProjectFromCustomRepository() {
-        projectAuthoring
+        projectLibrary
                 .importCustomExampleProject(Repository.JBPM_PLAYGROUND, "MyRepo", "MyOrgUnit", "Evaluation");
         deployAndCheckArtifact("org.jbpm:Evaluation:1.0");
     }
 
     private void deployAndCheckArtifact(String artifact) {
-        ProjectEditor pe = projectAuthoring.openProjectEditor();
-        pe.buildAndDeploy();
+        projectLibrary.buildAndDeployProject();
         Waits.pause(10_000); //Wait for project to build/deploy and appear in artifact repository perspective
 
-        ArtifactRepositoryPerspective artifactRepo = projectAuthoring.getNavbar().artifactRepository();
+        ArtifactRepositoryPerspective artifactRepo = projectLibrary.getNavbar().artifactRepository();
         assertThat(artifactRepo.isArtifactPresent(artifact))
                 .as("Project artifact should be present after Build & Deploy").isTrue();
     }
