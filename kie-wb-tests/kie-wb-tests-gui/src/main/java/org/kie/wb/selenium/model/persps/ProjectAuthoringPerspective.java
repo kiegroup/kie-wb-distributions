@@ -15,31 +15,13 @@
  */
 package org.kie.wb.selenium.model.persps;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.kie.wb.selenium.model.persps.authoring.ImportExampleModal;
-import org.kie.wb.selenium.model.persps.authoring.ProjectEditor;
-import org.kie.wb.selenium.model.persps.authoring.ProjectExplorer;
-import org.kie.wb.selenium.model.widgets.ContextNavbar;
-import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class ProjectAuthoringPerspective extends AbstractPerspective {
 
     private static final By WELCOME_MESSAGE_HOLDER = By.id("welcome");
-    private static final By PROJECT_EXPLORER_TITLE = By.xpath( "//h3[contains(text(),'Project Explorer')]" );
     private static final By NEW_ITEM_MENU = By.xpath( "//a[contains(text(),'New Item')]" );
-
-    @FindByJQuery(".nav.uf-perspective-context-menu")
-    private ContextNavbar contextNavbar;
-
-    @FindBy(xpath = "//div[div/h3[contains(text(),'Project Explorer')]]")
-    private ProjectExplorer projectExplorer;
-
-    @FindByJQuery("button:has(i.fa-chevron-right)")
-    private WebElement projectExplorerExpandButton;
 
     @Override
     public void waitForLoaded() {
@@ -54,37 +36,5 @@ public class ProjectAuthoringPerspective extends AbstractPerspective {
 
     public boolean isAuthoringDisabled(){
         return Waits.isElementPresent(WELCOME_MESSAGE_HOLDER);
-    }
-
-    public void importStockExampleProject( String targetRepo,
-                                           String targetOrgUnit,
-                                           String... projects ) {
-        ImportExampleModal modal = contextNavbar.importExample();
-        modal.selectStockRepository();
-        modal.selectProjects( projects );
-        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
-    }
-
-    public void importCustomExampleProject( Repository repo,
-                                            String targetRepo,
-                                            String targetOrgUnit,
-                                            String... projects ) {
-        ImportExampleModal modal = contextNavbar.importExample();
-        modal.selectCustomRepository( repo.getUrl() );
-        modal.selectProjects( projects );
-        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
-    }
-
-    public ProjectExplorer getProjectExplorer() {
-        return projectExplorer;
-    }
-
-    public ProjectEditor openProjectEditor() {
-        if (!Waits.isElementPresent(PROJECT_EXPLORER_TITLE)){
-            projectExplorerExpandButton.click();
-            Waits.elementPresent(PROJECT_EXPLORER_TITLE);
-        }
-        getProjectExplorer().openProjectEditor();
-        return createPanel(ProjectEditor.class, "Project:");
     }
 }
