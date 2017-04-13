@@ -36,11 +36,10 @@
     <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
     <errai.jboss.home>${project.build.directory}/wildfly-${version.org.wildfly.gwt.sdm}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
-    <gwt.memory.settings>-Xmx4g -Xms1g -Xss1M</gwt.memory.settings>
+    <gwt.memory.settings>-Xmx5g -Xms1g -Xss1M</gwt.memory.settings>
   </properties>
 
   <dependencies>
-
     <!-- errai-cdi-jboss provides gwt-dev with the proper dependency exclusions and should be first on the classpath -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -1705,6 +1704,7 @@
             </compileSourcesArtifacts>
           </configuration>
         </plugin>
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
@@ -1822,6 +1822,32 @@
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>wildfly-swarm-plugin</artifactId>
+        <configuration>
+          <fractionDetectMode>never</fractionDetectMode>
+          <fractions>
+            <fraction>logging</fraction>
+            <fraction>undertow</fraction>
+            <fraction>cdi</fraction>
+            <fraction>ejb</fraction>
+            <fraction>jaxrs</fraction>
+            <fraction>ee</fraction>
+            <fraction>security</fraction>
+            <fraction>management</fraction>
+            <fraction>datasources</fraction>
+          </fractions>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
         <configuration>
