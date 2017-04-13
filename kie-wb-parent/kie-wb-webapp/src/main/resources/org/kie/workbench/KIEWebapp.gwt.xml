@@ -58,7 +58,6 @@
   <inherits name='org.guvnor.organizationalunit.manager.GuvnorOrganizationalUnitManager'/>
 
   <!-- Home Page - This has the same GWT Module name for Community and Product so we do not need a different module for Product -->
-  <inherits name="org.kie.workbench.common.screens.home.KieWorkbenchHomeClient"/>
   <inherits name="org.kie.workbench.KIEWorkbenchHomePage"/>
 
   <!--Common Screens -->

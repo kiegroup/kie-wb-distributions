@@ -47,7 +47,6 @@
   <inherits name='org.guvnor.asset.management.GuvnorAssetMgmtClient'/>
 
   <!-- Home Page - This has the same GWT Module name for Community and Product so we do not need a different module for Product -->
-  <inherits name="org.kie.workbench.common.screens.home.KieWorkbenchHomeClient"/>
   <inherits name="org.kie.workbench.drools.KIEDroolsWorkbenchHomePage"/>
 
   <!--Common Screens -->
