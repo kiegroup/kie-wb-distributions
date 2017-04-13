@@ -25,6 +25,9 @@
            removed in future. WildFly also generates warning(s) during the deployment if
            the WAR depends on private modules. -->
       <!-- Keep the alphabetical order! -->
+      <!-- JMS API required by kie-server-client as there is an runtime API dependency
+           (even though the JMS is not being used for the communication itself). -->
+      <module name="javax.jms.api"/>
 
       <!-- ******************************************************************************************** -->
       <!-- EXCEPTIONS - private/unsupported modules that can not be directly added into the WEB-INF/lib -->
