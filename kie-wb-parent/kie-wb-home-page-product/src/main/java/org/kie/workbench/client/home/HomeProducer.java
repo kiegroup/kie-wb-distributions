@@ -70,7 +70,6 @@ public class HomeProducer {
         s2.setPerspectiveId( PerspectiveIds.DEPLOYMENTS );
         s3.setPerspectiveId( PerspectiveIds.PROCESS_DEFINITIONS );
         s4.setPerspectiveId( PerspectiveIds.TASKS );
-        s5.setPermission( WorkbenchFeatures.MANAGE_DASHBOARDS );
 
         model.addSection( s1 );
         model.addSection( s2 );
