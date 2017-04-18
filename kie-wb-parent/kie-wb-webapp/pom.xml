@@ -714,6 +714,19 @@
     </dependency>
     <dependency>
       <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-guided-rule-editor-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-guided-rule-editor-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-wb-guided-rule-editor-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.optaplanner</groupId>
       <artifactId>optaplanner-wb-solver-editor-api</artifactId>
     </dependency>
     <dependency>
@@ -1989,6 +2002,8 @@
               <!-- OptaPlanner WB -->
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-domain-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-domain-editor-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.optaplanner:optaplanner-wb-guided-rule-editor-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.optaplanner:optaplanner-wb-guided-rule-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-solver-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-solver-editor-client</compileSourcesArtifact>
 
