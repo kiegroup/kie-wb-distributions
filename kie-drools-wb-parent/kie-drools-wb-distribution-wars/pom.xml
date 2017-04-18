@@ -364,7 +364,7 @@
               <finalName>kie-drools-wb-${project.version}</finalName>
               <descriptors>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-eap-7-redhat.xml</descriptor>
-                <descriptor>${project.basedir}src/main/productized/assembly-kie-drools-wb-tomcat-8-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-tomcat-8-redhat.xml</descriptor>
               </descriptors>
               <archive>
                 <addMavenDescriptor>false</addMavenDescriptor>

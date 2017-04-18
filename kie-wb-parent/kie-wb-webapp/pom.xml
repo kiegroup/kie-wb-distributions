@@ -2368,11 +2368,6 @@
           <scope>provided</scope>
         </dependency>
         <dependency>
-          <groupId>org.kie.workbench.screens</groupId>
-          <artifactId>kie-wb-common-home-client</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-theme-community</artifactId>
           <scope>provided</scope>
@@ -2413,11 +2408,6 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-home-page-product</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-distribution-home-client</artifactId>
           <scope>provided</scope>
         </dependency>
         <dependency>
