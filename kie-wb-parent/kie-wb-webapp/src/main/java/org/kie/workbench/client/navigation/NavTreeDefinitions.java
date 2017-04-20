@@ -83,11 +83,10 @@ public class NavTreeDefinitions {
 
         return builder.endGroup()
             .group(GROUP_AUTHORING, i18n.navTreeAuthoringName(), i18n.navTreeAuthoringDescr(), true)
-                .item(ENTRY_PROJECT_AUTHORING, i18n.navTreeProjectAuthoringName(), i18n.navTreeProjectAuthoringDescr(), true, perspective(AUTHORING))
+                .item(ENTRY_LIBRARY, i18n.navTreeProjectAuthoringName(), i18n.navTreeAuthoringDescr(), true, perspective(LIBRARY))
                 .item(ENTRY_CONTRIBUTORS, i18n.navTreeContributorsName(), i18n.navTreeContributorsDescr(), true, perspective(CONTRIBUTORS))
                 .item(ENTRY_ARTIFACTS, i18n.navTreeArtifactsName(), i18n.navTreeArtifactsDescr(), true, perspective(GUVNOR_M2REPO))
                 .item(ENTRY_ADMINISTRATION, i18n.navTreeAdministrationName(), i18n.navTreeAdministrationDescr(), true, perspective(ADMINISTRATION))
-                .item(ENTRY_LIBRARY, i18n.navTreeLibraryName(), i18n.navTreeLibraryDescr(), true, perspective(LIBRARY))
                 .endGroup()
             .group(GROUP_DEPLOY, i18n.navTreeDeployName(), i18n.navTreeDeployDescr(), true)
                 .item(ENTRY_EXECUTION_SERVERS, i18n.navTreeExecutionServersName(), i18n.navTreeExecutionServersDescr(), true, perspective(SERVER_MANAGEMENT))
