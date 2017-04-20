@@ -44,8 +44,7 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
         projectLibrary = home.getNavbar().projectLibrary();
 
         if (projectLibrary.isProjectListEmpty()){
-            ProjectLibraryPerspective library = home.getNavbar().projectLibrary();
-            library.importDemoProject(MORTGAGES_PROJECT);
+            projectLibrary.importDemoProject(MORTGAGES_PROJECT);
             Waits.pause(5_000);
             projectLibrary.openProjectList();
         }

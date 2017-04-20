@@ -27,9 +27,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
+import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
-import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.drools.client.home.HomeProducer;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.mockito.ArgumentCaptor;
@@ -94,86 +94,94 @@ public class KieDroolsWorkbenchEntryPointTest {
 
     @Before
     public void setup() {
-        doNothing().when( pmas ).initActivities( anyList() );
+        doNothing().when(pmas).initActivities(anyList());
 
-        doReturn( Boolean.TRUE ).when( socialConfigurationService ).isSocialEnable();
-        doAnswer( invocationOnMock -> {
-            ( ( Command ) invocationOnMock.getArguments()[0] ).execute();
+        doReturn(Boolean.TRUE).when(socialConfigurationService).isSocialEnable();
+        doAnswer(invocationOnMock -> {
+            ((Command) invocationOnMock.getArguments()[0]).execute();
             return null;
-        } ).when( userSystemManager ).waitForInitialization( any( Command.class ) );
+        }).when(userSystemManager).waitForInitialization(any(Command.class));
 
-        appConfigServiceCallerMock = new CallerMock<>( appConfigService );
-        socialConfigurationServiceCallerMock = new CallerMock<>( socialConfigurationService );
-        pmasCallerMock = new CallerMock<>( pmas );
+        appConfigServiceCallerMock = new CallerMock<>(appConfigService);
+        socialConfigurationServiceCallerMock = new CallerMock<>(socialConfigurationService);
+        pmasCallerMock = new CallerMock<>(pmas);
 
-        kieDroolsWorkbenchEntryPoint = spy( new KieDroolsWorkbenchEntryPoint( appConfigServiceCallerMock,
-                                                                              pmasCallerMock,
-                                                                              activityBeansCache,
-                                                                              homeProducer,
-                                                                              socialConfigurationServiceCallerMock,
-                                                                              menusHelper,
-                                                                              userSystemManager,
-                                                                              menuBar,
-                                                                              iocManager,
-                                                                              workbench,
-                                                                              permissionTreeSetup,
-                                                                              adminPageHelper ) );
+        kieDroolsWorkbenchEntryPoint = spy(new KieDroolsWorkbenchEntryPoint(appConfigServiceCallerMock,
+                                                                            pmasCallerMock,
+                                                                            activityBeansCache,
+                                                                            homeProducer,
+                                                                            socialConfigurationServiceCallerMock,
+                                                                            menusHelper,
+                                                                            userSystemManager,
+                                                                            menuBar,
+                                                                            iocManager,
+                                                                            workbench,
+                                                                            permissionTreeSetup,
+                                                                            adminPageHelper));
         mockMenuHelper();
         mockConstants();
-        IocTestingUtils.mockIocManager( iocManager );
+        IocTestingUtils.mockIocManager(iocManager);
 
-        doNothing().when( kieDroolsWorkbenchEntryPoint ).hideLoadingPopup();
+        doNothing().when(kieDroolsWorkbenchEntryPoint).hideLoadingPopup();
     }
 
     @Test
     public void initTest() {
         kieDroolsWorkbenchEntryPoint.init();
 
-        verify( workbench ).addStartupBlocker( KieDroolsWorkbenchEntryPoint.class );
-        verify( homeProducer ).init();
+        verify(workbench).addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
+        verify(homeProducer).init();
     }
 
     @Test
     public void setupMenuTest() {
         kieDroolsWorkbenchEntryPoint.setupMenu();
 
-        ArgumentCaptor<Menus> menusCaptor = ArgumentCaptor.forClass( Menus.class );
-        verify( menuBar ).addMenus( menusCaptor.capture() );
+        ArgumentCaptor<Menus> menusCaptor = ArgumentCaptor.forClass(Menus.class);
+        verify(menuBar).addMenus(menusCaptor.capture());
 
         Menus menus = menusCaptor.getValue();
 
-        assertEquals( 5, menus.getItems().size() );
+        assertEquals(4,
+                     menus.getItems().size());
 
-        assertEquals( kieDroolsWorkbenchEntryPoint.constants.home(), menus.getItems().get( 0 ).getCaption() );
-        assertEquals( kieDroolsWorkbenchEntryPoint.constants.authoring(), menus.getItems().get( 1 ).getCaption() );
-        assertEquals( kieDroolsWorkbenchEntryPoint.constants.deploy(), menus.getItems().get( 2 ).getCaption() );
-        assertEquals( kieDroolsWorkbenchEntryPoint.constants.extensions(), menus.getItems().get( 3 ).getCaption() );
+        assertEquals(kieDroolsWorkbenchEntryPoint.constants.home(),
+                     menus.getItems().get(0).getCaption());
+        assertEquals(kieDroolsWorkbenchEntryPoint.constants.authoring(),
+                     menus.getItems().get(1).getCaption());
+        assertEquals(kieDroolsWorkbenchEntryPoint.constants.deploy(),
+                     menus.getItems().get(2).getCaption());
+        assertEquals(kieDroolsWorkbenchEntryPoint.constants.extensions(),
+                     menus.getItems().get(3).getCaption());
 
-        verify( menusHelper ).addRolesMenuItems();
-        verify( menusHelper ).addWorkbenchViewModeSwitcherMenuItem();
-        verify( menusHelper ).addWorkbenchConfigurationMenuItem();
-        verify( menusHelper ).addUtilitiesMenuItems();
+        verify(menusHelper).addRolesMenuItems();
+        verify(menusHelper).addWorkbenchViewModeSwitcherMenuItem();
+        verify(menusHelper).addWorkbenchConfigurationMenuItem();
+        verify(menusHelper).addUtilitiesMenuItems();
 
-        verify( workbench ).removeStartupBlocker( KieDroolsWorkbenchEntryPoint.class );
+        verify(workbench).removeStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
     }
 
     @Test
     public void getDeploymentViewsTest() {
         List<? extends MenuItem> deploymentMenuItems = kieDroolsWorkbenchEntryPoint.getDeploymentViews();
 
-        assertEquals( 1, deploymentMenuItems.size() );
-        assertEquals( kieDroolsWorkbenchEntryPoint.constants.ExecutionServers(), deploymentMenuItems.get( 0 ).getCaption() );
+        assertEquals(1,
+                     deploymentMenuItems.size());
+        assertEquals(kieDroolsWorkbenchEntryPoint.constants.ExecutionServers(),
+                     deploymentMenuItems.get(0).getCaption());
     }
 
     private void mockMenuHelper() {
         final ArrayList<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add( mock( MenuItem.class ) );
-        doReturn( menuItems ).when( menusHelper ).getHomeViews( anyBoolean() );
-        doReturn( menuItems ).when( menusHelper ).getAuthoringViews();
-        doReturn( menuItems ).when( menusHelper ).getExtensionsViews();
+        menuItems.add(mock(MenuItem.class));
+        doReturn(menuItems).when(menusHelper).getHomeViews(anyBoolean());
+        doReturn(menuItems).when(menusHelper).getAuthoringViews();
+        doReturn(menuItems).when(menusHelper).getExtensionsViews();
     }
 
     private void mockConstants() {
-        kieDroolsWorkbenchEntryPoint.constants = mock( AppConstants.class, new ConstantsAnswerMock() );
+        kieDroolsWorkbenchEntryPoint.constants = mock(AppConstants.class,
+                                                      new ConstantsAnswerMock());
     }
 }
