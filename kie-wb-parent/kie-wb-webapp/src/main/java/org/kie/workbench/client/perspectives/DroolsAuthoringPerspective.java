@@ -15,10 +15,13 @@
  */
 package org.kie.workbench.client.perspectives;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.kie.workbench.client.resources.i18n.AppConstants;
 import org.kie.workbench.common.screens.examples.client.wizard.ExamplesWizard;
 import org.kie.workbench.common.screens.examples.service.ExamplesService;
-import org.kie.workbench.common.screens.library.api.LibraryContextSwitchEvent;
 import org.kie.workbench.common.screens.projecteditor.client.menu.ProjectMenu;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
@@ -38,11 +41,6 @@ import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 @ApplicationScoped
 @WorkbenchPerspective(identifier = PerspectiveIds.AUTHORING, isTransient = false)
@@ -150,12 +148,6 @@ public class DroolsAuthoringPerspective {
                 } )
                 .endMenu()
                 .build();
-    }
-
-    public void onLibraryContextSwitchEvent( @Observes final LibraryContextSwitchEvent event ) {
-        if ( event.isProjectFromExample() ) {
-            wizard.start();
-        }
     }
 
 }
