@@ -25,7 +25,7 @@ import org.openqa.selenium.By;
 public class ProjectLibraryPerspective extends AbstractPerspective {
 
     private static final By WELCOME_MESSAGE_HOLDER = By.id("welcome");
-    private static final By OU_REPO_BREADCRUMB = ByJQuery.selector("a:contains('myteam (myrepo)')");
+    private static final By OU_REPO_BREADCRUMB = ByJQuery.selector("a:contains('myteam')");
 
     @Override
     public void waitForLoaded() {
@@ -34,7 +34,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(OU_REPO_BREADCRUMB);
+        return Waits.isElementPresent(OU_REPO_BREADCRUMB, 60);
     }
 
     private ImportExampleModal importExample() {
