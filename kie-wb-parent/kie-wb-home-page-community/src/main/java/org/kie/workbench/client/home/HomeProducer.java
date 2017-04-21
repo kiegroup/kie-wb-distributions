@@ -20,22 +20,24 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.LocaleInfo;
-import com.google.gwt.user.client.Window;
-import org.jbpm.dashboard.renderer.service.DashboardURLBuilder;
 import org.kie.workbench.client.resources.i18n.HomePageCommunityConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.common.screens.home.model.SectionEntry;
-import org.kie.workbench.common.workbench.client.authz.WorkbenchFeatures;
-import org.kie.workbench.common.workbench.client.library.LibraryMonitor;
 import org.uberfire.client.mvp.PlaceManager;
-import org.uberfire.mvp.PlaceRequest;
-import org.uberfire.mvp.impl.ConditionalPlaceRequest;
-import org.uberfire.mvp.impl.DefaultPlaceRequest;
 
-import static org.uberfire.workbench.model.ActivityResourceType.*;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.ADMINISTRATION;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.BUSINESS_DASHBOARDS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.CONTRIBUTORS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.GUVNOR_M2REPO;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.JOBS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DASHBOARD;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DEFINITIONS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_INSTANCES;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS;
+import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
 /**
  * Producer method for the Home Page content
@@ -49,9 +51,6 @@ public class HomeProducer {
 
     @Inject
     private PlaceManager placeManager;
-
-    @Inject
-    protected LibraryMonitor libraryMonitor;
 
     public void init() {
         final String url = GWT.getModuleBaseURL();
@@ -74,14 +73,9 @@ public class HomeProducer {
 
         final SectionEntry s1 = ModelUtils.makeSectionEntry( constants.Authoring() );
 
-        final PlaceRequest authoringPlaceRequest = getAuthoringPlaceRequest();
         s1.addChild( ModelUtils.makeSectionEntry( constants.Project_Authoring(),
-                () -> placeManager.goTo( authoringPlaceRequest ),
-                AUTHORING, PERSPECTIVE ) );
-
-        s1.addChild( ModelUtils.makeSectionEntry( constants.Library(),
-                                                  () -> placeManager.goTo( LIBRARY ),
-                                                  LIBRARY, PERSPECTIVE ) );
+                () -> placeManager.goTo( LIBRARY ),
+                LIBRARY, PERSPECTIVE ) );
 
         s1.addChild( ModelUtils.makeSectionEntry( constants.Contributors(),
                 () -> placeManager.goTo( CONTRIBUTORS ),
@@ -136,11 +130,6 @@ public class HomeProducer {
         model.addSection( s3 );
         model.addSection( s4 );
         model.addSection( s5 );
-    }
-
-    PlaceRequest getAuthoringPlaceRequest() {
-        final DefaultPlaceRequest libraryPlaceRequest = new DefaultPlaceRequest( LIBRARY );
-        return new ConditionalPlaceRequest( AUTHORING ).when( p -> libraryMonitor.thereIsAtLeastOneProjectAccessible() ).orElse( libraryPlaceRequest );
     }
 
     @Produces

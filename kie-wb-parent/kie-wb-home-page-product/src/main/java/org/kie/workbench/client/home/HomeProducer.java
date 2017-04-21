@@ -66,7 +66,7 @@ public class HomeProducer {
                                         homeConstants.dashboards_paragraph(),
                                         url + HomeImagesHelper.Images.Dashboard.getLocalisedImageUrl() );
 
-        s1.setPerspectiveId( PerspectiveIds.AUTHORING);
+        s1.setPerspectiveId( PerspectiveIds.LIBRARY);
         s2.setPerspectiveId( PerspectiveIds.DEPLOYMENTS );
         s3.setPerspectiveId( PerspectiveIds.PROCESS_DEFINITIONS );
         s4.setPerspectiveId( PerspectiveIds.TASKS );

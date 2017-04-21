@@ -59,7 +59,7 @@ public class HomeProducer {
                                         homeConstants.deploy_paragraph(),
                                         url + HomeImagesHelper.Images.Deploy.getLocalisedImageUrl() );
 
-        s1.setPerspectiveId( PerspectiveIds.AUTHORING);
+        s1.setPerspectiveId( PerspectiveIds.LIBRARY);
         s2.setPerspectiveId( PerspectiveIds.DEPLOYMENTS );
         s3.setPerspectiveId( PerspectiveIds.PROCESS_DEFINITIONS );
 
