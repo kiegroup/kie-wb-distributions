@@ -416,6 +416,22 @@
       </build>
     </profile>
 
+    <profile>
+      <id>productized</id>
+      <activation>
+        <property>
+          <name>productized</name>
+        </property>
+      </activation>
+      <properties>
+        <!-- We can not run the tests on WildFly 10 as there is no wildfly10-redhat.war being created. We also can not
+             easily run the tests on EAP7 as that requires custom URL pointing to the EAP7 zip. The only option would be
+             to run the tests on Tomcat, but that proved unreliable in some cases (needs to be investigated again, see
+             https://issues.jboss.org/browse/GUVNOR-3015) -->
+        <skipTests>true</skipTests>
+        <cargo.maven.skip>true</cargo.maven.skip>
+      </properties>
+    </profile>
     <!-- Tests are enabled by default. Specific modules (like Selenium UI tests) may disable them as they require
          additional resources (e.g. browser) which are not always available. Such additional tests are then enabled
          by specific profile. -->
