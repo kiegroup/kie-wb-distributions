@@ -15,9 +15,12 @@
  */
 package org.kie.workbench.drools.client.perspectives;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.kie.workbench.common.screens.examples.client.wizard.ExamplesWizard;
 import org.kie.workbench.common.screens.examples.service.ExamplesService;
-import org.kie.workbench.common.screens.library.api.LibraryContextSwitchEvent;
 import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
@@ -37,11 +40,6 @@ import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 /**
  * A Perspective for Rule authors
@@ -149,12 +147,6 @@ public class DroolsAuthoringPerspective {
                 } )
                 .endMenu()
                 .build();
-    }
-
-    public void onLibraryContextSwitchEvent( @Observes final LibraryContextSwitchEvent event ) {
-        if ( event.isProjectFromExample() ) {
-            wizard.start();
-        }
     }
 
 }

@@ -170,11 +170,10 @@ public class KieWorkbenchEntryPointTest {
         NavItem people = navTree.getItemById(NavTreeDefinitions.ENTRY_PEOPLE);
 
         NavGroup authoring = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_AUTHORING);
-        NavItem projectAuthoring = navTree.getItemById(NavTreeDefinitions.ENTRY_PROJECT_AUTHORING);
+        NavItem library = navTree.getItemById(NavTreeDefinitions.ENTRY_LIBRARY);
         NavItem contributors = navTree.getItemById(NavTreeDefinitions.ENTRY_CONTRIBUTORS);
         NavItem artifacts = navTree.getItemById(NavTreeDefinitions.ENTRY_ARTIFACTS);
         NavItem administration = navTree.getItemById(NavTreeDefinitions.ENTRY_ADMINISTRATION);
-        NavItem library = navTree.getItemById(NavTreeDefinitions.ENTRY_LIBRARY);
 
         NavGroup deploy = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEPLOY);
         NavItem execServers = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_SERVERS);
@@ -224,14 +223,11 @@ public class KieWorkbenchEntryPointTest {
         assertEquals(people.getParent(),
                      home);
 
+        assertNotNull(library);
         assertNotNull(authoring);
-        assertNotNull(projectAuthoring);
         assertNotNull(contributors);
         assertNotNull(artifacts);
         assertNotNull(administration);
-        assertNotNull(library);
-        assertEquals(projectAuthoring.getParent(),
-                     authoring);
         assertEquals(contributors.getParent(),
                      authoring);
         assertEquals(artifacts.getParent(),

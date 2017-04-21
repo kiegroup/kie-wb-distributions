@@ -41,7 +41,7 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
             home = login.loginDefaultUser();
         }
 
-        projectLibrary = home.getNavbar().projectLibrary();
+        projectLibrary = home.getNavbar().projectAuthoring();
 
         if (projectLibrary.isProjectListEmpty()){
             projectLibrary.importDemoProject(MORTGAGES_PROJECT);

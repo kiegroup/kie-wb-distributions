@@ -75,12 +75,8 @@ public class PrimaryNavbar {
         return navigateTo(Persp.PEOPLE);
     }
 
-    public ProjectAuthoringPerspective projectAuthoring() {
+    public ProjectLibraryPerspective projectAuthoring() {
         return navigateTo(Persp.PROJECT_AUTHORING);
-    }
-
-    public ProjectLibraryPerspective projectLibrary() {
-        return navigateTo(Persp.PROJECT_LIBRARY);
     }
 
     public ContributorsPerspective contributors() {
