@@ -60,8 +60,6 @@ public interface HomePageCommunityConstants
 
     String Project_Authoring();
 
-    String Library();
-
     String Contributors();
 
     String Asset_Management();
