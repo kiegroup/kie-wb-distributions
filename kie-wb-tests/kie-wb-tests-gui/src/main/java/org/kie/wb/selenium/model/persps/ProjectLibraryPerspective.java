@@ -16,13 +16,20 @@
 package org.kie.wb.selenium.model.persps;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.kie.wb.selenium.model.persps.authoring.ConflictingRepositoriesModal;
 import org.kie.wb.selenium.model.persps.authoring.ImportExampleModal;
 import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProjectLibraryPerspective extends AbstractPerspective {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ProjectLibraryPerspective.class);
 
     private static final By WELCOME_MESSAGE_HOLDER = By.id("welcome");
     private static final By OU_REPO_BREADCRUMB = ByJQuery.selector("a:contains('myteam')");
@@ -61,6 +68,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     public void buildAndDeployProject() {
         Waits.elementPresent(ByJQuery.selector("button:contains('Build & Deploy')"), 20)
                 .click();
+        possiblyOverrideGavConflict();
     }
 
     public void importStockExampleProject( String targetRepo,
@@ -80,5 +88,14 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
         modal.selectCustomRepository( repo.getUrl() );
         modal.selectProjects( projects );
         modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
+    }
+
+    private void possiblyOverrideGavConflict() {
+        try {
+            ConflictingRepositoriesModal modal = ConflictingRepositoriesModal.newInstance();
+            modal.overrideArtifactInMavenRepo();
+        } catch (TimeoutException | NoSuchElementException ignored) {
+            LOG.info("Modal showing GAV conflict didn't appear");
+        }
     }
 }
