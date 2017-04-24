@@ -130,4 +130,6 @@
   <!-- There is no "ie11" permutation. IE11 uses the Firefox one (gecko1_8) -->
   <set-property name="user.agent" value="gecko1_8,safari"/>
 
+  <set-property name="errai.i18n.default_per_key" value="true"/>
+
 </module>
