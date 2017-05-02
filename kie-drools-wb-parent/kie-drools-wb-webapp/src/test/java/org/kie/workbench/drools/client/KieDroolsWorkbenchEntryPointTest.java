@@ -142,7 +142,7 @@ public class KieDroolsWorkbenchEntryPointTest {
 
         Menus menus = menusCaptor.getValue();
 
-        assertEquals(4,
+        assertEquals(5,
                      menus.getItems().size());
 
         assertEquals(kieDroolsWorkbenchEntryPoint.constants.home(),
