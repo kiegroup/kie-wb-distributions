@@ -24,6 +24,7 @@
     <deployable.classifier.tomcat8>tomcat8</deployable.classifier.tomcat8>
     <deployable.classifier.wildfly10>wildfly10</deployable.classifier.wildfly10>
     <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
+    <deployable.classifier.swarm>swarm</deployable.classifier.swarm>
     <deployable.context>kie-wb</deployable.context>
 
     <deployable.groupId>org.kie</deployable.groupId>
@@ -51,6 +52,60 @@
         <groupId>org.kie</groupId>
         <artifactId>kie-wb-tests-gui</artifactId>
         <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb-webapp</artifactId>
+        <version>${deployable.version}</version>
+        <classifier>${deployable.classifier.swarm}</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-webapp</artifactId>
+        <version>${deployable.version}</version>
+        <classifier>${deployable.classifier.swarm}</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb</artifactId>
+        <version>${deployable.version}</version>
+        <classifier>${deployable.classifier.wildfly10}</classifier>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb</artifactId>
+        <version>${deployable.version}</version>
+        <classifier>${deployable.classifier.wildfly10}</classifier>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb</artifactId>
+        <version>${deployable.version}</version>
+        <classifier>${deployable.classifier.eap7}</classifier>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb</artifactId>
+        <version>${deployable.version}</version>
+        <classifier>${deployable.classifier.eap7}</classifier>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb</artifactId>
+        <version>${deployable.version}</version>
+        <classifier>${deployable.classifier.tomcat8}</classifier>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drools-wb</artifactId>
+        <version>${deployable.version}</version>
+        <classifier>${deployable.classifier.tomcat8}</classifier>
+        <type>war</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -434,27 +489,11 @@
         <deployable.context/>
         <cargo.maven.skip>true</cargo.maven.skip>
       </properties>
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-drools-wb-webapp</artifactId>
-            <classifier>swarm</classifier>
-            <version>${project.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-wb-webapp</artifactId>
-            <classifier>swarm</classifier>
-            <version>${project.version}</version>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb-webapp</artifactId>
-          <classifier>swarm</classifier>
+          <classifier>${deployable.classifier.swarm}</classifier>
           <exclusions>
             <exclusion>
               <groupId>*</groupId>
@@ -465,7 +504,7 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-webapp</artifactId>
-          <classifier>swarm</classifier>
+          <classifier>${deployable.classifier.swarm}</classifier>
           <exclusions>
             <exclusion>
               <groupId>*</groupId>
@@ -503,7 +542,7 @@
                       <process>
                         <groupId>org.kie</groupId>
                         <artifactId>${deployable.artifactId}-webapp</artifactId>
-                        <classifier>swarm</classifier>
+                        <classifier>${deployable.classifier.swarm}</classifier>
                       </process>
                       <properties>
                         <start.timeout.seconds>120</start.timeout.seconds>
