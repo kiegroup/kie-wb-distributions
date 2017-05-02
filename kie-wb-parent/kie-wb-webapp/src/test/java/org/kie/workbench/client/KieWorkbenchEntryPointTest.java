@@ -30,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.client.resources.i18n.NavigationConstants;
+import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
@@ -42,7 +43,6 @@ import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.mocks.CallerMock;
 import org.uberfire.mvp.Command;
-import org.uberfire.workbench.model.menu.MenuFactory;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -89,6 +89,9 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     protected NavigationServices navigationServices;
 
+    @Mock
+    protected SearchMenuBuilder searchMenuBuilder;
+
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     private NavTreeDefinitions navTreeDefinitions;
@@ -126,7 +129,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 permissionTreeSetup,
                                                                 adminPageHelper,
                                                                 navTreeDefinitions,
-                                                                navigationManager));
+                                                                navigationManager,
+                                                                searchMenuBuilder));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
     }
@@ -142,8 +146,6 @@ public class KieWorkbenchEntryPointTest {
 
     @Test
     public void setupMenuTest() {
-        doReturn(mock(MenuFactory.TopLevelMenusBuilder.class)).when(menusHelper).buildMenusFromNavTree(any());
-
         kieWorkbenchEntryPoint.setupMenu();
 
         verify(menuBar).addMenus(any());

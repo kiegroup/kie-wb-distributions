@@ -25,6 +25,7 @@ import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
+import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
@@ -111,6 +112,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                 .newTopLevelMenu(constants.authoring()).withItems(menusHelper.getAuthoringViews()).endMenu()
                                 .newTopLevelMenu(constants.deploy()).withItems(getDeploymentViews()).endMenu()
                                 .newTopLevelMenu(constants.extensions()).withItems(menusHelper.getExtensionsViews()).endMenu()
+                                .newTopLevelCustomMenu( iocManager.lookupBean( SearchMenuBuilder.class ).getInstance() ).endMenu()
                                 .build();
 
                 menuBar.addMenus(menus);
