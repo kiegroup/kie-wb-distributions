@@ -27,6 +27,7 @@ import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.navigation.NavTreeDefinitions;
+import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
@@ -39,9 +40,11 @@ import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveGroupEvent;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveRoleEvent;
+import org.uberfire.workbench.model.menu.Menus;
 
 import static org.uberfire.workbench.model.menu.MenuFactory.MenuBuilder;
 import static org.uberfire.workbench.model.menu.MenuFactory.TopLevelMenusBuilder;
+import static org.uberfire.workbench.model.menu.MenuFactory.newTopLevelCustomMenu;
 
 @EntryPoint
 public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
@@ -66,6 +69,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected NavigationManager navigationManager;
 
+    protected SearchMenuBuilder searchMenuBuilder;
+
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
                                   final Caller<PlaceManagerActivityService> pmas,
@@ -79,7 +84,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final PermissionTreeSetup permissionTreeSetup,
                                   final DefaultAdminPageHelper adminPageHelper,
                                   final NavTreeDefinitions navTreeDefinitions,
-                                  final NavigationManager navigationManager) {
+                                  final NavigationManager navigationManager,
+                                  final SearchMenuBuilder searchMenuBuilder) {
         super(appConfigService,
               pmas,
               activityBeansCache);
@@ -93,6 +99,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.adminPageHelper = adminPageHelper;
         this.navTreeDefinitions = navTreeDefinitions;
         this.navigationManager = navigationManager;
+        this.searchMenuBuilder = searchMenuBuilder;
     }
 
     @PostConstruct
@@ -136,11 +143,13 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         NavTree workbenchNavTree = navigationManager.getNavTree().getItemAsTree(NavTreeDefinitions.GROUP_WORKBENCH);
         TopLevelMenusBuilder<MenuBuilder> builder = menusHelper.buildMenusFromNavTree(workbenchNavTree);
 
+        // Append the search menu item & build the menus
+        Menus menus = builder == null ? newTopLevelCustomMenu(searchMenuBuilder).endMenu().build() :
+                builder.newTopLevelCustomMenu(searchMenuBuilder).endMenu().build();
+
         // Refresh the menu bar
         menuBar.clear();
-        if (builder != null) {
-            menuBar.addMenus(builder.build());
-        }
+        menuBar.addMenus(menus);
         menusHelper.addWorkbenchConfigurationMenuItem();
         menusHelper.addUtilitiesMenuItems();
     }
