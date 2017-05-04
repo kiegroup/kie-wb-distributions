@@ -111,7 +111,7 @@ public class AdministrationPerspective {
                 .respondsWith( () -> placeManager.goTo( "RepositoriesEditor" ) )
                 .endMenu()
                 .menu( constants.cloneRepository() )
-                .withPermission( Repository.RESOURCE_TYPE, RepositoryAction.READ )
+                .withPermission( Repository.RESOURCE_TYPE, RepositoryAction.CREATE )
                 .respondsWith( cloneRepoCommand )
                 .endMenu()
                 .menu( constants.newRepository() )
@@ -122,29 +122,24 @@ public class AdministrationPerspective {
                 .endMenu().build();
     }
 
+    Command getNewRepoCommand() {
+        return newRepoCommand;
+    }
+
+    Command getCloneRepoCommand() {
+        return cloneRepoCommand;
+    }
+
     private void buildCommands() {
-        this.cloneRepoCommand = new Command() {
-
-            @Override
-            public void execute() {
+        this.cloneRepoCommand = () -> {
                 cloneRepositoryPresenter.showForm();
-            }
-
         };
 
-        this.newRepoCommand = new Command() {
-            @Override
-            public void execute() {
-                final CreateRepositoryWizard newRepositoryWizard = iocManager.lookupBean( CreateRepositoryWizard.class ).getInstance();
-                //When pop-up is closed destroy bean to avoid memory leak
-                newRepositoryWizard.onCloseCallback( new Callback<Void>() {
-                    @Override
-                    public void callback( Void result ) {
-                        iocManager.destroyBean( newRepositoryWizard );
-                    }
-                } );
-                newRepositoryWizard.start();
-            }
+        this.newRepoCommand = () -> {
+            final CreateRepositoryWizard newRepositoryWizard = iocManager.lookupBean( CreateRepositoryWizard.class ).getInstance();
+            // When pop-up is closed destroy bean to avoid memory leak
+            newRepositoryWizard.onCloseCallback(result -> iocManager.destroyBean( newRepositoryWizard ));
+            newRepositoryWizard.start();
         };
     }
 }
