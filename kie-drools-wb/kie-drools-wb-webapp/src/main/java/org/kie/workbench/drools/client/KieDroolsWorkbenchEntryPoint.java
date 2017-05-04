@@ -61,7 +61,7 @@ import org.uberfire.client.mvp.PerspectiveManager;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.views.pfly.menu.UserMenu;
 import org.uberfire.client.workbench.widgets.menu.UtilityMenuBar;
-import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
+import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBar;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.mvp.Command;
 import org.uberfire.mvp.PlaceRequest;
@@ -70,7 +70,16 @@ import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.Menus;
 
-import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.*;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_ADMINISTRATION;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_APPS;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_ARTIFACT_REPO;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_CONTRIBUTORS;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_DATASETS;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_EXTENSIONS;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_MANAGEMENT;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_PLUGIN_MANAGEMENT;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.F_PROJECT_AUTHORING;
+import static org.kie.workbench.drools.client.security.KieWorkbenchFeatures.G_AUTHORING;
 
 /**
  * GWT's Entry-point for kie-drools-wb
@@ -84,7 +93,7 @@ public class KieDroolsWorkbenchEntryPoint {
     private Caller<AppConfigService> appConfigService;
 
     @Inject
-    private WorkbenchMenuBarPresenter menubar;
+    private WorkbenchMenuBar menubar;
 
     @Inject
     private PlaceManager placeManager;
