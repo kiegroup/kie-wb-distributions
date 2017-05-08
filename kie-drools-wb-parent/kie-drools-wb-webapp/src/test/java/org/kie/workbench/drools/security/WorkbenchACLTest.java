@@ -82,6 +82,9 @@ public class WorkbenchACLTest {
             "perspective.read.GuvnorM2RepoPerspective",
             "perspective.read.Deployments",
             "perspective.read.ServerManagementPerspective",
+            "orgunit.create",
+            "orgunit.update",
+            "orgunit.delete",
             "dataobject.edit");
 
     @Mock
