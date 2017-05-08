@@ -26,6 +26,8 @@ import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import static java.lang.Integer.MAX_VALUE;
+
 @ApplicationScoped
 @Templated
 public class AppNavBar implements Header {
@@ -49,6 +51,6 @@ public class AppNavBar implements Header {
 
     @Override
     public int getOrder() {
-        return 2;
+        return 20;
     }
 }

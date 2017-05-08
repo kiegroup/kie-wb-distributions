@@ -36,7 +36,7 @@
     <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
     <errai.jboss.home>${project.build.directory}/wildfly-${version.org.wildfly.gwt.sdm}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
-    <gwt.memory.settings>-Xmx4g -Xms1g -Xss1M</gwt.memory.settings>
+    <gwt.memory.settings>-Xmx5g -Xms1g -Xss1M</gwt.memory.settings>
   </properties>
 
   <dependencies>
