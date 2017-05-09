@@ -129,7 +129,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     @Override
     protected void setupAdminPage() {
-        adminPageHelper.setup();
+        socialConfigurationService.call(socialEnabled -> adminPageHelper.setup()).isSocialEnable();
     }
 
     protected List<MenuItem> getDeploymentViews() {
