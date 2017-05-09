@@ -79,7 +79,10 @@ public class WorkbenchACLTest {
             "perspective.read.AppsPerspective",
             "perspective.read.PlugInAuthoringPerspective",
             "perspective.read.DataSetAuthoringPerspective",
-            "perspective.read.DataSourceManagementPerspective");
+            "perspective.read.DataSourceManagementPerspective",
+            "orgunit.create",
+            "orgunit.update",
+            "orgunit.delete");
 
     static final List<String> ANALYST_DENIED = Arrays.asList(
             "perspective.read.AdministrationPerspective",
@@ -90,6 +93,9 @@ public class WorkbenchACLTest {
             "perspective.read.GuvnorM2RepoPerspective",
             "perspective.read.Deployments",
             "perspective.read.ServerManagementPerspective",
+            "orgunit.create",
+            "orgunit.update",
+            "orgunit.delete",
             "dataobject.edit");
 
     static final List<String> MANAGER_GRANTED = Arrays.asList(
