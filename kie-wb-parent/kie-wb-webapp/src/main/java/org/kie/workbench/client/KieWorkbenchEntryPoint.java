@@ -128,7 +128,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     @Override
     protected void setupAdminPage() {
-        adminPageHelper.setup();
+        socialConfigurationService.call(socialEnabled -> adminPageHelper.setup()).isSocialEnable();
     }
 
     protected void initMenuBar() {
