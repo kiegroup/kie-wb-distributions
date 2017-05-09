@@ -51,7 +51,7 @@ public class LogoNavBar implements Header {
 
     @Override
     public int getOrder() {
-        return 3;
+        return 30;
     }
 
 }
