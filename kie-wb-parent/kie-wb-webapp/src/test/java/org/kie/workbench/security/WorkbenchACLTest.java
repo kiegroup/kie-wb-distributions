@@ -80,6 +80,7 @@ public class WorkbenchACLTest {
             "perspective.read.PlugInAuthoringPerspective",
             "perspective.read.DataSetAuthoringPerspective",
             "perspective.read.DataSourceManagementPerspective",
+            "perspective.read.TaskAdmin",
             "orgunit.create",
             "orgunit.update",
             "orgunit.delete");
@@ -93,6 +94,7 @@ public class WorkbenchACLTest {
             "perspective.read.GuvnorM2RepoPerspective",
             "perspective.read.Deployments",
             "perspective.read.ServerManagementPerspective",
+            "perspective.read.TaskAdmin",
             "orgunit.create",
             "orgunit.update",
             "orgunit.delete",
@@ -108,6 +110,16 @@ public class WorkbenchACLTest {
             "perspective.read.ProcessDefinitions",
             "perspective.read.ProcessInstances",
             "perspective.read.Tasks",
+            "perspective.read.DashboardPerspective",
+            "dashboard.manage");
+            
+        static final List<String> PROCESS_ADMIN_GRANTED = Arrays.asList(
+            "perspective.read.SocialHomePagePerspective",
+            "perspective.read.UserHomePagePerspective",
+            "perspective.read.ProcessDefinitions",
+            "perspective.read.ProcessInstances",
+            "perspective.read.Tasks",
+            "perspective.read.TaskAdmin",
             "perspective.read.DashboardPerspective",
             "dashboard.manage");
 
@@ -180,6 +192,11 @@ public class WorkbenchACLTest {
     @Test
     public void testUserPermissions() {
         testPermissions(new RoleImpl("user"), USER_GRANTED, HOME_PERSPECTIVE, ACCESS_DENIED, ACCESS_GRANTED);
+    }
+    
+    @Test
+    public void testProcessAdminPermissions() {
+        testPermissions(new RoleImpl("process-admin"), PROCESS_ADMIN_GRANTED, HOME_PERSPECTIVE, ACCESS_DENIED, ACCESS_GRANTED);
     }
 
     public void testPermissions(Role role,

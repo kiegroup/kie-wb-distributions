@@ -55,6 +55,7 @@ public class NavTreeDefinitions {
     public static final String ENTRY_PROCESS_INSTANCES = "wb_entry_process_instances";
 
     public static final String ENTRY_TASKS = "wb_entry_tasks";
+    public static final String ENTRY_TASK_ADMIN = "wb_entry_task_admin";
 
     public static final String GROUP_DASHBOARDS = "wb_group_dashboards";
     public static final String ENTRY_PROCESS_DASHBOARD = "wb_entry_process_dashboard";
@@ -95,6 +96,7 @@ public class NavTreeDefinitions {
             .group(GROUP_PROCESS_MANAGEMENT, i18n.navTreeProcessManagementName(), i18n.navTreeProcessManagementDescr(), true)
                 .item(ENTRY_PROCESS_DEFINITIONS, i18n.navTreeProcessDefinitionsName(), i18n.navTreeProcessDefinitionsDescr(), true, perspective(PROCESS_DEFINITIONS))
                 .item(ENTRY_PROCESS_INSTANCES, i18n.navTreeProcessInstancesName(), i18n.navTreeProcessInstancesDescr(), true, perspective(PROCESS_INSTANCES))
+                .item(ENTRY_TASK_ADMIN, i18n.navTreeTaskAdminName(), i18n.navTreeTaskAdminDescr(), true, perspective(TASKS_ADMIN))
                 .endGroup()
             .item(ENTRY_TASKS, i18n.navTreeTasksName(), i18n.navTreeTasksDescr(), true, perspective(TASKS))
             .group(GROUP_DASHBOARDS, i18n.navTreeDashboardsName(), i18n.navTreeDashboardsDescr(), true)
