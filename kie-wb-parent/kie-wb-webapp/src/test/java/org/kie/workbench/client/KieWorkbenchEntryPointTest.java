@@ -17,8 +17,10 @@
 package org.kie.workbench.client;
 
 import com.google.gwtmockito.GwtMockitoTestRunner;
+import org.dashbuilder.client.cms.screen.explorer.ContentExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
 import org.dashbuilder.client.navigation.impl.NavigationManagerImpl;
+import org.dashbuilder.client.navigation.widget.NavTreeEditor;
 import org.dashbuilder.navigation.NavGroup;
 import org.dashbuilder.navigation.NavItem;
 import org.dashbuilder.navigation.NavTree;
@@ -92,6 +94,12 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     protected SearchMenuBuilder searchMenuBuilder;
 
+    @Mock
+    protected ContentExplorerScreen contentExplorerScreen;
+
+    @Mock
+    protected NavTreeEditor navTreeEditor;
+
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     private NavTreeDefinitions navTreeDefinitions;
@@ -130,9 +138,11 @@ public class KieWorkbenchEntryPointTest {
                                                                 adminPageHelper,
                                                                 navTreeDefinitions,
                                                                 navigationManager,
-                                                                searchMenuBuilder));
+                                                                searchMenuBuilder,
+                                                                contentExplorerScreen));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
+        when(contentExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
     }
 
     @Test
@@ -142,6 +152,7 @@ public class KieWorkbenchEntryPointTest {
         verify(workbench).addStartupBlocker(KieWorkbenchEntryPoint.class);
         verify(homeProducer).init();
         verify(permissionTreeSetup).configureTree();
+        verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH, 2);
     }
 
     @Test
