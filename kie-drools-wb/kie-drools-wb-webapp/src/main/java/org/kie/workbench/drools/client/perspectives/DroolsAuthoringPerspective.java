@@ -20,6 +20,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.guvnor.inbox.client.InboxPresenter;
+import org.kie.workbench.common.services.shared.preferences.ApplicationPreferences;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcePresenter;
 import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
 import org.kie.workbench.common.widgets.client.menu.RepositoryMenu;
@@ -43,7 +44,7 @@ import org.uberfire.workbench.model.menu.Menus;
  * A Perspective for Rule authors
  */
 @ApplicationScoped
-@WorkbenchPerspective( identifier = "AuthoringPerspective", isTransient = false )
+@WorkbenchPerspective(identifier = "AuthoringPerspective", isTransient = false)
 public class DroolsAuthoringPerspective {
 
     private AppConstants constants = AppConstants.INSTANCE;
@@ -65,73 +66,86 @@ public class DroolsAuthoringPerspective {
 
     @PostConstruct
     public void setup() {
-        docks.setup( "AuthoringPerspective", new DefaultPlaceRequest( "org.kie.guvnor.explorer" ) );
+        docks.setup("AuthoringPerspective",
+                    new DefaultPlaceRequest("org.kie.guvnor.explorer"));
     }
 
     @Perspective
     public PerspectiveDefinition getPerspective() {
-        final PerspectiveDefinition perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
-        perspective.setName( constants.project_authoring() );
+        final PerspectiveDefinition perspective = new PerspectiveDefinitionImpl(MultiListWorkbenchPanelPresenter.class.getName());
+        perspective.setName(constants.project_authoring());
 
         return perspective;
     }
 
     @WorkbenchMenu
     public Menus getMenus() {
-        return MenuFactory
-                .newTopLevelMenu( constants.explore() )
-                .menus()
-                .menu( constants.inboxIncomingChanges() )
-                .respondsWith( new Command() {
+        return getFirstItem()
+                .newTopLevelMenu(constants.Repository())
+                .withItems(repositoryMenu.getMenuItems())
+                .endMenu()
+                .newTopLevelMenu(constants.assetSearch()).position(MenuPosition.RIGHT).respondsWith(new Command() {
                     @Override
                     public void execute() {
-                        placeManager.goTo( "Inbox" );
+                        placeManager.goTo("FindForm");
                     }
-                } )
+                })
                 .endMenu()
-                .menu( constants.inboxRecentlyEdited() )
-                .respondsWith( new Command() {
+                .newTopLevelMenu(constants.Messages()).position(MenuPosition.RIGHT).respondsWith(new Command() {
                     @Override
                     public void execute() {
-                        PlaceRequest p = new DefaultPlaceRequest( "Inbox" );
-                        p.addParameter( "inboxname", InboxPresenter.RECENT_EDITED_ID );
-                        placeManager.goTo( p );
+                        placeManager.goTo("org.kie.workbench.common.screens.messageconsole.MessageConsole");
                     }
-                } )
-                .endMenu()
-                .menu( constants.inboxRecentlyOpened() )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        PlaceRequest p = new DefaultPlaceRequest( "Inbox" );
-                        p.addParameter( "inboxname", InboxPresenter.RECENT_VIEWED_ID );
-                        placeManager.goTo( p );
-                    }
-                } )
-                .endMenu()
-                .endMenus()
-                .endMenu()
-                .newTopLevelMenu( constants.newItem() )
-                .withItems( newResourcesMenu.getMenuItems() )
-                .endMenu()
-                .newTopLevelMenu( constants.Repository() )
-                .withItems( repositoryMenu.getMenuItems() )
-                .endMenu()
-                .newTopLevelMenu( constants.assetSearch() ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "FindForm" );
-                    }
-                } )
-                .endMenu()
-                .newTopLevelMenu( constants.Messages() ).position( MenuPosition.RIGHT ).respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( "org.kie.workbench.common.screens.messageconsole.MessageConsole" );
-                    }
-                } )
+                })
                 .endMenu()
                 .build();
     }
 
+    private MenuFactory.TopLevelMenusBuilder<MenuFactory.MenuBuilder> getFirstItem() {
+
+        if (ApplicationPreferences.getBooleanPref("org.guvnor.inbox.disabled")) {
+            return MenuFactory
+                    .newTopLevelMenu(constants.newItem())
+                    .withItems(newResourcesMenu.getMenuItems())
+                    .endMenu();
+        } else {
+            return MenuFactory
+                    .newTopLevelMenu(constants.explore())
+                    .menus()
+                    .menu(constants.inboxIncomingChanges())
+                    .respondsWith(new Command() {
+                        @Override
+                        public void execute() {
+                            placeManager.goTo("Inbox");
+                        }
+                    })
+                    .endMenu()
+                    .menu(constants.inboxRecentlyEdited())
+                    .respondsWith(new Command() {
+                        @Override
+                        public void execute() {
+                            PlaceRequest p = new DefaultPlaceRequest("Inbox");
+                            p.addParameter("inboxname",
+                                           InboxPresenter.RECENT_EDITED_ID);
+                            placeManager.goTo(p);
+                        }
+                    })
+                    .endMenu()
+                    .menu(constants.inboxRecentlyOpened())
+                    .respondsWith(new Command() {
+                        @Override
+                        public void execute() {
+                            PlaceRequest p = new DefaultPlaceRequest("Inbox");
+                            p.addParameter("inboxname",
+                                           InboxPresenter.RECENT_VIEWED_ID);
+                            placeManager.goTo(p);
+                        }
+                    })
+                    .endMenu()
+                    .endMenus()
+                    .endMenu().newTopLevelMenu(constants.newItem())
+                    .withItems(newResourcesMenu.getMenuItems())
+                    .endMenu();
+        }
+    }
 }
