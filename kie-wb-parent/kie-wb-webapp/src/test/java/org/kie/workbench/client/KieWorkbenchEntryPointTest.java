@@ -198,6 +198,7 @@ public class KieWorkbenchEntryPointTest {
 
         NavItem tasks = navTree.getItemById(NavTreeDefinitions.ENTRY_TASKS);
         NavItem taskAdmin = navTree.getItemById(NavTreeDefinitions.ENTRY_TASK_ADMIN);
+        NavItem executionErrors = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_ERRORS);
 
         NavGroup dashboards = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DASHBOARDS);
         NavItem businessDashboards = navTree.getItemById(NavTreeDefinitions.ENTRY_PROCESS_DASHBOARD);
@@ -263,9 +264,11 @@ public class KieWorkbenchEntryPointTest {
         assertNotNull(processDef);
         assertNotNull(processInst);
         assertNotNull(taskAdmin);
+        assertNotNull(executionErrors);
         assertEquals(processDef.getParent(), processMgmt);
         assertEquals(processInst.getParent(), processMgmt);
         assertEquals(taskAdmin.getParent(), processMgmt);
+        assertEquals(executionErrors.getParent(), processMgmt);
 
         assertNotNull(tasks);
         assertEquals(tasks.getParent(),

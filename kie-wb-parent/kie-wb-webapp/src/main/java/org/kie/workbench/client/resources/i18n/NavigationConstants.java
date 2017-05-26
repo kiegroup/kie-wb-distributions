@@ -76,6 +76,8 @@ public interface NavigationConstants
 
     String navTreeTaskAdminName();
 
+    String navTreeExecutionErrorsName();
+
     String navTreeDashboardsName();
 
     String navTreeProcessDashboardName();
@@ -133,6 +135,8 @@ public interface NavigationConstants
     String navTreeTasksDescr();
 
     String navTreeTaskAdminDescr();
+
+    String navTreeExecutionErrorsDescr();
 
     String navTreeDashboardsDescr();
 

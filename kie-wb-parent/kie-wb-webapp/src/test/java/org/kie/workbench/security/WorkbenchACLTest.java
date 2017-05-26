@@ -95,6 +95,7 @@ public class WorkbenchACLTest {
             "perspective.read.Deployments",
             "perspective.read.ServerManagementPerspective",
             "perspective.read.TaskAdmin",
+            "perspective.read.ExecutionErrors",
             "orgunit.create",
             "orgunit.update",
             "orgunit.delete",
@@ -120,6 +121,7 @@ public class WorkbenchACLTest {
             "perspective.read.ProcessInstances",
             "perspective.read.Tasks",
             "perspective.read.TaskAdmin",
+            "perspective.read.ExecutionErrors",
             "perspective.read.DashboardPerspective",
             "dashboard.manage");
 
