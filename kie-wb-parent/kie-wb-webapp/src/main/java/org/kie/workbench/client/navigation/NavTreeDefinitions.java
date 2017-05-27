@@ -57,6 +57,8 @@ public class NavTreeDefinitions {
     public static final String ENTRY_TASKS = "wb_entry_tasks";
     public static final String ENTRY_TASK_ADMIN = "wb_entry_task_admin";
 
+    public static final String ENTRY_EXECUTION_ERRORS = "wb_execution_errors";
+
     public static final String GROUP_DASHBOARDS = "wb_group_dashboards";
     public static final String ENTRY_PROCESS_DASHBOARD = "wb_entry_process_dashboard";
     public static final String ENTRY_BUSINESS_DASHBOARDS = "wb_entry_business_dashboards";
@@ -97,6 +99,7 @@ public class NavTreeDefinitions {
                 .item(ENTRY_PROCESS_DEFINITIONS, i18n.navTreeProcessDefinitionsName(), i18n.navTreeProcessDefinitionsDescr(), true, perspective(PROCESS_DEFINITIONS))
                 .item(ENTRY_PROCESS_INSTANCES, i18n.navTreeProcessInstancesName(), i18n.navTreeProcessInstancesDescr(), true, perspective(PROCESS_INSTANCES))
                 .item(ENTRY_TASK_ADMIN, i18n.navTreeTaskAdminName(), i18n.navTreeTaskAdminDescr(), true, perspective(TASKS_ADMIN))
+                .item(ENTRY_EXECUTION_ERRORS, i18n.navTreeExecutionErrorsName(), i18n.navTreeExecutionErrorsDescr(), true, perspective(EXECUTION_ERRORS))
                 .endGroup()
             .item(ENTRY_TASKS, i18n.navTreeTasksName(), i18n.navTreeTasksDescr(), true, perspective(TASKS))
             .group(GROUP_DASHBOARDS, i18n.navTreeDashboardsName(), i18n.navTreeDashboardsDescr(), true)
