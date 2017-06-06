@@ -40,7 +40,7 @@ Entry point for REST interface is at <%= request.getScheme()+"://"+request.getSe
   <tr><td><code>processDefId</code></td><td><code>[a-zA-Z0-9-:\._]+</code></td><td>process (definition) id</td></tr>
   <tr><td><code>taskId</code></td><td><code>[0-9-]+</code></td><td>task id</td></tr>
   <tr><td><code>type</code></td><td><code>[a-zA-Z]+</code></td><td>type of log</td></tr>
-  <tr><td><code>value</code></td><td><code>[a-zA-Z0-9-:\._]+</code></td><td>string value (of a variable)</td></tr>
+  <tr><td><code>value</code></td><td><code>[%a-zA-Z0-9-:\._]+</code></td><td>string value (of a variable)</td></tr>
   <tr><td><code>varId</code></td><td><code>[a-zA-Z0-9-:\._]+</code></td><td>variable id</td></tr>
   <tr><td><code>varName</code></td><td><code>[\w\.-]+</code></td><td>variable name (equivalent to the variable id)</td></tr>
   <tr><td><code>workItemId</code></td><td><code>[0-9-]+</code></td><td>work item id</td></tr>
