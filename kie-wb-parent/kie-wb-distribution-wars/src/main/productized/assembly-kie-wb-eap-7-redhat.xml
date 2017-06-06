@@ -30,7 +30,6 @@
 
   <componentDescriptors>
     <componentDescriptor>src/main/assembly/component-kie-wb-product-common.xml</componentDescriptor>
-    <componentDescriptor>src/main/assembly/component-kie-wb-product-user_mgmt.xml</componentDescriptor>
   </componentDescriptors>
 
   <fileSets>
@@ -42,7 +41,7 @@
   <dependencySets>
     <dependencySet>
       <includes>
-        <include>org.kie:kie-wb-webapp:war</include>
+        <include>${webapp.war}</include>
       </includes>
       <outputDirectory>.</outputDirectory>
       <unpack>true</unpack>
