@@ -122,6 +122,26 @@
         </plugins>
       </build>
     </profile>
+    <!-- Tests are disabled by default, but are automatically enabled when using specific profiles. So running
+         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly10,kie-wb" will. -->
+    <profile>
+      <id>disable-cargo-and-itests</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <cargo.maven.skip>true</cargo.maven.skip>
+        <skipITs>true</skipITs>
+      </properties>
+    </profile>
+    <!-- 'kie-wb' and 'kie-drools-wb' are just dummy profiles ensuring there is a way to disable the profile
+         'disable-cargo-and-itests' (so that the tests would actually be executed). -->
+    <profile>
+      <id>kie-wb</id>
+    </profile>
+    <profile>
+      <id>kie-drools-wb</id>
+    </profile>
   </profiles>
 
 </project>
