@@ -28,7 +28,6 @@
 
   <componentDescriptors>
     <componentDescriptor>src/main/assembly/component-kie-drools-wb-product-common.xml</componentDescriptor>
-    <componentDescriptor>src/main/assembly/component-kie-drools-wb-product-user_mgmt.xml</componentDescriptor>
   </componentDescriptors>
 
   <includeBaseDirectory>false</includeBaseDirectory>
