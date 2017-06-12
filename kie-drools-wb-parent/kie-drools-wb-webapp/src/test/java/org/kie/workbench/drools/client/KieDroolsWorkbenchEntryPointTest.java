@@ -26,11 +26,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
-import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
-import org.kie.workbench.drools.client.home.HomeProducer;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -56,14 +54,7 @@ public class KieDroolsWorkbenchEntryPointTest {
     private CallerMock<AppConfigService> appConfigServiceCallerMock;
 
     @Mock
-    private PlaceManagerActivityService pmas;
-    private CallerMock<PlaceManagerActivityService> pmasCallerMock;
-
-    @Mock
     private ActivityBeansCache activityBeansCache;
-
-    @Mock
-    private HomeProducer homeProducer;
 
     @Mock
     private SocialConfigurationService socialConfigurationService;
@@ -94,8 +85,6 @@ public class KieDroolsWorkbenchEntryPointTest {
 
     @Before
     public void setup() {
-        doNothing().when(pmas).initActivities(anyList());
-
         doReturn(Boolean.TRUE).when(socialConfigurationService).isSocialEnable();
         doAnswer(invocationOnMock -> {
             ((Command) invocationOnMock.getArguments()[0]).execute();
@@ -104,12 +93,9 @@ public class KieDroolsWorkbenchEntryPointTest {
 
         appConfigServiceCallerMock = new CallerMock<>(appConfigService);
         socialConfigurationServiceCallerMock = new CallerMock<>(socialConfigurationService);
-        pmasCallerMock = new CallerMock<>(pmas);
 
         kieDroolsWorkbenchEntryPoint = spy(new KieDroolsWorkbenchEntryPoint(appConfigServiceCallerMock,
-                                                                            pmasCallerMock,
                                                                             activityBeansCache,
-                                                                            homeProducer,
                                                                             socialConfigurationServiceCallerMock,
                                                                             menusHelper,
                                                                             userSystemManager,
@@ -130,7 +116,6 @@ public class KieDroolsWorkbenchEntryPointTest {
         kieDroolsWorkbenchEntryPoint.init();
 
         verify(workbench).addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
-        verify(homeProducer).init();
     }
 
     @Test

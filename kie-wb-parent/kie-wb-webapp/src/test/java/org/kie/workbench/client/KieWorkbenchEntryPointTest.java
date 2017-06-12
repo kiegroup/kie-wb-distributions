@@ -34,7 +34,6 @@ import org.kie.workbench.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.client.resources.i18n.NavigationConstants;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
-import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
@@ -77,9 +76,6 @@ public class KieWorkbenchEntryPointTest {
     protected PermissionTreeSetup permissionTreeSetup;
 
     @Mock
-    private PlaceManagerActivityService pmas;
-
-    @Mock
     private ActivityBeansCache activityBeansCache;
 
     @Mock
@@ -114,7 +110,6 @@ public class KieWorkbenchEntryPointTest {
                                                       null,
                                                       null);
 
-        doNothing().when(pmas).initActivities(anyList());
         doReturn(Boolean.TRUE).when(socialConfigurationService).isSocialEnable();
         doAnswer(invocationOnMock -> {
             ((Command) invocationOnMock.getArguments()[0]).execute();
@@ -123,10 +118,8 @@ public class KieWorkbenchEntryPointTest {
 
         CallerMock<AppConfigService> appConfigServiceCallerMock = new CallerMock<>(appConfigService);
         CallerMock<SocialConfigurationService> socialConfigurationServiceCallerMock = new CallerMock<>(socialConfigurationService);
-        CallerMock<PlaceManagerActivityService> pmasCallerMock = new CallerMock<>(pmas);
 
         kieWorkbenchEntryPoint = spy(new KieWorkbenchEntryPoint(appConfigServiceCallerMock,
-                                                                pmasCallerMock,
                                                                 activityBeansCache,
                                                                 homeProducer,
                                                                 socialConfigurationServiceCallerMock,

@@ -16,6 +16,7 @@
 package org.kie.workbench.drools.client.home;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
@@ -36,19 +37,15 @@ import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 /**
  * Producer method for the Home Page content
  */
-@ApplicationScoped
+@Dependent
 public class HomeProducer {
 
-    private HomePageCommunityConstants constants = HomePageCommunityConstants.INSTANCE;
-
-    private HomeModel model;
-
-    @Inject
-    private PlaceManager placeManager;
-
-    public void init() {
+    @Produces
+    @ApplicationScoped
+    public HomeModel getModel(PlaceManager placeManager) {
+        final HomePageCommunityConstants constants = HomePageCommunityConstants.INSTANCE;
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( constants.homeTheKnowledgeLifeCycle() );
+        final HomeModel model = new HomeModel( constants.homeTheKnowledgeLifeCycle() );
         model.addCarouselEntry( ModelUtils.makeCarouselEntry( constants.homeAuthor(),
                                                               constants.homeAuthorCaption(),
                                                               url + "/images/HandHome.jpg" ) );
@@ -83,10 +80,7 @@ public class HomeProducer {
 
         model.addSection( s1 );
         model.addSection( s2 );
-    }
 
-    @Produces
-    public HomeModel getModel() {
         return model;
     }
 
