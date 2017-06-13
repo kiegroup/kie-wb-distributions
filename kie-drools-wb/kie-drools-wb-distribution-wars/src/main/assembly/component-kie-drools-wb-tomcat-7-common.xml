@@ -20,7 +20,6 @@
         <include>org.hibernate.common:hibernate-commons-annotations</include>
         <include>com.sun.xml.bind:jaxb-xjc</include>
         <include>org.jboss.logging:jboss-logging</include>
-        <include>org.slf4j:jcl-over-slf4j</include>
         <include>org.slf4j:slf4j-ext</include>
         <include>org.codehaus.jackson:jackson-jaxrs</include>
         <include>org.codehaus.woodstox:woodstox-core-asl</include>
