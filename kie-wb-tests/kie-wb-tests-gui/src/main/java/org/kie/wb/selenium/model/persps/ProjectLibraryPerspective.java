@@ -41,12 +41,17 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(OU_REPO_BREADCRUMB, 60);
+        return Waits.isElementPresent(OU_REPO_BREADCRUMB,
+                                      60);
     }
 
     private ImportExampleModal importExample() {
         BusyPopup.waitForDisappearance();
-        Waits.elementPresent(ByJQuery.selector("button#import-project-wizard-button"), 20)
+        Waits.elementPresent(ByJQuery.selector("button#import-project-button"),
+                             20)
+                .click();
+        Waits.elementPresent(ByJQuery.selector("a:contains('Advanced Import')"),
+                             5)
                 .click();
         return ImportExampleModal.newInstance();
     }
@@ -56,38 +61,43 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     }
 
     public void openProjectList() {
-        Waits.elementPresent(OU_REPO_BREADCRUMB, 20)
+        Waits.elementPresent(OU_REPO_BREADCRUMB,
+                             20)
                 .click();
     }
 
-    public void importDemoProject(String projectName){
-        Waits.elementPresent(ByJQuery.selector("button:contains('" + projectName + "')"), 20)
+    public void importDemoProject(String projectName) {
+        Waits.elementPresent(ByJQuery.selector("button:contains('" + projectName + "')"),
+                             20)
                 .click();
     }
 
     public void buildAndDeployProject() {
-        Waits.elementPresent(ByJQuery.selector("button:contains('Build & Deploy')"), 20)
+        Waits.elementPresent(ByJQuery.selector("button:contains('Build & Deploy')"),
+                             20)
                 .click();
         possiblyOverrideGavConflict();
     }
 
-    public void importStockExampleProject( String targetRepo,
-                                           String targetOrgUnit,
-                                           String... projects ) {
+    public void importStockExampleProject(String targetRepo,
+                                          String targetOrgUnit,
+                                          String... projects) {
         ImportExampleModal modal = importExample();
         modal.selectStockRepository();
-        modal.selectProjects( projects );
-        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
+        modal.selectProjects(projects);
+        modal.setTargetRepoAndOrgUnit(targetRepo,
+                                      targetOrgUnit);
     }
 
-    public void importCustomExampleProject( Repository repo,
-                                            String targetRepo,
-                                            String targetOrgUnit,
-                                            String... projects ) {
+    public void importCustomExampleProject(Repository repo,
+                                           String targetRepo,
+                                           String targetOrgUnit,
+                                           String... projects) {
         ImportExampleModal modal = importExample();
-        modal.selectCustomRepository( repo.getUrl() );
-        modal.selectProjects( projects );
-        modal.setTargetRepoAndOrgUnit( targetRepo, targetOrgUnit );
+        modal.selectCustomRepository(repo.getUrl());
+        modal.selectProjects(projects);
+        modal.setTargetRepoAndOrgUnit(targetRepo,
+                                      targetOrgUnit);
     }
 
     private void possiblyOverrideGavConflict() {
