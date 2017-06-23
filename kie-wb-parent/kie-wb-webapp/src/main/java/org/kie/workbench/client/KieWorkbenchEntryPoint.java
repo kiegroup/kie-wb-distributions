@@ -30,7 +30,6 @@ import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
-import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
@@ -76,7 +75,6 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
-                                  final Caller<PlaceManagerActivityService> pmas,
                                   final ActivityBeansCache activityBeansCache,
                                   final HomeProducer homeProducer,
                                   final Caller<SocialConfigurationService> socialConfigurationService,
@@ -91,7 +89,6 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final SearchMenuBuilder searchMenuBuilder,
                                   final ContentExplorerScreen contentExplorerScreen) {
         super(appConfigService,
-              pmas,
               activityBeansCache);
         this.homeProducer = homeProducer;
         this.socialConfigurationService = socialConfigurationService;

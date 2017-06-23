@@ -27,12 +27,10 @@ import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
-import org.kie.workbench.common.services.shared.service.PlaceManagerActivityService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
-import org.kie.workbench.drools.client.home.HomeProducer;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
@@ -48,8 +46,6 @@ import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MA
 public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected AppConstants constants = AppConstants.INSTANCE;
-
-    protected HomeProducer homeProducer;
 
     protected Caller<SocialConfigurationService> socialConfigurationService;
 
@@ -69,9 +65,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     @Inject
     public KieDroolsWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
-                                        final Caller<PlaceManagerActivityService> pmas,
                                         final ActivityBeansCache activityBeansCache,
-                                        final HomeProducer homeProducer,
                                         final Caller<SocialConfigurationService> socialConfigurationService,
                                         final DefaultWorkbenchFeaturesMenusHelper menusHelper,
                                         final ClientUserSystemManager userSystemManager,
@@ -81,9 +75,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                         final PermissionTreeSetup permissionTreeSetup,
                                         final DefaultAdminPageHelper adminPageHelper) {
         super(appConfigService,
-              pmas,
               activityBeansCache);
-        this.homeProducer = homeProducer;
         this.socialConfigurationService = socialConfigurationService;
         this.menusHelper = menusHelper;
         this.userSystemManager = userSystemManager;
@@ -97,7 +89,6 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @PostConstruct
     public void init() {
         workbench.addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
-        homeProducer.init();
         permissionTreeSetup.configureTree();
     }
 

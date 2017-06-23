@@ -15,8 +15,8 @@
 
 package org.kie.workbench.drools.client.home;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
@@ -31,20 +31,15 @@ import org.uberfire.client.mvp.PlaceManager;
 /**
  * Producer method for the Home Page content
  */
-@ApplicationScoped
+@Dependent
 public class HomeProducer {
 
-    private HomePageProductConstants homeConstants = HomePageProductConstants.INSTANCE;
-
-    private HomeModel model;
-
-    @Inject
-    private PlaceManager placeManager;
-
-    @PostConstruct
-    public void init() {
+    @Produces
+    @ApplicationScoped
+    public HomeModel getModel(PlaceManager placeManager) {
+        final HomePageProductConstants homeConstants = HomePageProductConstants.INSTANCE;
         final String url = GWT.getModuleBaseURL();
-        model = new HomeModel( homeConstants.home_title(),
+        final HomeModel model = new HomeModel( homeConstants.home_title(),
                                homeConstants.home_subtitle() );
 
         final Section s1 = new Section( homeConstants.authoring_header(),
@@ -66,10 +61,7 @@ public class HomeProducer {
         model.addSection( s1 );
         model.addSection( s2 );
         model.addSection( s3 );
-    }
 
-    @Produces
-    public HomeModel getModel() {
         return model;
     }
 
