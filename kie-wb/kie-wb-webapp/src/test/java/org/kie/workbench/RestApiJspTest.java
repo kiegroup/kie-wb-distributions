@@ -198,7 +198,7 @@ public class RestApiJspTest {
                     String [] paramDef = new String[2];
                     for( Element cell : row.getElementsByTag("td") ) {
                         String text = cell.text();
-                        if( text.startsWith("[") ) {
+                        if( text.startsWith("[") || text.contains("+") ) {
                             // regex
                            paramDef[1] = text;
                         } else if( ! text.contains(" ") ) {
