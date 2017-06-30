@@ -79,10 +79,6 @@ public class PrimaryNavbar {
         return navigateTo(Persp.PROJECT_AUTHORING);
     }
 
-    public ContributorsPerspective contributors() {
-        return navigateTo(Persp.CONTRIBUTORS);
-    }
-
     public ArtifactRepositoryPerspective artifactRepository() {
         return navigateTo(Persp.ARTIFACT_REPOSITORY);
     }

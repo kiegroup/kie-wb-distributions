@@ -28,7 +28,6 @@ import org.kie.workbench.drools.client.resources.i18n.HomePageCommunityConstants
 import org.uberfire.client.mvp.PlaceManager;
 
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.ADMINISTRATION;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.CONTRIBUTORS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.GUVNOR_M2REPO;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
@@ -58,10 +57,6 @@ public class HomeProducer {
         s1.addChild( ModelUtils.makeSectionEntry( constants.project_authoring(),
                 () -> placeManager.goTo( LIBRARY ),
                 LIBRARY, PERSPECTIVE ) );
-
-        s1.addChild( ModelUtils.makeSectionEntry( constants.contributors(),
-                () -> placeManager.goTo( CONTRIBUTORS ),
-                CONTRIBUTORS, PERSPECTIVE ) );
 
         s1.addChild( ModelUtils.makeSectionEntry( constants.artifactRepository(),
                 () -> placeManager.goTo( GUVNOR_M2REPO ),
