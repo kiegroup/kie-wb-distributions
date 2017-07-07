@@ -204,6 +204,19 @@
       <groupId>org.drools</groupId>
       <artifactId>drools-workbench-models-test-scenarios</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-appformer-extensions-editor-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-appformer-extensions-editor-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-appformer-extensions-editor-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- org.kie.dmn -->
     <dependency>
@@ -1634,6 +1647,8 @@
               <compileSourcesArtifact>org.drools:drools-workbench-models-test-scenarios</compileSourcesArtifact>
 
               <!-- Drools WB -->
+              <compileSourcesArtifact>org.drools:drools-wb-appformer-extensions-editor-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.drools:drools-wb-appformer-extensions-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-verifier-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-verifier-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-enum-editor-api</compileSourcesArtifact>
