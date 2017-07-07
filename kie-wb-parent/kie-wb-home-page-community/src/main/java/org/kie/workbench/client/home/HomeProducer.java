@@ -28,7 +28,6 @@ import org.uberfire.client.mvp.PlaceManager;
 
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.ADMINISTRATION;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.BUSINESS_DASHBOARDS;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.CONTRIBUTORS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.GUVNOR_M2REPO;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.JOBS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
@@ -76,10 +75,6 @@ public class HomeProducer {
         s1.addChild( ModelUtils.makeSectionEntry( constants.Project_Authoring(),
                 () -> placeManager.goTo( LIBRARY ),
                 LIBRARY, PERSPECTIVE ) );
-
-        s1.addChild( ModelUtils.makeSectionEntry( constants.Contributors(),
-                () -> placeManager.goTo( CONTRIBUTORS ),
-                CONTRIBUTORS, PERSPECTIVE ) );
 
         s1.addChild( ModelUtils.makeSectionEntry( constants.artifactRepository(),
                 () -> placeManager.goTo( GUVNOR_M2REPO ),

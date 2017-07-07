@@ -177,7 +177,6 @@ public class KieWorkbenchEntryPointTest {
 
         NavGroup authoring = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_AUTHORING);
         NavItem library = navTree.getItemById(NavTreeDefinitions.ENTRY_LIBRARY);
-        NavItem contributors = navTree.getItemById(NavTreeDefinitions.ENTRY_CONTRIBUTORS);
         NavItem artifacts = navTree.getItemById(NavTreeDefinitions.ENTRY_ARTIFACTS);
         NavItem administration = navTree.getItemById(NavTreeDefinitions.ENTRY_ADMINISTRATION);
 
@@ -233,11 +232,8 @@ public class KieWorkbenchEntryPointTest {
 
         assertNotNull(library);
         assertNotNull(authoring);
-        assertNotNull(contributors);
         assertNotNull(artifacts);
         assertNotNull(administration);
-        assertEquals(contributors.getParent(),
-                     authoring);
         assertEquals(artifacts.getParent(),
                      authoring);
         assertEquals(administration.getParent(),

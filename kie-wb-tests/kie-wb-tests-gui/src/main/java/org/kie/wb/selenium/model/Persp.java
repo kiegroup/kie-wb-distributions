@@ -56,9 +56,6 @@ public class Persp<T extends AbstractPerspective> {
     public static final Persp<ProjectLibraryPerspective> PROJECT_AUTHORING
             = new Persp<>("Authoring", "Project Authoring", ProjectLibraryPerspective.class);
 
-    public static final Persp<ContributorsPerspective> CONTRIBUTORS
-            = new Persp<>("Authoring", "Contributors", ContributorsPerspective.class);
-
     public static final Persp<ArtifactRepositoryPerspective> ARTIFACT_REPOSITORY
             = new Persp<>("Authoring", "Artifact Repository", ArtifactRepositoryPerspective.class);
 
@@ -94,7 +91,7 @@ public class Persp<T extends AbstractPerspective> {
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPS = Collections.unmodifiableList(Arrays.asList(
             HOME_PAGE, ADMIN, TIMELINE, PEOPLE,
-            PROJECT_AUTHORING, CONTRIBUTORS, ARTIFACT_REPOSITORY, ADMINISTRATION,
+            PROJECT_AUTHORING, ARTIFACT_REPOSITORY, ADMINISTRATION,
             EXECUTION_SERVERS, JOBS,
             PROCESS_DEFINITIONS, PROCESS_INSTANCES,
             TASKS,

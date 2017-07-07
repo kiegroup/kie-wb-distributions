@@ -41,7 +41,6 @@ public class NavTreeDefinitions {
 
     public static final String GROUP_AUTHORING = "wb_group_authoring";
     public static final String ENTRY_PROJECT_AUTHORING = "wb_entry_project_authoring";
-    public static final String ENTRY_CONTRIBUTORS = "wb_entry_contributors";
     public static final String ENTRY_ARTIFACTS = "wb_entry_artifacts";
     public static final String ENTRY_ADMINISTRATION = "wb_entry_administration";
     public static final String ENTRY_LIBRARY = "wb_entry_library";
@@ -87,7 +86,6 @@ public class NavTreeDefinitions {
         return builder.endGroup()
             .group(GROUP_AUTHORING, i18n.navTreeAuthoringName(), i18n.navTreeAuthoringDescr(), true)
                 .item(ENTRY_LIBRARY, i18n.navTreeProjectAuthoringName(), i18n.navTreeAuthoringDescr(), true, perspective(LIBRARY))
-                .item(ENTRY_CONTRIBUTORS, i18n.navTreeContributorsName(), i18n.navTreeContributorsDescr(), true, perspective(CONTRIBUTORS))
                 .item(ENTRY_ARTIFACTS, i18n.navTreeArtifactsName(), i18n.navTreeArtifactsDescr(), true, perspective(GUVNOR_M2REPO))
                 .item(ENTRY_ADMINISTRATION, i18n.navTreeAdministrationName(), i18n.navTreeAdministrationDescr(), true, perspective(ADMINISTRATION))
                 .endGroup()
