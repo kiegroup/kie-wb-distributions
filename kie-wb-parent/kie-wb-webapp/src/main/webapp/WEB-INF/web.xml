@@ -56,6 +56,16 @@
   </filter-mapping>
 
   <filter>
+    <filter-name>CSRF Token Filter</filter-name>
+    <filter-class>org.jboss.errai.bus.server.servlet.CSRFTokenFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CSRF Token Filter</filter-name>
+    <url-pattern>/kie-wb.jsp</url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>GWT Locale Filter</filter-name>
     <filter-class>org.uberfire.server.locale.GWTLocaleHeaderFilter</filter-class>
   </filter>
