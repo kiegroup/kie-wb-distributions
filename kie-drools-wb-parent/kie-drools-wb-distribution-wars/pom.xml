@@ -281,6 +281,8 @@
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-wildfly-10.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-eap-7.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-tomcat-8.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-wildfly-10-no-controller.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-eap-7-no-controller.xml</descriptor>
           </descriptors>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
@@ -365,6 +367,7 @@
               <descriptors>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-eap-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-tomcat-8-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-eap-7-no-controller-redhat.xml</descriptor>
               </descriptors>
               <archive>
                 <addMavenDescriptor>false</addMavenDescriptor>
