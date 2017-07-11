@@ -20,7 +20,7 @@
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
   <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name/id of the artifact -->
-  <id>eap7-redhat</id>
+  <id>eap7-no-controller-redhat</id>
   <formats>
     <format>war</format>
     <format>dir</format>
@@ -29,8 +29,8 @@
   <includeBaseDirectory>false</includeBaseDirectory>
 
   <componentDescriptors>
-    <componentDescriptor>src/main/assembly/component-kie-drools-wb-product-common.xml</componentDescriptor>
-    <componentDescriptor>src/main/assembly/component-kie-drools-wb-wildfly-10-eap-7-common.xml</componentDescriptor>
+    <componentDescriptor>src/main/assembly/component-kie-wb-wildfly-10-eap-7-no-controller-common.xml</componentDescriptor>
+    <componentDescriptor>src/main/assembly/component-kie-wb-product-common.xml</componentDescriptor>
   </componentDescriptors>
 
 </assembly>
