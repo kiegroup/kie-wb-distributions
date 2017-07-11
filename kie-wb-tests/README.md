@@ -1,8 +1,8 @@
-#KIE Workbench tests
+# KIE Workbench tests
 
 This module contains tests which require KIE Workbench to be running in order to be executed.
 
-##Running and debugging tests locally
+## Running and debugging tests locally
 
 You can run tests directly from the command line.
 Cargo will take care of starting the container and the tests will be run afterwards.
