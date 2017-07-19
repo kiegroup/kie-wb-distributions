@@ -30,6 +30,11 @@ public class HomeModel {
     private final String subtitle;
     private final List<Section> sections = new ArrayList<Section>();
 
+    // For proxying
+    protected HomeModel() {
+      title = null;
+      subtitle = null;
+    }
 
     public HomeModel(final String title, final String subtitle) {
         this.title = PortablePreconditions.checkNotNull("title", title);
