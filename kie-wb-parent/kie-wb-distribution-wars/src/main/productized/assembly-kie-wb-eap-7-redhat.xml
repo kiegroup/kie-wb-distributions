@@ -41,7 +41,7 @@
   <dependencySets>
     <dependencySet>
       <includes>
-        <include>${webapp.war}</include>
+        <include>org.kie:kie-wb-webapp:war</include>
       </includes>
       <outputDirectory>.</outputDirectory>
       <unpack>true</unpack>
