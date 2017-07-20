@@ -2361,6 +2361,31 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>wildfly-swarm-plugin</artifactId>
+        <configuration>
+          <fractionDetectMode>never</fractionDetectMode>
+          <fractions>
+            <fraction>logging</fraction>
+            <fraction>undertow</fraction>
+            <fraction>cdi</fraction>
+            <fraction>ejb</fraction>
+            <fraction>jaxrs</fraction>
+            <fraction>ee</fraction>
+            <fraction>security</fraction>
+            <fraction>management</fraction>
+            <fraction>datasources</fraction>
+          </fractions>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -2405,34 +2430,6 @@
             </plugin>
           </plugins>
         </pluginManagement>
-
-        <plugins>
-          <plugin>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>wildfly-swarm-plugin</artifactId>
-            <configuration>
-              <fractionDetectMode>never</fractionDetectMode>
-              <fractions>
-                <fraction>logging</fraction>
-                <fraction>undertow</fraction>
-                <fraction>cdi</fraction>
-                <fraction>ejb</fraction>
-                <fraction>jaxrs</fraction>
-                <fraction>ee</fraction>
-                <fraction>security</fraction>
-                <fraction>management</fraction>
-                <fraction>datasources</fraction>
-              </fractions>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>package</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
       </build>
     </profile>
 
