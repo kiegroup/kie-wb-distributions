@@ -35,7 +35,7 @@
   <dependencySets>
     <dependencySet>
       <includes>
-        <include>org.kie:kie-drools-wb-webapp:war:redhat</include>
+        <include>org.kie:kie-drools-wb-webapp:war</include>
       </includes>
       <outputDirectory>.</outputDirectory>
       <unpack>true</unpack>
