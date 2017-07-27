@@ -21,20 +21,20 @@ import org.openqa.selenium.NoSuchElementException;
 
 public class HomePerspective extends AbstractPerspective {
 
-    private static final By CAROUSEL = By.className("carousel-caption");
+    private static final By HOME_CONTENT = By.className("kie-page");
     private static final int DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS = 15;
     // Troubleshooting webapp loading issues on tomcat / jenkins slaves where the default 15 seconds is not enough
     private static final int HOME_PERSP_LOADING_TIMEOUT_SECONDS = getTimeoutSeconds();
 
     @Override
     public void waitForLoaded() {
-        Waits.elementPresent(CAROUSEL, HOME_PERSP_LOADING_TIMEOUT_SECONDS);
+        Waits.elementPresent(HOME_CONTENT, HOME_PERSP_LOADING_TIMEOUT_SECONDS);
     }
 
     @Override
     public boolean isDisplayed() {
         try {
-            Waits.elementPresent(CAROUSEL, 2);
+            Waits.elementPresent(HOME_CONTENT, 2);
             return true;
         } catch (NoSuchElementException nse) {
             return false;
