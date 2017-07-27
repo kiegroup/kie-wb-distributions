@@ -194,20 +194,4 @@
     </plugins>
   </build>
 
-  <profiles>
-
-    <profile>
-      <id>productizedProfile</id>
-      <activation>
-        <property>
-          <name>productized</name>
-        </property>
-      </activation>
-      <modules>
-        <module>kie-wb-distribution-home</module>
-      </modules>
-    </profile>
-
-  </profiles>
-
 </project>

@@ -1,9 +1,9 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -16,53 +16,46 @@
 package org.kie.workbench.drools.client.home;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
-import com.google.gwt.core.client.GWT;
-import org.kie.workbench.common.screens.home.client.widgets.home.HomeImagesHelper;
+import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.workbench.common.screens.home.model.HomeModel;
-import org.kie.workbench.common.screens.home.model.Section;
-import org.kie.workbench.common.workbench.client.PerspectiveIds;
-import org.kie.workbench.drools.client.resources.i18n.HomePageProductConstants;
+import org.kie.workbench.common.screens.home.model.HomeModelProvider;
+import org.kie.workbench.common.screens.home.model.ModelUtils;
+import org.kie.workbench.drools.client.resources.i18n.Constants;
 import org.uberfire.client.mvp.PlaceManager;
 
-/**
- * Producer method for the Home Page content
- */
-@Dependent
-public class HomeProducer {
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
+import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
-    @Produces
-    @ApplicationScoped
-    public HomeModel getModel(PlaceManager placeManager) {
-        final HomePageProductConstants homeConstants = HomePageProductConstants.INSTANCE;
-        final String url = GWT.getModuleBaseURL();
-        final HomeModel model = new HomeModel( homeConstants.home_title(),
-                               homeConstants.home_subtitle() );
+@ApplicationScoped
+public class HomeProducer implements HomeModelProvider {
 
-        final Section s1 = new Section( homeConstants.authoring_header(),
-                                        homeConstants.authoring_paragraph(),
-                                        url + HomeImagesHelper.Images.Authoring.getLocalisedImageUrl() );
+    @Inject
+    private PlaceManager placeManager;
 
-        final Section s2 = new Section( homeConstants.analyze_header(),
-                                        homeConstants.analyze_paragraph(),
-                                        url + HomeImagesHelper.Images.Analyze.getLocalisedImageUrl() );
+    @Inject
+    private TranslationService translationService;
 
-        final Section s3 = new Section( homeConstants.deploy_header(),
-                                        homeConstants.deploy_paragraph(),
-                                        url + HomeImagesHelper.Images.Deploy.getLocalisedImageUrl() );
+    public HomeModel get() {
+        final HomeModel model = new HomeModel(translationService.format(Constants.Heading),
+                                              translationService.format(Constants.SubHeading),
+                                              "images/product_home_bg.svg");
 
-        s1.setPerspectiveId( PerspectiveIds.LIBRARY);
-        s2.setPerspectiveId( PerspectiveIds.DEPLOYMENTS );
-        s3.setPerspectiveId( PerspectiveIds.PROCESS_DEFINITIONS );
-
-        model.addSection( s1 );
-        model.addSection( s2 );
-        model.addSection( s3 );
+        model.addShortcut(ModelUtils.makeShortcut("pficon-blueprint",
+                                                  translationService.format(Constants.Design),
+                                                  translationService.format(Constants.DesignDescription),
+                                                  () -> placeManager.goTo(LIBRARY),
+                                                  LIBRARY,
+                                                  PERSPECTIVE));
+        model.addShortcut(ModelUtils.makeShortcut("pficon-build",
+                                                  translationService.format(Constants.DevOps),
+                                                  translationService.format(Constants.DevOpsDescription),
+                                                  () -> placeManager.goTo(SERVER_MANAGEMENT),
+                                                  SERVER_MANAGEMENT,
+                                                  PERSPECTIVE));
 
         return model;
     }
-
 }
