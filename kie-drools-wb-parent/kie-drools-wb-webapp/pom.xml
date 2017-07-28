@@ -2035,8 +2035,8 @@
                   <compileSourcesArtifact>org.kie:kie-wb-theme-product</compileSourcesArtifact>
                   <!-- Product Home Page -->
                   <compileSourcesArtifact>org.kie:kie-drools-wb-home-page-product</compileSourcesArtifact>
-                  <compileSourcesArtifact>org.kie:kie-wb-distribution-home-api</compileSourcesArtifact>
-                  <compileSourcesArtifact>org.kie:kie-wb-distribution-home-client</compileSourcesArtifact>
+                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-api</compileSourcesArtifact>
+                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
                 </compileSourcesArtifacts>
               </configuration>
             </plugin>
