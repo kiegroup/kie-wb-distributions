@@ -48,7 +48,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     private ImportExampleModal importExample() {
         BusyPopup.waitForDisappearance();
         Waits.elementPresent(ByJQuery.selector("button#import-project-button"),
-                             20)
+                             40)
                 .click();
         Waits.elementPresent(ByJQuery.selector("a:contains('Advanced Import')"),
                              5)
