@@ -67,6 +67,16 @@ public interface WorkbenchClient {
     CreateOrCloneRepositoryRequest createOrCloneRepository(RepositoryRequest repository);
 
     /**
+     * [POST] /repositories
+     */
+    CreateOrCloneRepositoryRequest createRepository(String orgUnitName, String repositoryName);
+
+    /**
+     * [POST] /repositories
+     */
+    CreateOrCloneRepositoryRequest cloneRepository(String orgUnitName, String repositoryName, String gitRepositoryUrl);
+
+    /**
      * [DELETE] /repositories/{repositoryName}
      */
     RemoveRepositoryRequest deleteRepository(String repositoryName);
@@ -75,6 +85,16 @@ public interface WorkbenchClient {
      * [POST] /repositories/{repositoryName}/projects/
      */
     CreateProjectRequest createProject(String repositoryName, ProjectRequest project);
+
+    /**
+     * [POST] /repositories/{repositoryName}/projects/
+     */
+    CreateProjectRequest createProject(String repositoryName, String projectName, String groupId, String version);
+
+    /**
+     * [POST] /repositories/{repositoryName}/projects/
+     */
+    CreateProjectRequest createProject(String repositoryName, String projectName, String groupId, String version, String description);
 
     /**
      * [DELETE] /repositories/{repositoryName}/projects/{projectName}
@@ -95,6 +115,21 @@ public interface WorkbenchClient {
      * [POST] /organizationalunits
      */
     CreateOrganizationalUnitRequest createOrganizationalUnit(OrganizationalUnit organizationalUnit);
+
+    /**
+     * [POST] /organizationalunits
+     */
+    CreateOrganizationalUnitRequest createOrganizationalUnit(String orgUnitName, String owner);
+
+    /**
+     * [POST] /organizationalunits
+     */
+    CreateOrganizationalUnitRequest createOrganizationalUnit(String orgUnitName, String owner, String description);
+
+    /**
+     * [POST] /organizationalunits
+     */
+    CreateOrganizationalUnitRequest createOrganizationalUnit(String orgUnitName, String owner, String description, String groupId);
 
     /**
      * [GET] /organizationalunits/{orgUnitName}

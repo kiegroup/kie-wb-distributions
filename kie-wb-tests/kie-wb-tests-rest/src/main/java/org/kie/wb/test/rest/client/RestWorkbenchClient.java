@@ -145,6 +145,25 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
+    public CreateOrCloneRepositoryRequest createRepository(String orgUnitName, String repositoryName) {
+        RepositoryRequest repository = new RepositoryRequest();
+        repository.setName(repositoryName);
+        repository.setOrganizationalUnitName(orgUnitName);
+        repository.setRequestType("new");
+        return createOrCloneRepository(repository);
+    }
+
+    @Override
+    public CreateOrCloneRepositoryRequest cloneRepository(String orgUnitName, String repositoryName, String gitRepositoryUrl) {
+        RepositoryRequest repository = new RepositoryRequest();
+        repository.setName(repositoryName);
+        repository.setOrganizationalUnitName(orgUnitName);
+        repository.setGitURL(gitRepositoryUrl);
+        repository.setRequestType("clone");
+        return createOrCloneRepository(repository);
+    }
+
+    @Override
     public CreateOrCloneRepositoryRequest createOrCloneRepository(RepositoryRequest repository) {
         log.info("Creating new repository '{}'", repository.getName());
 
@@ -167,6 +186,21 @@ public class RestWorkbenchClient implements WorkbenchClient {
                 .request().delete(RemoveRepositoryRequest.class);
 
         return waitUntilJobFinished(request);
+    }
+
+    @Override
+    public CreateProjectRequest createProject(String repositoryName, String projectName, String groupId, String version) {
+        return createProject(repositoryName, projectName, groupId, version, null);
+    }
+
+    @Override
+    public CreateProjectRequest createProject(String repositoryName, String projectName, String groupId, String version, String description) {
+        ProjectRequest project = new ProjectRequest();
+        project.setGroupId(groupId);
+        project.setName(projectName);
+        project.setVersion(version);
+        project.setDescription(description);
+        return createProject(repositoryName, project);
     }
 
     @Override
@@ -208,6 +242,26 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
         return target.path("organizationalunits").request().get(new GenericType<Collection<OrganizationalUnit>>() {
         });
+    }
+
+    @Override
+    public CreateOrganizationalUnitRequest createOrganizationalUnit(String orgUnitName, String owner) {
+        return createOrganizationalUnit(orgUnitName, owner, null);
+    }
+
+    @Override
+    public CreateOrganizationalUnitRequest createOrganizationalUnit(String orgUnitName, String owner, String description) {
+        return createOrganizationalUnit(orgUnitName, owner, description, null);
+    }
+
+    @Override
+    public CreateOrganizationalUnitRequest createOrganizationalUnit(String orgUnitName, String owner, String description, String groupId) {
+        OrganizationalUnit orgUnit = new OrganizationalUnit();
+        orgUnit.setName(orgUnitName);
+        orgUnit.setOwner(owner);
+        orgUnit.setDescription(description);
+        orgUnit.setDefaultGroupId(groupId);
+        return createOrganizationalUnit(orgUnit);
     }
 
     @Override
