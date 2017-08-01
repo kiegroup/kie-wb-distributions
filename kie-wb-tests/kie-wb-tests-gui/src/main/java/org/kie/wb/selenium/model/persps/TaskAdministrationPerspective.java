@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,23 +18,12 @@ package org.kie.wb.selenium.model.persps;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
-public class ProjectAuthoringPerspective extends AbstractPerspective {
+public class TaskAdministrationPerspective extends AbstractPerspective {
 
-    private static final By WELCOME_MESSAGE_HOLDER = By.id("welcome");
-    private static final By NEW_ITEM_MENU = By.xpath( "//a[contains(text(),'New Item')]" );
-
-    @Override
-    public void waitForLoaded() {
-        //Don't check for specific elements to appear as the ProjectLibraryPerspective may have been shown
-        Waits.pause( 500 );
-    }
+    private static final By PERSPECTIVE_TITLE = By.cssSelector("span[title='Task Administration List']");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(NEW_ITEM_MENU);
-    }
-
-    public boolean isAuthoringDisabled(){
-        return Waits.isElementPresent(WELCOME_MESSAGE_HOLDER);
+        return Waits.isElementPresent(PERSPECTIVE_TITLE);
     }
 }

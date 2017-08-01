@@ -16,6 +16,7 @@
 package org.kie.wb.selenium.model.widgets;
 
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.kie.wb.selenium.util.BusyPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,7 +30,7 @@ public class DropdownMenu {
 
     private void open() {
         if (!isOpened()) {
-            dropdownToggle.click();
+            BusyPopup.retryClickUntilPopupDisappears(dropdownToggle);
         }
     }
 

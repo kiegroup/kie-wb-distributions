@@ -15,6 +15,8 @@
  */
 package org.kie.wb.selenium.model.persps.authoring;
 
+import java.util.Arrays;
+
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.kie.wb.selenium.model.widgets.ModalDialog;
 import org.kie.wb.selenium.util.ByUtil;
@@ -22,66 +24,57 @@ import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-
-import static org.kie.wb.selenium.util.ByUtil.jquery;
+import org.openqa.selenium.support.FindBy;
 
 public class ImportExampleModal extends ModalDialog {
 
-    @FindByJQuery( "#stockRadio" )
+    @FindBy(id = "stockRadio")
     private WebElement stockRepositoryRadioOption;
-
-    @FindByJQuery( "#customRadio" )
+    @FindBy(id = "customRadio")
     private WebElement customRepositoryRadioOption;
-
-    @FindByJQuery("#repositoryUrlInput")
+    @FindBy(id = "repositoryUrlInput")
     private WebElement repoUrlInput;
-
-    @FindByJQuery("#targetRepositoryTextBox")
+    @FindBy(id = "targetRepositoryTextBox")
     private WebElement targetRepoInput;
-
     @FindByJQuery("#organizationalUnitsDropdown > input")
     private WebElement targetOrgUnit;
 
     public static ImportExampleModal newInstance() {
-        if ( Waits.isElementPresent( jquery( ".modal-content:has(.modal-header:contains('ExamplesWizard'))", 40 ) ) ) {
-            return ModalDialog.newInstance( ImportExampleModal.class, "ExamplesWizard" );
-        }
-
-        return ModalDialog.newInstance( ImportExampleModal.class, "Import Example" );
+        return ModalDialog.newInstance(ImportExampleModal.class,
+                                       "Import Example");
     }
 
     public void selectStockRepository() {
         stockRepositoryRadioOption.click();
         next();
-        Waits.elementPresent( By.id( "projects" ) );
+        Waits.elementPresent(By.id("projects"));
     }
 
-    public void selectCustomRepository( String repoUrl ) {
+    public void selectCustomRepository(String repoUrl) {
         customRepositoryRadioOption.click();
         repoUrlInput.clear();
-        repoUrlInput.sendKeys( repoUrl );
-        repoUrlInput.sendKeys( Keys.TAB );
+        repoUrlInput.sendKeys(repoUrl);
+        repoUrlInput.sendKeys(Keys.TAB);
         next();
-        Waits.elementPresent( By.id( "projects" ) );
+        Waits.elementPresent(By.id("projects"));
     }
 
-    public void selectProjects( String... projects ) {
-        for ( String proj : projects ) {
-            selectProject( proj );
-        }
+    public void selectProjects(String... projects) {
+        Arrays.stream(projects).forEach(this::selectProject);
         next();
     }
 
-    private void selectProject( String project ) {
-        By projCheckboxLoc = ByUtil.xpath( "//input[following-sibling::span[contains(text(),'%s')]]", project );
-        WebElement checkbox = Waits.elementPresent( projCheckboxLoc, 10 );
+    private void selectProject(String project) {
+        By projCheckboxLoc = ByUtil.xpath("//input[following-sibling::span[contains(text(),'%s')]]",
+                                          project);
+        WebElement checkbox = Waits.elementPresent(projCheckboxLoc);
         checkbox.click();
     }
 
-    public void setTargetRepoAndOrgUnit( String repoName,
-                                         String orgUnit ) {
-        targetRepoInput.sendKeys( repoName );
-        targetOrgUnit.sendKeys( orgUnit );
+    public void setTargetRepoAndOrgUnit(String repoName,
+                                        String orgUnit) {
+        targetRepoInput.sendKeys(repoName);
+        targetOrgUnit.sendKeys(orgUnit);
         targetRepoInput.click(); //workaround to fire onchange event or something //TODO report not user friendly
         finish();
     }

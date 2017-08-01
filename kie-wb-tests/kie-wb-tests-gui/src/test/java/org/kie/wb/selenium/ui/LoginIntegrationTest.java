@@ -1,9 +1,10 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ * You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -15,9 +16,10 @@
 package org.kie.wb.selenium.ui;
 
 import org.junit.Test;
-import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.model.KieSeleniumTest;
-import static org.junit.Assert.assertTrue;
+import org.kie.wb.selenium.model.persps.HomePerspective;
+
+import static org.junit.Assert.*;
 
 public class LoginIntegrationTest extends KieSeleniumTest {
 

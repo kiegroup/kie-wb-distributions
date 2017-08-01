@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package org.kie.wb.selenium.util;
 
-import static org.kie.wb.selenium.util.GrapheneUtil.getDriver;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -25,6 +23,8 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+
+import static org.kie.wb.selenium.util.GrapheneUtil.getDriver;
 
 /**
  * JUnit Rule for taking screenshots/saving page HTML source of browser content
