@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package org.kie.wb.selenium.util;
 
-import org.kie.wb.selenium.model.PrimaryNavbar;
 import org.kie.wb.selenium.model.LoginPage;
+import org.kie.wb.selenium.model.PrimaryNavbar;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 

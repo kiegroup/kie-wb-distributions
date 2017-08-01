@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package org.kie.wb.selenium.model.persps;
 
-import static org.kie.wb.selenium.util.ByUtil.jquery;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.model.PageObject;
@@ -26,6 +24,8 @@ import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import static org.kie.wb.selenium.util.ByUtil.jquery;
 
 public abstract class AbstractPerspective extends PageObject {
 
