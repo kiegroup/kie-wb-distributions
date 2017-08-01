@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,10 @@ import org.kie.wb.selenium.model.persps.AdminPagePerspective;
 import org.kie.wb.selenium.model.persps.AdministrationPerspective;
 import org.kie.wb.selenium.model.persps.AppsPerspective;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
-import org.kie.wb.selenium.model.persps.ContributorsPerspective;
+import org.kie.wb.selenium.model.persps.BusinessDashboardsPerspective;
 import org.kie.wb.selenium.model.persps.DataSetsPerspective;
+import org.kie.wb.selenium.model.persps.DataSourcesPerspective;
+import org.kie.wb.selenium.model.persps.ExecutionErrorsPerspective;
 import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.model.persps.JobsPerspective;
 import org.kie.wb.selenium.model.persps.PeoplePerspective;
@@ -33,74 +35,146 @@ import org.kie.wb.selenium.model.persps.PluginManagementPerspective;
 import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
 import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
-import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
 import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
+import org.kie.wb.selenium.model.persps.TaskAdministrationPerspective;
 import org.kie.wb.selenium.model.persps.TasksPerspective;
 import org.kie.wb.selenium.model.persps.TimelinePerspective;
 
 public class Persp<T extends AbstractPerspective> {
 
     public static final Persp<HomePerspective> HOME_PAGE
-            = new Persp<>("Home", "Home Page", HomePerspective.class);
+            = new Persp<>("Home",
+                          "Home Page",
+                          HomePerspective.class);
 
     public static final Persp<TimelinePerspective> TIMELINE
-            = new Persp<>("Home", "Timeline", TimelinePerspective.class);
+            = new Persp<>("Home",
+                          "Timeline",
+                          TimelinePerspective.class);
 
     public static final Persp<PeoplePerspective> PEOPLE
-            = new Persp<>("Home", "People", PeoplePerspective.class);
+            = new Persp<>("Home",
+                          "People",
+                          PeoplePerspective.class);
 
     public static final Persp<AdminPagePerspective> ADMIN
-            = new Persp<>("Home", "Admin", AdminPagePerspective.class);
-
+            = new Persp<>("Home",
+                          "Admin",
+                          AdminPagePerspective.class);
     public static final Persp<ProjectLibraryPerspective> PROJECT_AUTHORING
-            = new Persp<>("Authoring", "Project Authoring", ProjectLibraryPerspective.class);
+            = new Persp<>("Authoring",
+                          "Project Authoring",
+                          ProjectLibraryPerspective.class);
 
     public static final Persp<ArtifactRepositoryPerspective> ARTIFACT_REPOSITORY
-            = new Persp<>("Authoring", "Artifact Repository", ArtifactRepositoryPerspective.class);
+            = new Persp<>("Authoring",
+                          "Artifact Repository",
+                          ArtifactRepositoryPerspective.class);
 
     public static final Persp<AdministrationPerspective> ADMINISTRATION
-            = new Persp<>("Authoring", "Administration", AdministrationPerspective.class);
+            = new Persp<>("Authoring",
+                          "Administration",
+                          AdministrationPerspective.class);
 
     public static final Persp<RuleDeploymentsPerspective> EXECUTION_SERVERS
-            = new Persp<>("Deploy", "Execution Servers", RuleDeploymentsPerspective.class);
+            = new Persp<>("Deploy",
+                          "Execution Servers",
+                          RuleDeploymentsPerspective.class);
 
     public static final Persp<JobsPerspective> JOBS
-            = new Persp<>("Deploy", "Jobs", JobsPerspective.class, true);
+            = new Persp<>("Deploy",
+                          "Jobs",
+                          JobsPerspective.class,
+                          true);
 
     public static final Persp<ProcessDefinitionsPerspective> PROCESS_DEFINITIONS
-            = new Persp<>("Process Management", "Process Definitions", ProcessDefinitionsPerspective.class, true);
+            = new Persp<>("Process Management",
+                          "Process Definitions",
+                          ProcessDefinitionsPerspective.class,
+                          true);
 
     public static final Persp<ProcessInstancesPerspective> PROCESS_INSTANCES
-            = new Persp<>("Process Management", "Process Instances", ProcessInstancesPerspective.class, true);
+            = new Persp<>("Process Management",
+                          "Process Instances",
+                          ProcessInstancesPerspective.class,
+                          true);
+
+    public static final Persp<TaskAdministrationPerspective> TASK_ADMINISTRATION
+            = new Persp<>("Process Management",
+                          "Task Administration",
+                          TaskAdministrationPerspective.class,
+                          true);
+
+    public static final Persp<ExecutionErrorsPerspective> EXECUTION_ERRORS
+            = new Persp<>("Process Management",
+                          "Execution errors",
+                          ExecutionErrorsPerspective.class,
+                          true);
 
     public static final Persp<TasksPerspective> TASKS
-            = new Persp<>("N/A", "Tasks", TasksPerspective.class, true);
+            = new Persp<>("N/A",
+                          "Tasks",
+                          TasksPerspective.class,
+                          true);
 
     public static final Persp<ProcessAndTaskDashboardPerspective> PROCESS_AND_TASK_DASHBOARD
-            = new Persp<>("Dashboards", "Process & Task Dashboard", ProcessAndTaskDashboardPerspective.class, true);
+            = new Persp<>("Dashboards",
+                          "Process & Task Dashboard",
+                          ProcessAndTaskDashboardPerspective.class,
+                          true);
+
+    public static final Persp<BusinessDashboardsPerspective> BUSINESS_DASHBOARDS
+            = new Persp<>("Dashboards",
+                          "Business Dashboards",
+                          BusinessDashboardsPerspective.class,
+                          true);
 
     public static final Persp<PluginManagementPerspective> PLUGIN_MANAGEMENT
-            = new Persp<>("Extensions", "Plugin Management", PluginManagementPerspective.class);
+            = new Persp<>("Extensions",
+                          "Plugin Management",
+                          PluginManagementPerspective.class);
 
     public static final Persp<AppsPerspective> APPS
-            = new Persp<>("Extensions", "Apps", AppsPerspective.class);
+            = new Persp<>("Extensions",
+                          "Apps",
+                          AppsPerspective.class);
 
     public static final Persp<DataSetsPerspective> DATA_SETS
-            = new Persp<>("Extensions", "Data Sets", DataSetsPerspective.class);
+            = new Persp<>("Extensions",
+                          "Data Sets",
+                          DataSetsPerspective.class);
 
-    private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPS = Collections.unmodifiableList(Arrays.asList(
-            HOME_PAGE, ADMIN, TIMELINE, PEOPLE,
-            PROJECT_AUTHORING, ARTIFACT_REPOSITORY, ADMINISTRATION,
-            EXECUTION_SERVERS, JOBS,
-            PROCESS_DEFINITIONS, PROCESS_INSTANCES,
+    public static final Persp<DataSourcesPerspective> DATA_SOURCES
+            = new Persp<>("Extensions",
+                          "Data Sources",
+                          DataSourcesPerspective.class);
+
+    private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPECTIVES = Collections.unmodifiableList(Arrays.asList(
+            HOME_PAGE,
+            ADMIN,
+            TIMELINE,
+            PEOPLE,
+            PROJECT_AUTHORING,
+            ARTIFACT_REPOSITORY,
+            ADMINISTRATION,
+            EXECUTION_SERVERS,
+            JOBS,
+            PROCESS_DEFINITIONS,
+            PROCESS_INSTANCES,
+            TASK_ADMINISTRATION,
+            EXECUTION_ERRORS,
             TASKS,
             PROCESS_AND_TASK_DASHBOARD,
-            PLUGIN_MANAGEMENT, APPS, DATA_SETS
+            BUSINESS_DASHBOARDS,
+            PLUGIN_MANAGEMENT,
+            APPS,
+            DATA_SETS,
+            DATA_SOURCES
     ));
 
     public static List<Persp<? extends AbstractPerspective>> getAllPerspectives() {
-        return ALL_PERSPS;
+        return ALL_PERSPECTIVES;
     }
 
     private final String parentMenu;
@@ -108,8 +182,13 @@ public class Persp<T extends AbstractPerspective> {
     private final Class<T> perspPageObjectClass;
     private final boolean isKieWbOnly; // = Perspective is present in kie-wb only, not in kie-drools-wb
 
-    private Persp(String parentMenu, String menuItem, Class<T> perspPageObjectClass) {
-        this(parentMenu, menuItem, perspPageObjectClass, false);
+    private Persp(String parentMenu,
+                  String menuItem,
+                  Class<T> perspPageObjectClass) {
+        this(parentMenu,
+             menuItem,
+             perspPageObjectClass,
+             false);
     }
 
     /**
@@ -122,7 +201,10 @@ public class Persp<T extends AbstractPerspective> {
      * @param isKieWbOnly true if the perspective is present only in kie-wb (not
      * in kie-drools-wb), false otherwise
      */
-    private Persp(String parentMenu, String menuItem, Class<T> perspPageObjectClass, boolean isKieWbOnly) {
+    private Persp(String parentMenu,
+                  String menuItem,
+                  Class<T> perspPageObjectClass,
+                  boolean isKieWbOnly) {
         this.parentMenu = parentMenu;
         this.menuItem = menuItem;
         this.perspPageObjectClass = perspPageObjectClass;
@@ -150,6 +232,7 @@ public class Persp<T extends AbstractPerspective> {
      */
     @Override
     public String toString() {
-        return getName().replace(' ', '_');
+        return getName().replace(' ',
+                                 '_');
     }
 }

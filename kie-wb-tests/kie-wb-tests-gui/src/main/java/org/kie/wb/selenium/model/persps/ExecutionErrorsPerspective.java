@@ -18,18 +18,12 @@ package org.kie.wb.selenium.model.persps;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
-import static org.kie.wb.selenium.util.ByUtil.jquery;
+public class ExecutionErrorsPerspective extends AbstractPerspective {
 
-public class ArtifactRepositoryPerspective extends AbstractPerspective {
-
-    private static final By NAME_COLUMN_HEADER = By.xpath("//th[contains(text(),'Name')]");
+    private static final By ACKNOWLEDGED_TAB = By.linkText("Acknowledged");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(NAME_COLUMN_HEADER);
-    }
-
-    public boolean isArtifactPresent(String gav) {
-        return Waits.isElementPresent(jquery("tr[__gwt_row]:contains('%s')", gav), 5);
+        return Waits.isElementPresent(ACKNOWLEDGED_TAB);
     }
 }
