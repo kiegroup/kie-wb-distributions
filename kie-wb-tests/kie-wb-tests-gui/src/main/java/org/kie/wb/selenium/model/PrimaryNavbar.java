@@ -22,7 +22,6 @@ import org.kie.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.wb.selenium.model.persps.AdministrationPerspective;
 import org.kie.wb.selenium.model.persps.AppsPerspective;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
-import org.kie.wb.selenium.model.persps.ContributorsPerspective;
 import org.kie.wb.selenium.model.persps.DataSetsPerspective;
 import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.model.persps.JobsPerspective;
@@ -31,12 +30,12 @@ import org.kie.wb.selenium.model.persps.PluginManagementPerspective;
 import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
 import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
-import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
 import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
 import org.kie.wb.selenium.model.persps.TasksPerspective;
 import org.kie.wb.selenium.model.persps.TimelinePerspective;
 import org.kie.wb.selenium.model.widgets.DropdownMenu;
+import org.kie.wb.selenium.util.PerspectiveFactory;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -130,7 +129,7 @@ public class PrimaryNavbar {
         } else {
             selectMenuItem(p.getMenu(), p.getName());
         }
-        return initPerspective(p);
+        return PerspectiveFactory.createPerspective(p);
     }
 
     private void selectMenuItem(String menuName, String itemName) {
@@ -138,11 +137,5 @@ public class PrimaryNavbar {
         WebElement menuRoot = driver.findElement(jquery(NAVBAR_MENU, menuName));
         DropdownMenu menu = Graphene.createPageFragment(DropdownMenu.class, menuRoot);
         menu.selectItem(itemName);
-    }
-
-    private <T extends AbstractPerspective> T initPerspective(Persp<T> p) {
-        T perspective = Graphene.createPageFragment(p.getPerspectivePageObjectClass(), perspectiveRoot);
-        perspective.waitForLoaded();
-        return perspective;
     }
 }
