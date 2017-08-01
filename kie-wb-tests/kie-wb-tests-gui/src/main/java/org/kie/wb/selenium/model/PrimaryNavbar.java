@@ -1,9 +1,10 @@
 /*
- * Copyright 2015 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ * You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -14,15 +15,11 @@
  */
 package org.kie.wb.selenium.model;
 
-import static org.kie.wb.selenium.model.KieSeleniumTest.driver;
-import static org.kie.wb.selenium.util.ByUtil.jquery;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.wb.selenium.model.persps.AdministrationPerspective;
 import org.kie.wb.selenium.model.persps.AppsPerspective;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
-import org.kie.wb.selenium.model.persps.ContributorsPerspective;
 import org.kie.wb.selenium.model.persps.DataSetsPerspective;
 import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.model.persps.JobsPerspective;
@@ -31,7 +28,6 @@ import org.kie.wb.selenium.model.persps.PluginManagementPerspective;
 import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
 import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
-import org.kie.wb.selenium.model.persps.ProjectAuthoringPerspective;
 import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
 import org.kie.wb.selenium.model.persps.TasksPerspective;
@@ -42,6 +38,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.kie.wb.selenium.model.KieSeleniumTest.driver;
+import static org.kie.wb.selenium.util.ByUtil.jquery;
 
 public class PrimaryNavbar {
 

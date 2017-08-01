@@ -15,14 +15,14 @@
  */
 package org.kie.wb.selenium.model.widgets;
 
-import static org.kie.wb.selenium.util.ByUtil.jquery;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.kie.wb.selenium.model.PageObject;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import static org.kie.wb.selenium.util.ByUtil.jquery;
 
 public class ModalDialog extends PageObject {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2017 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +32,12 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectLibraryPerspective.class);
 
-    private static final By WELCOME_MESSAGE_HOLDER = By.id("welcome");
-    private static final By OU_REPO_BREADCRUMB = ByJQuery.selector("a:contains('myteam')");
+    private static final By
+            WELCOME_MESSAGE = By.id("welcome"),
+            TEAM_BREADCRUMB = By.linkText("myteam"),
+            IMPORT_PROJECT_BUTTON = By.id("import-project-button"),
+            ADVANCED_IMPORT_BUTTON = By.linkText("Advanced Import"),
+            BUILD_AND_DEPLOY_BUTTON = ByJQuery.selector("button:contains('Build & Deploy')");
 
     @Override
     public void waitForLoaded() {
@@ -41,41 +46,30 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(OU_REPO_BREADCRUMB,
+        return Waits.isElementPresent(TEAM_BREADCRUMB,
                                       60);
     }
 
     private ImportExampleModal importExample() {
-        BusyPopup.waitForDisappearance();
-        Waits.elementPresent(ByJQuery.selector("button#import-project-button"),
-                             20)
-                .click();
-        Waits.elementPresent(ByJQuery.selector("a:contains('Advanced Import')"),
-                             5)
-                .click();
+        click(IMPORT_PROJECT_BUTTON);
+        click(ADVANCED_IMPORT_BUTTON);
         return ImportExampleModal.newInstance();
     }
 
     public boolean isProjectListEmpty() {
-        return Waits.isElementPresent(WELCOME_MESSAGE_HOLDER);
+        return Waits.isElementPresent(WELCOME_MESSAGE);
     }
 
     public void openProjectList() {
-        Waits.elementPresent(OU_REPO_BREADCRUMB,
-                             20)
-                .click();
+        click(TEAM_BREADCRUMB);
     }
 
     public void importDemoProject(String projectName) {
-        Waits.elementPresent(ByJQuery.selector("button:contains('" + projectName + "')"),
-                             20)
-                .click();
+        click(ByJQuery.selector("button:contains('" + projectName + "')"));
     }
 
     public void buildAndDeployProject() {
-        Waits.elementPresent(ByJQuery.selector("button:contains('Build & Deploy')"),
-                             20)
-                .click();
+        click(BUILD_AND_DEPLOY_BUTTON);
         possiblyOverrideGavConflict();
     }
 
@@ -107,5 +101,10 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
         } catch (TimeoutException | NoSuchElementException ignored) {
             LOG.info("Modal showing GAV conflict didn't appear");
         }
+    }
+
+    private void click(By locatorOfThingToClick) {
+        WebElement thingToClick = Waits.elementPresent(locatorOfThingToClick);
+        BusyPopup.retryClickUntilPopupDisappears(thingToClick);
     }
 }
