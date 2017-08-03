@@ -133,6 +133,15 @@
     </dependency>
 
     <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-controller-websocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-controller-websocket-common</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-api</artifactId>
     </dependency>
