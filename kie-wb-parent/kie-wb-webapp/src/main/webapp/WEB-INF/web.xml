@@ -130,6 +130,7 @@
     <url-pattern>/rest/*</url-pattern>
     <url-pattern>/maven2/*</url-pattern>
     <url-pattern>/ws/*</url-pattern>
+    <url-pattern>/websocket/*</url-pattern>
   </filter-mapping>
 
   <!-- drools-wb servlets -->
