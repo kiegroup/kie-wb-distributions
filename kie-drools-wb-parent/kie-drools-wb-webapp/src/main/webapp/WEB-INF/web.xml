@@ -632,9 +632,17 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>public</web-resource-name>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/*.cache.*</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/*.nocache.js</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/ace/*</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/bootstrap-daterangepicker/*</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/bootstrap-select/*</url-pattern>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/css/*</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/deferredjs/*</url-pattern>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/fonts/*</url-pattern>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/img/*</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/images/*</url-pattern>
+      <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/zeroclipboard/*</url-pattern>
     </web-resource-collection>
   </security-constraint>
 
