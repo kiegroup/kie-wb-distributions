@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.kie.wb.test.rest.AccessRestTestBase;
 import org.kie.wb.test.rest.User;
+import org.kie.wb.test.rest.Utils;
 
 @RunWith(Parameterized.class)
 public class RepositoryAccessIntegrationTest extends AccessRestTestBase {
@@ -45,7 +46,7 @@ public class RepositoryAccessIntegrationTest extends AccessRestTestBase {
         repository.setOrganizationalUnitName(ORG_UNIT);
         repository.setRequestType("new");
 
-        assertOperation(() -> roleClient.createOrCloneRepository(repository));
+        assertOperation(() -> roleClient.cloneRepository(repository));
     }
 
     @Test
@@ -56,28 +57,31 @@ public class RepositoryAccessIntegrationTest extends AccessRestTestBase {
         repository.setRequestType("clone");
         repository.setGitURL(getLocalGitRepositoryUrl());
 
-        assertOperation(() -> roleClient.createOrCloneRepository(repository));
+        assertOperation(() -> roleClient.cloneRepository(repository));
     }
 
     @Test
     public void testDeleteRepository() {
-        String name = "deleteRepositoryWith" + user.getUserName();
-        createNewRepository(ORG_UNIT, name);
 
-        assertOperation(() -> roleClient.deleteRepository(name));
+        Utils utils = new Utils(ORG_UNIT, client);
+        String name = "deleteRepositoryWith" + user.getUserName();
+        utils.createProject(ORG_UNIT, name, "groupId", "1.0.0");
+
+        assertOperation(() -> roleClient.deleteProject(name));
     }
 
     @Test
     public void testGetRepository() {
-        String name = "getRepositoryWith" + user.getUserName();
-        createNewRepository(ORG_UNIT, name);
 
-        assertOperation(() -> roleClient.getRepository(name));
+        Utils utils = new Utils(ORG_UNIT, client);
+        String name = "getRepositoryWith" + user.getUserName();
+        utils.createProject(ORG_UNIT, name, "groupId", "1.0.0");
+
+        assertOperation(() -> roleClient.getProject(name));
     }
 
     @Test
     public void testGetRepositories() {
-        assertOperation(roleClient::getRepositories);
+        assertOperation(roleClient::getProjects);
     }
-
 }

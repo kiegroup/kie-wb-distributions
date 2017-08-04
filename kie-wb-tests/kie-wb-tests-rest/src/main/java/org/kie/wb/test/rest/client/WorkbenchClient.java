@@ -18,9 +18,9 @@ package org.kie.wb.test.rest.client;
 
 import java.util.Collection;
 
-import org.guvnor.rest.client.AddRepositoryToOrganizationalUnitRequest;
+import org.guvnor.rest.client.AddProjectToOrganizationalUnitRequest;
+import org.guvnor.rest.client.CloneRepositoryRequest;
 import org.guvnor.rest.client.CompileProjectRequest;
-import org.guvnor.rest.client.CreateOrCloneRepositoryRequest;
 import org.guvnor.rest.client.CreateOrganizationalUnitRequest;
 import org.guvnor.rest.client.CreateProjectRequest;
 import org.guvnor.rest.client.DeleteProjectRequest;
@@ -31,10 +31,8 @@ import org.guvnor.rest.client.OrganizationalUnit;
 import org.guvnor.rest.client.ProjectRequest;
 import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.RemoveOrganizationalUnitRequest;
-import org.guvnor.rest.client.RemoveRepositoryFromOrganizationalUnitRequest;
-import org.guvnor.rest.client.RemoveRepositoryRequest;
+import org.guvnor.rest.client.RemoveProjectFromOrganizationalUnitRequest;
 import org.guvnor.rest.client.RepositoryRequest;
-import org.guvnor.rest.client.RepositoryResponse;
 import org.guvnor.rest.client.TestProjectRequest;
 import org.guvnor.rest.client.UpdateOrganizationalUnit;
 import org.guvnor.rest.client.UpdateOrganizationalUnitRequest;
@@ -52,59 +50,49 @@ public interface WorkbenchClient {
     JobResult deleteJob(String jobId);
 
     /**
-     * [GET] /repositories
+     * [POST] /repositories
      */
-    Collection<RepositoryResponse> getRepositories();
-
-    /**
-     * [GET] /repositories/{repositoryName}
-     */
-    RepositoryResponse getRepository(String repositoryName);
+    CloneRepositoryRequest cloneRepository(String orgUnitName, String repositoryName, String gitRepositoryUrl);
 
     /**
      * [POST] /repositories
      */
-    CreateOrCloneRepositoryRequest createOrCloneRepository(RepositoryRequest repository);
+    CloneRepositoryRequest cloneRepository(RepositoryRequest repository);
 
     /**
-     * [POST] /repositories
+     * [GET] /projects
      */
-    CreateOrCloneRepositoryRequest createRepository(String orgUnitName, String repositoryName);
+    Collection<ProjectResponse> getProjects();
 
     /**
-     * [POST] /repositories
+     * [GET] /projects/{projectName}
      */
-    CreateOrCloneRepositoryRequest cloneRepository(String orgUnitName, String repositoryName, String gitRepositoryUrl);
+    ProjectResponse getProject(String projectName);
 
     /**
-     * [DELETE] /repositories/{repositoryName}
+     * [POST] /organizationalunits/{organizationalUnitName}/projects/
      */
-    RemoveRepositoryRequest deleteRepository(String repositoryName);
+    CreateProjectRequest createProject(String organizationalUnitName, ProjectRequest project);
 
     /**
-     * [POST] /repositories/{repositoryName}/projects/
+     * [POST] /organizationalunits/{organizationalUnitName}/projects/
      */
-    CreateProjectRequest createProject(String repositoryName, ProjectRequest project);
+    CreateProjectRequest createProject(String organizationalUnitName, String projectName, String groupId, String version);
 
     /**
-     * [POST] /repositories/{repositoryName}/projects/
+     * [POST] /organizationalunits/{organizationalUnitName}/projects/
      */
-    CreateProjectRequest createProject(String repositoryName, String projectName, String groupId, String version);
+    CreateProjectRequest createProject(String organizationalUnitName, String projectName, String groupId, String version, String description);
 
     /**
-     * [POST] /repositories/{repositoryName}/projects/
+     * [DELETE] /projects/{projectName}
      */
-    CreateProjectRequest createProject(String repositoryName, String projectName, String groupId, String version, String description);
+    DeleteProjectRequest deleteProject(String projectName);
 
     /**
-     * [DELETE] /repositories/{repositoryName}/projects/{projectName}
+     * [GET] /organizationalunits/{organizationalUnitName}/projects/
      */
-    DeleteProjectRequest deleteProject(String repositoryName, String projectName);
-
-    /**
-     * [GET] /repositories/{repositoryName}/projects/
-     */
-    Collection<ProjectResponse> getProjects(String repositoryName);
+    Collection<ProjectResponse> getProjects(String organizationalUnitName);
 
     /**
      * [GET] /organizationalunits
@@ -147,34 +135,33 @@ public interface WorkbenchClient {
     RemoveOrganizationalUnitRequest deleteOrganizationalUnit(String orgUnitName);
 
     /**
-     * [POST] /organizationalunits/{organizationalUnitName}/repositories/{repositoryName}
+     * [POST] /organizationalunits/{organizationalUnitName}/projects/{projectName}
      */
-    AddRepositoryToOrganizationalUnitRequest addRepositoryToOrganizationalUnit(String orgUnitName,
-                                                                               String repositoryName);
+    AddProjectToOrganizationalUnitRequest addProjectToOrganizationalUnit(String orgUnitName,
+                                                                            String projectName);
 
     /**
-     * [DELETE] /organizationalunits/{organizationalUnitName}/repositories/{repositoryName}
+     * [DELETE] /organizationalunits/{organizationalUnitName}/projects/{projectName}
      */
-    RemoveRepositoryFromOrganizationalUnitRequest removeRepositoryFromOrganizationalUnit(String orgUnitName, String repositoryName);
+    RemoveProjectFromOrganizationalUnitRequest removeProjectFromOrganizationalUnit(String orgUnitName, String projectName);
 
     /**
-     * [POST] /repositories/{repositoryName}/projects/{projectName}/maven/compile
+     * [POST] /projects/{projectName}/maven/compile
      */
-    CompileProjectRequest compileProject(String repositoryName, String projectName);
+    CompileProjectRequest compileProject(String projectName);
 
     /**
-     * [POST] /repositories/{repositoryName}/projects/{projectName}/maven/install
+     * [POST] /organizationalunits/{organizationalUnitName}/projects/{projectName}/maven/install
      */
-    InstallProjectRequest installProject(String repositoryName, String projectName);
+    InstallProjectRequest installProject(String organizationalUnitName, String projectName);
 
     /**
-     * [POST] /repositories/{repositoryName}/projects/{projectName}/maven/test
+     * [POST] /projects/{projectName}/maven/test
      */
-    TestProjectRequest testProject(String repositoryName, String projectName);
+    TestProjectRequest testProject(String projectName);
 
     /**
-     * [POST] /repositories/{repositoryName}/projects/{projectName}/maven/deploy
+     * [POST] /projects/{projectName}/maven/deploy
      */
-    DeployProjectRequest deployProject(String repositoryName, String projectName);
-
+    DeployProjectRequest deployProject(String projectName);
 }

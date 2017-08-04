@@ -17,7 +17,6 @@
 package org.kie.wb.test.rest.client;
 
 import java.util.Collection;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -25,9 +24,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-import org.guvnor.rest.client.AddRepositoryToOrganizationalUnitRequest;
+import org.guvnor.rest.client.AddProjectToOrganizationalUnitRequest;
+import org.guvnor.rest.client.CloneRepositoryRequest;
 import org.guvnor.rest.client.CompileProjectRequest;
-import org.guvnor.rest.client.CreateOrCloneRepositoryRequest;
 import org.guvnor.rest.client.CreateOrganizationalUnitRequest;
 import org.guvnor.rest.client.CreateProjectRequest;
 import org.guvnor.rest.client.DeleteProjectRequest;
@@ -40,10 +39,8 @@ import org.guvnor.rest.client.OrganizationalUnit;
 import org.guvnor.rest.client.ProjectRequest;
 import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.RemoveOrganizationalUnitRequest;
-import org.guvnor.rest.client.RemoveRepositoryFromOrganizationalUnitRequest;
-import org.guvnor.rest.client.RemoveRepositoryRequest;
+import org.guvnor.rest.client.RemoveProjectFromOrganizationalUnitRequest;
 import org.guvnor.rest.client.RepositoryRequest;
-import org.guvnor.rest.client.RepositoryResponse;
 import org.guvnor.rest.client.TestProjectRequest;
 import org.guvnor.rest.client.UpdateOrganizationalUnit;
 import org.guvnor.rest.client.UpdateOrganizationalUnitRequest;
@@ -68,7 +65,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
     private final WebTarget target;
 
     private RestWorkbenchClient(String appUrl, String userId, String password, boolean async,
-            int jobTimeoutSeconds, int projectJobTimeoutSeconds, int cloneRepoTimeoutSeconds) {
+                                int jobTimeoutSeconds, int projectJobTimeoutSeconds, int cloneRepoTimeoutSeconds) {
         this.async = async;
 
         Client client = ClientBuilder.newClient().register(new Authenticator(userId, password));
@@ -81,7 +78,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
     private RestWorkbenchClient(String appUrl, String userId, String password, boolean async) {
         this(appUrl, userId, password, async,
-                DEFAULT_JOB_TIMEOUT_SECONDS, DEFAULT_PROJECT_JOB_TIMEOUT_SECONDS, DEFAULT_CLONE_REPO_TIMEOUT_SECONDS
+             DEFAULT_JOB_TIMEOUT_SECONDS, DEFAULT_PROJECT_JOB_TIMEOUT_SECONDS, DEFAULT_CLONE_REPO_TIMEOUT_SECONDS
         );
     }
 
@@ -104,7 +101,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
      * Creates KIE Workbench REST client which will wait for successful completion of each operation using specified timeouts.
      */
     public static WorkbenchClient createWorkbenchClient(String appUrl, String userId, String password,
-            int jobTimeoutSeconds, int projectJobTimeoutSeconds, int cloneRepoTimeoutSeconds) {
+                                                        int jobTimeoutSeconds, int projectJobTimeoutSeconds, int cloneRepoTimeoutSeconds) {
         return new RestWorkbenchClient(appUrl, userId, password, false
                 , jobTimeoutSeconds, projectJobTimeoutSeconds, cloneRepoTimeoutSeconds);
     }
@@ -128,47 +125,38 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
-    public Collection<RepositoryResponse> getRepositories() {
-        log.info("Getting all repositories");
+    public Collection<ProjectResponse> getProjects() {
+        log.info("Getting all projects");
 
-        return target.path("repositories").request().get(new GenericType<Collection<RepositoryResponse>>() {
+        return target.path("projects").request().get(new GenericType<Collection<ProjectResponse>>() {
         });
     }
 
     @Override
-    public RepositoryResponse getRepository(String repositoryName) {
-        log.info("Getting repository '{}'", repositoryName);
+    public ProjectResponse getProject(String projectName) {
+        log.info("Getting project '{}'", projectName);
 
-        return target.path("repositories/{repositoryName}")
-                .resolveTemplate("repositoryName", repositoryName)
-                .request().get(RepositoryResponse.class);
+        return target.path("projects/{projectName}")
+                .resolveTemplate("projectName", projectName)
+                .request().get(ProjectResponse.class);
     }
 
     @Override
-    public CreateOrCloneRepositoryRequest createRepository(String orgUnitName, String repositoryName) {
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(repositoryName);
-        repository.setOrganizationalUnitName(orgUnitName);
-        repository.setRequestType("new");
-        return createOrCloneRepository(repository);
-    }
-
-    @Override
-    public CreateOrCloneRepositoryRequest cloneRepository(String orgUnitName, String repositoryName, String gitRepositoryUrl) {
+    public CloneRepositoryRequest cloneRepository(String orgUnitName, String repositoryName, String gitRepositoryUrl) {
         RepositoryRequest repository = new RepositoryRequest();
         repository.setName(repositoryName);
         repository.setOrganizationalUnitName(orgUnitName);
         repository.setGitURL(gitRepositoryUrl);
         repository.setRequestType("clone");
-        return createOrCloneRepository(repository);
+        return cloneRepository(repository);
     }
 
     @Override
-    public CreateOrCloneRepositoryRequest createOrCloneRepository(RepositoryRequest repository) {
+    public CloneRepositoryRequest cloneRepository(RepositoryRequest repository) {
         log.info("Creating new repository '{}'", repository.getName());
 
-        CreateOrCloneRepositoryRequest request = target.path("repositories").request()
-                .post(createEntity(repository), CreateOrCloneRepositoryRequest.class);
+        CloneRepositoryRequest request = target.path("repositories").request()
+                .post(createEntity(repository), CloneRepositoryRequest.class);
 
         if (request.getRepository().getRequestType().equals("clone")) {
             return waitUntilJobFinished(request, cloneRepoTimeoutSeconds);
@@ -178,12 +166,12 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
-    public RemoveRepositoryRequest deleteRepository(String repositoryName) {
-        log.info("Deleting repository '{}'", repositoryName);
+    public DeleteProjectRequest deleteProject(String projectName) {
+        log.info("Deleting project '{}'", projectName);
 
-        RemoveRepositoryRequest request = target.path("repositories/{repositoryName}")
-                .resolveTemplate("repositoryName", repositoryName)
-                .request().delete(RemoveRepositoryRequest.class);
+        DeleteProjectRequest request = target.path("projects/{projectName}")
+                .resolveTemplate("projectName", projectName)
+                .request().delete(DeleteProjectRequest.class);
 
         return waitUntilJobFinished(request);
     }
@@ -204,24 +192,12 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
-    public CreateProjectRequest createProject(String repositoryName, ProjectRequest project) {
-        log.info("Creating project '{}' in repository '{}'", project.getName(), repositoryName);
+    public CreateProjectRequest createProject(String organizationalUnitName, ProjectRequest project) {
+        log.info("Creating project '{}' in repository '{}'", project.getName(), organizationalUnitName);
 
-        CreateProjectRequest request = target.path("repositories/{repositoryName}/projects")
-                .resolveTemplate("repositoryName", repositoryName)
+        CreateProjectRequest request = target.path("organizationalUnits/{organizationalUnitName}/projects")
+                .resolveTemplate("organizationalUnitName", organizationalUnitName)
                 .request().post(createEntity(project), CreateProjectRequest.class);
-
-        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
-    }
-
-    @Override
-    public DeleteProjectRequest deleteProject(String repositoryName, String projectName) {
-        log.info("Removing project '{}' from repository '{}'", projectName, repositoryName);
-
-        DeleteProjectRequest request = target.path("repositories/{repositoryName}/projects/{projectName}")
-                .resolveTemplate("repositoryName", repositoryName)
-                .resolveTemplate("projectName", projectName)
-                .request().delete(DeleteProjectRequest.class);
 
         return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
@@ -306,25 +282,25 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
-    public AddRepositoryToOrganizationalUnitRequest addRepositoryToOrganizationalUnit(String orgUnitName, String repositoryName) {
-        log.info("Adding repository '{}' to organizational unit '{}'", repositoryName, orgUnitName);
+    public AddProjectToOrganizationalUnitRequest addProjectToOrganizationalUnit(String orgUnitName, String projectName) {
+        log.info("Adding projct '{}' to organizational unit '{}'", projectName, orgUnitName);
 
-        AddRepositoryToOrganizationalUnitRequest request = target.path("organizationalunits/{orgUnitName}/repositories/{repositoryName}")
+        AddProjectToOrganizationalUnitRequest request = target.path("organizationalunits/{orgUnitName}/projects/{projectName}")
                 .resolveTemplate("orgUnitName", orgUnitName)
-                .resolveTemplate("repositoryName", repositoryName)
-                .request().post(createEntity(""), AddRepositoryToOrganizationalUnitRequest.class);
+                .resolveTemplate("projectName", projectName)
+                .request().post(createEntity(""), AddProjectToOrganizationalUnitRequest.class);
 
         return waitUntilJobFinished(request);
     }
 
     @Override
-    public RemoveRepositoryFromOrganizationalUnitRequest removeRepositoryFromOrganizationalUnit(String orgUnitName, String repositoryName) {
-        log.info("Removing repository '{}' from organizational unit '{}'", repositoryName, orgUnitName);
+    public RemoveProjectFromOrganizationalUnitRequest removeProjectFromOrganizationalUnit(String orgUnitName, String projectName) {
+        log.info("Removing project '{}' from organizational unit '{}'", projectName, orgUnitName);
 
-        RemoveRepositoryFromOrganizationalUnitRequest request = target.path("organizationalunits/{orgUnitName}/repositories/{repositoryName}")
+        RemoveProjectFromOrganizationalUnitRequest request = target.path("organizationalunits/{orgUnitName}/project/{projectName}")
                 .resolveTemplate("orgUnitName", orgUnitName)
-                .resolveTemplate("repositoryName", repositoryName)
-                .request().delete(RemoveRepositoryFromOrganizationalUnitRequest.class);
+                .resolveTemplate("projectName", projectName)
+                .request().delete(RemoveProjectFromOrganizationalUnitRequest.class);
 
         return waitUntilJobFinished(request);
     }
@@ -337,11 +313,18 @@ public class RestWorkbenchClient implements WorkbenchClient {
                 .request().post(createEntity(""), requestType);
     }
 
-    @Override
-    public CompileProjectRequest compileProject(String repositoryName, String projectName) {
-        log.info("Compiling project '{}' from repository '{}'", projectName, repositoryName);
+    private <T extends JobRequest> T postMavenRequest(String projectName, String phase, Class<T> requestType) {
+        return target.path("projects/{projectName}/maven/{phase}")
+                .resolveTemplate("projectName", projectName)
+                .resolveTemplate("phase", phase)
+                .request().post(createEntity(""), requestType);
+    }
 
-        CompileProjectRequest request = postMavenRequest(repositoryName, projectName, "compile", CompileProjectRequest.class);
+    @Override
+    public CompileProjectRequest compileProject(String projectName) {
+        log.info("Compiling project '{}' ", projectName);
+
+        CompileProjectRequest request = postMavenRequest(projectName, "compile", CompileProjectRequest.class);
 
         return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
@@ -356,19 +339,19 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
-    public TestProjectRequest testProject(String repositoryName, String projectName) {
-        log.info("Testing project '{}' from repository '{}'", projectName, repositoryName);
+    public TestProjectRequest testProject(String projectName) {
+        log.info("Testing project '{}' ", projectName);
 
-        TestProjectRequest request = postMavenRequest(repositoryName, projectName, "test", TestProjectRequest.class);
+        TestProjectRequest request = postMavenRequest(projectName, "test", TestProjectRequest.class);
 
         return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
 
     @Override
-    public DeployProjectRequest deployProject(String repositoryName, String projectName) {
-        log.info("Deploying project '{}' from repository '{}'", projectName, repositoryName);
+    public DeployProjectRequest deployProject(String projectName) {
+        log.info("Deploying project '{}' ", projectName);
 
-        DeployProjectRequest request = postMavenRequest(repositoryName, projectName, "deploy", DeployProjectRequest.class);
+        DeployProjectRequest request = postMavenRequest(projectName, "deploy", DeployProjectRequest.class);
 
         return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
@@ -419,5 +402,4 @@ public class RestWorkbenchClient implements WorkbenchClient {
     private <T> Entity<T> createEntity(T body) {
         return Entity.entity(body, MEDIA_TYPE);
     }
-
 }

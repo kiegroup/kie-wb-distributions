@@ -35,7 +35,7 @@ public class JobIntegrationTest extends RestTestBase {
 
     @BeforeClass
     public static void setUp() {
-        deleteAllRepositories();
+        deleteAllProjects();
         deleteAllOrganizationalUnits();
 
         createOrganizationalUnit(ORG_UNIT);
@@ -50,7 +50,7 @@ public class JobIntegrationTest extends RestTestBase {
         repository.setRequestType("clone");
         repository.setGitURL(getLocalGitRepositoryUrl());
 
-        return asyncClient.createOrCloneRepository(repository);
+        return asyncClient.cloneRepository(repository);
     }
 
     @Test

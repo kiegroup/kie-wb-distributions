@@ -19,7 +19,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.guvnor.asset.management.client.editors.repository.wizard.CreateRepositoryWizard;
 import org.guvnor.structure.client.editors.repository.clone.CloneRepositoryPresenter;
 import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.guvnor.structure.repositories.Repository;
@@ -133,13 +132,6 @@ public class AdministrationPerspective {
     private void buildCommands() {
         this.cloneRepoCommand = () -> {
                 cloneRepositoryPresenter.showForm();
-        };
-
-        this.newRepoCommand = () -> {
-            final CreateRepositoryWizard newRepositoryWizard = iocManager.lookupBean( CreateRepositoryWizard.class ).getInstance();
-            // When pop-up is closed destroy bean to avoid memory leak
-            newRepositoryWizard.onCloseCallback(result -> iocManager.destroyBean( newRepositoryWizard ));
-            newRepositoryWizard.start();
         };
     }
 }

@@ -30,7 +30,7 @@ import org.guvnor.structure.server.config.ConfigGroup;
 import org.guvnor.structure.server.config.ConfigType;
 import org.guvnor.structure.server.config.ConfigurationFactory;
 import org.guvnor.structure.server.config.ConfigurationService;
-import org.kie.workbench.common.services.shared.project.KieProjectService;
+import org.kie.workbench.common.services.shared.project.KieModuleService;
 import org.kie.workbench.screens.workbench.backend.BaseAppSetup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,12 +59,12 @@ public class AppSetup extends BaseAppSetup {
     public AppSetup( @Named("ioStrategy") final IOService ioService,
                      final RepositoryService repositoryService,
                      final OrganizationalUnitService organizationalUnitService,
-                     final KieProjectService projectService,
+                     final KieModuleService moduleService,
                      final ConfigurationService configurationService,
                      final ConfigurationFactory configurationFactory,
                      final Event<ApplicationStarted> applicationStartedEvent,
                      final WorkbenchConfigurationHelper workbenchConfigurationHelper ) {
-        super( ioService, repositoryService, organizationalUnitService, projectService, configurationService, configurationFactory );
+        super( ioService, repositoryService, organizationalUnitService, moduleService, configurationService, configurationFactory );
         this.applicationStartedEvent = applicationStartedEvent;
         this.workbenchConfigurationHelper = workbenchConfigurationHelper;
     }

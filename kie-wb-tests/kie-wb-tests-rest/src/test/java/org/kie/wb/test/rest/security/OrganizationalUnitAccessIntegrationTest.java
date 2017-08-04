@@ -23,9 +23,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.kie.wb.test.rest.AccessRestTestBase;
 import org.kie.wb.test.rest.User;
+import org.kie.wb.test.rest.Utils;
 
 @RunWith(Parameterized.class)
 public class OrganizationalUnitAccessIntegrationTest extends AccessRestTestBase {
+
+    private Utils utils;
 
     public OrganizationalUnitAccessIntegrationTest(User user) {
         super(user);
@@ -74,16 +77,20 @@ public class OrganizationalUnitAccessIntegrationTest extends AccessRestTestBase 
 
     @Test
     public void testAddRepositoryToOrganizationalUnit() {
+
         String originOrgUnitName = "originAddRepoOrgUnitWith" + user.getUserName();
+
+        Utils utils = new Utils(originOrgUnitName, client);
+
         createOrganizationalUnit(originOrgUnitName);
 
-        String repoName = "addToOrgUnitRepoWith" + user.getUserName();
-        createNewRepository(originOrgUnitName, repoName);
+        String projectName = "addToOrgUnitRepoWith" + user.getUserName();
+        utils.createProject(originOrgUnitName, projectName, "groupId", "1.0.0");
 
         String orgUnitName = "addRepoOrgUnitWith" + user.getUserName();
         createOrganizationalUnit(orgUnitName);
 
-        assertOperation(() -> roleClient.addRepositoryToOrganizationalUnit(orgUnitName, repoName));
+        assertOperation(() -> roleClient.addProjectToOrganizationalUnit(orgUnitName, projectName));
     }
 
     @Test
@@ -91,10 +98,11 @@ public class OrganizationalUnitAccessIntegrationTest extends AccessRestTestBase 
         String orgUnitName = "originRemoveFromOrgUnitWith" + user.getUserName();
         createOrganizationalUnit(orgUnitName);
 
-        String repoName = "removeFromOrgUnitRepoWith" + user.getUserName();
-        createNewRepository(orgUnitName, repoName);
+        Utils utils = new Utils(orgUnitName, client);
 
-        assertOperation(() -> roleClient.removeRepositoryFromOrganizationalUnit(orgUnitName, repoName));
+        String projectName = "removeFromOrgUnitRepoWith" + user.getUserName();
+        utils.createProject(orgUnitName, projectName, "groupId","1.0.0");
+
+        assertOperation(() -> roleClient.removeProjectFromOrganizationalUnit(orgUnitName, projectName));
     }
-
 }

@@ -26,7 +26,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.guvnor.rest.client.CreateOrganizationalUnitRequest;
 import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.OrganizationalUnit;
-import org.guvnor.rest.client.RepositoryRequest;
+import org.guvnor.rest.client.ProjectRequest;
+import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.UpdateOrganizationalUnit;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
@@ -103,32 +104,32 @@ public class OrganizationalUnitIntegrationTest extends RestTestBase {
     }
 
     @Test
-    public void testCreateWithRepositories() {
+    public void testCreateWithProjects() {
         final String originOrgUnitName = "originRepositoryOrgUnit";
         prepareOrganizationalUnit(originOrgUnitName);
 
-        final String repositoryName1 = "orgUnitRepository1";
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(repositoryName1);
-        repository.setOrganizationalUnitName(originOrgUnitName);
-        repository.setRequestType("new");
-        client.createOrCloneRepository(repository);
+        final String projectName1 = "orgUnitProject1";
+        ProjectRequest projectRequest = new ProjectRequest();
+        projectRequest.setName(projectName1);
+        projectRequest.setGroupId("groupId");
+        projectRequest.setVersion("1.0.0");
+        client.createProject(originOrgUnitName, projectRequest);
 
-        final String repositoryName2 = "orgUnitRepository2";
-        RepositoryRequest repository2 = new RepositoryRequest();
-        repository2.setName(repositoryName2);
-        repository2.setOrganizationalUnitName(originOrgUnitName);
-        repository2.setRequestType("new");
-        client.createOrCloneRepository(repository2);
+        final String projectName2 = "orgUnitProject2";
+        ProjectRequest project2 = new ProjectRequest();
+        project2.setName(projectName2);
+        project2.setGroupId("groupId");
+        project2.setVersion("2.0.0");
+        client.createProject(originOrgUnitName, project2);
 
-        List<String> repositories = new ArrayList<>();
-        repositories.add(repositoryName1);
-        repositories.add(repositoryName2);
+        List<String> projects = new ArrayList<>();
+        projects.add(projectName1);
+        projects.add(projectName2);
 
         OrganizationalUnit orgUnit = new OrganizationalUnit();
         orgUnit.setName("orgUnitWithRepositories");
         orgUnit.setOwner(OWNER);
-        orgUnit.setRepositories(repositories);
+        orgUnit.setProjects(projects);
 
         testCreate(orgUnit);
     }
@@ -246,28 +247,14 @@ public class OrganizationalUnitIntegrationTest extends RestTestBase {
         String orgUnitName = "addToNotExistingOrgUnit";
         prepareOrganizationalUnit(orgUnitName);
 
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName("addToNotExistingOrgUnitRepo");
-        repository.setOrganizationalUnitName(orgUnitName);
-        repository.setRequestType("new");
-        client.createOrCloneRepository(repository);
+        ProjectResponse project = new ProjectResponse();
+        project.setName("addToNotExistingOrgUnitRepo");
+        project.setGroupId("groupId");
+        project.setVersion("1.0.0");
 
         try {
-            client.addRepositoryToOrganizationalUnit("notExistingOrgUnit", repository.getName());
+            client.createProject(orgUnitName, project);
             Assertions.fail("The operation should have failed because organizational unit does not exist");
-        } catch (NotFoundException ex) {
-            // expected
-        }
-    }
-
-    @Test
-    public void testAddNotExistingRepositoryToOrganizationalUnit() {
-        String orgUnitName = "addToNotExistingRepoOrgUnit";
-        prepareOrganizationalUnit(orgUnitName);
-
-        try {
-            client.addRepositoryToOrganizationalUnit(orgUnitName, "notExistingRepo");
-            Assertions.fail("The operation should have failed because repository does not exist");
         } catch (NotFoundException ex) {
             // expected
         }
@@ -279,114 +266,20 @@ public class OrganizationalUnitIntegrationTest extends RestTestBase {
         String orgUnitName = "alreadyAddedRepoOrgUnit";
         prepareOrganizationalUnit(orgUnitName);
 
-        String repoName = "alreadyAddedRepo";
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(repoName);
-        repository.setOrganizationalUnitName(orgUnitName);
-        repository.setRequestType("new");
-        client.createOrCloneRepository(repository);
+        String projectName = "alreadyAddedProject";
+        ProjectRequest project = new ProjectRequest();
+        project.setName(projectName);
+        project.setGroupId("groupId");
+        project.setVersion("1.0.0");
+
+        client.createProject(orgUnitName, project);
 
         try {
-            client.addRepositoryToOrganizationalUnit(orgUnitName, repoName);
+            client.createProject(orgUnitName, project);
             Assertions.fail("The operation should not have succeeded");
         } catch (NotSuccessException ex) {
             Assertions.assertThat(ex.getJobResult().getStatus()).isEqualTo(JobStatus.BAD_REQUEST);
         }
-    }
-
-    @Test
-    public void testAddRepositoryToOrganizationalUnit() {
-        String originOrgUnitName = "originAddRepoOrgUnit";
-        prepareOrganizationalUnit(originOrgUnitName);
-
-        String repoName = "addToOrgUnitRepo";
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(repoName);
-        repository.setOrganizationalUnitName(originOrgUnitName);
-        repository.setRequestType("new");
-        client.createOrCloneRepository(repository);
-
-        String orgUnitName = "addRepoOrgUnit";
-        prepareOrganizationalUnit(orgUnitName);
-
-        client.addRepositoryToOrganizationalUnit(orgUnitName, repoName);
-
-        OrganizationalUnit orgUnit = client.getOrganizationalUnit(orgUnitName);
-        Assertions.assertThat(orgUnit.getRepositories()).contains(repoName);
-    }
-
-    @Test
-    public void testRemoveRepositoryFromNotExistingOrganizationalUnit() {
-        String orgUnitName = "removeFromNotExistingOrgUnit";
-        prepareOrganizationalUnit(orgUnitName);
-
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName("removeFromNotExistingOrgUnitRepo");
-        repository.setOrganizationalUnitName(orgUnitName);
-        repository.setRequestType("new");
-        client.createOrCloneRepository(repository);
-
-        try {
-            client.removeRepositoryFromOrganizationalUnit("notExistingOrgUnit", repository.getName());
-            Assertions.fail("The operation should have failed because organizational unit does not exist");
-        } catch (NotFoundException ex) {
-            // expected
-        }
-    }
-
-    @Test
-    public void testRemoveNotExistingRepositoryFromOrganizationalUnit() {
-        String orgUnitName = "removeFromNotExistingRepoOrgUnit";
-        prepareOrganizationalUnit(orgUnitName);
-
-        try {
-            client.addRepositoryToOrganizationalUnit(orgUnitName, "notExistingRepo");
-            Assertions.fail("The operation should have failed because repository does not exist");
-        } catch (NotFoundException ex) {
-            // expected
-        }
-    }
-
-    @Test
-    @Jira("GUVNOR-2542")
-    public void testRemoveNotAddedRepositoryFromOrganizationalUnit() {
-        String originOrgUnitName = "originRemoveFromNotAddedOrgUnit";
-        prepareOrganizationalUnit(originOrgUnitName);
-
-        String repoName = "removeFromNotAddedRepo";
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(repoName);
-        repository.setOrganizationalUnitName(originOrgUnitName);
-        repository.setRequestType("new");
-        client.createOrCloneRepository(repository);
-
-        String orgUnitName = "removeFromNotAddedOrgUnit";
-        prepareOrganizationalUnit(orgUnitName);
-
-        try {
-            client.removeRepositoryFromOrganizationalUnit(orgUnitName, repoName);
-            Assertions.fail("Operation should have failed");
-        } catch (NotSuccessException ex) {
-            Assertions.assertThat(ex.getJobResult().getStatus()).isEqualTo(JobStatus.BAD_REQUEST);
-        }
-    }
-
-    @Test
-    public void testRemoveRepositoryFromOrganizationalUnit() {
-        String orgUnitName = "originRemoveFromOrgUnit";
-        prepareOrganizationalUnit(orgUnitName);
-
-        String repoName = "removeFromOrgUnitRepo";
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(repoName);
-        repository.setOrganizationalUnitName(orgUnitName);
-        repository.setRequestType("new");
-        client.createOrCloneRepository(repository);
-
-        client.removeRepositoryFromOrganizationalUnit(orgUnitName, repoName);
-
-        OrganizationalUnit orgUnit = client.getOrganizationalUnit(orgUnitName);
-        Assertions.assertThat(orgUnit.getRepositories()).doesNotContain(repoName);
     }
 
     private OrganizationalUnit prepareOrganizationalUnit(String name) {
@@ -411,9 +304,9 @@ public class OrganizationalUnitIntegrationTest extends RestTestBase {
         assertions.assertThat(request.getDescription()).isEqualTo(orgUnit.getDescription());
         assertions.assertThat(request.getOwner()).isEqualTo(orgUnit.getOwner());
         assertions.assertThat(request.getDefaultGroupId()).isEqualTo(orgUnit.getDefaultGroupId());
-        if (orgUnit.getRepositories() != null) {
-            assertions.assertThat(request.getRepositories())
-                    .containsOnly(orgUnit.getRepositories().toArray(new String[]{}));
+        if (orgUnit.getProjects() != null) {
+            assertions.assertThat(request.getProjects())
+                    .containsOnly(orgUnit.getProjects().toArray(new String[]{}));
         }
         assertions.assertAll();
     }
@@ -428,12 +321,11 @@ public class OrganizationalUnitIntegrationTest extends RestTestBase {
         assertions.assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
         assertions.assertThat(actual.getOwner()).isEqualTo(expected.getOwner());
         assertions.assertThat(actual.getDefaultGroupId()).isEqualTo(expected.getDefaultGroupId());
-        if (expected.getRepositories() != null) {
-            assertions.assertThat(actual.getRepositories())
-                    .containsOnly(expected.getRepositories().toArray(new String[]{}));
+        if (expected.getProjects() != null) {
+            assertions.assertThat(actual.getProjects())
+                    .containsOnly(expected.getProjects().toArray(new String[]{}));
         }
         assertions.assertAll();
-
     }
 
     private void testCreate(OrganizationalUnit organizationalUnit) {
@@ -443,5 +335,4 @@ public class OrganizationalUnitIntegrationTest extends RestTestBase {
         OrganizationalUnit orgUnit = client.getOrganizationalUnit(organizationalUnit.getName());
         assertOrganizationalUnit(orgUnit, organizationalUnit);
     }
-
 }

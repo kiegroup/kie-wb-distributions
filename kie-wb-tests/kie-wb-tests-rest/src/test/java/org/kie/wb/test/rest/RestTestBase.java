@@ -23,10 +23,8 @@ import java.net.URL;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.guvnor.rest.client.CreateOrCloneRepositoryRequest;
 import org.guvnor.rest.client.CreateOrganizationalUnitRequest;
 import org.guvnor.rest.client.OrganizationalUnit;
-import org.guvnor.rest.client.RepositoryRequest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -68,7 +66,7 @@ public abstract class RestTestBase {
 
     @AfterClass
     public static void cleanUp() throws IOException {
-        deleteAllRepositories();
+        deleteAllProjects();
         deleteAllOrganizationalUnits();
 
         if (gitRepository != null) {
@@ -88,7 +86,6 @@ public abstract class RestTestBase {
         protected void finished(Description description) {
             System.out.println();
         }
-
     };
 
     @Rule
@@ -101,24 +98,15 @@ public abstract class RestTestBase {
         return client.createOrganizationalUnit(orgUnit);
     }
 
-    protected static CreateOrCloneRepositoryRequest createNewRepository(String orgUnitName, String repositoryName) {
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName(repositoryName);
-        repository.setOrganizationalUnitName(orgUnitName);
-        repository.setRequestType("new");
-        return client.createOrCloneRepository(repository);
-    }
-
     protected static void deleteAllOrganizationalUnits() {
         client.getOrganizationalUnits().forEach(orgUnit -> client.deleteOrganizationalUnit(orgUnit.getName()));
     }
 
-    protected static void deleteAllRepositories() {
-        client.getRepositories().forEach(repository -> client.deleteRepository(repository.getName()));
+    protected static void deleteAllProjects() {
+        client.getProjects().forEach(projectResponseConsumer -> client.deleteProject(projectResponseConsumer.getName()));
     }
 
     protected static String getLocalGitRepositoryUrl() {
         return "file://" + gitRepository.getAbsolutePath();
     }
-
 }
