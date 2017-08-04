@@ -17,6 +17,15 @@
 
   <dependencies>
     <!-- dependencies added because of new illegal transitive dependency check -->
+    <dependency>
+      <groupId>org.jboss.errai</groupId>
+      <artifactId>errai-ioc</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.errai</groupId>
+      <artifactId>errai-ui</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -29,13 +38,13 @@
     </dependency>
 
     <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-distribution-home-api</artifactId>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-home-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-distribution-home-client</artifactId>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-home-client</artifactId>
     </dependency>
 
     <dependency>

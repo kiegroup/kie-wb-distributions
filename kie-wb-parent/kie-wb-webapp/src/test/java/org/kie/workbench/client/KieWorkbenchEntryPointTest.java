@@ -29,7 +29,6 @@ import org.guvnor.common.services.shared.config.AppConfigService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.client.resources.i18n.NavigationConstants;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
@@ -53,9 +52,6 @@ public class KieWorkbenchEntryPointTest {
 
     @Mock
     private AppConfigService appConfigService;
-
-    @Mock
-    private HomeProducer homeProducer;
 
     @Mock
     private SocialConfigurationService socialConfigurationService;
@@ -121,7 +117,6 @@ public class KieWorkbenchEntryPointTest {
 
         kieWorkbenchEntryPoint = spy(new KieWorkbenchEntryPoint(appConfigServiceCallerMock,
                                                                 activityBeansCache,
-                                                                homeProducer,
                                                                 socialConfigurationServiceCallerMock,
                                                                 menusHelper,
                                                                 userSystemManager,
@@ -143,7 +138,6 @@ public class KieWorkbenchEntryPointTest {
         kieWorkbenchEntryPoint.init();
 
         verify(workbench).addStartupBlocker(KieWorkbenchEntryPoint.class);
-        verify(homeProducer).init();
         verify(permissionTreeSetup).configureTree();
         verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH, 2);
     }

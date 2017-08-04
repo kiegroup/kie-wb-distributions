@@ -26,7 +26,6 @@ import org.dashbuilder.navigation.NavTree;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
-import org.kie.workbench.client.home.HomeProducer;
 import org.kie.workbench.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
 import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
@@ -48,8 +47,6 @@ import static org.uberfire.workbench.model.menu.MenuFactory.newTopLevelCustomMen
 
 @EntryPoint
 public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
-
-    protected HomeProducer homeProducer;
 
     protected Caller<SocialConfigurationService> socialConfigurationService;
 
@@ -76,7 +73,6 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
                                   final ActivityBeansCache activityBeansCache,
-                                  final HomeProducer homeProducer,
                                   final Caller<SocialConfigurationService> socialConfigurationService,
                                   final DefaultWorkbenchFeaturesMenusHelper menusHelper,
                                   final ClientUserSystemManager userSystemManager,
@@ -90,7 +86,6 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final ContentExplorerScreen contentExplorerScreen) {
         super(appConfigService,
               activityBeansCache);
-        this.homeProducer = homeProducer;
         this.socialConfigurationService = socialConfigurationService;
         this.menusHelper = menusHelper;
         this.userSystemManager = userSystemManager;
@@ -107,7 +102,6 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @PostConstruct
     public void init() {
         workbench.addStartupBlocker(KieWorkbenchEntryPoint.class);
-        homeProducer.init();
         permissionTreeSetup.configureTree();
 
         // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
