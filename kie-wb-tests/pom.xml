@@ -16,7 +16,6 @@
   <description>Parent for integration tests for KIE Workbench and KIE Drools Workbench</description>
 
   <modules>
-    <module>kie-wb-tests-rest</module>
     <module>kie-wb-tests-gui</module>
   </modules>
 
@@ -43,11 +42,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-wb-tests-rest</artifactId>
-        <version>${version.org.kie}</version>
-      </dependency>
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-wb-tests-gui</artifactId>

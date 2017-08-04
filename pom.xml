@@ -57,6 +57,7 @@
     <module>kie-drools-wb-parent</module>
     <module>kie-wb-tests</module>
     <module>kie-wb-webapp-common</module>
+    <module>kie-wb-deployment-validation</module>
   </modules>
 
   <dependencyManagement>

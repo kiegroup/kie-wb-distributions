@@ -136,13 +136,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Artificial dependency on REST tests module to make sure GUI and REST tests are not executed in parallel
-         (during Maven parallel execution) -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-tests-rest</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
