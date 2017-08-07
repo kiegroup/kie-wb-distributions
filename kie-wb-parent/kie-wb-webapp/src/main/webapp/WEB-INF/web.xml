@@ -655,9 +655,17 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>public</web-resource-name>
+      <url-pattern>/org.kie.workbench.KIEWebapp/*.cache.*</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/*.nocache.js</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/ace/*</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/bootstrap-daterangepicker/*</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/bootstrap-select/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/css/*</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/deferredjs/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/fonts/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/img/*</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/images/*</url-pattern>
+      <url-pattern>/org.kie.workbench.KIEWebapp/zeroclipboard/*</url-pattern>
     </web-resource-collection>
   </security-constraint>
 
