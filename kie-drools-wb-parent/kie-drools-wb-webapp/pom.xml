@@ -37,6 +37,8 @@
     <errai.jboss.home>${project.build.directory}/wildfly-${version.org.wildfly.gwt.sdm}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
     <gwt.memory.settings>-Xmx5g -Xms1g -Xss1M</gwt.memory.settings>
+    <login.bundle.name>org.kie.workbench.drools.client.resources.i18n.LoginConstants</login.bundle.name>
+    <login.page>kie-drools-wb.jsp</login.page>
   </properties>
 
   <dependencies>
@@ -336,6 +338,12 @@
     </dependency>
 
     <!-- Common -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-wb-webapp-common</artifactId>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
       <artifactId>kie-wb-common-datamodel-api</artifactId>
@@ -1779,7 +1787,7 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
           <configuration>
-            <excludeFilterFile>${project.basedir}/src/main/findbugs/findbugs-exclude.xml</excludeFilterFile>
+            <excludeFilterFile>${project.basedir}/../../src/main/findbugs/findbugs-exclude.xml</excludeFilterFile>
           </configuration>
         </plugin>
       </plugins>
@@ -1890,6 +1898,13 @@
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
+          <overlays>
+            <overlay>
+              <groupId>org.kie</groupId>
+              <artifactId>kie-wb-webapp-common</artifactId>
+              <filtered>true</filtered>
+            </overlay>
+          </overlays>
         </configuration>
       </plugin>
 

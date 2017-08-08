@@ -57,6 +57,7 @@
     <module>kie-drools-wb-parent</module>
     <module>kie-tomcat-integration</module>
     <module>kie-wb-tests</module>
+    <module>kie-wb-webapp-common</module>
   </modules>
 
   <dependencyManagement>
