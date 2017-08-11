@@ -722,7 +722,27 @@
       <exclusions>
         <exclusion>
           <groupId>org.jbpm</groupId>
-          <artifactId>jbpm-workitems</artifactId>
+          <artifactId>jbpm-workitems-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-bpmn2</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-email</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-rest</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-jms</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-webservice</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
