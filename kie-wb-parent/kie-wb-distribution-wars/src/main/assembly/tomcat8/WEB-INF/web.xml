@@ -470,8 +470,9 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>public</web-resource-name>
-      <url-pattern>/org.kie.workbench.KIEWebapp/*.cache.*</url-pattern>
-      <url-pattern>/org.kie.workbench.KIEWebapp/*.nocache.js</url-pattern>
+      <url-pattern>*.cache.js</url-pattern>
+      <url-pattern>*.cache.html</url-pattern>
+      <url-pattern>*.nocache.js</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/ace/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/bootstrap-daterangepicker/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/bootstrap-select/*</url-pattern>
