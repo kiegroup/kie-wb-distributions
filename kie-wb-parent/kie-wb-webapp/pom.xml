@@ -1867,7 +1867,7 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
-    <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
@@ -1896,7 +1896,6 @@
             <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>
             <disableCastChecking>true</disableCastChecking>
             <runTarget>kie-wb.jsp</runTarget>
-            <hostedWebapp>src/main/webapp</hostedWebapp>
             <compileSourcesArtifacts>
               <!-- Kie Server needed by Exec Server UI -->
               <compileSourcesArtifact>org.kie:kie-api</compileSourcesArtifact>
@@ -2266,12 +2265,21 @@
           </archive>
           <overlays>
             <overlay>
-                <groupId>org.kie</groupId>
-                <artifactId>kie-wb-webapp-common</artifactId>
-                <filtered>true</filtered>
+              <groupId>org.kie</groupId>
+              <artifactId>kie-wb-webapp-common</artifactId>
+              <filtered>true</filtered>
             </overlay>
           </overlays>
         </configuration>
+        <executions>
+          <execution>
+            <id>unpack-overlay</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>exploded</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
