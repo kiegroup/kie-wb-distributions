@@ -21,7 +21,7 @@ import javax.inject.Inject;
 
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.workbench.client.resources.i18n.Constants;
-import org.uberfire.client.views.pfly.menu.megamenu.brand.MegaMenuBrand;
+import org.uberfire.client.workbench.widgets.menu.megamenu.brand.MegaMenuBrand;
 
 @ApplicationScoped
 public class MegaMenuConfig implements MegaMenuBrand {
