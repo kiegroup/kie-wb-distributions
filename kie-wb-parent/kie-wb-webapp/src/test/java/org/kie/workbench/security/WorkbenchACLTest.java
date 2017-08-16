@@ -92,7 +92,7 @@ public class WorkbenchACLTest {
             "perspective.read.DataSetAuthoringPerspective",
             "perspective.read.DataSourceManagementPerspective",
             "perspective.read.GuvnorM2RepoPerspective",
-            "perspective.read.Deployments",
+            "perspective.read.ProvisioningManagementPerspective",
             "perspective.read.ServerManagementPerspective",
             "perspective.read.TaskAdmin",
             "perspective.read.ExecutionErrors",

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,15 +15,28 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
-public class PluginManagementPerspective extends AbstractPerspective {
+import static org.kie.wb.selenium.util.ByUtil.jquery;
 
-    private static final By PLUGINS_EXPLORER_TITLE = By.xpath("//span[contains(text(),'Plugins')]");
+public class ProvisioningManagementPerspective extends AbstractPerspective {
+
+    private static final By PROVISIONING_MANAGEMENT_SCREEN_ITEM = jquery("div[data-field='provider-type-list-group']");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(PLUGINS_EXPLORER_TITLE);
+        try {
+            return Waits.isElementPresent(PROVISIONING_MANAGEMENT_SCREEN_ITEM);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public void waitForLoaded() {
+        Graphene.waitModel().until().element(By.cssSelector(".alert-dismissable")).is().not().present();
     }
 }
