@@ -38,4 +38,9 @@ public class Constants {
     @TranslationKey(defaultValue = "")
     public static final String DevOpsDescription = "DevOpsDescription";
 
+    @TranslationKey(defaultValue = "")
+    public static final String ProductName = "ProductName";
+
+    @TranslationKey(defaultValue = "")
+    public static final String License = "License";
 }

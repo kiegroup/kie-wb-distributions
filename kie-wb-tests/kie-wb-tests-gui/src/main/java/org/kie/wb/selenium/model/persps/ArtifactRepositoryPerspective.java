@@ -30,6 +30,6 @@ public class ArtifactRepositoryPerspective extends AbstractPerspective {
     }
 
     public boolean isArtifactPresent(String gav) {
-        return Waits.isElementPresent(jquery("tr[__gwt_row]:contains('%s')", gav), 5);
+        return Waits.isElementPresent(jquery("tr[__gwt_row]:contains('%s')", gav));
     }
 }

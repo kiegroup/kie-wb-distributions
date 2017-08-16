@@ -337,6 +337,50 @@
       <artifactId>guvnor-asset-mgmt-backend</artifactId>
     </dependency>
 
+    <!-- Guvnor ALA -->
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-ui-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-ui-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-ui-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-openshift-ui-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-openshift-ui-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-openshift-ui-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-openshift-provider</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-registry-vfs</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-services-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.guvnor</groupId>
+      <artifactId>guvnor-ala-services-rest</artifactId>
+    </dependency>
+
     <!-- Common -->
     <dependency>
       <groupId>org.kie</groupId>
@@ -772,6 +816,14 @@
       <groupId>org.dashbuilder</groupId>
       <artifactId>dashbuilder-displayer-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.dashbuilder</groupId>
+      <artifactId>dashbuilder-navigation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dashbuilder</groupId>
+      <artifactId>dashbuilder-services-api</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.dashbuilder</groupId>
@@ -824,6 +876,18 @@
     <dependency>
       <groupId>org.dashbuilder</groupId>
       <artifactId>dashbuilder-widgets</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dashbuilder</groupId>
+      <artifactId>dashbuilder-navigation-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dashbuilder</groupId>
+      <artifactId>dashbuilder-cms-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -1607,6 +1671,9 @@
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-displayer-editor</compileSourcesArtifact>
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-renderer-default</compileSourcesArtifact>
               <compileSourcesArtifact>org.dashbuilder:dashbuilder-renderer-google</compileSourcesArtifact>
+              <compileSourcesArtifact>org.dashbuilder:dashbuilder-navigation-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.dashbuilder:dashbuilder-navigation-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.dashbuilder:dashbuilder-cms-client</compileSourcesArtifact>
 
               <!-- Guvnor -->
               <compileSourcesArtifact>org.guvnor:guvnor-asset-mgmt-api</compileSourcesArtifact>
@@ -1623,6 +1690,12 @@
               <compileSourcesArtifact>org.guvnor:guvnor-message-console-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.guvnor:guvnor-message-console-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.guvnor:guvnor-organizationalunit-manager</compileSourcesArtifact>
+
+              <!-- Guvnor ALA -->
+              <compileSourcesArtifact>org.guvnor:guvnor-ala-ui-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.guvnor:guvnor-ala-ui-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.guvnor:guvnor-ala-openshift-ui-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.guvnor:guvnor-ala-openshift-ui-client</compileSourcesArtifact>
 
               <!-- Common dependencies -->
               <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-editor-api</compileSourcesArtifact>

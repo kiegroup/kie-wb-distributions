@@ -16,32 +16,32 @@
 
 package org.kie.workbench.drools.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gwtmockito.GwtMockitoTestRunner;
+import org.dashbuilder.client.cms.screen.explorer.ContentExplorerScreen;
+import org.dashbuilder.client.navigation.NavigationManager;
+import org.dashbuilder.client.navigation.impl.NavigationManagerImpl;
+import org.dashbuilder.client.navigation.widget.NavTreeEditor;
+import org.dashbuilder.navigation.NavGroup;
+import org.dashbuilder.navigation.NavItem;
+import org.dashbuilder.navigation.NavTree;
+import org.dashbuilder.navigation.service.NavigationServices;
 import org.guvnor.common.services.shared.config.AppConfigService;
-import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
-import org.kie.workbench.drools.client.resources.i18n.AppConstants;
-import org.mockito.ArgumentCaptor;
+import org.kie.workbench.drools.client.navigation.NavTreeDefinitions;
+import org.kie.workbench.drools.client.resources.i18n.NavigationConstants;
 import org.mockito.Mock;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
-import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
+import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.mocks.CallerMock;
-import org.uberfire.mocks.ConstantsAnswerMock;
-import org.uberfire.mocks.IocTestingUtils;
 import org.uberfire.mvp.Command;
-import org.uberfire.workbench.model.menu.MenuItem;
-import org.uberfire.workbench.model.menu.Menus;
+import org.uberfire.workbench.model.menu.MenuFactory;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -51,14 +51,9 @@ public class KieDroolsWorkbenchEntryPointTest {
 
     @Mock
     private AppConfigService appConfigService;
-    private CallerMock<AppConfigService> appConfigServiceCallerMock;
 
     @Mock
     private ActivityBeansCache activityBeansCache;
-
-    @Mock
-    private SocialConfigurationService socialConfigurationService;
-    private CallerMock<SocialConfigurationService> socialConfigurationServiceCallerMock;
 
     @Mock
     private DefaultWorkbenchFeaturesMenusHelper menusHelper;
@@ -67,10 +62,7 @@ public class KieDroolsWorkbenchEntryPointTest {
     protected ClientUserSystemManager userSystemManager;
 
     @Mock
-    protected WorkbenchMenuBarPresenter menuBar;
-
-    @Mock
-    protected SyncBeanManager iocManager;
+    protected WorkbenchMegaMenuPresenter menuBar;
 
     @Mock
     protected Workbench workbench;
@@ -79,94 +71,111 @@ public class KieDroolsWorkbenchEntryPointTest {
     protected PermissionTreeSetup permissionTreeSetup;
 
     @Mock
-    protected DefaultAdminPageHelper adminPageHelper;
+    private DefaultAdminPageHelper adminPageHelper;
 
-    private KieDroolsWorkbenchEntryPoint kieDroolsWorkbenchEntryPoint;
+    private NavTreeDefinitions navTreeDefinitions;
+
+    private NavigationManager navigationManager;
+
+    @Mock
+    protected ContentExplorerScreen contentExplorerScreen;
+
+    @Mock
+    protected NavigationConstants navigationConstants;
+
+    @Mock
+    protected NavigationServices navigationServices;
+
+    @Mock
+    protected NavTreeEditor navTreeEditor;
+
+    private KieDroolsWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     @Before
     public void setup() {
-        doReturn(Boolean.TRUE).when(socialConfigurationService).isSocialEnable();
+        navTreeDefinitions = new NavTreeDefinitions();
+        navigationManager = new NavigationManagerImpl(new CallerMock<>(navigationServices),
+                                                      null,
+                                                      null,
+                                                      null);
+
         doAnswer(invocationOnMock -> {
             ((Command) invocationOnMock.getArguments()[0]).execute();
             return null;
         }).when(userSystemManager).waitForInitialization(any(Command.class));
 
-        appConfigServiceCallerMock = new CallerMock<>(appConfigService);
-        socialConfigurationServiceCallerMock = new CallerMock<>(socialConfigurationService);
+        doReturn(mock(MenuFactory.TopLevelMenusBuilder.class)).when(menusHelper).buildMenusFromNavTree(any());
 
-        kieDroolsWorkbenchEntryPoint = spy(new KieDroolsWorkbenchEntryPoint(appConfigServiceCallerMock,
-                                                                            activityBeansCache,
-                                                                            socialConfigurationServiceCallerMock,
-                                                                            menusHelper,
-                                                                            userSystemManager,
-                                                                            menuBar,
-                                                                            iocManager,
-                                                                            workbench,
-                                                                            permissionTreeSetup,
-                                                                            adminPageHelper));
-        mockMenuHelper();
-        mockConstants();
-        IocTestingUtils.mockIocManager(iocManager);
+        CallerMock<AppConfigService> appConfigServiceCallerMock = new CallerMock<>(appConfigService);
 
-        doNothing().when(kieDroolsWorkbenchEntryPoint).hideLoadingPopup();
+        kieWorkbenchEntryPoint = spy(new KieDroolsWorkbenchEntryPoint(appConfigServiceCallerMock,
+                                                                      activityBeansCache,
+                                                                      menusHelper,
+                                                                      userSystemManager,
+                                                                      menuBar,
+                                                                      workbench,
+                                                                      permissionTreeSetup,
+                                                                      adminPageHelper,
+                                                                      navTreeDefinitions,
+                                                                      navigationManager,
+                                                                      contentExplorerScreen));
+
+        doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
+        when(contentExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
     }
 
     @Test
     public void initTest() {
-        kieDroolsWorkbenchEntryPoint.init();
+        kieWorkbenchEntryPoint.init();
 
         verify(workbench).addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
+        verify(permissionTreeSetup).configureTree();
+        verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
+                                           2);
     }
 
     @Test
     public void setupMenuTest() {
-        kieDroolsWorkbenchEntryPoint.setupMenu();
+        kieWorkbenchEntryPoint.setupMenu();
 
-        ArgumentCaptor<Menus> menusCaptor = ArgumentCaptor.forClass(Menus.class);
-        verify(menuBar).addMenus(menusCaptor.capture());
-
-        Menus menus = menusCaptor.getValue();
-
-        assertEquals(5,
-                     menus.getItems().size());
-
-        assertEquals(kieDroolsWorkbenchEntryPoint.constants.home(),
-                     menus.getItems().get(0).getCaption());
-        assertEquals(kieDroolsWorkbenchEntryPoint.constants.authoring(),
-                     menus.getItems().get(1).getCaption());
-        assertEquals(kieDroolsWorkbenchEntryPoint.constants.deploy(),
-                     menus.getItems().get(2).getCaption());
-        assertEquals(kieDroolsWorkbenchEntryPoint.constants.extensions(),
-                     menus.getItems().get(3).getCaption());
-
-        verify(menusHelper).addRolesMenuItems();
-        verify(menusHelper).addWorkbenchViewModeSwitcherMenuItem();
-        verify(menusHelper).addWorkbenchConfigurationMenuItem();
+        verify(menuBar).addMenus(any());
         verify(menusHelper).addUtilitiesMenuItems();
 
         verify(workbench).removeStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
     }
 
     @Test
-    public void getDeploymentViewsTest() {
-        List<? extends MenuItem> deploymentMenuItems = kieDroolsWorkbenchEntryPoint.getDeploymentViews();
+    public void defaultNavTreeTest() {
+        kieWorkbenchEntryPoint.setupMenu();
 
-        assertEquals(1,
-                     deploymentMenuItems.size());
-        assertEquals(kieDroolsWorkbenchEntryPoint.constants.ExecutionServers(),
-                     deploymentMenuItems.get(0).getCaption());
-    }
+        NavTree navTree = navigationManager.getNavTree();
 
-    private void mockMenuHelper() {
-        final ArrayList<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(mock(MenuItem.class));
-        doReturn(menuItems).when(menusHelper).getHomeViews(anyBoolean());
-        doReturn(menuItems).when(menusHelper).getAuthoringViews();
-        doReturn(menuItems).when(menusHelper).getExtensionsViews();
-    }
+        NavGroup workbench = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_WORKBENCH);
 
-    private void mockConstants() {
-        kieDroolsWorkbenchEntryPoint.constants = mock(AppConstants.class,
-                                                      new ConstantsAnswerMock());
+        NavGroup design = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DESIGN);
+        NavItem projects = navTree.getItemById(NavTreeDefinitions.ENTRY_PROJECTS);
+        NavItem dashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_DASHBOARDS);
+
+        NavGroup devops = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEVOPS);
+        NavItem execServers = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_SERVERS);
+
+        assertNotNull(workbench);
+        assertNotNull(design);
+        assertNotNull(devops);
+        assertEquals(design.getParent(),
+                     workbench);
+        assertEquals(devops.getParent(),
+                     workbench);
+
+        assertNotNull(projects);
+        assertNotNull(dashboard);
+        assertEquals(projects.getParent(),
+                     design);
+        assertEquals(dashboard.getParent(),
+                     design);
+
+        assertNotNull(execServers);
+        assertEquals(execServers.getParent(),
+                     devops);
     }
 }
