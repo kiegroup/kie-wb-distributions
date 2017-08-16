@@ -20,6 +20,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.model.PageObject;
 import org.kie.wb.selenium.model.PrimaryNavbar;
 import org.kie.wb.selenium.model.widgets.Panel;
+import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -57,5 +58,10 @@ public abstract class AbstractPerspective extends PageObject {
         By panelLoc = jquery(".uf-listbar-panel:contains('%s')", title);
         WebElement panelRoot = Waits.elementPresent(panelLoc, 3);
         return Graphene.createPageFragment(panelClass, panelRoot);
+    }
+
+    public void click(By locatorOfThingToClick) {
+        WebElement thingToClick = Waits.elementPresent(locatorOfThingToClick);
+        BusyPopup.retryClickUntilPopupDisappears(thingToClick);
     }
 }

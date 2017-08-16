@@ -102,9 +102,4 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
             LOG.info("Modal showing GAV conflict didn't appear");
         }
     }
-
-    private void click(By locatorOfThingToClick) {
-        WebElement thingToClick = Waits.elementPresent(locatorOfThingToClick);
-        BusyPopup.retryClickUntilPopupDisappears(thingToClick);
-    }
 }

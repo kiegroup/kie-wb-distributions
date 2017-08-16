@@ -57,6 +57,12 @@
   <inherits name="org.guvnor.messageconsole.GuvnorMessageConsoleClient"/>
   <inherits name='org.guvnor.organizationalunit.manager.GuvnorOrganizationalUnitManager'/>
 
+  <!-- Guvnor ALA -->
+  <inherits name="org.guvnor.ala.ui.GuvnorAlaUIAPI" />
+  <inherits name="org.guvnor.ala.ui.GuvnorAlaUIClient" />
+  <inherits name="org.guvnor.ala.ui.openshift.GuvnorAlaUIOpenShiftAPI" />
+  <inherits name="org.guvnor.ala.ui.openshift.GuvnorAlaUIOpenShiftClient" />
+
   <!-- Home Page - This has the same GWT Module name for Community and Product so we do not need a different module for Product -->
   <inherits name="org.kie.workbench.KIEWorkbenchHomePage"/>
 

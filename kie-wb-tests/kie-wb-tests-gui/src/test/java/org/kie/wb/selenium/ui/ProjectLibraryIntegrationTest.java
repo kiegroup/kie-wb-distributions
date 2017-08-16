@@ -74,7 +74,7 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
         projectLibrary.buildAndDeployProject();
         Waits.pause(10_000); //Wait for project to build/deploy and appear in artifact repository perspective
 
-        ArtifactRepositoryPerspective artifactRepo = projectLibrary.getNavbar().artifactRepository();
+        ArtifactRepositoryPerspective artifactRepo = projectLibrary.getNavbar().admin().artifactRepository();
         assertThat(artifactRepo.isArtifactPresent(artifact))
                 .as("Project artifact should be present after Build & Deploy").isTrue();
     }

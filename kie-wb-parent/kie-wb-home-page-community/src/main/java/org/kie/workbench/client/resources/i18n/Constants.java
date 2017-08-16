@@ -50,4 +50,9 @@ public class Constants {
     @TranslationKey(defaultValue = "")
     public static final String TrackDescription = "TrackDescription";
 
+    @TranslationKey(defaultValue = "")
+    public static final String ProductName = "ProductName";
+
+    @TranslationKey(defaultValue = "")
+    public static final String License = "License";
 }
