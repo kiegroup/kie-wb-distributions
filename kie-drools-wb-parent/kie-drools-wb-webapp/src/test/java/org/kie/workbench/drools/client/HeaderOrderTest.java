@@ -18,7 +18,6 @@ package org.kie.workbench.drools.client;
 
 import org.junit.Test;
 import org.kie.workbench.drools.client.navbar.AppNavBar;
-import org.kie.workbench.drools.client.navbar.LogoNavBar;
 import org.uberfire.client.workbench.Header;
 import org.uberfire.ext.widgets.common.client.breadcrumbs.header.UberfireBreadcrumbsContainerImpl;
 
@@ -28,12 +27,9 @@ public class HeaderOrderTest {
 
     @Test
     public void headerOrderTest() {
-        Header logo = new LogoNavBar();
         Header app = new AppNavBar();
         Header breadcrumb = new UberfireBreadcrumbsContainerImpl();
 
-        assertTrue(logo.getOrder() > app.getOrder());
         assertTrue(app.getOrder() > breadcrumb.getOrder());
     }
-
 }

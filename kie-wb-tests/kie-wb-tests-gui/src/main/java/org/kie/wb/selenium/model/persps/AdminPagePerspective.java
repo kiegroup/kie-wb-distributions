@@ -15,15 +15,25 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.kie.wb.selenium.model.Persp;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
+import static org.kie.wb.selenium.util.ByUtil.jquery;
+
 public class AdminPagePerspective extends AbstractPerspective {
 
-    private static final By HOME_LINK = By.xpath("//h1[contains(text(), 'Settings')]");
+    private static final By TITLE = jquery("h1:contains('Settings')");
+
+    private static final By ARTIFACTS = jquery(".admin-page-item:has(div:contains('Artifacts'))");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent( HOME_LINK );
+        return Waits.isElementPresent( TITLE );
+    }
+
+    public ArtifactRepositoryPerspective artifactRepository() {
+        click(ARTIFACTS);
+        return getNavbar().initPerspective(Persp.ARTIFACTS);
     }
 }

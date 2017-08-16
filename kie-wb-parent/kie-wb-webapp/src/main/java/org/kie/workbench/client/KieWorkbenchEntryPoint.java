@@ -27,15 +27,13 @@ import org.guvnor.common.services.shared.config.AppConfigService;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.kie.workbench.client.navigation.NavTreeDefinitions;
-import org.kie.workbench.common.screens.search.client.menu.SearchMenuBuilder;
-import org.kie.workbench.common.screens.social.hp.config.SocialConfigurationService;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
-import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
+import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveGroupEvent;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveRoleEvent;
@@ -43,18 +41,15 @@ import org.uberfire.workbench.model.menu.Menus;
 
 import static org.uberfire.workbench.model.menu.MenuFactory.MenuBuilder;
 import static org.uberfire.workbench.model.menu.MenuFactory.TopLevelMenusBuilder;
-import static org.uberfire.workbench.model.menu.MenuFactory.newTopLevelCustomMenu;
 
 @EntryPoint
 public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
-
-    protected Caller<SocialConfigurationService> socialConfigurationService;
 
     protected DefaultWorkbenchFeaturesMenusHelper menusHelper;
 
     protected ClientUserSystemManager userSystemManager;
 
-    protected WorkbenchMenuBarPresenter menuBar;
+    protected WorkbenchMegaMenuPresenter menuBar;
 
     protected Workbench workbench;
 
@@ -66,27 +61,22 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected NavigationManager navigationManager;
 
-    protected SearchMenuBuilder searchMenuBuilder;
-
     protected ContentExplorerScreen contentExplorerScreen;
 
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
                                   final ActivityBeansCache activityBeansCache,
-                                  final Caller<SocialConfigurationService> socialConfigurationService,
                                   final DefaultWorkbenchFeaturesMenusHelper menusHelper,
                                   final ClientUserSystemManager userSystemManager,
-                                  final WorkbenchMenuBarPresenter menuBar,
+                                  final WorkbenchMegaMenuPresenter menuBar,
                                   final Workbench workbench,
                                   final PermissionTreeSetup permissionTreeSetup,
                                   final DefaultAdminPageHelper adminPageHelper,
                                   final NavTreeDefinitions navTreeDefinitions,
                                   final NavigationManager navigationManager,
-                                  final SearchMenuBuilder searchMenuBuilder,
                                   final ContentExplorerScreen contentExplorerScreen) {
         super(appConfigService,
               activityBeansCache);
-        this.socialConfigurationService = socialConfigurationService;
         this.menusHelper = menusHelper;
         this.userSystemManager = userSystemManager;
         this.menuBar = menuBar;
@@ -95,7 +85,6 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.adminPageHelper = adminPageHelper;
         this.navTreeDefinitions = navTreeDefinitions;
         this.navigationManager = navigationManager;
-        this.searchMenuBuilder = searchMenuBuilder;
         this.contentExplorerScreen = contentExplorerScreen;
     }
 
@@ -106,34 +95,31 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
         // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
         // navigation tree node must be limited to 2 (see https://issues.jboss.org/browse/GUVNOR-2992)
-        contentExplorerScreen.getNavTreeEditor().setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH, 2);
+        contentExplorerScreen.getNavTreeEditor().setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
+                                                              2);
     }
 
     @Override
     public void setupMenu() {
-        socialConfigurationService.call((Boolean socialEnabled) -> {
-            navigationManager.init(() -> {
+        navigationManager.init(() -> {
 
-                // Set the default nav tree
-                NavTree navTree = navTreeDefinitions.buildDefaultNavTree(socialEnabled);
-                navigationManager.setDefaultNavTree(navTree);
+            // Set the default nav tree
+            NavTree navTree = navTreeDefinitions.buildDefaultNavTree();
+            navigationManager.setDefaultNavTree(navTree);
 
-                // Initialize the  menu bar
-                initMenuBar();
+            // Initialize the  menu bar
+            initMenuBar();
 
-                workbench.removeStartupBlocker(KieWorkbenchEntryPoint.class);
-            });
-        }).isSocialEnable();
+            workbench.removeStartupBlocker(KieWorkbenchEntryPoint.class);
+        });
     }
 
     @Override
     protected void setupAdminPage() {
-        socialConfigurationService.call(socialEnabled -> adminPageHelper.setup()).isSocialEnable();
+        adminPageHelper.setup();
     }
 
     protected void initMenuBar() {
-        menusHelper.addRolesMenuItems();
-        menusHelper.addWorkbenchViewModeSwitcherMenuItem();
         refreshMenuBar();
     }
 
@@ -143,14 +129,11 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         NavTree workbenchNavTree = navigationManager.getNavTree().getItemAsTree(NavTreeDefinitions.GROUP_WORKBENCH);
         TopLevelMenusBuilder<MenuBuilder> builder = menusHelper.buildMenusFromNavTree(workbenchNavTree);
 
-        // Append the search menu item & build the menus
-        Menus menus = builder == null ? newTopLevelCustomMenu(searchMenuBuilder).endMenu().build() :
-                builder.newTopLevelCustomMenu(searchMenuBuilder).endMenu().build();
+        Menus menus = builder.build();
 
         // Refresh the menu bar
         menuBar.clear();
         menuBar.addMenus(menus);
-        menusHelper.addWorkbenchConfigurationMenuItem();
         menusHelper.addUtilitiesMenuItems();
     }
 

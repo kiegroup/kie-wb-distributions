@@ -38,6 +38,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-workbench-client-views-patternfly</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-home-api</artifactId>
     </dependency>
@@ -52,6 +58,11 @@
       <artifactId>kie-wb-common-workbench-client</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.kie.workbench.widgets</groupId>
+      <artifactId>kie-wb-common-ui</artifactId>
+    </dependency>
+
     <!-- GWT and GWT Extensions -->
     <dependency>
       <groupId>com.google.gwt</groupId>
@@ -60,5 +71,22 @@
     </dependency>
 
   </dependencies>
+
+  <build>
+    <resources>
+      <!-- Include module descriptors from src/main/resources in order not to break the Intellij GWT plug-in -->
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <!-- About popup -->
+      <resource>
+        <directory>src/main/java/</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>org/kie/workbench/drools/client/navbar/AboutPopupConfigImpl.java</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
 
 </project>

@@ -17,21 +17,23 @@ package org.kie.wb.selenium.model.widgets;
 
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.kie.wb.selenium.util.BusyPopup;
+import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class DropdownMenu {
 
+    public static final String DROPDOWN_TOGGLE = ".dropdown-toggle";
+
     @Root
     private WebElement dropdownRoot;
-    @FindBy(css = ".dropdown-toggle")
+    @FindBy(css = DROPDOWN_TOGGLE)
     private WebElement dropdownToggle;
 
     private void open() {
-        if (!isOpened()) {
-            BusyPopup.retryClickUntilPopupDisappears(dropdownToggle);
-        }
+        Waits.elementClickable(By.cssSelector(DROPDOWN_TOGGLE));
+        BusyPopup.retryClickUntilPopupDisappears(dropdownToggle);
     }
 
     private boolean isOpened() {

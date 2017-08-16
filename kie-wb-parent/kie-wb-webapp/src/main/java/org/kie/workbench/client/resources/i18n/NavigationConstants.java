@@ -32,7 +32,7 @@ public interface NavigationConstants
         extends
         Messages {
 
-    NavigationConstants INSTANCE = GWT.create( NavigationConstants.class );
+    NavigationConstants INSTANCE = GWT.create(NavigationConstants.class);
 
     String navTreeRootName();
 
@@ -40,117 +40,73 @@ public interface NavigationConstants
 
     String navTreeHomeName();
 
-    String navTreeHomeGroupName();
+    String navTreeDesignName();
 
-    String navTreePreferencesName();
+    String navTreeProjectsName();
 
-    String navTreeTimelineName();
+    String navTreeDashboardsName();
 
-    String navTreePeopleName();
+    String navTreeDevOpsName();
 
-    String navTreeAuthoringName();
-
-    String navTreeProjectAuthoringName();
-
-    String navTreeContributorsName();
-
-    String navTreeArtifactsName();
-
-    String navTreeAdministrationName();
-
-    String navTreeLibraryName();
-
-    String navTreeDeployName();
+    String navTreeDeploymentsName();
 
     String navTreeExecutionServersName();
 
-    String navTreeJobsName();
-
-    String navTreeProcessManagementName();
+    String navTreeManageName();
 
     String navTreeProcessDefinitionsName();
 
     String navTreeProcessInstancesName();
 
-    String navTreeTasksName();
+    String navTreeTasksAdministrationName();
 
-    String navTreeTaskAdminName();
+    String navTreeJobsName();
 
     String navTreeExecutionErrorsName();
 
-    String navTreeDashboardsName();
+    String navTreeTrackName();
 
-    String navTreeProcessDashboardName();
+    String navTreeTasksListName();
+
+    String navTreeProcessesAndTasksDashboardName();
 
     String navTreeBusinessDashboardsName();
-
-    String navTreeExtensionsName();
-
-    String navTreePluginManagementName();
-
-    String navTreeAppsName();
-
-    String navTreeDatasetsName();
-
-    String navTreeDatasourcesName();
 
     String navTreeRootDescr();
 
     String navTreeWorkbenchDescr();
 
-    String navTreeHomeGroupDescr();
-
     String navTreeHomeDescr();
 
-    String navTreePreferencesDescr();
+    String navTreeDesignDescr();
 
-    String navTreeTimelineDescr();
+    String navTreeProjectsDescr();
 
-    String navTreePeopleDescr();
+    String navTreeDashboardsDescr();
 
-    String navTreeAuthoringDescr();
+    String navTreeDevOpsDescr();
 
-    String navTreeProjectAuthoringDescr();
-
-    String navTreeContributorsDescr();
-
-    String navTreeArtifactsDescr();
-
-    String navTreeAdministrationDescr();
-
-    String navTreeLibraryDescr();
-
-    String navTreeDeployDescr();
+    String navTreeDeploymentsDescr();
 
     String navTreeExecutionServersDescr();
 
-    String navTreeJobsDescr();
-
-    String navTreeProcessManagementDescr();
+    String navTreeManageDescr();
 
     String navTreeProcessDefinitionsDescr();
 
     String navTreeProcessInstancesDescr();
 
-    String navTreeTasksDescr();
+    String navTreeTasksAdministrationDescr();
 
-    String navTreeTaskAdminDescr();
+    String navTreeJobsDescr();
 
     String navTreeExecutionErrorsDescr();
 
-    String navTreeDashboardsDescr();
+    String navTreeTrackDescr();
 
-    String navTreeProcessDashboardDescr();
+    String navTreeTasksListDescr();
+
+    String navTreeProcessesAndTasksDashboardDescr();
 
     String navTreeBusinessDashboardsDescr();
-
-    String navTreeExtensionsDescr();
-
-    String navTreePluginManagementDescr();
-
-    String navTreeAppsDescr();
-
-    String navTreeDatasetsDescr();
-
-    String navTreeDatasourcesDescr();
 }

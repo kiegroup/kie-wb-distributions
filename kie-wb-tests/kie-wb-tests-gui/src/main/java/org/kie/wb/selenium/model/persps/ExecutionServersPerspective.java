@@ -15,15 +15,26 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
-public class PeoplePerspective extends AbstractPerspective {
+public class ExecutionServersPerspective extends AbstractPerspective {
 
-    private static final By PROFILE_HOME_BUTTON = By.cssSelector("button[title^='Go To User']");
+    private static final By SERVER_MNGMT_SCREEN_ITEM = By.id("template-server-list-group");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(PROFILE_HOME_BUTTON);
+        try {
+            return Waits.isElementPresent(SERVER_MNGMT_SCREEN_ITEM);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public void waitForLoaded() {
+        Graphene.waitModel().until().element(By.cssSelector(".alert-dismissable")).is().not().present();
     }
 }

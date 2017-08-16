@@ -21,156 +21,116 @@ import java.util.List;
 
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.wb.selenium.model.persps.AdminPagePerspective;
-import org.kie.wb.selenium.model.persps.AdministrationPerspective;
 import org.kie.wb.selenium.model.persps.AppsPerspective;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
 import org.kie.wb.selenium.model.persps.BusinessDashboardsPerspective;
-import org.kie.wb.selenium.model.persps.DataSetsPerspective;
-import org.kie.wb.selenium.model.persps.DataSourcesPerspective;
 import org.kie.wb.selenium.model.persps.ExecutionErrorsPerspective;
+import org.kie.wb.selenium.model.persps.ExecutionServersPerspective;
 import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.model.persps.JobsPerspective;
-import org.kie.wb.selenium.model.persps.PeoplePerspective;
-import org.kie.wb.selenium.model.persps.PluginManagementPerspective;
 import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
 import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
 import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
-import org.kie.wb.selenium.model.persps.RuleDeploymentsPerspective;
+import org.kie.wb.selenium.model.persps.ProvisioningManagementPerspective;
 import org.kie.wb.selenium.model.persps.TaskAdministrationPerspective;
 import org.kie.wb.selenium.model.persps.TasksPerspective;
-import org.kie.wb.selenium.model.persps.TimelinePerspective;
 
 public class Persp<T extends AbstractPerspective> {
 
-    public static final Persp<HomePerspective> HOME_PAGE
-            = new Persp<>("Home",
-                          "Home Page",
+    public static final Persp<HomePerspective> HOME
+            = new Persp<>("N/A",
+                          "Home",
                           HomePerspective.class);
-
-    public static final Persp<TimelinePerspective> TIMELINE
-            = new Persp<>("Home",
-                          "Timeline",
-                          TimelinePerspective.class);
-
-    public static final Persp<PeoplePerspective> PEOPLE
-            = new Persp<>("Home",
-                          "People",
-                          PeoplePerspective.class);
-
     public static final Persp<AdminPagePerspective> ADMIN
-            = new Persp<>("Home",
+            = new Persp<>("N/A",
                           "Admin",
                           AdminPagePerspective.class);
-    public static final Persp<ProjectLibraryPerspective> PROJECT_AUTHORING
-            = new Persp<>("Authoring",
-                          "Project Authoring",
-                          ProjectLibraryPerspective.class);
-
-    public static final Persp<ArtifactRepositoryPerspective> ARTIFACT_REPOSITORY
-            = new Persp<>("Authoring",
-                          "Artifact Repository",
+    public static final Persp<AppsPerspective> APPS
+            = new Persp<>("N/A",
+                          "Apps",
+                          AppsPerspective.class);
+    public static final Persp<ArtifactRepositoryPerspective> ARTIFACTS
+            = new Persp<>("N/A",
+                          "Artifacts",
                           ArtifactRepositoryPerspective.class);
 
-    public static final Persp<AdministrationPerspective> ADMINISTRATION
-            = new Persp<>("Authoring",
-                          "Administration",
-                          AdministrationPerspective.class);
+    public static final Persp<ProjectLibraryPerspective> PROJECTS
+            = new Persp<>("Design",
+                          "Projects",
+                          ProjectLibraryPerspective.class);
+    public static final Persp<BusinessDashboardsPerspective> DASHBOARDS
+            = new Persp<>("Design",
+                          "Dashboards",
+                          BusinessDashboardsPerspective.class);
 
-    public static final Persp<RuleDeploymentsPerspective> EXECUTION_SERVERS
-            = new Persp<>("Deploy",
+    public static final Persp<ProvisioningManagementPerspective> DEPLOYMENTS
+            = new Persp<>("DevOps",
+                          "Deployments",
+                          ProvisioningManagementPerspective.class);
+    public static final Persp<ExecutionServersPerspective> EXECUTION_SERVERS
+            = new Persp<>("DevOps",
                           "Execution Servers",
-                          RuleDeploymentsPerspective.class);
-
-    public static final Persp<JobsPerspective> JOBS
-            = new Persp<>("Deploy",
-                          "Jobs",
-                          JobsPerspective.class,
-                          true);
+                          ExecutionServersPerspective.class);
 
     public static final Persp<ProcessDefinitionsPerspective> PROCESS_DEFINITIONS
-            = new Persp<>("Process Management",
+            = new Persp<>("Manage",
                           "Process Definitions",
                           ProcessDefinitionsPerspective.class,
                           true);
-
     public static final Persp<ProcessInstancesPerspective> PROCESS_INSTANCES
-            = new Persp<>("Process Management",
+            = new Persp<>("Manage",
                           "Process Instances",
                           ProcessInstancesPerspective.class,
                           true);
-
     public static final Persp<TaskAdministrationPerspective> TASK_ADMINISTRATION
-            = new Persp<>("Process Management",
-                          "Task Administration",
+            = new Persp<>("Manage",
+                          "Tasks Administration",
                           TaskAdministrationPerspective.class,
                           true);
-
+    public static final Persp<JobsPerspective> JOBS
+            = new Persp<>("Manage",
+                          "Jobs",
+                          JobsPerspective.class,
+                          true);
     public static final Persp<ExecutionErrorsPerspective> EXECUTION_ERRORS
-            = new Persp<>("Process Management",
+            = new Persp<>("Manage",
                           "Execution errors",
                           ExecutionErrorsPerspective.class,
                           true);
 
     public static final Persp<TasksPerspective> TASKS
-            = new Persp<>("N/A",
-                          "Tasks",
+            = new Persp<>("Track",
+                          "Tasks List",
                           TasksPerspective.class,
                           true);
-
     public static final Persp<ProcessAndTaskDashboardPerspective> PROCESS_AND_TASK_DASHBOARD
-            = new Persp<>("Dashboards",
-                          "Process & Task Dashboard",
+            = new Persp<>("Track",
+                          "Processes & Tasks",
                           ProcessAndTaskDashboardPerspective.class,
                           true);
-
-    public static final Persp<BusinessDashboardsPerspective> BUSINESS_DASHBOARDS
-            = new Persp<>("Dashboards",
+    public static final Persp<AppsPerspective> BUSINESS_DASHBOARDS
+            = new Persp<>("Track",
                           "Business Dashboards",
-                          BusinessDashboardsPerspective.class,
+                          AppsPerspective.class,
                           true);
 
-    public static final Persp<PluginManagementPerspective> PLUGIN_MANAGEMENT
-            = new Persp<>("Extensions",
-                          "Plugin Management",
-                          PluginManagementPerspective.class);
-
-    public static final Persp<AppsPerspective> APPS
-            = new Persp<>("Extensions",
-                          "Apps",
-                          AppsPerspective.class);
-
-    public static final Persp<DataSetsPerspective> DATA_SETS
-            = new Persp<>("Extensions",
-                          "Data Sets",
-                          DataSetsPerspective.class);
-
-    public static final Persp<DataSourcesPerspective> DATA_SOURCES
-            = new Persp<>("Extensions",
-                          "Data Sources",
-                          DataSourcesPerspective.class);
-
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPECTIVES = Collections.unmodifiableList(Arrays.asList(
-            HOME_PAGE,
             ADMIN,
-            TIMELINE,
-            PEOPLE,
-            PROJECT_AUTHORING,
-            ARTIFACT_REPOSITORY,
-            ADMINISTRATION,
+            APPS,
+            HOME,
+            PROJECTS,
+            DASHBOARDS,
+            DEPLOYMENTS,
             EXECUTION_SERVERS,
-            JOBS,
             PROCESS_DEFINITIONS,
             PROCESS_INSTANCES,
             TASK_ADMINISTRATION,
+            JOBS,
             EXECUTION_ERRORS,
             TASKS,
             PROCESS_AND_TASK_DASHBOARD,
-            BUSINESS_DASHBOARDS,
-            PLUGIN_MANAGEMENT,
-            APPS,
-            DATA_SETS,
-            DATA_SOURCES
+            BUSINESS_DASHBOARDS
     ));
 
     public static List<Persp<? extends AbstractPerspective>> getAllPerspectives() {
