@@ -911,11 +911,42 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-backend</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-bpmn2</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-email</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-rest</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-jms</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jbpm</groupId>
+          <artifactId>jbpm-workitems-webservice</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
+    <!-- jBPM Workitems -->
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-workitems</artifactId>
+      <artifactId>jbpm-workitems-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-workitems-bpmn2</artifactId>
       <exclusions>
         <exclusion>
           <groupId>org.apache.cxf</groupId>
@@ -938,14 +969,6 @@
           <artifactId>cxf-rt-frontend-simple</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>javax.mail</groupId>
-          <artifactId>mail</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>javax.activation</groupId>
-          <artifactId>activation</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>org.apache.neethi</groupId>
           <artifactId>neethi</artifactId>
         </exclusion>
@@ -954,6 +977,24 @@
           <artifactId>wsdl4j</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-workitems-email</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.mail</groupId>
+          <artifactId>mail</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.activation</groupId>
+          <artifactId>activation</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-workitems-rest</artifactId>
     </dependency>
 
     <!-- UberFire -->
