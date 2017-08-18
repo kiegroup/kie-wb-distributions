@@ -48,7 +48,7 @@ public class Persp<T extends AbstractPerspective> {
                           AdminPagePerspective.class);
     public static final Persp<AppsPerspective> APPS
             = new Persp<>("N/A",
-                          "Apps",
+                          "Business Dashboards",
                           AppsPerspective.class);
     public static final Persp<ArtifactRepositoryPerspective> ARTIFACTS
             = new Persp<>("N/A",
@@ -101,12 +101,12 @@ public class Persp<T extends AbstractPerspective> {
 
     public static final Persp<TasksPerspective> TASKS
             = new Persp<>("Track",
-                          "Tasks List",
+                          "Task Lists",
                           TasksPerspective.class,
                           true);
     public static final Persp<ProcessAndTaskDashboardPerspective> PROCESS_AND_TASK_DASHBOARD
             = new Persp<>("Track",
-                          "Processes & Tasks",
+                          "Process & Task Reports",
                           ProcessAndTaskDashboardPerspective.class,
                           true);
     public static final Persp<AppsPerspective> BUSINESS_DASHBOARDS
