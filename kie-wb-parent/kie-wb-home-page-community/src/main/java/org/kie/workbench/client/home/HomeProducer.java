@@ -22,13 +22,23 @@ import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.workbench.client.resources.i18n.Constants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeModelProvider;
+import org.kie.workbench.common.screens.home.model.HomeShortcut;
+import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.uberfire.client.mvp.PlaceManager;
 
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.APPS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.BUSINESS_DASHBOARDS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.EXECUTION_ERRORS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.JOBS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DASHBOARD;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DEFINITIONS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_INSTANCES;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS_ADMIN;
 import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
 @ApplicationScoped
@@ -45,30 +55,62 @@ public class HomeProducer implements HomeModelProvider {
                                               translationService.format(Constants.SubHeading),
                                               "images/community_home_bg.jpg");
 
-        model.addShortcut(ModelUtils.makeShortcut("pficon-blueprint",
-                                                  translationService.format(Constants.Design),
-                                                  translationService.format(Constants.DesignDescription),
-                                                  () -> placeManager.goTo(LIBRARY),
-                                                  LIBRARY,
-                                                  PERSPECTIVE));
-        model.addShortcut(ModelUtils.makeShortcut("pficon-build",
-                                                  translationService.format(Constants.DevOps),
-                                                  translationService.format(Constants.DevOpsDescription),
-                                                  () -> placeManager.goTo(SERVER_MANAGEMENT),
-                                                  SERVER_MANAGEMENT,
-                                                  PERSPECTIVE));
-        model.addShortcut(ModelUtils.makeShortcut("fa-briefcase",
-                                                  translationService.format(Constants.Manage),
-                                                  translationService.format(Constants.ManageDescription),
-                                                  () -> placeManager.goTo(PROCESS_INSTANCES),
-                                                  PROCESS_INSTANCES,
-                                                  PERSPECTIVE));
-        model.addShortcut(ModelUtils.makeShortcut("pficon-trend-up",
-                                                  translationService.format(Constants.Track),
-                                                  translationService.format(Constants.TrackDescription),
-                                                  () -> placeManager.goTo(BUSINESS_DASHBOARDS),
-                                                  BUSINESS_DASHBOARDS,
-                                                  PERSPECTIVE));
+        final HomeShortcut design = ModelUtils.makeShortcut("pficon-blueprint",
+                                                            translationService.format(Constants.Design),
+                                                            translationService.format(Constants.DesignDescription),
+                                                            () -> placeManager.goTo(LIBRARY),
+                                                            LIBRARY,
+                                                            PERSPECTIVE);
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Projects),
+                                            LIBRARY));
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
+                                            BUSINESS_DASHBOARDS));
+
+        final HomeShortcut devOps = ModelUtils.makeShortcut("fa-gears",
+                                                            translationService.format(Constants.DevOps),
+                                                            translationService.format(Constants.DevOpsDescription),
+                                                            () -> placeManager.goTo(SERVER_MANAGEMENT),
+                                                            SERVER_MANAGEMENT,
+                                                            PERSPECTIVE);
+        devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Deployments),
+                                            DEPLOYMENTS));
+        devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Servers),
+                                            SERVER_MANAGEMENT));
+
+        final HomeShortcut manage = ModelUtils.makeShortcut("fa-briefcase",
+                                                            translationService.format(Constants.Manage),
+                                                            translationService.format(Constants.ManageDescription),
+                                                            () -> placeManager.goTo(PROCESS_INSTANCES),
+                                                            PROCESS_INSTANCES,
+                                                            PERSPECTIVE);
+        manage.addLink(new HomeShortcutLink(translationService.format(Constants.ProcessDefinitions),
+                                            PROCESS_DEFINITIONS));
+        manage.addLink(new HomeShortcutLink(translationService.format(Constants.ProcessInstances),
+                                            PROCESS_INSTANCES));
+        manage.addLink(new HomeShortcutLink(translationService.format(Constants.TasksAdmin),
+                                            TASKS_ADMIN));
+        manage.addLink(new HomeShortcutLink(translationService.format(Constants.Jobs),
+                                            JOBS));
+        manage.addLink(new HomeShortcutLink(translationService.format(Constants.ExecutionErrors),
+                                            EXECUTION_ERRORS));
+
+        final HomeShortcut track = ModelUtils.makeShortcut("pficon-trend-up",
+                                                           translationService.format(Constants.Track),
+                                                           translationService.format(Constants.TrackDescription),
+                                                           () -> placeManager.goTo(APPS),
+                                                           APPS,
+                                                           PERSPECTIVE);
+        track.addLink(new HomeShortcutLink(translationService.format(Constants.Tasks),
+                                           TASKS));
+        track.addLink(new HomeShortcutLink(translationService.format(Constants.Reports),
+                                           PROCESS_DASHBOARD));
+        track.addLink(new HomeShortcutLink(translationService.format(Constants.BusinessDashboards),
+                                           APPS));
+
+        model.addShortcut(design);
+        model.addShortcut(devOps);
+        model.addShortcut(manage);
+        model.addShortcut(track);
 
         return model;
     }

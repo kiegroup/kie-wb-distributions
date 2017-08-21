@@ -503,7 +503,7 @@ a.serviceTab:active {
 
 /* Override PatternFly default css so border isn't duplicated */
 .navbar-pf {
-    border-top: none;
+    border-top-width: 0;
 }
 
 .navbar-pf ul.navbar-nav.navbar-utility {

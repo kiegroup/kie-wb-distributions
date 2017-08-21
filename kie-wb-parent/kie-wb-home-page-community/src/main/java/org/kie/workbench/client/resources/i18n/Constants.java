@@ -55,4 +55,40 @@ public class Constants {
 
     @TranslationKey(defaultValue = "")
     public static final String License = "License";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Projects = "HomeProducer.Projects";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Dashboards = "HomeProducer.Dashboards";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Deployments = "HomeProducer.Deployments";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Servers = "HomeProducer.Servers";
+
+    @TranslationKey(defaultValue = "")
+    public static final String ProcessDefinitions = "HomeProducer.ProcessDefinitions";
+
+    @TranslationKey(defaultValue = "")
+    public static final String ProcessInstances = "HomeProducer.ProcessInstances";
+
+    @TranslationKey(defaultValue = "")
+    public static final String TasksAdmin = "HomeProducer.TasksAdmin";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Jobs = "HomeProducer.Jobs";
+
+    @TranslationKey(defaultValue = "")
+    public static final String ExecutionErrors = "HomeProducer.ExecutionErrors";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Tasks = "HomeProducer.Tasks";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Reports = "HomeProducer.Reports";
+
+    @TranslationKey(defaultValue = "")
+    public static final String BusinessDashboards = "HomeProducer.BusinessDashboards";
 }
