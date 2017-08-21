@@ -21,10 +21,14 @@ import javax.inject.Inject;
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeModelProvider;
+import org.kie.workbench.common.screens.home.model.HomeShortcut;
+import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.drools.client.resources.i18n.Constants;
 import org.uberfire.client.mvp.PlaceManager;
 
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.BUSINESS_DASHBOARDS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
 import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
@@ -43,18 +47,30 @@ public class HomeProducer implements HomeModelProvider {
                                               translationService.format(Constants.SubHeading),
                                               "images/community_home_bg.jpg");
 
-        model.addShortcut(ModelUtils.makeShortcut("pficon-blueprint",
-                                                  translationService.format(Constants.Design),
-                                                  translationService.format(Constants.DesignDescription),
-                                                  () -> placeManager.goTo(LIBRARY),
-                                                  LIBRARY,
-                                                  PERSPECTIVE));
-        model.addShortcut(ModelUtils.makeShortcut("pficon-build",
-                                                  translationService.format(Constants.DevOps),
-                                                  translationService.format(Constants.DevOpsDescription),
-                                                  () -> placeManager.goTo(SERVER_MANAGEMENT),
-                                                  SERVER_MANAGEMENT,
-                                                  PERSPECTIVE));
+        final HomeShortcut design = ModelUtils.makeShortcut("pficon-blueprint",
+                                                            translationService.format(Constants.Design),
+                                                            translationService.format(Constants.DesignDescription),
+                                                            () -> placeManager.goTo(LIBRARY),
+                                                            LIBRARY,
+                                                            PERSPECTIVE);
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Projects),
+                                            LIBRARY));
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
+                                            BUSINESS_DASHBOARDS));
+
+        final HomeShortcut devOps = ModelUtils.makeShortcut("fa-gears",
+                                                            translationService.format(Constants.DevOps),
+                                                            translationService.format(Constants.DevOpsDescription),
+                                                            () -> placeManager.goTo(SERVER_MANAGEMENT),
+                                                            SERVER_MANAGEMENT,
+                                                            PERSPECTIVE);
+        devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Deployments),
+                                            DEPLOYMENTS));
+        devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Servers),
+                                            SERVER_MANAGEMENT));
+
+        model.addShortcut(design);
+        model.addShortcut(devOps);
 
         return model;
     }

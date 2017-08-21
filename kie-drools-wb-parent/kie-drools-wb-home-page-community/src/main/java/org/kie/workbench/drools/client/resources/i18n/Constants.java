@@ -43,4 +43,16 @@ public class Constants {
 
     @TranslationKey(defaultValue = "")
     public static final String License = "License";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Projects = "HomeProducer.Projects";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Dashboards = "HomeProducer.Dashboards";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Deployments = "HomeProducer.Deployments";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Servers = "HomeProducer.Servers";
 }
