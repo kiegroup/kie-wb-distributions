@@ -46,10 +46,6 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("N/A",
                           "Admin",
                           AdminPagePerspective.class);
-    public static final Persp<AppsPerspective> APPS
-            = new Persp<>("N/A",
-                          "Business Dashboards",
-                          AppsPerspective.class);
     public static final Persp<ArtifactRepositoryPerspective> ARTIFACTS
             = new Persp<>("N/A",
                           "Artifacts",
@@ -117,7 +113,6 @@ public class Persp<T extends AbstractPerspective> {
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPECTIVES = Collections.unmodifiableList(Arrays.asList(
             ADMIN,
-            APPS,
             HOME,
             PROJECTS,
             DASHBOARDS,
