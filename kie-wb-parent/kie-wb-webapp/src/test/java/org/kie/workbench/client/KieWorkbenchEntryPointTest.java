@@ -132,6 +132,9 @@ public class KieWorkbenchEntryPointTest {
         verify(permissionTreeSetup).configureTree();
         verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
                                            2);
+        verify(navTreeEditor).setNewDividerEnabled(false);
+        verify(navTreeEditor).setNewPerspectiveEnabled(NavTreeDefinitions.GROUP_WORKBENCH,
+                                                       false);
     }
 
     @Test
