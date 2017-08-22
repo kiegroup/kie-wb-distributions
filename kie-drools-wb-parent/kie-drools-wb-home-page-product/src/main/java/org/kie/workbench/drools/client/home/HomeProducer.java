@@ -44,7 +44,7 @@ public class HomeProducer implements HomeModelProvider {
                                               translationService.format(Constants.SubHeading),
                                               "images/product_home_bg.svg");
 
-        final HomeShortcut design = ModelUtils.makeShortcut("pficon-blueprint",
+        final HomeShortcut design = ModelUtils.makeShortcut("pficon pficon-blueprint",
                                                             translationService.format(Constants.Design),
                                                             translationService.format(Constants.DesignDescription),
                                                             () -> placeManager.goTo(LIBRARY),
@@ -55,7 +55,7 @@ public class HomeProducer implements HomeModelProvider {
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
                                             BUSINESS_DASHBOARDS));
 
-        final HomeShortcut devOps = ModelUtils.makeShortcut("fa-gears",
+        final HomeShortcut devOps = ModelUtils.makeShortcut("fa fa-gears",
                                                             translationService.format(Constants.DevOps),
                                                             translationService.format(Constants.DevOpsDescription),
                                                             () -> placeManager.goTo(SERVER_MANAGEMENT),
