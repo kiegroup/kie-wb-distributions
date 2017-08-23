@@ -55,7 +55,7 @@ public class HomeProducer implements HomeModelProvider {
                                               translationService.format(Constants.SubHeading),
                                               "images/community_home_bg.jpg");
 
-        final HomeShortcut design = ModelUtils.makeShortcut("pficon-blueprint",
+        final HomeShortcut design = ModelUtils.makeShortcut("pficon pficon-blueprint",
                                                             translationService.format(Constants.Design),
                                                             translationService.format(Constants.DesignDescription),
                                                             () -> placeManager.goTo(LIBRARY),
@@ -66,7 +66,7 @@ public class HomeProducer implements HomeModelProvider {
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
                                             BUSINESS_DASHBOARDS));
 
-        final HomeShortcut devOps = ModelUtils.makeShortcut("fa-gears",
+        final HomeShortcut devOps = ModelUtils.makeShortcut("fa fa-gears",
                                                             translationService.format(Constants.DevOps),
                                                             translationService.format(Constants.DevOpsDescription),
                                                             () -> placeManager.goTo(SERVER_MANAGEMENT),
@@ -77,7 +77,7 @@ public class HomeProducer implements HomeModelProvider {
         devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Servers),
                                             SERVER_MANAGEMENT));
 
-        final HomeShortcut manage = ModelUtils.makeShortcut("fa-briefcase",
+        final HomeShortcut manage = ModelUtils.makeShortcut("fa fa-briefcase",
                                                             translationService.format(Constants.Manage),
                                                             translationService.format(Constants.ManageDescription),
                                                             () -> placeManager.goTo(PROCESS_INSTANCES),
@@ -94,7 +94,7 @@ public class HomeProducer implements HomeModelProvider {
         manage.addLink(new HomeShortcutLink(translationService.format(Constants.ExecutionErrors),
                                             EXECUTION_ERRORS));
 
-        final HomeShortcut track = ModelUtils.makeShortcut("pficon-trend-up",
+        final HomeShortcut track = ModelUtils.makeShortcut("pficon pficon-trend-up",
                                                            translationService.format(Constants.Track),
                                                            translationService.format(Constants.TrackDescription),
                                                            () -> placeManager.goTo(APPS),
