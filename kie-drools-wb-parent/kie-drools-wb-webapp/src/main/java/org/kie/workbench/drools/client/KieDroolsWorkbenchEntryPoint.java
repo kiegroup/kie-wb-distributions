@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import org.dashbuilder.client.cms.screen.explorer.ContentExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
 import org.dashbuilder.client.navigation.event.NavTreeChangedEvent;
+import org.dashbuilder.client.navigation.widget.NavTreeEditor;
 import org.dashbuilder.navigation.NavTree;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.jboss.errai.common.client.api.Caller;
@@ -91,10 +92,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         workbench.addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
         permissionTreeSetup.configureTree();
 
-        // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
-        // navigation tree node must be limited to 2 (see https://issues.jboss.org/browse/GUVNOR-2992)
-        contentExplorerScreen.getNavTreeEditor().setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
-                                                              2);
+        initNavTreeEditor();
     }
 
     @Override
@@ -149,5 +147,19 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     public void onAuthzPolicyChanged(@Observes final SaveGroupEvent event) {
         refreshMenuBar();
+    }
+
+    private void initNavTreeEditor() {
+        final NavTreeEditor navTreeEditor = contentExplorerScreen.getNavTreeEditor();
+
+        // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
+        // navigation tree node must be limited to 2 (see https://issues.jboss.org/browse/GUVNOR-2992)
+        navTreeEditor.setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
+                                   2);
+
+        // Mega Menu does not support dividers and root menu items (menu items are only allowed inside menu groups).
+        navTreeEditor.setNewDividerEnabled(false);
+        navTreeEditor.setNewPerspectiveEnabled(NavTreeDefinitions.GROUP_WORKBENCH,
+                                               false);
     }
 }
