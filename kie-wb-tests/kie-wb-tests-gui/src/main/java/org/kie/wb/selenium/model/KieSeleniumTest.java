@@ -15,6 +15,8 @@
  */
 package org.kie.wb.selenium.model;
 
+import java.util.Optional;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
@@ -26,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RunWith(Arquillian.class)
-public class KieSeleniumTest {
+public abstract class KieSeleniumTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(KieSeleniumTest.class);
 
@@ -36,17 +38,18 @@ public class KieSeleniumTest {
     @Page
     protected LoginPage login;
 
-    public static final boolean IS_KIE_WB = isKieWb();
+    public static final KieWbDistribution DISTRO = kieWbDistribution();
 
     @Rule
     public ScreenshotOnFailure screenshotter = new ScreenshotOnFailure();
 
-    private static boolean isKieWb() {
+    private static KieWbDistribution kieWbDistribution() {
         String prop = System.getProperty("app.name");
-        if (!("kie-wb".equals(prop) || "kie-drools-wb".equals(prop))) {
-            throw new IllegalStateException("Invalid app.name='" + prop + "' Expecting kie-wb or kie-drools-wb");
+        final Optional<KieWbDistribution> kieWbDistribution = KieWbDistribution.fromWarNameString(prop);
+        if (kieWbDistribution.isPresent() == false) {
+            throw new IllegalStateException("Invalid app.name='" + prop + "' Expecting kie-wb, kie-wb-runtime or kie-drools-wb");
         }
         LOG.info("Tested application: {}", prop);
-        return "kie-wb".equals(prop);
+        return kieWbDistribution.get();
     }
 }
