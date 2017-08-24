@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2016 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,7 +42,8 @@ import org.uberfire.security.impl.authz.DefaultPermissionManager;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.uberfire.security.authz.AuthorizationResult.*;
+import static org.uberfire.security.authz.AuthorizationResult.ACCESS_DENIED;
+import static org.uberfire.security.authz.AuthorizationResult.ACCESS_GRANTED;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WorkbenchACLTest {
@@ -100,7 +101,9 @@ public class WorkbenchACLTest {
     @Before
     public void setUp() throws Exception {
         permissionManager = new DefaultPermissionManager();
-        deployer = new AuthorizationPolicyDeployer(storage, permissionManager, deployedEvent);
+        deployer = new AuthorizationPolicyDeployer(storage,
+                                                   permissionManager,
+                                                   deployedEvent);
 
         URL fileURL = Thread.currentThread().getContextClassLoader().getResource("security-policy.properties");
         Path policyDir = Paths.get(fileURL.toURI()).getParent();
@@ -115,7 +118,8 @@ public class WorkbenchACLTest {
     @Test
     public void testPolicyDeployment() {
         assertNotNull(policy);
-        assertEquals(policy.getRoles().size(), 2);
+        assertEquals(policy.getRoles().size(),
+                     2);
 
         verify(storage).savePolicy(policy);
         verify(deployedEvent).fire(any());
@@ -123,24 +127,34 @@ public class WorkbenchACLTest {
 
     @Test
     public void testDefaultPermissions() {
-        assertEquals(policy.getHomePerspective(), HOME_PERSPECTIVE);
+        assertEquals(policy.getHomePerspective(),
+                     HOME_PERSPECTIVE);
         PermissionCollection pc = policy.getPermissions();
 
         for (String permissionName : DEFAULT_DENIED) {
             Permission p = pc.get(permissionName);
             assertNotNull(p);
-            assertEquals(p.getResult(), ACCESS_DENIED);
+            assertEquals(p.getResult(),
+                         ACCESS_DENIED);
         }
     }
 
     @Test
     public void testAdminPermissions() {
-        testPermissions(new RoleImpl("admin"), null, HOME_PERSPECTIVE, ACCESS_GRANTED, null);
+        testPermissions(new RoleImpl("admin"),
+                        null,
+                        HOME_PERSPECTIVE,
+                        ACCESS_GRANTED,
+                        null);
     }
 
     @Test
     public void testAnalystPermissions() {
-        testPermissions(new RoleImpl("analyst"), ANALYST_DENIED, HOME_PERSPECTIVE, ACCESS_GRANTED, ACCESS_DENIED);
+        testPermissions(new RoleImpl("analyst"),
+                        ANALYST_DENIED,
+                        HOME_PERSPECTIVE,
+                        ACCESS_GRANTED,
+                        ACCESS_DENIED);
     }
 
     public void testPermissions(Role role,
@@ -149,21 +163,24 @@ public class WorkbenchACLTest {
                                 AuthorizationResult defaultExpected,
                                 AuthorizationResult exceptionExpected) {
 
-        assertEquals(role != null ? policy.getHomePerspective(role) : policy.getHomePerspective(), homeExpected);
+        assertEquals(role != null ? policy.getHomePerspective(role) : policy.getHomePerspective(),
+                     homeExpected);
         PermissionCollection pc = policy.getPermissions(role);
 
         for (String permissionName : DEFAULT_DENIED) {
             if (exceptionList == null || !exceptionList.contains(permissionName)) {
                 Permission p = pc.get(permissionName);
                 assertNotNull(p);
-                assertEquals(p.getResult(), defaultExpected);
+                assertEquals(p.getResult(),
+                             defaultExpected);
             }
         }
         if (exceptionList != null) {
             for (String permissionName : exceptionList) {
                 Permission p = pc.get(permissionName);
                 assertNotNull(p);
-                assertEquals(p.getResult(), exceptionExpected);
+                assertEquals(p.getResult(),
+                             exceptionExpected);
             }
         }
     }

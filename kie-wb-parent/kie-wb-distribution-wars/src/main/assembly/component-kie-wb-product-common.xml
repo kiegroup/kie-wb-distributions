@@ -3,23 +3,23 @@
   <!-- Assembly configuration shared between all product (-redhat.xml) assemblies -->
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/src/main/productized/banner</directory>
+      <directory>${project.parent.basedir}/src/main/productized/banner</directory>
       <outputDirectory>banner</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/src/main/productized/img</directory>
+      <directory>${project.parent.basedir}/src/main/productized/img</directory>
       <outputDirectory>img</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/src/main/productized/fonts</directory>
+      <directory>${project.parent.basedir}/src/main/productized/fonts</directory>
       <outputDirectory>fonts</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/src/main/productized/styles</directory>
+      <directory>${project.parent.basedir}/src/main/productized/styles</directory>
       <outputDirectory>styles</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/src/main/productized/webapp</directory>
+      <directory>${project.parent.basedir}/src/main/productized/webapp</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
   </fileSets>

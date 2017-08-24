@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2016 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.enterprise.event.Event;
 
 import org.jboss.errai.security.shared.api.Role;
@@ -41,9 +40,10 @@ import org.uberfire.security.authz.PermissionCollection;
 import org.uberfire.security.authz.PermissionManager;
 import org.uberfire.security.impl.authz.DefaultPermissionManager;
 
-import static org.uberfire.security.authz.AuthorizationResult.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static org.uberfire.security.authz.AuthorizationResult.ACCESS_DENIED;
+import static org.uberfire.security.authz.AuthorizationResult.ACCESS_GRANTED;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WorkbenchACLTest {
@@ -113,8 +113,8 @@ public class WorkbenchACLTest {
             "perspective.read.Tasks",
             "perspective.read.DashboardPerspective",
             "dashboard.manage");
-            
-        static final List<String> PROCESS_ADMIN_GRANTED = Arrays.asList(
+
+    static final List<String> PROCESS_ADMIN_GRANTED = Arrays.asList(
             "perspective.read.SocialHomePagePerspective",
             "perspective.read.UserHomePagePerspective",
             "perspective.read.ProcessDefinitions",
@@ -138,7 +138,9 @@ public class WorkbenchACLTest {
     @Before
     public void setUp() throws Exception {
         permissionManager = new DefaultPermissionManager();
-        deployer = new AuthorizationPolicyDeployer(storage, permissionManager, deployedEvent);
+        deployer = new AuthorizationPolicyDeployer(storage,
+                                                   permissionManager,
+                                                   deployedEvent);
 
         URL fileURL = Thread.currentThread().getContextClassLoader().getResource("security-policy.properties");
         Path policyDir = Paths.get(fileURL.toURI()).getParent();
@@ -153,7 +155,8 @@ public class WorkbenchACLTest {
     @Test
     public void testPolicyDeployment() {
         assertNotNull(policy);
-        assertEquals(policy.getRoles().size(), 6);
+        assertEquals(policy.getRoles().size(),
+                     6);
 
         verify(storage).savePolicy(policy);
         verify(deployedEvent).fire(any());
@@ -161,44 +164,70 @@ public class WorkbenchACLTest {
 
     @Test
     public void testDefaultPermissions() {
-        assertEquals(policy.getHomePerspective(), HOME_PERSPECTIVE);
+        assertEquals(policy.getHomePerspective(),
+                     HOME_PERSPECTIVE);
         PermissionCollection pc = policy.getPermissions();
 
         for (String permissionName : DEFAULT_DENIED) {
             Permission p = pc.get(permissionName);
             assertNotNull(p);
-            assertEquals(p.getResult(), ACCESS_DENIED);
+            assertEquals(p.getResult(),
+                         ACCESS_DENIED);
         }
     }
 
     @Test
     public void testAdminPermissions() {
-        testPermissions(new RoleImpl("admin"), null, HOME_PERSPECTIVE, ACCESS_GRANTED, null);
+        testPermissions(new RoleImpl("admin"),
+                        null,
+                        HOME_PERSPECTIVE,
+                        ACCESS_GRANTED,
+                        null);
     }
 
     @Test
     public void testDeveloperPermissions() {
-        testPermissions(new RoleImpl("developer"), DEVELOPER_DENIED, HOME_PERSPECTIVE, ACCESS_GRANTED, ACCESS_DENIED);
+        testPermissions(new RoleImpl("developer"),
+                        DEVELOPER_DENIED,
+                        HOME_PERSPECTIVE,
+                        ACCESS_GRANTED,
+                        ACCESS_DENIED);
     }
 
     @Test
     public void testAnalystPermissions() {
-        testPermissions(new RoleImpl("analyst"), ANALYST_DENIED, HOME_PERSPECTIVE, ACCESS_GRANTED, ACCESS_DENIED);
+        testPermissions(new RoleImpl("analyst"),
+                        ANALYST_DENIED,
+                        HOME_PERSPECTIVE,
+                        ACCESS_GRANTED,
+                        ACCESS_DENIED);
     }
 
     @Test
     public void testManagerPermissions() {
-        testPermissions(new RoleImpl("manager"), MANAGER_GRANTED, HOME_PERSPECTIVE, ACCESS_DENIED, ACCESS_GRANTED);
+        testPermissions(new RoleImpl("manager"),
+                        MANAGER_GRANTED,
+                        HOME_PERSPECTIVE,
+                        ACCESS_DENIED,
+                        ACCESS_GRANTED);
     }
 
     @Test
     public void testUserPermissions() {
-        testPermissions(new RoleImpl("user"), USER_GRANTED, HOME_PERSPECTIVE, ACCESS_DENIED, ACCESS_GRANTED);
+        testPermissions(new RoleImpl("user"),
+                        USER_GRANTED,
+                        HOME_PERSPECTIVE,
+                        ACCESS_DENIED,
+                        ACCESS_GRANTED);
     }
-    
+
     @Test
     public void testProcessAdminPermissions() {
-        testPermissions(new RoleImpl("process-admin"), PROCESS_ADMIN_GRANTED, HOME_PERSPECTIVE, ACCESS_DENIED, ACCESS_GRANTED);
+        testPermissions(new RoleImpl("process-admin"),
+                        PROCESS_ADMIN_GRANTED,
+                        HOME_PERSPECTIVE,
+                        ACCESS_DENIED,
+                        ACCESS_GRANTED);
     }
 
     public void testPermissions(Role role,
@@ -207,21 +236,24 @@ public class WorkbenchACLTest {
                                 AuthorizationResult defaultExpected,
                                 AuthorizationResult exceptionExpected) {
 
-        assertEquals(role != null ? policy.getHomePerspective(role) : policy.getHomePerspective(), homeExpected);
+        assertEquals(role != null ? policy.getHomePerspective(role) : policy.getHomePerspective(),
+                     homeExpected);
         PermissionCollection pc = policy.getPermissions(role);
 
         for (String permissionName : DEFAULT_DENIED) {
             if (exceptionList == null || !exceptionList.contains(permissionName)) {
                 Permission p = pc.get(permissionName);
                 assertNotNull(p);
-                assertEquals(p.getResult(), defaultExpected);
+                assertEquals(p.getResult(),
+                             defaultExpected);
             }
         }
         if (exceptionList != null) {
             for (String permissionName : exceptionList) {
                 Permission p = pc.get(permissionName);
                 assertNotNull(p);
-                assertEquals(p.getResult(), exceptionExpected);
+                assertEquals(p.getResult(),
+                             exceptionExpected);
             }
         }
     }

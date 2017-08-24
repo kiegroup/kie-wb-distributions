@@ -18,23 +18,11 @@ package org.kie.wb.selenium.model;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.kie.wb.selenium.model.persps.AbstractPerspective;
-import org.kie.wb.selenium.model.persps.AdminPagePerspective;
-import org.kie.wb.selenium.model.persps.AppsPerspective;
-import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
-import org.kie.wb.selenium.model.persps.BusinessDashboardsPerspective;
-import org.kie.wb.selenium.model.persps.ExecutionErrorsPerspective;
-import org.kie.wb.selenium.model.persps.ExecutionServersPerspective;
-import org.kie.wb.selenium.model.persps.HomePerspective;
-import org.kie.wb.selenium.model.persps.JobsPerspective;
-import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
-import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
-import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
-import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
-import org.kie.wb.selenium.model.persps.ProvisioningManagementPerspective;
-import org.kie.wb.selenium.model.persps.TaskAdministrationPerspective;
-import org.kie.wb.selenium.model.persps.TasksPerspective;
+import org.kie.wb.selenium.model.persps.*;
+
+import static org.kie.wb.selenium.model.KieWbDistribution.*;
 
 public class Persp<T extends AbstractPerspective> {
 
@@ -54,7 +42,9 @@ public class Persp<T extends AbstractPerspective> {
     public static final Persp<ProjectLibraryPerspective> PROJECTS
             = new Persp<>("Design",
                           "Projects",
-                          ProjectLibraryPerspective.class);
+                          ProjectLibraryPerspective.class,
+                          KIE_DROOLS_WB,
+                          KIE_WB);
     public static final Persp<BusinessDashboardsPerspective> DASHBOARDS
             = new Persp<>("Design",
                           "Dashboards",
@@ -73,43 +63,51 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Manage",
                           "Process Definitions",
                           ProcessDefinitionsPerspective.class,
-                          true);
+                          KIE_WB,
+                          KIE_WB_RUNTIME);
     public static final Persp<ProcessInstancesPerspective> PROCESS_INSTANCES
             = new Persp<>("Manage",
                           "Process Instances",
                           ProcessInstancesPerspective.class,
-                          true);
+                          KIE_WB,
+                          KIE_WB_RUNTIME);
     public static final Persp<TaskAdministrationPerspective> TASK_ADMINISTRATION
             = new Persp<>("Manage",
                           "Tasks Administration",
                           TaskAdministrationPerspective.class,
-                          true);
+                          KIE_WB,
+                          KIE_WB_RUNTIME);
     public static final Persp<JobsPerspective> JOBS
             = new Persp<>("Manage",
                           "Jobs",
                           JobsPerspective.class,
-                          true);
+                          KIE_WB,
+                          KIE_WB_RUNTIME);
     public static final Persp<ExecutionErrorsPerspective> EXECUTION_ERRORS
             = new Persp<>("Manage",
                           "Execution errors",
                           ExecutionErrorsPerspective.class,
-                          true);
+                          KIE_WB,
+                          KIE_WB_RUNTIME);
 
     public static final Persp<TasksPerspective> TASKS
             = new Persp<>("Track",
                           "Task Lists",
                           TasksPerspective.class,
-                          true);
+                          KIE_WB,
+                          KIE_WB_RUNTIME);
     public static final Persp<ProcessAndTaskDashboardPerspective> PROCESS_AND_TASK_DASHBOARD
             = new Persp<>("Track",
                           "Process & Task Reports",
                           ProcessAndTaskDashboardPerspective.class,
-                          true);
+                          KIE_WB,
+                          KIE_WB_RUNTIME);
     public static final Persp<AppsPerspective> BUSINESS_DASHBOARDS
             = new Persp<>("Track",
                           "Business Dashboards",
                           AppsPerspective.class,
-                          true);
+                          KIE_WB,
+                          KIE_WB_RUNTIME);
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPECTIVES = Collections.unmodifiableList(Arrays.asList(
             ADMIN,
@@ -127,15 +125,10 @@ public class Persp<T extends AbstractPerspective> {
             PROCESS_AND_TASK_DASHBOARD,
             BUSINESS_DASHBOARDS
     ));
-
-    public static List<Persp<? extends AbstractPerspective>> getAllPerspectives() {
-        return ALL_PERSPECTIVES;
-    }
-
     private final String parentMenu;
     private final String menuItem;
     private final Class<T> perspPageObjectClass;
-    private final boolean isKieWbOnly; // = Perspective is present in kie-wb only, not in kie-drools-wb
+    private final List<KieWbDistribution> kieWbDistributions;
 
     private Persp(String parentMenu,
                   String menuItem,
@@ -143,7 +136,9 @@ public class Persp<T extends AbstractPerspective> {
         this(parentMenu,
              menuItem,
              perspPageObjectClass,
-             false);
+             KIE_DROOLS_WB,
+             KIE_WB,
+             KIE_WB_RUNTIME);
     }
 
     /**
@@ -153,17 +148,20 @@ public class Persp<T extends AbstractPerspective> {
      * perspective
      * @param perspPageObjectClass Selenium Page Object class representing given
      * perspective
-     * @param isKieWbOnly true if the perspective is present only in kie-wb (not
-     * in kie-drools-wb), false otherwise
+     * @param distributions Distributions where perspective is present
      */
     private Persp(String parentMenu,
                   String menuItem,
                   Class<T> perspPageObjectClass,
-                  boolean isKieWbOnly) {
+                  KieWbDistribution... distributions) {
         this.parentMenu = parentMenu;
         this.menuItem = menuItem;
         this.perspPageObjectClass = perspPageObjectClass;
-        this.isKieWbOnly = isKieWbOnly;
+        this.kieWbDistributions = Arrays.asList(distributions);
+    }
+
+    public static List<Persp<? extends AbstractPerspective>> getAllPerspectives(final KieWbDistribution distribution) {
+        return ALL_PERSPECTIVES.stream().filter(perspective -> perspective.getKieWbDistributions().contains(distribution)).collect(Collectors.toList());
     }
 
     public String getMenu() {
@@ -178,8 +176,8 @@ public class Persp<T extends AbstractPerspective> {
         return perspPageObjectClass;
     }
 
-    public boolean isKieWbOnly() {
-        return isKieWbOnly;
+    public List<KieWbDistribution> getKieWbDistributions() {
+        return kieWbDistributions;
     }
 
     /**

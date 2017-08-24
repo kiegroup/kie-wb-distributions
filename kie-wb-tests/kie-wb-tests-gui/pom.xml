@@ -199,6 +199,26 @@
     </profile>
 
     <profile>
+      <id>kie-wb-runtime</id>
+      <properties>
+        <app.name>kie-wb-runtime</app.name>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>**/ProjectLibraryIntegrationTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
       <!--  Enable selenium UI tests to be run with Internet Explorer.
       Example usage: mvn clean install -Pwildfly10,kie-wb,selenium,ie -->
       <id>ie</id>
