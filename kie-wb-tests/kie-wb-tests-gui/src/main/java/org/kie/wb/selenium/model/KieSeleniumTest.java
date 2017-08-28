@@ -47,7 +47,7 @@ public abstract class KieSeleniumTest {
         String prop = System.getProperty("app.name");
         final Optional<KieWbDistribution> kieWbDistribution = KieWbDistribution.fromWarNameString(prop);
         if (kieWbDistribution.isPresent() == false) {
-            throw new IllegalStateException("Invalid app.name='" + prop + "' Expecting kie-wb, kie-wb-runtime or kie-drools-wb");
+            throw new IllegalStateException("Invalid app.name='" + prop + "' Expecting kie-wb, kie-wb-monitoring or kie-drools-wb");
         }
         LOG.info("Tested application: {}", prop);
         return kieWbDistribution.get();
