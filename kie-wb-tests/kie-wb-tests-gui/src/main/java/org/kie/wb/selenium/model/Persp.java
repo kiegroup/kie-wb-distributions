@@ -64,50 +64,50 @@ public class Persp<T extends AbstractPerspective> {
                           "Process Definitions",
                           ProcessDefinitionsPerspective.class,
                           KIE_WB,
-                          KIE_WB_RUNTIME);
+                          KIE_WB_MONITORING);
     public static final Persp<ProcessInstancesPerspective> PROCESS_INSTANCES
             = new Persp<>("Manage",
                           "Process Instances",
                           ProcessInstancesPerspective.class,
                           KIE_WB,
-                          KIE_WB_RUNTIME);
+                          KIE_WB_MONITORING);
     public static final Persp<TaskAdministrationPerspective> TASK_ADMINISTRATION
             = new Persp<>("Manage",
                           "Tasks Administration",
                           TaskAdministrationPerspective.class,
                           KIE_WB,
-                          KIE_WB_RUNTIME);
+                          KIE_WB_MONITORING);
     public static final Persp<JobsPerspective> JOBS
             = new Persp<>("Manage",
                           "Jobs",
                           JobsPerspective.class,
                           KIE_WB,
-                          KIE_WB_RUNTIME);
+                          KIE_WB_MONITORING);
     public static final Persp<ExecutionErrorsPerspective> EXECUTION_ERRORS
             = new Persp<>("Manage",
                           "Execution errors",
                           ExecutionErrorsPerspective.class,
                           KIE_WB,
-                          KIE_WB_RUNTIME);
+                          KIE_WB_MONITORING);
 
     public static final Persp<TasksPerspective> TASKS
             = new Persp<>("Track",
                           "Task Lists",
                           TasksPerspective.class,
                           KIE_WB,
-                          KIE_WB_RUNTIME);
+                          KIE_WB_MONITORING);
     public static final Persp<ProcessAndTaskDashboardPerspective> PROCESS_AND_TASK_DASHBOARD
             = new Persp<>("Track",
                           "Process & Task Reports",
                           ProcessAndTaskDashboardPerspective.class,
                           KIE_WB,
-                          KIE_WB_RUNTIME);
+                          KIE_WB_MONITORING);
     public static final Persp<AppsPerspective> BUSINESS_DASHBOARDS
             = new Persp<>("Track",
                           "Business Dashboards",
                           AppsPerspective.class,
                           KIE_WB,
-                          KIE_WB_RUNTIME);
+                          KIE_WB_MONITORING);
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPECTIVES = Collections.unmodifiableList(Arrays.asList(
             ADMIN,
@@ -138,7 +138,7 @@ public class Persp<T extends AbstractPerspective> {
              perspPageObjectClass,
              KIE_DROOLS_WB,
              KIE_WB,
-             KIE_WB_RUNTIME);
+             KIE_WB_MONITORING);
     }
 
     /**

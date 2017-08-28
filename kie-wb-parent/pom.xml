@@ -30,7 +30,7 @@
   <description>KIE Workbench Parent</description>
 
   <modules>
-    <module>kie-wb-runtime-webapp</module>
+    <module>kie-wb-monitoring-webapp</module>
     <module>kie-wb-webapp</module>
     <module>kie-wb-distribution-wars</module>
   </modules>

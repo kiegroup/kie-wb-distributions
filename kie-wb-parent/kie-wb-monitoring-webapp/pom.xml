@@ -9,11 +9,11 @@
     <version>7.3.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>kie-wb-runtime-webapp</artifactId>
+  <artifactId>kie-wb-monitoring-webapp</artifactId>
   <packaging>war</packaging>
 
-  <name>KIE Workbench - Runtime Webapp</name>
-  <description>KIE Workbench - Runtime Webapp</description>
+  <name>KIE Workbench - Monitoring Webapp</name>
+  <description>KIE Workbench - Monitoring Webapp</description>
 
   <dependencies>
     <!-- errai-cdi-jboss provides gwt-dev with the proper dependency exclusions and should be first on the classpath -->

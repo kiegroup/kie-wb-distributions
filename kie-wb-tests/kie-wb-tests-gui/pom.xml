@@ -199,9 +199,9 @@
     </profile>
 
     <profile>
-      <id>kie-wb-runtime</id>
+      <id>kie-wb-monitoring</id>
       <properties>
-        <app.name>kie-wb-runtime</app.name>
+        <app.name>kie-wb-monitoring</app.name>
       </properties>
       <build>
         <plugins>
