@@ -1,4 +1,4 @@
-# Sample Swarm config for KIE Workbench
+# Sample Swarm config for KIE Workbench Runtime
 swarm:
   management:
     security-realms:
