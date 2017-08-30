@@ -55,7 +55,7 @@ public class NavTreeDefinitions {
     public static final String GROUP_MANAGE = "wb_group_manage";
     public static final String ENTRY_PROCESS_DEFINITIONS = "wb_entry_process_definitions";
     public static final String ENTRY_PROCESS_INSTANCES = "wb_entry_process_instances";
-    public static final String ENTRY_ADMINISTRATION_TASKS = "wb_entry_administration_tasks";
+    public static final String ENTRY_ADMINISTRATION_TASKS = "wb_entry_task_administration";
     public static final String ENTRY_JOBS = "wb_entry_jobs";
     public static final String ENTRY_EXECUTION_ERRORS = "wb_execution_errors";
 

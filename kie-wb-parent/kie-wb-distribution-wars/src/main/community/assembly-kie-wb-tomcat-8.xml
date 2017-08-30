@@ -13,7 +13,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
 
   <componentDescriptors>
-    <componentDescriptor>src/main/assembly/component-kie-wb-tomcat-8-common.xml</componentDescriptor>
+    <componentDescriptor>${project.parent.basedir}/src/main/assembly/component-kie-wb-tomcat-8-common.xml</componentDescriptor>
   </componentDescriptors>
 
 </assembly>

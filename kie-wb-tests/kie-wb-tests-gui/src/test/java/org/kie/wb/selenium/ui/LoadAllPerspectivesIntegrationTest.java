@@ -37,20 +37,14 @@ public class LoadAllPerspectivesIntegrationTest extends KieSeleniumTest {
         login.getLoginPage();
         HomePerspective home = login.loginDefaultUser();
 
-        for (Persp<?> p : Persp.getAllPerspectives()) {
-            if (perspectiveInCurrentWebApp(p)) {
-                LOG.info("Checking perspective '" + p.getName() + "..");
-                AbstractPerspective perspective = home.getNavbar().navigateTo(p);
-                LOG.info("Navigated to perspective '" + p.getName() + "..");
-                assertTrue("Perspective " + p.getName() + " should be loaded",
-                           perspective.isDisplayed());
-            }
+        for (Persp<?> p : Persp.getAllPerspectives(DISTRO)) {
+            LOG.info("Checking perspective '" + p.getName() + "..");
+            AbstractPerspective perspective = home.getNavbar().navigateTo(p);
+            LOG.info("Navigated to perspective '" + p.getName() + "..");
+            assertTrue("Perspective " + p.getName() + " should be loaded",
+                       perspective.isDisplayed());
         }
 
         home.logout();
-    }
-
-    private boolean perspectiveInCurrentWebApp(Persp persp) {
-        return IS_KIE_WB || !persp.isKieWbOnly();
     }
 }

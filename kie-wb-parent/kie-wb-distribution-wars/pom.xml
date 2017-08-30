@@ -3,17 +3,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-wb-parent</artifactId>
     <version>8.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>kie-wb</artifactId>
+  <artifactId>kie-wb-distribution-wars</artifactId>
   <packaging>pom</packaging>
 
-  <name>KIE Workbench - Distribution Wars</name>
+  <name>KIE Workbench - Distribution Wars Parent</name>
   <description>This module builds the download wars for different application servers.</description>
+
+  <modules>
+    <module>kie-wb-runtime</module>
+    <module>kie-wb</module>
+  </modules>
 
   <dependencyManagement>
     <dependencies>
@@ -26,13 +32,6 @@
   </dependencyManagement>
 
   <dependencies>
-    <!-- Internal dependencies -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-webapp</artifactId>
-      <type>war</type>
-    </dependency>
-
     <!-- External dependencies -->
     <!-- Tomcat -->
     <dependency>
@@ -305,78 +304,22 @@
       <artifactId>uberfire-security-management-tomcat</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-wb-webapp</artifactId>
-      <type>war</type>
-    </dependency>
   </dependencies>
 
   <build>
-    <plugins>
+    <pluginManagement>
+      <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <finalName>kie-wb-${project.version}</finalName>
-          <descriptors>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-wildfly-10.xml</descriptor>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-eap-7.xml</descriptor>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-wb-tomcat-8.xml</descriptor>
-          </descriptors>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
         </configuration>
-      </plugin>
-    </plugins>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
-
-  <profiles>
-    <profile>
-      <id>productizedProfile</id>
-      <activation>
-        <property>
-          <name>productized</name>
-        </property>
-      </activation>
-
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <finalName>kie-wb-${project.version}</finalName>
-              <descriptors>
-                <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-eap-7-redhat.xml</descriptor>
-                <descriptor>${project.basedir}/src/main/productized/assembly-kie-wb-tomcat-8-redhat.xml</descriptor>
-              </descriptors>
-              <archive>
-                <addMavenDescriptor>false</addMavenDescriptor>
-              </archive>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-
-    </profile>
-  </profiles>
 
 </project>

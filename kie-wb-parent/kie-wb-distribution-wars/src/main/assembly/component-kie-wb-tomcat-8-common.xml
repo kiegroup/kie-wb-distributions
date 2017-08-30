@@ -3,7 +3,7 @@
   <!-- Assembly configuration for Tomcat 7, shared between the community and product assemblies. -->
   <fileSets>
       <fileSet>
-        <directory>${project.basedir}/src/main/assembly/tomcat8</directory>
+        <directory>${project.parent.basedir}/src/main/assembly/tomcat8</directory>
         <outputDirectory>.</outputDirectory>
       </fileSet>
     </fileSets>
@@ -61,17 +61,17 @@
           <include>xalan:serializer</include>
           <include>xerces:xercesImpl</include>
           <include>xml-resolver:xml-resolver</include>
-          
+
           <!-- UF Security management provider for Tomcat. -->
           <include>org.uberfire:uberfire-security-management-tomcat</include>
-          
+
         </includes>
         <unpack>false</unpack>
         <outputDirectory>WEB-INF/lib</outputDirectory>
       </dependencySet>
       <dependencySet>
         <includes>
-          <include>org.kie:kie-wb-webapp:war</include>
+          <include>org.kie:${artifactId}-webapp:war</include>
         </includes>
         <outputDirectory>.</outputDirectory>
         <unpack>true</unpack>
@@ -82,7 +82,7 @@
             <exclude>WEB-INF/beans.xml</exclude>
             <exclude>WEB-INF/web.xml</exclude>
             <exclude>WEB-INF/ejb-jar.xml</exclude>
-            <exclude>WEB-INF/jboss-deployment-structure.xml</exclude>
+            <exclude>META-INF/jboss-deployment-structure.xml</exclude>
             <exclude>WEB-INF/jboss-web.xml</exclude>
             <exclude>WEB-INF/classes/jbpm.audit.jms.properties</exclude>
 
