@@ -18,13 +18,11 @@ package org.kie.wb.selenium.model.persps;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.kie.wb.selenium.model.persps.authoring.ConflictingRepositoriesModal;
 import org.kie.wb.selenium.model.persps.authoring.ImportExampleModal;
-import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,24 +72,20 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     }
 
     public void importStockExampleProject(String targetRepo,
-                                          String targetOrgUnit,
                                           String... projects) {
         ImportExampleModal modal = importExample();
         modal.selectStockRepository();
         modal.selectProjects(projects);
-        modal.setTargetRepoAndOrgUnit(targetRepo,
-                                      targetOrgUnit);
+        modal.setTargetRepo(targetRepo);
     }
 
     public void importCustomExampleProject(Repository repo,
                                            String targetRepo,
-                                           String targetOrgUnit,
                                            String... projects) {
         ImportExampleModal modal = importExample();
         modal.selectCustomRepository(repo.getUrl());
         modal.selectProjects(projects);
-        modal.setTargetRepoAndOrgUnit(targetRepo,
-                                      targetOrgUnit);
+        modal.setTargetRepo(targetRepo);
     }
 
     private void possiblyOverrideGavConflict() {
