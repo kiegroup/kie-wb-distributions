@@ -17,7 +17,6 @@ package org.kie.wb.selenium.model.persps.authoring;
 
 import java.util.Arrays;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.kie.wb.selenium.model.widgets.ModalDialog;
 import org.kie.wb.selenium.util.ByUtil;
 import org.kie.wb.selenium.util.Waits;
@@ -36,8 +35,6 @@ public class ImportExampleModal extends ModalDialog {
     private WebElement repoUrlInput;
     @FindBy(id = "targetRepositoryTextBox")
     private WebElement targetRepoInput;
-    @FindByJQuery("#organizationalUnitsDropdown > input")
-    private WebElement targetOrgUnit;
 
     public static ImportExampleModal newInstance() {
         return ModalDialog.newInstance(ImportExampleModal.class,
@@ -71,10 +68,8 @@ public class ImportExampleModal extends ModalDialog {
         checkbox.click();
     }
 
-    public void setTargetRepoAndOrgUnit(String repoName,
-                                        String orgUnit) {
+    public void setTargetRepo(String repoName) {
         targetRepoInput.sendKeys(repoName);
-        targetOrgUnit.sendKeys(orgUnit);
         targetRepoInput.click(); //workaround to fire onchange event or something //TODO report not user friendly
         finish();
     }
