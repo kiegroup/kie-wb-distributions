@@ -85,7 +85,7 @@ public class Persp<T extends AbstractPerspective> {
                           KIE_WB_MONITORING);
     public static final Persp<ExecutionErrorsPerspective> EXECUTION_ERRORS
             = new Persp<>("Manage",
-                          "Execution errors",
+                          "Execution Errors",
                           ExecutionErrorsPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
