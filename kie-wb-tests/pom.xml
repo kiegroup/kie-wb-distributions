@@ -67,7 +67,7 @@
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
-        <artifactId>kie-wb-runtime-webapp</artifactId>
+        <artifactId>kie-wb-monitoring-webapp</artifactId>
         <version>${deployable.version}</version>
         <classifier>${deployable.classifier.swarm}</classifier>
       </dependency>
@@ -80,7 +80,7 @@
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
-        <artifactId>kie-wb-runtime</artifactId>
+        <artifactId>kie-wb-monitoring</artifactId>
         <version>${deployable.version}</version>
         <classifier>${deployable.classifier.wildfly10}</classifier>
         <type>war</type>
@@ -101,7 +101,7 @@
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
-        <artifactId>kie-wb-runtime</artifactId>
+        <artifactId>kie-wb-monitoring</artifactId>
         <version>${deployable.version}</version>
         <classifier>${deployable.classifier.eap7}</classifier>
         <type>war</type>
@@ -122,7 +122,7 @@
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
-        <artifactId>kie-wb-runtime</artifactId>
+        <artifactId>kie-wb-monitoring</artifactId>
         <version>${deployable.version}</version>
         <classifier>${deployable.classifier.tomcat8}</classifier>
         <type>war</type>
@@ -279,10 +279,10 @@
     </profile>
 
     <profile>
-      <id>kie-wb-runtime</id>
+      <id>kie-wb-monitoring</id>
       <properties>
         <deployable.groupId>org.kie</deployable.groupId>
-        <deployable.artifactId>kie-wb-runtime</deployable.artifactId>
+        <deployable.artifactId>kie-wb-monitoring</deployable.artifactId>
         <deployable.context>kie-wb</deployable.context>
       </properties>
     </profile>
@@ -302,7 +302,7 @@
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-wb-runtime</artifactId>
+          <artifactId>kie-wb-monitoring</artifactId>
           <classifier>${deployable.classifier.wildfly10}</classifier>
           <scope>test</scope>
           <type>war</type>
@@ -437,7 +437,7 @@
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-wb-runtime</artifactId>
+          <artifactId>kie-wb-monitoring</artifactId>
           <classifier>${deployable.classifier.tomcat8}</classifier>
           <type>war</type>
         </dependency>
@@ -560,7 +560,7 @@
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>kie-wb-runtime-webapp</artifactId>
+          <artifactId>kie-wb-monitoring-webapp</artifactId>
           <classifier>${deployable.classifier.swarm}</classifier>
           <exclusions>
             <exclusion>

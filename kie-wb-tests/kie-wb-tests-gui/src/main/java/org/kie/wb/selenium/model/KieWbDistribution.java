@@ -25,7 +25,7 @@ public enum KieWbDistribution {
 
     KIE_DROOLS_WB,
 
-    KIE_WB_RUNTIME;
+    KIE_WB_MONITORING;
 
     public static Optional<KieWbDistribution> fromWarNameString(final String warName) {
         return Arrays.asList(KieWbDistribution.values()).stream().filter(distro -> distro.getWarName().equals(warName)).findFirst();

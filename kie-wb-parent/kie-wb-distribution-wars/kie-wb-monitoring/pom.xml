@@ -11,15 +11,15 @@
     <version>8.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>kie-wb-runtime</artifactId>
+  <artifactId>kie-wb-monitoring</artifactId>
   <packaging>pom</packaging>
 
-  <name>KIE Workbench - Runtime Distribution Wars</name>
+  <name>KIE Workbench - Monitoring Distribution Wars</name>
 
   <dependencies>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-wb-runtime-webapp</artifactId>
+      <artifactId>kie-wb-monitoring-webapp</artifactId>
       <type>war</type>
     </dependency>
   </dependencies>
