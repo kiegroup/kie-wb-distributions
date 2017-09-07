@@ -618,6 +618,10 @@
       <artifactId>uberfire-commons</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.kie.soup</groupId>
+      <artifactId>kie-soup-commons</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-io</artifactId>
     </dependency>
@@ -1374,6 +1378,8 @@
             <!-- Datasource management -->
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-datasource-mgmt-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-datasource-mgmt-client</compileSourcesArtifact>
+
+            <compileSourcesArtifact>org.kie.soup:kie-soup-commons</compileSourcesArtifact>
 
             <!-- UberFire -->
             <compileSourcesArtifact>org.uberfire:uberfire-maven-support</compileSourcesArtifact>

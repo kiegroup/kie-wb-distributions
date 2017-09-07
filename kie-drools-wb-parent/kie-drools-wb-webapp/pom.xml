@@ -1049,6 +1049,10 @@
       <artifactId>uberfire-commons</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.kie.soup</groupId>
+      <artifactId>kie-soup-commons</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-metadata-api</artifactId>
     </dependency>
@@ -1332,6 +1336,10 @@
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-jaxrs-client</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-cdi</artifactId>
     </dependency>
 
     <!-- GWT and GWT Extensions -->
@@ -1961,6 +1969,8 @@
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-guided-rule-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-solver-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-solver-editor-client</compileSourcesArtifact>
+
+              <compileSourcesArtifact>org.kie.soup:kie-soup-commons</compileSourcesArtifact>
 
               <!-- UberFire -->
               <compileSourcesArtifact>org.uberfire:uberfire-maven-support</compileSourcesArtifact>
