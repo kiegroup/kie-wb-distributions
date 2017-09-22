@@ -156,12 +156,18 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
         // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
         // navigation tree node must be limited to 2 (see https://issues.jboss.org/browse/GUVNOR-2992)
-        navTreeEditor.setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
-                                   2);
+        navTreeEditor.setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH, 2);
 
-        // Mega Menu does not support dividers and root menu items (menu items are only allowed inside menu groups).
-        navTreeEditor.setNewDividerEnabled(false);
-        navTreeEditor.setNewPerspectiveEnabled(NavTreeDefinitions.GROUP_WORKBENCH,
-                                               false);
+        // Mega Menu does not support dividers at any level
+        navTreeEditor.setNewDividerEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false).applyToAllChildren();
+
+        // Mega Menu does not support single menu items at first level (menu items are only allowed inside menu groups).
+        navTreeEditor.setNewPerspectiveEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
+
+        // Mega Menu is the only nav widget which allow links to core perspectives
+        navTreeEditor.setOnlyRuntimePerspectives(NavTreeDefinitions.GROUP_WORKBENCH, false).applyToAllChildren();
+
+        // Mega Menu's linked perspectives don't support passing a navigation context
+        navTreeEditor.setPerspectiveContextEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false).applyToAllChildren();
     }
 }
