@@ -137,10 +137,12 @@
     <dependency>
       <groupId>org.kie.server</groupId>
       <artifactId>kie-server-controller-websocket</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.server</groupId>
       <artifactId>kie-server-controller-websocket-common</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -166,12 +168,14 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-library-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- identity provider -->
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-identity-session-provider</artifactId>
+      <scope>runtime</scope>
       <exclusions>
         <exclusion>
           <groupId>javax.el</groupId>
@@ -206,6 +210,12 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-workbench-models-guided-scorecard</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>stax</groupId>
+          <artifactId>stax-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -252,6 +262,7 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-structure-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -274,6 +285,7 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-m2repo-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -287,6 +299,7 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-project-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -308,6 +321,7 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-message-console-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -322,6 +336,7 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-services-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -335,6 +350,7 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-asset-mgmt-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Guvnor ALA -->
@@ -345,6 +361,7 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-ala-ui-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
@@ -363,26 +380,32 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-ala-openshift-ui-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-ala-openshift-provider</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-ala-registry-vfs</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-ala-services-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-ala-services-rest</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-ala-provisioning-pipelines-openshift</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Common -->
@@ -399,10 +422,12 @@
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
       <artifactId>kie-wb-common-datamodel-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
       <artifactId>kie-wb-common-refactoring-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
@@ -421,6 +446,11 @@
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
       <artifactId>kie-wb-common-services-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-project-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -430,6 +460,7 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-project-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -448,6 +479,7 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-project-explorer-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -460,21 +492,31 @@
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-default-editor-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-default-editor-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-default-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-server-ui-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-server-ui-client</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-server-ui-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -488,10 +530,12 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-contributors-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-social-home-page-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -513,6 +557,7 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-data-modeller-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -531,6 +576,7 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-examples-screen-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -554,33 +600,52 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-datasource-mgmt-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-datasource-mgmt-wildfly</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-datasource-mgmt-dbcp</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-datasource-mgmt-dashbuilder</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- KIE Workbench Playground Repository -->
     <dependency>
       <groupId>org.kie.workbench.playground</groupId>
       <artifactId>playground-parent</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Drools Workbench Services -->
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-verifier-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Drools Workbench Screens -->
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-verifier-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-verifier-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-rule-editor-api</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-guided-rule-editor-client</artifactId>
@@ -589,6 +654,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-guided-rule-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-template-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -598,6 +668,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-guided-template-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-dtable-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -607,6 +682,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-guided-dtable-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-dtree-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -616,6 +696,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-guided-dtree-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-guided-scorecard-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -625,6 +710,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-guided-scorecard-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-drl-text-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -634,6 +724,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-drl-text-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-enum-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -643,10 +738,20 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-enum-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-factmodel-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-factmodel-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-dsl-text-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -656,6 +761,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-dsl-text-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-dtable-xls-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -665,6 +775,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-dtable-xls-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-scorecard-xls-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -674,6 +789,7 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-scorecard-xls-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -687,6 +803,11 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-globals-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-test-scenario-editor-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -696,6 +817,7 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-test-scenario-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -726,10 +848,12 @@
     <dependency>
       <groupId>org.optaplanner</groupId>
       <artifactId>optaplanner-wb-domain-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.optaplanner</groupId>
       <artifactId>optaplanner-wb-guided-rule-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.optaplanner</groupId>
@@ -752,6 +876,7 @@
     <dependency>
       <groupId>org.optaplanner</groupId>
       <artifactId>optaplanner-wb-solver-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- jBPM Designer -->
@@ -767,6 +892,7 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-backend</artifactId>
+      <scope>runtime</scope>
       <exclusions>
         <exclusion>
           <groupId>org.jbpm</groupId>
@@ -793,6 +919,10 @@
           <artifactId>jbpm-workitems-webservice</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>batik</groupId>
+      <artifactId>batik-ext</artifactId>
     </dependency>
 
     <!-- org.dashbuilder -->
@@ -908,6 +1038,10 @@
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-maven-integration</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
       <artifactId>uberfire-commons</artifactId>
     </dependency>
     <dependency>
@@ -945,6 +1079,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-servlet-security</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- UberFire Preferences Extension -->
@@ -976,6 +1111,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-runtime-plugins-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -1003,12 +1139,17 @@
     <!-- UberFire Apps -->
     <dependency>
       <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-apps-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
       <artifactId>uberfire-apps-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-apps-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- UF Extensions -->
@@ -1032,6 +1173,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-metadata-backend-lucene</artifactId>
+      <scope>runtime</scope>
       <exclusions>
         <exclusion>
           <groupId>jakarta-regexp</groupId>
@@ -1042,10 +1184,12 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-metadata-commons-io</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Other UberFire -->
@@ -1067,6 +1211,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-widgets-service-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -1086,6 +1231,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-backend-server</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -1096,6 +1242,11 @@
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-client-all</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-server-all</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -1173,11 +1324,21 @@
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-cdi-server</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.jboss.errai</groupId>
+      <artifactId>errai-jaxrs-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- GWT and GWT Extensions -->
     <dependency>
       <groupId>de.benediktmeurer.gwt-slf4j</groupId>
       <artifactId>gwt-slf4j</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mozilla</groupId>
+      <artifactId>rhino</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -1190,6 +1351,11 @@
           <artifactId>sac</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <classifier>no_aop</classifier>
     </dependency>
 
     <dependency>
@@ -1219,6 +1385,7 @@
     <dependency>
       <groupId>org.guvnor</groupId>
       <artifactId>guvnor-rest-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Form Modeler dependencies -->
@@ -1246,12 +1413,14 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
 
     <dependency>
       <groupId>org.kie.uberfire</groupId>
       <artifactId>i18n-taglib</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- hack to disable sisu annotation processing (that scans client side types) -->
@@ -1271,6 +1440,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-security-management-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -1295,6 +1465,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-security-management-wildfly</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Validation -->
@@ -1360,6 +1531,7 @@
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
       <artifactId>kie-wb-common-forms-adf-engine-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -1382,6 +1554,7 @@
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
       <artifactId>kie-wb-common-dynamic-forms-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -1409,6 +1582,7 @@
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
       <artifactId>kie-wb-common-forms-editor-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Stunner and BPMN set. -->
@@ -1446,6 +1620,7 @@
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
       <artifactId>kie-wb-common-stunner-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -1520,6 +1695,7 @@
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
       <artifactId>kie-wb-common-stunner-bpmn-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -1547,6 +1723,7 @@
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
       <artifactId>kie-wb-common-stunner-forms-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -1563,6 +1740,7 @@
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
       <artifactId>kie-wb-common-stunner-project-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
