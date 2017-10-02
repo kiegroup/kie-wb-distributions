@@ -26,6 +26,7 @@ import org.dashbuilder.navigation.NavItem;
 import org.dashbuilder.navigation.NavTree;
 import org.dashbuilder.navigation.service.NavigationServices;
 import org.guvnor.common.services.shared.config.AppConfigService;
+import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,7 @@ import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.mockito.Mock;
+import org.uberfire.client.authz.PerspectiveTreeProvider;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
@@ -69,6 +71,12 @@ public class KieWorkbenchEntryPointTest {
 
     @Mock
     protected PermissionTreeSetup permissionTreeSetup;
+
+    @Mock
+    private PerspectiveTreeProvider perspectiveTreeProvider;
+
+    @Mock
+    private SyncBeanManager syncBeanManager;
 
     @Mock
     private DefaultAdminPageHelper adminPageHelper;
@@ -121,6 +129,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 contentExplorerScreen));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
+
+        navTreeEditor = spy(new NavTreeEditor(mock(NavTreeEditor.View.class), syncBeanManager, perspectiveTreeProvider));
         when(contentExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
     }
 
@@ -130,11 +140,11 @@ public class KieWorkbenchEntryPointTest {
 
         verify(workbench).addStartupBlocker(KieWorkbenchEntryPoint.class);
         verify(permissionTreeSetup).configureTree();
-        verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
-                                           2);
-        verify(navTreeEditor).setNewDividerEnabled(false);
-        verify(navTreeEditor).setNewPerspectiveEnabled(NavTreeDefinitions.GROUP_WORKBENCH,
-                                                       false);
+        verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH, 2);
+        verify(navTreeEditor).setNewDividerEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
+        verify(navTreeEditor).setNewPerspectiveEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
+        verify(navTreeEditor).setOnlyRuntimePerspectives(NavTreeDefinitions.GROUP_WORKBENCH, false);
+        verify(navTreeEditor).setPerspectiveContextEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
     }
 
     @Test
