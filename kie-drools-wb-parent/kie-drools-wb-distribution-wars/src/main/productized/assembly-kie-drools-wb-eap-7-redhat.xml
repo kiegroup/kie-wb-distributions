@@ -26,27 +26,11 @@
     <format>dir</format>
   </formats>
 
-  <componentDescriptors>
-    <componentDescriptor>src/main/assembly/component-kie-drools-wb-product-common.xml</componentDescriptor>
-  </componentDescriptors>
-
   <includeBaseDirectory>false</includeBaseDirectory>
 
-  <dependencySets>
-    <dependencySet>
-      <includes>
-        <include>org.kie:kie-drools-wb-webapp:war</include>
-      </includes>
-      <outputDirectory>.</outputDirectory>
-      <unpack>true</unpack>
-      <unpackOptions>
-        <excludes>
-          <exclude>WEB-INF/classes/application-roles.properties</exclude>
-          <exclude>WEB-INF/classes/application-users.properties</exclude>
-        </excludes>
-      </unpackOptions>
-      <useStrictFiltering>true</useStrictFiltering>
-    </dependencySet>
-  </dependencySets>
+  <componentDescriptors>
+    <componentDescriptor>src/main/assembly/component-kie-drools-wb-wildfly-10-eap-7-common.xml</componentDescriptor>
+    <componentDescriptor>src/main/assembly/component-kie-drools-wb-product-common.xml</componentDescriptor>
+  </componentDescriptors>
 
 </assembly>
