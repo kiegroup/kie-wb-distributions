@@ -23,6 +23,7 @@ import org.dashbuilder.navigation.impl.NavTreeBuilder;
 import org.kie.workbench.drools.client.resources.i18n.NavigationConstants;
 
 import static org.dashbuilder.navigation.workbench.NavWorkbenchCtx.perspective;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.APPS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.BUSINESS_DASHBOARDS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.HOME;
@@ -45,6 +46,9 @@ public class NavTreeDefinitions {
     public static final String GROUP_DEVOPS = "wb_group_devops";
     public static final String ENTRY_DEPLOYMENTS = "wb_entry_deployments";
     public static final String ENTRY_EXECUTION_SERVERS = "wb_entry_execution_servers";
+
+    public static final String GROUP_TRACK = "wb_group_track";
+    public static final String ENTRY_BUSINESS_DASHBOARDS = "wb_entry_business_dashboards";
 
     private NavigationConstants i18n = NavigationConstants.INSTANCE;
 
@@ -89,6 +93,16 @@ public class NavTreeDefinitions {
                       i18n.navTreeExecutionServersDescr(),
                       true,
                       perspective(SERVER_MANAGEMENT))
+                .endGroup()
+                .group(GROUP_TRACK,
+                       i18n.navTreeTrackName(),
+                       i18n.navTreeTrackDescr(),
+                       true)
+                .item(ENTRY_BUSINESS_DASHBOARDS,
+                      i18n.navTreeBusinessDashboardsName(),
+                      i18n.navTreeBusinessDashboardsDescr(),
+                      true,
+                      perspective(APPS))
                 .endGroup()
                 .endGroup()
                 .endGroup()
