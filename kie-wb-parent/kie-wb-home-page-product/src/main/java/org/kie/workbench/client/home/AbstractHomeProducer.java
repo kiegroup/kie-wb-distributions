@@ -16,10 +16,9 @@
 
 package org.kie.workbench.client.home;
 
-import javax.inject.Inject;
-
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.workbench.client.resources.i18n.Constants;
+import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeModelProvider;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
@@ -27,34 +26,45 @@ import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.uberfire.client.mvp.PlaceManager;
 
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.APPS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.EXECUTION_ERRORS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.JOBS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DASHBOARD;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DEFINITIONS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_INSTANCES;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS_ADMIN;
 import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
 public abstract class AbstractHomeProducer implements HomeModelProvider {
 
-    @Inject
     protected PlaceManager placeManager;
-
-    @Inject
     protected TranslationService translationService;
+    private ShortcutHelper shortcutHelper;
+
+    public AbstractHomeProducer() {
+        //CDI proxy
+    }
+
+    public AbstractHomeProducer(final PlaceManager placeManager,
+                                final TranslationService translationService,
+                                final ShortcutHelper shortcutHelper) {
+        this.placeManager = placeManager;
+        this.translationService = translationService;
+        this.shortcutHelper = shortcutHelper;
+    }
 
     public HomeModel get() {
         final HomeModel model = new HomeModel(translationService.format(Constants.Heading),
                                               translationService.format(Constants.SubHeading),
                                               "images/product_home_bg.svg");
 
-        final HomeShortcut design = createDesignShortcut();
-
-        final HomeShortcut devOps = createDevOpsShortcut();
-
-        final HomeShortcut manage = createManageShortcut();
-
-        final HomeShortcut track = createTrackShortcut();
-
-        model.addShortcut(design);
-        model.addShortcut(devOps);
-        model.addShortcut(manage);
-        model.addShortcut(track);
+        model.addShortcut(createDesignShortcut());
+        model.addShortcut(createDevOpsShortcut());
+        model.addShortcut(createManageShortcut());
+        model.addShortcut(createTrackShortcut());
 
         return model;
     }
@@ -96,19 +106,32 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
     }
 
     protected HomeShortcut createDevOpsShortcut() {
+        final HomeShortcutLink deployments = new HomeShortcutLink(translationService.format(Constants.Deployments),
+                                                                  DEPLOYMENTS);
+        final HomeShortcutLink servers = new HomeShortcutLink(translationService.format(Constants.Servers),
+                                                              SERVER_MANAGEMENT);
+        final boolean isDeploymentsAuthorized = shortcutHelper.authorize(deployments.getPerspectiveIdentifier());
+
         final HomeShortcut devOps = ModelUtils.makeShortcut("fa fa-gears",
                                                             translationService.format(Constants.DevOps),
-                                                            translationService.format(Constants.DevOpsDescription),
+                                                            getDevOpsDescription(isDeploymentsAuthorized),
                                                             () -> placeManager.goTo(SERVER_MANAGEMENT),
                                                             SERVER_MANAGEMENT,
                                                             PERSPECTIVE);
-        devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Deployments),
-                                            DEPLOYMENTS));
-        devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Servers),
-                                            SERVER_MANAGEMENT));
+        if (isDeploymentsAuthorized) {
+            devOps.addLink(deployments);
+        }
+        devOps.addLink(servers);
+
         return devOps;
     }
 
-    protected abstract HomeShortcut createDesignShortcut();
+    private String getDevOpsDescription(final boolean isDeploymentsAuthorized) {
+        if (isDeploymentsAuthorized) {
+            return translationService.format(Constants.DevOpsDescription2);
+        }
+        return translationService.format(Constants.DevOpsDescription1);
+    }
 
+    protected abstract HomeShortcut createDesignShortcut();
 }
