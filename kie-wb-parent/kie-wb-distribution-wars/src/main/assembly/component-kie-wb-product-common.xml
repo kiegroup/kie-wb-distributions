@@ -22,5 +22,9 @@
       <directory>${project.parent.basedir}/src/main/productized/webapp</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/src/main/productized/resources</directory>
+      <outputDirectory>WEB-INF/classes</outputDirectory>
+    </fileSet>
   </fileSets>
 </component>

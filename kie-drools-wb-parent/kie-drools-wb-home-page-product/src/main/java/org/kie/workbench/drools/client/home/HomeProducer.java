@@ -19,6 +19,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.errai.ui.client.local.spi.TranslationService;
+import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeModelProvider;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
@@ -27,23 +28,44 @@ import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.drools.client.resources.i18n.Constants;
 import org.uberfire.client.mvp.PlaceManager;
 
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.BUSINESS_DASHBOARDS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
 import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
 @ApplicationScoped
 public class HomeProducer implements HomeModelProvider {
 
-    @Inject
     private PlaceManager placeManager;
+    private TranslationService translationService;
+    private ShortcutHelper shortcutHelper;
+
+    public HomeProducer() {
+        //CDI proxy
+    }
 
     @Inject
-    private TranslationService translationService;
+    public HomeProducer(final PlaceManager placeManager,
+                        final TranslationService translationService,
+                        final ShortcutHelper shortcutHelper) {
+        this.placeManager = placeManager;
+        this.translationService = translationService;
+        this.shortcutHelper = shortcutHelper;
+    }
 
     public HomeModel get() {
         final HomeModel model = new HomeModel(translationService.format(Constants.Heading),
                                               translationService.format(Constants.SubHeading),
                                               "images/product_home_bg.svg");
 
+        model.addShortcut(createDesignShortcut());
+        model.addShortcut(createDevOpsShortcut());
+
+        return model;
+    }
+
+    private HomeShortcut createDesignShortcut() {
         final HomeShortcut design = ModelUtils.makeShortcut("pficon pficon-blueprint",
                                                             translationService.format(Constants.Design),
                                                             translationService.format(Constants.DesignDescription),
@@ -54,21 +76,34 @@ public class HomeProducer implements HomeModelProvider {
                                             LIBRARY));
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
                                             BUSINESS_DASHBOARDS));
+        return design;
+    }
+
+    private HomeShortcut createDevOpsShortcut() {
+        final HomeShortcutLink deployments = new HomeShortcutLink(translationService.format(Constants.Deployments),
+                                                                  DEPLOYMENTS);
+        final HomeShortcutLink servers = new HomeShortcutLink(translationService.format(Constants.Servers),
+                                                              SERVER_MANAGEMENT);
+        final boolean isDeploymentsAuthorized = shortcutHelper.authorize(deployments.getPerspectiveIdentifier());
 
         final HomeShortcut devOps = ModelUtils.makeShortcut("fa fa-gears",
                                                             translationService.format(Constants.DevOps),
-                                                            translationService.format(Constants.DevOpsDescription),
+                                                            getDevOpsDescription(isDeploymentsAuthorized),
                                                             () -> placeManager.goTo(SERVER_MANAGEMENT),
                                                             SERVER_MANAGEMENT,
                                                             PERSPECTIVE);
-        devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Deployments),
-                                            DEPLOYMENTS));
-        devOps.addLink(new HomeShortcutLink(translationService.format(Constants.Servers),
-                                            SERVER_MANAGEMENT));
+        if (isDeploymentsAuthorized) {
+            devOps.addLink(deployments);
+        }
+        devOps.addLink(servers);
 
-        model.addShortcut(design);
-        model.addShortcut(devOps);
+        return devOps;
+    }
 
-        return model;
+    private String getDevOpsDescription(final boolean isDeploymentsAuthorized) {
+        if (isDeploymentsAuthorized) {
+            return translationService.format(Constants.DevOpsDescription2);
+        }
+        return translationService.format(Constants.DevOpsDescription1);
     }
 }

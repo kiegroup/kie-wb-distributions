@@ -21,6 +21,7 @@ import javax.enterprise.inject.Alternative;
 
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.workbench.client.resources.i18n.Constants;
+import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeModelProvider;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
@@ -34,6 +35,19 @@ import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 @Alternative
 @ApplicationScoped
 public class HomeProducer extends AbstractHomeProducer {
+
+    public HomeProducer() {
+        //CDI proxy
+    }
+
+    @Inject
+    public HomeProducer(final PlaceManager placeManager,
+                        final TranslationService translationService,
+                        final ShortcutHelper shortcutHelper) {
+        super(placeManager,
+              translationService,
+              shortcutHelper);
+    }
 
     @Override
     protected HomeShortcut createDesignShortcut() {
