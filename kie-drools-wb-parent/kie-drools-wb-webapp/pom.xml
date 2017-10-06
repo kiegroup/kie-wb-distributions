@@ -832,7 +832,11 @@
     <!-- Models for OptaPlanner Workbench Screens -->
     <dependency>
       <groupId>org.optaplanner</groupId>
-      <artifactId>optaplanner-wb-upstream-model</artifactId>
+      <artifactId>optaplanner-workbench-models-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.optaplanner</groupId>
+      <artifactId>optaplanner-workbench-models-datamodel-api</artifactId>
     </dependency>
 
     <!-- OptaPlanner Workbench Screens -->
@@ -1947,7 +1951,8 @@
               <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-client</compileSourcesArtifact>
 
               <!-- Models for OptaPlanner Workbench Screens -->
-              <compileSourcesArtifact>org.optaplanner:optaplanner-wb-upstream-model</compileSourcesArtifact>
+              <compileSourcesArtifact>org.optaplanner:optaplanner-workbench-models-datamodel-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.optaplanner:optaplanner-workbench-models-core</compileSourcesArtifact>
 
               <!-- OptaPlanner WB -->
               <compileSourcesArtifact>org.optaplanner:optaplanner-wb-domain-editor-api</compileSourcesArtifact>
