@@ -43,6 +43,10 @@ public interface NavigationConstants
 
     String navTreeExecutionServersName();
 
+    String navTreeTrackName();
+
+    String navTreeBusinessDashboardsName();
+
     String navTreeRootDescr();
 
     String navTreeWorkbenchDescr();
@@ -60,4 +64,8 @@ public interface NavigationConstants
     String navTreeDeploymentsDescr();
 
     String navTreeExecutionServersDescr();
+
+    String navTreeTrackDescr();
+
+    String navTreeBusinessDashboardsDescr();
 }

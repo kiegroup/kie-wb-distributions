@@ -104,7 +104,7 @@ public class HomeProducerTest {
         assertEquals(Constants.SubHeading,
                      model.getDescription());
 
-        assertEquals(2,
+        assertEquals(3,
                      model.getShortcuts().size());
         assertEquals(Constants.Design,
                      model.getShortcuts().get(0).getHeading());
@@ -114,6 +114,10 @@ public class HomeProducerTest {
                      model.getShortcuts().get(1).getHeading());
         assertEquals(devOpsDescription,
                      model.getShortcuts().get(1).getSubHeading());
+        assertEquals(Constants.Track,
+                     model.getShortcuts().get(2).getHeading());
+        assertEquals(Constants.TrackDescription,
+                     model.getShortcuts().get(2).getSubHeading());
     }
 
     private void assertDesign(final HomeModel model) {
