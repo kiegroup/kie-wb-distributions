@@ -22,7 +22,7 @@ import javax.inject.Inject;
 import org.dashbuilder.client.cms.screen.explorer.ContentExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
 import org.dashbuilder.client.navigation.event.NavTreeChangedEvent;
-import org.dashbuilder.client.navigation.widget.NavTreeEditor;
+import org.dashbuilder.client.navigation.widget.editor.NavTreeEditor;
 import org.dashbuilder.navigation.NavTree;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.jboss.errai.common.client.api.Caller;

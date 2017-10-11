@@ -46,13 +46,7 @@ public class NavTreeDefinitionsTest {
         final List<NavItem> rootItems = navTree.getRootItems();
         assertEquals(1, rootItems.size());
 
-        final NavGroup rootItem = (NavGroup) rootItems.get(0);
-        assertEquals(GROUP_ROOT, rootItem.getId());
-        assertEquals(false, rootItem.isModifiable());
-        final List<NavItem> rootChildren = rootItem.getChildren();
-        assertEquals(1, rootChildren.size());
-
-        final NavGroup workbenchItem = (NavGroup) rootChildren.get(0);
+        final NavGroup workbenchItem = (NavGroup) rootItems.get(0);
         assertEquals(GROUP_WORKBENCH, workbenchItem.getId());
         assertEquals(false, workbenchItem.isModifiable());
         final List<NavItem> workbenchChildren = workbenchItem.getChildren();
