@@ -196,49 +196,6 @@
                 </artifactItems>
               </configuration>
             </execution>
-            <execution>
-              <id>copy-files-to-webapp-directory</id>
-              <phase>process-resources</phase>
-              <goals>
-                <goal>unpack</goal>
-              </goals>
-              <configuration>
-                <artifactItems>
-                  <artifactItem>
-                    <groupId>org.jbpm</groupId>
-                    <artifactId>jbpm-form-modeler-request-dispatcher</artifactId>
-                    <type>jar</type>
-                    <overWrite>true</overWrite>
-                    <outputDirectory>src/main/webapp</outputDirectory>
-                    <includes>**/*.tld, **/*.gif, **/*.jpg, **/*.js, **/*.jsp, **/*.css, **/*.png</includes>
-                  </artifactItem>
-                  <artifactItem>
-                    <groupId>org.jbpm</groupId>
-                    <artifactId>jbpm-form-modeler-form-editor</artifactId>
-                    <type>jar</type>
-                    <overWrite>true</overWrite>
-                    <outputDirectory>src/main/webapp</outputDirectory>
-                    <includes>**/*.tld, **/*.gif, **/*.jpg, **/*.js, **/*.jsp, **/*.css, **/*.png</includes>
-                  </artifactItem>
-                  <artifactItem>
-                    <groupId>org.jbpm</groupId>
-                    <artifactId>jbpm-form-modeler-static-resources</artifactId>
-                    <type>jar</type>
-                    <overWrite>true</overWrite>
-                    <outputDirectory>src/main/webapp</outputDirectory>
-                    <includes>**/*.tld, **/*.gif, **/*.jpg, **/*.js, **/*.jsp, **/*.css, **/*.png</includes>
-                  </artifactItem>
-                  <artifactItem>
-                    <groupId>org.jbpm</groupId>
-                    <artifactId>jbpm-form-modeler-ui</artifactId>
-                    <type>jar</type>
-                    <overWrite>true</overWrite>
-                    <outputDirectory>src/main/webapp</outputDirectory>
-                    <includes>**/*.tld, **/*.gif, **/*.jpg, **/*.js, **/*.jsp, **/*.css, **/*.png</includes>
-                  </artifactItem>
-                </artifactItems>
-              </configuration>
-            </execution>
           </executions>
         </plugin>
         <plugin>

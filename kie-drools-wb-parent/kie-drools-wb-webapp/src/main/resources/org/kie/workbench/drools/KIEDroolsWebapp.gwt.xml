@@ -28,10 +28,6 @@
   <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
   <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
 
-  <!-- Form-Modeler -->
-  <inherits name="org.jbpm.formModeler.renderer.FormRendererAPI"/>
-  <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>
-
   <!-- Guvnor dependencies -->
   <inherits name="org.guvnor.structure.GuvnorStructureClient"/>
   <inherits name="org.guvnor.m2repo.GuvnorM2RepoEditorClient"/>
