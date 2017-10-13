@@ -30,11 +30,6 @@
   <inherits name="org.jbpm.workbench.common.JbpmWorkbenchCommonClient"/>
   <inherits name="org.jbpm.workbench.df.JbpmWorkbenchDataFiltersClient"/>
   <inherits name="org.jbpm.workbench.forms.JbpmWorkbenchFormsClient"/>
-  <inherits name="org.jbpm.workbench.forms.modeler.JbpmWorkbenchFormsModelerClient"/>
-
-  <!-- Form-Modeler -->
-  <inherits name="org.jbpm.formModeler.editor.FormModelerEditorClient"/>
-  <inherits name="org.jbpm.formModeler.renderer.FormRendererClient"/>
 
   <!-- Dashbuilder -->
   <inherits name="org.jbpm.dashboard.renderer.DashboardRendererApi"/>

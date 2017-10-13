@@ -312,18 +312,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   </mime-mapping>
   <!-- End jBPM Designer -->
 
-  <!-- start form-modeler -->
-  <servlet>
-    <servlet-name>Controller</servlet-name>
-    <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>Controller</servlet-name>
-    <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
-  </servlet-mapping>
-  <!-- end form-modeler-->
-
   <!-- security settings -->
   <security-constraint>
     <web-resource-collection>
@@ -376,21 +364,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/plugins/*</url-pattern>
       <url-pattern>/maven2wb/*</url-pattern>
       <url-pattern>/verifier/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>admin</role-name>
-      <role-name>analyst</role-name>
-      <role-name>developer</role-name>
-      <role-name>user</role-name>
-      <role-name>manager</role-name>
-      <role-name>process-admin</role-name>
-    </auth-constraint>
-  </security-constraint>
-
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>formModeler</web-resource-name>
-      <url-pattern>/formModeler/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
