@@ -34,8 +34,6 @@ public interface NavigationConstants
 
     NavigationConstants INSTANCE = GWT.create(NavigationConstants.class);
 
-    String navTreeRootName();
-
     String navTreeWorkbenchName();
 
     String navTreeHomeName();
@@ -71,8 +69,6 @@ public interface NavigationConstants
     String navTreeProcessesAndTasksDashboardName();
 
     String navTreeBusinessDashboardsName();
-
-    String navTreeRootDescr();
 
     String navTreeWorkbenchDescr();
 

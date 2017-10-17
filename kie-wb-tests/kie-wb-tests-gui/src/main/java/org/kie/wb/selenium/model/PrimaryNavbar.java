@@ -38,7 +38,7 @@ public class PrimaryNavbar {
     private static final Logger LOG = LoggerFactory.getLogger(PrimaryNavbar.class);
     //Contains both the link to expand menu as well as menu item links
     private static final String NAVBAR_MENU = ".navbar li.dropdown:has(a#mega-menu-dropdown)";
-    private static final String INFO_ALERT = "div[class*='alert-info']";
+    private static final String INFO_ALERT = "div.info-alert:not(.uf-cms-nav-alert-panel)";
 
     @FindBy(css = "#mega-menu > nav")
     private WebElement navbar;

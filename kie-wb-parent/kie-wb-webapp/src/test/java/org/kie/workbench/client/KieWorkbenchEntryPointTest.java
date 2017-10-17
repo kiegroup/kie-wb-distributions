@@ -19,8 +19,11 @@ package org.kie.workbench.client;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.dashbuilder.client.cms.screen.explorer.ContentExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
+import org.dashbuilder.client.navigation.event.NavTreeLoadedEvent;
 import org.dashbuilder.client.navigation.impl.NavigationManagerImpl;
-import org.dashbuilder.client.navigation.widget.NavTreeEditor;
+import org.dashbuilder.client.navigation.widget.editor.NavTreeEditor;
+import org.dashbuilder.client.navigation.widget.editor.NavTreeEditorView;
+import org.dashbuilder.client.navigation.widget.editor.TargetPerspectiveEditor;
 import org.dashbuilder.navigation.NavGroup;
 import org.dashbuilder.navigation.NavItem;
 import org.dashbuilder.navigation.NavTree;
@@ -42,6 +45,7 @@ import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.mocks.CallerMock;
+import org.uberfire.mocks.EventSourceMock;
 import org.uberfire.mvp.Command;
 import org.uberfire.workbench.model.menu.MenuFactory;
 
@@ -97,6 +101,12 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     protected NavTreeEditor navTreeEditor;
 
+    @Mock
+    protected TargetPerspectiveEditor targetPerspectiveEditor;
+
+    @Mock
+    protected EventSourceMock<NavTreeLoadedEvent> navTreeLoadedEvent;
+
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     @Before
@@ -104,6 +114,7 @@ public class KieWorkbenchEntryPointTest {
         navTreeDefinitions = new NavTreeDefinitions();
         navigationManager = new NavigationManagerImpl(new CallerMock<>(navigationServices),
                                                       null,
+                                                      navTreeLoadedEvent,
                                                       null,
                                                       null);
 
@@ -130,7 +141,9 @@ public class KieWorkbenchEntryPointTest {
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
-        navTreeEditor = spy(new NavTreeEditor(mock(NavTreeEditor.View.class), syncBeanManager, perspectiveTreeProvider));
+        navTreeEditor = spy(new NavTreeEditor(mock(NavTreeEditorView.class), null, syncBeanManager, null,
+                perspectiveTreeProvider, targetPerspectiveEditor, null, null, null));
+
         when(contentExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
     }
 

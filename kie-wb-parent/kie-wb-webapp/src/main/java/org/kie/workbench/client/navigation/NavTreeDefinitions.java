@@ -41,7 +41,6 @@ import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS_ADM
 @ApplicationScoped
 public class NavTreeDefinitions {
 
-    public static final String GROUP_ROOT = "root";
     public static final String GROUP_WORKBENCH = "wb_group";
 
     public static final String GROUP_DESIGN = "wb_group_design";
@@ -67,17 +66,11 @@ public class NavTreeDefinitions {
     private NavigationConstants i18n = NavigationConstants.INSTANCE;
 
     public NavTree buildDefaultNavTree() {
-        NavTreeBuilder builder = new NavTreeBuilder()
-                .group(GROUP_ROOT,
-                       i18n.navTreeRootName(),
-                       i18n.navTreeRootDescr(),
-                       false)
+        return new NavTreeBuilder()
                 .group(GROUP_WORKBENCH,
-                       i18n.navTreeWorkbenchName(),
-                       i18n.navTreeWorkbenchDescr(),
-                       false);
-
-        return builder
+                        i18n.navTreeWorkbenchName(),
+                        i18n.navTreeWorkbenchDescr(),
+                        false)
                 .group(GROUP_DESIGN,
                        i18n.navTreeDesignName(),
                        i18n.navTreeDesignDescr(),
@@ -157,7 +150,6 @@ public class NavTreeDefinitions {
                       i18n.navTreeBusinessDashboardsDescr(),
                       true,
                       perspective(APPS))
-                .endGroup()
                 .endGroup()
                 .endGroup()
                 .build();
