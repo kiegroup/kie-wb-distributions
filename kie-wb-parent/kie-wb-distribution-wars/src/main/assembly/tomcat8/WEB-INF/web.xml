@@ -618,18 +618,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   </mime-mapping>
   <!-- end designer -->
 
-  <!--start form-modeler -->
-  <servlet>
-    <servlet-name>Controller</servlet-name>
-    <servlet-class>org.jbpm.formModeler.service.bb.mvc.controller.ControllerServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>Controller</servlet-name>
-    <url-pattern>/org.kie.workbench.KIEWebapp/Controller</url-pattern>
-  </servlet-mapping>
-  <!-- end form-modeler -->
-
   <resource-ref>
     <description>Console DS</description>
     <res-ref-name>jdbc/jbpm</res-ref-name>
