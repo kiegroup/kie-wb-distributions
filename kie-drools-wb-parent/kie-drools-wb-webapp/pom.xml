@@ -1400,35 +1400,6 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- Form Modeler dependencies -->
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-renderer-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-service-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-bpmn-form-builder</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-renderer-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-form-modeler-renderer-backend</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-
     <dependency>
       <groupId>org.kie.uberfire</groupId>
       <artifactId>i18n-taglib</artifactId>
@@ -1833,10 +1804,6 @@
               <compileSourcesArtifact>org.kie:kie-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.server:kie-server-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.server:kie-server-controller-api</compileSourcesArtifact>
-
-              <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-api</compileSourcesArtifact>
-              <compileSourcesArtifact>org.jbpm:jbpm-form-modeler-renderer-client</compileSourcesArtifact>
 
               <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
