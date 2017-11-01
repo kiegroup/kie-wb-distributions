@@ -33,6 +33,7 @@
   <description>KIE Theme - Product</description>
 
   <properties>
+    <java.module.name>org.kie.wb.theme.product</java.module.name>
     <version.org.webjars.npm.rcue>3.18.1</version.org.webjars.npm.rcue>
   </properties>
 

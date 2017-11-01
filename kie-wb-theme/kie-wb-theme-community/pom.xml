@@ -32,6 +32,10 @@
   <name>KIE Theme - Community</name>
   <description>KIE Theme - Community</description>
 
+  <properties>
+    <java.module.name>org.kie.wb.theme.community</java.module.name>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.uberfire</groupId>

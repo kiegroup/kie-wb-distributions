@@ -15,6 +15,10 @@
   <name>KIE Drools Workbench - Home Page - Community</name>
   <description>KIE Drools Workbench - Home Page - Community</description>
 
+  <properties>
+    <java.module.name>org.kie.drools.wb.home.page.community</java.module.name>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.jboss.errai</groupId>

@@ -15,6 +15,10 @@
   <name>KIE Workbench - Home Page - Product</name>
   <description>KIE Workbench - Home Page - Product</description>
 
+  <properties>
+    <java.module.name>org.kie.wb.home.page.product</java.module.name>
+  </properties>
+
   <dependencies>
     <!-- dependencies added because of new illegal transitive dependency check -->
     <dependency>
