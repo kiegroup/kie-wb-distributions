@@ -1110,10 +1110,10 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-    <groupId>org.uberfire</groupId>
-    <artifactId>uberfire-preferences-client</artifactId>
-    <scope>provided</scope>
-  </dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-preferences-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-preferences-ui-client</artifactId>
@@ -1187,6 +1187,16 @@
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-metadata-backend-lucene</artifactId>
       <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>jakarta-regexp</groupId>
+          <artifactId>jakarta-regexp</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-metadata-backend-elasticsearch</artifactId>
       <exclusions>
         <exclusion>
           <groupId>jakarta-regexp</groupId>
