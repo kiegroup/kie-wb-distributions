@@ -17,7 +17,8 @@ package org.kie.wb.selenium.model.persps;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.kie.wb.selenium.model.persps.authoring.ConflictingRepositoriesModal;
-import org.kie.wb.selenium.model.persps.authoring.ImportExampleModal;
+import org.kie.wb.selenium.model.persps.authoring.ImportProjectsScreen;
+import org.kie.wb.selenium.model.persps.authoring.ImportRepositoryModal;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
@@ -33,8 +34,9 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     private static final By
             WELCOME_MESSAGE = By.id("welcome"),
             TEAM_BREADCRUMB = By.linkText("myteam"),
-            IMPORT_PROJECT_BUTTON = By.id("import-project-button"),
-            ADVANCED_IMPORT_BUTTON = By.linkText("Advanced Import"),
+            PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
+            IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
+            TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
             BUILD_AND_DEPLOY_BUTTON = ByJQuery.selector("button:contains('Build & Deploy')");
 
     @Override
@@ -48,10 +50,16 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
                                       60);
     }
 
-    private ImportExampleModal importExample() {
+    private ImportRepositoryModal importProject() {
+        click(PROJECT_ACTIONS_BUTTON);
         click(IMPORT_PROJECT_BUTTON);
-        click(ADVANCED_IMPORT_BUTTON);
-        return ImportExampleModal.newInstance();
+        return ImportRepositoryModal.newInstance();
+    }
+
+    private ImportProjectsScreen trySamples() {
+        click(PROJECT_ACTIONS_BUTTON);
+        click(TRY_SAMPLES_BUTTON);
+        return ImportProjectsScreen.newInstance();
     }
 
     public boolean isProjectListEmpty() {
@@ -71,21 +79,20 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
         possiblyOverrideGavConflict();
     }
 
-    public void importStockExampleProject(String targetRepo,
-                                          String... projects) {
-        ImportExampleModal modal = importExample();
-        modal.selectStockRepository();
-        modal.selectProjects(projects);
-        modal.setTargetRepo(targetRepo);
+    public void importStockExampleProject(String... projects) {
+        ImportProjectsScreen importProjectsScreen = trySamples();
+        importProjectsScreen.selectProjects(projects);
+        importProjectsScreen.ok();
     }
 
     public void importCustomExampleProject(Repository repo,
-                                           String targetRepo,
                                            String... projects) {
-        ImportExampleModal modal = importExample();
+        ImportRepositoryModal modal = importProject();
         modal.selectCustomRepository(repo.getUrl());
-        modal.selectProjects(projects);
-        modal.setTargetRepo(targetRepo);
+
+        ImportProjectsScreen importProjectsScreen = modal.importProjects();
+        importProjectsScreen.selectProjects(projects);
+        importProjectsScreen.ok();
     }
 
     private void possiblyOverrideGavConflict() {

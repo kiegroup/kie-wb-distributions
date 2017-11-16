@@ -58,15 +58,13 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void importAndBuildProjectFromStockRepository() {
-        projectLibrary
-                .importStockExampleProject("MyRepo", "optacloud");
+        projectLibrary.importStockExampleProject("optacloud");
         deployAndCheckArtifact("optacloud:optacloud:1.0.0-SNAPSHOT");
     }
 
     @Test
     public void importAndBuildProjectFromCustomRepository() {
-        projectLibrary
-                .importCustomExampleProject(Repository.JBPM_PLAYGROUND, "MyRepo",  "Evaluation");
+        projectLibrary.importCustomExampleProject(Repository.JBPM_PLAYGROUND, "Evaluation");
         deployAndCheckArtifact("org.jbpm:Evaluation:1.0");
     }
 
