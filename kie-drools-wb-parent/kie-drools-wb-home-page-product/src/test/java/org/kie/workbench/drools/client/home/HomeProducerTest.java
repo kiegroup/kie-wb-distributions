@@ -127,9 +127,9 @@ public class HomeProducerTest {
                      model.getShortcuts().get(0).getLinks().get(0).getLabel());
         assertEquals(PerspectiveIds.LIBRARY,
                      model.getShortcuts().get(0).getLinks().get(0).getPerspectiveIdentifier());
-        assertEquals(Constants.Dashboards,
+        assertEquals(Constants.Pages,
                      model.getShortcuts().get(0).getLinks().get(1).getLabel());
-        assertEquals(PerspectiveIds.BUSINESS_DASHBOARDS,
+        assertEquals(PerspectiveIds.CONTENT_MANAGEMENT,
                      model.getShortcuts().get(0).getLinks().get(1).getPerspectiveIdentifier());
     }
 }

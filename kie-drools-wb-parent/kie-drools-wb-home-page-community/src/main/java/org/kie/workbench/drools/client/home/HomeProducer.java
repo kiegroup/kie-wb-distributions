@@ -28,8 +28,7 @@ import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.drools.client.resources.i18n.Constants;
 import org.uberfire.client.mvp.PlaceManager;
 
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.APPS;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.BUSINESS_DASHBOARDS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.CONTENT_MANAGEMENT;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
@@ -62,7 +61,6 @@ public class HomeProducer implements HomeModelProvider {
 
         model.addShortcut(createDesignShortcut());
         model.addShortcut(createDevOpsShortcut());
-        model.addShortcut(createTrackShortcut());
 
         return model;
     }
@@ -76,8 +74,8 @@ public class HomeProducer implements HomeModelProvider {
                                                             PERSPECTIVE);
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Projects),
                                             LIBRARY));
-        design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
-                                            BUSINESS_DASHBOARDS));
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
+                                            CONTENT_MANAGEMENT));
         return design;
     }
 
@@ -100,18 +98,6 @@ public class HomeProducer implements HomeModelProvider {
         devOps.addLink(servers);
 
         return devOps;
-    }
-
-    protected HomeShortcut createTrackShortcut() {
-        final HomeShortcut track = ModelUtils.makeShortcut("pficon pficon-trend-up",
-                                                           translationService.format(Constants.Track),
-                                                           translationService.format(Constants.TrackDescription),
-                                                           () -> placeManager.goTo(APPS),
-                                                           APPS,
-                                                           PERSPECTIVE);
-        track.addLink(new HomeShortcutLink(translationService.format(Constants.BusinessDashboards),
-                                           APPS));
-        return track;
     }
 
     private String getDevOpsDescription(final boolean isDeploymentsAuthorized) {

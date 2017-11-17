@@ -174,7 +174,7 @@ public class KieDroolsWorkbenchEntryPointTest {
 
         NavGroup design = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DESIGN);
         NavItem projects = navTree.getItemById(NavTreeDefinitions.ENTRY_PROJECTS);
-        NavItem dashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_DASHBOARDS);
+        NavItem pages = navTree.getItemById(NavTreeDefinitions.ENTRY_PAGES);
 
         NavGroup devops = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEVOPS);
         NavItem execServers = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_SERVERS);
@@ -188,10 +188,10 @@ public class KieDroolsWorkbenchEntryPointTest {
                      workbench);
 
         assertNotNull(projects);
-        assertNotNull(dashboard);
+        assertNotNull(pages);
         assertEquals(projects.getParent(),
                      design);
-        assertEquals(dashboard.getParent(),
+        assertEquals(pages.getParent(),
                      design);
 
         assertNotNull(execServers);
