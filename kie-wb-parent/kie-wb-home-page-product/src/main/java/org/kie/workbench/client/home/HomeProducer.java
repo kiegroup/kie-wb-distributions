@@ -59,8 +59,8 @@ public class HomeProducer extends AbstractHomeProducer {
                                                             PERSPECTIVE);
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Projects),
                                             LIBRARY));
-        design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
-                                            BUSINESS_DASHBOARDS));
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
+                                            CONTENT_MANAGEMENT));
         return design;
     }
 }

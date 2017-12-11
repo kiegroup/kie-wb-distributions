@@ -50,7 +50,7 @@ public class NavTreeDefinitionsTest {
         assertEquals(GROUP_WORKBENCH, workbenchItem.getId());
         assertEquals(false, workbenchItem.isModifiable());
         final List<NavItem> workbenchChildren = workbenchItem.getChildren();
-        assertEquals(3, workbenchChildren.size());
+        assertEquals(2, workbenchChildren.size());
 
         final NavGroup designItem = (NavGroup) workbenchChildren.get(0);
         assertEquals(GROUP_DESIGN, designItem.getId());
@@ -59,7 +59,7 @@ public class NavTreeDefinitionsTest {
         assertEquals(2, designChildren.size());
         assertEquals(ENTRY_PROJECTS, designChildren.get(0).getId());
         assertEquals(true, designChildren.get(0).isModifiable());
-        assertEquals(ENTRY_DASHBOARDS, designChildren.get(1).getId());
+        assertEquals(ENTRY_PAGES, designChildren.get(1).getId());
         assertEquals(true, designChildren.get(1).isModifiable());
 
         final NavGroup devopsItem = (NavGroup) workbenchChildren.get(1);
@@ -71,13 +71,5 @@ public class NavTreeDefinitionsTest {
         assertEquals(true, devopsChildren.get(0).isModifiable());
         assertEquals(ENTRY_EXECUTION_SERVERS, devopsChildren.get(1).getId());
         assertEquals(true, devopsChildren.get(1).isModifiable());
-
-        final NavGroup trackItem = (NavGroup) workbenchChildren.get(2);
-        assertEquals(GROUP_TRACK, trackItem.getId());
-        assertEquals(true, trackItem.isModifiable());
-        final List<NavItem> trackChildren = trackItem.getChildren();
-        assertEquals(1, trackChildren.size());
-        assertEquals(ENTRY_BUSINESS_DASHBOARDS, trackChildren.get(0).getId());
-        assertEquals(true, trackChildren.get(0).isModifiable());
     }
 }

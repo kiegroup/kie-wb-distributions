@@ -33,7 +33,7 @@ public class NavTreeDefinitions {
     public static final String GROUP_WORKBENCH = "wb_group";
 
     public static final String GROUP_DESIGN = "wb_group_design";
-    public static final String ENTRY_DASHBOARDS = "wb_entry_dashboards";
+    public static final String ENTRY_PAGES = "wb_entry_pages";
 
     public static final String GROUP_DEVOPS = "wb_group_devops";
     public static final String ENTRY_DEPLOYMENTS = "wb_entry_deployments";
@@ -49,7 +49,6 @@ public class NavTreeDefinitions {
     public static final String GROUP_TRACK = "wb_group_track";
     public static final String ENTRY_TASKS_LIST = "wb_entry_tasks_list";
     public static final String ENTRY_PROCESSES_AND_TASKS_DASHBOARD = "wb_entry_processes_and_tasks_dashboard";
-    public static final String ENTRY_BUSINESS_DASHBOARDS = "wb_entry_business_dashboards";
 
     private NavigationConstants i18n = NavigationConstants.INSTANCE;
 
@@ -63,11 +62,11 @@ public class NavTreeDefinitions {
                        i18n.navTreeDesignName(),
                        i18n.navTreeDesignDescr(),
                        true)
-                .item(ENTRY_DASHBOARDS,
-                      i18n.navTreeDashboardsName(),
-                      i18n.navTreeDashboardsDescr(),
+                .item(ENTRY_PAGES,
+                      i18n.navTreePageAuthoringName(),
+                      i18n.navTreePageAuthoringDescr(),
                       true,
-                      perspective(BUSINESS_DASHBOARDS))
+                      perspective(CONTENT_MANAGEMENT))
                 .endGroup()
                 .group(GROUP_DEVOPS,
                        i18n.navTreeDevOpsName(),
@@ -128,11 +127,6 @@ public class NavTreeDefinitions {
                       i18n.navTreeProcessesAndTasksDashboardDescr(),
                       true,
                       perspective(PROCESS_DASHBOARD))
-                .item(ENTRY_BUSINESS_DASHBOARDS,
-                      i18n.navTreeBusinessDashboardsName(),
-                      i18n.navTreeBusinessDashboardsDescr(),
-                      true,
-                      perspective(APPS))
                 .endGroup()
                 .endGroup()
                 .build();

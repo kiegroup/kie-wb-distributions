@@ -28,7 +28,7 @@ import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.uberfire.client.mvp.PlaceManager;
 
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.BUSINESS_DASHBOARDS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.CONTENT_MANAGEMENT;
 import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
 @Alternative
@@ -53,11 +53,11 @@ public class HomeRuntimeProducer extends AbstractHomeProducer {
         final HomeShortcut design = ModelUtils.makeShortcut("pficon pficon-blueprint",
                                                             translationService.format(Constants.Design),
                                                             translationService.format(Constants.DesignRuntimeDescription),
-                                                            () -> placeManager.goTo(BUSINESS_DASHBOARDS),
-                                                            BUSINESS_DASHBOARDS,
+                                                            () -> placeManager.goTo(CONTENT_MANAGEMENT),
+                                                            CONTENT_MANAGEMENT,
                                                             PERSPECTIVE);
-        design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
-                                            BUSINESS_DASHBOARDS));
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
+                                            CONTENT_MANAGEMENT));
 
         return design;
     }

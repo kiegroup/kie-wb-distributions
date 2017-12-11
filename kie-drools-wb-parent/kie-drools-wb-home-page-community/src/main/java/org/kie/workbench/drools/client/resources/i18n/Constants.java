@@ -42,12 +42,6 @@ public class Constants {
     public static final String DevOpsDescription2 = "DevOpsDescription2";
 
     @TranslationKey(defaultValue = "")
-    public static final String Track = "Track";
-
-    @TranslationKey(defaultValue = "")
-    public static final String TrackDescription = "TrackDescription";
-
-    @TranslationKey(defaultValue = "")
     public static final String ProductName = "ProductName";
 
     @TranslationKey(defaultValue = "")
@@ -57,14 +51,11 @@ public class Constants {
     public static final String Projects = "HomeProducer.Projects";
 
     @TranslationKey(defaultValue = "")
-    public static final String Dashboards = "HomeProducer.Dashboards";
+    public static final String Pages = "HomeProducer.Pages";
 
     @TranslationKey(defaultValue = "")
     public static final String Deployments = "HomeProducer.Deployments";
 
     @TranslationKey(defaultValue = "")
     public static final String Servers = "HomeProducer.Servers";
-
-    @TranslationKey(defaultValue = "")
-    public static final String BusinessDashboards = "HomeProducer.BusinessDashboards";
 }
