@@ -45,10 +45,10 @@ public class Persp<T extends AbstractPerspective> {
                           ProjectLibraryPerspective.class,
                           KIE_DROOLS_WB,
                           KIE_WB);
-    public static final Persp<BusinessDashboardsPerspective> DASHBOARDS
+    public static final Persp<ContentManagerPerspective> PAGES
             = new Persp<>("Design",
-                          "Dashboards",
-                          BusinessDashboardsPerspective.class);
+                          "Pages",
+                          ContentManagerPerspective.class);
 
     public static final Persp<ProvisioningManagementPerspective> DEPLOYMENTS
             = new Persp<>("DevOps",
@@ -102,18 +102,12 @@ public class Persp<T extends AbstractPerspective> {
                           ProcessAndTaskDashboardPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
-    public static final Persp<AppsPerspective> BUSINESS_DASHBOARDS
-            = new Persp<>("Track",
-                          "Business Dashboards",
-                          AppsPerspective.class,
-                          KIE_WB,
-                          KIE_WB_MONITORING);
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPECTIVES = Collections.unmodifiableList(Arrays.asList(
             ADMIN,
             HOME,
             PROJECTS,
-            DASHBOARDS,
+            PAGES,
             DEPLOYMENTS,
             EXECUTION_SERVERS,
             PROCESS_DEFINITIONS,
@@ -122,8 +116,7 @@ public class Persp<T extends AbstractPerspective> {
             JOBS,
             EXECUTION_ERRORS,
             TASKS,
-            PROCESS_AND_TASK_DASHBOARD,
-            BUSINESS_DASHBOARDS
+            PROCESS_AND_TASK_DASHBOARD
     ));
     private final String parentMenu;
     private final String menuItem;

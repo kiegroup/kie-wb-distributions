@@ -73,15 +73,13 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
         final HomeShortcut track = ModelUtils.makeShortcut("pficon pficon-trend-up",
                                                            translationService.format(Constants.Track),
                                                            translationService.format(Constants.TrackDescription),
-                                                           () -> placeManager.goTo(APPS),
-                                                           APPS,
+                                                           () -> placeManager.goTo(PROCESS_DASHBOARD),
+                                                           PROCESS_DASHBOARD,
                                                            PERSPECTIVE);
         track.addLink(new HomeShortcutLink(translationService.format(Constants.Tasks),
                                            TASKS));
         track.addLink(new HomeShortcutLink(translationService.format(Constants.Reports),
                                            PROCESS_DASHBOARD));
-        track.addLink(new HomeShortcutLink(translationService.format(Constants.BusinessDashboards),
-                                           APPS));
         return track;
     }
 
