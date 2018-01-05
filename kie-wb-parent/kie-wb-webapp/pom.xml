@@ -1264,10 +1264,16 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- Layout Editor API -->
+    <!-- Layout Editor -->
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-layout-editor-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-layout-editor-client</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Search -->
@@ -2268,6 +2274,8 @@
             <compileSourcesArtifact>org.uberfire:uberfire-preferences-ui-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-runtime-plugins-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-runtime-plugins-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-layout-editor-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-layout-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-apps-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-apps-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-commons</compileSourcesArtifact>

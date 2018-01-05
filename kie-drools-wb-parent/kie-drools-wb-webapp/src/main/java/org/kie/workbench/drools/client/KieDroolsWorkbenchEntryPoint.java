@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.dashbuilder.client.cms.screen.explorer.ContentExplorerScreen;
+import org.dashbuilder.client.cms.screen.explorer.NavigationExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
 import org.dashbuilder.client.navigation.event.NavTreeChangedEvent;
 import org.dashbuilder.client.navigation.widget.editor.NavTreeEditor;
@@ -63,7 +63,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected NavigationManager navigationManager;
 
-    protected ContentExplorerScreen contentExplorerScreen;
+    protected NavigationExplorerScreen navigationExplorerScreen;
 
     @Inject
     public KieDroolsWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
@@ -77,7 +77,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                         final DefaultAdminPageHelper adminPageHelper,
                                         final NavTreeDefinitions navTreeDefinitions,
                                         final NavigationManager navigationManager,
-                                        final ContentExplorerScreen contentExplorerScreen) {
+                                        final NavigationExplorerScreen navigationExplorerScreen) {
         super(appConfigService,
               activityBeansCache);
         this.menusHelper = menusHelper;
@@ -89,7 +89,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.adminPageHelper = adminPageHelper;
         this.navTreeDefinitions = navTreeDefinitions;
         this.navigationManager = navigationManager;
-        this.contentExplorerScreen = contentExplorerScreen;
+        this.navigationExplorerScreen = navigationExplorerScreen;
     }
 
     @PostConstruct
@@ -156,7 +156,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     }
 
     private void initNavTreeEditor() {
-        final NavTreeEditor navTreeEditor = contentExplorerScreen.getNavTreeEditor();
+        final NavTreeEditor navTreeEditor = navigationExplorerScreen.getNavTreeEditor();
 
         // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
         // navigation tree node must be limited to 2 (see https://issues.jboss.org/browse/GUVNOR-2992)
