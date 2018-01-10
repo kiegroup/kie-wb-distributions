@@ -20,7 +20,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>Red Hat JBoss BRMS :: Business central</title>
+    <title>Red Hat Decision Manager :: Business Central</title>
 
     <script src="org.kie.workbench.drools.KIEDroolsWebapp/zeroclipboard/ZeroClipboard.min.js"></script>
     <script src="org.kie.workbench.drools.KIEDroolsWebapp/zeroclipboard/ZeroClipboardLoader.js"></script>
