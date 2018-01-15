@@ -142,7 +142,7 @@ public class KieWorkbenchEntryPointTest {
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
         navTreeEditor = spy(new NavTreeEditor(mock(NavTreeEditorView.class), null, syncBeanManager, null,
-                perspectiveTreeProvider, targetPerspectiveEditor, null, null, null));
+                perspectiveTreeProvider, targetPerspectiveEditor, null, null, null, null));
 
         when(contentExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
     }
