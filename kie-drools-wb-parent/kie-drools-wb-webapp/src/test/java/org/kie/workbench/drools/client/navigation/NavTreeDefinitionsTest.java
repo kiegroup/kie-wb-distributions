@@ -56,11 +56,9 @@ public class NavTreeDefinitionsTest {
         assertEquals(GROUP_DESIGN, designItem.getId());
         assertEquals(true, designItem.isModifiable());
         final List<NavItem> designChildren = designItem.getChildren();
-        assertEquals(2, designChildren.size());
+        assertEquals(1, designChildren.size());
         assertEquals(ENTRY_PROJECTS, designChildren.get(0).getId());
         assertEquals(true, designChildren.get(0).isModifiable());
-        assertEquals(ENTRY_PAGES, designChildren.get(1).getId());
-        assertEquals(true, designChildren.get(1).isModifiable());
 
         final NavGroup devopsItem = (NavGroup) workbenchChildren.get(1);
         assertEquals(GROUP_DEVOPS, devopsItem.getId());

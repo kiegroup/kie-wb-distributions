@@ -27,13 +27,9 @@ public interface NavigationConstants
 
     String navTreeWorkbenchName();
 
-    String navTreeHomeName();
-
     String navTreeDesignName();
 
     String navTreeProjectsName();
-
-    String navTreePageAuthoringName();
 
     String navTreeDevOpsName();
 
@@ -41,23 +37,15 @@ public interface NavigationConstants
 
     String navTreeExecutionServersName();
 
-    String navTreeTrackName();
-
     String navTreeWorkbenchDescr();
-
-    String navTreeHomeDescr();
 
     String navTreeDesignDescr();
 
     String navTreeProjectsDescr();
-
-    String navTreePageAuthoringDescr();
 
     String navTreeDevOpsDescr();
 
     String navTreeDeploymentsDescr();
 
     String navTreeExecutionServersDescr();
-
-    String navTreeTrackDescr();
 }
