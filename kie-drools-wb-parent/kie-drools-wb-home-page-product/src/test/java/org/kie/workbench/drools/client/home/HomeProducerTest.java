@@ -121,15 +121,11 @@ public class HomeProducerTest {
     }
 
     private void assertDesign(final HomeModel model) {
-        assertEquals(2,
+        assertEquals(1,
                      model.getShortcuts().get(0).getLinks().size());
         assertEquals(Constants.Projects,
                      model.getShortcuts().get(0).getLinks().get(0).getLabel());
         assertEquals(PerspectiveIds.LIBRARY,
                      model.getShortcuts().get(0).getLinks().get(0).getPerspectiveIdentifier());
-        assertEquals(Constants.Pages,
-                     model.getShortcuts().get(0).getLinks().get(1).getLabel());
-        assertEquals(PerspectiveIds.CONTENT_MANAGEMENT,
-                     model.getShortcuts().get(0).getLinks().get(1).getPerspectiveIdentifier());
     }
 }

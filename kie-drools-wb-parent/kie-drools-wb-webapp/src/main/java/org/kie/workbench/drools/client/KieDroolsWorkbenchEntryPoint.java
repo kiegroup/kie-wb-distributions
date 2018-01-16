@@ -32,6 +32,7 @@ import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.kie.workbench.drools.client.navigation.NavTreeDefinitions;
+import org.uberfire.client.authz.PerspectiveTreeProvider;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
@@ -54,6 +55,8 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected PermissionTreeSetup permissionTreeSetup;
 
+    protected PerspectiveTreeProvider perspectiveTreeProvider;
+
     protected DefaultAdminPageHelper adminPageHelper;
 
     protected NavTreeDefinitions navTreeDefinitions;
@@ -70,6 +73,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                         final WorkbenchMegaMenuPresenter menuBar,
                                         final Workbench workbench,
                                         final PermissionTreeSetup permissionTreeSetup,
+                                        final PerspectiveTreeProvider perspectiveTreeProvider,
                                         final DefaultAdminPageHelper adminPageHelper,
                                         final NavTreeDefinitions navTreeDefinitions,
                                         final NavigationManager navigationManager,
@@ -81,6 +85,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.menuBar = menuBar;
         this.workbench = workbench;
         this.permissionTreeSetup = permissionTreeSetup;
+        this.perspectiveTreeProvider = perspectiveTreeProvider;
         this.adminPageHelper = adminPageHelper;
         this.navTreeDefinitions = navTreeDefinitions;
         this.navigationManager = navigationManager;
@@ -91,6 +96,7 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     public void init() {
         workbench.addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
         permissionTreeSetup.configureTree();
+        perspectiveTreeProvider.excludePerspectiveId("ContentManagerPerspective");
 
         initNavTreeEditor();
     }

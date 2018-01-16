@@ -131,6 +131,7 @@ public class KieDroolsWorkbenchEntryPointTest {
                                                                       menuBar,
                                                                       workbench,
                                                                       permissionTreeSetup,
+                                                                      perspectiveTreeProvider,
                                                                       adminPageHelper,
                                                                       navTreeDefinitions,
                                                                       navigationManager,
@@ -148,6 +149,7 @@ public class KieDroolsWorkbenchEntryPointTest {
 
         verify(workbench).addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
         verify(permissionTreeSetup).configureTree();
+        verify(perspectiveTreeProvider).excludePerspectiveId("ContentManagerPerspective");
         verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH, 2);
         verify(navTreeEditor).setNewDividerEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
         verify(navTreeEditor).setNewPerspectiveEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
@@ -174,7 +176,6 @@ public class KieDroolsWorkbenchEntryPointTest {
 
         NavGroup design = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DESIGN);
         NavItem projects = navTree.getItemById(NavTreeDefinitions.ENTRY_PROJECTS);
-        NavItem pages = navTree.getItemById(NavTreeDefinitions.ENTRY_PAGES);
 
         NavGroup devops = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEVOPS);
         NavItem execServers = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_SERVERS);
@@ -188,10 +189,7 @@ public class KieDroolsWorkbenchEntryPointTest {
                      workbench);
 
         assertNotNull(projects);
-        assertNotNull(pages);
         assertEquals(projects.getParent(),
-                     design);
-        assertEquals(pages.getParent(),
                      design);
 
         assertNotNull(execServers);
