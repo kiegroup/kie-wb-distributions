@@ -131,7 +131,7 @@ public class HomeProducerTest {
                      model.getShortcuts().get(0).getLinks().get(0).getPerspectiveIdentifier());
         assertEquals(Constants.Pages,
                      model.getShortcuts().get(0).getLinks().get(1).getLabel());
-        assertEquals(PerspectiveIds.CONTENT_MANAGEMENT,
+        assertEquals(PerspectiveIds.BUSINESS_DASHBOARDS,
                      model.getShortcuts().get(0).getLinks().get(1).getPerspectiveIdentifier());
     }
 

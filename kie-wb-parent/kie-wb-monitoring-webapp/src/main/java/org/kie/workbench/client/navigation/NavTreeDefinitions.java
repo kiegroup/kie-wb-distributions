@@ -66,7 +66,7 @@ public class NavTreeDefinitions {
                       i18n.navTreePageAuthoringName(),
                       i18n.navTreePageAuthoringDescr(),
                       true,
-                      perspective(CONTENT_MANAGEMENT))
+                      perspective(BUSINESS_DASHBOARDS))
                 .endGroup()
                 .group(GROUP_DEVOPS,
                        i18n.navTreeDevOpsName(),

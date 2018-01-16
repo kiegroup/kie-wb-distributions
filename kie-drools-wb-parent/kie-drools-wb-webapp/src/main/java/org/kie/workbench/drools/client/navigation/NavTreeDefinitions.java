@@ -23,7 +23,6 @@ import org.dashbuilder.navigation.impl.NavTreeBuilder;
 import org.kie.workbench.drools.client.resources.i18n.NavigationConstants;
 
 import static org.dashbuilder.navigation.workbench.NavWorkbenchCtx.perspective;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.CONTENT_MANAGEMENT;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
@@ -61,11 +60,6 @@ public class NavTreeDefinitions {
                       i18n.navTreeProjectsDescr(),
                       true,
                       perspective(LIBRARY))
-                .item(ENTRY_PAGES,
-                      i18n.navTreePageAuthoringName(),
-                      i18n.navTreePageAuthoringDescr(),
-                      true,
-                      perspective(CONTENT_MANAGEMENT))
                 .endGroup()
                 .group(GROUP_DEVOPS,
                        i18n.navTreeDevOpsName(),

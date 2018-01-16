@@ -51,9 +51,6 @@ public class Constants {
     public static final String Projects = "HomeProducer.Projects";
 
     @TranslationKey(defaultValue = "")
-    public static final String Pages = "HomeProducer.Pages";
-
-    @TranslationKey(defaultValue = "")
     public static final String Deployments = "HomeProducer.Deployments";
 
     @TranslationKey(defaultValue = "")

@@ -60,7 +60,7 @@ public class HomeProducer extends AbstractHomeProducer {
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Projects),
                                             LIBRARY));
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
-                                            CONTENT_MANAGEMENT));
+                                            BUSINESS_DASHBOARDS));
         return design;
     }
 }
