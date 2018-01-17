@@ -389,16 +389,6 @@
       <artifactId>uberfire-organizationalunit-manager</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-asset-mgmt-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-asset-mgmt-backend</artifactId>
-      <scope>runtime</scope>
-    </dependency>
 
     <!-- Guvnor ALA -->
     <dependency>
@@ -1507,12 +1497,6 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- org.guvnor -->
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-asset-mgmt-api</artifactId>
-    </dependency>
-
     <!--org.jboss.errai -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -2149,9 +2133,7 @@
             <compileSourcesArtifact>org.dashbuilder:dashbuilder-cms-client</compileSourcesArtifact>
 
             <!-- Guvnor -->
-            <compileSourcesArtifact>org.uberfire:uberfire-asset-mgmt-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-asset-mgmt-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-structure-api</compileSourcesArtifact>
+           <compileSourcesArtifact>org.uberfire:uberfire-structure-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-structure-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-m2repo-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-m2repo-editor-client</compileSourcesArtifact>

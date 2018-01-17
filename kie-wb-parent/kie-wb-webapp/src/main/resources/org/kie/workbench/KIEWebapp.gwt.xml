@@ -41,7 +41,6 @@
   <inherits name="org.jbpm.dashboard.renderer.client.DashboardRendererClient"/>
 
   <!-- Guvnor dependencies -->
-  <inherits name='org.guvnor.asset.management.GuvnorAssetMgmtClient'/>
   <inherits name="org.guvnor.structure.GuvnorStructureClient"/>
   <inherits name="org.guvnor.m2repo.GuvnorM2RepoEditorClient"/>
   <inherits name='org.guvnor.common.services.GuvnorServicesAPI'/>

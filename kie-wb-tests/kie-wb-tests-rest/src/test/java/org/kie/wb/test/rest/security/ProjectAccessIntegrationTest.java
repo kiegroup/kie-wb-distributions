@@ -28,7 +28,6 @@ import org.kie.wb.test.rest.User;
 public class ProjectAccessIntegrationTest extends AccessRestTestBase {
 
     private static final String ORG_UNIT = "projectAccessTestOrgUnit";
-    private static final String REPOSITORY = "projectAccessTestRepository";
 
     public ProjectAccessIntegrationTest(User user) {
         super(user);
@@ -37,7 +36,6 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
     @BeforeClass
     public static void createRepository() {
         createOrganizationalUnit(ORG_UNIT);
-        createNewRepository(ORG_UNIT, REPOSITORY);
     }
 
     @Test
@@ -46,8 +44,10 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
 
         ProjectRequest project = new ProjectRequest();
         project.setName(name);
+        project.setGroupId("groupId");
+        project.setVersion("1.0.0");
 
-        assertOperation(() -> roleClient.createProject(REPOSITORY, project));
+        assertOperation(() -> roleClient.createProject(ORG_UNIT, project));
     }
 
     @Test
@@ -55,12 +55,12 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
         String name = "deleteProjectWith" + user.getUserName();
         createProject(name);
 
-        assertOperation(() -> roleClient.deleteProject(REPOSITORY, name));
+        assertOperation(() -> roleClient.deleteProject(name));
     }
 
     @Test
     public void testGetProjects() {
-        assertOperation(() -> roleClient.getProjects(REPOSITORY));
+        assertOperation(() -> roleClient.getProjects(ORG_UNIT));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
         String name = "compileProjectWith" + user.getUserName();
         createProject(name);
 
-        assertOperation(() -> roleClient.compileProject(REPOSITORY, name));
+        assertOperation(() -> roleClient.compileProject(name));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
         String name = "testProjectWith" + user.getUserName();
         createProject(name);
 
-        assertOperation(() -> roleClient.testProject(REPOSITORY, name));
+        assertOperation(() -> roleClient.testProject(name));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
         String name = "installProjectWith" + user.getUserName() + Math.random();
         createProject(name);
 
-        assertOperation(() -> roleClient.installProject(REPOSITORY, name));
+        assertOperation(() -> roleClient.installProject(ORG_UNIT, name));
     }
 
     @Test
@@ -92,13 +92,12 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
         String name = "deployProjectWith" + user.getUserName() + Math.random();
         createProject(name);
 
-        assertOperation(() -> roleClient.deployProject(REPOSITORY, name));
+        assertOperation(() -> roleClient.deployProject(name));
     }
 
     private void createProject(String name) {
         ProjectRequest project = new ProjectRequest();
         project.setName(name);
-        client.createProject(REPOSITORY, project);
+        client.createProject(ORG_UNIT, project);
     }
-
 }

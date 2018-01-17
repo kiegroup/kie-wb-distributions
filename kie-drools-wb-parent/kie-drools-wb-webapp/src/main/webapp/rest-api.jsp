@@ -41,19 +41,18 @@ Entry point for REST interface is at <%= request.getScheme()+"://"+request.getSe
   <tr><td>/organizationalunits/{organizationalUnitName}</td><td>GET</td><td>get the details for an organizational unit</td></tr>
   <tr><td>/organizationalunits/{organizationalUnitName}</td><td>DELETE</td><td>delete an organizational unit</td></tr>
   <tr><td>/organizationalunits/{organizationalUnitName}/</td><td>POST</td><td>update an existing organizational unit</td></tr>
-  <tr><td>/organizationalunits/{organizationalUnitName}/repositories/{repositoryName}</td><td>POST</td><td>add a repository to an organizational unit</td></tr>
-  <tr><td>/organizationalunits/{organizationalUnitName}/repositories/{repositoryName}</td><td>DELETE</td><td>remove a repository from an organizational unit</td></tr>
-  <tr><td>/repositories</td><td>GET</td><td>get details for  repositories</td></tr>
-  <tr><td>/repositories</td><td>POST</td><td>create a repository</td></tr>
-  <tr><td>/repositories/{repositoryName}</td><td>DELETE</td><td>delete a repository</td></tr>
-  <tr><td>/repositories/{repositoryName}</td><td>GET</td><td>get repository details</td></tr>
-  <tr><td>/repositories/{repositoryName}/projects</td><td>GET</td><td>get details for all projects in a repository</td></tr>
-  <tr><td>/repositories/{repositoryName}/projects</td><td>POST</td><td>create a project in a repository</td></tr>
-  <tr><td>/repositories/{repositoryName}/projects/{projectName}</td><td>DELETE</td><td>remove a project</td></tr>
-  <tr><td>/repositories/{repositoryName}/projects/{projectName}/maven/compile</td><td>POST</td><td>build a project</td></tr>
-  <tr><td>/repositories/{repositoryName}/projects/{projectName}/maven/test</td><td>POST</td><td>run all tests in a project</td></tr>
-  <tr><td>/repositories/{repositoryName}/projects/{projectName}/maven/install</td><td>POST</td><td>build and deploy a project</td></tr>
-  <tr><td>/repositories/{repositoryName}/projects/{projectName}/maven/deploy</td><td>POST</td><td>build and deploy a project [<em>deprecated</em>]</td></tr>
+  <tr><td>/organizationalunits/{organizationalUnitName}/projects</td><td>POST</td><td>add a project in to an organizational unit</td></tr>
+  <tr><td>/organizationalunits/{organizationalUnitName}/projects</td><td>GET</td><td>get details for all projects in an organizational unit</td></tr>
+  <tr><td>/organizationalunits/{organizationalUnitName}/projects/{projectName}</td><td>POST</td><td>add a project to an organizational unit</td></tr>
+  <tr><td>/organizationalunits/{organizationalUnitName}/projects/{projectName}</td><td>DELETE</td><td>remove a project from an organizational unit</td></tr>
+  <tr><td>/repositories</td><td>POST</td><td>clone a repository</td></tr>
+  <tr><td>/projects</td><td>GET</td><td>get details for projects</td></tr>
+  <tr><td>/projects/{projectName}</td><td>DELETE</td><td>delete a project</td></tr>
+  <tr><td>/projects/{projectName}</td><td>GET</td><td>get project details</td></tr>
+  <tr><td>/projects/{projectName}/maven/compile</td><td>POST</td><td>build a project</td></tr>
+  <tr><td>/projects/{projectName}/maven/test</td><td>POST</td><td>run all tests in a project</td></tr>
+  <tr><td>/organizationalunits/{organizationalUnitName}/projects/{projectName}/maven/install</td><td>POST</td><td>build and deploy a project</td></tr>
+  <tr><td>/projects/{projectName}/maven/deploy</td><td>POST</td><td>build and deploy a project [<em>deprecated</em>]</td></tr>
 </table>
 
 </body>

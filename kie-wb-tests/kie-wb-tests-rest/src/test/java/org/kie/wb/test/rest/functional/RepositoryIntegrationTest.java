@@ -16,19 +16,20 @@
 
 package org.kie.wb.test.rest.functional;
 
-import java.util.Collection;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
-import org.guvnor.rest.client.CreateOrCloneRepositoryRequest;
+import org.guvnor.rest.client.CloneRepositoryRequest;
 import org.guvnor.rest.client.JobStatus;
+import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.RepositoryRequest;
-import org.guvnor.rest.client.RepositoryResponse;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
+import org.kie.wb.test.rest.Utils;
 import org.kie.wb.test.rest.client.NotSuccessException;
 import qa.tools.ikeeper.annotation.Jira;
 
@@ -37,52 +38,33 @@ import static org.assertj.core.api.Assertions.*;
 public class RepositoryIntegrationTest extends RestTestBase {
 
     private static final String ORG_UNIT = "repoTestOrgUnit";
+    private Utils utils;
 
     @BeforeClass
     public static void createOrganizationalUnit() {
         createOrganizationalUnit(ORG_UNIT);
     }
 
-    @Test
-    public void testCreateRepositoryEmptyName() {
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setOrganizationalUnitName(ORG_UNIT);
-        repository.setRequestType("new");
-
-        try {
-            client.createOrCloneRepository(repository);
-            Assertions.fail("Operation should fail because of missing repository name");
-        } catch (NotSuccessException ex) {
-            assertThat(ex.getJobResult().getStatus()).isEqualTo(JobStatus.BAD_REQUEST);
-            assertThat(ex.getJobResult().getResult()).contains("name");
-        }
-    }
-
-    @Jira("GUVNOR-2542")
-    @Test(expected = BadRequestException.class)
-    public void testCreateRepositoryEmptyOrganizationalUnit() {
-        RepositoryRequest repository = new RepositoryRequest();
-        repository.setName("emptyOrgUnitRepo");
-        repository.setRequestType("new");
-
-        client.createOrCloneRepository(repository);
+    @Before
+    public void setUp() {
+        utils = new Utils(ORG_UNIT, client);
     }
 
     @Test(expected = BadRequestException.class)
-    public void testCreateRepositoryEmptyRequestType() {
+    public void testCloneRepositoryEmptyRequestType() {
         RepositoryRequest repository = new RepositoryRequest();
         repository.setName("emptyRequestTypeRepo");
         repository.setOrganizationalUnitName(ORG_UNIT);
 
-        client.createOrCloneRepository(repository);
+        client.cloneRepository(repository);
     }
 
-    private void testCreateOrCloneRepository(RepositoryRequest repository) {
-        CreateOrCloneRepositoryRequest request = client.createOrCloneRepository(repository);
+    private void testCloneRepository(RepositoryRequest repository) {
+        CloneRepositoryRequest request = client.cloneRepository(repository);
         assertThat(request).isNotNull();
         assertRepositoryRequest(request.getRepository(), repository);
 
-        RepositoryResponse response = client.getRepository(repository.getName());
+        ProjectResponse response = client.getProject(repository.getName());
         assertRepositoryResponse(response, repository);
     }
 
@@ -93,7 +75,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
         repository.setOrganizationalUnitName(ORG_UNIT);
         repository.setRequestType("new");
 
-        testCreateOrCloneRepository(repository);
+        testCloneRepository(repository);
     }
 
     @Test
@@ -105,7 +87,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
         repository.setRequestType("new");
         repository.setDescription("Some kind of description");
 
-        testCreateOrCloneRepository(repository);
+        testCloneRepository(repository);
     }
 
     @Test
@@ -116,7 +98,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
         repository.setRequestType("new");
         repository.setGitURL(getLocalGitRepositoryUrl());
 
-        testCreateOrCloneRepository(repository);
+        testCloneRepository(repository);
     }
 
     @Test
@@ -128,7 +110,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
         repository.setRequestType("clone");
 
         try {
-            client.createOrCloneRepository(repository);
+            client.cloneRepository(repository);
             Assertions.fail("Operation should fail because of missing Git URL");
         } catch (NotSuccessException ex) {
             assertThat(ex.getJobResult().getStatus()).isEqualTo(JobStatus.BAD_REQUEST);
@@ -145,7 +127,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
         repository.setGitURL(getLocalGitRepositoryUrl() + "xyz");
 
         try {
-            client.createOrCloneRepository(repository);
+            client.cloneRepository(repository);
             Assertions.fail("Operation should fail because of not valid Git URL");
         } catch (NotSuccessException ex) {
             assertThat(ex.getJobResult().getStatus()).isEqualTo(JobStatus.BAD_REQUEST);
@@ -160,65 +142,27 @@ public class RepositoryIntegrationTest extends RestTestBase {
         repository.setRequestType("clone");
         repository.setGitURL(getLocalGitRepositoryUrl());
 
-        testCreateOrCloneRepository(repository);
+        testCloneRepository(repository);
     }
 
     @Test
     public void testCloneRepositoryInternal() {
-        String originalRepo = "repoToBeCloned";
-        createNewRepository(ORG_UNIT, originalRepo);
+        String originalProject = "repoToBeCloned";
+        utils.createProject(ORG_UNIT, originalProject, "groupId", "1.0.0");
 
         RepositoryRequest repository = new RepositoryRequest();
         repository.setName("clonedInternalRepo");
         repository.setOrganizationalUnitName(ORG_UNIT);
         repository.setRequestType("clone");
-        repository.setGitURL("git://localhost:9418/" + originalRepo);
+        repository.setGitURL("git://localhost:9418/" + originalProject);
 
-        testCreateOrCloneRepository(repository);
-    }
-
-    @Test
-    public void testDeleteRepository() {
-        String name = "repoToBeDeleted";
-        createNewRepository(ORG_UNIT, name);
-
-        client.deleteRepository(name);
-
-        try {
-            client.getRepository(name);
-            Assertions.fail("Repository should have been deleted");
-        } catch (NotFoundException ex) {
-            // expected, repository has been deleted
-        }
+        testCloneRepository(repository);
     }
 
     @Jira("GUVNOR-2542")
     @Test(expected = NotFoundException.class)
     public void testDeleteRepositoryNotExisting() {
-        client.deleteRepository("notExistingRepo");
-    }
-
-    @Test
-    public void testGetExistingRepository() {
-        String name = "getExistingRepo";
-        createNewRepository(ORG_UNIT, name);
-
-        RepositoryResponse repository = client.getRepository(name);
-        assertThat(repository.getName()).isEqualTo(name);
-    }
-
-    @Test(expected = NotFoundException.class)
-    public void testGetNotExistingRepository() {
-        client.getRepository("notExistingRepo");
-    }
-
-    @Test
-    public void testGetRepositories() {
-        String name = "oneOfManyRepos";
-        createNewRepository(ORG_UNIT, name);
-
-        Collection<RepositoryResponse> repositories = client.getRepositories();
-        assertThat(repositories).extracting(RepositoryResponse::getName).contains(name);
+        client.deleteProject("notExistingRepo");
     }
 
     private void assertRepositoryRequest(RepositoryRequest actual, RepositoryRequest expected) {
@@ -236,16 +180,12 @@ public class RepositoryIntegrationTest extends RestTestBase {
         assertions.assertAll();
     }
 
-    private void assertRepositoryResponse(RepositoryResponse actual, RepositoryRequest expected) {
+    private void assertRepositoryResponse(ProjectResponse actual, RepositoryRequest expected) {
         assertThat(actual).isNotNull();
 
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(actual.getName()).isEqualTo(expected.getName());
         assertions.assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
-        assertions.assertThat(actual.getUserName()).isEqualTo(expected.getUserName());
-        assertions.assertThat(actual.getPassword()).isEqualTo(expected.getPassword());
-        assertions.assertThat(actual.getRequestType()).isNull();
         assertions.assertAll();
     }
-
 }
