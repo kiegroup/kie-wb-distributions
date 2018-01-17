@@ -104,7 +104,7 @@ public class HomeProducerTest {
         assertEquals(Constants.SubHeading,
                      model.getDescription());
 
-        assertEquals(3,
+        assertEquals(2,
                      model.getShortcuts().size());
         assertEquals(Constants.Design,
                      model.getShortcuts().get(0).getHeading());
@@ -114,22 +114,14 @@ public class HomeProducerTest {
                      model.getShortcuts().get(1).getHeading());
         assertEquals(devOpsDescription,
                      model.getShortcuts().get(1).getSubHeading());
-        assertEquals(Constants.Track,
-                     model.getShortcuts().get(2).getHeading());
-        assertEquals(Constants.TrackDescription,
-                     model.getShortcuts().get(2).getSubHeading());
     }
 
     private void assertDesign(final HomeModel model) {
-        assertEquals(2,
+        assertEquals(1,
                      model.getShortcuts().get(0).getLinks().size());
         assertEquals(Constants.Projects,
                      model.getShortcuts().get(0).getLinks().get(0).getLabel());
         assertEquals(PerspectiveIds.LIBRARY,
                      model.getShortcuts().get(0).getLinks().get(0).getPerspectiveIdentifier());
-        assertEquals(Constants.Dashboards,
-                     model.getShortcuts().get(0).getLinks().get(1).getLabel());
-        assertEquals(PerspectiveIds.BUSINESS_DASHBOARDS,
-                     model.getShortcuts().get(0).getLinks().get(1).getPerspectiveIdentifier());
     }
 }

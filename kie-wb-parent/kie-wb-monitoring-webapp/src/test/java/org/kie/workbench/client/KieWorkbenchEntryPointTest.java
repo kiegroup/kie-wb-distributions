@@ -159,7 +159,7 @@ public class KieWorkbenchEntryPointTest {
         NavGroup workbench = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_WORKBENCH);
 
         NavGroup design = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DESIGN);
-        NavItem dashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_DASHBOARDS);
+        NavItem pages = navTree.getItemById(NavTreeDefinitions.ENTRY_PAGES);
 
         NavGroup devops = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEVOPS);
         NavItem execServers = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_SERVERS);
@@ -174,7 +174,6 @@ public class KieWorkbenchEntryPointTest {
         NavGroup track = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_TRACK);
         NavItem tasks = navTree.getItemById(NavTreeDefinitions.ENTRY_TASKS_LIST);
         NavItem processesAndTasksDashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_PROCESSES_AND_TASKS_DASHBOARD);
-        NavItem businessDashboards = navTree.getItemById(NavTreeDefinitions.ENTRY_PROCESSES_AND_TASKS_DASHBOARD);
 
         assertNotNull(workbench);
         assertNotNull(design);
@@ -190,8 +189,8 @@ public class KieWorkbenchEntryPointTest {
         assertEquals(track.getParent(),
                      workbench);
 
-        assertNotNull(dashboard);
-        assertEquals(dashboard.getParent(),
+        assertNotNull(pages);
+        assertEquals(pages.getParent(),
                      design);
 
         assertNotNull(execServers);
@@ -216,12 +215,9 @@ public class KieWorkbenchEntryPointTest {
 
         assertNotNull(tasks);
         assertNotNull(processesAndTasksDashboard);
-        assertNotNull(businessDashboards);
         assertEquals(tasks.getParent(),
                      track);
         assertEquals(processesAndTasksDashboard.getParent(),
-                     track);
-        assertEquals(businessDashboards.getParent(),
                      track);
     }
 }

@@ -53,10 +53,10 @@ public class HomeRuntimeProducer extends AbstractHomeProducer {
         final HomeShortcut design = ModelUtils.makeShortcut("pficon pficon-blueprint",
                                                             translationService.format(Constants.Design),
                                                             translationService.format(Constants.DesignRuntimeDescription),
-                                                            () -> placeManager.goTo(BUSINESS_DASHBOARDS),
-                                                            BUSINESS_DASHBOARDS,
+                                                            () -> placeManager.goTo(CONTENT_MANAGEMENT),
+                                                            CONTENT_MANAGEMENT,
                                                             PERSPECTIVE);
-        design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
                                             BUSINESS_DASHBOARDS));
 
         return design;

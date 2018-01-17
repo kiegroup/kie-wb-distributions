@@ -56,7 +56,7 @@ public class HomeRuntimeProducer extends AbstractHomeProducer {
                                                             () -> placeManager.goTo(BUSINESS_DASHBOARDS),
                                                             BUSINESS_DASHBOARDS,
                                                             PERSPECTIVE);
-        design.addLink(new HomeShortcutLink(translationService.format(Constants.Dashboards),
+        design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
                                             BUSINESS_DASHBOARDS));
 
         return design;

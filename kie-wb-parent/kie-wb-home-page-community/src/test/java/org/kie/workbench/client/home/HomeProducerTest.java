@@ -129,7 +129,7 @@ public class HomeProducerTest {
                      model.getShortcuts().get(0).getLinks().get(0).getLabel());
         assertEquals(PerspectiveIds.LIBRARY,
                      model.getShortcuts().get(0).getLinks().get(0).getPerspectiveIdentifier());
-        assertEquals(Constants.Dashboards,
+        assertEquals(Constants.Pages,
                      model.getShortcuts().get(0).getLinks().get(1).getLabel());
         assertEquals(PerspectiveIds.BUSINESS_DASHBOARDS,
                      model.getShortcuts().get(0).getLinks().get(1).getPerspectiveIdentifier());
@@ -161,7 +161,7 @@ public class HomeProducerTest {
     }
 
     private void assertTrack(final HomeModel model) {
-        assertEquals(3,
+        assertEquals(2,
                      model.getShortcuts().get(3).getLinks().size());
         assertEquals(Constants.Tasks,
                      model.getShortcuts().get(3).getLinks().get(0).getLabel());
@@ -171,9 +171,5 @@ public class HomeProducerTest {
                      model.getShortcuts().get(3).getLinks().get(1).getLabel());
         assertEquals(PerspectiveIds.PROCESS_DASHBOARD,
                      model.getShortcuts().get(3).getLinks().get(1).getPerspectiveIdentifier());
-        assertEquals(Constants.BusinessDashboards,
-                     model.getShortcuts().get(3).getLinks().get(2).getLabel());
-        assertEquals(PerspectiveIds.APPS,
-                     model.getShortcuts().get(3).getLinks().get(2).getPerspectiveIdentifier());
     }
 }
