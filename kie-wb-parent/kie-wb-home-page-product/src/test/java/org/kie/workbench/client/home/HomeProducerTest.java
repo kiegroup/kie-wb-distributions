@@ -37,21 +37,25 @@ import static org.mockito.Mockito.when;
 public class HomeProducerTest {
 
     @Mock
-    private PlaceManager placeManager;
+    protected PlaceManager placeManager;
 
     @Mock
-    private TranslationService translationService;
+    protected TranslationService translationService;
 
     @Mock
-    private ShortcutHelper shortcutHelper;
+    protected ShortcutHelper shortcutHelper;
 
-    private HomeProducer producer;
+    private AbstractHomeProducer producer;
+
+    protected AbstractHomeProducer createHomeProducer() {
+        return new HomeProducer(placeManager,
+                translationService,
+                shortcutHelper);
+    }
 
     @Before
     public void setup() {
-        producer = new HomeProducer(placeManager,
-                                    translationService,
-                                    shortcutHelper);
+        producer = createHomeProducer();
         doAnswer((InvocationOnMock invocation) -> invocation.getArguments()[0]).when(translationService).format(anyString());
     }
 
@@ -101,7 +105,7 @@ public class HomeProducerTest {
                      model.getShortcuts().get(1).getLinks().get(0).getPerspectiveIdentifier());
     }
 
-    private void assertHomeModel(final HomeModel model,
+    protected void assertHomeModel(final HomeModel model,
                                  final String devOpsDescription) {
         assertNotNull(model);
 
@@ -122,7 +126,7 @@ public class HomeProducerTest {
                      model.getShortcuts().get(1).getSubHeading());
     }
 
-    private void assertDesign(final HomeModel model) {
+    protected void assertDesign(final HomeModel model) {
         assertEquals(2,
                      model.getShortcuts().get(0).getLinks().size());
         assertEquals(Constants.Projects,
@@ -135,7 +139,7 @@ public class HomeProducerTest {
                      model.getShortcuts().get(0).getLinks().get(1).getPerspectiveIdentifier());
     }
 
-    private void assertManage(final HomeModel model) {
+    protected void assertManage(final HomeModel model) {
         assertEquals(5,
                      model.getShortcuts().get(2).getLinks().size());
         assertEquals(Constants.ProcessDefinitions,
@@ -160,8 +164,8 @@ public class HomeProducerTest {
                      model.getShortcuts().get(2).getLinks().get(4).getPerspectiveIdentifier());
     }
 
-    private void assertTrack(final HomeModel model) {
-        assertEquals(3,
+    protected void assertTrack(final HomeModel model) {
+        assertEquals(2,
                      model.getShortcuts().get(3).getLinks().size());
         assertEquals(Constants.Tasks,
                      model.getShortcuts().get(3).getLinks().get(0).getLabel());
