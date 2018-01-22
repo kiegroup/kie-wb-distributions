@@ -413,6 +413,13 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- PMML -->
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>kie-pmml</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- Common -->
     <dependency>
       <groupId>org.kie</groupId>
