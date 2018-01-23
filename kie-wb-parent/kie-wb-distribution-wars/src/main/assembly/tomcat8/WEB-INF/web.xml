@@ -439,21 +439,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </auth-constraint>
   </security-constraint>
 
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>formModeler</web-resource-name>
-      <url-pattern>/formModeler/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>admin</role-name>
-      <role-name>analyst</role-name>
-      <role-name>developer</role-name>
-      <role-name>user</role-name>
-      <role-name>manager</role-name>
-      <role-name>process-admin</role-name>
-    </auth-constraint>
-  </security-constraint>
-
   <!-- public resources -->
   <security-constraint>
     <web-resource-collection>

@@ -5,7 +5,6 @@
 /src/main/webapp/WEB-INF/classes/
 /src/main/webapp/WEB-INF/lib/
 /src/main/webapp/WEB-INF/tlds/
-/src/main/webapp/formModeler/
 /src/main/webapp/org.kie.workbench.KIEWebapp/
 
 # Eclipse, Netbeans and IntelliJ files
