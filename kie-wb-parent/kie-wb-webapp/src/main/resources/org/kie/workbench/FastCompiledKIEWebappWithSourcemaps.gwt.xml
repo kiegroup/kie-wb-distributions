@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module rename-to="org.kie.workbench.KIEWebapp">
+
+    <inherits name="org.kie.workbench.FastCompiledKIEWebapp"/>
+
+    <set-property name="compiler.useSourceMaps" value="true"/>
+    <set-configuration-property name="includeSourceMapUrl"
+	                        value="sourcemaps/__HASH___sourceMap__FRAGMENT__.json"/>
+</module>
