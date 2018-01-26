@@ -40,7 +40,7 @@ public interface NavigationConstants
 
     String navTreePageAuthoringName();
 
-    String navTreeDevOpsName();
+    String navTreeDeployName();
 
     String navTreeDeploymentsName();
 
@@ -70,7 +70,7 @@ public interface NavigationConstants
 
     String navTreePageAuthoringDescr();
 
-    String navTreeDevOpsDescr();
+    String navTreeDeployDescr();
 
     String navTreeDeploymentsDescr();
 

@@ -59,7 +59,7 @@ public class HomeProducer implements HomeModelProvider {
                                               "images/community_home_bg.jpg");
 
         model.addShortcut(createDesignShortcut());
-        model.addShortcut(createDevOpsShortcut());
+        model.addShortcut(createDeployShortcut());
 
         return model;
     }
@@ -76,31 +76,31 @@ public class HomeProducer implements HomeModelProvider {
         return design;
     }
 
-    private HomeShortcut createDevOpsShortcut() {
+    private HomeShortcut createDeployShortcut() {
         final HomeShortcutLink deployments = new HomeShortcutLink(translationService.format(Constants.Deployments),
                                                                   DEPLOYMENTS);
         final HomeShortcutLink servers = new HomeShortcutLink(translationService.format(Constants.Servers),
                                                               SERVER_MANAGEMENT);
         final boolean isDeploymentsAuthorized = shortcutHelper.authorize(deployments.getPerspectiveIdentifier());
 
-        final HomeShortcut devOps = ModelUtils.makeShortcut("fa fa-gears",
-                                                            translationService.format(Constants.DevOps),
-                                                            getDevOpsDescription(isDeploymentsAuthorized),
+        final HomeShortcut deploy = ModelUtils.makeShortcut("fa fa-gears",
+                                                            translationService.format(Constants.Deploy),
+                                                            getDeployDescription(isDeploymentsAuthorized),
                                                             () -> placeManager.goTo(SERVER_MANAGEMENT),
                                                             SERVER_MANAGEMENT,
                                                             PERSPECTIVE);
         if (isDeploymentsAuthorized) {
-            devOps.addLink(deployments);
+            deploy.addLink(deployments);
         }
-        devOps.addLink(servers);
+        deploy.addLink(servers);
 
-        return devOps;
+        return deploy;
     }
 
-    private String getDevOpsDescription(final boolean isDeploymentsAuthorized) {
+    private String getDeployDescription(final boolean isDeploymentsAuthorized) {
         if (isDeploymentsAuthorized) {
-            return translationService.format(Constants.DevOpsDescription2);
+            return translationService.format(Constants.DeployDescription2);
         }
-        return translationService.format(Constants.DevOpsDescription1);
+        return translationService.format(Constants.DeployDescription1);
     }
 }

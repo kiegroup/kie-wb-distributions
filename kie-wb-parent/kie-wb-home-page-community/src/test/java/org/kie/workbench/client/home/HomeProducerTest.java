@@ -66,7 +66,7 @@ public class HomeProducerTest {
         final HomeModel model = producer.get();
 
         assertHomeModel(model,
-                        Constants.DevOpsDescription2);
+                        Constants.DeployDescription2);
         assertDesign(model);
         assertManage(model);
         assertTrack(model);
@@ -92,7 +92,7 @@ public class HomeProducerTest {
         assertNotNull(model);
 
         assertHomeModel(model,
-                        Constants.DevOpsDescription1);
+                        Constants.DeployDescription1);
         assertDesign(model);
         assertManage(model);
         assertTrack(model);
@@ -106,7 +106,7 @@ public class HomeProducerTest {
     }
 
     protected void assertHomeModel(final HomeModel model,
-                                 final String devOpsDescription) {
+                                 final String deployDescription) {
         assertNotNull(model);
 
         assertEquals(Constants.Heading,
@@ -120,9 +120,9 @@ public class HomeProducerTest {
                      model.getShortcuts().get(0).getHeading());
         assertEquals(Constants.DesignDescription,
                      model.getShortcuts().get(0).getSubHeading());
-        assertEquals(Constants.DevOps,
+        assertEquals(Constants.Deploy,
                      model.getShortcuts().get(1).getHeading());
-        assertEquals(devOpsDescription,
+        assertEquals(deployDescription,
                      model.getShortcuts().get(1).getSubHeading());
     }
 
