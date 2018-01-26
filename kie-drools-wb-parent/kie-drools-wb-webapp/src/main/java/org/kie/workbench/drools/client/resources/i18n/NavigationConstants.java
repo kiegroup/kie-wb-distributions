@@ -31,7 +31,7 @@ public interface NavigationConstants
 
     String navTreeProjectsName();
 
-    String navTreeDevOpsName();
+    String navTreeDeployName();
 
     String navTreeDeploymentsName();
 
@@ -43,7 +43,7 @@ public interface NavigationConstants
 
     String navTreeProjectsDescr();
 
-    String navTreeDevOpsDescr();
+    String navTreeDeployDescr();
 
     String navTreeDeploymentsDescr();
 

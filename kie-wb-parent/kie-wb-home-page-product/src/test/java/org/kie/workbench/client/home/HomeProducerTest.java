@@ -62,7 +62,7 @@ public class HomeProducerTest {
         final HomeModel model = producer.get();
 
         assertHomeModel(model,
-                        Constants.DevOpsDescription2);
+                        Constants.DeployDescription2);
         assertDesign(model);
         assertManage(model);
         assertTrack(model);
@@ -88,7 +88,7 @@ public class HomeProducerTest {
         assertNotNull(model);
 
         assertHomeModel(model,
-                        Constants.DevOpsDescription1);
+                        Constants.DeployDescription1);
         assertDesign(model);
         assertManage(model);
         assertTrack(model);
@@ -101,8 +101,8 @@ public class HomeProducerTest {
                      model.getShortcuts().get(1).getLinks().get(0).getPerspectiveIdentifier());
     }
 
-    private void assertHomeModel(final HomeModel model,
-                                 final String devOpsDescription) {
+    protected void assertHomeModel(final HomeModel model,
+                                   final String deployDescription) {
         assertNotNull(model);
 
         assertEquals(Constants.Heading,
@@ -116,9 +116,9 @@ public class HomeProducerTest {
                      model.getShortcuts().get(0).getHeading());
         assertEquals(Constants.DesignDescription,
                      model.getShortcuts().get(0).getSubHeading());
-        assertEquals(Constants.DevOps,
+        assertEquals(Constants.Deploy,
                      model.getShortcuts().get(1).getHeading());
-        assertEquals(devOpsDescription,
+        assertEquals(deployDescription,
                      model.getShortcuts().get(1).getSubHeading());
     }
 
@@ -161,7 +161,7 @@ public class HomeProducerTest {
     }
 
     private void assertTrack(final HomeModel model) {
-        assertEquals(3,
+        assertEquals(2,
                      model.getShortcuts().get(3).getLinks().size());
         assertEquals(Constants.Tasks,
                      model.getShortcuts().get(3).getLinks().get(0).getLabel());
