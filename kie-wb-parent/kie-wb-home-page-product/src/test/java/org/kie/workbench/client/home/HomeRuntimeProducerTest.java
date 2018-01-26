@@ -35,7 +35,7 @@ public class HomeRuntimeProducerTest extends HomeProducerTest {
 
     @Override
     protected void assertHomeModel(final HomeModel model,
-            final String devOpsDescription) {
+            final String deployDescription) {
         assertNotNull(model);
 
         assertEquals(Constants.Heading,
@@ -49,9 +49,9 @@ public class HomeRuntimeProducerTest extends HomeProducerTest {
                 model.getShortcuts().get(0).getHeading());
         assertEquals(Constants.DesignRuntimeDescription,
                 model.getShortcuts().get(0).getSubHeading());
-        assertEquals(Constants.DevOps,
+        assertEquals(Constants.Deploy,
                 model.getShortcuts().get(1).getHeading());
-        assertEquals(devOpsDescription,
+        assertEquals(deployDescription,
                 model.getShortcuts().get(1).getSubHeading());
     }
 

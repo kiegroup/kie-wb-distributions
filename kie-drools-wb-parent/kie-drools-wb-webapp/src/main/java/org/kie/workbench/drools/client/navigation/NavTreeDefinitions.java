@@ -39,7 +39,7 @@ public class NavTreeDefinitions {
     public static final String ENTRY_PROJECTS = "wb_entry_projects";
     public static final String ENTRY_PAGES = "wb_entry_pages";
 
-    public static final String GROUP_DEVOPS = "wb_group_devops";
+    public static final String GROUP_DEPLOY = "wb_group_deploy";
     public static final String ENTRY_DEPLOYMENTS = "wb_entry_deployments";
     public static final String ENTRY_EXECUTION_SERVERS = "wb_entry_execution_servers";
 
@@ -61,9 +61,9 @@ public class NavTreeDefinitions {
                       true,
                       perspective(LIBRARY))
                 .endGroup()
-                .group(GROUP_DEVOPS,
-                       i18n.navTreeDevOpsName(),
-                       i18n.navTreeDevOpsDescr(),
+                .group(GROUP_DEPLOY,
+                       i18n.navTreeDeployName(),
+                       i18n.navTreeDeployDescr(),
                        true)
                 .item(ENTRY_DEPLOYMENTS,
                       i18n.navTreeDeploymentsName(),

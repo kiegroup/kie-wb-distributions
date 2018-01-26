@@ -60,14 +60,14 @@ public class NavTreeDefinitionsTest {
         assertEquals(ENTRY_PROJECTS, designChildren.get(0).getId());
         assertEquals(true, designChildren.get(0).isModifiable());
 
-        final NavGroup devopsItem = (NavGroup) workbenchChildren.get(1);
-        assertEquals(GROUP_DEVOPS, devopsItem.getId());
-        assertEquals(true, devopsItem.isModifiable());
-        final List<NavItem> devopsChildren = devopsItem.getChildren();
-        assertEquals(2, devopsChildren.size());
-        assertEquals(ENTRY_DEPLOYMENTS, devopsChildren.get(0).getId());
-        assertEquals(true, devopsChildren.get(0).isModifiable());
-        assertEquals(ENTRY_EXECUTION_SERVERS, devopsChildren.get(1).getId());
-        assertEquals(true, devopsChildren.get(1).isModifiable());
+        final NavGroup deployItem = (NavGroup) workbenchChildren.get(1);
+        assertEquals(GROUP_DEPLOY, deployItem.getId());
+        assertEquals(true, deployItem.isModifiable());
+        final List<NavItem> deployChildren = deployItem.getChildren();
+        assertEquals(2, deployChildren.size());
+        assertEquals(ENTRY_DEPLOYMENTS, deployChildren.get(0).getId());
+        assertEquals(true, deployChildren.get(0).isModifiable());
+        assertEquals(ENTRY_EXECUTION_SERVERS, deployChildren.get(1).getId());
+        assertEquals(true, deployChildren.get(1).isModifiable());
     }
 }
