@@ -36,13 +36,13 @@ public class Constants {
     public static final String DesignRuntimeDescription = "DesignRuntimeDescription";
 
     @TranslationKey(defaultValue = "")
-    public static final String DevOps = "DevOps";
+    public static final String Deploy = "Deploy";
 
     @TranslationKey(defaultValue = "")
-    public static final String DevOpsDescription1 = "DevOpsDescription1";
+    public static final String DeployDescription1 = "DeployDescription1";
 
     @TranslationKey(defaultValue = "")
-    public static final String DevOpsDescription2 = "DevOpsDescription2";
+    public static final String DeployDescription2 = "DeployDescription2";
 
     @TranslationKey(defaultValue = "")
     public static final String Manage = "Manage";

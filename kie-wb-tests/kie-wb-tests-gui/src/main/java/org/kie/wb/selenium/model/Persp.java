@@ -51,11 +51,11 @@ public class Persp<T extends AbstractPerspective> {
                           ContentManagerPerspective.class);
 
     public static final Persp<ProvisioningManagementPerspective> DEPLOYMENTS
-            = new Persp<>("DevOps",
+            = new Persp<>("Deploy",
                           "Deployments",
                           ProvisioningManagementPerspective.class);
     public static final Persp<ExecutionServersPerspective> EXECUTION_SERVERS
-            = new Persp<>("DevOps",
+            = new Persp<>("Deploy",
                           "Execution Servers",
                           ExecutionServersPerspective.class);
 

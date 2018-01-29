@@ -182,7 +182,7 @@ public class KieWorkbenchEntryPointTest {
         NavItem projects = navTree.getItemById(NavTreeDefinitions.ENTRY_PROJECTS);
         NavItem pages = navTree.getItemById(NavTreeDefinitions.ENTRY_PAGES);
 
-        NavGroup devops = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEVOPS);
+        NavGroup deploy = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEPLOY);
         NavItem execServers = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_SERVERS);
 
         NavGroup manage = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_MANAGE);
@@ -198,12 +198,12 @@ public class KieWorkbenchEntryPointTest {
 
         assertNotNull(workbench);
         assertNotNull(design);
-        assertNotNull(devops);
+        assertNotNull(deploy);
         assertNotNull(manage);
         assertNotNull(track);
         assertEquals(design.getParent(),
                      workbench);
-        assertEquals(devops.getParent(),
+        assertEquals(deploy.getParent(),
                      workbench);
         assertEquals(manage.getParent(),
                      workbench);
@@ -219,7 +219,7 @@ public class KieWorkbenchEntryPointTest {
 
         assertNotNull(execServers);
         assertEquals(execServers.getParent(),
-                     devops);
+                     deploy);
 
         assertNotNull(processDef);
         assertNotNull(processInst);
