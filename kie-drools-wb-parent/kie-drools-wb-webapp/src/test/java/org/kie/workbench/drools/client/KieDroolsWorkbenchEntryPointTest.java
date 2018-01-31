@@ -17,7 +17,7 @@
 package org.kie.workbench.drools.client;
 
 import com.google.gwtmockito.GwtMockitoTestRunner;
-import org.dashbuilder.client.cms.screen.explorer.ContentExplorerScreen;
+import org.dashbuilder.client.cms.screen.explorer.NavigationExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
 import org.dashbuilder.client.navigation.event.NavTreeLoadedEvent;
 import org.dashbuilder.client.navigation.impl.NavigationManagerImpl;
@@ -90,7 +90,7 @@ public class KieDroolsWorkbenchEntryPointTest {
     private NavigationManager navigationManager;
 
     @Mock
-    protected ContentExplorerScreen contentExplorerScreen;
+    protected NavigationExplorerScreen navigationExplorerScreen;
 
     @Mock
     protected NavigationConstants navigationConstants;
@@ -135,12 +135,12 @@ public class KieDroolsWorkbenchEntryPointTest {
                                                                       adminPageHelper,
                                                                       navTreeDefinitions,
                                                                       navigationManager,
-                                                                      contentExplorerScreen));
+                                                                      navigationExplorerScreen));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
         navTreeEditor = spy(new NavTreeEditor(mock(NavTreeEditorView.class), null, syncBeanManager, null, perspectiveTreeProvider, targetPerspectiveEditor, null, null, null, null));
-        when(contentExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
+        when(navigationExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
     }
 
     @Test

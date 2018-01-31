@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.dashbuilder.client.cms.screen.explorer.ContentExplorerScreen;
+import org.dashbuilder.client.cms.screen.explorer.NavigationExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
 import org.dashbuilder.client.navigation.event.NavTreeChangedEvent;
 import org.dashbuilder.navigation.NavTree;
@@ -61,7 +61,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected NavigationManager navigationManager;
 
-    protected ContentExplorerScreen contentExplorerScreen;
+    protected NavigationExplorerScreen navigationExplorerScreen;
 
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
@@ -74,7 +74,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final DefaultAdminPageHelper adminPageHelper,
                                   final NavTreeDefinitions navTreeDefinitions,
                                   final NavigationManager navigationManager,
-                                  final ContentExplorerScreen contentExplorerScreen) {
+                                  final NavigationExplorerScreen navigationExplorerScreen) {
         super(appConfigService,
               activityBeansCache);
         this.menusHelper = menusHelper;
@@ -85,7 +85,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.adminPageHelper = adminPageHelper;
         this.navTreeDefinitions = navTreeDefinitions;
         this.navigationManager = navigationManager;
-        this.contentExplorerScreen = contentExplorerScreen;
+        this.navigationExplorerScreen = navigationExplorerScreen;
     }
 
     @PostConstruct
@@ -95,7 +95,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
         // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
         // navigation tree node must be limited to 2 (see https://issues.jboss.org/browse/GUVNOR-2992)
-        contentExplorerScreen.getNavTreeEditor().setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
+        navigationExplorerScreen.getNavTreeEditor().setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
                                                               2);
     }
 
