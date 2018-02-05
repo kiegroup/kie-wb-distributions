@@ -980,7 +980,7 @@
       <groupId>org.gwtbootstrap3</groupId>
       <artifactId>gwtbootstrap3-extras</artifactId>
       <scope>provided</scope>
-    </dependency>    
+    </dependency>
 
     <dependency>
       <groupId>org.owasp.encoder</groupId>
@@ -2406,6 +2406,57 @@
           <scope>provided</scope>
         </dependency>
       </dependencies>
+    </profile>
+
+     <!-- Fast compiled build including Source maps for easier debugging.
+     At the moment only enabled for kie-wb -->
+    <profile>
+      <id>sourcemaps</id>
+      <activation>
+        <property>
+          <name>sourcemaps</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>gwt-maven-plugin</artifactId>
+            <configuration>
+              <module>org.kie.workbench.FastCompiledKIEWebappWithSourcemaps</module>
+              <saveSource>true</saveSource>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-source-maps</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>war</goal>
+                </goals>
+                <configuration>
+                  <webResources>
+                    <resource>
+                      <directory>${basedir}/target/extra/org.kie.workbench.KIEWebapp/src</directory>
+                      <targetPath>sourcemaps</targetPath>
+                    </resource>
+                    <resource>
+                      <directory>${basedir}/target/extra/org.kie.workbench.KIEWebapp/symbolMaps</directory>
+                      <includes>
+                        <include>*.json</include>
+                      </includes>
+                      <targetPath>sourcemaps</targetPath>
+                    </resource>
+                  </webResources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
 
   </profiles>
