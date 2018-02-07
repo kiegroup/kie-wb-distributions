@@ -661,7 +661,7 @@
     <!-- KIE Workbench Playground Repository -->
     <dependency>
       <groupId>org.kie.workbench.playground</groupId>
-      <artifactId>playground-parent</artifactId>
+      <artifactId>kie-all-playground</artifactId>
       <scope>runtime</scope>
     </dependency>
 
