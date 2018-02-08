@@ -1303,6 +1303,13 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- KIE PMML -->
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>kie-pmml</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- Uberfire Docks extension -->
     <dependency>
       <groupId>org.uberfire</groupId>
