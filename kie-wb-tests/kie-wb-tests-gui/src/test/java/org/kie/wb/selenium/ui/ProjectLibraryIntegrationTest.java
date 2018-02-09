@@ -15,63 +15,75 @@
  */
 package org.kie.wb.selenium.ui;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
-import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
 
-    private static final String MORTGAGES_PROJECT = "mortgages";
-
-    private HomePerspective home;
     private ProjectLibraryPerspective projectLibrary;
 
     @Before
     public void setUp() {
-        login.getLoginPage();
-        if (login.isDisplayed()){
-            home = login.loginDefaultUser();
+        login.get();
+        if (login.isDisplayed()) {
+            login.loginDefaultUser();
         }
 
-        projectLibrary = home.getNavbar().projectAuthoring();
-
-        if (projectLibrary.isProjectListEmpty()){
-            ProjectLibraryPerspective library = home.getNavbar().projectAuthoring();
-            library.importDemoProject(MORTGAGES_PROJECT);
-            Waits.pause(5_000);
-            projectLibrary.openProjectList();
-        }
-    }
-
-    @After
-    public void cleanUp(){
-        home.logout();
+        projectLibrary = home.getNavbar().projects();
     }
 
     @Test
     public void importAndBuildProjectFromStockRepository() {
-        projectLibrary.importStockExampleProject("optacloud");
-        deployAndCheckArtifact("optacloud:optacloud:1.0.0-SNAPSHOT");
+        final String
+                projectName = "optacloud",
+                projectGav = "optacloud:optacloud:1.0.0-SNAPSHOT";
+
+        importBuildDeployAndCheckArtifact(
+                projectName,
+                projectGav,
+                () -> projectLibrary.importStockExampleProject(projectName)
+        );
     }
 
     @Test
     public void importAndBuildProjectFromCustomRepository() {
-        projectLibrary.importCustomExampleProject(Repository.JBPM_PLAYGROUND, "Evaluation");
-        deployAndCheckArtifact("org.jbpm:Evaluation:1.0");
+        final String
+                projectName = "Evaluation",
+                projectGav = "org.jbpm:Evaluation:1.0";
+
+        importBuildDeployAndCheckArtifact(
+                projectName,
+                projectGav,
+                () -> projectLibrary.importCustomExampleProject(Repository.JBPM_PLAYGROUND, projectName)
+        );
+    }
+
+    private void importBuildDeployAndCheckArtifact(String projectName, String projectGav, Runnable stepsToImportProject) {
+        stepsToImportProject.run();
+        workaroundOpenProjectAfterImport(projectName);
+        deployAndCheckArtifact(projectGav);
+        // Important: don't put logout in @After, because ScreenshotOnFailure captures screenshots after @After,
+        // which results in useless image of login screen
+        home.logout();
+    }
+
+    // Workaround - after selecting examples to import and clicking OK, library stays in the list of projects - is this a bug?
+    private void workaroundOpenProjectAfterImport(String projectName) {
+        projectLibrary.openProjectList();
+        projectLibrary.clickProjectCard(projectName);
     }
 
     private void deployAndCheckArtifact(String artifact) {
         projectLibrary.buildAndDeployProject();
-        Waits.pause(10_000); //Wait for project to build/deploy and appear in artifact repository perspective
-
+        //Wait for project to build/deploy and appear in artifact repository perspective
+        Waits.pause(10_000);
         ArtifactRepositoryPerspective artifactRepo = projectLibrary.getNavbar().admin().artifactRepository();
         assertThat(artifactRepo.isArtifactPresent(artifact))
                 .as("Project artifact should be present after Build & Deploy").isTrue();

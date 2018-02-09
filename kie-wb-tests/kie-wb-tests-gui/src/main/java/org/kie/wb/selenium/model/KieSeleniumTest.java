@@ -15,41 +15,32 @@
  */
 package org.kie.wb.selenium.model;
 
-import java.util.Optional;
-
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.util.ScreenshotOnFailure;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Arquillian.class)
 public abstract class KieSeleniumTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(KieSeleniumTest.class);
-
     @Drone
     protected static WebDriver driver;
-
     @Page
     protected LoginPage login;
-
-    public static final KieWbDistribution DISTRO = kieWbDistribution();
-
+    @Page
+    protected HomePerspective home;
     @Rule
     public ScreenshotOnFailure screenshotter = new ScreenshotOnFailure();
+    protected static final KieWbDistribution DISTRO = kieWbDistribution();
 
     private static KieWbDistribution kieWbDistribution() {
         String prop = System.getProperty("app.name");
-        final Optional<KieWbDistribution> kieWbDistribution = KieWbDistribution.fromWarNameString(prop);
-        if (kieWbDistribution.isPresent() == false) {
-            throw new IllegalStateException("Invalid app.name='" + prop + "' Expecting kie-wb, kie-wb-monitoring or kie-drools-wb");
-        }
-        LOG.info("Tested application: {}", prop);
-        return kieWbDistribution.get();
+        return KieWbDistribution
+                .fromWarNameString(prop)
+                .orElseThrow(() -> new IllegalStateException("Invalid app.name='" + prop + "' Expecting kie-wb, kie-wb-monitoring or kie-drools-wb"));
     }
 }

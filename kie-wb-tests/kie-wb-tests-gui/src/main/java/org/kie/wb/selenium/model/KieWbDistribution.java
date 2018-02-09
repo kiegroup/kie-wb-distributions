@@ -16,23 +16,22 @@
 
 package org.kie.wb.selenium.model;
 
-import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum KieWbDistribution {
 
     KIE_WB,
-
     KIE_DROOLS_WB,
-
     KIE_WB_MONITORING;
 
     public static Optional<KieWbDistribution> fromWarNameString(final String warName) {
-        return Arrays.asList(KieWbDistribution.values()).stream().filter(distro -> distro.getWarName().equals(warName)).findFirst();
+        return Stream.of(KieWbDistribution.values())
+                .filter(distro -> distro.getWarName().equals(warName))
+                .findFirst();
     }
 
     public String getWarName() {
-        return this.name().toLowerCase().replace("_",
-                                                 "-");
+        return this.name().toLowerCase().replace("_", "-");
     }
 }

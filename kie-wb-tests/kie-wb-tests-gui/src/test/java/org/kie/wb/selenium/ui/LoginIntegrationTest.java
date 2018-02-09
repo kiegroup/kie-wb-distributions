@@ -17,16 +17,15 @@ package org.kie.wb.selenium.ui;
 
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
-import org.kie.wb.selenium.model.persps.HomePerspective;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class LoginIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void loginAndLogout() {
-        login.getLoginPage();
-        HomePerspective home = login.loginDefaultUser();
+        login.get();
+        login.loginDefaultUser();
         assertTrue(home.isDisplayed());
 
         home.logout();

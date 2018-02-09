@@ -19,11 +19,10 @@ import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.Persp;
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
-import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Login and verify each perspective can be navigated to and loads some content.
@@ -34,8 +33,8 @@ public class LoadAllPerspectivesIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void allPerspectivesCanBeLoaded() {
-        login.getLoginPage();
-        HomePerspective home = login.loginDefaultUser();
+        login.get();
+        login.loginDefaultUser();
 
         for (Persp<?> p : Persp.getAllPerspectives(DISTRO)) {
             LOG.info("Checking perspective '" + p.getName() + "..");
