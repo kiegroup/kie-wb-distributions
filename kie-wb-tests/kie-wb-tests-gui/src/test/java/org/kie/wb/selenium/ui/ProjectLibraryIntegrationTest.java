@@ -67,17 +67,10 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
 
     private void importBuildDeployAndCheckArtifact(String projectName, String projectGav, Runnable stepsToImportProject) {
         stepsToImportProject.run();
-        workaroundOpenProjectAfterImport(projectName);
         deployAndCheckArtifact(projectGav);
         // Important: don't put logout in @After, because ScreenshotOnFailure captures screenshots after @After,
         // which results in useless image of login screen
         home.logout();
-    }
-
-    // Workaround - after selecting examples to import and clicking OK, library stays in the list of projects - is this a bug?
-    private void workaroundOpenProjectAfterImport(String projectName) {
-        projectLibrary.openProjectList();
-        projectLibrary.clickProjectCard(projectName);
     }
 
     private void deployAndCheckArtifact(String artifact) {

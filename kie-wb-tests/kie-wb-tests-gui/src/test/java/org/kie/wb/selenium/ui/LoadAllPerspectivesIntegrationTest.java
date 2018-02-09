@@ -19,8 +19,6 @@ import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.Persp;
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertTrue;
 
@@ -29,17 +27,13 @@ import static org.junit.Assert.assertTrue;
  */
 public class LoadAllPerspectivesIntegrationTest extends KieSeleniumTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LoadAllPerspectivesIntegrationTest.class);
-
     @Test
     public void allPerspectivesCanBeLoaded() {
         login.get();
         login.loginDefaultUser();
 
         for (Persp<?> p : Persp.getAllPerspectives(DISTRO)) {
-            LOG.info("Checking perspective '" + p.getName() + "..");
             AbstractPerspective perspective = home.getNavbar().navigateTo(p);
-            LOG.info("Navigated to perspective '" + p.getName() + "..");
             assertTrue("Perspective " + p.getName() + " should be loaded",
                        perspective.isDisplayed());
         }

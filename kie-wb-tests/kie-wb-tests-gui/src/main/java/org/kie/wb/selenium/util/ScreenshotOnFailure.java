@@ -71,8 +71,8 @@ public class ScreenshotOnFailure extends TestWatcher {
     private File initScreenshotDir() {
         String dir = System.getProperty("selenium.screenshots.dir");
         if (dir == null) {
-            throw new IllegalStateException("Property selenium.screenshots.dir "
-                                                    + "(where screenshot taken by WebDriver will be put) must be defined: " + dir);
+            throw new IllegalStateException(
+                    "Property selenium.screenshots.dir (where screenshot taken by WebDriver will be put) was null");
         }
         File scd = new File(dir);
         if (!scd.exists()) {
