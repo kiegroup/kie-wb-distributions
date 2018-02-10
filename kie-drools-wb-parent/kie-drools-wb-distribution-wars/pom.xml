@@ -221,7 +221,7 @@
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-security-management-tomcat</artifactId>
     </dependency>
-    
+
     <!-- for tomcat and RestEasy -->
     <dependency>
       <groupId>org.scannotation</groupId>
@@ -264,6 +264,23 @@
       <groupId>org.kie</groupId>
       <artifactId>kie-drools-wb-webapp</artifactId>
       <type>war</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drools-wb-webapp</artifactId>
+      <type>jar</type>
+      <classifier>swarm</classifier>
+      <exclusions>
+        <exclusion>
+          <groupId>org.yaml</groupId>
+          <artifactId>snakeyaml</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis-ext</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 
@@ -323,8 +340,12 @@
               <descriptors>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-eap-7-redhat.xml</descriptor>
                 <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-tomcat-8-redhat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/productized/assembly-kie-drools-wb-swarm-redhat.xml</descriptor>
               </descriptors>
               <archive>
+                <manifest>
+                  <mainClass>org.wildfly.swarm.bootstrap.Main</mainClass>
+                </manifest>
                 <addMavenDescriptor>false</addMavenDescriptor>
               </archive>
             </configuration>
