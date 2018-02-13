@@ -32,7 +32,6 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectLibraryPerspective.class);
 
     private static final By
-            WELCOME_MESSAGE = By.id("welcome"),
             TEAM_BREADCRUMB = By.linkText("myteam"),
             PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
             IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
@@ -62,16 +61,15 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
         return ImportProjectsScreen.newInstance();
     }
 
-    public boolean isProjectListEmpty() {
-        return Waits.isElementPresent(WELCOME_MESSAGE);
-    }
-
     public void openProjectList() {
         click(TEAM_BREADCRUMB);
+        // A moment to load projects
+        Waits.pause(2_000);
     }
 
-    public void importDemoProject(String projectName) {
-        click(ByJQuery.selector("button:contains('" + projectName + "')"));
+    public void clickProjectCard(String projectName) {
+        By projectCard = ByJQuery.selector("[data-i18n-prefix='PopulatedLibraryView.'] .card-pf-title:contains('" + projectName + "')");
+        click(projectCard);
     }
 
     public void buildAndDeployProject() {
@@ -81,18 +79,19 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     public void importStockExampleProject(String... projects) {
         ImportProjectsScreen importProjectsScreen = trySamples();
-        importProjectsScreen.selectProjects(projects);
-        importProjectsScreen.ok();
+        importProjectsScreen
+                .selectProjects(projects)
+                .ok();
     }
 
-    public void importCustomExampleProject(Repository repo,
-                                           String... projects) {
+    public void importCustomExampleProject(Repository repo, String... projects) {
         ImportRepositoryModal modal = importProject();
         modal.selectCustomRepository(repo.getUrl());
 
         ImportProjectsScreen importProjectsScreen = modal.importProjects();
-        importProjectsScreen.selectProjects(projects);
-        importProjectsScreen.ok();
+        importProjectsScreen
+                .selectProjects(projects)
+                .ok();
     }
 
     private void possiblyOverrideGavConflict() {

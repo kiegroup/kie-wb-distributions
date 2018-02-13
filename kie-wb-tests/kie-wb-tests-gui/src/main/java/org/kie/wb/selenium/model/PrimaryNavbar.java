@@ -18,7 +18,6 @@ package org.kie.wb.selenium.model;
 import org.jboss.arquillian.graphene.Graphene;
 import org.kie.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.wb.selenium.model.persps.AdminPagePerspective;
-import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
 import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.widgets.DropdownMenu;
 import org.kie.wb.selenium.util.BusyPopup;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import static org.kie.wb.selenium.model.KieSeleniumTest.driver;
 import static org.kie.wb.selenium.util.ByUtil.jquery;
-import static org.openqa.selenium.By.cssSelector;
 
 public class PrimaryNavbar {
 
@@ -56,17 +54,13 @@ public class PrimaryNavbar {
         logoutMenu.selectItem("Log Out");
     }
 
-    public ProjectLibraryPerspective projectAuthoring() {
+    public ProjectLibraryPerspective projects() {
         return navigateTo(Persp.PROJECTS);
     }
 
     public AdminPagePerspective admin() {
         adminLink.click();
         return initPerspective(Persp.ADMIN);
-    }
-
-    public ProcessAndTaskDashboardPerspective processAndTaskDashboard() {
-        return navigateTo(Persp.PROCESS_AND_TASK_DASHBOARD);
     }
 
     public <T extends AbstractPerspective> T navigateTo(Persp<T> p) {

@@ -40,17 +40,16 @@ public class LoginPage extends PageObject {
     @Page
     private HomePerspective home;
 
-    public HomePerspective loginDefaultUser() {
-        return loginAs(KIE_USER, KIE_PASS);
+    public void loginDefaultUser() {
+        loginAs(KIE_USER, KIE_PASS);
     }
 
-    public HomePerspective loginAs(String username, String password) {
+    public void loginAs(String username, String password) {
         submitCredentials(username, password);
         home.waitForLoaded();
-        return home;
     }
 
-    public void getLoginPage(){
+    public void get() {
         driver.get(BASE_URL);
     }
 

@@ -23,6 +23,8 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.kie.wb.selenium.util.GrapheneUtil.getDriver;
 
@@ -32,6 +34,7 @@ import static org.kie.wb.selenium.util.GrapheneUtil.getDriver;
  */
 public class ScreenshotOnFailure extends TestWatcher {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ScreenshotOnFailure.class);
     private final File screenshotDir = initScreenshotDir();
 
     @Override
@@ -48,9 +51,9 @@ public class ScreenshotOnFailure extends TestWatcher {
         File targetScreenshot = new File(screenshotDir, filename + ".png");
         try {
             FileUtils.copyFile(tmpScreenshot, targetScreenshot);
-            System.out.println("Screenshot on failure taken: " + targetScreenshot);
+            LOG.info("Screenshot on failure taken: {}", targetScreenshot);
         } catch (IOException ex) {
-            System.err.print("Failed to take a screenshot on failed test " + filename + " " + ex.getMessage());
+            LOG.info("Failed to take a screenshot on failed test {} : {}", filename, ex.getMessage());
         }
     }
 
@@ -59,17 +62,17 @@ public class ScreenshotOnFailure extends TestWatcher {
         File targetFile = new File(screenshotDir, filename + ".html");
         try {
             FileUtils.writeStringToFile(targetFile, pageSource, "UTF-8");
-            System.out.println("Saved page HTML source on failure: " + targetFile);
+            LOG.info("Saved page HTML source on failure: {}", targetFile);
         } catch (IOException ex) {
-            System.err.println("Failed to save page HTML source " + ex.getMessage());
+            LOG.info("Failed to save page HTML source ", ex);
         }
     }
 
     private File initScreenshotDir() {
         String dir = System.getProperty("selenium.screenshots.dir");
         if (dir == null) {
-            throw new IllegalStateException("Property selenium.screenshots.dir "
-                    + "(where screenshot taken by WebDriver will be put) must be defined: " + dir);
+            throw new IllegalStateException(
+                    "Property selenium.screenshots.dir (where screenshot taken by WebDriver will be put) was null");
         }
         File scd = new File(dir);
         if (!scd.exists()) {

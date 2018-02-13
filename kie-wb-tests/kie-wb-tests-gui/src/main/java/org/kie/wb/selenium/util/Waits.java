@@ -61,9 +61,7 @@ public class Waits {
         try {
             elementPresent(locator, timeoutSeconds);
             return true;
-        } catch (NoSuchElementException nse) {
-            return false;
-        } catch(TimeoutException toe) {
+        } catch (NoSuchElementException | TimeoutException nse) {
             return false;
         }
     }

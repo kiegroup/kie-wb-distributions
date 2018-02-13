@@ -15,23 +15,18 @@
  */
 package org.kie.wb.selenium.ui;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
-import org.jboss.arquillian.graphene.page.Page;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
-import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 
-public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @Page
-    private HomePerspective home;
+public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     private final static String
             BASE_URL = System.getProperty("kie.wb.url"),
@@ -42,14 +37,14 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
             COMPLETE_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PERSPECTIVE_ID;
 
     private static final By
-            ELEMENT = ByJQuery.selector("h3:contains('Project Explorer')"),
-            HEADER = By.id("workbenchHeaderPanel");
+            EXPLORER_HEADER = ByJQuery.selector("h3:contains('Project Explorer')"),
+            WORKBENCH_HEADER = By.id("workbenchHeaderPanel");
 
     @Before
     public void setUp() {
-        login.getLoginPage();
+        login.get();
         if (login.isDisplayed()) {
-            home = login.loginDefaultUser();
+            login.loginDefaultUser();
         }
     }
 
@@ -69,7 +64,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     private void verifyPerspectiveIsLoaded() {
         try {
-            Waits.elementPresent(ELEMENT, 10);
+            Waits.elementPresent(EXPLORER_HEADER, 10);
         } catch (WebDriverException exception) {
             Assertions.fail("The standalone perspective could not be loaded.", exception);
         }
@@ -77,7 +72,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     private void verifyPresenceOfHeader(boolean headerIncluded) {
         int
-                actualHeaderCount = driver.findElements(HEADER).size(),
+                actualHeaderCount = driver.findElements(WORKBENCH_HEADER).size(),
                 expectedHeaderCount = headerIncluded ? 1 : 0;
 
         String headerAssertionMessage = String.format("There should %s be AppNavBar on the page.", headerIncluded ? "" : "NOT");

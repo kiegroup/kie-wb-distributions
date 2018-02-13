@@ -35,17 +35,20 @@ public class ImportProjectsScreen extends PageObject {
     @FindBy(css = "button.btn-primary")
     private WebElement okButton;
 
-    public void selectProjects(String... projects) {
+    public ImportProjectsScreen selectProjects(String... projects) {
         for (String project : projects) {
             By projectCardLocator = jquery(".card-pf-view-select:has(.card-pf-title:contains('%s'))", project);
             WebElement projectCard = Waits.elementPresent(projectCardLocator);
             waitForLoaded();
             projectCard.click();
         }
+        return this;
     }
 
     public void ok() {
         okButton.click();
+        // a moment for imported projects to load
+        Waits.pause(5_000);
     }
 
     public static ImportProjectsScreen newInstance() {
