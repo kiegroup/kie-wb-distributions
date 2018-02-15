@@ -424,9 +424,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>public</web-resource-name>
-      <url-pattern>*.cache.js</url-pattern>
-      <url-pattern>*.cache.html</url-pattern>
-      <url-pattern>*.nocache.js</url-pattern>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/ace/*</url-pattern>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/bootstrap-daterangepicker/*</url-pattern>
       <url-pattern>/org.kie.workbench.drools.KIEDroolsWebapp/bootstrap-select/*</url-pattern>
