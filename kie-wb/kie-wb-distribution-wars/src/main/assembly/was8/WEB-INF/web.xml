@@ -213,7 +213,6 @@
   <servlet-mapping>
     <servlet-name>M2Servlet</servlet-name>
     <url-pattern>/maven2/*</url-pattern>
-    <url-pattern>/maven2wb/*</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -607,7 +606,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/plugin/*</url-pattern>
       <url-pattern>/stencilset/*</url-pattern>
       <url-pattern>/plugins/*</url-pattern>
-      <url-pattern>/maven2wb/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
