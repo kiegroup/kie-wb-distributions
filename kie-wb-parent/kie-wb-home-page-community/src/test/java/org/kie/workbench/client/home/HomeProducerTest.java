@@ -163,7 +163,7 @@ public class HomeProducerTest {
     private void assertTrack(final HomeModel model) {
         assertEquals(2,
                      model.getShortcuts().get(3).getLinks().size());
-        assertEquals(Constants.Tasks,
+        assertEquals(Constants.TaskInbox,
                      model.getShortcuts().get(3).getLinks().get(0).getLabel());
         assertEquals(PerspectiveIds.TASKS,
                      model.getShortcuts().get(3).getLinks().get(0).getPerspectiveIdentifier());
