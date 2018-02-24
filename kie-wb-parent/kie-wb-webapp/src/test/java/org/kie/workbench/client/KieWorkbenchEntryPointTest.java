@@ -194,7 +194,8 @@ public class KieWorkbenchEntryPointTest {
 
         NavGroup track = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_TRACK);
         NavItem tasks = navTree.getItemById(NavTreeDefinitions.ENTRY_TASKS_LIST);
-        NavItem processesAndTasksDashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_PROCESSES_AND_TASKS_DASHBOARD);
+        NavItem processDashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_PROCESS_DASHBOARD);
+        NavItem taskDashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_TASK_DASHBOARD);
 
         assertNotNull(workbench);
         assertNotNull(design);
@@ -238,10 +239,13 @@ public class KieWorkbenchEntryPointTest {
                      manage);
 
         assertNotNull(tasks);
-        assertNotNull(processesAndTasksDashboard);
+        assertNotNull(processDashboard);
+        assertNotNull(taskDashboard);
         assertEquals(tasks.getParent(),
                      track);
-        assertEquals(processesAndTasksDashboard.getParent(),
+        assertEquals(processDashboard.getParent(),
+                     track);
+        assertEquals(taskDashboard.getParent(),
                      track);
     }
 }
