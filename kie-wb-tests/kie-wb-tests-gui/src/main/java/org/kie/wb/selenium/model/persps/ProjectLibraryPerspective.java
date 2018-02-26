@@ -36,7 +36,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
             PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
             IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
             TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
-            BUILD_AND_DEPLOY_BUTTON = ByJQuery.selector("button:contains('Build & Deploy')");
+            DEPLOY_BUTTON = ByJQuery.selector("button:contains('Deploy')");
 
     @Override
     public void waitForLoaded() {
@@ -73,7 +73,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     }
 
     public void buildAndDeployProject() {
-        click(BUILD_AND_DEPLOY_BUTTON);
+        click(DEPLOY_BUTTON);
         possiblyOverrideGavConflict();
     }
 
