@@ -190,7 +190,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>M2Servlet</servlet-name>
-    <url-pattern>/maven2wb/*</url-pattern>
     <url-pattern>/maven2/*</url-pattern>
   </servlet-mapping>
 
@@ -283,7 +282,6 @@ minutes. it is now 24 hours. -->
       <url-pattern>/plugin/*</url-pattern>
       <url-pattern>/stencilset/*</url-pattern>
       <url-pattern>/plugins/*</url-pattern>
-      <url-pattern>/maven2wb/*</url-pattern>
       <url-pattern>/verifier/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
