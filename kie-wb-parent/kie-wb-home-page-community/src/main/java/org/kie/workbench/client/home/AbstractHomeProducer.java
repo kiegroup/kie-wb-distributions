@@ -76,7 +76,7 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
                                                            () -> placeManager.goTo(PROCESS_DASHBOARD),
                                                            PROCESS_DASHBOARD,
                                                            PERSPECTIVE);
-        track.addLink(new HomeShortcutLink(translationService.format(Constants.Tasks),
+        track.addLink(new HomeShortcutLink(translationService.format(Constants.TaskInbox),
                                            TASKS));
         track.addLink(new HomeShortcutLink(translationService.format(Constants.Reports),
                                            PROCESS_DASHBOARD));

@@ -134,8 +134,8 @@ public class NavTreeDefinitions {
                        i18n.navTreeTrackDescr(),
                        true)
                 .item(ENTRY_TASKS_LIST,
-                      i18n.navTreeTasksListName(),
-                      i18n.navTreeTasksListDescr(),
+                      i18n.navTreeTaskInboxName(),
+                      i18n.navTreeTaskInboxDescr(),
                       true,
                       perspective(TASKS))
                 .item(ENTRY_PROCESSES_AND_TASKS_DASHBOARD,
