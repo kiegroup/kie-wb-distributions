@@ -96,10 +96,16 @@ public class Persp<T extends AbstractPerspective> {
                           TasksPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
-    public static final Persp<ProcessAndTaskDashboardPerspective> PROCESS_AND_TASK_DASHBOARD
+    public static final Persp<ProcessDashboardPerspective> PROCESS_DASHBOARD
             = new Persp<>("Track",
-                          "Process & Task Reports",
-                          ProcessAndTaskDashboardPerspective.class,
+                          "Process Reports",
+                          ProcessDashboardPerspective.class,
+                          KIE_WB,
+                          KIE_WB_MONITORING);
+    public static final Persp<TaskDashboardPerspective> TASK_DASHBOARD
+            = new Persp<>("Track",
+                          "Task Reports",
+                          TaskDashboardPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
 
@@ -116,7 +122,8 @@ public class Persp<T extends AbstractPerspective> {
             JOBS,
             EXECUTION_ERRORS,
             TASKS,
-            PROCESS_AND_TASK_DASHBOARD
+            PROCESS_DASHBOARD,
+            TASK_DASHBOARD
     ));
     private final String parentMenu;
     private final String menuItem;

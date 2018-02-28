@@ -93,5 +93,8 @@ public class Constants {
     public static final String TaskInbox = "HomeProducer.TaskInbox";
 
     @TranslationKey(defaultValue = "")
-    public static final String Reports = "HomeProducer.Reports";
+    public static final String ProcessReports = "HomeProducer.ProcessReports";
+
+    @TranslationKey(defaultValue = "")
+    public static final String TaskReports = "HomeProducer.TaskReports";
 }

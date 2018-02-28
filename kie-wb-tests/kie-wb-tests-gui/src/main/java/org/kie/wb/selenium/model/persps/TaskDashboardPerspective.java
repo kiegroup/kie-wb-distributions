@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2018 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,13 +20,13 @@ import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
-public class ProcessAndTaskDashboardPerspective extends AbstractPerspective {
+public class TaskDashboardPerspective extends AbstractPerspective {
 
-    private static final By PROCESSES_TAB = By.id("processes");
+    private static final By TASK_TITLE = By.cssSelector("span[title='Task Reports']");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(PROCESSES_TAB);
+        return Waits.isElementPresent(TASK_TITLE);
     }
 
     @Override

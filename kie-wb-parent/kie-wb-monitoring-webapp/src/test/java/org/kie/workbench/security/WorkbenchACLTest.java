@@ -75,14 +75,16 @@ public class WorkbenchACLTest {
             "perspective.read.ExecutionErrors");
 
     static final List<String> MANAGER_GRANTED = Arrays.asList(
-            "perspective.read.DashboardPerspective",
+            "perspective.read.ProcessDashboardPerspective",
+            "perspective.read.TaskDashboardPerspective",
             "dashboard.manage");
 
     static final List<String> USER_GRANTED = Arrays.asList(
             "perspective.read.ProcessDefinitions",
             "perspective.read.ProcessInstances",
             "perspective.read.Tasks",
-            "perspective.read.DashboardPerspective",
+            "perspective.read.ProcessDashboardPerspective",
+            "perspective.read.TaskDashboardPerspective",
             "dashboard.manage");
 
     static final List<String> PROCESS_ADMIN_GRANTED = Arrays.asList(
@@ -91,7 +93,8 @@ public class WorkbenchACLTest {
             "perspective.read.Tasks",
             "perspective.read.TaskAdmin",
             "perspective.read.ExecutionErrors",
-            "perspective.read.DashboardPerspective",
+            "perspective.read.ProcessDashboardPerspective",
+            "perspective.read.TaskDashboardPerspective",
             "dashboard.manage");
 
     @Mock
