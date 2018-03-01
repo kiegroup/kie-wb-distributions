@@ -16,12 +16,13 @@
   <description>Parent for integration tests for KIE Workbench and KIE Drools Workbench</description>
 
   <modules>
+    <module>kie-wb-tests-rest</module>
     <module>kie-wb-tests-gui</module>
   </modules>
 
   <properties>
     <deployable.classifier.tomcat8>tomcat8</deployable.classifier.tomcat8>
-    <deployable.classifier.wildfly10>wildfly10</deployable.classifier.wildfly10>
+    <deployable.classifier.wildfly11>wildfly11</deployable.classifier.wildfly11>
     <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
     <deployable.classifier.swarm>swarm</deployable.classifier.swarm>
     <deployable.context>kie-wb</deployable.context>
@@ -37,11 +38,16 @@
     <kie.wb.url>http://${container.host}:${container.port}/${deployable.context}</kie.wb.url>
 
     <version.tomcat8>8.5.11</version.tomcat8>
-    <version.wildfly10>10.1.0.Final</version.wildfly10>
+    <version.wildfly11>11.0.0.Final</version.wildfly11>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-wb-tests-rest</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-wb-tests-gui</artifactId>
@@ -69,21 +75,21 @@
         <groupId>org.kie</groupId>
         <artifactId>kie-wb</artifactId>
         <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.wildfly10}</classifier>
+        <classifier>${deployable.classifier.wildfly11}</classifier>
         <type>war</type>
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-wb-monitoring</artifactId>
         <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.wildfly10}</classifier>
+        <classifier>${deployable.classifier.wildfly11}</classifier>
         <type>war</type>
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-drools-wb</artifactId>
         <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.wildfly10}</classifier>
+        <classifier>${deployable.classifier.wildfly11}</classifier>
         <type>war</type>
       </dependency>
       <dependency>
@@ -282,7 +288,7 @@
     </profile>
 
     <profile>
-      <id>wildfly10</id>
+      <id>wildfly11</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
@@ -290,27 +296,27 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb</artifactId>
-          <classifier>${deployable.classifier.wildfly10}</classifier>
+          <classifier>${deployable.classifier.wildfly11}</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-monitoring</artifactId>
-          <classifier>${deployable.classifier.wildfly10}</classifier>
+          <classifier>${deployable.classifier.wildfly11}</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb</artifactId>
-          <classifier>${deployable.classifier.wildfly10}</classifier>
+          <classifier>${deployable.classifier.wildfly11}</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
       </dependencies>
       <properties>
-        <cargo.container.id>wildfly10x</cargo.container.id>
+        <cargo.container.id>wildfly11x</cargo.container.id>
       </properties>
       <build>
         <pluginManagement>
@@ -324,7 +330,7 @@
                   <artifactInstaller>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-dist</artifactId>
-                    <version>${version.wildfly10}</version>
+                    <version>${version.wildfly11}</version>
                   </artifactInstaller>
                 </container>
                 <configuration>
@@ -337,7 +343,7 @@
                   <deployable>
                     <groupId>${deployable.groupId}</groupId>
                     <artifactId>${deployable.artifactId}</artifactId>
-                    <classifier>${deployable.classifier.wildfly10}</classifier>
+                    <classifier>${deployable.classifier.wildfly11}</classifier>
                     <type>war</type>
                   </deployable>
                 </deployables>
@@ -387,8 +393,8 @@
               <configuration>
                 <container>
                   <type>installed</type>
-                  <!-- WildFly ~= EAP 7, so just reuse the wildfly10x containerId -->
-                  <containerId>wildfly10x</containerId>
+                  <!-- WildFly ~= EAP 7, so just reuse the wildfly11x containerId -->
+                  <containerId>wildfly11x</containerId>
                   <type>installed</type>
                   <zipUrlInstaller>
                     <url>${eap7.download.url}</url>
@@ -624,7 +630,7 @@
       <properties>
         <deployable.classifier.tomcat8>tomcat8-redhat</deployable.classifier.tomcat8>
         <deployable.classifier.eap7>eap7-redhat</deployable.classifier.eap7>
-        <deployable.classifier.wildfly10>there-is-no-wildfly10-war-for-product</deployable.classifier.wildfly10>
+        <deployable.classifier.wildfly11>there-is-no-wildfly11-war-for-product</deployable.classifier.wildfly11>
       </properties>
     </profile>
 

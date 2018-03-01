@@ -64,9 +64,11 @@ public interface NavigationConstants
 
     String navTreeTrackName();
 
-    String navTreeTasksListName();
+    String navTreeTaskInboxName();
 
-    String navTreeProcessesAndTasksDashboardName();
+    String navTreeProcessReportName();
+
+    String navTreeTaskReportName();
 
     String navTreeWorkbenchDescr();
 
@@ -98,7 +100,9 @@ public interface NavigationConstants
 
     String navTreeTrackDescr();
 
-    String navTreeTasksListDescr();
+    String navTreeTaskInboxDescr();
 
-    String navTreeProcessesAndTasksDashboardDescr();
+    String navTreeProcessReportDescr();
+
+    String navTreeTaskReportDescr();
 }

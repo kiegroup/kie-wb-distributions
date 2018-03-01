@@ -48,7 +48,8 @@ public class NavTreeDefinitions {
 
     public static final String GROUP_TRACK = "wb_group_track";
     public static final String ENTRY_TASKS_LIST = "wb_entry_tasks_list";
-    public static final String ENTRY_PROCESSES_AND_TASKS_DASHBOARD = "wb_entry_processes_and_tasks_dashboard";
+    public static final String ENTRY_PROCESS_DASHBOARD = "wb_entry_process_dashboard";
+    public static final String ENTRY_TASK_DASHBOARD = "wb_entry_task_dashboard";
 
     private NavigationConstants i18n = NavigationConstants.INSTANCE;
 
@@ -118,15 +119,20 @@ public class NavTreeDefinitions {
                        i18n.navTreeTrackDescr(),
                        true)
                 .item(ENTRY_TASKS_LIST,
-                      i18n.navTreeTasksListName(),
-                      i18n.navTreeTasksListDescr(),
+                      i18n.navTreeTaskInboxName(),
+                      i18n.navTreeTaskInboxDescr(),
                       true,
                       perspective(TASKS))
-                .item(ENTRY_PROCESSES_AND_TASKS_DASHBOARD,
-                      i18n.navTreeProcessesAndTasksDashboardName(),
-                      i18n.navTreeProcessesAndTasksDashboardDescr(),
+                .item(ENTRY_PROCESS_DASHBOARD,
+                      i18n.navTreeProcessReportName(),
+                      i18n.navTreeProcessReportDescr(),
                       true,
                       perspective(PROCESS_DASHBOARD))
+                .item(ENTRY_TASK_DASHBOARD,
+                      i18n.navTreeTaskReportName(),
+                      i18n.navTreeTaskReportDescr(),
+                      true,
+                      perspective(TASK_DASHBOARD))
                 .endGroup()
                 .endGroup()
                 .build();

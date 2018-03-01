@@ -161,15 +161,19 @@ public class HomeProducerTest {
     }
 
     private void assertTrack(final HomeModel model) {
-        assertEquals(2,
+        assertEquals(3,
                      model.getShortcuts().get(3).getLinks().size());
-        assertEquals(Constants.Tasks,
+        assertEquals(Constants.TaskInbox,
                      model.getShortcuts().get(3).getLinks().get(0).getLabel());
         assertEquals(PerspectiveIds.TASKS,
                      model.getShortcuts().get(3).getLinks().get(0).getPerspectiveIdentifier());
-        assertEquals(Constants.Reports,
+        assertEquals(Constants.ProcessReports,
                      model.getShortcuts().get(3).getLinks().get(1).getLabel());
         assertEquals(PerspectiveIds.PROCESS_DASHBOARD,
                      model.getShortcuts().get(3).getLinks().get(1).getPerspectiveIdentifier());
+        assertEquals(Constants.TaskReports,
+                     model.getShortcuts().get(3).getLinks().get(2).getLabel());
+        assertEquals(PerspectiveIds.TASK_DASHBOARD,
+                     model.getShortcuts().get(3).getLinks().get(2).getPerspectiveIdentifier());
     }
 }
