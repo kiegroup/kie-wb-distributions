@@ -34,7 +34,7 @@
 
   <properties>
     <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
-    <errai.jboss.home>${project.build.directory}/wildfly-${version.org.wildfly.gwt.sdm}</errai.jboss.home>
+    <errai.jboss.home>${project.build.directory}/wildfly-${version.org.jboss.errai.wildfly}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
     <gwt.memory.settings>-Xmx5g -Xms1g -Xss1M</gwt.memory.settings>
     <login.bundle.name>org.kie.workbench.drools.client.resources.i18n.LoginConstants</login.bundle.name>
@@ -53,6 +53,13 @@
           <artifactId>ant</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+
+    <!-- Disables WF logging subsystem in SDM -->
+    <dependency>
+      <groupId>org.kie.workbench</groupId>
+      <artifactId>kie-wb-common-wf-sdm-extensions</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -2192,9 +2199,9 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.wildfly</groupId>
+                  <groupId>org.jboss.errai</groupId>
                   <artifactId>wildfly-dist</artifactId>
-                  <version>${version.org.wildfly.gwt.sdm}</version>
+                  <version>${version.org.jboss.errai.wildfly}</version>
                   <type>zip</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}</outputDirectory>
@@ -2346,6 +2353,22 @@
           </plugins>
         </pluginManagement>
       </build>
+    </profile>
+
+    <profile>
+      <id>devProfile</id>
+      <activation>
+        <property>
+          <name>!full</name>
+        </property>
+      </activation>
+      <dependencies>
+        <!-- For SDM logging -->
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </dependency>
+      </dependencies>
     </profile>
 
   </profiles>
