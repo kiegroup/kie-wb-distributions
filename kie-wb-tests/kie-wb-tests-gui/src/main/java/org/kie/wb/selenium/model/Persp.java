@@ -92,7 +92,7 @@ public class Persp<T extends AbstractPerspective> {
 
     public static final Persp<TasksPerspective> TASKS
             = new Persp<>("Track",
-                          "Task Lists",
+                          "Task Inbox",
                           TasksPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
