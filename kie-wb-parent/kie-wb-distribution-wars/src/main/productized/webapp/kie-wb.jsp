@@ -23,7 +23,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <title>Red Hat JBoss BPM Suite :: Business central</title>
+    <title>Red Hat Business Automation :: Business Central</title>
 
      <!--[if lt IE 9]>
      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

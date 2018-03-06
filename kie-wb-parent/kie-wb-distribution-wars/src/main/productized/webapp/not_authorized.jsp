@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/org.kie.workbench.KIEWebapp/css/rcue.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/org.kie.workbench.KIEWebapp/css/rcue-additions.min.css">
     <link rel="shortcut icon" href="favicon.ico" />
-    <title>Red Hat JBoss BPM Suite :: Business central</title>
+    <title>Red Hat Business Automation :: Business Central</title>
 </head>
 <body>
     <span id="badge">
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="brand">
-                    <img src="<%=request.getContextPath()%>/img/RH_JBoss_BPMS_Logo.svg" alt="RED HAT JBOSS BPM SUITE" title="RED HAT JBOSS BPM SUITE"/>
+                    <img src="<%=request.getContextPath()%>/img/RHBA_Logo.svg" alt="RED HAT BUSINESS AUTOMATION" title="RED HAT BUSINESS AUTOMATION"/>
                 </div>
             </div>
             <div class="col-sm-7 col-md-6 col-lg-5 login">
