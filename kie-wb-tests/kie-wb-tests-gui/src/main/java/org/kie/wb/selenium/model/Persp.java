@@ -73,7 +73,7 @@ public class Persp<T extends AbstractPerspective> {
                           KIE_WB_MONITORING);
     public static final Persp<TaskAdministrationPerspective> TASK_ADMINISTRATION
             = new Persp<>("Manage",
-                          "Tasks Administration",
+                          "Tasks",
                           TaskAdministrationPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
@@ -92,7 +92,7 @@ public class Persp<T extends AbstractPerspective> {
 
     public static final Persp<TasksPerspective> TASKS
             = new Persp<>("Track",
-                          "Task Lists",
+                          "Task Inbox",
                           TasksPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);

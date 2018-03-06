@@ -81,7 +81,7 @@ public class Constants {
     public static final String ProcessInstances = "HomeProducer.ProcessInstances";
 
     @TranslationKey(defaultValue = "")
-    public static final String TasksAdmin = "HomeProducer.TasksAdmin";
+    public static final String Tasks = "HomeProducer.Tasks";
 
     @TranslationKey(defaultValue = "")
     public static final String Jobs = "HomeProducer.Jobs";

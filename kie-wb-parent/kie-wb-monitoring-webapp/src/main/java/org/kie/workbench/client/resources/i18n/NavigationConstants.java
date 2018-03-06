@@ -52,7 +52,7 @@ public interface NavigationConstants
 
     String navTreeProcessInstancesName();
 
-    String navTreeTasksAdministrationName();
+    String navTreeTasksName();
 
     String navTreeJobsName();
 
@@ -84,7 +84,7 @@ public interface NavigationConstants
 
     String navTreeProcessInstancesDescr();
 
-    String navTreeTasksAdministrationDescr();
+    String navTreeTasksDescr();
 
     String navTreeJobsDescr();
 

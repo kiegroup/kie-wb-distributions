@@ -146,7 +146,7 @@ public class HomeProducerTest {
                      model.getShortcuts().get(2).getLinks().get(1).getLabel());
         assertEquals(PerspectiveIds.PROCESS_INSTANCES,
                      model.getShortcuts().get(2).getLinks().get(1).getPerspectiveIdentifier());
-        assertEquals(Constants.TasksAdmin,
+        assertEquals(Constants.Tasks,
                      model.getShortcuts().get(2).getLinks().get(2).getLabel());
         assertEquals(PerspectiveIds.TASKS_ADMIN,
                      model.getShortcuts().get(2).getLinks().get(2).getPerspectiveIdentifier());

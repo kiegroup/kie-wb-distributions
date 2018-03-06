@@ -87,7 +87,7 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
                                             PROCESS_DEFINITIONS));
         manage.addLink(new HomeShortcutLink(translationService.format(Constants.ProcessInstances),
                                             PROCESS_INSTANCES));
-        manage.addLink(new HomeShortcutLink(translationService.format(Constants.TasksAdmin),
+        manage.addLink(new HomeShortcutLink(translationService.format(Constants.Tasks),
                                             TASKS_ADMIN));
         manage.addLink(new HomeShortcutLink(translationService.format(Constants.Jobs),
                                             JOBS));

@@ -105,8 +105,8 @@ public class NavTreeDefinitions {
                       true,
                       perspective(PROCESS_INSTANCES))
                 .item(ENTRY_ADMINISTRATION_TASKS,
-                      i18n.navTreeTasksAdministrationName(),
-                      i18n.navTreeTasksAdministrationDescr(),
+                      i18n.navTreeTasksName(),
+                      i18n.navTreeTasksDescr(),
                       true,
                       perspective(TASKS_ADMIN))
                 .item(ENTRY_JOBS,
