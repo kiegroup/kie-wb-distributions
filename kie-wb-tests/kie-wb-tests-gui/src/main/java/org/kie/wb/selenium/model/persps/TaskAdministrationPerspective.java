@@ -20,7 +20,7 @@ import org.openqa.selenium.By;
 
 public class TaskAdministrationPerspective extends AbstractPerspective {
 
-    private static final By PERSPECTIVE_TITLE = By.cssSelector("span[title='Task Administration List']");
+    private static final By PERSPECTIVE_TITLE = By.cssSelector("span[title='Tasks']");
 
     @Override
     public boolean isDisplayed() {
