@@ -238,6 +238,13 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- Needed for some CDI producers -->
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-cdi</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- Guvnor -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -390,6 +397,11 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-project-explorer-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench.screens</groupId>
+      <artifactId>kie-wb-common-project-editor-backend</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
