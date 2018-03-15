@@ -253,5 +253,8 @@ public class KieWorkbenchEntryPointTest {
                      track);
         assertEquals(taskDashboard.getParent(),
                      track);
+
+        assertFalse(design.isModifiable());
+        assertFalse(pages.isModifiable());
     }
 }
