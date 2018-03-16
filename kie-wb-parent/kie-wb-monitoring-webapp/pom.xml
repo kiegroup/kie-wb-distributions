@@ -15,6 +15,11 @@
   <name>KIE Workbench - Monitoring Webapp</name>
   <description>KIE Workbench - Monitoring Webapp</description>
 
+  <properties>
+    <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
+    <jboss.home>${project.build.directory}/wildfly-${version.org.jboss.errai.wildfly}</jboss.home>
+  </properties>
+
   <dependencies>
     <!-- errai-cdi-jboss provides gwt-dev with the proper dependency exclusions and should be first on the classpath -->
     <dependency>
@@ -448,6 +453,7 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-workbench-client</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -577,7 +583,11 @@
       <artifactId>gwtbootstrap3-extras</artifactId>
       <scope>provided</scope>
     </dependency>
-
+    <dependency>
+      <groupId>com.google.elemental2</groupId>
+      <artifactId>elemental2-dom</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.owasp.encoder</groupId>
@@ -761,6 +771,11 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-layout-editor-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-layout-editor-client</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Search -->
@@ -998,6 +1013,11 @@
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-commons-editor-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
       <artifactId>uberfire-runtime-plugins-api</artifactId>
     </dependency>
     <dependency>
@@ -1006,7 +1026,17 @@
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-widgets-properties-editor-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
       <artifactId>uberfire-widgets-service-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-widgets-core-client</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -1219,6 +1249,18 @@
       <scope>runtime</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>kie-pmml</artifactId>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <!-- Test deps -->
     <dependency>
       <groupId>com.google.gwt.gwtmockito</groupId>
@@ -1234,6 +1276,26 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-testing-utils</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wildfly.arquillian</groupId>
+      <artifactId>wildfly-arquillian-container-managed</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -1406,6 +1468,27 @@
       <plugin>
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>wildfly-swarm-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <systemPropertyVariables>
+                <wildfly.war>${project.build.finalName}.war</wildfly.war>
+                <arquillian.launch>wildfly-managed</arquillian.launch>
+                <jboss.home>${jboss.home}</jboss.home>
+                <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+              </systemPropertyVariables>
+              <redirectTestOutputToFile>false</redirectTestOutputToFile>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
