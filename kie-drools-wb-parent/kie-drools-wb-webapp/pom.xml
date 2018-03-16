@@ -352,11 +352,6 @@
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-organizationalunit-manager</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
       <artifactId>uberfire-services-backend</artifactId>
       <scope>runtime</scope>
     </dependency>
@@ -1861,7 +1856,6 @@
               <compileSourcesArtifact>org.uberfire:uberfire-project-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-message-console-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.uberfire:uberfire-message-console-client</compileSourcesArtifact>
-              <compileSourcesArtifact>org.uberfire:uberfire-organizationalunit-manager</compileSourcesArtifact>
 
               <!-- Guvnor ALA -->
               <compileSourcesArtifact>org.kie.workbench:kie-wb-common-ala-ui-api</compileSourcesArtifact>
