@@ -16,6 +16,7 @@
 package org.kie.wb.selenium.ui;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
@@ -53,6 +54,7 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
     }
 
     @Test
+    @Ignore("RHBA-581 - [Project Oriented] Impossible to delete 'broken projects'")
     public void importAndBuildProjectFromCustomRepository() {
         final String
                 projectName = "Evaluation",

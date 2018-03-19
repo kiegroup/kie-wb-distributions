@@ -15,23 +15,27 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.PageFactory;
 
 public class ProcessDashboardPerspective extends AbstractPerspective {
 
-    private static final By PROCESSES_TITLE = By.cssSelector("span[title='Process Reports']");
+    private static final By PROCESS_REPORTS_BREADCRUMB =
+            ByJQuery.selector("[data-field='breadcrumb']:contains('Process Reports')");
+
+    @Page
+    private BusyPopup loadingIndicator;
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(PROCESSES_TITLE);
+        return Waits.isElementPresent(PROCESS_REPORTS_BREADCRUMB);
     }
 
     @Override
     public void waitForLoaded() {
-        BusyPopup indicator = PageFactory.initElements(driver, BusyPopup.class);
-        indicator.waitForDisappearance();
+        loadingIndicator.waitForDisappearance();
     }
 }

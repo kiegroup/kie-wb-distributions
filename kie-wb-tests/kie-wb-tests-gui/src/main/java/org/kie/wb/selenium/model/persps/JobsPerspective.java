@@ -15,15 +15,17 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
 public class JobsPerspective extends AbstractPerspective {
 
-    private static final By ID_COLUMN_HEADER = By.xpath("//th[contains(text(), 'Id')]");
+    private static final By MANAGE_JOBS_BREADCRUMB =
+            ByJQuery.selector("[data-field='breadcrumb']:contains('Manage Jobs')");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(ID_COLUMN_HEADER);
+        return Waits.isElementPresent(MANAGE_JOBS_BREADCRUMB);
     }
 }

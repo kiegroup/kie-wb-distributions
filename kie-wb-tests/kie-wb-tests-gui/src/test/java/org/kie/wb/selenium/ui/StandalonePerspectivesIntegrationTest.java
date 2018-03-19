@@ -18,6 +18,7 @@ package org.kie.wb.selenium.ui;
 import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.util.Waits;
@@ -26,6 +27,7 @@ import org.openqa.selenium.WebDriverException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore("RHBA-503 - Standalone perspectives are broken")
 public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     private final static String

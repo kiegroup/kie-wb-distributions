@@ -15,15 +15,17 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
-public class TaskAdministrationPerspective extends AbstractPerspective {
+public class TaskAdminPerspective extends AbstractPerspective {
 
-    private static final By PERSPECTIVE_TITLE = By.cssSelector("span[title='Tasks']");
+    private static final By MANAGE_TASKS_BREADCRUMB =
+            ByJQuery.selector("[data-field='breadcrumb']:contains('Manage Tasks')");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(PERSPECTIVE_TITLE);
+        return Waits.isElementPresent(MANAGE_TASKS_BREADCRUMB);
     }
 }

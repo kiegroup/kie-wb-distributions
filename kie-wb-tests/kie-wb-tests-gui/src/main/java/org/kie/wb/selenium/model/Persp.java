@@ -20,9 +20,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.kie.wb.selenium.model.persps.*;
+import org.kie.wb.selenium.model.persps.AbstractPerspective;
+import org.kie.wb.selenium.model.persps.AdminPagePerspective;
+import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
+import org.kie.wb.selenium.model.persps.ContentManagerPerspective;
+import org.kie.wb.selenium.model.persps.ExecutionErrorsPerspective;
+import org.kie.wb.selenium.model.persps.ExecutionServersPerspective;
+import org.kie.wb.selenium.model.persps.HomePerspective;
+import org.kie.wb.selenium.model.persps.JobsPerspective;
+import org.kie.wb.selenium.model.persps.ProcessDashboardPerspective;
+import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
+import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
+import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
+import org.kie.wb.selenium.model.persps.ProvisioningManagementPerspective;
+import org.kie.wb.selenium.model.persps.TaskDashboardPerspective;
+import org.kie.wb.selenium.model.persps.TasksPerspective;
+import org.kie.wb.selenium.model.persps.TaskAdminPerspective;
 
-import static org.kie.wb.selenium.model.KieWbDistribution.*;
+import static org.kie.wb.selenium.model.KieWbDistribution.KIE_DROOLS_WB;
+import static org.kie.wb.selenium.model.KieWbDistribution.KIE_WB;
+import static org.kie.wb.selenium.model.KieWbDistribution.KIE_WB_MONITORING;
 
 public class Persp<T extends AbstractPerspective> {
 
@@ -30,10 +47,12 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("N/A",
                           "Home",
                           HomePerspective.class);
+
     public static final Persp<AdminPagePerspective> ADMIN
             = new Persp<>("N/A",
                           "Admin",
                           AdminPagePerspective.class);
+
     public static final Persp<ArtifactRepositoryPerspective> ARTIFACTS
             = new Persp<>("N/A",
                           "Artifacts",
@@ -54,6 +73,7 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Deploy",
                           "Deployments",
                           ProvisioningManagementPerspective.class);
+
     public static final Persp<ExecutionServersPerspective> EXECUTION_SERVERS
             = new Persp<>("Deploy",
                           "Execution Servers",
@@ -71,18 +91,21 @@ public class Persp<T extends AbstractPerspective> {
                           ProcessInstancesPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
-    public static final Persp<TaskAdministrationPerspective> TASK_ADMINISTRATION
+
+    public static final Persp<TaskAdminPerspective> TASKS
             = new Persp<>("Manage",
                           "Tasks",
-                          TaskAdministrationPerspective.class,
+                          TaskAdminPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
+
     public static final Persp<JobsPerspective> JOBS
             = new Persp<>("Manage",
                           "Jobs",
                           JobsPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
+
     public static final Persp<ExecutionErrorsPerspective> EXECUTION_ERRORS
             = new Persp<>("Manage",
                           "Execution Errors",
@@ -90,19 +113,21 @@ public class Persp<T extends AbstractPerspective> {
                           KIE_WB,
                           KIE_WB_MONITORING);
 
-    public static final Persp<TasksPerspective> TASKS
+    public static final Persp<TasksPerspective> TASK_INBOX
             = new Persp<>("Track",
                           "Task Inbox",
                           TasksPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
-    public static final Persp<ProcessDashboardPerspective> PROCESS_DASHBOARD
+
+    public static final Persp<ProcessDashboardPerspective> PROCESS_REPORTS
             = new Persp<>("Track",
                           "Process Reports",
                           ProcessDashboardPerspective.class,
                           KIE_WB,
                           KIE_WB_MONITORING);
-    public static final Persp<TaskDashboardPerspective> TASK_DASHBOARD
+
+    public static final Persp<TaskDashboardPerspective> TASK_REPORTS
             = new Persp<>("Track",
                           "Task Reports",
                           TaskDashboardPerspective.class,
@@ -118,12 +143,12 @@ public class Persp<T extends AbstractPerspective> {
             EXECUTION_SERVERS,
             PROCESS_DEFINITIONS,
             PROCESS_INSTANCES,
-            TASK_ADMINISTRATION,
+            TASKS,
             JOBS,
             EXECUTION_ERRORS,
-            TASKS,
-            PROCESS_DASHBOARD,
-            TASK_DASHBOARD
+            TASK_INBOX,
+            PROCESS_REPORTS,
+            TASK_REPORTS
     ));
     private final String parentMenu;
     private final String menuItem;

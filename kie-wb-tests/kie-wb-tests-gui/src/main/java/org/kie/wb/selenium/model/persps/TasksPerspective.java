@@ -15,6 +15,7 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
@@ -22,13 +23,14 @@ import org.openqa.selenium.By;
 
 public class TasksPerspective extends AbstractPerspective {
 
-    private static final By ACTIVE_FILTER_TITLE = By.xpath("//h4[contains(text(),'Filter Active')]");
+    private static final By TASK_INBOX_BREADCRUMB =
+            ByJQuery.selector("[data-field='breadcrumb']:contains('Task Inbox')");
     @Page
     private BusyPopup loadingIndicator;
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(ACTIVE_FILTER_TITLE);
+        return Waits.isElementPresent(TASK_INBOX_BREADCRUMB);
     }
 
     @Override
