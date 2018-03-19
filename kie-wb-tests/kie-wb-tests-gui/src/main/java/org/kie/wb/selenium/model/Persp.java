@@ -20,9 +20,25 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.kie.wb.selenium.model.persps.*;
+import org.kie.wb.selenium.model.persps.AbstractPerspective;
+import org.kie.wb.selenium.model.persps.AdminPagePerspective;
+import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
+import org.kie.wb.selenium.model.persps.ContentManagerPerspective;
+import org.kie.wb.selenium.model.persps.ExecutionErrorsPerspective;
+import org.kie.wb.selenium.model.persps.ExecutionServersPerspective;
+import org.kie.wb.selenium.model.persps.HomePerspective;
+import org.kie.wb.selenium.model.persps.JobsPerspective;
+import org.kie.wb.selenium.model.persps.ProcessAndTaskDashboardPerspective;
+import org.kie.wb.selenium.model.persps.ProcessDefinitionsPerspective;
+import org.kie.wb.selenium.model.persps.ProcessInstancesPerspective;
+import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
+import org.kie.wb.selenium.model.persps.ProvisioningManagementPerspective;
+import org.kie.wb.selenium.model.persps.TaskAdministrationPerspective;
+import org.kie.wb.selenium.model.persps.TasksPerspective;
 
-import static org.kie.wb.selenium.model.KieWbDistribution.*;
+import static org.kie.wb.selenium.model.KieWbDistribution.KIE_DROOLS_WB;
+import static org.kie.wb.selenium.model.KieWbDistribution.KIE_WB;
+import static org.kie.wb.selenium.model.KieWbDistribution.KIE_WB_MONITORING;
 
 public class Persp<T extends AbstractPerspective> {
 
@@ -48,7 +64,8 @@ public class Persp<T extends AbstractPerspective> {
     public static final Persp<ContentManagerPerspective> PAGES
             = new Persp<>("Design",
                           "Pages",
-                          ContentManagerPerspective.class);
+                          ContentManagerPerspective.class,
+                          KIE_WB);
 
     public static final Persp<ProvisioningManagementPerspective> DEPLOYMENTS
             = new Persp<>("Deploy",
