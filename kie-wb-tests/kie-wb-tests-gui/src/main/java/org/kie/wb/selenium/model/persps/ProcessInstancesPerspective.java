@@ -15,6 +15,7 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
@@ -22,14 +23,15 @@ import org.openqa.selenium.By;
 
 public class ProcessInstancesPerspective extends AbstractPerspective {
 
-    private static final By PROC_INST_TITLE = By.cssSelector("span[title='Process Instances']");
+    private static final By PROCESS_INSTANCES_BREADCRUMB =
+            ByJQuery.selector("[data-field='breadcrumb']:contains('Manage Process Instances')");
 
     @Page
     private BusyPopup busyPopup;
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(PROC_INST_TITLE);
+        return Waits.isElementPresent(PROCESS_INSTANCES_BREADCRUMB);
     }
 
     @Override

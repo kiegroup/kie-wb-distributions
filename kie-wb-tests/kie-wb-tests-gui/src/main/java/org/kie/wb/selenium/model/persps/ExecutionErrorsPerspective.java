@@ -15,15 +15,17 @@
  */
 package org.kie.wb.selenium.model.persps;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
 public class ExecutionErrorsPerspective extends AbstractPerspective {
 
-    private static final By ACKNOWLEDGED_TAB = By.linkText("Acknowledged");
+    private static final By EXECUTION_ERRORS_BREADCRUMB =
+            ByJQuery.selector("[data-field='breadcrumb']:contains('Manage Execution Errors')");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(ACKNOWLEDGED_TAB);
+        return Waits.isElementPresent(EXECUTION_ERRORS_BREADCRUMB);
     }
 }
