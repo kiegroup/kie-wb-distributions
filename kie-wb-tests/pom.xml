@@ -34,8 +34,6 @@
     <deployment.timeout>90000</deployment.timeout>
 
     <container.host>localhost</container.host>
-    <container.port>8080</container.port>
-    <kie.wb.url>http://${container.host}:${container.port}/${deployable.context}</kie.wb.url>
 
     <version.tomcat8>8.5.11</version.tomcat8>
     <version.wildfly11>11.0.0.Final</version.wildfly11>
@@ -182,7 +180,7 @@
                 <properties>
                   <context>${deployable.context}</context>
                 </properties>
-                <pingURL>${kie.wb.url}</pingURL>
+                <pingURL>http://${container.host}:${container.port}/${deployable.context}</pingURL>
                 <pingTimeout>${deployment.timeout}</pingTimeout>
               </deployable>
             </deployables>
@@ -217,7 +215,8 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
             <systemPropertyVariables>
-              <kie.wb.url>${kie.wb.url}</kie.wb.url>
+              <kie.wb.url>http://${container.host}:${container.port}/${deployable.context}</kie.wb.url>
+              <org.uberfire.nio.git.daemon.port>${cargo.git.port}</org.uberfire.nio.git.daemon.port>
             </systemPropertyVariables>
             <failIfNoTests>false</failIfNoTests>
             <argLine>-Xmx1024m -Dfile.encoding=UTF-8</argLine>
@@ -322,6 +321,28 @@
         <pluginManagement>
           <plugins>
             <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>build-helper-maven-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>reserve-network-port</id>
+                  <goals>
+                    <goal>reserve-network-port</goal>
+                  </goals>
+                  <phase>process-resources</phase>
+                  <configuration>
+                    <portNames>
+                      <portName>container.port</portName>
+                      <portName>cargo.https.port</portName>
+                      <portName>cargo.management.port</portName>
+                      <portName>cargo.ajp.port</portName>
+                      <portName>cargo.git.port</portName>
+                    </portNames>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
               <groupId>org.codehaus.cargo</groupId>
               <artifactId>cargo-maven2-plugin</artifactId>
               <configuration>
@@ -332,11 +353,20 @@
                     <artifactId>wildfly-dist</artifactId>
                     <version>${version.wildfly11}</version>
                   </artifactInstaller>
+                  <systemProperties>
+                    <jboss.https.port>${cargo.https.port}</jboss.https.port>
+                    <org.uberfire.nio.git.daemon.port>${cargo.git.port}</org.uberfire.nio.git.daemon.port>
+                    <org.uberfire.nio.git.ssh.enabled>false</org.uberfire.nio.git.ssh.enabled>
+                    <datasource.management.wildfly.port>${cargo.management.port}</datasource.management.wildfly.port>
+                  </systemProperties>
                 </container>
                 <configuration>
                   <properties>
-                    <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
+                    <cargo.jboss.configuration>standalone</cargo.jboss.configuration>
                     <cargo.jvmargs>-Xmx1024m</cargo.jvmargs>
+                    <cargo.servlet.port>${container.port}</cargo.servlet.port>
+                    <cargo.jboss.management-http.port>${cargo.management.port}</cargo.jboss.management-http.port>
+                    <cargo.jboss.ajp.port>${cargo.ajp.port}</cargo.jboss.ajp.port>
                   </properties>
                 </configuration>
                 <deployables>
