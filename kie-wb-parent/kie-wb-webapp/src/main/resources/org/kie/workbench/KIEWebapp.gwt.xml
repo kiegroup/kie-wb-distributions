@@ -49,7 +49,6 @@
   <inherits name="org.guvnor.common.services.workingset.GuvnorWorkingsetAPI"/>
   <inherits name="org.guvnor.common.services.workingset.GuvnorWorkingsetClient"/>
   <inherits name="org.guvnor.messageconsole.GuvnorMessageConsoleClient"/>
-  <inherits name='org.guvnor.organizationalunit.manager.GuvnorOrganizationalUnitManager'/>
 
   <!-- Guvnor ALA -->
   <inherits name="org.guvnor.ala.ui.GuvnorAlaUIAPI" />
