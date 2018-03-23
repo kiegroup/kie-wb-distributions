@@ -148,13 +148,20 @@ public class KieDroolsWorkbenchEntryPointTest {
         kieWorkbenchEntryPoint.init();
 
         verify(workbench).addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
-        verify(permissionTreeSetup).configureTree();
-        verify(perspectiveTreeProvider).excludePerspectiveId("ContentManagerPerspective");
         verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH, 2);
         verify(navTreeEditor).setNewDividerEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
         verify(navTreeEditor).setNewPerspectiveEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
         verify(navTreeEditor).setOnlyRuntimePerspectives(NavTreeDefinitions.GROUP_WORKBENCH, false);
-        verify(navTreeEditor).setPerspectiveContextEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);    }
+        verify(navTreeEditor).setPerspectiveContextEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false);
+    }
+
+    @Test
+    public void testInitializeWorkbench(){
+        kieWorkbenchEntryPoint.initializeWorkbench();
+
+        verify(permissionTreeSetup).configureTree();
+        verify(perspectiveTreeProvider).excludePerspectiveId("ContentManagerPerspective");
+    }
 
     @Test
     public void setupMenuTest() {

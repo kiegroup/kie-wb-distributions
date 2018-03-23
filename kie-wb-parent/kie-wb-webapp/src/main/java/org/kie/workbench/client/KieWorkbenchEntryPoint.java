@@ -92,9 +92,14 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @PostConstruct
     public void init() {
         workbench.addStartupBlocker(KieWorkbenchEntryPoint.class);
-        permissionTreeSetup.configureTree();
 
         initNavTreeEditor();
+    }
+
+    @Override
+    protected void initializeWorkbench() {
+        permissionTreeSetup.configureTree();
+        super.initializeWorkbench();
     }
 
     @Override
