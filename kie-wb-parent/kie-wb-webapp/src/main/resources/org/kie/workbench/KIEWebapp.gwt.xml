@@ -37,8 +37,8 @@
   <inherits name="org.jbpm.workbench.forms.JbpmWorkbenchFormsClient"/>
 
   <!-- Dashbuilder -->
-  <inherits name="org.jbpm.dashboard.renderer.DashboardRendererApi"/>
-  <inherits name="org.jbpm.dashboard.renderer.client.DashboardRendererClient"/>
+  <inherits name="org.jbpm.dashboard.DashboardAddonApi"/>
+  <inherits name="org.jbpm.dashboard.DashboardAddonClient"/>
 
   <!-- Guvnor dependencies -->
   <inherits name="org.guvnor.structure.GuvnorStructureClient"/>
