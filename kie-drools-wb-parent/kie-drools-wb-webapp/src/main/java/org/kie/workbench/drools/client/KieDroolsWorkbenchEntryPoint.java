@@ -95,10 +95,15 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @PostConstruct
     public void init() {
         workbench.addStartupBlocker(KieDroolsWorkbenchEntryPoint.class);
-        permissionTreeSetup.configureTree();
-        perspectiveTreeProvider.excludePerspectiveId("ContentManagerPerspective");
 
         initNavTreeEditor();
+    }
+
+    @Override
+    protected void initializeWorkbench() {
+        permissionTreeSetup.configureTree();
+        perspectiveTreeProvider.excludePerspectiveId("ContentManagerPerspective");
+        super.initializeWorkbench();
     }
 
     @Override

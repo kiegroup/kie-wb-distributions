@@ -91,7 +91,6 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @PostConstruct
     public void init() {
         workbench.addStartupBlocker(KieWorkbenchEntryPoint.class);
-        permissionTreeSetup.configureTree();
 
         // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
         // navigation tree node must be limited to 2 (see https://issues.jboss.org/browse/GUVNOR-2992)
@@ -99,6 +98,11 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                                               2);
     }
 
+    @Override
+    protected void initializeWorkbench() {
+        permissionTreeSetup.configureTree();
+        super.initializeWorkbench();
+    }
     @Override
     public void setupMenu() {
         navigationManager.init(() -> {
