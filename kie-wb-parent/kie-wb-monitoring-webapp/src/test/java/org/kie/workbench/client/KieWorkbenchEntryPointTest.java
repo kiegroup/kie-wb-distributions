@@ -135,9 +135,15 @@ public class KieWorkbenchEntryPointTest {
         kieWorkbenchEntryPoint.init();
 
         verify(workbench).addStartupBlocker(KieWorkbenchEntryPoint.class);
-        verify(permissionTreeSetup).configureTree();
         verify(navTreeEditor).setMaxLevels(NavTreeDefinitions.GROUP_WORKBENCH,
                                            2);
+    }
+
+    @Test
+    public void testInitializeWorkbench(){
+        kieWorkbenchEntryPoint.initializeWorkbench();
+
+        verify(permissionTreeSetup).configureTree();
     }
 
     @Test
