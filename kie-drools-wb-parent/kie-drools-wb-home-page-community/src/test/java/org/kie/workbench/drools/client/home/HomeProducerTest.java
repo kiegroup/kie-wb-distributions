@@ -57,7 +57,7 @@ public class HomeProducerTest {
 
     @Test
     public void checkSetupWithProvisioningGranted() {
-        when(shortcutHelper.authorize(PerspectiveIds.DEPLOYMENTS)).thenReturn(true);
+        when(shortcutHelper.authorize(PerspectiveIds.PROVISIONING)).thenReturn(true);
 
         final HomeModel model = producer.get();
 
@@ -67,9 +67,9 @@ public class HomeProducerTest {
 
         assertEquals(2,
                      model.getShortcuts().get(1).getLinks().size());
-        assertEquals(Constants.Deployments,
+        assertEquals(Constants.Provisioning,
                      model.getShortcuts().get(1).getLinks().get(0).getLabel());
-        assertEquals(PerspectiveIds.DEPLOYMENTS,
+        assertEquals(PerspectiveIds.PROVISIONING,
                      model.getShortcuts().get(1).getLinks().get(0).getPerspectiveIdentifier());
         assertEquals(Constants.Servers,
                      model.getShortcuts().get(1).getLinks().get(1).getLabel());
@@ -79,7 +79,7 @@ public class HomeProducerTest {
 
     @Test
     public void checkSetupWithProvisioningDenied() {
-        when(shortcutHelper.authorize(PerspectiveIds.DEPLOYMENTS)).thenReturn(false);
+        when(shortcutHelper.authorize(PerspectiveIds.PROVISIONING)).thenReturn(false);
 
         final HomeModel model = producer.get();
 
