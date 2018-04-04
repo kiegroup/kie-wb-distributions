@@ -65,7 +65,7 @@ public class NavTreeDefinitionsTest {
         assertEquals(true, deployItem.isModifiable());
         final List<NavItem> deployChildren = deployItem.getChildren();
         assertEquals(2, deployChildren.size());
-        assertEquals(ENTRY_DEPLOYMENTS, deployChildren.get(0).getId());
+        assertEquals(ENTRY_PROVISIONING, deployChildren.get(0).getId());
         assertEquals(true, deployChildren.get(0).isModifiable());
         assertEquals(ENTRY_EXECUTION_SERVERS, deployChildren.get(1).getId());
         assertEquals(true, deployChildren.get(1).isModifiable());
