@@ -23,7 +23,7 @@ import org.dashbuilder.navigation.impl.NavTreeBuilder;
 import org.kie.workbench.drools.client.resources.i18n.NavigationConstants;
 
 import static org.dashbuilder.navigation.workbench.NavWorkbenchCtx.perspective;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROVISIONING;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
 
@@ -39,7 +39,7 @@ public class NavTreeDefinitions {
     public static final String ENTRY_PROJECTS = "wb_entry_projects";
 
     public static final String GROUP_DEPLOY = "wb_group_deploy";
-    public static final String ENTRY_DEPLOYMENTS = "wb_entry_deployments";
+    public static final String ENTRY_PROVISIONING = "wb_entry_provisioning";
     public static final String ENTRY_EXECUTION_SERVERS = "wb_entry_execution_servers";
 
     private NavigationConstants i18n = NavigationConstants.INSTANCE;
@@ -64,11 +64,11 @@ public class NavTreeDefinitions {
                        i18n.navTreeDeployName(),
                        i18n.navTreeDeployDescr(),
                        true)
-                .item(ENTRY_DEPLOYMENTS,
-                      i18n.navTreeDeploymentsName(),
-                      i18n.navTreeDeploymentsDescr(),
+                .item(ENTRY_PROVISIONING,
+                      i18n.navTreeProvisioningName(),
+                      i18n.navTreeProvisioningDescr(),
                       true,
-                      perspective(DEPLOYMENTS))
+                      perspective(PROVISIONING))
                 .item(ENTRY_EXECUTION_SERVERS,
                       i18n.navTreeExecutionServersName(),
                       i18n.navTreeExecutionServersDescr(),

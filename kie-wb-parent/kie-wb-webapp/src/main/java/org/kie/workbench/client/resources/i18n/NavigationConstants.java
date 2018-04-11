@@ -46,7 +46,7 @@ public interface NavigationConstants
 
     String navTreeDeployName();
 
-    String navTreeDeploymentsName();
+    String navTreeProvisioningName();
 
     String navTreeExecutionServersName();
 
@@ -82,7 +82,7 @@ public interface NavigationConstants
 
     String navTreeDeployDescr();
 
-    String navTreeDeploymentsDescr();
+    String navTreeProvisioningDescr();
 
     String navTreeExecutionServersDescr();
 
