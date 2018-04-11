@@ -72,11 +72,11 @@ public class NavTreeDefinitions {
                 .group(GROUP_DESIGN,
                        i18n.navTreeDesignName(),
                        i18n.navTreeDesignDescr(),
-                       true)
+                       false)
                 .item(ENTRY_PAGES,
                       i18n.navTreePageAuthoringName(),
                       i18n.navTreePageAuthoringDescr(),
-                      true,
+                      false,
                       perspective(CONTENT_MANAGEMENT))
                 .endGroup()
                 .group(GROUP_DEPLOY,
