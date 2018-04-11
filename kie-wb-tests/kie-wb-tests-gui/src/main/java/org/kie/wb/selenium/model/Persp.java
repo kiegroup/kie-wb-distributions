@@ -69,9 +69,9 @@ public class Persp<T extends AbstractPerspective> {
                           "Pages",
                           ContentManagerPerspective.class);
 
-    public static final Persp<ProvisioningManagementPerspective> DEPLOYMENTS
+    public static final Persp<ProvisioningManagementPerspective> PROVISIONING
             = new Persp<>("Deploy",
-                          "Deployments",
+                          "Provisioning",
                           ProvisioningManagementPerspective.class);
 
     public static final Persp<ExecutionServersPerspective> EXECUTION_SERVERS
@@ -139,7 +139,7 @@ public class Persp<T extends AbstractPerspective> {
             HOME,
             PROJECTS,
             PAGES,
-            DEPLOYMENTS,
+            PROVISIONING,
             EXECUTION_SERVERS,
             PROCESS_DEFINITIONS,
             PROCESS_INSTANCES,

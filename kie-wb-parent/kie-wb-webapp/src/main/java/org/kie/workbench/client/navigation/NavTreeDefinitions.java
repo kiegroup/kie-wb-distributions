@@ -37,7 +37,7 @@ public class NavTreeDefinitions {
     public static final String ENTRY_PAGES = "wb_entry_pages";
 
     public static final String GROUP_DEPLOY = "wb_group_deploy";
-    public static final String ENTRY_DEPLOYMENTS = "wb_entry_deployments";
+    public static final String ENTRY_PROVISIONING = "wb_entry_provisioning";
     public static final String ENTRY_EXECUTION_SERVERS = "wb_entry_execution_servers";
 
     public static final String GROUP_MANAGE = "wb_group_manage";
@@ -79,11 +79,11 @@ public class NavTreeDefinitions {
                        i18n.navTreeDeployName(),
                        i18n.navTreeDeployDescr(),
                        true)
-                .item(ENTRY_DEPLOYMENTS,
-                      i18n.navTreeDeploymentsName(),
-                      i18n.navTreeDeploymentsDescr(),
+                .item(ENTRY_PROVISIONING,
+                      i18n.navTreeProvisioningName(),
+                      i18n.navTreeProvisioningDescr(),
                       true,
-                      perspective(DEPLOYMENTS))
+                      perspective(PROVISIONING))
                 .item(ENTRY_EXECUTION_SERVERS,
                       i18n.navTreeExecutionServersName(),
                       i18n.navTreeExecutionServersDescr(),
