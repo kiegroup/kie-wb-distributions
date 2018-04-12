@@ -41,7 +41,7 @@ public class PrimaryNavbar {
     @FindBy(css = "#mega-menu > nav")
     private WebElement navbar;
 
-    @FindBy(css = "li[title='Reset all Perspective layouts']+li")
+    @FindBy(css = "li[title='Reset all Page layouts']+li")
     private DropdownMenu logoutMenu;
 
     @FindBy(css = ".uf-workbench-layout")

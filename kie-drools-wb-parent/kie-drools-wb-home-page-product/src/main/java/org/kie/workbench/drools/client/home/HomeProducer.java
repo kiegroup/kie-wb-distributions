@@ -28,7 +28,7 @@ import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.kie.workbench.drools.client.resources.i18n.Constants;
 import org.uberfire.client.mvp.PlaceManager;
 
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.DEPLOYMENTS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROVISIONING;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.LIBRARY;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
 import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
@@ -77,8 +77,8 @@ public class HomeProducer implements HomeModelProvider {
     }
 
     private HomeShortcut createDeployShortcut() {
-        final HomeShortcutLink deployments = new HomeShortcutLink(translationService.format(Constants.Deployments),
-                                                                  DEPLOYMENTS);
+        final HomeShortcutLink deployments = new HomeShortcutLink(translationService.format(Constants.Provisioning),
+                                                                  PROVISIONING);
         final HomeShortcutLink servers = new HomeShortcutLink(translationService.format(Constants.Servers),
                                                               SERVER_MANAGEMENT);
         final boolean isDeploymentsAuthorized = shortcutHelper.authorize(deployments.getPerspectiveIdentifier());

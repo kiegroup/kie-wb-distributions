@@ -69,7 +69,7 @@ public class Constants {
     public static final String Pages = "HomeProducer.Pages";
 
     @TranslationKey(defaultValue = "")
-    public static final String Deployments = "HomeProducer.Deployments";
+    public static final String Provisioning = "HomeProducer.Provisioning";
 
     @TranslationKey(defaultValue = "")
     public static final String Servers = "HomeProducer.Servers";
