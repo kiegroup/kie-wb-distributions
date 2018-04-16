@@ -201,9 +201,6 @@
       <properties>
         <errai.marshalling.very_short_names>true</errai.marshalling.very_short_names>
       </properties>
-      <modules>
-        <module>kie-wb-distribution-home</module>
-      </modules>
     </profile>
 
   </profiles>
