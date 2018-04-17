@@ -67,7 +67,8 @@ public class Persp<T extends AbstractPerspective> {
     public static final Persp<ContentManagerPerspective> PAGES
             = new Persp<>("Design",
                           "Pages",
-                          ContentManagerPerspective.class);
+                          ContentManagerPerspective.class,
+                          KIE_WB);
 
     public static final Persp<ProvisioningManagementPerspective> PROVISIONING
             = new Persp<>("Deploy",
