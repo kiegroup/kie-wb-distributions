@@ -15,7 +15,7 @@
  */
 package org.kie.wb.selenium.ui;
 
-import org.junit.After;
+import org.jboss.arquillian.graphene.page.Page;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
@@ -25,35 +25,31 @@ import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.util.Repository;
 import org.kie.wb.selenium.util.Waits;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
 
     private static final String MORTGAGES_PROJECT = "mortgages";
 
+    @Page
     private HomePerspective home;
     private ProjectLibraryPerspective projectLibrary;
 
     @Before
     public void setUp() {
         login.getLoginPage();
-        if (login.isDisplayed()){
+        if (login.isDisplayed()) {
             home = login.loginDefaultUser();
         }
 
         projectLibrary = home.getNavbar().projectAuthoring();
 
-        if (projectLibrary.isProjectListEmpty()){
+        if (projectLibrary.isProjectListEmpty()) {
             ProjectLibraryPerspective library = home.getNavbar().projectAuthoring();
             library.importDemoProject(MORTGAGES_PROJECT);
             Waits.pause(5_000);
             projectLibrary.openProjectList();
         }
-    }
-
-    @After
-    public void cleanUp(){
-        home.logout();
     }
 
     @Test
