@@ -29,6 +29,8 @@ import org.dashbuilder.navigation.NavItem;
 import org.dashbuilder.navigation.NavTree;
 import org.dashbuilder.navigation.service.NavigationServices;
 import org.guvnor.common.services.shared.config.AppConfigService;
+import org.jboss.errai.bus.server.service.ErraiConfigAttribs;
+import org.jboss.errai.bus.server.service.ErraiServiceConfiguratorImpl;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,8 +51,18 @@ import org.uberfire.mocks.EventSourceMock;
 import org.uberfire.mvp.Command;
 import org.uberfire.workbench.model.menu.MenuFactory;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(GwtMockitoTestRunner.class)
 public class KieWorkbenchEntryPointTest {
@@ -142,7 +154,7 @@ public class KieWorkbenchEntryPointTest {
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
         navTreeEditor = spy(new NavTreeEditor(mock(NavTreeEditorView.class), null, syncBeanManager, null,
-                perspectiveTreeProvider, targetPerspectiveEditor, null, null, null, null));
+                                              perspectiveTreeProvider, targetPerspectiveEditor, null, null, null, null));
 
         when(navigationExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
     }
@@ -160,7 +172,7 @@ public class KieWorkbenchEntryPointTest {
     }
 
     @Test
-    public void testInitializeWorkbench(){
+    public void testInitializeWorkbench() {
         kieWorkbenchEntryPoint.initializeWorkbench();
 
         verify(permissionTreeSetup).configureTree();
@@ -256,5 +268,11 @@ public class KieWorkbenchEntryPointTest {
 
         assertFalse(design.isModifiable());
         assertFalse(pages.isModifiable());
+    }
+
+    @Test
+    public void testCSFRProtectionEnabled() throws Exception {
+        final ErraiServiceConfiguratorImpl config = new ErraiServiceConfiguratorImpl();
+        assertTrue(ErraiConfigAttribs.ENABLE_CSRF_BUS_TOKEN.getBoolean(config));
     }
 }

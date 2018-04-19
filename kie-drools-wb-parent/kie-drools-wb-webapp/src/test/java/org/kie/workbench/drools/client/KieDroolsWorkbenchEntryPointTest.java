@@ -29,6 +29,8 @@ import org.dashbuilder.navigation.NavItem;
 import org.dashbuilder.navigation.NavTree;
 import org.dashbuilder.navigation.service.NavigationServices;
 import org.guvnor.common.services.shared.config.AppConfigService;
+import org.jboss.errai.bus.server.service.ErraiConfigAttribs;
+import org.jboss.errai.bus.server.service.ErraiServiceConfiguratorImpl;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -202,5 +204,11 @@ public class KieDroolsWorkbenchEntryPointTest {
         assertNotNull(execServers);
         assertEquals(execServers.getParent(),
                      deploy);
+    }
+
+    @Test
+    public void testCSFRProtectionEnabled() throws Exception {
+        final ErraiServiceConfiguratorImpl config = new ErraiServiceConfiguratorImpl();
+        assertTrue(ErraiConfigAttribs.ENABLE_CSRF_BUS_TOKEN.getBoolean(config));
     }
 }
