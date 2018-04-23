@@ -37,6 +37,9 @@
 
     <version.tomcat8>8.5.11</version.tomcat8>
     <version.wildfly11>11.0.0.Final</version.wildfly11>
+
+    <containers.dir>${project.build.directory}/containers</containers.dir>
+    <configurations.dir>${project.build.directory}/configurations</configurations.dir>
   </properties>
 
   <dependencyManagement>
@@ -170,20 +173,6 @@
                 <java.security.egd>file:/dev/./urandom</java.security.egd>
               </systemProperties>
             </container>
-            <deployables>
-              <deployable>
-                <groupId>${deployable.groupId}</groupId>
-                <artifactId>${deployable.artifactId}</artifactId>
-                <!-- default, may be overridden in container specific profiles -->
-                <classifier>${deployable.classifier}</classifier>
-                <type>war</type>
-                <properties>
-                  <context>${deployable.context}</context>
-                </properties>
-                <pingURL>http://${container.host}:${container.port}/${deployable.context}</pingURL>
-                <pingTimeout>${deployment.timeout}</pingTimeout>
-              </deployable>
-            </deployables>
             <configuration>
               <properties>
                 <cargo.servlet.port>${container.port}</cargo.servlet.port>
@@ -370,13 +359,18 @@
                   </properties>
                 </configuration>
                 <deployables>
-                  <deployable>
-                    <groupId>${deployable.groupId}</groupId>
-                    <artifactId>${deployable.artifactId}</artifactId>
-                    <classifier>${deployable.classifier.wildfly11}</classifier>
-                    <type>war</type>
-                  </deployable>
-                </deployables>
+              <deployable>
+                <groupId>${deployable.groupId}</groupId>
+                <artifactId>${deployable.artifactId}</artifactId>
+                <classifier>${deployable.classifier.wildfly11}</classifier>
+                <type>war</type>
+                <properties>
+                  <context>${deployable.context}</context>
+                </properties>
+                <pingURL>http://${container.host}:${container.port}/${deployable.context}</pingURL>
+                <pingTimeout>${deployment.timeout}</pingTimeout>
+              </deployable>
+            </deployables>
               </configuration>
             </plugin>
           </plugins>
@@ -442,6 +436,11 @@
                     <artifactId>${deployable.artifactId}</artifactId>
                     <classifier>${deployable.classifier.eap7}</classifier>
                     <type>war</type>
+                    <properties>
+                      <context>${deployable.context}</context>
+                    </properties>
+                    <pingURL>http://${container.host}:${container.port}/${deployable.context}</pingURL>
+                    <pingTimeout>${deployment.timeout}</pingTimeout>
                   </deployable>
                 </deployables>
               </configuration>
@@ -544,6 +543,11 @@
                     <artifactId>${deployable.artifactId}</artifactId>
                     <classifier>${deployable.classifier.tomcat8}</classifier>
                     <type>war</type>
+                    <properties>
+                      <context>${deployable.context}</context>
+                    </properties>
+                    <pingURL>http://${container.host}:${container.port}/${deployable.context}</pingURL>
+                    <pingTimeout>${deployment.timeout}</pingTimeout>
                   </deployable>
                 </deployables>
               </configuration>
@@ -563,86 +567,91 @@
       </activation>
       <properties>
         <deployable.context/>
-        <cargo.maven.skip>true</cargo.maven.skip>
+        <cargo.container.id>wildfly-swarm2017x</cargo.container.id>
+        <container.port>8080</container.port>
+        <cargo.git.port>9418</cargo.git.port>
+        <workbench.swarm.bundle.path>${containers.dir}/${workbench.swarm.bundle.name}</workbench.swarm.bundle.path>
+        <workbench.swarm.bundle.name>${deployable.artifactId}-webapp-swarm.jar</workbench.swarm.bundle.name>
       </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb-webapp</artifactId>
-          <classifier>${deployable.classifier.swarm}</classifier>
-          <exclusions>
-            <exclusion>
-              <groupId>*</groupId>
-              <artifactId>*</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-webapp</artifactId>
-          <classifier>${deployable.classifier.swarm}</classifier>
-          <exclusions>
-            <exclusion>
-              <groupId>*</groupId>
-              <artifactId>*</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-monitoring-webapp</artifactId>
-          <classifier>${deployable.classifier.swarm}</classifier>
-          <exclusions>
-            <exclusion>
-              <groupId>*</groupId>
-              <artifactId>*</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-      </dependencies>
       <build>
         <pluginManagement>
           <plugins>
             <plugin>
-              <groupId>org.wildfly.swarm</groupId>
-              <artifactId>wildfly-swarm-plugin</artifactId>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-dependency-plugin</artifactId>
               <executions>
                 <execution>
-                  <id>start</id>
+                  <id>download-swarm-wb</id>
                   <phase>pre-integration-test</phase>
                   <goals>
-                    <goal>multistart</goal>
+                    <goal>copy</goal>
                   </goals>
                   <configuration>
-                    <properties>
-                      <!-- Not ideal as it relies on the module structure, but for now it is safe to assume that all testing modules
-                           are children of this one.-->
-                      <swarm.project.stage.file>${project.build.testOutputDirectory}/sample-swarm-config.yml</swarm.project.stage.file>
-                      <swarm.logging>INFO</swarm.logging>
-                      <swarm.bind.address>127.0.0.1</swarm.bind.address>
-                      <org.uberfire.nio.git.dir>${project.build.directory}/wb-dirs</org.uberfire.nio.git.dir>
-                      <org.uberfire.nio.git.ssh.cert.dir>${project.build.directory}/wb-dirs</org.uberfire.nio.git.ssh.cert.dir>
-                      <org.uberfire.metadata.index.dir>${project.build.directory}/wb-dirs</org.uberfire.metadata.index.dir>
-                      <org.guvnor.m2repo.dir>${project.build.directory}/wb-dirs</org.guvnor.m2repo.dir>
-                    </properties>
-                    <processes>
-                      <process>
-                        <groupId>org.kie</groupId>
+                    <artifactItems>
+                      <artifactItem>
+                        <groupId>${deployable.groupId}</groupId>
                         <artifactId>${deployable.artifactId}-webapp</artifactId>
+                        <version>${deployable.version}</version>
                         <classifier>${deployable.classifier.swarm}</classifier>
-                      </process>
+                        <type>jar</type>
+                        <outputDirectory>${containers.dir}</outputDirectory>
+                        <destFileName>${workbench.swarm.bundle.name}</destFileName>
+                      </artifactItem>
+                    </artifactItems>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.cargo</groupId>
+              <artifactId>cargo-maven2-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>start-container</id>
+                  <phase>pre-integration-test</phase>
+                  <goals>
+                    <goal>start</goal>
+                  </goals>
+                  <configuration>
+                    <container>
+                      <containerId>${cargo.container.id}</containerId>
+                      <contextKey>swarm-wb</contextKey>
+                      <type>installed</type>
+                      <home>${workbench.swarm.bundle.path}</home>
+                      <systemProperties>
+                        <datasource.management.wildfly.admin>admin</datasource.management.wildfly.admin>
+                        <org.uberfire.ext.security.management.wildfly.cli.user>admin</org.uberfire.ext.security.management.wildfly.cli.user>
+                      </systemProperties>
+                    </container>
+                    <configuration>
+                      <type>standalone</type>
+                      <home>${configurations.dir}/swarm-profile</home>
                       <properties>
-                        <start.timeout.seconds>120</start.timeout.seconds>
+                        <cargo.swarm.ping.url>http://localhost:8080/</cargo.swarm.ping.url>
+                        <cargo.jvmargs>-Xmx1G -XX:MaxMetaspaceSize=400m</cargo.jvmargs>
                       </properties>
-                    </processes>
+                    </configuration>
                   </configuration>
                 </execution>
                 <execution>
-                  <id>stop</id>
+                  <id>stop-container</id>
                   <phase>post-integration-test</phase>
                   <goals>
                     <goal>stop</goal>
                   </goals>
+                  <configuration>
+                    <container>
+                      <containerId>wildfly-swarm2017x</containerId>
+                      <contextKey>swarm-wb</contextKey>
+                      <type>installed</type>
+                    </container>
+                    <configuration>
+                      <type>standalone</type>
+                      <properties>
+                        <cargo.swarm.ping.url>http://localhost:8080/</cargo.swarm.ping.url>
+                      </properties>
+                    </configuration>
+                  </configuration>
                 </execution>
               </executions>
             </plugin>
@@ -660,10 +669,9 @@
       <properties>
         <deployable.classifier.tomcat8>tomcat8-redhat</deployable.classifier.tomcat8>
         <deployable.classifier.eap7>eap7-redhat</deployable.classifier.eap7>
+        <deployable.classifier.swarm>swarm-redhat</deployable.classifier.swarm>
         <deployable.classifier.wildfly11>there-is-no-wildfly11-war-for-product</deployable.classifier.wildfly11>
       </properties>
     </profile>
-
   </profiles>
-
 </project>
