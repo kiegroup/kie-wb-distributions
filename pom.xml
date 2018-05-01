@@ -31,6 +31,7 @@
 
   <properties>
     <findbugs.failOnViolation>true</findbugs.failOnViolation>
+    <errai.marshalling.very_short_names>false</errai.marshalling.very_short_names>
   </properties>
 
   <repositories>
@@ -187,5 +188,21 @@
 
     </plugins>
   </build>
+
+  <profiles>
+
+    <profile>
+      <id>productizedProfile</id>
+      <activation>
+        <property>
+          <name>productized</name>
+        </property>
+      </activation>
+      <properties>
+        <errai.marshalling.very_short_names>true</errai.marshalling.very_short_names>
+      </properties>
+    </profile>
+
+  </profiles>
 
 </project>
