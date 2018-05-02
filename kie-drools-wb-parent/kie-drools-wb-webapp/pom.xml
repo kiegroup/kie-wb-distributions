@@ -1714,6 +1714,34 @@
 
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
+      <artifactId>kie-wb-common-stunner-case-mgmt-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.stunner</groupId>
+      <artifactId>kie-wb-common-stunner-case-mgmt-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.stunner</groupId>
+      <artifactId>kie-wb-common-stunner-case-mgmt-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.stunner</groupId>
+      <artifactId>kie-wb-common-stunner-case-mgmt-project-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.stunner</groupId>
+      <artifactId>kie-wb-common-stunner-case-mgmt-project-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.stunner</groupId>
       <artifactId>kie-wb-common-stunner-bpmn-api</artifactId>
     </dependency>
 
@@ -2091,6 +2119,10 @@
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-bpmn-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-bpmn-project-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-bpmn-project-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-case-mgmt-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-case-mgmt-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-case-mgmt-project-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-case-mgmt-project-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-forms-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-forms-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-project-api</compileSourcesArtifact>
