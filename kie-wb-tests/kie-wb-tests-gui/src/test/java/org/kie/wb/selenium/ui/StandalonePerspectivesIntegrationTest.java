@@ -16,31 +16,59 @@
 package org.kie.wb.selenium.ui;
 
 import org.assertj.core.api.Assertions;
+import org.guvnor.rest.client.CloneProjectRequest;
+import org.guvnor.rest.client.Space;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.util.Waits;
+import org.kie.wb.test.rest.client.RestWorkbenchClient;
+import org.kie.wb.test.rest.client.WorkbenchClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore("RHBA-503 - Standalone perspectives are broken")
 public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
-    private final static String
+    private final static String // Project setup
+            PROJECT_URL = "https://github.com/Rikkola/single-project-test-repository.git",
+            SPACE_NAME = "Standalone_space",
+            PROJECT_NAME = "Standalone_project";
+
+    private final static String // Assemble URL to standalone perspective
             BASE_URL = System.getProperty("kie.wb.url"),
             APP_CONTEXT = System.getProperty("app.name") + ".jsp",
-            STANDALONE_PARAMETER = "?standalone=true",
-            PERSPECTIVE_ID = "&perspective=AuthoringPerspective",
+            STANDALONE_PARAMETER = "?standalone",
             HEADER_PARAMETER = "&header=AppNavBar",
-            COMPLETE_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PERSPECTIVE_ID;
+            PROJECT_ASSET_PATH = "&path=default://master@" + SPACE_NAME + "/" + PROJECT_NAME + "/src/main/java/mortgages/mortgages/Applicant.java",
+            COMPLETE_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PROJECT_ASSET_PATH;
 
     private static final By
-            EXPLORER_HEADER = ByJQuery.selector("h3:contains('Project Explorer')"),
+            DATA_MODELER_EDITOR_TITLE = ByJQuery.selector("[title='Applicant.java - Data Objects']"),
             WORKBENCH_HEADER = By.id("workbenchHeaderPanel");
+
+    @BeforeClass
+    public static void cloneTestingProject() {
+        WorkbenchClient workbenchClient = RestWorkbenchClient
+                // Rest credentials from cargo config in kie-wb-tests/pom.xml
+                .createWorkbenchClient(BASE_URL, "restAll", "restAll1234;");
+
+        // Create space
+        final Space space = new Space();
+        space.setName(SPACE_NAME);
+        space.setOwner("donald@duck.gov");
+        space.setDefaultGroupId("gov.duck");
+        workbenchClient.createSpace(space);
+
+        // Clone project
+        CloneProjectRequest cloneReq = new CloneProjectRequest();
+        cloneReq.setGitURL(PROJECT_URL);
+        cloneReq.setName(PROJECT_NAME);
+        workbenchClient.cloneRepository(SPACE_NAME, cloneReq);
+    }
 
     @Before
     public void setUp() {
@@ -66,7 +94,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     private void verifyPerspectiveIsLoaded() {
         try {
-            Waits.elementPresent(EXPLORER_HEADER, 10);
+            Waits.elementPresent(DATA_MODELER_EDITOR_TITLE, 15);
         } catch (WebDriverException exception) {
             Assertions.fail("The standalone perspective could not be loaded.", exception);
         }
