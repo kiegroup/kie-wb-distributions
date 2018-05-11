@@ -32,7 +32,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectLibraryPerspective.class);
 
     private static final By
-            TEAM_BREADCRUMB = By.linkText("myteam"),
+            TEAM_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('MySpace')"),
             PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
             IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
             TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
