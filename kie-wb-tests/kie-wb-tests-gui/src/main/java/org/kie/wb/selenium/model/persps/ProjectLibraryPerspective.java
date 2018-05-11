@@ -32,7 +32,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectLibraryPerspective.class);
 
     private static final By
-            TEAM_BREADCRUMB = By.linkText("myteam"),
+            SPACE_BREADCRUMB = By.linkText("MySpace"),
             PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
             IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
             TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
@@ -45,7 +45,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(TEAM_BREADCRUMB,
+        return Waits.isElementPresent(SPACE_BREADCRUMB,
                                       60);
     }
 
@@ -62,7 +62,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     }
 
     public void openProjectList() {
-        click(TEAM_BREADCRUMB);
+        click(SPACE_BREADCRUMB);
         // A moment to load projects
         Waits.pause(2_000);
     }
