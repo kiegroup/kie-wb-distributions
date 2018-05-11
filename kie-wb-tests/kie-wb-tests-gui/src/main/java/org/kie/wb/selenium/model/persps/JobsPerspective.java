@@ -21,8 +21,7 @@ import org.openqa.selenium.By;
 
 public class JobsPerspective extends AbstractPerspective {
 
-    private static final By MANAGE_JOBS_BREADCRUMB =
-            ByJQuery.selector("[data-field='breadcrumb']:contains('Manage Jobs')");
+    private static final By MANAGE_JOBS_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Manage Jobs')");
 
     @Override
     public boolean isDisplayed() {
