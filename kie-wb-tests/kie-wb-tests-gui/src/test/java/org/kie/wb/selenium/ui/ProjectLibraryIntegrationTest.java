@@ -69,6 +69,8 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
 
     private void importBuildDeployAndCheckArtifact(String projectName, String projectGav, Runnable stepsToImportProject) {
         stepsToImportProject.run();
+        //Wait for success alert to hide
+        Waits.pause(5_000);
         deployAndCheckArtifact(projectGav);
         // Important: don't put logout in @After, because ScreenshotOnFailure captures screenshots after @After,
         // which results in useless image of login screen
