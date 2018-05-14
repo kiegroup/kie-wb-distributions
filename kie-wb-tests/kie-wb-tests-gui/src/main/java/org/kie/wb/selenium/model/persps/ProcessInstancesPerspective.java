@@ -23,8 +23,7 @@ import org.openqa.selenium.By;
 
 public class ProcessInstancesPerspective extends AbstractPerspective {
 
-    private static final By PROCESS_INSTANCES_BREADCRUMB =
-            ByJQuery.selector("[data-field='breadcrumb']:contains('Manage Process Instances')");
+    private static final By PROCESS_INSTANCES_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Manage Process Instances')");
 
     @Page
     private BusyPopup busyPopup;

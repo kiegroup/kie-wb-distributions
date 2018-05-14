@@ -23,8 +23,7 @@ import org.openqa.selenium.By;
 
 public class TaskDashboardPerspective extends AbstractPerspective {
 
-    private static final By TASK_REPORTS_BREADCRUMB =
-            ByJQuery.selector("[data-field='breadcrumb']:contains('Task Reports')");
+    private static final By TASK_REPORTS_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Task Reports')");
 
     @Page
     private BusyPopup loadingIndicator;
