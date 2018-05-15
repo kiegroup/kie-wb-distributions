@@ -309,7 +309,9 @@ public class RestWorkbenchClient implements WorkbenchClient {
         }
 
         JobResult jobResult;
-        int totalSecondsWaited = 0;
+        // added becasue of RHPAM-863
+        sleepForSecond();
+        int totalSecondsWaited = 1;
         while ((jobResult = getJob(request.getJobId())).getStatus() != JobStatus.SUCCESS && seconds-- > 0) {
             switch (jobResult.getStatus()) {
                 case ACCEPTED:
