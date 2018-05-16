@@ -31,7 +31,7 @@ public class MegaMenuConfig implements MegaMenuBrand {
 
     @Override
     public String brandImageUrl() {
-        return "banner/logo.svg";
+        return "banner/logo.png";
     }
 
     @Override

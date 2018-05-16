@@ -46,11 +46,11 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
 
     @Override
     public String productImageUrl() {
-        return "banner/logo.svg";
+        return "banner/logo.png";
     }
 
     @Override
     public String backgroundImageUrl() {
-        return "images/product_home_bg.svg";
+        return "images/product_home_bg.png";
     }
 }
