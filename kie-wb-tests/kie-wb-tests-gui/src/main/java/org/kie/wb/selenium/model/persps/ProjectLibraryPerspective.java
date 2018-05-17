@@ -32,7 +32,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectLibraryPerspective.class);
 
     private static final By
-            TEAM_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('MySpace')"),
+            SPACES_BREADCRUMB = ByJQuery.linkText("Spaces"),
             PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
             IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
             TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
@@ -45,8 +45,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(TEAM_BREADCRUMB,
-                                      60);
+        return Waits.isElementPresent(SPACES_BREADCRUMB, 60);
     }
 
     private ImportRepositoryModal importProject() {
@@ -59,17 +58,6 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
         click(PROJECT_ACTIONS_BUTTON);
         click(TRY_SAMPLES_BUTTON);
         return ImportProjectsScreen.newInstance();
-    }
-
-    public void openProjectList() {
-        click(TEAM_BREADCRUMB);
-        // A moment to load projects
-        Waits.pause(2_000);
-    }
-
-    public void clickProjectCard(String projectName) {
-        By projectCard = ByJQuery.selector("[data-i18n-prefix='PopulatedLibraryView.'] .card-pf-title:contains('" + projectName + "')");
-        click(projectCard);
     }
 
     public void buildAndDeployProject() {
