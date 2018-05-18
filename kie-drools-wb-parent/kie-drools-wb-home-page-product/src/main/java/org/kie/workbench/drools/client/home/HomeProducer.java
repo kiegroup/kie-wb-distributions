@@ -56,7 +56,7 @@ public class HomeProducer implements HomeModelProvider {
     public HomeModel get() {
         final HomeModel model = new HomeModel(translationService.format(Constants.Heading),
                                               translationService.format(Constants.SubHeading),
-                                              "images/product_home_bg.svg");
+                                              "images/product_home_bg.png");
 
         model.addShortcut(createDesignShortcut());
         model.addShortcut(createDeployShortcut());
