@@ -233,6 +233,12 @@
     <dependency>
       <groupId>org.apache.neethi</groupId>
       <artifactId>neethi</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.woodstox</groupId>
+          <artifactId>woodstox-core-asl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -249,16 +255,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-jdk14</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.woodstox</groupId>
-      <artifactId>woodstox-core-asl</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.xml.stream</groupId>
-          <artifactId>stax-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>wsdl4j</groupId>
