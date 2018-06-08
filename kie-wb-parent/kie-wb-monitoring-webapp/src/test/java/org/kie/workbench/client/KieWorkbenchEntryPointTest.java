@@ -233,4 +233,13 @@ public class KieWorkbenchEntryPointTest {
         assertFalse(design.isModifiable());
         assertFalse(pages.isModifiable());
     }
+
+    @Test
+    public void testSetupAdminPage(){
+        kieWorkbenchEntryPoint.setupAdminPage();
+
+        verify(adminPageHelper).setup(false,
+                                      true,
+                                      false);
+    }
 }
