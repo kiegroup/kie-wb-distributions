@@ -121,7 +121,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @Override
     protected void setupAdminPage() {
         adminPageHelper.setup(false,
-                              true);
+                              true,
+                              false);
     }
 
     protected void initMenuBar() {
