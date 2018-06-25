@@ -51,6 +51,11 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency><!-- Using workbench rest client for UI test setup -->
+      <groupId>org.kie</groupId>
+      <artifactId>kie-wb-tests-rest</artifactId>
+    </dependency>
+
     <!-- utilities -->
     <dependency>
       <groupId>junit</groupId>
