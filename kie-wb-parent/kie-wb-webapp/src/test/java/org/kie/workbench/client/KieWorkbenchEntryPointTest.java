@@ -39,6 +39,7 @@ import org.kie.workbench.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.client.resources.i18n.NavigationConstants;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
+import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCallback;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.mockito.Mock;
 import org.uberfire.client.authz.PerspectiveTreeProvider;
@@ -119,6 +120,9 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     protected EventSourceMock<NavTreeLoadedEvent> navTreeLoadedEvent;
 
+    @Mock
+    private DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback;
+
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     @Before
@@ -149,7 +153,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 adminPageHelper,
                                                                 navTreeDefinitions,
                                                                 navigationManager,
-                                                                navigationExplorerScreen, null));
+                                                                navigationExplorerScreen,
+                                                                defaultWorkbenchErrorCallback));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 

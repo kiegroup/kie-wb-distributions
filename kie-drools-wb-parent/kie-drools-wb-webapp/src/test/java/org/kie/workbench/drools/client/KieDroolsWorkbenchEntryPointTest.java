@@ -37,6 +37,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
+import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCallback;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.kie.workbench.drools.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.drools.client.resources.i18n.NavigationConstants;
@@ -109,6 +110,9 @@ public class KieDroolsWorkbenchEntryPointTest {
     @Mock
     protected EventSourceMock<NavTreeLoadedEvent> navTreeLoadedEvent;
 
+    @Mock
+    private DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback;
+
     private KieDroolsWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     @Before
@@ -137,7 +141,8 @@ public class KieDroolsWorkbenchEntryPointTest {
                                                                       adminPageHelper,
                                                                       navTreeDefinitions,
                                                                       navigationManager,
-                                                                      navigationExplorerScreen, null));
+                                                                      navigationExplorerScreen,
+                                                                      defaultWorkbenchErrorCallback));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
