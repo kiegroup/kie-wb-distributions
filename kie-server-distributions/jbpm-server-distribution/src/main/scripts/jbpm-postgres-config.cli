@@ -1,0 +1,58 @@
+embed-server --server-config=standalone.xml
+
+try
+	module add --name=org.postgres --resources=drivers/postgresql.jar --dependencies=javax.api,javax.transaction.api
+catch
+	echo "PostgreSQL module exists"
+end-try
+
+if (outcome != success) of /subsystem=datasources/jdbc-driver=postgres:read-resource
+	/subsystem=datasources/jdbc-driver=postgres:add(driver-name=postgres,driver-module-name=org.postgres,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+end-if
+
+if (outcome == success) of /subsystem=datasources/xa-data-source=jBPMXADS:read-resource
+	/subsystem=datasources/xa-data-source=jBPMXADS:remove
+end-if
+
+xa-data-source add --name=jBPMXADS --jndi-name="java:jboss/datasources/jBPMDS" --driver-name=postgres --user-name=jbpm --password=jbpm --xa-datasource-class=org.postgresql.xa.PGXADataSource --xa-datasource-properties=[ServerName=localhost, PortNumber=5432, DatabaseName=jbpm] --background-validation=true --background-validation-millis=120000 --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker --validate-on-match=true
+
+
+if (outcome != success) of /system-property=org.kie.server.persistence.ds:read-resource
+	/system-property=org.kie.server.persistence.ds:add(value="java:jboss/datasources/jBPMDS")
+else
+    /system-property=org.kie.server.persistence.ds:write-attribute(name=value,value="java:jboss/datasources/jBPMDS")
+end-if	
+
+if (outcome != success) of /system-property=org.kie.server.persistence.dialect:read-resource
+	/system-property=org.kie.server.persistence.dialect:add(value="org.hibernate.dialect.PostgreSQLDialect")
+else
+    /system-property=org.kie.server.persistence.dialect:write-attribute(name=value,value="org.hibernate.dialect.PostgreSQLDialect")
+end-if
+
+
+
+if (outcome != success) of /system-property=org.kie.server.id:read-resource
+	/system-property=org.kie.server.id:add(value="sample-server")
+else
+    /system-property=org.kie.server.id:write-attribute(name=value,value="sample-server")
+end-if
+
+if (outcome != success) of /system-property=org.kie.server.controller:read-resource
+	/system-property=org.kie.server.controller:add(value="http://localhost:8080/jbpm-console/rest/controller")
+else
+    /system-property=org.kie.server.controller:write-attribute(name=value,value="http://localhost:8080/jbpm-console/rest/controller")
+end-if
+
+if (outcome != success) of /system-property=org.kie.server.location:read-resource
+	/system-property=org.kie.server.location:add(value="http://localhost:8080/kie-server/services/rest/server")
+else
+    /system-property=org.kie.server.location:write-attribute(name=value,value="http://localhost:8080/kie-server/services/rest/server")
+end-if
+
+if (outcome != success) of /system-property=org.jbpm.casemgmt.showcase.url:read-resource
+    /system-property=org.jbpm.casemgmt.showcase.url:add(value="/jbpm-casemgmt")
+else
+    /system-property=org.jbpm.casemgmt.showcase.url:write-attribute(name=value,value="/jbpm-casemgmt")
+end-if
+	
+stop-embedded-server

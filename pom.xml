@@ -59,6 +59,7 @@
     <module>kie-wb-tests</module>
     <module>kie-wb-webapp-common</module>
     <module>kie-wb-deployment-validation</module>
+    <module>kie-server-distributions</module>
   </modules>
 
   <dependencyManagement>
