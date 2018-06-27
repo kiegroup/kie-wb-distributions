@@ -149,7 +149,7 @@ public class KieWorkbenchEntryPointTest {
                                                                 adminPageHelper,
                                                                 navTreeDefinitions,
                                                                 navigationManager,
-                                                                navigationExplorerScreen));
+                                                                navigationExplorerScreen, null));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 

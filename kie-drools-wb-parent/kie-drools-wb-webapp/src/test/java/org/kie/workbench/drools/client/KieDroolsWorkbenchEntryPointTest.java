@@ -137,7 +137,7 @@ public class KieDroolsWorkbenchEntryPointTest {
                                                                       adminPageHelper,
                                                                       navTreeDefinitions,
                                                                       navigationManager,
-                                                                      navigationExplorerScreen));
+                                                                      navigationExplorerScreen, null));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
