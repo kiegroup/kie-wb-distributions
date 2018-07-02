@@ -1997,6 +1997,49 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- Experimental Deps -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-extensions-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-extensions-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-extensions-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-cms-layout-components-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-cms-layout-components-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-cms-persistence-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-cms-persistence-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-cms-persistence-jpa</artifactId>
+    </dependency>
+
     <!-- Test deps -->
     <dependency>
       <groupId>com.google.gwt.gwtmockito</groupId>
@@ -2341,6 +2384,13 @@
             <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-forms-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-project-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-project-client</compileSourcesArtifact>
+
+            <!-- Experimental Deps -->
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-extensions-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-extensions-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-layout-components-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-layout-components-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-persistence-api</compileSourcesArtifact>
           </compileSourcesArtifacts>
         </configuration>
       </plugin>
