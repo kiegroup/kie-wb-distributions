@@ -1266,7 +1266,6 @@
       </exclusions>
     </dependency>
 
-
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -1283,6 +1282,23 @@
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
       <scope>runtime</scope>
+    </dependency>
+
+    <!-- Experimental Deps -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-client</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Test deps -->
@@ -1477,6 +1493,10 @@
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-jbpm-integration-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-jbpm-integration-client</compileSourcesArtifact>
+
+            <!-- Experimental Deps -->
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-client</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
         </configuration>
