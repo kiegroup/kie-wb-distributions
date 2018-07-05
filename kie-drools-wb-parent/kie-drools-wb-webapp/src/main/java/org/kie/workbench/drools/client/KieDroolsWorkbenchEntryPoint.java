@@ -30,6 +30,7 @@ import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
+import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCallback;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.kie.workbench.drools.client.navigation.NavTreeDefinitions;
 import org.uberfire.client.authz.PerspectiveTreeProvider;
@@ -77,9 +78,11 @@ public class KieDroolsWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                         final DefaultAdminPageHelper adminPageHelper,
                                         final NavTreeDefinitions navTreeDefinitions,
                                         final NavigationManager navigationManager,
-                                        final NavigationExplorerScreen navigationExplorerScreen) {
+                                        final NavigationExplorerScreen navigationExplorerScreen,
+                                        final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback) {
         super(appConfigService,
-              activityBeansCache);
+              activityBeansCache,
+              defaultWorkbenchErrorCallback);
         this.menusHelper = menusHelper;
         this.userSystemManager = userSystemManager;
         this.menuBar = menuBar;
