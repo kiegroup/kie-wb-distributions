@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.Collection;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.guvnor.rest.client.CreateProjectJobRequest;
@@ -34,8 +35,11 @@ import org.junit.Rule;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
+import org.kie.wb.test.rest.client.ClientRequestTimedOutException;
 import org.kie.wb.test.rest.client.RestWorkbenchClient;
 import org.kie.wb.test.rest.client.WorkbenchClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qa.tools.ikeeper.client.JiraClient;
 import qa.tools.ikeeper.test.IKeeperJUnitConnector;
 
@@ -46,8 +50,10 @@ public abstract class RestTestBase {
     protected static final String USER_ID = System.getProperty("kie.wb.user.name", User.REST_ALL.getUserName());
     protected static final String PASSWORD = System.getProperty("kie.wb.user.password", User.REST_ALL.getPassword());
 
-    protected static WorkbenchClient client;
+    private static Logger log = LoggerFactory.getLogger(RestTestBase.class);
+    private static final StopWatch stopWatch = new StopWatch();
 
+    protected static WorkbenchClient client;
     private static File gitRepository;
 
     @BeforeClass
@@ -70,8 +76,13 @@ public abstract class RestTestBase {
 
     @AfterClass
     public static void cleanUp() throws IOException {
-        deleteAllProject();
-        deleteAllSpaces();
+        try {
+            deleteAllSpaces();
+        } catch (ClientRequestTimedOutException timeoutException) {
+            throw new RuntimeException(String.format(
+                    "Test cleanup (deletion of spaces) failed because it took more than %d seconds to delete a space." +
+                            " See https://issues.jboss.org/browse/AF-1310", timeoutException.getTimeout()), timeoutException);
+        }
 
         if (gitRepository != null) {
             FileUtils.deleteDirectory(gitRepository);
@@ -111,14 +122,18 @@ public abstract class RestTestBase {
     }
 
     protected static void deleteAllSpaces() {
-        client.getSpaces().forEach(space -> client.deleteSpace(space.getName()));
-    }
-
-    protected static void deleteAllProject() {
         Collection<Space> spaces = client.getSpaces();
-        for (Space space : spaces) {
-            client.deleteSpace(space.getName());
-        }
+        log.info("Deleting {} spaces", spaces.size());
+        spaces.forEach(space -> {
+            stopWatch.reset();
+            stopWatch.start();
+            try {
+                client.deleteSpace(space.getName());
+            } finally {
+                stopWatch.stop();
+                log.debug("Deleting space '{}' took {} ms", space.getName(), stopWatch.getTime());
+            }
+        });
     }
 
     protected static String getLocalGitRepositoryUrl() {

@@ -48,7 +48,7 @@ public class RestWorkbenchClient implements WorkbenchClient {
 
     private static final Logger log = LoggerFactory.getLogger(RestWorkbenchClient.class);
 
-    private static final int DEFAULT_JOB_TIMEOUT_SECONDS = 10;
+    private static final int DEFAULT_JOB_TIMEOUT_SECONDS = 60; // TODO lower this back to 10s after https://issues.jboss.org/browse/AF-1310 is fixed
     private static final int DEFAULT_PROJECT_JOB_TIMEOUT_SECONDS = 60;
     private static final int DEFAULT_CLONE_REPO_TIMEOUT_SECONDS = 60;
     private final int jobTimeoutSeconds;
@@ -322,13 +322,13 @@ public class RestWorkbenchClient implements WorkbenchClient {
                     return request;
                 default:
                     log.warn("  Timeout waiting {} seconds for job to succeed", totalSecondsWaited);
-                    throw new NotSuccessException(jobResult);
+                    throw new ClientRequestTimedOutException(jobResult, totalSecondsWaited);
             }
         }
 
         if (jobResult.getStatus() != JobStatus.SUCCESS) {
             log.warn("  Timeout waiting {} seconds for job to succeed", totalSecondsWaited);
-            throw new NotSuccessException(jobResult);
+            throw new ClientRequestTimedOutException(jobResult, totalSecondsWaited);
         }
 
         return request;
