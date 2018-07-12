@@ -1755,6 +1755,23 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Experimental Deps -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-extensions-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-extensions-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-extensions-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- test -->
     <dependency>
       <groupId>org.reflections</groupId>
@@ -2048,6 +2065,10 @@
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-forms-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-project-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-project-client</compileSourcesArtifact>
+
+              <!-- Experimental Deps -->
+              <compileSourcesArtifact>org.uberfire:uberfire-experimental-extensions-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-experimental-extensions-client</compileSourcesArtifact>
             </compileSourcesArtifacts>
           </configuration>
         </plugin>
