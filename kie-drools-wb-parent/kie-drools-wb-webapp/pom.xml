@@ -237,12 +237,12 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>kie-pmml</artifactId>
-       <exclusions>
-         <exclusion>
-           <groupId>ch.qos.logback</groupId>
-           <artifactId>logback-classic</artifactId>
-         </exclusion>
-       </exclusions>
+      <exclusions>
+        <exclusion>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -282,7 +282,6 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-dmn-backend</artifactId>
-      <scope>runtime</scope>
     </dependency>
 
     <!-- Guvnor -->
@@ -848,6 +847,30 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-workitems-editor-backend</artifactId>
+    </dependency>
+
+    <!-- DMN Editor -->
+    <dependency>
+      <groupId>org.kie.workbench</groupId>
+      <artifactId>kie-wb-common-dmn-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench</groupId>
+      <artifactId>kie-wb-common-dmn-project-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench</groupId>
+      <artifactId>kie-wb-common-dmn-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench</groupId>
+      <artifactId>kie-wb-common-dmn-project-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.workbench</groupId>
+      <artifactId>kie-wb-common-dmn-backend</artifactId>
     </dependency>
 
     <!-- Models for OptaPlanner Workbench Screens -->
@@ -1936,6 +1959,12 @@
               <compileSourcesArtifact>org.drools:drools-wb-workitems-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-client</compileSourcesArtifact>
+
+              <!-- DMN Editor -->
+              <compileSourcesArtifact>org.kie.workbench:kie-wb-common-dmn-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench:kie-wb-common-dmn-project-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench:kie-wb-common-dmn-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.kie.workbench:kie-wb-common-dmn-project-client</compileSourcesArtifact>
 
               <!-- Models for OptaPlanner Workbench Screens -->
               <compileSourcesArtifact>org.optaplanner:optaplanner-workbench-models-datamodel-api</compileSourcesArtifact>
