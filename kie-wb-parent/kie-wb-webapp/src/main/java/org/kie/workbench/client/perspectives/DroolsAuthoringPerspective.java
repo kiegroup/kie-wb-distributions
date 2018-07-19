@@ -48,7 +48,7 @@ import org.uberfire.workbench.model.menu.MenuFactory;
 import org.uberfire.workbench.model.menu.Menus;
 
 @ApplicationScoped
-@WorkbenchPerspective(identifier = PerspectiveIds.AUTHORING, isTransient = false)
+@WorkbenchPerspective(identifier = "AuthoringPerspective", isTransient = false)
 public class DroolsAuthoringPerspective {
 
     private AppConstants constants = AppConstants.INSTANCE;
@@ -82,7 +82,7 @@ public class DroolsAuthoringPerspective {
 
         final PlaceRequest placeRequest = generateProjectExplorerPlaceRequest();
 
-        docks.setup(PerspectiveIds.AUTHORING, placeRequest);
+        docks.setup("AuthoringPerspective", placeRequest);
 
     }
 
@@ -90,19 +90,19 @@ public class DroolsAuthoringPerspective {
         final PlaceRequest placeRequest = new DefaultPlaceRequest( "org.kie.guvnor.explorer" );
         if ( !explorerMode.isEmpty() ) {
             placeRequest.addParameter( "mode",
-                    explorerMode );
+                                       explorerMode );
         }
         if ( !projectPathString.isEmpty() ) {
             placeRequest.addParameter( "init_path",
-                    projectPathString );
+                                       projectPathString );
         }
         if ( projectEditorDisableBuild ) {
             placeRequest.addParameter( "no_build",
-                    "true" );
+                                       "true" );
         }
 
         placeRequest.addParameter( "no_context",
-                "true" );
+                                   "true" );
         return placeRequest;
     }
 
