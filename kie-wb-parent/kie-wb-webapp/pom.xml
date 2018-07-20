@@ -1516,7 +1516,6 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-dmn-model</artifactId>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
