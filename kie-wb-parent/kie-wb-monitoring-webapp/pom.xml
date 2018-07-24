@@ -1269,17 +1269,17 @@
     <!-- Experimental Deps -->
     <dependency>
       <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-experimental-extensions-api</artifactId>
+      <artifactId>uberfire-experimental-api</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-experimental-extensions-backend</artifactId>
+      <artifactId>uberfire-experimental-backend</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-experimental-extensions-client</artifactId>
+      <artifactId>uberfire-experimental-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -1477,8 +1477,8 @@
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-jbpm-integration-client</compileSourcesArtifact>
 
             <!-- Experimental Deps -->
-            <compileSourcesArtifact>org.uberfire:uberfire-experimental-extensions-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-experimental-extensions-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-client</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
         </configuration>
