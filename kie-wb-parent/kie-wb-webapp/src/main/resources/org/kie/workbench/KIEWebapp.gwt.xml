@@ -133,6 +133,7 @@
 
   <!-- Experimental -->
   <inherits name="org.uberfire.ext.experimental.UberfireExperimentalClient"/>
+  <inherits name="org.kie.workbench.common.forms.cms.components.FormsCMSComponentsClient"/>
 
   <!-- Specify the paths for translatable code -->
   <source path='client'/>
