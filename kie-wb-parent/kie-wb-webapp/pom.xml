@@ -2014,31 +2014,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
-      <artifactId>kie-wb-common-forms-cms-layout-components-api</artifactId>
-    </dependency>
 
-    <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
-      <artifactId>kie-wb-common-forms-cms-layout-components-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
-      <artifactId>kie-wb-common-forms-cms-persistence-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
-      <artifactId>kie-wb-common-forms-cms-persistence-backend</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
-      <artifactId>kie-wb-common-forms-cms-persistence-jpa</artifactId>
-    </dependency>
 
     <!-- Test deps -->
     <dependency>
@@ -2388,9 +2364,6 @@
             <!-- Experimental Deps -->
             <compileSourcesArtifact>org.uberfire:uberfire-experimental-extensions-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-experimental-extensions-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-layout-components-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-layout-components-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-persistence-api</compileSourcesArtifact>
           </compileSourcesArtifacts>
         </configuration>
       </plugin>
