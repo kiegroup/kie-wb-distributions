@@ -67,7 +67,7 @@ Authentication
 Access to jbpm console and execution server is protected and requires users to logon. 
 jBPM Server comes with predefined set of sample users that can be used directly
 
-admin/admin
+wbadmin/wbadmin
 krisv/krisv
 john/john
 mary/mary
