@@ -32,6 +32,7 @@ import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.TestProjectRequest;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
@@ -39,6 +40,7 @@ import qa.tools.ikeeper.annotation.Jira;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore("See https://issues.jboss.org/browse/DROOLS-2803")
 public class ProjectIntegrationTest extends RestTestBase {
 
     private static final String SPACE = "projectTestSpace";

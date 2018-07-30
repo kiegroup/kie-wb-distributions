@@ -22,11 +22,13 @@ import org.guvnor.rest.client.JobRequest;
 import org.guvnor.rest.client.JobResult;
 import org.guvnor.rest.client.JobStatus;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.RestWorkbenchClient;
 import org.kie.wb.test.rest.client.WorkbenchClient;
 
+@Ignore("See https://issues.jboss.org/browse/DROOLS-2803")
 public class JobIntegrationTest extends RestTestBase {
 
     private static final String SPACE_NAME = "jobTestSpace";
