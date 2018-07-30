@@ -18,12 +18,14 @@ package org.kie.wb.test.rest.security;
 
 import org.guvnor.rest.client.CreateProjectRequest;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.kie.wb.test.rest.AccessRestTestBase;
 import org.kie.wb.test.rest.User;
 
+@Ignore("See https://issues.jboss.org/browse/DROOLS-2803")
 @RunWith(Parameterized.class)
 public class ProjectAccessIntegrationTest extends AccessRestTestBase {
 

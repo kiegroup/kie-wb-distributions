@@ -27,6 +27,7 @@ import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.Space;
 import org.guvnor.rest.client.SpaceRequest;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
@@ -109,6 +110,7 @@ public class SpaceIntegrationTest extends RestTestBase {
     }
 
     @Test
+    @Ignore("See https://issues.jboss.org/browse/DROOLS-2803")
     public void testDeleteExisting() {
         final String name = "spaceToBeDeleted";
         prepareSpace(name);
