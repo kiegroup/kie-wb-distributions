@@ -14,7 +14,7 @@ if (outcome == success) of /subsystem=datasources/xa-data-source=jBPMXADS:read-r
 	/subsystem=datasources/xa-data-source=jBPMXADS:remove
 end-if
 
-xa-data-source add --name=jBPMXADS --jndi-name="java:jboss/datasources/jBPMDS" --driver-name=mysql --user-name=jbpm --password=jbpm --xa-datasource-class=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource --xa-datasource-properties=[ServerName=localhost, DatabaseName=jbpm] --background-validation=true --background-validation-millis=120000 --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker --validate-on-match=true
+xa-data-source add --name=jBPMXADS --jndi-name="java:jboss/datasources/jBPMDS" --driver-name=mysql --user-name=jbpm --password=jbpm --xa-datasource-class=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource --xa-datasource-properties=[ServerName=localhost, PortNumber=3306, DatabaseName=jbpm] --background-validation=true --background-validation-millis=120000 --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker --validate-on-match=true
 
 
 if (outcome != success) of /system-property=org.kie.server.persistence.ds:read-resource
