@@ -90,7 +90,13 @@ public class RestRepositoryDeploymentUtil {
         
         JobRequest createRepoJob = createRepository(repositoryName, orgUnitName, repoUrl);
         waitForJobsToFinish(sleepSecs, createRepoJob);
-        
+
+        // Extra wait for indexing to finish
+        try {
+            Thread.sleep(10000); // TODO don't use hardcoded wait, but rather polling
+        } catch (Exception e) {
+            // no op
+        }
         deploy(deploymentId);
     }
   
