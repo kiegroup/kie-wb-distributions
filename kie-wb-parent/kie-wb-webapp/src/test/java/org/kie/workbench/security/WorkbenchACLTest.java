@@ -109,7 +109,6 @@ public class WorkbenchACLTest {
 
     static final List<String> USER_GRANTED = Arrays.asList(
             "perspective.read.HomePerspective",
-            "perspective.read.SocialHomePagePerspective",
             "perspective.read.UserHomePagePerspective",
             "perspective.read.ProcessDefinitions",
             "perspective.read.ProcessInstances",
@@ -120,7 +119,6 @@ public class WorkbenchACLTest {
 
     static final List<String> PROCESS_ADMIN_GRANTED = Arrays.asList(
             "perspective.read.HomePerspective",
-            "perspective.read.SocialHomePagePerspective",
             "perspective.read.UserHomePagePerspective",
             "perspective.read.ProcessDefinitions",
             "perspective.read.ProcessInstances",
