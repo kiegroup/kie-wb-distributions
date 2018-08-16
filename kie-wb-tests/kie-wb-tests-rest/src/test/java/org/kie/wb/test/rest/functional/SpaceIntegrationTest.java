@@ -27,13 +27,10 @@ import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.Space;
 import org.guvnor.rest.client.SpaceRequest;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
 import qa.tools.ikeeper.annotation.Jira;
-
-import static org.kie.wb.test.rest.functional.Utils.getProjectNames;
 
 public class SpaceIntegrationTest extends RestTestBase {
 
@@ -110,7 +107,6 @@ public class SpaceIntegrationTest extends RestTestBase {
     }
 
     @Test
-    @Ignore("See https://issues.jboss.org/browse/DROOLS-2803")
     public void testDeleteExisting() {
         final String name = "spaceToBeDeleted";
         prepareSpace(name);

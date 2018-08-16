@@ -1,0 +1,15 @@
+<configuration>
+
+  <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %class{36}.%method:%line - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.kie.wb.test.rest" level="debug"/>
+
+  <root level="info">
+    <appender-ref ref="consoleAppender"/>
+  </root>
+
+</configuration>
