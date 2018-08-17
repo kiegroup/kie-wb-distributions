@@ -19,7 +19,6 @@ of the JDK, see http://www.oracle.com/technetwork/java/index.html
 
 Reporting problems
 ---------------
-
 In case of any issues or problems please file a jira issue in jBPM project
 https://issues.jboss.org/projects/JBPM/summary
 
