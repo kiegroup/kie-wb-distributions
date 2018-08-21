@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2018 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package org.kie.wb.selenium.ui;
 import org.assertj.core.api.Assertions;
 import org.guvnor.rest.client.CloneProjectRequest;
 import org.guvnor.rest.client.Space;
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,37 +32,43 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
-    private final static String // Project setup
+    private final static String
             PROJECT_URL = "https://github.com/Rikkola/single-project-test-repository.git",
             SPACE_NAME = "Standalone_space",
             PROJECT_NAME = "Standalone_project";
 
-    private final static String // Assemble URL to standalone perspective
+    private final static String
             BASE_URL = System.getProperty("kie.wb.url"),
             APP_CONTEXT = System.getProperty("app.name") + ".jsp",
             STANDALONE_PARAMETER = "?standalone",
-            HEADER_PARAMETER = "&header=AppNavBar",
+            // URL of a standalone perspective:
+            PERSPECTIVE_PARAMETER = "&perspective=",
+            HEADER_PARAMETER = "&header=UberfireBreadcrumbsContainer",
+            PERSPECTIVE_FULL_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PERSPECTIVE_PARAMETER,
+            // URL of a standalone editor:
             PROJECT_ASSET_PATH = "&path=default://master@" + SPACE_NAME + "/" + PROJECT_NAME + "/src/main/java/mortgages/mortgages/Applicant.java",
-            COMPLETE_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PROJECT_ASSET_PATH;
+            EDITOR_FULL_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PROJECT_ASSET_PATH;
 
     private static final By
-            DATA_MODELER_EDITOR_TITLE = ByJQuery.selector("[title='Applicant.java - Data Objects']"),
-            WORKBENCH_HEADER = By.id("workbenchHeaderPanel");
+            CONTENT_MANAGEMENT = By.cssSelector("[title='Content Manager']"),
+            DATA_OBJECT = By.cssSelector("[title='Applicant.java - Data Objects']"),
+            HEADER = By.id("workbenchHeaderPanel"),
+            LIBRARY = By.className("toolbar-data-title-kie");
 
     @BeforeClass
     public static void cloneTestingProject() {
         WorkbenchClient workbenchClient = RestWorkbenchClient
-                // Rest credentials from cargo config in kie-wb-tests/pom.xml
+                // REST credentials from Cargo configuration in kie-wb-tests/pom.xml:
                 .createWorkbenchClient(BASE_URL, "restAll", "restAll1234;");
 
-        // Create space
+        // Create a space:
         final Space space = new Space();
         space.setName(SPACE_NAME);
         space.setOwner("donald@duck.gov");
         space.setDefaultGroupId("gov.duck");
         workbenchClient.createSpace(space);
 
-        // Clone project
+        // Clone a project:
         CloneProjectRequest cloneReq = new CloneProjectRequest();
         cloneReq.setGitURL(PROJECT_URL);
         cloneReq.setName(PROJECT_NAME);
@@ -79,33 +84,52 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
     }
 
     @Test
-    public void testAuthoringPerspectiveWithoutHeader() {
-        driver.get(COMPLETE_URL);
-        verifyPerspectiveIsLoaded();
+    public void testLibraryPerspectiveWithoutHeader() {
+        String perspective = "LibraryPerspective";
+        driver.get(PERSPECTIVE_FULL_URL + perspective);
+
+        verifyPerspectiveIsLoaded(LIBRARY);
         verifyPresenceOfHeader(false);
     }
 
     @Test
-    public void testAuthoringPerspectiveWithHeader() {
-        driver.get(COMPLETE_URL + HEADER_PARAMETER);
-        verifyPerspectiveIsLoaded();
+    public void testLibraryPerspectiveWithHeader() {
+        String perspective = "LibraryPerspective";
+        driver.get(PERSPECTIVE_FULL_URL + perspective + HEADER_PARAMETER);
+
+        verifyPerspectiveIsLoaded(LIBRARY);
         verifyPresenceOfHeader(true);
     }
 
-    private void verifyPerspectiveIsLoaded() {
+    @Test
+    public void testStandaloneEditorPerspective() {
+        driver.get(EDITOR_FULL_URL);
+
+        verifyPerspectiveIsLoaded(DATA_OBJECT);
+    }
+
+    @Test
+    public void testContentManagerPerspective() {
+        String perspective = "ContentManagerPerspective";
+        driver.get(PERSPECTIVE_FULL_URL + perspective);
+
+        verifyPerspectiveIsLoaded(CONTENT_MANAGEMENT);
+    }
+
+    private void verifyPerspectiveIsLoaded(By verifier) {
         try {
-            Waits.elementPresent(DATA_MODELER_EDITOR_TITLE, 15);
+            Waits.elementPresent(verifier, 15);
         } catch (WebDriverException exception) {
-            Assertions.fail("The standalone perspective could not be loaded.", exception);
+            Assertions.fail("The standalone perspective was not loaded.", exception);
         }
     }
 
     private void verifyPresenceOfHeader(boolean headerIncluded) {
         int
-                actualHeaderCount = driver.findElements(WORKBENCH_HEADER).size(),
+                actualHeaderCount = driver.findElements(HEADER).size(),
                 expectedHeaderCount = headerIncluded ? 1 : 0;
 
-        String headerAssertionMessage = String.format("There should %s be AppNavBar on the page.", headerIncluded ? "" : "NOT");
+        String headerAssertionMessage = String.format("There should %s be UberfireBreadcrumbsContainer on the page.", headerIncluded ? "" : "NOT");
 
         assertThat(actualHeaderCount)
                 .as(headerAssertionMessage)
