@@ -18,6 +18,7 @@
       <excludes>
         <exclude>standalone/configuration/standalone.xml</exclude>
         <exclude>bin/standalone.conf</exclude>
+        <exclude>bin/standalone.conf.bat</exclude>
         <exclude>README.txt</exclude>
       </excludes>
     </fileSet>
