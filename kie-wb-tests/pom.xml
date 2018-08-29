@@ -21,7 +21,6 @@
   </modules>
 
   <properties>
-    <deployable.classifier.tomcat8>tomcat8</deployable.classifier.tomcat8>
     <deployable.classifier.wildfly11>wildfly11</deployable.classifier.wildfly11>
     <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
     <deployable.classifier.swarm>swarm</deployable.classifier.swarm>
@@ -34,8 +33,6 @@
     <deployment.timeout>90000</deployment.timeout>
 
     <container.host>localhost</container.host>
-
-    <version.tomcat8>8.5.11</version.tomcat8>
     <version.wildfly11>11.0.0.Final</version.wildfly11>
 
     <containers.dir>${project.build.directory}/containers</containers.dir>
@@ -114,27 +111,6 @@
         <classifier>${deployable.classifier.eap7}</classifier>
         <type>war</type>
       </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-wb</artifactId>
-        <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.tomcat8}</classifier>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-wb-monitoring</artifactId>
-        <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.tomcat8}</classifier>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-drools-wb</artifactId>
-        <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.tomcat8}</classifier>
-        <type>war</type>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -167,10 +143,6 @@
               <containerId>${cargo.container.id}</containerId>
               <systemProperties>
                 <kie.maven.settings.custom>${project.build.testOutputDirectory}/settings.xml</kie.maven.settings.custom>
-                <!-- Fixes issue when Tomcat hangs during deployment due to insufficient amount of entropy.
-                     The property specifies less secure source of entropy, which is fine for testing.
-                     See https://wiki.apache.org/tomcat/HowTo/FasterStartUp#Entropy_Source for more info -->
-                <java.security.egd>file:/dev/./urandom</java.security.egd>
               </systemProperties>
             </container>
             <configuration>
@@ -449,113 +421,6 @@
         </pluginManagement>
       </build>
     </profile>
-    <profile>
-      <id>tomcat8</id>
-      <activation>
-        <property>
-          <name>container</name>
-          <value>tomcat8</value>
-        </property>
-      </activation>
-      <dependencies>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb</artifactId>
-          <classifier>${deployable.classifier.tomcat8}</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-wb-monitoring</artifactId>
-          <classifier>${deployable.classifier.tomcat8}</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-drools-wb</artifactId>
-          <classifier>${deployable.classifier.tomcat8}</classifier>
-          <type>war</type>
-        </dependency>
-        <dependency>
-          <groupId>org.kie</groupId>
-          <artifactId>kie-tomcat-integration</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.jboss.spec.javax.security.jacc</groupId>
-          <artifactId>jboss-jacc-api_1.5_spec</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-jdk14</artifactId>
-        </dependency>
-      </dependencies>
-      <properties>
-        <cargo.container.id>tomcat8x</cargo.container.id>
-      </properties>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.cargo</groupId>
-              <artifactId>cargo-maven2-plugin</artifactId>
-              <configuration>
-                <container>
-                  <type>installed</type>
-                  <artifactInstaller>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat</artifactId>
-                    <version>${version.tomcat8}</version>
-                  </artifactInstaller>
-                  <systemProperties>
-                    <org.jboss.logging.provider>jdk</org.jboss.logging.provider>
-                  </systemProperties>
-                  <dependencies>
-                    <dependency>
-                      <groupId>org.slf4j</groupId>
-                      <artifactId>slf4j-api</artifactId>
-                    </dependency>
-                    <dependency>
-                      <groupId>org.slf4j</groupId>
-                      <artifactId>slf4j-jdk14</artifactId>
-                    </dependency>
-                    <dependency>
-                      <groupId>org.kie</groupId>
-                      <artifactId>kie-tomcat-integration</artifactId>
-                    </dependency>
-                    <dependency>
-                      <groupId>org.jboss.spec.javax.security.jacc</groupId>
-                      <artifactId>jboss-jacc-api_1.5_spec</artifactId>
-                    </dependency>
-                  </dependencies>
-                </container>
-                <configuration>
-                  <properties>
-                    <cargo.jvmargs>-Xmx1024m</cargo.jvmargs>
-                  </properties>
-                </configuration>
-                <deployables>
-                  <deployable>
-                    <groupId>${deployable.groupId}</groupId>
-                    <artifactId>${deployable.artifactId}</artifactId>
-                    <classifier>${deployable.classifier.tomcat8}</classifier>
-                    <type>war</type>
-                    <properties>
-                      <context>${deployable.context}</context>
-                    </properties>
-                    <pingURL>http://${container.host}:${container.port}/${deployable.context}</pingURL>
-                    <pingTimeout>${deployment.timeout}</pingTimeout>
-                  </deployable>
-                </deployables>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
 
     <profile>
       <id>wildfly-swarm</id>
@@ -667,7 +532,6 @@
         </property>
       </activation>
       <properties>
-        <deployable.classifier.tomcat8>tomcat8-redhat</deployable.classifier.tomcat8>
         <deployable.classifier.eap7>eap7-redhat</deployable.classifier.eap7>
         <deployable.classifier.swarm>swarm-redhat</deployable.classifier.swarm>
         <deployable.classifier.wildfly11>there-is-no-wildfly11-war-for-product</deployable.classifier.wildfly11>
