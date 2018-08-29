@@ -64,7 +64,6 @@
                   <descriptors>
                     <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-11.xml</descriptor>
                     <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-eap-7.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-tomcat-8.xml</descriptor>
                   </descriptors>
                 </configuration>
               </execution>
@@ -97,7 +96,6 @@
                 <configuration>
                   <descriptors>
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-eap-7-redhat.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-tomcat-8-redhat.xml</descriptor>
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-swarm-redhat.xml</descriptor>
                   </descriptors>
                   <archive>
