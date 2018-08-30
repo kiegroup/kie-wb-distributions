@@ -15,9 +15,6 @@
  */
 package org.kie.workbench.drools.client.perspectives;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,142 +22,60 @@ import javax.inject.Inject;
 import com.google.gwt.user.client.Window;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
-import org.kie.workbench.common.widgets.client.handlers.NewResourcesMenu;
-import org.kie.workbench.common.workbench.client.PerspectiveIds;
-import org.kie.workbench.common.workbench.client.docks.AuthoringWorkbenchDocks;
 import org.kie.workbench.drools.client.resources.i18n.AppConstants;
 import org.uberfire.backend.vfs.Path;
 import org.uberfire.backend.vfs.VFSService;
 import org.uberfire.client.annotations.Perspective;
-import org.uberfire.client.annotations.WorkbenchMenu;
 import org.uberfire.client.annotations.WorkbenchPerspective;
 import org.uberfire.client.mvp.PlaceManager;
-import org.uberfire.client.workbench.PanelManager;
 import org.uberfire.client.workbench.panels.impl.MultiListWorkbenchPanelPresenter;
 import org.uberfire.lifecycle.OnOpen;
-import org.uberfire.mvp.PlaceRequest;
-import org.uberfire.mvp.impl.DefaultPlaceRequest;
-import org.uberfire.workbench.model.PanelDefinition;
-import org.uberfire.workbench.model.PartDefinition;
 import org.uberfire.workbench.model.PerspectiveDefinition;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
-import org.uberfire.workbench.model.menu.MenuFactory;
-import org.uberfire.workbench.model.menu.Menus;
 
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "AuthoringPerspective", isTransient = false)
 public class DroolsAuthoringPerspective {
 
-    private AppConstants constants = AppConstants.INSTANCE;
-
-    @Inject
-    private NewResourcesMenu newResourcesMenu;
-
     @Inject
     private PlaceManager placeManager;
 
     @Inject
-    private PanelManager panelManager;
-
-    @Inject
     private Caller<VFSService> vfsServices;
 
-    @Inject
-    private AuthoringWorkbenchDocks docks;
-
-    private String explorerMode;
     private String projectPathString;
-    private boolean projectEditorDisableBuild;
-
-    private final List<PlaceRequest> placesToClose = new ArrayList<PlaceRequest>();
 
     @PostConstruct
     public void init() {
-        explorerMode = ( ( Window.Location.getParameterMap().containsKey( "explorer_mode" ) ) ? Window.Location.getParameterMap().get( "explorer_mode" ).get( 0 ) : "" ).trim();
-        projectPathString = ( ( ( Window.Location.getParameterMap().containsKey( "path" ) ) ? Window.Location.getParameterMap().get( "path" ).get( 0 ) : "" ) ).trim();
-        projectEditorDisableBuild = Window.Location.getParameterMap().containsKey("no_build");
-
-        final PlaceRequest placeRequest = generateProjectExplorerPlaceRequest();
-
-        docks.setup("AuthoringPerspective", placeRequest);
-
-    }
-
-    private PlaceRequest generateProjectExplorerPlaceRequest() {
-        final PlaceRequest placeRequest = new DefaultPlaceRequest( "org.kie.guvnor.explorer" );
-        if ( !explorerMode.isEmpty() ) {
-            placeRequest.addParameter( "mode",
-                                       explorerMode );
-        }
-        if ( !projectPathString.isEmpty() ) {
-            placeRequest.addParameter( "init_path",
-                                       projectPathString );
-        }
-        if ( projectEditorDisableBuild ) {
-            placeRequest.addParameter( "no_build",
-                                       "true" );
-        }
-
-        placeRequest.addParameter("no_context",
-                                  "true");
-        return placeRequest;
+        projectPathString = (((Window.Location.getParameterMap().containsKey("path")) ? Window.Location.getParameterMap().get("path").get(0) : "")).trim();
     }
 
     @Perspective
     public PerspectiveDefinition getPerspective() {
-        final PerspectiveDefinitionImpl perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
-        perspective.setName( constants.project_authoring() );
+        final PerspectiveDefinitionImpl perspective = new PerspectiveDefinitionImpl(MultiListWorkbenchPanelPresenter.class.getName());
+        perspective.setName(AppConstants.INSTANCE.project_authoring());
 
         return perspective;
     }
 
     @OnOpen
     public void onOpen() {
-        placesToClose.clear();
-        if ( !projectPathString.isEmpty() ) {
-            vfsServices.call( new RemoteCallback<Boolean>() {
+        placeManager.closeAllPlaces();
+
+        if (!projectPathString.isEmpty()) {
+            vfsServices.call(new RemoteCallback<Boolean>() {
                 @Override
-                public void callback( Boolean isRegularFile ) {
-                    if ( isRegularFile ) {
-                        vfsServices.call( new RemoteCallback<Path>() {
+                public void callback(Boolean isRegularFile) {
+                    if (isRegularFile) {
+                        vfsServices.call(new RemoteCallback<Path>() {
                             @Override
-                            public void callback( Path path ) {
-                                placeManager.goTo( path );
+                            public void callback(Path path) {
+                                placeManager.goTo(path);
                             }
-                        } ).get( projectPathString );
+                        }).get(projectPathString);
                     }
                 }
-            } ).isRegularFile( projectPathString );
+            }).isRegularFile(projectPathString);
         }
-        if ( panelManager.getRoot() != null ) {
-            process( panelManager.getRoot().getParts() );
-            process( panelManager.getRoot().getChildren() );
-
-            for ( final PlaceRequest placeRequest : placesToClose ) {
-                placeManager.forceClosePlace( placeRequest );
-            }
-        }
-    }
-
-    private void process( final List<PanelDefinition> children ) {
-        for ( final PanelDefinition child : children ) {
-            process( child.getParts() );
-            process( child.getChildren() );
-        }
-    }
-
-    private void process( final Collection<PartDefinition> parts ) {
-        for ( final PartDefinition partDefinition : parts ) {
-            if ( !partDefinition.getPlace().getIdentifier().equals( "org.kie.guvnor.explorer" ) ) {
-                placesToClose.add( partDefinition.getPlace() );
-            }
-        }
-    }
-
-    @WorkbenchMenu
-    public Menus getMenus() {
-        return MenuFactory.newTopLevelMenu( constants.newItem() )
-                .withItems( newResourcesMenu.getMenuItemsWithoutProject() ).endMenu()
-                .build();
     }
 }
