@@ -23,7 +23,7 @@ import org.openqa.selenium.By;
 
 public class ProcessDashboardPerspective extends AbstractPerspective {
 
-    private static final By PROCESS_REPORTS_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Process Reports')");
+    private static final By PROCESS_REPORTS_BREADCRUMB = ByJQuery.selector(".breadcrumb-deactivated:contains('Process Reports')");
 
     @Page
     private BusyPopup loadingIndicator;

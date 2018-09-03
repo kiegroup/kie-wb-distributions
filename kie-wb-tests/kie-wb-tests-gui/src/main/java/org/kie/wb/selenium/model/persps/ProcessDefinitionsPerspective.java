@@ -21,7 +21,7 @@ import org.openqa.selenium.By;
 
 public class ProcessDefinitionsPerspective extends AbstractPerspective {
 
-    private static final By PROCESS_DEFINITIONS_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Manage Process Definitions')");
+    private static final By PROCESS_DEFINITIONS_BREADCRUMB = ByJQuery.selector(".breadcrumb-deactivated:contains('Manage Process Definitions')");
 
     @Override
     public boolean isDisplayed() {
