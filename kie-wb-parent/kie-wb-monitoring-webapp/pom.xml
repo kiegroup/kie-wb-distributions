@@ -1266,6 +1266,23 @@
       </exclusions>
     </dependency>
 
+    <!-- Experimental Deps -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Test deps -->
     <dependency>
       <groupId>com.google.gwt.gwtmockito</groupId>
@@ -1458,6 +1475,10 @@
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-jbpm-integration-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-jbpm-integration-client</compileSourcesArtifact>
+
+            <!-- Experimental Deps -->
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-client</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
         </configuration>

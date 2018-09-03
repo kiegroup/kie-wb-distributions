@@ -107,6 +107,9 @@
   <inherits name="org.kie.workbench.common.stunner.project.StunnerProjectClient"/>
   <inherits name="org.kie.workbench.common.stunner.bpmn.StunnerBpmnProjectClient"/>
 
+  <!-- Experimental -->
+  <inherits name="org.uberfire.experimental.UberfireExperimentalClient"/>
+
   <!-- Specify the application specific style sheet. -->
   <stylesheet src='css/kie-drools-wb.css'/>
 
