@@ -21,7 +21,7 @@ import org.openqa.selenium.By;
 
 public class TaskAdminPerspective extends AbstractPerspective {
 
-    private static final By MANAGE_TASKS_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Manage Tasks')");
+    private static final By MANAGE_TASKS_BREADCRUMB = ByJQuery.selector(".breadcrumb-deactivated:contains('Manage Tasks')");
 
     @Override
     public boolean isDisplayed() {

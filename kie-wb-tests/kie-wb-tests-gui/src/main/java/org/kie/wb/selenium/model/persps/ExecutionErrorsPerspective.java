@@ -21,7 +21,7 @@ import org.openqa.selenium.By;
 
 public class ExecutionErrorsPerspective extends AbstractPerspective {
 
-    private static final By EXECUTION_ERRORS_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Manage Execution Errors')");
+    private static final By EXECUTION_ERRORS_BREADCRUMB = ByJQuery.selector(".breadcrumb-deactivated:contains('Manage Execution Errors')");
 
     @Override
     public boolean isDisplayed() {
