@@ -26,8 +26,8 @@
   <artifactId>kie-wb-distributions</artifactId>
 
   <packaging>pom</packaging>
-  <name>KIE Workbench - Distributions</name>
-  <description>KIE Workbench - Distributions</description>
+  <name>Business Central - Distributions</name>
+  <description>Business Central - Distributions</description>
 
   <properties>
     <findbugs.failOnViolation>true</findbugs.failOnViolation>
@@ -53,12 +53,8 @@
   </repositories>
 
   <modules>
-    <module>kie-wb-theme</module>
-    <module>kie-wb-parent</module>
-    <module>kie-drools-wb-parent</module>
-    <module>kie-wb-tests</module>
-    <module>kie-wb-webapp-common</module>
-    <module>kie-wb-deployment-validation</module>
+    <module>business-central-parent</module>
+    <module>business-central-tests</module>
   </modules>
 
   <dependencyManagement>
@@ -126,6 +122,27 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- dependencies for jbpm-server-distribution -->
+      <dependency>
+        <groupId>org.jbpm</groupId>
+        <artifactId>jbpm-wb-case-mgmt-showcase</artifactId>
+        <version>${project.version}</version>
+        <classifier>wildfly11</classifier>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>business-central</artifactId>
+        <version>${project.version}</version>
+        <classifier>wildfly11</classifier>
+        <type>war</type>
+      </dependency>
+      <dependency>
+        <groupId>org.jbpm.contrib</groupId>
+        <artifactId>repository-wildfly</artifactId>
+        <version>${project.version}</version>
+        <type>war</type>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -173,8 +190,7 @@
         <artifactId>native2ascii-maven-plugin</artifactId>
         <configuration>
           <includes>
-            <include>kie-drools-wb-parent/kie-drools-wb-webapp/src/main/resources/org/kie/workbench/drools/client/resources/i18n/LoginConstants*.properties</include>
-            <include>kie-wb-parent/kie-wb-webapp/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants*.properties</include>
+            <include>business-central-parent/business-central-webapp/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants*.properties</include>
           </includes>
           <workDir>.</workDir>
           <tempDir>.</tempDir>
@@ -199,7 +215,7 @@
         </property>
       </activation>
       <modules>
-        <module>kie-server-distributions</module>
+        <module>jbpm-server-distribution</module>
       </modules>
     </profile>
 
