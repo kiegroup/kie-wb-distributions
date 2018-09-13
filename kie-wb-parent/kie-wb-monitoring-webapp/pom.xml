@@ -21,23 +21,6 @@
   </properties>
 
   <dependencies>
-    <!-- Ensure drools-compiler ECJ compiler is excluded as it conflict with gwt-dev -->
-    <dependency>
-      <groupId>org.drools</groupId>
-      <artifactId>drools-compiler</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.eclipse.jdt.core.compiler</groupId>
-          <artifactId>ecj</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jdt.core.compiler</groupId>
-      <artifactId>ecj</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
     <!-- errai-cdi-jboss provides gwt-dev with the proper dependency exclusions and should be first on the classpath -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
