@@ -13,7 +13,7 @@
 
   <properties>
     <version.org.postgresql>42.2.1</version.org.postgresql>
-    <version.org.wildfly>11.0.0.Final</version.org.wildfly>
+    <version.org.wildfly>13.0.0.Final</version.org.wildfly>
   </properties>
 
   <dependencyManagement>
