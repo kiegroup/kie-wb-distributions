@@ -25,7 +25,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static org.kie.wb.selenium.util.ByUtil.jquery;
+import static org.kie.wb.selenium.util.ByUtil.xpath;
 
 public class ImportProjectsScreen extends PageObject {
 
@@ -37,7 +37,7 @@ public class ImportProjectsScreen extends PageObject {
 
     public ImportProjectsScreen selectProjects(String... projects) {
         for (String project : projects) {
-            By projectCardLocator = jquery(".card-pf-view-select:has(.card-pf-title:contains('%s'))", project);
+            By projectCardLocator = xpath("//h2[@class='card-pf-title' and contains(text(), '%s')]", project);
             WebElement projectCard = Waits.elementPresent(projectCardLocator);
             waitForLoaded();
             projectCard.click();

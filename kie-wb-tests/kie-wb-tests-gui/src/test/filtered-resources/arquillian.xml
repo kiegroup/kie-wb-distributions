@@ -19,8 +19,9 @@ limitations under the License.
   <extension qualifier="webdriver">
     <property name="browser">${browser}</property>
     <property name="waitModelInterval">15</property>
-    <!-- IE specific -->
-    <property name="ignoreProtectedModeSettings">false</property>
-    <property name="ie.ensureCleanSession">true</property>
+    <property name="firefox_binary">${webdriver.firefox.bin}</property>
+    <property name="firefoxArguments">-headless</property>
+    <property name="firefoxDriverVersion">0.22.0</property>
+    <property name="firefoxDriverUrl">https://github.com/mozilla/geckodriver/releases/download/v0.22.0/geckodriver-v0.22.0-linux64.tar.gz</property>
   </extension>
 </arquillian>
