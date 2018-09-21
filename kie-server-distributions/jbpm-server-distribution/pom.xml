@@ -21,13 +21,13 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-wb</artifactId>
-      <classifier>wildfly11</classifier>
+      <classifier>wildfly14</classifier>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-wb-case-mgmt-showcase</artifactId>
-      <classifier>wildfly11</classifier>
+      <classifier>wildfly14</classifier>
       <type>war</type>
     </dependency>
     <dependency>

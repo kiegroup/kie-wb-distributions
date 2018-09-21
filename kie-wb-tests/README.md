@@ -8,7 +8,7 @@ You can run tests directly from the command line.
 Cargo will take care of starting the container and the tests will be run afterwards.
 
 ```bash
-mvn clean verify -Pkie-wb,wildfly11
+mvn clean verify -Pkie-wb,wildfly14
 mvn clean verify -Pkie-drools-wb,eap7 -Dproductized -Deap7.download.url=url-where-to-get-the-eap-zip
 ```
 
@@ -17,7 +17,7 @@ Following Maven command will start the Wildfly 11 and deploy the KIE Workbench W
 The server will run until manually (Ctrl+C) stopped:
 
 ```bash
-mvn clean package cargo:run -Pkie-wb,wildfly11
+mvn clean package cargo:run -Pkie-wb,wildfly14
 ```
 
 You can of course choose `kie-drools-wb` instead of `kie-wb` and also different container to deploy

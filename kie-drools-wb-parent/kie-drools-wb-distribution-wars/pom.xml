@@ -300,7 +300,7 @@
         <configuration>
           <finalName>kie-drools-wb-${project.version}</finalName>
           <descriptors>
-            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-wildfly-11.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-wildfly-14.xml</descriptor>
             <descriptor>${project.basedir}/src/main/community/assembly-kie-drools-wb-eap-7.xml</descriptor>
           </descriptors>
           <archive>

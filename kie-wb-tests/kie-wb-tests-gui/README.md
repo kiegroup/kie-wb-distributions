@@ -11,7 +11,7 @@ To run the tests you have to:
 
 ```bash
 cd kie-wb-distributions/kie-wb-tests/kie-wb-tests-gui/
-mvn clean verify -Pkie-wb,wildfly11 -Dwebdriver.firefox.bin=/path/to/firefox/firefox-bin
+mvn clean verify -Pkie-wb,wildfly14 -Dwebdriver.firefox.bin=/path/to/firefox/firefox-bin
 ```
 
 By default the tests are using headless firefox, so the browser window is not shown.
