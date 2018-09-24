@@ -38,6 +38,8 @@ import org.junit.runner.RunWith;
 import org.kie.bc.client.KieWorkbenchEntryPoint;
 import org.kie.bc.client.navigation.NavTreeDefinitions;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
+import org.kie.workbench.common.profile.api.preferences.Profile;
+import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCallback;
@@ -51,12 +53,14 @@ import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.mocks.CallerMock;
 import org.uberfire.mocks.EventSourceMock;
 import org.uberfire.mvp.Command;
+import org.uberfire.mvp.ParameterizedCommand;
 import org.uberfire.workbench.model.menu.MenuFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
@@ -65,6 +69,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.uberfire.mocks.ParametrizedCommandMock.executeParametrizedCommandWith;
 
 @RunWith(GwtMockitoTestRunner.class)
 public class KieWorkbenchEntryPointTest {
@@ -125,6 +130,9 @@ public class KieWorkbenchEntryPointTest {
     private DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback;
 
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
+    
+    @Mock
+    private ProfilePreferences profilePreferences;
 
     @Before
     public void setup() {
@@ -139,6 +147,10 @@ public class KieWorkbenchEntryPointTest {
             ((Command) invocationOnMock.getArguments()[0]).execute();
             return null;
         }).when(userSystemManager).waitForInitialization(any(Command.class));
+        
+        executeParametrizedCommandWith(0, new ProfilePreferences(Profile.FULL))
+                    .when(profilePreferences).load(any(ParameterizedCommand.class), 
+                                                    any(ParameterizedCommand.class));  
 
         doReturn(mock(MenuFactory.TopLevelMenusBuilder.class)).when(menusHelper).buildMenusFromNavTree(any());
 
@@ -155,7 +167,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 navTreeDefinitions,
                                                                 navigationManager,
                                                                 navigationExplorerScreen,
-                                                                defaultWorkbenchErrorCallback));
+                                                                defaultWorkbenchErrorCallback,
+                                                                profilePreferences));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 

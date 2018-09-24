@@ -83,6 +83,9 @@
   <!-- Specify the paths for translatable code -->
   <source path='client'/>
 
+  <!-- Profile API -->
+  <inherits name="org.kie.workbench.common.profile.ProfileAPI"/>  
+
   <extend-property name="locale" values="es"/>
   <extend-property name="locale" values="fr"/>
   <extend-property name="locale" values="ja"/>

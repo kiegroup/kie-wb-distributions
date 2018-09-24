@@ -14,27 +14,29 @@
 */
 package org.kie.bc.client.home;
 
+import org.jboss.errai.ui.client.local.spi.TranslationService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
+import org.kie.workbench.common.screens.home.model.HomeModel;
+import org.kie.workbench.common.profile.api.preferences.Profile;
+import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
+import org.kie.workbench.common.workbench.client.PerspectiveIds;
+import org.kie.bc.client.resources.i18n.Constants;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.uberfire.client.mvp.PlaceManager;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
-import org.jboss.errai.ui.client.local.spi.TranslationService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.kie.bc.client.resources.i18n.Constants;
-import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
-import org.kie.workbench.common.screens.home.model.HomeModel;
-import org.kie.workbench.common.workbench.client.PerspectiveIds;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.uberfire.client.mvp.PlaceManager;
-
 @RunWith(MockitoJUnitRunner.class)
-public class HomeProducerTest {
+public class HomeProducerDroolsPlannerProfileTest {
 
     @Mock
     private PlaceManager placeManager;
@@ -45,6 +47,8 @@ public class HomeProducerTest {
     @Mock
     private ShortcutHelper shortcutHelper;
 
+    private ProfilePreferences profilePreferences;
+
     private HomeProducer producer;
 
     @Before
@@ -52,20 +56,18 @@ public class HomeProducerTest {
         producer = new HomeProducer(placeManager,
                                     translationService,
                                     shortcutHelper);
+        profilePreferences = new ProfilePreferences(Profile.PLANNER_AND_RULES);
         doAnswer((InvocationOnMock invocation) -> invocation.getArguments()[0]).when(translationService).format(anyString());
     }
-
     @Test
     public void checkSetupWithProvisioningGranted() {
         when(shortcutHelper.authorize(PerspectiveIds.PROVISIONING)).thenReturn(true);
 
-        final HomeModel model = producer.get();
+        final HomeModel model = producer.get(profilePreferences);
 
         assertHomeModel(model,
                         Constants.DeployDescription2);
         assertDesign(model);
-        assertManage(model);
-        assertTrack(model);
 
         assertEquals(2,
                      model.getShortcuts().get(1).getLinks().size());
@@ -83,15 +85,11 @@ public class HomeProducerTest {
     public void checkSetupWithProvisioningDenied() {
         when(shortcutHelper.authorize(PerspectiveIds.PROVISIONING)).thenReturn(false);
 
-        final HomeModel model = producer.get();
-
-        assertNotNull(model);
+        final HomeModel model = producer.get(profilePreferences);
 
         assertHomeModel(model,
                         Constants.DeployDescription1);
         assertDesign(model);
-        assertManage(model);
-        assertTrack(model);
 
         assertEquals(1,
                      model.getShortcuts().get(1).getLinks().size());
@@ -101,8 +99,8 @@ public class HomeProducerTest {
                      model.getShortcuts().get(1).getLinks().get(0).getPerspectiveIdentifier());
     }
 
-    protected void assertHomeModel(final HomeModel model,
-                                   final String deployDescription) {
+    private void assertHomeModel(final HomeModel model,
+                                 final String deployDescription) {
         assertNotNull(model);
 
         assertEquals(Constants.Heading,
@@ -110,7 +108,7 @@ public class HomeProducerTest {
         assertEquals(Constants.SubHeading,
                      model.getDescription());
 
-        assertEquals(4,
+        assertEquals(2,
                      model.getShortcuts().size());
         assertEquals(Constants.Design,
                      model.getShortcuts().get(0).getHeading());
@@ -123,57 +121,11 @@ public class HomeProducerTest {
     }
 
     private void assertDesign(final HomeModel model) {
-        assertEquals(2,
+        assertEquals(1,
                      model.getShortcuts().get(0).getLinks().size());
         assertEquals(Constants.Projects,
                      model.getShortcuts().get(0).getLinks().get(0).getLabel());
         assertEquals(PerspectiveIds.LIBRARY,
                      model.getShortcuts().get(0).getLinks().get(0).getPerspectiveIdentifier());
-        assertEquals(Constants.Pages,
-                     model.getShortcuts().get(0).getLinks().get(1).getLabel());
-        assertEquals(PerspectiveIds.CONTENT_MANAGEMENT,
-                     model.getShortcuts().get(0).getLinks().get(1).getPerspectiveIdentifier());
-    }
-
-    private void assertManage(final HomeModel model) {
-        assertEquals(5,
-                     model.getShortcuts().get(2).getLinks().size());
-        assertEquals(Constants.ProcessDefinitions,
-                     model.getShortcuts().get(2).getLinks().get(0).getLabel());
-        assertEquals(PerspectiveIds.PROCESS_DEFINITIONS,
-                     model.getShortcuts().get(2).getLinks().get(0).getPerspectiveIdentifier());
-        assertEquals(Constants.ProcessInstances,
-                     model.getShortcuts().get(2).getLinks().get(1).getLabel());
-        assertEquals(PerspectiveIds.PROCESS_INSTANCES,
-                     model.getShortcuts().get(2).getLinks().get(1).getPerspectiveIdentifier());
-        assertEquals(Constants.Tasks,
-                     model.getShortcuts().get(2).getLinks().get(2).getLabel());
-        assertEquals(PerspectiveIds.TASKS_ADMIN,
-                     model.getShortcuts().get(2).getLinks().get(2).getPerspectiveIdentifier());
-        assertEquals(Constants.Jobs,
-                     model.getShortcuts().get(2).getLinks().get(3).getLabel());
-        assertEquals(PerspectiveIds.JOBS,
-                     model.getShortcuts().get(2).getLinks().get(3).getPerspectiveIdentifier());
-        assertEquals(Constants.ExecutionErrors,
-                     model.getShortcuts().get(2).getLinks().get(4).getLabel());
-        assertEquals(PerspectiveIds.EXECUTION_ERRORS,
-                     model.getShortcuts().get(2).getLinks().get(4).getPerspectiveIdentifier());
-    }
-
-    private void assertTrack(final HomeModel model) {
-        assertEquals(3,
-                     model.getShortcuts().get(3).getLinks().size());
-        assertEquals(Constants.TaskInbox,
-                     model.getShortcuts().get(3).getLinks().get(0).getLabel());
-        assertEquals(PerspectiveIds.TASKS,
-                     model.getShortcuts().get(3).getLinks().get(0).getPerspectiveIdentifier());
-        assertEquals(Constants.ProcessReports,
-                     model.getShortcuts().get(3).getLinks().get(1).getLabel());
-        assertEquals(PerspectiveIds.PROCESS_DASHBOARD,
-                     model.getShortcuts().get(3).getLinks().get(1).getPerspectiveIdentifier());
-        assertEquals(Constants.TaskReports,
-                     model.getShortcuts().get(3).getLinks().get(2).getLabel());
-        assertEquals(PerspectiveIds.TASK_DASHBOARD,
-                     model.getShortcuts().get(3).getLinks().get(2).getPerspectiveIdentifier());
     }
 }

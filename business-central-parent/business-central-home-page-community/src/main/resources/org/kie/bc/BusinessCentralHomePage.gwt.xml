@@ -5,6 +5,7 @@
   <inherits name="org.jboss.errai.enterprise.CDI"/>
 
   <!-- Home Page - This has the same GWT Module name for Community and Product so we do not need a different module for Product -->
+  <inherits name="org.kie.workbench.common.profile.ProfileAPI"/>
   <inherits name="org.kie.workbench.common.screens.home.KieWorkbenchHomeClient"/>
 
   <!-- Specify the paths for translatable code -->

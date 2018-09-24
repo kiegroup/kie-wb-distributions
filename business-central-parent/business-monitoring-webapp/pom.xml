@@ -289,6 +289,10 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
+      <groupId>org.kie.workbench.profile</groupId>
+      <artifactId>kie-wb-common-profile-api</artifactId>
+    </dependency> 
+    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-project-api</artifactId>
     </dependency>
@@ -1506,6 +1510,7 @@
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-examples-screen-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-workbench-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-library-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.profile:kie-wb-common-profile-api</compileSourcesArtifact>
 
             <!-- Datasource management -->
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-datasource-mgmt-api</compileSourcesArtifact>

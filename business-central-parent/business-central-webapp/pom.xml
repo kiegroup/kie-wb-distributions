@@ -620,6 +620,10 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
+      <groupId>org.kie.workbench.profile</groupId>
+      <artifactId>kie-wb-common-profile-api</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-workbench-client</artifactId>
     </dependency>
@@ -2367,6 +2371,7 @@
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-default-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-examples-screen-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-examples-screen-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.profile:kie-wb-common-profile-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-workbench-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-library-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-library-api</compileSourcesArtifact>

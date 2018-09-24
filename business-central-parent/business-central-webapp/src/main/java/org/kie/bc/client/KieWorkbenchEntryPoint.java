@@ -28,6 +28,8 @@ import org.guvnor.common.services.shared.config.AppConfigService;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.kie.bc.client.navigation.NavTreeDefinitions;
+import org.kie.workbench.common.profile.api.preferences.Profile;
+import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
@@ -36,9 +38,11 @@ import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMe
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
+import org.uberfire.ext.properties.editor.model.PropertyEditorChangeEvent;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveGroupEvent;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveRoleEvent;
+import org.uberfire.preferences.shared.event.PreferenceUpdatedEvent;
 import org.uberfire.workbench.model.menu.Menus;
 
 import static org.uberfire.workbench.model.menu.MenuFactory.MenuBuilder;
@@ -64,6 +68,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     protected NavigationManager navigationManager;
 
     private NavigationExplorerScreen navigationExplorerScreen;
+    
+    private ProfilePreferences profilePreferences;
 
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
@@ -77,7 +83,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final NavTreeDefinitions navTreeDefinitions,
                                   final NavigationManager navigationManager,
                                   final NavigationExplorerScreen navigationExplorerScreen,
-                                  final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback) {
+                                  final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback,
+                                  final ProfilePreferences profilePreferences) {
         super(appConfigService,
               activityBeansCache,
               defaultWorkbenchErrorCallback);
@@ -90,6 +97,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.navTreeDefinitions = navTreeDefinitions;
         this.navigationManager = navigationManager;
         this.navigationExplorerScreen = navigationExplorerScreen;
+        this.profilePreferences = profilePreferences;
     }
 
     @PostConstruct
@@ -108,15 +116,15 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @Override
     public void setupMenu() {
         navigationManager.init(() -> {
-
             // Set the default nav tree
             NavTree navTree = navTreeDefinitions.buildDefaultNavTree();
             navigationManager.setDefaultNavTree(navTree);
-
+            
             // Initialize the  menu bar
             initMenuBar();
-
+            
             workbench.removeStartupBlocker(KieWorkbenchEntryPoint.class);
+            
         });
     }
 
@@ -130,13 +138,19 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     }
 
     protected void refreshMenuBar() {
-
+        profilePreferences.load(p -> refreshMenuBar(p.getProfile()), RuntimeException::new);
+    }
+    
+    protected void refreshMenuBar(Profile profile) {
         // Turn the workbench nav tree into a Menus instance that is passed as input to the workbench's menu bar
         NavTree workbenchNavTree = navigationManager.getNavTree().getItemAsTree(NavTreeDefinitions.GROUP_WORKBENCH);
+        
+        profile.getMenuBlackList().forEach(workbenchNavTree::deleteItem);
+    
         TopLevelMenusBuilder<MenuBuilder> builder = menusHelper.buildMenusFromNavTree(workbenchNavTree);
-
+        
         Menus menus = builder.build();
-
+        
         // Refresh the menu bar
         menuBar.clear();
         menuBar.addMenus(menus);
@@ -177,5 +191,12 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
         // Mega Menu's linked perspectives don't support passing a navigation context
         navTreeEditor.setPerspectiveContextEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false).applyToAllChildren();
+    }
+    
+    public void refreshMenuOnProfilesChange(@Observes PreferenceUpdatedEvent event) {
+        if (event.getKey().equalsIgnoreCase("ProfilePreferences")) {
+            ProfilePreferences pref = (ProfilePreferences) event.getValue();
+            refreshMenuBar(pref.getProfile());
+        }
     }
 }

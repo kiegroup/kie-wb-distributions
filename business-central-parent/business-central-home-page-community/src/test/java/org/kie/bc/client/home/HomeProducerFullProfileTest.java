@@ -14,14 +14,20 @@
 */
 package org.kie.bc.client.home;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.when;
+
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.bc.client.home.HomeProducer;
 import org.kie.bc.client.resources.i18n.Constants;
 import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
+import org.kie.workbench.common.profile.api.preferences.Profile;
 import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.kie.workbench.common.workbench.client.PerspectiveIds;
 import org.mockito.Mock;
@@ -29,14 +35,8 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.uberfire.client.mvp.PlaceManager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
-public class HomeProducerTest {
+public class HomeProducerFullProfileTest {
 
     @Mock
     private PlaceManager placeManager;
@@ -46,17 +46,17 @@ public class HomeProducerTest {
 
     @Mock
     private ShortcutHelper shortcutHelper;
+    
+    private ProfilePreferences profilePreferences;
 
     private HomeProducer producer;
-
-    @Mock
-    private ProfilePreferences profilePreferences;
 
     @Before
     public void setup() {
         producer = new HomeProducer(placeManager,
                                     translationService,
                                     shortcutHelper);
+        profilePreferences = new ProfilePreferences(Profile.FULL);
         doAnswer((InvocationOnMock invocation) -> invocation.getArguments()[0]).when(translationService).format(anyString());
     }
 
@@ -119,7 +119,7 @@ public class HomeProducerTest {
                      model.getShortcuts().size());
         assertEquals(Constants.Design,
                      model.getShortcuts().get(0).getHeading());
-        assertEquals(Constants.DesignDescription,
+        assertEquals(Constants.DesignDescriptionFull,
                      model.getShortcuts().get(0).getSubHeading());
         assertEquals(Constants.Deploy,
                      model.getShortcuts().get(1).getHeading());
@@ -181,4 +181,5 @@ public class HomeProducerTest {
         assertEquals(PerspectiveIds.TASK_DASHBOARD,
                      model.getShortcuts().get(3).getLinks().get(2).getPerspectiveIdentifier());
     }
+    
 }

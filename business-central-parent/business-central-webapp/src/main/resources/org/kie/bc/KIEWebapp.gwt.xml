@@ -61,6 +61,9 @@
 
   <!-- Home Page - This has the same GWT Module name for Community and Product so we do not need a different module for Product -->
   <inherits name="org.kie.bc.BusinessCentralHomePage"/>
+  
+  <!-- Profile API -->
+  <inherits name="org.kie.workbench.common.profile.ProfileAPI"/>  
 
   <!--Common Screens -->
   <inherits name="org.kie.workbench.common.screens.explorer.KieWorkbenchProjectExplorerClient"/>

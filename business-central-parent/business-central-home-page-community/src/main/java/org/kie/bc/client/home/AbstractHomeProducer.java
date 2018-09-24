@@ -24,8 +24,9 @@ import org.kie.workbench.common.screens.home.model.HomeModelProvider;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
 import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
+import org.kie.workbench.common.profile.api.preferences.Profile;
+import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.uberfire.client.mvp.PlaceManager;
-
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.EXECUTION_ERRORS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.JOBS;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DASHBOARD;
@@ -38,10 +39,12 @@ import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS_ADM
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASK_DASHBOARD;
 import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
+
 public abstract class AbstractHomeProducer implements HomeModelProvider {
 
     protected PlaceManager placeManager;
     protected TranslationService translationService;
+    protected ProfilePreferences profilePreferences;
     private ShortcutHelper shortcutHelper;
 
     public AbstractHomeProducer() {
@@ -56,17 +59,37 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
         this.shortcutHelper = shortcutHelper;
     }
 
-    public HomeModel get() {
+    public HomeModel get(ProfilePreferences preferences) {
+        this.profilePreferences = preferences;
         final HomeModel model = new HomeModel(translationService.format(Constants.Heading),
                                               translationService.format(Constants.SubHeading),
                                               "images/community_home_bg.jpg");
 
+        switch(profilePreferences.getProfile()) {
+            case FULL:
+                addProfileFullShortcuts(model);
+                break;
+            case PLANNER_AND_RULES:
+                addProfileRulesPlannerShortcuts(model);
+                break;
+            default:
+                addProfileFullShortcuts(model);
+                break;
+        
+        }
+        return model;
+    }
+    
+    private void addProfileRulesPlannerShortcuts(final HomeModel model) {
+        model.addShortcut(createDesignShortcut());
+        model.addShortcut(createDeployShortcut());
+    }
+
+    private void addProfileFullShortcuts(final HomeModel model) {
         model.addShortcut(createDesignShortcut());
         model.addShortcut(createDeployShortcut());
         model.addShortcut(createManageShortcut());
         model.addShortcut(createTrackShortcut());
-
-        return model;
     }
 
     protected HomeShortcut createTrackShortcut() {
@@ -131,6 +154,14 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
             return translationService.format(Constants.DeployDescription2);
         }
         return translationService.format(Constants.DeployDescription1);
+    }
+    
+    protected String getDesignDescription() {
+        if(profilePreferences.getProfile() == Profile.PLANNER_AND_RULES) {
+            return translationService.format(Constants.DesignDescription);
+        } else {
+            return translationService.format(Constants.DesignDescriptionFull);        
+        }
     }
 
     protected abstract HomeShortcut createDesignShortcut();

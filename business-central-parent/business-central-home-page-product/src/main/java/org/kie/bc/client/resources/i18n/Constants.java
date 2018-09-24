@@ -97,4 +97,6 @@ public class Constants {
 
     @TranslationKey(defaultValue = "")
     public static final String TaskReports = "HomeProducer.TaskReports";
+
+    public static final String DesignDescriptionFull = "DesignDescription.Full";
 }

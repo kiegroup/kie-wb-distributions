@@ -53,14 +53,16 @@ public class HomeProducer extends AbstractHomeProducer {
     protected HomeShortcut createDesignShortcut() {
         final HomeShortcut design = ModelUtils.makeShortcut("pficon pficon-blueprint",
                                                             translationService.format(Constants.Design),
-                                                            translationService.format(Constants.DesignDescription),
+                                                            getDesignDescription(),
                                                             () -> placeManager.goTo(LIBRARY),
                                                             LIBRARY,
                                                             PERSPECTIVE);
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Projects),
                                             LIBRARY));
-        design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
+        if(profilesPreferences.isFull()) {
+            design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
                                             CONTENT_MANAGEMENT));
+        }
         return design;
     }
 }

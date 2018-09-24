@@ -16,6 +16,18 @@
 
 package org.kie.bc.client.home;
 
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.EXECUTION_ERRORS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.JOBS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DASHBOARD;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DEFINITIONS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_INSTANCES;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROVISIONING;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS_ADMIN;
+import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASK_DASHBOARD;
+import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
+
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.bc.client.resources.i18n.Constants;
 import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
@@ -24,16 +36,15 @@ import org.kie.workbench.common.screens.home.model.HomeModelProvider;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
 import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
+import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.uberfire.client.mvp.PlaceManager;
-
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
-import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
 public abstract class AbstractHomeProducer implements HomeModelProvider {
 
     protected PlaceManager placeManager;
     protected TranslationService translationService;
     private ShortcutHelper shortcutHelper;
+    protected ProfilePreferences profilePreferences;
 
     public AbstractHomeProducer() {
         //CDI proxy
@@ -47,18 +58,31 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
         this.shortcutHelper = shortcutHelper;
     }
 
-    public HomeModel get() {
+    public HomeModel get(ProfilePreferences profilePreferences) {
+        this.profilePreferences = profilePreferences;
         final HomeModel model = new HomeModel(translationService.format(Constants.Heading),
                                               translationService.format(Constants.SubHeading),
                                               "images/product_home_bg.png");
 
+        if(profilePreferences.isRulesAndPlanner()) {
+            addProfileRulesPlannerShortcuts(model);
+        } else if(profilePreferences.isFull()) {
+            addProfileFullShortcuts(model);
+        }
+        return model;
+    }
+
+    private void addProfileRulesPlannerShortcuts(final HomeModel model) {
+        model.addShortcut(createDesignShortcut());
+        model.addShortcut(createDeployShortcut());
+    }
+
+    private void addProfileFullShortcuts(final HomeModel model) {
         model.addShortcut(createDesignShortcut());
         model.addShortcut(createDeployShortcut());
         model.addShortcut(createManageShortcut());
         model.addShortcut(createTrackShortcut());
-
-        return model;
-    }
+    }    
 
     protected HomeShortcut createTrackShortcut() {
         final HomeShortcut track = ModelUtils.makeShortcut("pficon pficon-trend-up",
@@ -122,6 +146,14 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
             return translationService.format(Constants.DeployDescription2);
         }
         return translationService.format(Constants.DeployDescription1);
+    }
+    
+    protected String getDesignDescription() {
+        if(profilePreferences.isRulesAndPlanner()) {
+            return translationService.format(Constants.DesignDescription);
+        } else {
+            return translationService.format(Constants.DesignDescriptionFull);        
+        }
     }
 
     protected abstract HomeShortcut createDesignShortcut();
