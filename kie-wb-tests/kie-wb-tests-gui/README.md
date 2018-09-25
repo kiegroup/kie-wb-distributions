@@ -1,25 +1,14 @@
-# KIE Workbench tests
+# KIE Workbench GUI tests (selenium)
 
-This module contains selenium GUI tests.
+Before the tests run, container is started (using cargo maven plugin) with kie-wb deployed.
+These tests require Firefox to be available on the system.
 
-## Running and debugging tests locally
+## Running from CLI
 
-You can run tests directly from the command line.
-Cargo will take care of starting the container with kie workbench deployed and the tests will be run afterwards.
+You have to provide path to firefox binary.
+Selenium usually supports the latest two ESR versions (54 and 60 at the time I'm writing this).
 
-```
-mvn clean verify -Pkie-wb,wildfly11
-```
-
-**Note, Selenium 2.53.0 requires Firefox 46 and is incompatible with later versions.**
-
-Older versions can be downloaded from https://ftp.mozilla.org/pub/firefox/releases/46.0/ and tests executed as below:
-
-```
-mvn clean verify -Pkie-wb,wildfly11 -Dwebdriver.firefox.bin=/path/to/older/firefox/firefox-bin
-```
-
-For example:
-```
-mvn clean verify -Pkie-wb,wildfly11 -Dwebdriver.firefox.bin=/home/myuser/installs/ff46.0/firefox/firefox
+```bash
+cd kie-wb-distributions/kie-wb-tests/kie-wb-tests-gui/
+mvn clean verify -Pkie-wb,wildfly11 -Dwebdriver.firefox.bin=/path/to/firefox/firefox-bin
 ```

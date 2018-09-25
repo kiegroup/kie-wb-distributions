@@ -26,15 +26,14 @@ public class Waits {
 
     private static final int DEFAULT_TIMEOUT = 15;
 
-    public static void elementVisible(By locator, int timeoutSeconds) {
-        new WebDriverWait(GrapheneUtil.getDriver(), timeoutSeconds)
+    public static WebElement elementVisible(By locator, int timeoutSeconds) {
+        return new WebDriverWait(GrapheneUtil.getDriver(), timeoutSeconds)
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public static WebElement elementPresent(By locator, int timeoutSeconds) {
-        WebElement elementPresent = new WebDriverWait(GrapheneUtil.getDriver(), timeoutSeconds)
+        return new WebDriverWait(GrapheneUtil.getDriver(), timeoutSeconds)
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
-        return elementPresent;
     }
 
     public static WebElement elementPresent(By locator) {
@@ -52,9 +51,8 @@ public class Waits {
     }
 
     public static WebElement elementClickable(By locator) {
-        WebElement clickableElement = new WebDriverWait(GrapheneUtil.getDriver(), DEFAULT_TIMEOUT)
+        return new WebDriverWait(GrapheneUtil.getDriver(), DEFAULT_TIMEOUT)
                 .until(ExpectedConditions.elementToBeClickable(locator));
-        return clickableElement;
     }
 
     public static boolean isElementPresent(By locator, int timeoutSeconds) {

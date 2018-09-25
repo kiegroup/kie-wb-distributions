@@ -19,17 +19,15 @@ import org.kie.wb.selenium.model.Persp;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
-import static org.kie.wb.selenium.util.ByUtil.jquery;
-
 public class AdminPagePerspective extends AbstractPerspective {
 
-    private static final By TITLE = jquery("h1:contains('Settings')");
+    private static final By TITLE = By.id("admin-page-title");
 
-    private static final By ARTIFACTS = jquery(".admin-page-item:has(div:contains('Artifacts'))");
+    private static final By ARTIFACTS = By.cssSelector(".fa-download");
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent( TITLE );
+        return Waits.isElementPresent(TITLE);
     }
 
     public ArtifactRepositoryPerspective artifactRepository() {

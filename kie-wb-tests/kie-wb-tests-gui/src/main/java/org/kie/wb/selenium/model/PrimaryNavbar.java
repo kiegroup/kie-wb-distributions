@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.kie.wb.selenium.model.KieSeleniumTest.driver;
+import static org.kie.wb.selenium.util.ByUtil.css;
 import static org.kie.wb.selenium.util.ByUtil.jquery;
 
 public class PrimaryNavbar {
@@ -72,9 +73,8 @@ public class PrimaryNavbar {
     private void selectMenuItem(String menuName, String itemName) {
         Waits.elementAbsent(jquery(INFO_ALERT));
         if ("N/A".equals(menuName)) {
-            final By itemLink = jquery("a[title='%s']",
-                                       itemName);
-            Waits.elementClickable(itemLink);
+            final By itemLink = css("a[title='%s']", itemName);
+            Waits.elementPresent(itemLink);
             BusyPopup.retryClickUntilPopupDisappears(navbar.findElement(itemLink));
         } else {
             WebElement menuRoot = driver.findElement(jquery(NAVBAR_MENU));

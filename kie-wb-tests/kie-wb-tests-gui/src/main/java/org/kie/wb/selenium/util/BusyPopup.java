@@ -68,7 +68,6 @@ public class BusyPopup extends PageObject {
 
     private static boolean isGlassException(WebDriverException e) {
         // Be careful when changing this condition; the exact exception message might differ on FF vs. Chrome.
-        return e.getMessage().contains("Other element would receive the click")
-                && e.getMessage().contains(GLASS_CSS_CLASS);
+        return e.getMessage().contains(GLASS_CSS_CLASS);
     }
 }

@@ -15,13 +15,12 @@
  */
 package org.kie.wb.selenium.model.persps;
 
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
 public class TaskAdminPerspective extends AbstractPerspective {
 
-    private static final By MANAGE_TASKS_BREADCRUMB = ByJQuery.selector(".breadcrumb-deactivated:contains('Manage Tasks')");
+    private static final By MANAGE_TASKS_BREADCRUMB = By.xpath("//a[contains(text(), 'Manage Tasks')]");
 
     @Override
     public boolean isDisplayed() {
