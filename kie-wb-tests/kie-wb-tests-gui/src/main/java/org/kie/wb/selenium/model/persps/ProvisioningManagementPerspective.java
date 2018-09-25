@@ -19,11 +19,9 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
-import static org.kie.wb.selenium.util.ByUtil.jquery;
-
 public class ProvisioningManagementPerspective extends AbstractPerspective {
 
-    private static final By PROVISIONING_MANAGEMENT_SCREEN_ITEM = jquery("div[data-field='provider-type-list-group']");
+    private static final By PROVISIONING_MANAGEMENT_SCREEN_ITEM = By.cssSelector("[data-field='provider-type-list-group']");
 
     @Override
     public boolean isDisplayed() {
