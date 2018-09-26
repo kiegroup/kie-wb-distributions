@@ -248,7 +248,8 @@
     </profile>
 
     <profile>
-      <id>wildfly14</id>
+      <!-- temporary hack to let it test on jenkins <id>wildfly14</id>-->
+      <id>wildfly11</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
@@ -276,7 +277,7 @@
         </dependency>
       </dependencies>
       <properties>
-        <cargo.container.id>wildfly14x</cargo.container.id>
+        <cargo.container.id>wildfly11x</cargo.container.id>
       </properties>
       <build>
         <pluginManagement>
@@ -392,8 +393,8 @@
               <configuration>
                 <container>
                   <type>installed</type>
-                  <!-- WildFly ~= EAP 7, so just reuse the wildfly14x containerId -->
-                  <containerId>wildfly14x</containerId>
+                  <!-- WildFly ~= EAP 7, so just reuse the wildfly11x containerId -->
+                  <containerId>wildfly11x</containerId>
                   <type>installed</type>
                   <zipUrlInstaller>
                     <url>${eap7.download.url}</url>
