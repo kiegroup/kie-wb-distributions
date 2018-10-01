@@ -15,7 +15,7 @@
 
   <properties>
     <app.name>kie-wb</app.name><!-- for tests to know if they are running against kie-wb or kie-drools-wb -->
-    <selenium.homepage.loading.timeout.seconds>15</selenium.homepage.loading.timeout.seconds>
+    <selenium.homepage.loading.timeout.seconds>30</selenium.homepage.loading.timeout.seconds>
     <!-- default browser to be used by selenium tests -->
     <browser>firefox</browser>
     <!-- path to firefox binary specified externally via -Dwebdriver.firefox.bin=... -->
