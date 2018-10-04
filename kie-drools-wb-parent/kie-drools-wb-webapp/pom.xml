@@ -836,6 +836,20 @@
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
+      <artifactId>drools-wb-scenario-simulation-editor-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-scenario-simulation-editor-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-wb-scenario-simulation-editor-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
       <artifactId>drools-wb-workitems-editor-client</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -1973,6 +1987,8 @@
               <compileSourcesArtifact>org.drools:drools-wb-workitems-editor-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.drools:drools-wb-test-scenario-editor-client</compileSourcesArtifact>
+              <compileSourcesArtifact>org.drools:drools-wb-scenario-simulation-editor-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.drools:drools-wb-scenario-simulation-editor-client</compileSourcesArtifact>
 
               <!-- DMN Editor -->
               <compileSourcesArtifact>org.kie.workbench:kie-wb-common-dmn-api</compileSourcesArtifact>
