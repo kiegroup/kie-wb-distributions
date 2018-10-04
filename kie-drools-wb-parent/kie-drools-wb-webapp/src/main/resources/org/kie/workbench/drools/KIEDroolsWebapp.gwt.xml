@@ -11,6 +11,9 @@
   <inherits name="org.uberfire.UberfireClientAll"/>
   <inherits name="org.kie.workbench.KIETheme"/>
 
+  <!-- Uberfire SSH -->
+  <inherits name="org.uberfire.ssh.UberfireSSHClient"/>
+
   <!-- Uberfire Extensions - Core Widgets -->
   <inherits name="org.uberfire.ext.widgets.core.UberfireWidgetsCore"/>
   <inherits name="org.uberfire.UberfireDocksClient"/>

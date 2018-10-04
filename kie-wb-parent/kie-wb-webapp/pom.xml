@@ -1219,6 +1219,21 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- Uberfire SSH Keystore -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-ssh-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-ssh-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-ssh-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- UberFire Security (Extension) -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -2409,6 +2424,10 @@
             <compileSourcesArtifact>org.uberfire:uberfire-simple-docks-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-social-activities-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-social-activities-client</compileSourcesArtifact>
+
+            <!-- Uberfire SSH -->
+            <compileSourcesArtifact>org.uberfire:uberfire-ssh-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-ssh-client</compileSourcesArtifact>
 
             <!-- Wires -->
             <compileSourcesArtifact>org.uberfire:uberfire-wires-core-api</compileSourcesArtifact>
