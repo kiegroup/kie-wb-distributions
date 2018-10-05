@@ -1,25 +1,18 @@
-# KIE Workbench tests
+# KIE Workbench GUI tests (selenium)
 
-This module contains selenium GUI tests.
+Before the tests run, container is started (using cargo-maven2-plugin) with kie-wb deployed.
+These tests require Firefox to be available on the system.
 
-## Running and debugging tests locally
+## Running from CLI
 
-You can run tests directly from the command line.
-Cargo will take care of starting the container with kie workbench deployed and the tests will be run afterwards.
+To run the tests you have to:
+- provide path to firefox binary by setting `-Dwebdriver.firefox.bin=/path/to/firefox-bin`. Selenium usually supports the latest two ESR versions (54 and 60 at the time I'm writing this).- 
+- enable container profile (wildflyXX) to enable cargo configuration which starts container with kie-wb deployed
 
-```
-mvn clean verify -Pkie-wb,wildfly11
-```
-
-**Note, Selenium 2.53.0 requires Firefox 46 and is incompatible with later versions.**
-
-Older versions can be downloaded from https://ftp.mozilla.org/pub/firefox/releases/46.0/ and tests executed as below:
-
-```
-mvn clean verify -Pkie-wb,wildfly11 -Dwebdriver.firefox.bin=/path/to/older/firefox/firefox-bin
+```bash
+cd kie-wb-distributions/kie-wb-tests/kie-wb-tests-gui/
+mvn clean verify -Pkie-wb,wildfly11 -Dwebdriver.firefox.bin=/path/to/firefox/firefox-bin
 ```
 
-For example:
-```
-mvn clean verify -Pkie-wb,wildfly11 -Dwebdriver.firefox.bin=/home/myuser/installs/ff46.0/firefox/firefox
-```
+By default the tests are using headless firefox, so the browser window is not shown.
+If you want to view the browser window as the tests are running, remove `<property name="firefoxArguments">-headless</property>` from [arquillian.xml](https://github.com/kiegroup/kie-wb-distributions/blob/master/kie-wb-tests/kie-wb-tests-gui/src/test/filtered-resources/arquillian.xml).

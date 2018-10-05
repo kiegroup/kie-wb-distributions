@@ -15,13 +15,12 @@
  */
 package org.kie.wb.selenium.model.persps;
 
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 
 public class JobsPerspective extends AbstractPerspective {
 
-    private static final By MANAGE_JOBS_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Manage Jobs')");
+    private static final By MANAGE_JOBS_BREADCRUMB = By.xpath("//a[contains(text(), 'Manage Jobs')]");
 
     @Override
     public boolean isDisplayed() {

@@ -15,7 +15,6 @@
  */
 package org.kie.wb.selenium.model.persps;
 
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
@@ -23,7 +22,7 @@ import org.openqa.selenium.By;
 
 public class TaskDashboardPerspective extends AbstractPerspective {
 
-    private static final By TASK_REPORTS_BREADCRUMB = ByJQuery.selector(".breadcrumb-last:contains('Task Reports')");
+    private static final By TASK_REPORTS_BREADCRUMB = By.xpath("//a[contains(text(), 'Task Reports')]");
 
     @Page
     private BusyPopup loadingIndicator;

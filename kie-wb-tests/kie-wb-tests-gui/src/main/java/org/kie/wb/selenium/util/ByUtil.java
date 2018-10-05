@@ -29,4 +29,9 @@ public class ByUtil {
         String jqueryStr = String.format(format, params);
         return ByJQuery.selector(jqueryStr);
     }
+
+    public static By css(String format, Object... params) {
+        String cssSelector = String.format(format, params);
+        return By.cssSelector(cssSelector);
+    }
 }

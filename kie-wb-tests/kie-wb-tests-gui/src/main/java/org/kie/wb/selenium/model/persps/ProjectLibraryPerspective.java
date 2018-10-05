@@ -36,7 +36,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
             PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
             IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
             TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
-            DEPLOY_BUTTON = ByJQuery.selector("button:contains('Deploy')");
+            DEPLOY_BUTTON = By.id("deploy");
 
     @Override
     public void waitForLoaded() {
