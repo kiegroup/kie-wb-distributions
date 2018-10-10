@@ -133,6 +133,7 @@
   <!-- Stunner. -->
   <inherits name="org.kie.workbench.common.stunner.project.StunnerProjectClient"/>
   <inherits name="org.kie.workbench.common.stunner.bpmn.StunnerBpmnProjectClient"/>
+  <inherits name="org.kie.workbench.common.stunner.cm.StunnerCaseManagementProjectClient"/>
 
   <!-- Specify the paths for translatable code -->
   <source path='client'/>
