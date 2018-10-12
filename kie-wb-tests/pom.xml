@@ -381,6 +381,7 @@
              here or via system property when running the build (don't forget to use the `file://` prefix when
              referencing the zip from local filesystem). -->
         <eap7.download.url>valid-url-for-eap-7-zip-needs-to-be-specified-here-or-via-cmd-line</eap7.download.url>
+        <cargo.git.port>9418</cargo.git.port>
       </properties>
       <build>
         <pluginManagement>
