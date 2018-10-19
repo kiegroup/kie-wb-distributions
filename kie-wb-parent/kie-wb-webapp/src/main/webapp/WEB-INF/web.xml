@@ -46,32 +46,18 @@
   </filter-mapping>
 
   <filter>
-    <filter-name>Host Page Patch</filter-name>
-    <filter-class>org.jboss.errai.security.server.servlet.UserHostPageFilter</filter-class>
+    <filter-name>Inject Script</filter-name>
+    <filter-class>org.jboss.errai.common.server.InjectScriptFilter</filter-class>
+    <init-param>
+      <param-name>inject-script-handlers</param-name>
+      <param-value>
+        org.jboss.errai.common.inject.script.UserHostPageHandler,org.jboss.errai.common.inject.script.CSRTokenHandler,org.uberfire.server.locale.GWTLocaleHandler
+      </param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>
-    <filter-name>Host Page Patch</filter-name>
-    <url-pattern>/kie-wb.jsp</url-pattern>
-  </filter-mapping>
-
-  <filter>
-    <filter-name>CSRF Token Filter</filter-name>
-    <filter-class>org.jboss.errai.bus.server.servlet.CSRFTokenFilter</filter-class>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>CSRF Token Filter</filter-name>
-    <url-pattern>/kie-wb.jsp</url-pattern>
-  </filter-mapping>
-
-  <filter>
-    <filter-name>GWT Locale Filter</filter-name>
-    <filter-class>org.uberfire.server.locale.GWTLocaleHeaderFilter</filter-class>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>GWT Locale Filter</filter-name>
+    <filter-name>Inject Script</filter-name>
     <url-pattern>/kie-wb.jsp</url-pattern>
   </filter-mapping>
 
