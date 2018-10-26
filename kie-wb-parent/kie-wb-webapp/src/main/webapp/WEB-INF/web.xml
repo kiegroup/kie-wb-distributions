@@ -10,6 +10,10 @@
     <listener-class>org.uberfire.backend.server.io.DisposableShutdownService</listener-class>
   </listener>
 
+  <listener>
+    <listener-class>org.kie.workbench.screens.workbench.backend.SwaggerAPIScanner</listener-class>
+  </listener>
+
   <servlet-mapping>
     <servlet-name>javax.ws.rs.core.Application</servlet-name>
     <url-pattern>/rest/*</url-pattern>
@@ -113,6 +117,7 @@
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
   <!-- Basic Auth Filter for REST and Maven2 repo -->
@@ -386,6 +391,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/org.kie.workbench.KIEWebapp/img/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/images/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/zeroclipboard/*</url-pattern>
+      <url-pattern>/docs/*</url-pattern>
     </web-resource-collection>
   </security-constraint>
 

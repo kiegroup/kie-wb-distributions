@@ -9,6 +9,10 @@
   <listener>
     <listener-class>org.uberfire.backend.server.io.DisposableShutdownService</listener-class>
   </listener>
+  
+  <listener>
+    <listener-class>org.kie.workbench.screens.workbench.backend.SwaggerAPIScanner</listener-class>
+  </listener>
 
   <servlet-mapping>
     <servlet-name>javax.ws.rs.core.Application</servlet-name>
@@ -113,6 +117,7 @@
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
   <!-- Basic Auth Filter for REST and Maven2 repo -->
@@ -301,6 +306,7 @@ minutes. it is now 24 hours. -->
       <url-pattern>/org.kie.workbench.KIEWebapp/css/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/fonts/*</url-pattern>
       <url-pattern>/org.kie.workbench.KIEWebapp/img/*</url-pattern>
+      <url-pattern>/docs/*</url-pattern>
     </web-resource-collection>
   </security-constraint>
 
