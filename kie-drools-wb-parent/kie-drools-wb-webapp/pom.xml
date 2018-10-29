@@ -1807,6 +1807,23 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Experimental Deps -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-backend</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-experimental-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -1884,7 +1901,7 @@
           <configuration>
             <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
             <localWorkers>${gwt.compiler.localWorkers}</localWorkers>
-            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Derrai.server.classOutput=${project.build.outputDirectory} -Derrai.dynamic_validation.enabled=true -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.jbpm.designer.perspective=ruleflow -Djava.util.prefs.syncInterval=2000000 -Dorg.uberfire.async.executor.safemode=true -Derrai.marshalling.very_short_names=${errai.marshalling.very_short_names}</extraJvmArgs>
+            <extraJvmArgs>${gwt.memory.settings} -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home} -Derrai.server.classOutput=${project.build.outputDirectory} -Derrai.dynamic_validation.enabled=true -Dorg.kie.demo=true -Dorg.kie.clean.onstartup=true -Dorg.jbpm.designer.perspective=ruleflow -Djava.util.prefs.syncInterval=2000000 -Dorg.uberfire.async.executor.safemode=true -Derrai.marshalling.very_short_names=${errai.marshalling.very_short_names} -Dappformer.experimental.features=true</extraJvmArgs>
             <draftCompile>true</draftCompile>
             <module>org.kie.workbench.drools.FastCompiledKIEDroolsWebapp</module>
             <logLevel>INFO</logLevel>
@@ -2127,6 +2144,10 @@
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-forms-client</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-project-api</compileSourcesArtifact>
               <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-project-client</compileSourcesArtifact>
+
+              <!-- Experimental Deps -->
+              <compileSourcesArtifact>org.uberfire:uberfire-experimental-api</compileSourcesArtifact>
+              <compileSourcesArtifact>org.uberfire:uberfire-experimental-client</compileSourcesArtifact>
             </compileSourcesArtifacts>
           </configuration>
         </plugin>
