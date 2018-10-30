@@ -6,7 +6,9 @@
     </encoder>
   </appender>
 
+  <logger name="org.infinispan.protostream" level="error"/>
+
   <root level="info">
-    <appender-ref ref="STDOUT" />
+    <appender-ref ref="STDOUT"/>
   </root>
 </configuration>
