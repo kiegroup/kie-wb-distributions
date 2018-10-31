@@ -13,6 +13,9 @@
   <inherits name="org.uberfire.ext.widgets.core.UberfireWidgetsCore"/>
   <inherits name="org.uberfire.UberfireDocksClient"/>
 
+  <!-- Uberfire SSH -->
+  <inherits name="org.uberfire.ssh.UberfireSSHClient"/>
+
   <!-- Uberfire Extensions - Preferences -->
   <inherits name="org.uberfire.ext.preferences.UberfirePreferences"/>
 
