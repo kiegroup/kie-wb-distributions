@@ -29,7 +29,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
 
   <componentDescriptors>
-    <componentDescriptor>src/main/assembly/component-kie-drools-wb-wildfly-11-eap-7-common.xml</componentDescriptor>
+    <componentDescriptor>src/main/assembly/component-kie-drools-wb-wildfly-14-eap-7-common.xml</componentDescriptor>
     <componentDescriptor>src/main/assembly/component-kie-drools-wb-product-common.xml</componentDescriptor>
   </componentDescriptors>
 

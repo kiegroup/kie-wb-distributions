@@ -30,7 +30,7 @@
 
   <componentDescriptors>
     <componentDescriptor>${project.parent.basedir}/src/main/assembly/component-kie-wb-product-common.xml</componentDescriptor>
-    <componentDescriptor>${project.parent.basedir}/src/main/assembly/component-kie-wb-wildfly-11-eap-7-common.xml</componentDescriptor>
+    <componentDescriptor>${project.parent.basedir}/src/main/assembly/component-kie-wb-wildfly-14-eap-7-common.xml</componentDescriptor>
   </componentDescriptors>
 
 </assembly>

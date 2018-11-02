@@ -13,7 +13,7 @@
 
   <properties>
     <version.org.postgresql>42.2.1</version.org.postgresql>
-    <version.org.wildfly>11.0.0.Final</version.org.wildfly>
+    <version.org.wildfly>14.0.1.Final</version.org.wildfly>
   </properties>
 
   <dependencyManagement>
@@ -22,14 +22,14 @@
         <groupId>org.kie</groupId>
         <artifactId>kie-wb</artifactId>
         <version>${project.version}</version>
-        <classifier>wildfly11</classifier>
+        <classifier>wildfly14</classifier>
         <type>war</type>
       </dependency>
       <dependency>
         <groupId>org.jbpm</groupId>
         <artifactId>jbpm-wb-case-mgmt-showcase</artifactId>
         <version>${project.version}</version>
-        <classifier>wildfly11</classifier>
+        <classifier>wildfly14</classifier>
         <type>war</type>
       </dependency>
       <dependency>
