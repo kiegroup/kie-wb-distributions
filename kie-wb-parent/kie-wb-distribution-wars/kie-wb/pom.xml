@@ -15,11 +15,21 @@
 
   <name>KIE Workbench - Distribution Wars</name>
 
+  <properties>
+    <org.kie.swagger.url>../rest/swagger.json</org.kie.swagger.url>
+    <org.kie.swagger.title>Business Central Documentation</org.kie.swagger.title>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-wb-webapp</artifactId>
       <type>war</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-swagger-ui</artifactId>
     </dependency>
 
     <dependency>
