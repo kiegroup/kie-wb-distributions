@@ -43,6 +43,7 @@
         <property name="org.jbpm.casemgmt.showcase.url" value="/jbpm-casemgmt"/>
         <property name="org.jbpm.ht.admin.group" value="admin"/>
         <property name="org.jbpm.task.cleanup.enabled" value="false"/>
+        <property name="org.kie.server.persistence.ds" value="java:jboss/datasources/jBPMDS"/>
     </system-properties>
     <management>
         <security-realms>
