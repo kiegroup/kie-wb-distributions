@@ -176,13 +176,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <!-- Enable selenium UI tests to be run with Firefox.
-
-           Simple usage: mvn clean install -Pwildfly11,kie-wb (executes all Selenium GUI tests)
-           Complex usage: mvn clean install -Pwildfly11,kie-wb -Dit.test=LoginIntegrationTest
-                             -Dwebdriver.firefox.bin=<path-to-ff-binary> -Dselenium.homepage.loading.timeout.seconds=30
-
-           To use Internet Explorer see profile 'ie' -->
         <configuration>
           <systemPropertyVariables>
             <!-- directory where screenshots taken by webdriver will be placed -->
@@ -232,7 +225,7 @@
     </profile>
 
     <!-- Tests are disabled by default, but are automatically enabled when using specific profiles. So running
-         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly11,kie-wb" will. -->
+         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly,kie-wb" will. -->
     <profile>
       <id>disable-cargo-and-itests</id>
       <activation>

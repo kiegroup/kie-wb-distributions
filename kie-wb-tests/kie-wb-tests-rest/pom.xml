@@ -98,7 +98,7 @@
 
   <profiles>
     <!-- Tests are disabled by default, but are automatically enabled when using specific profiles. So running
-         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly10,kie-wb" will. -->
+         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly,kie-wb" will. -->
     <profile>
       <id>disable-cargo-and-itests</id>
       <activation>
