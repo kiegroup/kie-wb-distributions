@@ -7,11 +7,11 @@ These tests require Firefox to be available on the system.
 
 To run the tests you have to:
 - provide path to firefox binary by setting `-Dwebdriver.firefox.bin=/path/to/firefox-bin`. Selenium usually supports the latest two ESR versions (54 and 60 at the time I'm writing this).- 
-- enable container profile (wildflyXX) to enable cargo configuration which starts container with kie-wb deployed
+- enable container profile `wildfly` to enable cargo configuration which starts container with kie-wb deployed
 
 ```bash
 cd kie-wb-distributions/kie-wb-tests/kie-wb-tests-gui/
-mvn clean verify -Pkie-wb,wildfly11 -Dwebdriver.firefox.bin=/path/to/firefox/firefox-bin
+mvn clean verify -Pkie-wb,wildfly -Dwebdriver.firefox.bin=/path/to/firefox/firefox-bin
 ```
 
 By default the tests are using headless firefox, so the browser window is not shown.
