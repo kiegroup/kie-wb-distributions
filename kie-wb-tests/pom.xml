@@ -21,7 +21,7 @@
   </modules>
 
   <properties>
-    <deployable.classifier.wildfly14>wildfly14</deployable.classifier.wildfly14>
+    <deployable.classifier.wildfly>wildfly14</deployable.classifier.wildfly>
     <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
     <deployable.classifier.swarm>swarm</deployable.classifier.swarm>
     <deployable.context>kie-wb</deployable.context>
@@ -33,7 +33,6 @@
     <deployment.timeout>90000</deployment.timeout>
 
     <container.host>localhost</container.host>
-    <version.wildfly14>14.0.1.Final</version.wildfly14>
 
     <containers.dir>${project.build.directory}/containers</containers.dir>
     <configurations.dir>${project.build.directory}/configurations</configurations.dir>
@@ -73,21 +72,21 @@
         <groupId>org.kie</groupId>
         <artifactId>kie-wb</artifactId>
         <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.wildfly14}</classifier>
+        <classifier>${deployable.classifier.wildfly}</classifier>
         <type>war</type>
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-wb-monitoring</artifactId>
         <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.wildfly14}</classifier>
+        <classifier>${deployable.classifier.wildfly}</classifier>
         <type>war</type>
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kie-drools-wb</artifactId>
         <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.wildfly14}</classifier>
+        <classifier>${deployable.classifier.wildfly}</classifier>
         <type>war</type>
       </dependency>
       <dependency>
@@ -256,21 +255,21 @@
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb</artifactId>
-          <classifier>${deployable.classifier.wildfly14}</classifier>
+          <classifier>${deployable.classifier.wildfly}</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-wb-monitoring</artifactId>
-          <classifier>${deployable.classifier.wildfly14}</classifier>
+          <classifier>${deployable.classifier.wildfly}</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
         <dependency>
           <groupId>org.kie</groupId>
           <artifactId>kie-drools-wb</artifactId>
-          <classifier>${deployable.classifier.wildfly14}</classifier>
+          <classifier>${deployable.classifier.wildfly}</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
@@ -312,7 +311,7 @@
                   <artifactInstaller>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-dist</artifactId>
-                    <version>${version.wildfly14}</version>
+                    <version>${version.org.wildfly}</version>
                   </artifactInstaller>
                   <systemProperties>
                     <jboss.https.port>${cargo.https.port}</jboss.https.port>
@@ -336,7 +335,7 @@
               <deployable>
                 <groupId>${deployable.groupId}</groupId>
                 <artifactId>${deployable.artifactId}</artifactId>
-                <classifier>${deployable.classifier.wildfly14}</classifier>
+                <classifier>${deployable.classifier.wildfly}</classifier>
                 <type>war</type>
                 <properties>
                   <context>${deployable.context}</context>
@@ -537,7 +536,7 @@
       <properties>
         <deployable.classifier.eap7>eap7-redhat</deployable.classifier.eap7>
         <deployable.classifier.swarm>swarm-redhat</deployable.classifier.swarm>
-        <deployable.classifier.wildfly14>there-is-no-wildfly14-war-for-product</deployable.classifier.wildfly14>
+        <deployable.classifier.wildfly>there-is-no-wildfly-war-for-product</deployable.classifier.wildfly>
       </properties>
     </profile>
   </profiles>
