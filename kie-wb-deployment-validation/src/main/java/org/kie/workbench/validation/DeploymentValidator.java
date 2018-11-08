@@ -52,7 +52,7 @@ public class DeploymentValidator implements Extension {
             // TODO i18n?
             throw new IllegalStateException(String
                                             .format("The configured repository folder contains unmigrated repositories from a previous version." +
-                                                    " Please use the repostory migraiton tool to update the repository layout.\n\tRepositories directory: %s",
+                                                    " Please use the repository migration tool to update the repository layout.\n\tRepositories directory: %s",
                                                     niogit));
         }
     }
