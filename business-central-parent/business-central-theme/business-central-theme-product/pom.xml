@@ -85,7 +85,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.outputDirectory}/org/kie/workbench/public</outputDirectory>
+              <outputDirectory>${project.build.outputDirectory}/org/kie/bc/public</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.build.directory}/rcue/META-INF/resources/webjars/rcue/${version.org.webjars.npm.rcue}/dist</directory>

@@ -21,6 +21,7 @@ import javax.enterprise.inject.Alternative;
 
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.bc.client.resources.i18n.Constants;
+import org.kie.workbench.common.profile.api.preferences.Profile;
 import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeModelProvider;
@@ -59,7 +60,7 @@ public class HomeProducer extends AbstractHomeProducer {
                                                             PERSPECTIVE);
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Projects),
                                             LIBRARY));
-        if(profilesPreferences.isFull()) {
+        if(profilePreferences.getProfile() == Profile.FULL) {
             design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
                                             CONTENT_MANAGEMENT));
         }

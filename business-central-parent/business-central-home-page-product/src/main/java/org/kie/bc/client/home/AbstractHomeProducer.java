@@ -36,6 +36,7 @@ import org.kie.workbench.common.screens.home.model.HomeModelProvider;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
 import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
+import org.kie.workbench.common.profile.api.preferences.Profile;
 import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.uberfire.client.mvp.PlaceManager;
 
@@ -60,14 +61,19 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
 
     public HomeModel get(ProfilePreferences profilePreferences) {
         this.profilePreferences = profilePreferences;
-        final HomeModel model = new HomeModel(translationService.format(Constants.Heading),
-                                              translationService.format(Constants.SubHeading),
-                                              "images/product_home_bg.png");
-
-        if(profilePreferences.isRulesAndPlanner()) {
-            addProfileRulesPlannerShortcuts(model);
-        } else if(profilePreferences.isFull()) {
-            addProfileFullShortcuts(model);
+        HomeModel model = new HomeModel(translationService.format(Constants.Heading), 
+                                        translationService.format(Constants.SubHeading),
+                                        "images/product_home_bg.png");
+        switch (profilePreferences.getProfile()) {
+            case FULL:
+                addProfileFullShortcuts(model);
+                break;
+            case PLANNER_AND_RULES:
+                model = new HomeModel(translationService.format(Constants.HeadingDecisionManager), 
+                                      translationService.format(Constants.SubHeadingDecisionManager),
+                                      "images/product_home_bg.png");
+                addProfileRulesPlannerShortcuts(model);
+                break;
         }
         return model;
     }
@@ -149,7 +155,7 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
     }
     
     protected String getDesignDescription() {
-        if(profilePreferences.isRulesAndPlanner()) {
+        if(profilePreferences.getProfile() == Profile.PLANNER_AND_RULES) {
             return translationService.format(Constants.DesignDescription);
         } else {
             return translationService.format(Constants.DesignDescriptionFull);        

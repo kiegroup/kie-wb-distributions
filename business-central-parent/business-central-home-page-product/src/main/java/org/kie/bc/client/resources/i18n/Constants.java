@@ -22,9 +22,15 @@ public class Constants {
 
     @TranslationKey(defaultValue = "")
     public static final String Heading = "Heading";
+    
+    @TranslationKey(defaultValue = "")
+    public static final String HeadingDecisionManager = "Heading.DecisionManager";
 
     @TranslationKey(defaultValue = "")
     public static final String SubHeading = "SubHeading";
+    
+    @TranslationKey(defaultValue = "")
+    public static final String SubHeadingDecisionManager = "SubHeading.DecisionManager";
 
     @TranslationKey(defaultValue = "")
     public static final String Design = "Design";

@@ -37,9 +37,9 @@
   <files>
 
     <file>
-      <source>${project.basedir}/target/kie-wb-${version.org.kie}-eap7-redhat.war</source>
+      <source>${project.basedir}/target/business-central-${version.org.kie}-eap7-redhat.war</source>
       <outputDirectory>_bootstrap</outputDirectory>
-      <destName>kie-wb-webapp.war</destName>
+      <destName>business-central-webapp.war</destName>
     </file>
   </files>
 </component>
