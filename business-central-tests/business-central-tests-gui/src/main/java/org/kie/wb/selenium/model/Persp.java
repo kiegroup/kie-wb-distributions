@@ -15,7 +15,7 @@
  */
 package org.kie.wb.selenium.model;
 
-import static org.kie.wb.selenium.model.KieWbDistribution.KIE_WB;
+import static org.kie.wb.selenium.model.KieWbDistribution.BUSINESS_CENTRAL;
 import static org.kie.wb.selenium.model.KieWbDistribution.BUSINESS_MONITORING;
 
 import java.util.Arrays;
@@ -61,12 +61,12 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Design",
                           "Projects",
                           ProjectLibraryPerspective.class,
-                          KIE_WB);
+                          BUSINESS_CENTRAL);
     public static final Persp<ContentManagerPerspective> PAGES
             = new Persp<>("Design",
                           "Pages",
                           ContentManagerPerspective.class,
-                          KIE_WB);
+                          BUSINESS_CENTRAL);
 
     public static final Persp<ProvisioningManagementPerspective> PROVISIONING
             = new Persp<>("Deploy",
@@ -82,55 +82,55 @@ public class Persp<T extends AbstractPerspective> {
             = new Persp<>("Manage",
                           "Process Definitions",
                           ProcessDefinitionsPerspective.class,
-                          KIE_WB,
+                          BUSINESS_CENTRAL,
                           BUSINESS_MONITORING);
     public static final Persp<ProcessInstancesPerspective> PROCESS_INSTANCES
             = new Persp<>("Manage",
                           "Process Instances",
                           ProcessInstancesPerspective.class,
-                          KIE_WB,
+                          BUSINESS_CENTRAL,
                           BUSINESS_MONITORING);
 
     public static final Persp<TaskAdminPerspective> TASKS
             = new Persp<>("Manage",
                           "Tasks",
                           TaskAdminPerspective.class,
-                          KIE_WB,
+                          BUSINESS_CENTRAL,
                           BUSINESS_MONITORING);
 
     public static final Persp<JobsPerspective> JOBS
             = new Persp<>("Manage",
                           "Jobs",
                           JobsPerspective.class,
-                          KIE_WB,
+                          BUSINESS_CENTRAL,
                           BUSINESS_MONITORING);
 
     public static final Persp<ExecutionErrorsPerspective> EXECUTION_ERRORS
             = new Persp<>("Manage",
                           "Execution Errors",
                           ExecutionErrorsPerspective.class,
-                          KIE_WB,
+                          BUSINESS_CENTRAL,
                           BUSINESS_MONITORING);
 
     public static final Persp<TasksPerspective> TASK_INBOX
             = new Persp<>("Track",
                           "Task Inbox",
                           TasksPerspective.class,
-                          KIE_WB,
+                          BUSINESS_CENTRAL,
                           BUSINESS_MONITORING);
 
     public static final Persp<ProcessDashboardPerspective> PROCESS_REPORTS
             = new Persp<>("Track",
                           "Process Reports",
                           ProcessDashboardPerspective.class,
-                          KIE_WB,
+                          BUSINESS_CENTRAL,
                           BUSINESS_MONITORING);
 
     public static final Persp<TaskDashboardPerspective> TASK_REPORTS
             = new Persp<>("Track",
                           "Task Reports",
                           TaskDashboardPerspective.class,
-                          KIE_WB,
+                          BUSINESS_CENTRAL,
                           BUSINESS_MONITORING);
 
     private static final List<Persp<? extends AbstractPerspective>> ALL_PERSPECTIVES = Collections.unmodifiableList(Arrays.asList(
@@ -160,7 +160,7 @@ public class Persp<T extends AbstractPerspective> {
         this(parentMenu,
              menuItem,
              perspPageObjectClass,
-             KIE_WB,
+             BUSINESS_CENTRAL,
              BUSINESS_MONITORING);
     }
 

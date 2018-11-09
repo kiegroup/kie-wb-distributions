@@ -46,7 +46,7 @@ import qa.tools.ikeeper.test.IKeeperJUnitConnector;
 public abstract class RestTestBase {
 
     protected static final String GIT_PORT = System.getProperty("org.uberfire.nio.git.daemon.port", "9418");
-    protected static final String URL = System.getProperty("kie.wb.url", "http://localhost:8080/kie-wb");
+    protected static final String URL = System.getProperty("kie.wb.url", "http://localhost:8080/business-central");
     protected static final String USER_ID = System.getProperty("kie.wb.user.name", User.REST_ALL.getUserName());
     protected static final String PASSWORD = System.getProperty("kie.wb.user.password", User.REST_ALL.getPassword());
 

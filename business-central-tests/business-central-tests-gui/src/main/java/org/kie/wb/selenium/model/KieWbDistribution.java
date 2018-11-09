@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 public enum KieWbDistribution {
 
-    KIE_WB,
+    BUSINESS_CENTRAL,
     BUSINESS_MONITORING;
 
     public static Optional<KieWbDistribution> fromWarNameString(final String warName) {

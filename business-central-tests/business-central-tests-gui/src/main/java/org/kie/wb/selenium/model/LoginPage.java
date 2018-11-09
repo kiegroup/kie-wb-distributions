@@ -33,7 +33,7 @@ public class LoginPage extends PageObject {
 
     public final static String BASE_URL = System.getProperty("kie.wb.url");
 
-    // Credentials based on Cargo Maven plugin config in ../kie-wb-tests/pom.xml
+    // Credentials based on Cargo Maven plugin config in ../business-central-tests/pom.xml
     public final static String KIE_PASS = "admin1234;";
     public final static String KIE_USER = "admin";
 

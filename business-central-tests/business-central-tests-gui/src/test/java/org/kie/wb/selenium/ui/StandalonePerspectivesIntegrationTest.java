@@ -39,7 +39,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     private final static String
             BASE_URL = System.getProperty("kie.wb.url"),
-            APP_CONTEXT = System.getProperty("app.name") + ".jsp",
+            APP_CONTEXT = "kie-wb.jsp",
             STANDALONE_PARAMETER = "?standalone",
             // URL of a standalone perspective:
             PERSPECTIVE_PARAMETER = "&perspective=",
@@ -58,7 +58,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
     @BeforeClass
     public static void cloneTestingProject() {
         WorkbenchClient workbenchClient = RestWorkbenchClient
-                // REST credentials from Cargo configuration in kie-wb-tests/pom.xml:
+                // REST credentials from Cargo configuration in business-central-tests/pom.xml:
                 .createWorkbenchClient(BASE_URL, "restAll", "restAll1234;");
 
         // Create a space:

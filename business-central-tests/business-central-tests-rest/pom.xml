@@ -98,7 +98,7 @@
 
   <profiles>
     <!-- Tests are disabled by default, but are automatically enabled when using specific profiles. So running
-         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly,kie-wb" will. -->
+         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly,business-central" will. -->
     <profile>
       <id>disable-cargo-and-itests</id>
       <activation>
@@ -109,7 +109,7 @@
         <skipITs>true</skipITs>
       </properties>
     </profile>
-    <!-- 'kie-wb' and 'kie-drools-wb' are just dummy profiles ensuring there is a way to disable the profile
+    <!-- business-central just dummy profiles ensuring there is a way to disable the profile
          'disable-cargo-and-itests' (so that the tests would actually be executed). -->
     <profile>
       <id>business-central</id>

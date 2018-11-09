@@ -14,8 +14,8 @@
   <description>GUI tests for Business Central and KIE Drools Workbench</description>
 
   <properties>
-    <app.name>kie-wb</app.name><!-- for tests to know if they are running against business-central or kie-drools-wb -->
-    <selenium.homepage.loading.timeout.seconds>15</selenium.homepage.loading.timeout.seconds>
+    <app.name>business-central</app.name><!-- for tests to know if they are running against business-central-->
+    <selenium.homepage.loading.timeout.seconds>30</selenium.homepage.loading.timeout.seconds>
     <!-- default browser to be used by selenium tests -->
     <browser>firefox</browser>
     <!-- path to firefox binary specified externally via -Dwebdriver.firefox.bin=... -->
@@ -178,8 +178,8 @@
         <artifactId>maven-failsafe-plugin</artifactId>
         <!-- Enable selenium UI tests to be run with Firefox.
 
-           Simple usage: mvn clean install -Pwildfly11,business-central (executes all Selenium GUI tests)
-           Complex usage: mvn clean install -Pwildfly11,business-central -Dit.test=LoginIntegrationTest
+           Simple usage: mvn clean install -Pwildfly,business-central (executes all Selenium GUI tests)
+           Complex usage: mvn clean install -Pwildfly,business-central -Dit.test=LoginIntegrationTest
                              -Dwebdriver.firefox.bin=<path-to-ff-binary> -Dselenium.homepage.loading.timeout.seconds=30
 
            To use Internet Explorer see profile 'ie' -->
@@ -200,14 +200,14 @@
     <profile>
       <id>business-central</id>
       <properties>
-        <app.name>kie-wb</app.name>
+        <app.name>business-central</app.name>
       </properties>
     </profile>
 
     <profile>
       <id>business-monitoring</id>
       <properties>
-        <app.name>kie-wb</app.name>
+        <app.name>business-central</app.name>
       </properties>
       <build>
         <plugins>
@@ -226,7 +226,7 @@
 
     <profile>
       <!--  Enable selenium UI tests to be run with Internet Explorer.
-      Example usage: mvn clean install -Pwildfly11,business-central,selenium,ie -->
+      Example usage: mvn clean install -Pwildfly,business-central,selenium,ie -->
       <id>ie</id>
       <activation>
         <property>
@@ -275,7 +275,7 @@
     </profile>
 
     <!-- Tests are disabled by default, but are automatically enabled when using specific profiles. So running
-         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly11,business-central" will. -->
+         "mvn clean install" will _not_ execute the tests, but "mvn clean install -Pwildfly,business-central" will. -->
     <profile>
       <id>disable-cargo-and-itests</id>
       <activation>

@@ -155,7 +155,7 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
     }
     
     protected String getDesignDescription() {
-        if(profilePreferences.getProfile() == Profile.PLANNER_AND_RULES) {
+        if (profilePreferences.getProfile() == Profile.PLANNER_AND_RULES) {
             return translationService.format(Constants.DesignDescription);
         } else {
             return translationService.format(Constants.DesignDescriptionFull);        

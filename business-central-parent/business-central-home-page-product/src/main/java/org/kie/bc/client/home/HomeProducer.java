@@ -60,7 +60,7 @@ public class HomeProducer extends AbstractHomeProducer {
                                                             PERSPECTIVE);
         design.addLink(new HomeShortcutLink(translationService.format(Constants.Projects),
                                             LIBRARY));
-        if(profilePreferences.getProfile() == Profile.FULL) {
+        if (profilePreferences.getProfile() == Profile.FULL) {
             design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
                                             CONTENT_MANAGEMENT));
         }
