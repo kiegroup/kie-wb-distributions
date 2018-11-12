@@ -7,6 +7,6 @@
 
 
 
-    <exclude name="org.kie.workbench.client.**"/>
+    <exclude name="org.kie.bc.client.**"/>
   </scan>
 </beans>
