@@ -207,7 +207,7 @@
     <profile>
       <id>business-monitoring</id>
       <properties>
-        <app.name>business-central</app.name>
+        <app.name>business-monitoring</app.name>
       </properties>
       <build>
         <plugins>
