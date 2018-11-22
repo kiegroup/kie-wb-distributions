@@ -46,7 +46,7 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
 
     @Override
     public String productImageUrl() {
-        return "images/kie-ide.png";
+        return "images/business-central.png";
     }
 
     @Override

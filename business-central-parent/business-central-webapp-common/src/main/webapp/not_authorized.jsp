@@ -28,7 +28,7 @@
 
 <body id="login">
 <div id="pfly-login-screen">
-  <img id="logo" src="<%= request.getContextPath() %>/images/kie-ide.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
+  <img id="logo" src="<%= request.getContextPath() %>/images/business-central.png" alt="KIE IDE Logo" title="Powered By Drools/jBPM"/>
 
   <div id="login-wrapper" class="png_bg">
     <div id="login-top">    
