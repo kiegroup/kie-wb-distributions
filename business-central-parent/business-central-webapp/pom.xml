@@ -461,6 +461,11 @@
       <artifactId>kie-wb-common-ala-provisioning-pipelines-openshift</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.kie.workbench</groupId>
+      <artifactId>kie-wb-common-command-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- Common -->
     <dependency>
@@ -2343,6 +2348,7 @@
             <compileSourcesArtifact>org.kie.workbench:kie-wb-common-ala-ui-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench:kie-wb-common-ala-openshift-ui-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench:kie-wb-common-ala-openshift-ui-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench:kie-wb-common-command-api</compileSourcesArtifact>
 
             <!-- Common dependencies -->
             <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-project-editor-api</compileSourcesArtifact>
