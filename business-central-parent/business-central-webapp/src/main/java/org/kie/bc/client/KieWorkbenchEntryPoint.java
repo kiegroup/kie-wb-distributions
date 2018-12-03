@@ -16,6 +16,7 @@
 package org.kie.bc.client;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
@@ -37,8 +38,8 @@ import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCall
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
+import org.uberfire.client.workbench.events.WorkbenchProfileCssClass;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
-import org.uberfire.ext.properties.editor.model.PropertyEditorChangeEvent;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveGroupEvent;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveRoleEvent;
@@ -70,6 +71,9 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     private NavigationExplorerScreen navigationExplorerScreen;
     
     private ProfilePreferences profilePreferences;
+    
+    private Event<WorkbenchProfileCssClass> workbenchProfileCssClassEvent;
+
 
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
@@ -84,7 +88,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final NavigationManager navigationManager,
                                   final NavigationExplorerScreen navigationExplorerScreen,
                                   final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback,
-                                  final ProfilePreferences profilePreferences) {
+                                  final ProfilePreferences profilePreferences,
+                                  final Event<WorkbenchProfileCssClass> workbenchProfileCssClassEvent) {
         super(appConfigService,
               activityBeansCache,
               defaultWorkbenchErrorCallback);
@@ -98,6 +103,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.navigationManager = navigationManager;
         this.navigationExplorerScreen = navigationExplorerScreen;
         this.profilePreferences = profilePreferences;
+        this.workbenchProfileCssClassEvent = workbenchProfileCssClassEvent;
     }
 
     @PostConstruct
@@ -155,6 +161,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         menuBar.clear();
         menuBar.addMenus(menus);
         menusHelper.addUtilitiesMenuItems();
+        workbenchProfileCssClassEvent.fire(new WorkbenchProfileCssClass(profile.name()));
     }
 
     // Listen to changes in the navigation tree

@@ -48,6 +48,7 @@ import org.mockito.Mock;
 import org.uberfire.client.authz.PerspectiveTreeProvider;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
+import org.uberfire.client.workbench.events.WorkbenchProfileCssClass;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.mocks.CallerMock;
@@ -61,7 +62,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -133,6 +133,9 @@ public class KieWorkbenchEntryPointTest {
     
     @Mock
     private ProfilePreferences profilePreferences;
+    
+    @Mock
+    private EventSourceMock<WorkbenchProfileCssClass> workbenchProfileCssClassEvent;
 
     @Before
     public void setup() {
@@ -155,7 +158,7 @@ public class KieWorkbenchEntryPointTest {
         doReturn(mock(MenuFactory.TopLevelMenusBuilder.class)).when(menusHelper).buildMenusFromNavTree(any());
 
         CallerMock<AppConfigService> appConfigServiceCallerMock = new CallerMock<>(appConfigService);
-
+        
         kieWorkbenchEntryPoint = spy(new KieWorkbenchEntryPoint(appConfigServiceCallerMock,
                                                                 activityBeansCache,
                                                                 menusHelper,
@@ -168,7 +171,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 navigationManager,
                                                                 navigationExplorerScreen,
                                                                 defaultWorkbenchErrorCallback,
-                                                                profilePreferences));
+                                                                profilePreferences,
+                                                                workbenchProfileCssClassEvent));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
@@ -205,6 +209,7 @@ public class KieWorkbenchEntryPointTest {
         verify(menusHelper).addUtilitiesMenuItems();
 
         verify(workbench).removeStartupBlocker(KieWorkbenchEntryPoint.class);
+        verify(workbenchProfileCssClassEvent).fire(any(WorkbenchProfileCssClass.class));
     }
 
     @Test
