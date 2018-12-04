@@ -57,6 +57,14 @@
     <module>business-central-tests</module>
   </modules>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.appformer</groupId>
+      <artifactId>ts-exporter</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -202,6 +210,11 @@
         <artifactId>copy-rename-maven-plugin</artifactId>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+      </plugin>
     </plugins>
   </build>
 

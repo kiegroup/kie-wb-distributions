@@ -2161,6 +2161,11 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.appformer</groupId>
+      <artifactId>appformer-js</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -2174,6 +2179,62 @@
     </testResources>
 
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <id>set-ts-exporter-output-dir</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>set-system-properties</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <property>
+                  <name>ts-exporter-output-dir</name>
+                  <value>${project.build.directory}</value>
+                </property>
+                <property>
+                  <name>ts-exporter-project</name>
+                  <value>${project}</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+          <execution>
+            <id>set-ts-exporter-all</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>set-system-properties</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <property>
+                  <name>ts-exporter</name>
+                  <value>export</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+          <execution>
+            <id>set-ts-exporter-none</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>set-system-properties</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <property>
+                  <name>ts-exporter</name>
+                  <value>default</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
 	<artifactId>maven-war-plugin</artifactId>
 	<configuration>
@@ -2455,6 +2516,7 @@
             <compileSourcesArtifact>org.uberfire:uberfire-nio2-model</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-js</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:appformer-js-bridge</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-client-api</compileSourcesArtifact>
