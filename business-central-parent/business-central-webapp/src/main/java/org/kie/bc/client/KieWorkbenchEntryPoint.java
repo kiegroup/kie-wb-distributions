@@ -43,6 +43,7 @@ import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPres
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveGroupEvent;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveRoleEvent;
+import org.uberfire.jsbridge.client.AppFormerJsBridge;
 import org.uberfire.preferences.shared.event.PreferenceUpdatedEvent;
 import org.uberfire.workbench.model.menu.Menus;
 
@@ -74,6 +75,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     
     private Event<WorkbenchProfileCssClass> workbenchProfileCssClassEvent;
 
+    private AppFormerJsBridge appFormerJsBridge;
+
 
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
@@ -89,7 +92,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final NavigationExplorerScreen navigationExplorerScreen,
                                   final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback,
                                   final ProfilePreferences profilePreferences,
-                                  final Event<WorkbenchProfileCssClass> workbenchProfileCssClassEvent) {
+                                  final Event<WorkbenchProfileCssClass> workbenchProfileCssClassEvent,
+                                  final AppFormerJsBridge appFormerJsBridge) {
         super(appConfigService,
               activityBeansCache,
               defaultWorkbenchErrorCallback);
@@ -104,10 +108,13 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.navigationExplorerScreen = navigationExplorerScreen;
         this.profilePreferences = profilePreferences;
         this.workbenchProfileCssClassEvent = workbenchProfileCssClassEvent;
+        this.appFormerJsBridge = appFormerJsBridge;
     }
 
     @PostConstruct
     public void init() {
+        appFormerJsBridge.init("org.kie.bc.KIEWebapp");
+
         workbench.addStartupBlocker(KieWorkbenchEntryPoint.class);
 
         initNavTreeEditor();

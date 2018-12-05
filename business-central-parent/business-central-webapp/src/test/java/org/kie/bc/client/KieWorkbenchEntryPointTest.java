@@ -35,7 +35,6 @@ import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.bc.client.KieWorkbenchEntryPoint;
 import org.kie.bc.client.navigation.NavTreeDefinitions;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
 import org.kie.workbench.common.profile.api.preferences.Profile;
@@ -172,7 +171,7 @@ public class KieWorkbenchEntryPointTest {
                                                                 navigationExplorerScreen,
                                                                 defaultWorkbenchErrorCallback,
                                                                 profilePreferences,
-                                                                workbenchProfileCssClassEvent));
+                                                                workbenchProfileCssClassEvent, null));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
