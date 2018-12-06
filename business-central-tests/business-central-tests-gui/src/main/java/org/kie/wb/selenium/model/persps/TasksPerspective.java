@@ -15,7 +15,6 @@
  */
 package org.kie.wb.selenium.model.persps;
 
-import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
@@ -23,8 +22,6 @@ import org.openqa.selenium.By;
 public class TasksPerspective extends AbstractPerspective {
 
     private static final By TASK_INBOX_BREADCRUMB = By.xpath("//a[contains(text(), 'Task Inbox')]");
-    @Page
-    private BusyPopup loadingIndicator;
 
     @Override
     public boolean isDisplayed() {
@@ -33,6 +30,6 @@ public class TasksPerspective extends AbstractPerspective {
 
     @Override
     public void waitForLoaded() {
-        loadingIndicator.waitForDisappearance();
+        BusyPopup.waitForDisappearance();
     }
 }

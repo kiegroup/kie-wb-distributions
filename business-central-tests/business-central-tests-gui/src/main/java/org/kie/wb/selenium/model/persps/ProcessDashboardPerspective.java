@@ -15,7 +15,6 @@
  */
 package org.kie.wb.selenium.model.persps;
 
-import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
@@ -24,9 +23,6 @@ public class ProcessDashboardPerspective extends AbstractPerspective {
 
     private static final By PROCESS_REPORTS_BREADCRUMB = By.xpath("//a[contains(text(), 'Process Reports')]");
 
-    @Page
-    private BusyPopup loadingIndicator;
-
     @Override
     public boolean isDisplayed() {
         return Waits.isElementPresent(PROCESS_REPORTS_BREADCRUMB);
@@ -34,6 +30,6 @@ public class ProcessDashboardPerspective extends AbstractPerspective {
 
     @Override
     public void waitForLoaded() {
-        loadingIndicator.waitForDisappearance();
+        BusyPopup.waitForDisappearance();
     }
 }
