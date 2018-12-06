@@ -16,21 +16,21 @@
 package org.kie.wb.selenium.model.widgets;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.kie.wb.selenium.model.PageObject;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-import static org.kie.wb.selenium.util.ByUtil.jquery;
+import static org.kie.wb.selenium.util.ByUtil.xpath;
 
 public class ModalDialog extends PageObject {
 
-    @FindByJQuery("button.close")
+    @FindBy(className = "close")
     private WebElement closeButton;
 
     public static <T extends ModalDialog> T newInstance(Class<T> pageFragmentClass, String modalTitle) {
-        By modalRootLocator = jquery(".modal-content:has(.modal-header:contains('%s'))", modalTitle);
+        By modalRootLocator = xpath("//div[@class='modal-content' and div[@class='modal-header'][h4[contains(text(),'%s')]]]", modalTitle);
         WebElement modalRoot = Waits.elementPresent(modalRootLocator);
         return Graphene.createPageFragment(pageFragmentClass, modalRoot);
     }
@@ -53,8 +53,8 @@ public class ModalDialog extends PageObject {
         clickButton("Next");
     }
 
-    public void clickButton(String buttonText) {
-        By buttonLoc = jquery(".modal-footer > .btn:contains('%s'):not([disabled])", buttonText);
+    protected void clickButton(String buttonText) {
+        By buttonLoc = xpath("//div[@class='modal-footer']/button[contains(@class,'btn') and contains(text(),'%s')]", buttonText);
         WebElement button = Waits.elementPresent(buttonLoc);
         button.click();
     }

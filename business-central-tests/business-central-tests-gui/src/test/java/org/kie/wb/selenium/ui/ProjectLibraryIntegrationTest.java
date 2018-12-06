@@ -16,7 +16,6 @@
 package org.kie.wb.selenium.ui;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.selenium.model.KieSeleniumTest;
 import org.kie.wb.selenium.model.persps.ArtifactRepositoryPerspective;
@@ -47,27 +46,24 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
                 projectGav = "optacloud:optacloud:1.0.0-SNAPSHOT";
 
         importBuildDeployAndCheckArtifact(
-                projectName,
                 projectGav,
                 () -> projectLibrary.importStockExampleProject(projectName)
         );
     }
 
     @Test
-    @Ignore("RHBA-581 - [Project Oriented] Impossible to delete 'broken projects'")
     public void importAndBuildProjectFromCustomRepository() {
         final String
                 projectName = "Evaluation",
                 projectGav = "org.jbpm:Evaluation:1.0";
 
         importBuildDeployAndCheckArtifact(
-                projectName,
                 projectGav,
                 () -> projectLibrary.importCustomExampleProject(Repository.JBPM_PLAYGROUND, projectName)
         );
     }
 
-    private void importBuildDeployAndCheckArtifact(String projectName, String projectGav, Runnable stepsToImportProject) {
+    private void importBuildDeployAndCheckArtifact(String projectGav, Runnable stepsToImportProject) {
         stepsToImportProject.run();
         //Wait for success alert to hide
         Waits.pause(5_000);
