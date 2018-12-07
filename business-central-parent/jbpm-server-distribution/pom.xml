@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.kie</groupId>
-    <artifactId>kie-wb-distributions</artifactId>
+    <artifactId>business-central-parent</artifactId>
     <version>7.16.0-SNAPSHOT</version>
   </parent>
   <artifactId>jbpm-server-distribution</artifactId>
