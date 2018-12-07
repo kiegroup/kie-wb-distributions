@@ -3,7 +3,7 @@ http://www.jbpm.org/
 
 Go to the above link for documentation, and additional downloads.
 
-Also, once jBPM is started you can go to http://localhost:8080/jbpm-console
+Also, once jBPM is started you can go to http://localhost:8080/business-central
 
 
 Release Notes
@@ -34,11 +34,11 @@ A jBPM server runs a single instance.
 <JBOSS_HOME>\bin\standalone.bat     (Windows)
 
 
-Accessing the jBPM Console
+Accessing the Business Central
 --------------------------
 Once the server has started you can access the landing page:
 
-http://localhost:8080/jbpm-console
+http://localhost:8080/business-central
 
 This is the entry point app that provides comprehensive tooling for 
 authoring and monitoring your business applications.
