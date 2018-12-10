@@ -38,9 +38,9 @@ else
 end-if
 
 if (outcome != success) of /system-property=org.kie.server.controller:read-resource
-	/system-property=org.kie.server.controller:add(value="http://localhost:8080/jbpm-console/rest/controller")
+	/system-property=org.kie.server.controller:add(value="http://localhost:8080/business-central/rest/controller")
 else
-    /system-property=org.kie.server.controller:write-attribute(name=value,value="http://localhost:8080/jbpm-console/rest/controller")
+    /system-property=org.kie.server.controller:write-attribute(name=value,value="http://localhost:8080/business-central/rest/controller")
 end-if
 
 if (outcome != success) of /system-property=org.kie.server.location:read-resource
