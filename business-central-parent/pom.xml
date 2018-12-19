@@ -51,13 +51,6 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
-          <configuration>
-            <excludeFilterFile>${project.basedir}/../../src/main/findbugs/findbugs-exclude.xml</excludeFilterFile>
-          </configuration>
-        </plugin>
-        <plugin>
           <!-- Default configuration used for FastCompiled build. Includes the common GWT source artifacts and plugin
                config. Product X community specific artifacts (e.g. home page) are specified using
                profiles "productized" and "notProductized".
