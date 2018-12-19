@@ -1,11 +1,20 @@
 embed-server --server-config=standalone.xml
 
+try
+	module add --name=com.mysql --resources=drivers/mysql-connector-java.jar --dependencies=javax.api,javax.transaction.api
+catch
+	echo "MySQL module exists"
+end-try
+
+if (outcome != success) of /subsystem=datasources/jdbc-driver=mysql:read-resource
+	/subsystem=datasources/jdbc-driver=mysql:add(driver-name=mysql,driver-module-name=com.mysql,driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource)
+end-if
 
 if (outcome == success) of /subsystem=datasources/xa-data-source=jBPMXADS:read-resource
 	/subsystem=datasources/xa-data-source=jBPMXADS:remove
 end-if
 
-xa-data-source add --name=jBPMXADS --jndi-name="java:jboss/datasources/jBPMDS" --driver-name=h2 --user-name=sa --password=sa --xa-datasource-class=org.h2.jdbcx.JdbcDataSource --xa-datasource-properties=[URL= jdbc:h2:file:${jboss.server.data.dir}/jbpm-db;MVCC=TRUE]
+xa-data-source add --name=jBPMXADS --jndi-name="java:jboss/datasources/jBPMDS" --driver-name=mysql --user-name=jbpm --password=jbpm --xa-datasource-class=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource --xa-datasource-properties=[ServerName=localhost, PortNumber=3306, DatabaseName=jbpm] --background-validation=true --background-validation-millis=120000 --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker --validate-on-match=true
 
 
 if (outcome != success) of /system-property=org.kie.server.persistence.ds:read-resource
@@ -15,9 +24,9 @@ else
 end-if	
 
 if (outcome != success) of /system-property=org.kie.server.persistence.dialect:read-resource
-	/system-property=org.kie.server.persistence.dialect:add(value="org.hibernate.dialect.H2Dialect")
+	/system-property=org.kie.server.persistence.dialect:add(value="org.hibernate.dialect.MySQL5Dialect")
 else
-    /system-property=org.kie.server.persistence.dialect:write-attribute(name=value,value="org.hibernate.dialect.H2Dialect")
+    /system-property=org.kie.server.persistence.dialect:write-attribute(name=value,value="org.hibernate.dialect.MySQL5Dialect")
 end-if
 
 
@@ -29,9 +38,9 @@ else
 end-if
 
 if (outcome != success) of /system-property=org.kie.server.controller:read-resource
-	/system-property=org.kie.server.controller:add(value="http://localhost:8080/jbpm-console/rest/controller")
+	/system-property=org.kie.server.controller:add(value="http://localhost:8080/business-central/rest/controller")
 else
-    /system-property=org.kie.server.controller:write-attribute(name=value,value="http://localhost:8080/jbpm-console/rest/controller")
+    /system-property=org.kie.server.controller:write-attribute(name=value,value="http://localhost:8080/business-central/rest/controller")
 end-if
 
 if (outcome != success) of /system-property=org.kie.server.location:read-resource

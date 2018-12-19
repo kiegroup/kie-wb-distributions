@@ -57,7 +57,7 @@
         <include>org.kie:business-central</include>
       </includes>
       <outputDirectory>standalone/deployments</outputDirectory>
-      <outputFileNameMapping>jbpm-console.${artifact.extension}</outputFileNameMapping>
+      <outputFileNameMapping>business-central.${artifact.extension}</outputFileNameMapping>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
     <dependencySet>

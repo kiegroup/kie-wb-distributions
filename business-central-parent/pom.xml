@@ -204,6 +204,7 @@
       </activation>
       <modules>
         <module>business-central-home-page-community</module>
+        <module>jbpm-server-distribution</module>
       </modules>
 
       <build>

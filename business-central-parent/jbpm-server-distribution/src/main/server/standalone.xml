@@ -41,7 +41,7 @@
     </extensions>
      <system-properties>
         <property name="org.kie.server.id" value="sample-server"/>
-        <property name="org.kie.server.controller" value="http://localhost:8080/jbpm-console/rest/controller"/>
+        <property name="org.kie.server.controller" value="http://localhost:8080/business-central/rest/controller"/>
         <property name="org.kie.server.location" value="http://localhost:8080/kie-server/services/rest/server"/>
         <property name="org.jbpm.casemgmt.showcase.url" value="/jbpm-casemgmt"/>
         <property name="org.jbpm.ht.admin.group" value="admin"/>
@@ -484,7 +484,7 @@
                         <login-module code="RealmDirect" flag="required">
                             <module-option name="password-stacking" value="useFirstPass"/>
                         </login-module>
-                        <login-module code="org.kie.security.jaas.KieLoginModule" flag="optional" module="deployment.jbpm-console.war"/>
+                        <login-module code="org.kie.security.jaas.KieLoginModule" flag="optional" module="deployment.business-central.war"/>
                         <login-module code="org.kie.security.jaas.KieLoginModule" flag="optional" module="deployment.jbpm-casemgmt.war"/>
                     </authentication>
                 </security-domain>

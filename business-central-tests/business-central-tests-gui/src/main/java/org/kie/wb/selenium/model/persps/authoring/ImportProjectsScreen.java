@@ -23,7 +23,6 @@ import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import static org.kie.wb.selenium.util.ByUtil.xpath;
 
@@ -58,7 +57,6 @@ public class ImportProjectsScreen extends PageObject {
     }
 
     public void waitForLoaded() {
-        BusyPopup indicator = PageFactory.initElements(driver, BusyPopup.class);
-        indicator.waitForDisappearance();
+        BusyPopup.waitForDisappearance();
     }
 }
