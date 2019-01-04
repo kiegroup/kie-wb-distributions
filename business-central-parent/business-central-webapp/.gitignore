@@ -2,6 +2,7 @@
 /local
 /overlays
 /src/main/gwt-unitCache/
+/src/main/webapp/service-tasks/
 /src/main/webapp/WEB-INF/classes/
 /src/main/webapp/WEB-INF/lib/
 /src/main/webapp/WEB-INF/tlds/
