@@ -32,6 +32,7 @@
   <properties>
     <findbugs.failOnViolation>true</findbugs.failOnViolation>
     <errai.marshalling.very_short_names>false</errai.marshalling.very_short_names>
+    <needs-errai-1101-workaround>true</needs-errai-1101-workaround>
   </properties>
 
   <repositories>
