@@ -16,22 +16,44 @@
 
 package org.kie.bc.client.navbar;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.bc.client.resources.i18n.Constants;
+import org.kie.workbench.common.profile.api.preferences.Profile;
+import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.kie.workbench.common.widgets.client.popups.about.AboutPopupConfig;
+import org.uberfire.preferences.shared.event.PreferenceUpdatedEvent;
 
 @ApplicationScoped
+@EntryPoint
 public class AboutPopupConfigImpl implements AboutPopupConfig {
 
-    @Inject
     private TranslationService translationService;
+    
+    private ProfilePreferences profilePreferences;
+    
+    String productNameConstant = Constants.ProductName;
+    
+    @Inject
+    public AboutPopupConfigImpl(ProfilePreferences profilePreferences,
+                                TranslationService translationService) {
+        this.profilePreferences = profilePreferences;
+        this.translationService = translationService;
+    }
+    
+    @PostConstruct
+    public void init() {
+        profilePreferences.load(this::updateProductName, RuntimeException::new);
+    }
 
     @Override
     public String productName() {
-        return translationService.format(Constants.ProductName);
+        return translationService.format(productNameConstant);
     }
 
     @Override
@@ -52,5 +74,20 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
     @Override
     public String backgroundImageUrl() {
         return "images/product_home_bg.png";
+    }
+    
+    public void refreshMenuOnProfilesChange(@Observes PreferenceUpdatedEvent event) {
+        if (event.getKey().equalsIgnoreCase("ProfilePreferences")) {
+            ProfilePreferences pref = (ProfilePreferences) event.getValue();
+            updateProductName(pref);
+        }
+    } 
+    
+    private void updateProductName(ProfilePreferences p) {
+        if (p.getProfile().equals(Profile.FULL)) {
+            productNameConstant = Constants.ProductName;
+        } else if (p.getProfile().equals(Profile.PLANNER_AND_RULES)) {
+            productNameConstant = Constants.ProductNameRHDM;
+        }
     }
 }
