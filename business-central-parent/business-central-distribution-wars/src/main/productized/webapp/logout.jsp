@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/org.kie.bc.KIEWebapp/css/rcue.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/org.kie.bc.KIEWebapp/css/rcue-additions.min.css">
     <link rel="shortcut icon" href="favicon.ico"/>
-    <title>Red Hat Process Automation Manager :: Business Central</title>
+    <title>Business Central</title>
 </head>
 <body>
     <span id="badge">
@@ -45,7 +45,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="brand">
-                    <img src="<%=request.getContextPath()%>/img/RHPAM_Logo.svg" alt="RED HAT PROCESS AUTOMATION MANAGER" title="RED HAT PROCESS AUTOMATION MANAGER"/>
+                    <img style="height: unset" src="<%=request.getContextPath()%>/img/BC_Logo.png" alt="BUSINESS CENTRAL" title="BUSINESS CENTRAL"/>
                 </div>
             </div>
             <div class="col-sm-7 col-md-6 col-lg-5 login">
