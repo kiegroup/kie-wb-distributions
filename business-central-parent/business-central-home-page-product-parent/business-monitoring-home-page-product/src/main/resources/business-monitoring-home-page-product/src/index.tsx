@@ -1,11 +1,9 @@
 import * as AppFormer from "appformer-js";
 import * as HomeApi from "kie-wb-common-home-api";
-import {Profile} from "@kiegroup-ts-generated/kie-wb-common-profile-api";
+import { Profile } from "@kiegroup-ts-generated/kie-wb-common-profile-api";
 
 export class BusinessMonitoringProductHomePageProvider implements HomeApi.HomeScreenProvider {
-
-    get(profile: Profile): HomeApi.HomeScreen {
-
+    public get(profile: Profile): HomeApi.HomeScreen {
         switch (profile.name) {
             case Profile.PLANNER_AND_RULES.name:
                 return this.buildPlannerAndRulesScreen();
@@ -54,7 +52,11 @@ export class BusinessMonitoringProductHomePageProvider implements HomeApi.HomeSc
         const deploymentAuthorized = HomeApi.AuthorizationManager.hasAccessToPerspective(serverManagementPerspective);
 
         const description = new HomeApi.CardDescriptionBuilder(this.getDeployCardDescription(deploymentAuthorized))
-            .addLinkIf(() => deploymentAuthorized, AppFormer.translate("HomeProducer.Provisioning", []), "ProvisioningManagementPerspective")
+            .addLinkIf(
+                () => deploymentAuthorized,
+                AppFormer.translate("HomeProducer.Provisioning", []),
+                "ProvisioningManagementPerspective"
+            )
             .addLink(AppFormer.translate("HomeProducer.Servers", []), serverManagementPerspective)
             .build();
 
@@ -92,7 +94,6 @@ export class BusinessMonitoringProductHomePageProvider implements HomeApi.HomeSc
     }
 
     private getDeployCardDescription(deploymentAuthorized: boolean) {
-
         if (deploymentAuthorized) {
             return AppFormer.translate("DeployDescription2", []);
         }

@@ -1,11 +1,9 @@
 import * as AppFormer from "appformer-js";
 import * as HomeApi from "kie-wb-common-home-api";
-import {Profile} from "@kiegroup-ts-generated/kie-wb-common-profile-api";
+import { Profile } from "@kiegroup-ts-generated/kie-wb-common-profile-api";
 
 export class BusinessCentralCommunityHomePageProvider implements HomeApi.HomeScreenProvider {
-
-    get(profile: Profile): HomeApi.HomeScreen {
-
+    public get(profile: Profile): HomeApi.HomeScreen {
         const welcomeText = AppFormer.translate("Heading", []);
         const description = AppFormer.translate("SubHeading", []);
         const backgroundImageUrl = "images/community_home_bg.jpg";
@@ -14,7 +12,6 @@ export class BusinessCentralCommunityHomePageProvider implements HomeApi.HomeScr
     }
 
     private buildCardsForProfile(profile: Profile) {
-
         switch (profile.name) {
             case Profile.PLANNER_AND_RULES.name:
                 return [this.plannerAndRulesProfileDesignCard(), this.deployCard()];
@@ -22,7 +19,6 @@ export class BusinessCentralCommunityHomePageProvider implements HomeApi.HomeScr
             default:
                 return [this.fullProfileDesignCard(), this.deployCard(), this.manageCard(), this.trackCard()];
         }
-
     }
 
     private fullProfileDesignCard() {
@@ -56,7 +52,11 @@ export class BusinessCentralCommunityHomePageProvider implements HomeApi.HomeScr
         const deploymentAuthorized = HomeApi.AuthorizationManager.hasAccessToPerspective(serverManagementPerspective);
 
         const description = new HomeApi.CardDescriptionBuilder(this.getDeployCardDescription(deploymentAuthorized))
-            .addLinkIf(() => deploymentAuthorized, AppFormer.translate("HomeProducer.Provisioning", []), "ProvisioningManagementPerspective")
+            .addLinkIf(
+                () => deploymentAuthorized,
+                AppFormer.translate("HomeProducer.Provisioning", []),
+                "ProvisioningManagementPerspective"
+            )
             .addLink(AppFormer.translate("HomeProducer.Servers", []), serverManagementPerspective)
             .build();
 
@@ -94,7 +94,6 @@ export class BusinessCentralCommunityHomePageProvider implements HomeApi.HomeScr
     }
 
     private getDeployCardDescription(deploymentAuthorized: boolean) {
-
         if (deploymentAuthorized) {
             return AppFormer.translate("DeployDescription2", []);
         }
