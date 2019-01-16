@@ -1384,6 +1384,11 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.appformer</groupId>
+      <artifactId>appformer-js</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -1528,6 +1533,7 @@
             <compileSourcesArtifact>org.uberfire:uberfire-nio2-model</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-js</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:appformer-js-bridge</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-client-api</compileSourcesArtifact>
@@ -1621,6 +1627,62 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <id>set-ts-exporter-output-dir</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>set-system-properties</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <property>
+                  <name>ts-exporter-output-dir</name>
+                  <value>${project.build.directory}</value>
+                </property>
+                <property>
+                  <name>ts-exporter-project</name>
+                  <value>${project}</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+          <execution>
+            <id>set-ts-exporter-all</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>set-system-properties</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <property>
+                  <name>ts-exporter</name>
+                  <value>export</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+          <execution>
+            <id>set-ts-exporter-none</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>set-system-properties</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <property>
+                  <name>ts-exporter</name>
+                  <value>default</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -1636,7 +1698,8 @@
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>business-central-home-page-community</artifactId>
+          <artifactId>business-monitoring-home-page-community</artifactId>
+          <version>${project.version}</version>
           <scope>provided</scope>
         </dependency>
         <dependency>
@@ -1645,6 +1708,26 @@
           <scope>provided</scope>
         </dependency>
       </dependencies>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>gwt-maven-plugin</artifactId>
+              <configuration>
+                <compileSourcesArtifacts combine.children="append">
+                  <!-- Community Theme -->
+                  <compileSourcesArtifact>org.kie:business-central-theme-community</compileSourcesArtifact>
+                  <!-- Community Home Page -->
+                  <compileSourcesArtifact>org.kie:business-monitoring-home-page-community</compileSourcesArtifact>
+                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
+                </compileSourcesArtifacts>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
 
     <profile>
@@ -1658,7 +1741,8 @@
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>business-central-home-page-product</artifactId>
+          <artifactId>business-monitoring-home-page-product</artifactId>
+          <version>${project.version}</version>
           <scope>provided</scope>
         </dependency>
         <dependency>
@@ -1667,6 +1751,26 @@
           <scope>provided</scope>
         </dependency>
       </dependencies>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>gwt-maven-plugin</artifactId>
+              <configuration>
+                <compileSourcesArtifacts combine.children="append">
+                  <!-- Product Theme -->
+                  <compileSourcesArtifact>org.kie:business-central-theme-product</compileSourcesArtifact>
+                  <!-- Product Home Page -->
+                  <compileSourcesArtifact>org.kie:business-monitoring-home-page-product</compileSourcesArtifact>
+                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
+                </compileSourcesArtifacts>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
 
   </profiles>

@@ -38,6 +38,7 @@ import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPres
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveGroupEvent;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveRoleEvent;
+import org.uberfire.jsbridge.client.AppFormerJsBridge;
 import org.uberfire.workbench.model.menu.Menus;
 
 import static org.uberfire.workbench.model.menu.MenuFactory.MenuBuilder;
@@ -64,6 +65,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected NavigationExplorerScreen navigationExplorerScreen;
 
+    protected AppFormerJsBridge appFormerJsBridge;
+
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
                                   final ActivityBeansCache activityBeansCache,
@@ -76,7 +79,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final NavTreeDefinitions navTreeDefinitions,
                                   final NavigationManager navigationManager,
                                   final NavigationExplorerScreen navigationExplorerScreen,
-                                  final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback) {
+                                  final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback,
+                                  final AppFormerJsBridge appFormerJsBridge) {
         super(appConfigService,
               activityBeansCache,
               defaultWorkbenchErrorCallback);
@@ -89,10 +93,13 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.navTreeDefinitions = navTreeDefinitions;
         this.navigationManager = navigationManager;
         this.navigationExplorerScreen = navigationExplorerScreen;
+        this.appFormerJsBridge = appFormerJsBridge;
     }
 
     @PostConstruct
     public void init() {
+        appFormerJsBridge.init("org.kie.bc.KIEWebapp");
+
         workbench.addStartupBlocker(KieWorkbenchEntryPoint.class);
 
         // Due to a limitation in the Menus API the number of levels in the workbench's menu bar

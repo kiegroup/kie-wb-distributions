@@ -130,7 +130,7 @@ public class KieWorkbenchEntryPointTest {
                                                                 navTreeDefinitions,
                                                                 navigationManager,
                                                                 navigationExplorerScreen,
-                                                                defaultWorkbenchErrorCallback));
+                                                                defaultWorkbenchErrorCallback, null));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
         when(navigationExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);

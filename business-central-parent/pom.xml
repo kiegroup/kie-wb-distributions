@@ -203,30 +203,9 @@
         </property>
       </activation>
       <modules>
-        <module>business-central-home-page-community</module>
+        <module>business-central-home-page-community-parent</module>
         <module>jbpm-server-distribution</module>
       </modules>
-
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>gwt-maven-plugin</artifactId>
-              <configuration>
-                <compileSourcesArtifacts combine.children="append">
-                  <!-- Community Theme -->
-                  <compileSourcesArtifact>org.kie:business-central-theme-community</compileSourcesArtifact>
-                  <!-- Community Home Page -->
-                  <compileSourcesArtifact>org.kie:business-central-home-page-community</compileSourcesArtifact>
-                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-api</compileSourcesArtifact>
-                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
-                </compileSourcesArtifacts>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
     </profile>
 
     <!-- Product Home Page -->
@@ -238,29 +217,8 @@
         </property>
       </activation>
       <modules>
-        <module>business-central-home-page-product</module>
+        <module>business-central-home-page-product-parent</module>
       </modules>
-
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>gwt-maven-plugin</artifactId>
-              <configuration>
-                <compileSourcesArtifacts combine.children="append">
-                  <!-- Product Theme -->
-                  <compileSourcesArtifact>org.kie:business-central-theme-product</compileSourcesArtifact>
-                  <!-- Product Home Page -->
-                  <compileSourcesArtifact>org.kie:business-central-home-page-product</compileSourcesArtifact>
-                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-api</compileSourcesArtifact>
-                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
-                </compileSourcesArtifacts>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
     </profile>
 
     <!-- Full profile builds all GWT permutations -->

@@ -2685,6 +2685,26 @@
           <scope>provided</scope>
         </dependency>
       </dependencies>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>gwt-maven-plugin</artifactId>
+              <configuration>
+                <compileSourcesArtifacts combine.children="append">
+                  <!-- Community Theme -->
+                  <compileSourcesArtifact>org.kie:business-central-theme-community</compileSourcesArtifact>
+                  <!-- Community Home Page -->
+                  <compileSourcesArtifact>org.kie:business-central-home-page-community</compileSourcesArtifact>
+                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
+                </compileSourcesArtifacts>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
 
     <profile>
@@ -2707,6 +2727,26 @@
           <scope>provided</scope>
         </dependency>
       </dependencies>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>gwt-maven-plugin</artifactId>
+              <configuration>
+                <compileSourcesArtifacts combine.children="append">
+                  <!-- Product Theme -->
+                  <compileSourcesArtifact>org.kie:business-central-theme-product</compileSourcesArtifact>
+                  <!-- Product Home Page -->
+                  <compileSourcesArtifact>org.kie:business-central-home-page-product</compileSourcesArtifact>
+                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
+                </compileSourcesArtifacts>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
 
     <profile>
