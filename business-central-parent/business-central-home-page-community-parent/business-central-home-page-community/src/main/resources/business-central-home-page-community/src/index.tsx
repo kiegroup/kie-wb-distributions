@@ -12,10 +12,10 @@ export class BusinessCentralCommunityHomePageProvider implements HomeApi.HomeScr
     }
 
     private buildCardsForProfile(profile: Profile) {
-        switch (profile.name) {
-            case Profile.PLANNER_AND_RULES.name:
+        switch (profile) {
+            case Profile.PLANNER_AND_RULES:
                 return [this.plannerAndRulesProfileDesignCard(), this.deployCard()];
-            case Profile.FULL.name:
+            case Profile.FULL:
             default:
                 return [this.fullProfileDesignCard(), this.deployCard(), this.manageCard(), this.trackCard()];
         }

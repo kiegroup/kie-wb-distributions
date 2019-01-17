@@ -4,10 +4,10 @@ import { Profile } from "@kiegroup-ts-generated/kie-wb-common-profile-api";
 
 export class BusinessMonitoringProductHomePageProvider implements HomeApi.HomeScreenProvider {
     public get(profile: Profile): HomeApi.HomeScreen {
-        switch (profile.name) {
-            case Profile.PLANNER_AND_RULES.name:
+        switch (profile) {
+            case Profile.PLANNER_AND_RULES:
                 return this.buildPlannerAndRulesScreen();
-            case Profile.FULL.name:
+            case Profile.FULL:
             default:
                 return this.buildFullScreen();
         }

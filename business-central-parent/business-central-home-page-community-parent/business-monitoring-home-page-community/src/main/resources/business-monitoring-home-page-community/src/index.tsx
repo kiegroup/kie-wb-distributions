@@ -12,10 +12,10 @@ export class BusinessMonitoringCommunityHomePageProvider implements HomeApi.Home
     }
 
     private buildCardsForProfile(profile: Profile) {
-        switch (profile.name) {
-            case Profile.PLANNER_AND_RULES.name:
+        switch (profile) {
+            case Profile.PLANNER_AND_RULES:
                 return [this.designCard(), this.deployCard()];
-            case Profile.FULL.name:
+            case Profile.FULL:
             default:
                 return [this.designCard(), this.deployCard(), this.manageCard(), this.trackCard()];
         }
