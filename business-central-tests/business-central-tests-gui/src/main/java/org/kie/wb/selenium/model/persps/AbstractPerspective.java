@@ -20,13 +20,13 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.kie.wb.selenium.model.PageObject;
 import org.kie.wb.selenium.model.PrimaryNavbar;
 import org.kie.wb.selenium.model.widgets.Panel;
-import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static org.kie.wb.selenium.util.ByUtil.jquery;
+import static org.kie.wb.selenium.util.ObstructedClickExceptionHandler.retryClickUntilNotObstructed;
 
 public abstract class AbstractPerspective extends PageObject {
 
@@ -62,6 +62,6 @@ public abstract class AbstractPerspective extends PageObject {
 
     public void click(By locatorOfThingToClick) {
         WebElement thingToClick = Waits.elementPresent(locatorOfThingToClick);
-        BusyPopup.retryClickUntilPopupDisappears(thingToClick);
+        retryClickUntilNotObstructed(thingToClick);
     }
 }
