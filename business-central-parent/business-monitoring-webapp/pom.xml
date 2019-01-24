@@ -1636,8 +1636,7 @@
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>business-monitoring-home-page-community</artifactId>
-          <version>${project.version}</version>
+          <artifactId>business-central-home-page-community</artifactId>
           <scope>provided</scope>
         </dependency>
         <dependency>
@@ -1647,24 +1646,83 @@
         </dependency>
       </dependencies>
 
+      <properties>
+        <version.org.webjars.npm.appformer-js-workbench-screens>0.2.0-ALPHA</version.org.webjars.npm.appformer-js-workbench-screens>
+      </properties>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>gwt-maven-plugin</artifactId>
-              <configuration>
-                <compileSourcesArtifacts combine.children="append">
-                  <!-- Community Theme -->
-                  <compileSourcesArtifact>org.kie:business-central-theme-community</compileSourcesArtifact>
-                  <!-- Community Home Page -->
-                  <compileSourcesArtifact>org.kie:business-monitoring-home-page-community</compileSourcesArtifact>
-                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
-                </compileSourcesArtifacts>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack-appformer-js-workbench-screens</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.webjars.npm</groupId>
+                      <artifactId>appformer-js-workbench-screens</artifactId>
+                      <version>${version.org.webjars.npm.appformer-js-workbench-screens}</version>
+                      <type>jar</type>
+                      <overWrite>true</overWrite>
+                      <outputDirectory>${project.build.outputDirectory}/appformer-js-workbench-screens</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                  <overWriteReleases>false</overWriteReleases>
+                  <overWriteSnapshots>true</overWriteSnapshots>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-appformer-js-workbench-screens-resources</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.outputDirectory}/org/uberfire/jsbridge/public</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.outputDirectory}/appformer-js-workbench-screens/META-INF/resources/webjars/appformer-js-workbench-screens/${version.org.webjars.npm.appformer-js-workbench-screens}/dist</directory>
+                      <includes>
+                        <include>home-perspective-bundle.js</include>
+                        <include>business-monitoring-community-home-screen-bundle.js</include>
+                        <include>spaces-screen-bundle.js</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>copy-appformer-js-registry</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.outputDirectory}/org/uberfire/jsbridge/public</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${basedir}/src/main/appformer-js/community/</directory>
+                      <includes>
+                        <include>AppFormerComponentsRegistry.js</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
     </profile>
 
@@ -1679,8 +1737,7 @@
       <dependencies>
         <dependency>
           <groupId>org.kie</groupId>
-          <artifactId>business-monitoring-home-page-product</artifactId>
-          <version>${project.version}</version>
+          <artifactId>business-central-home-page-product</artifactId>
           <scope>provided</scope>
         </dependency>
         <dependency>
@@ -1690,24 +1747,83 @@
         </dependency>
       </dependencies>
 
+      <properties>
+        <version.org.webjars.npm.appformer-js-workbench-screens>0.2.0-ALPHA</version.org.webjars.npm.appformer-js-workbench-screens>
+      </properties>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>gwt-maven-plugin</artifactId>
-              <configuration>
-                <compileSourcesArtifacts combine.children="append">
-                  <!-- Product Theme -->
-                  <compileSourcesArtifact>org.kie:business-central-theme-product</compileSourcesArtifact>
-                  <!-- Product Home Page -->
-                  <compileSourcesArtifact>org.kie:business-monitoring-home-page-product</compileSourcesArtifact>
-                  <compileSourcesArtifact>org.kie.workbench.screens:kie-wb-common-home-client</compileSourcesArtifact>
-                </compileSourcesArtifacts>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack-appformer-js-workbench-screens</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.webjars.npm</groupId>
+                      <artifactId>appformer-js-workbench-screens</artifactId>
+                      <version>${version.org.webjars.npm.appformer-js-workbench-screens}</version>
+                      <type>jar</type>
+                      <overWrite>true</overWrite>
+                      <outputDirectory>${project.build.outputDirectory}/appformer-js-workbench-screens</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                  <overWriteReleases>false</overWriteReleases>
+                  <overWriteSnapshots>true</overWriteSnapshots>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-appformer-js-workbench-screens-resources</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.outputDirectory}/org/uberfire/jsbridge/public</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.outputDirectory}/appformer-js-workbench-screens/META-INF/resources/webjars/appformer-js-workbench-screens/${version.org.webjars.npm.appformer-js-workbench-screens}/dist</directory>
+                      <includes>
+                        <include>home-perspective-bundle.js</include>
+                        <include>business-monitoring-product-home-screen-bundle.js</include>
+                        <include>spaces-screen-bundle.js</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>copy-appformer-js-registry</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.outputDirectory}/org/uberfire/jsbridge/public</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${basedir}/src/main/appformer-js/product/</directory>
+                      <includes>
+                        <include>AppFormerComponentsRegistry.js</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
     </profile>
 
