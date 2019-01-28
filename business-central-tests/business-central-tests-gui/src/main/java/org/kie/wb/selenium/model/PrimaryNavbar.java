@@ -20,7 +20,6 @@ import org.kie.wb.selenium.model.persps.AbstractPerspective;
 import org.kie.wb.selenium.model.persps.AdminPagePerspective;
 import org.kie.wb.selenium.model.persps.ProjectLibraryPerspective;
 import org.kie.wb.selenium.model.widgets.DropdownMenu;
-import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -31,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import static org.kie.wb.selenium.model.KieSeleniumTest.driver;
 import static org.kie.wb.selenium.util.ByUtil.css;
 import static org.kie.wb.selenium.util.ByUtil.jquery;
+import static org.kie.wb.selenium.util.ObstructedClickExceptionHandler.retryClickUntilNotObstructed;
 
 public class PrimaryNavbar {
 
@@ -75,7 +75,7 @@ public class PrimaryNavbar {
         if ("N/A".equals(menuName)) {
             final By itemLink = css("a[title='%s']", itemName);
             Waits.elementPresent(itemLink);
-            BusyPopup.retryClickUntilPopupDisappears(navbar.findElement(itemLink));
+            retryClickUntilNotObstructed(navbar.findElement(itemLink));
         } else {
             WebElement menuRoot = driver.findElement(jquery(NAVBAR_MENU));
             DropdownMenu menu = Graphene.createPageFragment(DropdownMenu.class, menuRoot);

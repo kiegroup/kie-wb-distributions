@@ -16,11 +16,12 @@
 package org.kie.wb.selenium.model.widgets;
 
 import org.jboss.arquillian.graphene.fragment.Root;
-import org.kie.wb.selenium.util.BusyPopup;
 import org.kie.wb.selenium.util.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import static org.kie.wb.selenium.util.ObstructedClickExceptionHandler.retryClickUntilNotObstructed;
 
 public class DropdownMenu {
 
@@ -33,7 +34,7 @@ public class DropdownMenu {
 
     private void open() {
         Waits.elementClickable(By.cssSelector(DROPDOWN_TOGGLE));
-        BusyPopup.retryClickUntilPopupDisappears(dropdownToggle);
+        retryClickUntilNotObstructed(dropdownToggle);
     }
 
     private boolean isOpened() {
