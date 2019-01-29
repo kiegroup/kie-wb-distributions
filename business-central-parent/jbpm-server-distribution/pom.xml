@@ -19,7 +19,7 @@
     <dependency>
       <groupId>org.kie.server</groupId>
       <artifactId>kie-server</artifactId>
-      <classifier>ee7</classifier>
+      <classifier>ee8</classifier>
       <type>war</type>
     </dependency>
     <dependency>
@@ -32,11 +32,6 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-wb-case-mgmt-showcase</artifactId>
       <classifier>wildfly14</classifier>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.jbpm.contrib</groupId>
-      <artifactId>repository-wildfly</artifactId>
       <type>war</type>
     </dependency>
 

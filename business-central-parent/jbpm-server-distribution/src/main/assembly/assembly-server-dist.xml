@@ -68,14 +68,6 @@
       <outputFileNameMapping>jbpm-casemgmt.${artifact.extension}</outputFileNameMapping>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.jbpm.contrib:repository-wildfly</include>
-      </includes>
-      <outputDirectory>standalone/deployments</outputDirectory>
-      <outputFileNameMapping>workitemrepository.${artifact.extension}</outputFileNameMapping>
-      <useProjectArtifact>false</useProjectArtifact>
-    </dependencySet>
 
     <dependencySet>
       <includes>
