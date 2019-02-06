@@ -67,6 +67,9 @@ public class Constants {
     
     @TranslationKey(defaultValue = "")
     public static final String ProductNameRHDM = "ProductNameRHDM";
+    
+    @TranslationKey(defaultValue = "")
+    public static final String BrandImageLabel = "BrandImageLabel";
 
     @TranslationKey(defaultValue = "")
     public static final String License = "License";
