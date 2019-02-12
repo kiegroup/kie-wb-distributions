@@ -137,6 +137,16 @@
     <url-pattern>/ws/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>GzipFilter</filter-name>
+    <filter-class>org.uberfire.backend.server.util.gzip.GzipFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>GzipFilter</filter-name>
+    <url-pattern>*.js</url-pattern>
+  </filter-mapping>
+
   <!-- Basic Auth Filter for WebSocket endpoints -->
   <filter>
     <filter-name>WebSocket Basic Auth Filter</filter-name>
