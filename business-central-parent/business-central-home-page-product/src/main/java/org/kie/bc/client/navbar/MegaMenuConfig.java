@@ -36,7 +36,7 @@ public class MegaMenuConfig implements MegaMenuBrand {
 
     @Override
     public String brandImageLabel() {
-        return translationService.format(Constants.ProductName);
+        return translationService.format(Constants.BrandImageLabel);
     }
 
     @Override

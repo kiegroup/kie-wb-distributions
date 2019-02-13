@@ -439,6 +439,13 @@
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-server-ui-backend</artifactId>
       <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <!-- Collides with 'xml-apis:xml-apis' -->
+          <groupId>javax.xml.stream</groupId>
+          <artifactId>stax-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
