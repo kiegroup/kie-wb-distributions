@@ -156,6 +156,16 @@
     <url-pattern>/websocket/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>GzipFilter</filter-name>
+    <filter-class>org.uberfire.backend.server.util.gzip.GzipFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>GzipFilter</filter-name>
+    <url-pattern>*.js</url-pattern>
+  </filter-mapping>
+
   <!-- drools-wb servlets -->
   <servlet>
     <servlet-name>DTableXLSFileServlet</servlet-name>
