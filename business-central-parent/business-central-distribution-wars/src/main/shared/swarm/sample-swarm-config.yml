@@ -58,13 +58,10 @@ org:
           wildfly:
             cli:
               user: admin
+  # Sample connection to KIE Server. The values here are the defaults.
   kie:
-    server: # Sample connection to KIE Server.
+    server:
       id: kieserver1
       user: kieserver
       pwd: kieserver1!
       location: http://localhost:8230/kie-server/services/rest/server
-      controller:
-        user: kieserver
-        pwd: kieserver1!
-      controller: http://localhost:8080/business-central/rest/controller
