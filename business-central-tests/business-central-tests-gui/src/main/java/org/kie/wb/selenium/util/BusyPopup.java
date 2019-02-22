@@ -18,21 +18,14 @@ package org.kie.wb.selenium.util;
 import org.jboss.arquillian.graphene.Graphene;
 import org.kie.wb.selenium.model.PageObject;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class BusyPopup extends PageObject {
 
     private static final String GLASS_CSS_CLASS = "gwt-PopupPanelGlass";
-
 
     public static void waitForDisappearance() {
         By glass = By.className(GLASS_CSS_CLASS);
         Graphene.waitModel().until().element(glass).is().not().present();
         Waits.pause(500);
     }
-
-
 }

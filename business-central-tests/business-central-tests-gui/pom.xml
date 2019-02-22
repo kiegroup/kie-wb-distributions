@@ -217,6 +217,7 @@
             <configuration>
               <excludes>
                 <exclude>**/ProjectLibraryIntegrationTest.java</exclude>
+                <exclude>**/StandalonePerspectivesIntegrationTest.java</exclude>
               </excludes>
             </configuration>
           </plugin>

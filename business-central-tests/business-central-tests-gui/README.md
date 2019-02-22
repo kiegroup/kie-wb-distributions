@@ -7,10 +7,12 @@ These tests require Firefox to be available on the system.
 
 To run the tests you have to:
 - provide path to firefox binary by setting `-Dwebdriver.firefox.bin=/path/to/firefox-bin`. Selenium usually supports the latest two ESR versions (54 and 60 at the time I'm writing this).- 
-- enable container profile `wildfly` to enable cargo configuration which starts container with business-central deployed
+- add either `business-central` or `business-monitoring` profile to pick the war to test
+- add either `wildfly` or `eap7` profile to pick which container to deploy the tested war to
+    - when using `eap7`, you have to provide eap7 download url (can also be local file URL): -Deap7.download.url=file:///path/to/eap7.zip
 
 ```bash
-cd business-central-distributions/business-central-tests/business-central-tests-gui/
+cd kie-wb-distributions/business-central-tests/business-central-tests-gui/
 mvn clean verify -Pbusiness-central,wildfly -Dwebdriver.firefox.bin=/path/to/firefox/firefox-bin
 ```
 
