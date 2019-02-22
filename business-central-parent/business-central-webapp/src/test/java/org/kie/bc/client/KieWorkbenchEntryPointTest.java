@@ -50,6 +50,7 @@ import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.events.WorkbenchProfileCssClass;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
+import org.uberfire.jsbridge.client.AppFormerJsBridge;
 import org.uberfire.mocks.CallerMock;
 import org.uberfire.mocks.EventSourceMock;
 import org.uberfire.mvp.Command;
@@ -171,7 +172,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 navigationExplorerScreen,
                                                                 defaultWorkbenchErrorCallback,
                                                                 profilePreferences,
-                                                                workbenchProfileCssClassEvent, null));
+                                                                workbenchProfileCssClassEvent,
+                                                                mock(AppFormerJsBridge.class)));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
