@@ -30,6 +30,7 @@ import org.kie.bc.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
+import org.kie.workbench.common.workbench.client.entrypoint.GenericErrorPopup;
 import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCallback;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.uberfire.client.mvp.ActivityBeansCache;
@@ -76,10 +77,12 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final NavTreeDefinitions navTreeDefinitions,
                                   final NavigationManager navigationManager,
                                   final NavigationExplorerScreen navigationExplorerScreen,
-                                  final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback) {
+                                  final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback,
+                                  final GenericErrorPopup genericErrorPopup) {
         super(appConfigService,
               activityBeansCache,
-              defaultWorkbenchErrorCallback);
+              defaultWorkbenchErrorCallback,
+              genericErrorPopup);
         this.menusHelper = menusHelper;
         this.userSystemManager = userSystemManager;
         this.menuBar = menuBar;

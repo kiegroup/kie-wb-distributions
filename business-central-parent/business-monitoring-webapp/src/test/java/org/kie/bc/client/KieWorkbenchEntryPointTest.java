@@ -35,6 +35,7 @@ import org.kie.bc.client.navigation.NavTreeDefinitions;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
+import org.kie.workbench.common.workbench.client.entrypoint.GenericErrorPopup;
 import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCallback;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.mockito.Mock;
@@ -99,6 +100,9 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     private DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback;
 
+    @Mock
+    private GenericErrorPopup genericErrorPopup;
+
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     @Before
@@ -130,7 +134,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 navTreeDefinitions,
                                                                 navigationManager,
                                                                 navigationExplorerScreen,
-                                                                defaultWorkbenchErrorCallback));
+                                                                defaultWorkbenchErrorCallback,
+                                                                genericErrorPopup));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
         when(navigationExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);

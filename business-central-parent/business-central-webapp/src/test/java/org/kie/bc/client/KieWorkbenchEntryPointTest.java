@@ -42,6 +42,7 @@ import org.kie.workbench.common.profile.api.preferences.Profile;
 import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
+import org.kie.workbench.common.workbench.client.entrypoint.GenericErrorPopup;
 import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCallback;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.mockito.Mock;
@@ -137,6 +138,9 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     private EventSourceMock<WorkbenchProfileCssClass> workbenchProfileCssClassEvent;
 
+    @Mock
+    private GenericErrorPopup genericErrorPopup;
+
     @Before
     public void setup() {
         navTreeDefinitions = new NavTreeDefinitions();
@@ -172,7 +176,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 navigationExplorerScreen,
                                                                 defaultWorkbenchErrorCallback,
                                                                 profilePreferences,
-                                                                workbenchProfileCssClassEvent));
+                                                                workbenchProfileCssClassEvent,
+                                                                genericErrorPopup));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 
