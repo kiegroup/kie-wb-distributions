@@ -2684,7 +2684,7 @@
       </dependencies>
 
       <properties>
-        <version.org.webjars.npm.appformer-js-workbench-screens>0.2.5-ALPHA</version.org.webjars.npm.appformer-js-workbench-screens>
+        <version.org.webjars.npm.appformer-js-workbench-screens>0.2.6-ALPHA</version.org.webjars.npm.appformer-js-workbench-screens>
       </properties>
       <build>
         <plugins>
