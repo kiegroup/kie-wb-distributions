@@ -35,7 +35,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="brand">
-                    <img style="height: unset" src="<%=request.getContextPath()%>/img/BC_Logo.png" alt="BUSINESS CENTRAL" title="BUSINESS CENTRAL"/>
+                    <img style="height: auto" src="<%=request.getContextPath()%>/img/BC_Logo.png" alt="BUSINESS CENTRAL" title="BUSINESS CENTRAL"/>
                 </div>
             </div>
             <div class="col-sm-7 col-md-6 col-lg-5 login">
