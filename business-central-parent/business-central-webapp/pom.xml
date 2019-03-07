@@ -2615,54 +2615,6 @@
 
   <profiles>
     <profile>
-      <id>ts-exporter-build</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>properties-maven-plugin</artifactId>
-            <version>1.0.0</version>
-            <executions>
-              <execution>
-                <id>set-ts-exporter-all</id>
-                <phase>validate</phase>
-                <goals>
-                  <goal>set-system-properties</goal>
-                </goals>
-                <configuration>
-                  <properties>
-                    <property>
-                      <name>ts-exporter-output-dir</name>
-                      <value>${project.build.directory}</value>
-                    </property>
-                    <property>
-                      <name>ts-exporter</name>
-                      <value>export</value>
-                    </property>
-                  </properties>
-                </configuration>
-              </execution>
-              <execution>
-                <id>set-ts-exporter-none</id>
-                <phase>prepare-package</phase>
-                <goals>
-                  <goal>set-system-properties</goal>
-                </goals>
-                <configuration>
-                  <properties>
-                    <property>
-                      <name>ts-exporter</name>
-                      <value>default</value>
-                    </property>
-                  </properties>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
       <id>notProductizedProfile</id>
       <activation>
         <property>
@@ -2683,9 +2635,6 @@
         </dependency>
       </dependencies>
 
-      <properties>
-        <version.org.webjars.npm.appformer-js-workbench-screens>0.2.6-ALPHA</version.org.webjars.npm.appformer-js-workbench-screens>
-      </properties>
       <build>
         <plugins>
           <plugin>
@@ -2701,12 +2650,12 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.webjars.npm</groupId>
+                      <groupId>org.appformer</groupId>
                       <artifactId>appformer-js-workbench-screens</artifactId>
-                      <version>${version.org.webjars.npm.appformer-js-workbench-screens}</version>
+                      <version>${project.version}</version>
                       <type>jar</type>
                       <overWrite>true</overWrite>
-                      <outputDirectory>${project.build.outputDirectory}/appformer-js-workbench-screens</outputDirectory>
+                      <outputDirectory>${project.build.directory}/appformer-js-workbench-screens</outputDirectory>
                     </artifactItem>
                   </artifactItems>
                   <overWriteReleases>false</overWriteReleases>
@@ -2729,7 +2678,7 @@
                   <outputDirectory>${project.build.outputDirectory}/org/uberfire/jsbridge/public</outputDirectory>
                   <resources>
                     <resource>
-                      <directory>${project.build.outputDirectory}/appformer-js-workbench-screens/META-INF/resources/webjars/appformer-js-workbench-screens/${version.org.webjars.npm.appformer-js-workbench-screens}/dist</directory>
+                      <directory>${project.build.directory}/appformer-js-workbench-screens/META-INF/resources/webjars/appformer-js-workbench-screens/${project.version}</directory>
                       <includes>
                         <include>home-perspective-bundle.js</include>
                         <include>business-central-community-home-screen-bundle.js</include>
@@ -2784,9 +2733,6 @@
         </dependency>
       </dependencies>
 
-      <properties>
-        <version.org.webjars.npm.appformer-js-workbench-screens>0.2.6-ALPHA</version.org.webjars.npm.appformer-js-workbench-screens>
-      </properties>
       <build>
         <plugins>
           <plugin>
@@ -2802,12 +2748,12 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.webjars.npm</groupId>
+                      <groupId>org.appformer</groupId>
                       <artifactId>appformer-js-workbench-screens</artifactId>
-                      <version>${version.org.webjars.npm.appformer-js-workbench-screens}</version>
+                      <version>${project.version}</version>
                       <type>jar</type>
                       <overWrite>true</overWrite>
-                      <outputDirectory>${project.build.outputDirectory}/appformer-js-workbench-screens</outputDirectory>
+                      <outputDirectory>${project.build.directory}/appformer-js-workbench-screens</outputDirectory>
                     </artifactItem>
                   </artifactItems>
                   <overWriteReleases>false</overWriteReleases>
@@ -2830,7 +2776,7 @@
                   <outputDirectory>${project.build.outputDirectory}/org/uberfire/jsbridge/public</outputDirectory>
                   <resources>
                     <resource>
-                      <directory>${project.build.outputDirectory}/appformer-js-workbench-screens/META-INF/resources/webjars/appformer-js-workbench-screens/${version.org.webjars.npm.appformer-js-workbench-screens}/dist</directory>
+                      <directory>${project.build.directory}/appformer-js-workbench-screens/META-INF/resources/webjars/appformer-js-workbench-screens/${project.version}</directory>
                       <includes>
                         <include>home-perspective-bundle.js</include>
                         <include>business-central-product-home-screen-bundle.js</include>
