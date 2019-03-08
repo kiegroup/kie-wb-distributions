@@ -207,6 +207,7 @@
   </build>
 
   <profiles>
+
     <profile>
       <id>productizedProfile</id>
       <activation>
