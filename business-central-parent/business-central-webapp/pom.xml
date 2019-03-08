@@ -2196,11 +2196,11 @@
 	<configuration>
 	  <packagingExcludes>
 	    WEB-INF/classes/javax/**/*.*,
-	    WEB-INF/classes/org/kie/workbench/client/**/*.class,
-	    WEB-INF/classes/org/kie/workbench/client/resources/i18n/App*.properties,
-	    WEB-INF/classes/org/kie/workbench/client/docks/**,
-	    WEB-INF/classes/org/kie/workbench/client/navbar/**,
-	    WEB-INF/classes/org/kie/workbench/client/perspectives/**,
+	    WEB-INF/classes/org/kie/bc/client/**/*.class,
+	    WEB-INF/classes/org/kie/bc/client/resources/i18n/App*.properties,
+	    WEB-INF/classes/org/kie/bc/client/docks/**,
+	    WEB-INF/classes/org/kie/bc/client/navbar/**,
+	    WEB-INF/classes/org/kie/bc/client/perspectives/**,
 
 	    WEB-INF/classes/**/public/**,
 	    WEB-INF/classes/logback.xml,
@@ -2242,8 +2242,8 @@
             <configuration>
               <fileSets>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants.properties</destinationFile>
                 </fileSet>
               </fileSets>
             </configuration>
@@ -2256,36 +2256,36 @@
             <configuration>
               <fileSets>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en_de.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_de.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en_de.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_de.properties</destinationFile>
                 </fileSet>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en_es.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_es.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en_es.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_es.properties</destinationFile>
                 </fileSet>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en_fr.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_fr.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en_fr.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_fr.properties</destinationFile>
                 </fileSet>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en_ja.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_ja.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en_ja.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_ja.properties</destinationFile>
                 </fileSet>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en_pt_BR.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_pt_BR.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en_pt_BR.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_pt_BR.properties</destinationFile>
                 </fileSet>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en_ru.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_ru.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en_ru.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_ru.properties</destinationFile>
                 </fileSet>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en_zh_CN.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_zh_CN.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en_zh_CN.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_zh_CN.properties</destinationFile>
                 </fileSet>
                 <fileSet>
-                  <sourceFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_en_zh_TW.properties</sourceFile>
-                  <destinationFile>${project.basedir}/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants_zh_TW.properties</destinationFile>
+                  <sourceFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_en_zh_TW.properties</sourceFile>
+                  <destinationFile>${project.basedir}/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants_zh_TW.properties</destinationFile>
                 </fileSet>
               </fileSets>
             </configuration>
