@@ -128,6 +128,10 @@
       <param-name>realmName</param-name>
       <param-value>Business Central Realm</param-value>
     </init-param>
+    <init-param>
+      <param-name>excludedPaths</param-name>
+      <param-value>/rest/healthy,/rest/ready</param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>
