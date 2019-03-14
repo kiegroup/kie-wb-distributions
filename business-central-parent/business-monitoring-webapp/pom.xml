@@ -1263,6 +1263,17 @@
 
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-data-modeller-integration-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-data-modeller-integration-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
       <artifactId>kie-wb-common-forms-jbpm-integration-api</artifactId>
     </dependency>
 
