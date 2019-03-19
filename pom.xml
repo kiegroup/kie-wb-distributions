@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-parent</artifactId>
-    <version>7.19.0-SNAPSHOT</version>
+    <version>7.20.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>kie-wb-distributions</artifactId>
@@ -191,7 +191,7 @@
         <artifactId>native2ascii-maven-plugin</artifactId>
         <configuration>
           <includes>
-            <include>business-central-parent/business-central-webapp/src/main/resources/org/kie/workbench/client/resources/i18n/LoginConstants*.properties</include>
+            <include>business-central-parent/business-central-webapp/src/main/resources/org/kie/bc/client/resources/i18n/LoginConstants*.properties</include>
           </includes>
           <workDir>.</workDir>
           <tempDir>.</tempDir>
