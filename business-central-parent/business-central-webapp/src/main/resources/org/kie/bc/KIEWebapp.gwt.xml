@@ -42,6 +42,7 @@
   <!-- Dashbuilder -->
   <inherits name="org.jbpm.dashboard.DashboardAddonApi"/>
   <inherits name="org.jbpm.dashboard.DashboardAddonClient"/>
+  <inherits name="org.dashbuilder.renderer.C3Renderer"/>
 
   <!-- Guvnor dependencies -->
   <inherits name="org.guvnor.structure.GuvnorStructureClient"/>
