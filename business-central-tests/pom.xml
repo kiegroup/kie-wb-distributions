@@ -492,7 +492,7 @@
       </activation>
       <properties>
         <deployable.classifier.eap7>eap7-redhat</deployable.classifier.eap7>
-        <deployable.classifier.swarm>swarm-redhat</deployable.classifier.swarm>
+        <deployable.classifier.swarm>standalone-redhat</deployable.classifier.swarm>
         <deployable.classifier.wildfly>there-is-no-wildfly-war-for-product</deployable.classifier.wildfly>
       </properties>
     </profile>

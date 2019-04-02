@@ -51,7 +51,7 @@
       <groupId>org.kie</groupId>
       <artifactId>business-central-webapp</artifactId>
       <type>jar</type>
-      <classifier>swarm</classifier>
+      <classifier>thorntail</classifier>
       <exclusions>
         <exclusion>
           <groupId>org.yaml</groupId>
