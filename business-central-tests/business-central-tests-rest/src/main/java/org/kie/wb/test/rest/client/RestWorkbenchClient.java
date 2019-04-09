@@ -245,6 +245,20 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
+    public String isReady() {
+        log.info("Getting readiness status");
+        return target.path("ready")
+                .request().get(String.class);
+    }
+
+    @Override
+    public String isHealthy() {
+        log.info("Getting health status");
+        return target.path("healthy")
+                .request().get(String.class);
+    }
+
+    @Override
     public org.guvnor.rest.client.RemoveSpaceRequest deleteSpace(String name) {
         log.info("Deleting space '{}'", name);
 
