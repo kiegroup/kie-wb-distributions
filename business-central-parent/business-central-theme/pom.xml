@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>business-central-parent</artifactId>
-    <version>7.20.0-SNAPSHOT</version>
+    <version>7.21.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>business-central-theme</artifactId>
