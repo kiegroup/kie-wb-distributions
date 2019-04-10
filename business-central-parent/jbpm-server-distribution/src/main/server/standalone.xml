@@ -39,7 +39,7 @@
         <extension module="org.wildfly.extension.undertow"/>
         <extension module="org.wildfly.iiop-openjdk"/>
     </extensions>
-     <system-properties>
+    <system-properties>
         <property name="org.kie.server.id" value="sample-server"/>
         <property name="org.kie.server.controller" value="http://localhost:8080/business-central/rest/controller"/>
         <property name="org.kie.server.location" value="http://localhost:8080/kie-server/services/rest/server"/>
@@ -48,6 +48,12 @@
         <property name="org.jbpm.task.cleanup.enabled" value="false"/>
         <property name="org.kie.server.persistence.ds" value="java:jboss/datasources/jBPMDS"/>
         <property name="appformer.experimental.features" value="true"/>
+        <property name="kie.keystore.keyStoreURL" value="file://${jboss.server.config.dir}/jBPMKeystore.jceks"/>
+        <property name="kie.keystore.keyStorePwd" value="jBPMKeyStorePassword"/>
+        <property name="kie.keystore.key.server.alias" value="jBPMAlias"/>
+        <property name="kie.keystore.key.server.pwd" value="jBPMKeyPassword"/>
+        <property name="kie.keystore.key.ctrl.alias" value="jBPMAlias"/>
+        <property name="kie.keystore.key.ctrl.pwd" value="jBPMKeyPassword"/>
     </system-properties>
     <management>
         <security-realms>
