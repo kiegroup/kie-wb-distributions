@@ -37,11 +37,6 @@ public class DropdownMenu {
         retryClickUntilNotObstructed(dropdownToggle);
     }
 
-    private boolean isOpened() {
-        String expandedAttr = dropdownToggle.getAttribute("aria-expanded");
-        return "true".equals(expandedAttr);
-    }
-
     public void selectItem(String item) {
         open();
         dropdownRoot.findElement(By.linkText(item)).click();

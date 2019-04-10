@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-wb-distributions</artifactId>
-    <version>7.19.0-SNAPSHOT</version>
+    <version>7.21.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>business-central-parent</artifactId>
@@ -50,13 +50,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
-          <configuration>
-            <excludeFilterFile>${project.basedir}/../../src/main/findbugs/findbugs-exclude.xml</excludeFilterFile>
-          </configuration>
-        </plugin>
         <plugin>
           <!-- Default configuration used for FastCompiled build. Includes the common GWT source artifacts and plugin
                config. Product X community specific artifacts (e.g. home page) are specified using

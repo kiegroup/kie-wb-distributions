@@ -120,6 +120,7 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
+<<<<<<< HEAD
   <!-- Basic Auth Filter for REST and Maven2 repo -->
   <filter>
     <filter-name>HTTP Basic Auth Filter</filter-name>
@@ -160,6 +161,8 @@
     <url-pattern>/websocket/*</url-pattern>
   </filter-mapping>
 
+=======
+>>>>>>> origin/master
   <filter>
     <filter-name>GzipFilter</filter-name>
     <filter-class>org.uberfire.backend.server.util.gzip.GzipFilter</filter-class>
@@ -399,6 +402,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/stencilset/*</url-pattern>
       <url-pattern>/plugins/*</url-pattern>
       <url-pattern>/verifier/*</url-pattern>
+      <url-pattern>/docs/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
@@ -426,8 +430,21 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </web-resource-collection>
   </security-constraint>
 
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>BASIC auth resources</web-resource-name>
+      <url-pattern>/websocket/*</url-pattern>
+      <url-pattern>/rest/*</url-pattern>
+      <url-pattern>/maven2/*</url-pattern>
+      <url-pattern>/ws/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>*</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
   <login-config>
-    <auth-method>FORM</auth-method>
+    <auth-method>BASIC?silent=true,FORM</auth-method>
     <form-login-config>
       <form-login-page>/login.jsp</form-login-page>
       <form-error-page>/login.jsp?message=Login failed: Invalid UserName or Password</form-error-page>
