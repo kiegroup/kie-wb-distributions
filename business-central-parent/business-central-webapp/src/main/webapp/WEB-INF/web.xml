@@ -120,25 +120,6 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
-  <!-- Basic Auth Filter for WebSocket endpoints -->
-  <filter>
-    <filter-name>WebSocket Basic Auth Filter</filter-name>
-    <filter-class>org.uberfire.ext.security.server.BasicAuthSecurityFilter</filter-class>
-    <init-param>
-      <param-name>realmName</param-name>
-      <param-value>KIE Workbench Realm</param-value>
-    </init-param>
-    <init-param>
-      <param-name>invalidate</param-name>
-      <param-value>false</param-value>
-    </init-param>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>WebSocket Basic Auth Filter</filter-name>
-    <url-pattern>/websocket/*</url-pattern>
-  </filter-mapping>
-
   <filter>
     <filter-name>GzipFilter</filter-name>
     <filter-class>org.uberfire.backend.server.util.gzip.GzipFilter</filter-class>
