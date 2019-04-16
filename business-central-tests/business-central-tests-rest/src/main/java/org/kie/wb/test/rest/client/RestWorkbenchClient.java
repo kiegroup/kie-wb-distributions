@@ -65,7 +65,11 @@ public class RestWorkbenchClient implements WorkbenchClient {
                                 int jobTimeoutSeconds, int projectJobTimeoutSeconds, int cloneRepoTimeoutSeconds) {
         this.async = async;
 
-        Client client = ClientBuilder.newClient().register(new Authenticator(userId, password));
+        final Client client = ClientBuilder.newClient();
+        if (userId != null && password != null) {
+            client.register(new Authenticator(userId, password));
+        }
+
         target = client.target(appUrl).path("rest");
 
         this.jobTimeoutSeconds = jobTimeoutSeconds;
