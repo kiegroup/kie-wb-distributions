@@ -2,7 +2,6 @@ org:
   kie:
     workbench:
       profile: FORCE_PLANNER_AND_RULES
-org:
   jbpm:
     designer:
       perspective: ruleflow
