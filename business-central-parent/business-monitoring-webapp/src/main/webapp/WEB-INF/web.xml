@@ -299,6 +299,8 @@ minutes. it is now 24 hours. -->
       <url-pattern>/org.kie.bc.KIEWebapp/css/*</url-pattern>
       <url-pattern>/org.kie.bc.KIEWebapp/fonts/*</url-pattern>
       <url-pattern>/org.kie.bc.KIEWebapp/img/*</url-pattern>
+      <url-pattern>/rest/ready</url-pattern>
+      <url-pattern>/rest/healthy</url-pattern>
     </web-resource-collection>
   </security-constraint>
 

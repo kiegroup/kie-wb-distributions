@@ -65,7 +65,11 @@ public class RestWorkbenchClient implements WorkbenchClient {
                                 int jobTimeoutSeconds, int projectJobTimeoutSeconds, int cloneRepoTimeoutSeconds) {
         this.async = async;
 
-        Client client = ClientBuilder.newClient().register(new Authenticator(userId, password));
+        final Client client = ClientBuilder.newClient();
+        if (userId != null && password != null) {
+            client.register(new Authenticator(userId, password));
+        }
+
         target = client.target(appUrl).path("rest");
 
         this.jobTimeoutSeconds = jobTimeoutSeconds;
@@ -242,6 +246,20 @@ public class RestWorkbenchClient implements WorkbenchClient {
         return target.path("spaces/{spaceName}")
                 .resolveTemplate("spaceName", spaceNameName)
                 .request().get(Space.class);
+    }
+
+    @Override
+    public String isReady() {
+        log.info("Getting readiness status");
+        return target.path("ready")
+                .request().get(String.class);
+    }
+
+    @Override
+    public String isHealthy() {
+        log.info("Getting health status");
+        return target.path("healthy")
+                .request().get(String.class);
     }
 
     @Override
