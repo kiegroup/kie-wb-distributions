@@ -20,7 +20,7 @@
   <dependencySets>
     <dependencySet>
       <includes>
-        <include>org.kie:${artifactId}-webapp:jar:swarm</include>
+        <include>org.kie:${artifactId}-webapp:jar:thorntail</include>
       </includes>
     </dependencySet>
   </dependencySets>
