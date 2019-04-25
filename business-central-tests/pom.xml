@@ -23,7 +23,7 @@
   <properties>
     <deployable.classifier.wildfly>wildfly14</deployable.classifier.wildfly>
     <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
-    <deployable.classifier.swarm>swarm</deployable.classifier.swarm>
+    <deployable.classifier.standalone>thorntail</deployable.classifier.standalone>
     <deployable.context>business-central</deployable.context>
 
     <deployable.groupId>org.kie</deployable.groupId>
@@ -54,13 +54,13 @@
         <groupId>org.kie</groupId>
         <artifactId>business-central-webapp</artifactId>
         <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.swarm}</classifier>
+        <classifier>${deployable.classifier.standalone}</classifier>
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>business-monitoring-webapp</artifactId>
         <version>${deployable.version}</version>
-        <classifier>${deployable.classifier.swarm}</classifier>
+        <classifier>${deployable.classifier.standalone}</classifier>
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
@@ -394,8 +394,8 @@
         <cargo.container.id>wildfly-swarm2017x</cargo.container.id>
         <container.port>8080</container.port>
         <cargo.git.port>9418</cargo.git.port>
-        <workbench.swarm.bundle.path>${containers.dir}/${workbench.swarm.bundle.name}</workbench.swarm.bundle.path>
-        <workbench.swarm.bundle.name>${deployable.artifactId}-webapp-swarm.jar</workbench.swarm.bundle.name>
+        <workbench.standalone.bundle.path>${containers.dir}/${workbench.standalone.bundle.name}</workbench.standalone.bundle.path>
+        <workbench.standalone.bundle.name>${deployable.artifactId}-webapp-standalone.jar</workbench.standalone.bundle.name>
       </properties>
       <build>
         <pluginManagement>
@@ -405,7 +405,7 @@
               <artifactId>maven-dependency-plugin</artifactId>
               <executions>
                 <execution>
-                  <id>download-swarm-wb</id>
+                  <id>download-standalone-wb</id>
                   <phase>pre-integration-test</phase>
                   <goals>
                     <goal>copy</goal>
@@ -416,10 +416,10 @@
                         <groupId>${deployable.groupId}</groupId>
                         <artifactId>${deployable.artifactId}-webapp</artifactId>
                         <version>${deployable.version}</version>
-                        <classifier>${deployable.classifier.swarm}</classifier>
+                        <classifier>${deployable.classifier.standalone}</classifier>
                         <type>jar</type>
                         <outputDirectory>${containers.dir}</outputDirectory>
-                        <destFileName>${workbench.swarm.bundle.name}</destFileName>
+                        <destFileName>${workbench.standalone.bundle.name}</destFileName>
                       </artifactItem>
                     </artifactItems>
                   </configuration>
@@ -439,9 +439,9 @@
                   <configuration>
                     <container>
                       <containerId>${cargo.container.id}</containerId>
-                      <contextKey>swarm-wb</contextKey>
+                      <contextKey>standalone-wb</contextKey>
                       <type>installed</type>
-                      <home>${workbench.swarm.bundle.path}</home>
+                      <home>${workbench.standalone.bundle.path}</home>
                       <systemProperties>
                         <datasource.management.wildfly.admin>admin</datasource.management.wildfly.admin>
                         <org.uberfire.ext.security.management.wildfly.cli.user>admin</org.uberfire.ext.security.management.wildfly.cli.user>
@@ -449,7 +449,7 @@
                     </container>
                     <configuration>
                       <type>standalone</type>
-                      <home>${configurations.dir}/swarm-profile</home>
+                      <home>${configurations.dir}/standalone-profile</home>
                       <properties>
                         <cargo.swarm.ping.url>http://localhost:8080/</cargo.swarm.ping.url>
                         <cargo.jvmargs>-Xmx1G -XX:MaxMetaspaceSize=400m</cargo.jvmargs>
@@ -466,7 +466,7 @@
                   <configuration>
                     <container>
                       <containerId>wildfly-swarm2017x</containerId>
-                      <contextKey>swarm-wb</contextKey>
+                      <contextKey>standalone-wb</contextKey>
                       <type>installed</type>
                     </container>
                     <configuration>
@@ -492,7 +492,7 @@
       </activation>
       <properties>
         <deployable.classifier.eap7>eap7-redhat</deployable.classifier.eap7>
-        <deployable.classifier.swarm>standalone-redhat</deployable.classifier.swarm>
+        <deployable.classifier.standalone>standalone-redhat</deployable.classifier.standalone>
         <deployable.classifier.wildfly>there-is-no-wildfly-war-for-product</deployable.classifier.wildfly>
       </properties>
     </profile>
