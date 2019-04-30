@@ -49,7 +49,7 @@
         <property name="org.kie.server.persistence.ds" value="java:jboss/datasources/jBPMDS"/>
         <property name="appformer.experimental.features" value="true"/>
         <property name="org.kie.prometheus.server.ext.disabled" value="false"/>
-        <property name="kie.keystore.keyStoreURL" value="file://${jboss.server.config.dir}/jBPMKeystore.jceks"/>
+        <property name="kie.keystore.keyStoreURL" value="file:///${jboss.server.config.dir}/jBPMKeystore.jceks"/>
         <property name="kie.keystore.keyStorePwd" value="jBPMKeyStorePassword"/>
         <property name="kie.keystore.key.server.alias" value="jBPMAlias"/>
         <property name="kie.keystore.key.server.pwd" value="jBPMKeyPassword"/>
