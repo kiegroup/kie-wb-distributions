@@ -17,6 +17,9 @@
 package org.kie.wb.test.rest.client;
 
 import java.util.Collection;
+import java.util.List;
+
+import javax.ws.rs.core.Response;
 
 import org.guvnor.rest.client.CloneProjectJobRequest;
 import org.guvnor.rest.client.CloneProjectRequest;
@@ -32,6 +35,8 @@ import org.guvnor.rest.client.RemoveSpaceRequest;
 import org.guvnor.rest.client.Space;
 import org.guvnor.rest.client.SpaceRequest;
 import org.guvnor.rest.client.TestProjectRequest;
+import org.guvnor.structure.organizationalunit.OrganizationalUnit;
+import org.kie.workbench.common.screens.library.api.SpacesScreenService;
 
 public interface WorkbenchClient {
 
@@ -54,7 +59,6 @@ public interface WorkbenchClient {
      * [POST] /spaces/{spaceName}/git/clone
      */
     CloneProjectJobRequest cloneRepository(String spaceName, CloneProjectRequest cloneProjectRequest);
-
 
     /**
      * [POST] /spaces/{spaceName}/projects/
@@ -145,4 +149,29 @@ public interface WorkbenchClient {
      * [POST] /spaces/{spaceName}/projects/{projectName}/maven/deploy
      */
     DeployProjectRequest deployProject(String spaceName, String projectName);
+
+    /**
+     * [GET] /spacesScreen/spaces
+     */
+    Response spacesScreen_getSpaces();
+
+    /**
+     * [PUT] /spacesScreen/libraryPreference
+     */
+    Response spacesScreen_savePreference(SpacesScreenLibraryPreference preference);
+
+    /**
+     * [GET] /spacesScreen/space/{name}
+     */
+    Response spacesScreen_getSpace(String name);
+
+    /**
+     * [GET] /spacesScreen/validGroupId
+     */
+    boolean spacesScreen_isValidGroupId(String groupId);
+
+    /**
+     * [POST] /spacesScreen/spaces
+     */
+    Response spacesScreen_postSpace(SpacesScreenService.NewSpace newSpace);
 }

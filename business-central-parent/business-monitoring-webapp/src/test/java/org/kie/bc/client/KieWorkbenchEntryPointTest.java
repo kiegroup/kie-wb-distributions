@@ -42,6 +42,7 @@ import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
+import org.uberfire.jsbridge.client.AppFormerJsBridge;
 import org.uberfire.mocks.CallerMock;
 import org.uberfire.mocks.EventSourceMock;
 import org.uberfire.mvp.Command;
@@ -130,7 +131,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 navTreeDefinitions,
                                                                 navigationManager,
                                                                 navigationExplorerScreen,
-                                                                defaultWorkbenchErrorCallback));
+                                                                defaultWorkbenchErrorCallback,
+                                                                mock(AppFormerJsBridge.class)));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
         when(navigationExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);

@@ -35,7 +35,6 @@ import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.bc.client.KieWorkbenchEntryPoint;
 import org.kie.bc.client.navigation.NavTreeDefinitions;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
 import org.kie.workbench.common.profile.api.preferences.Profile;
@@ -51,6 +50,7 @@ import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.events.WorkbenchProfileCssClass;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
 import org.uberfire.ext.security.management.client.ClientUserSystemManager;
+import org.uberfire.jsbridge.client.AppFormerJsBridge;
 import org.uberfire.mocks.CallerMock;
 import org.uberfire.mocks.EventSourceMock;
 import org.uberfire.mvp.Command;
@@ -172,7 +172,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 navigationExplorerScreen,
                                                                 defaultWorkbenchErrorCallback,
                                                                 profilePreferences,
-                                                                workbenchProfileCssClassEvent));
+                                                                workbenchProfileCssClassEvent,
+                                                                mock(AppFormerJsBridge.class)));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
 

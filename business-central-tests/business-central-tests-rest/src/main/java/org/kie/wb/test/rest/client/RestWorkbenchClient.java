@@ -24,6 +24,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.guvnor.rest.client.CloneProjectJobRequest;
 import org.guvnor.rest.client.CloneProjectRequest;
@@ -41,6 +42,7 @@ import org.guvnor.rest.client.RemoveSpaceRequest;
 import org.guvnor.rest.client.Space;
 import org.guvnor.rest.client.SpaceRequest;
 import org.guvnor.rest.client.TestProjectRequest;
+import org.kie.workbench.common.screens.library.api.SpacesScreenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -315,6 +317,43 @@ public class RestWorkbenchClient implements WorkbenchClient {
         DeployProjectRequest request = postMavenRequest(spaceName, projectName, "deploy", DeployProjectRequest.class);
 
         return waitUntilJobFinished(request, projectJobTimeoutSeconds);
+    }
+
+    @Override
+    public Response spacesScreen_getSpaces() {
+        return target.path("spacesScreen/spaces")
+                .request()
+                .get();
+    }
+
+    @Override
+    public Response spacesScreen_savePreference(final SpacesScreenLibraryPreference preference) {
+        return target.path("spacesScreen/libraryPreference")
+                .request()
+                .put(createEntity(preference));
+    }
+
+    @Override
+    public Response spacesScreen_getSpace(final String name) {
+        return target.path("spacesScreen/spaces/{name}")
+                .resolveTemplate("name", name)
+                .request()
+                .get();
+    }
+
+    @Override
+    public boolean spacesScreen_isValidGroupId(final String groupId) {
+        return target.path("spacesScreen/spaces/validGroupId")
+                .queryParam("groupId", groupId)
+                .request()
+                .get(Boolean.class);
+    }
+
+    @Override
+    public Response spacesScreen_postSpace(final SpacesScreenService.NewSpace newSpace) {
+        return target.path("spacesScreen/spaces")
+                .request()
+                .post(createEntity(newSpace));
     }
 
     private <T extends JobRequest> T waitUntilJobFinished(T request) {
