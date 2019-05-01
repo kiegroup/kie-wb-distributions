@@ -43,7 +43,7 @@
     </file>
 
     <file>
-      <source>${project.parent.basedir}/src/main/productized/swarm/project-defaults.yml</source>
+      <source>${project.parent.basedir}/src/main/productized/standalone/project-defaults.yml</source>
       <outputDirectory>.</outputDirectory>
       <destName>project-defaults.yml</destName>
     </file>

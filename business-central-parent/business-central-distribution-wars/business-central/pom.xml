@@ -50,7 +50,6 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>business-central-webapp</artifactId>
-      <type>jar</type>
       <classifier>thorntail</classifier>
       <exclusions>
         <exclusion>
@@ -121,9 +120,9 @@
                 <configuration>
                   <descriptors>
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-eap-7-redhat.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-swarm-redhat.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-swarm-redhat-RHDM.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-swarm-zip-redhat.xml</descriptor>
+                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-redhat.xml</descriptor>
+                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-redhat-RHDM.xml</descriptor>
+                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-zip-redhat.xml</descriptor>
                   </descriptors>
                   <archive>
                     <manifest>
