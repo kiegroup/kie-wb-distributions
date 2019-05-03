@@ -27,7 +27,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
 
   <componentDescriptors>
-    <componentDescriptor>${project.parent.basedir}/src/main/assembly/component-kie-wb-swarm-zip.xml</componentDescriptor>
+    <componentDescriptor>${project.parent.basedir}/src/main/assembly/component-kie-wb-standalone-zip.xml</componentDescriptor>
   </componentDescriptors>
 
 </assembly>
