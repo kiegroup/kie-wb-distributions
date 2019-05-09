@@ -1636,11 +1636,6 @@
       <artifactId>jbpm-wb-process-runtime-api</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-social-activities-api</artifactId>
-    </dependency>
-
     <!-- org.kie.workbench -->
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -2512,8 +2507,6 @@
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-simple-docks-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-social-activities-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-social-activities-client</compileSourcesArtifact>
 
             <!-- Uberfire SSH -->
             <compileSourcesArtifact>org.uberfire:uberfire-ssh-api</compileSourcesArtifact>
