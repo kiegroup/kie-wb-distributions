@@ -128,7 +128,7 @@
               <properties>
                 <cargo.servlet.port>${container.port}</cargo.servlet.port>
                 <cargo.servlet.users>
-                  admin:admin1234;:admin|restAll:restAll1234;:admin,rest-all|restProject:restProject1234;:admin,rest-project|noRest:noRest1234;:admin
+                  admin:admin1234;:admin|restAll:restAll1234;:rest-all|restProject:restProject1234;:rest-project|noRest:noRest1234;:user
                 </cargo.servlet.users>
               </properties>
             </configuration>

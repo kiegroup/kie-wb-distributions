@@ -373,6 +373,16 @@ minutes. it is now 24 hours. -->
     <role-name>process-admin</role-name>
   </security-role>
 
+  <security-role>
+    <description>REST user - Users with the rest-all role can access Business Central REST capabilities.</description>
+    <role-name>rest-all</role-name>
+  </security-role>
+
+  <security-role>
+    <description>REST project - Users with the rest-project role can access Business Central REST capabilities.</description>
+    <role-name>rest-project</role-name>
+  </security-role>
+  
   <error-page>
     <error-code>403</error-code>
     <location>/not_authorized.jsp</location>
