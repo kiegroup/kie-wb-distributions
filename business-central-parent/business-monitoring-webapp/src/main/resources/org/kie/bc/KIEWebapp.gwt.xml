@@ -37,7 +37,7 @@
   <!-- Dashbuilder -->
   <inherits name="org.jbpm.dashboard.DashboardAddonApi"/>
   <inherits name="org.jbpm.dashboard.DashboardAddonClient"/>
-  <inherits name="org.dashbuilder.renderer.GChartsRenderer"/>
+  <inherits name="org.dashbuilder.renderer.C3Renderer"/>
   <inherits name="org.dashbuilder.NavigationClient"/>
 
   <!-- Guvnor ALA -->
