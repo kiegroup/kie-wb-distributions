@@ -120,6 +120,27 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
+  <!-- Basic Auth Filter for REST and Maven2 repo -->
+  <filter>
+    <filter-name>HTTP Basic Auth Filter</filter-name>
+    <filter-class>org.uberfire.ext.security.server.BasicAuthSecurityFilter</filter-class>
+    <init-param>
+      <param-name>realmName</param-name>
+      <param-value>Business Central Realm</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludedPaths</param-name>
+      <param-value>/rest/healthy,/rest/ready</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>HTTP Basic Auth Filter</filter-name>
+    <url-pattern>/rest/*</url-pattern>
+    <url-pattern>/maven2/*</url-pattern>
+    <url-pattern>/ws/*</url-pattern>
+  </filter-mapping>
+
   <filter>
     <filter-name>GzipFilter</filter-name>
     <filter-class>org.uberfire.backend.server.util.gzip.GzipFilter</filter-class>
@@ -128,6 +149,25 @@
   <filter-mapping>
     <filter-name>GzipFilter</filter-name>
     <url-pattern>*.js</url-pattern>
+  </filter-mapping>
+
+  <!-- Basic Auth Filter for WebSocket endpoints -->
+  <filter>
+    <filter-name>WebSocket Basic Auth Filter</filter-name>
+    <filter-class>org.uberfire.ext.security.server.BasicAuthSecurityFilter</filter-class>
+    <init-param>
+      <param-name>realmName</param-name>
+      <param-value>Business Central Realm</param-value>
+    </init-param>
+    <init-param>
+      <param-name>invalidate</param-name>
+      <param-value>false</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>WebSocket Basic Auth Filter</filter-name>
+    <url-pattern>/websocket/*</url-pattern>
   </filter-mapping>
 
   <servlet>
@@ -280,7 +320,6 @@ minutes. it is now 24 hours. -->
       <url-pattern>/stencilset/*</url-pattern>
       <url-pattern>/plugins/*</url-pattern>
       <url-pattern>/verifier/*</url-pattern>
-      <url-pattern>/docs/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
@@ -304,21 +343,8 @@ minutes. it is now 24 hours. -->
     </web-resource-collection>
   </security-constraint>
 
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>BASIC auth resources</web-resource-name>
-      <url-pattern>/websocket/*</url-pattern>
-      <url-pattern>/rest/*</url-pattern>
-      <url-pattern>/maven2/*</url-pattern>
-      <url-pattern>/ws/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>*</role-name>
-    </auth-constraint>
-  </security-constraint>
-
   <login-config>
-    <auth-method>BASIC?silent=true,FORM</auth-method>
+    <auth-method>FORM</auth-method>
     <form-login-config>
       <form-login-page>/login.jsp</form-login-page>
       <form-error-page>/login.jsp?message=Login failed: Invalid UserName or Password</form-error-page>
