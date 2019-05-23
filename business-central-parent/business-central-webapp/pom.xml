@@ -176,6 +176,12 @@
       <artifactId>slf4j-api</artifactId>
     </dependency>
 
+    <!-- Promises -->
+    <dependency>
+      <groupId>com.google.elemental2</groupId>
+      <artifactId>elemental2-promise</artifactId>
+    </dependency>
+
     <!-- jBPM Console Panels -->
     <dependency>
       <groupId>org.jbpm</groupId>
