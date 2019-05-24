@@ -19,6 +19,7 @@ package org.kie.wb.test.rest.functional;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.SpacesScreenLibraryPreference;
@@ -29,28 +30,39 @@ import static org.junit.Assert.assertTrue;
 
 public class SpacesScreenServiceIntegrationTest extends RestTestBase {
 
+    private static final String SPACE_NAME = "ASpace";
+
+    @BeforeClass
+    public static void cleanupSpaces(){
+        deleteAllSpaces();
+    }
+
     @Before
     public void before() {
-        deleteAllSpaces();
+        try {
+            client.deleteSpace(SPACE_NAME);
+        } catch (Exception ex){
+            //ignore
+        }
     }
 
     @Test
     public void testGetSpaces() {
         assertEquals(0, client.spacesScreen_getSpaces().readEntity(List.class).size());
-        createSpace("ASpace");
+        createSpace(SPACE_NAME);
         assertEquals(1, client.spacesScreen_getSpaces().readEntity(List.class).size());
     }
 
     @Test
     public void testGetSpace() {
-        createSpace("ASpace");
-        assertEquals(200, client.spacesScreen_getSpace("ASpace").getStatus());
+        createSpace(SPACE_NAME);
+        assertEquals(200, client.spacesScreen_getSpace(SPACE_NAME).getStatus());
     }
 
     @Test
     public void testSaveLibraryPreference() {
-        createSpace("ASpace");
-        createNewProject("ASpace", "AProject", "com.AProject", "1.0.0");
+        createSpace(SPACE_NAME);
+        createNewProject(SPACE_NAME, "AProject", "com.AProject", "1.0.0");
 
         assertEquals(200, client.spacesScreen_savePreference(new SpacesScreenLibraryPreference(false, "AProject")).getStatus());
     }
@@ -64,7 +76,7 @@ public class SpacesScreenServiceIntegrationTest extends RestTestBase {
     public void testPostSpace() {
         final SpacesScreenService.NewSpace newSpace = new SpacesScreenService.NewSpace();
         newSpace.groupId = "foo.bar";
-        newSpace.name = "ASpace";
+        newSpace.name = SPACE_NAME;
 
         assertEquals(201, client.spacesScreen_postSpace(newSpace).getStatus());
     }
