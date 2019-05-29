@@ -136,6 +136,7 @@
 
   <filter-mapping>
     <filter-name>HTTP Basic Auth Filter</filter-name>
+    <url-pattern>/git/*</url-pattern>
     <url-pattern>/rest/*</url-pattern>
     <url-pattern>/maven2/*</url-pattern>
     <url-pattern>/ws/*</url-pattern>

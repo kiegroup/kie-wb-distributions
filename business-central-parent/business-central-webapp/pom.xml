@@ -2643,10 +2643,6 @@
         <artifactId>spotbugs-maven-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-      </plugin>
-      <plugin>
         <groupId>io.thorntail</groupId>
         <artifactId>thorntail-maven-plugin</artifactId>
       </plugin>
