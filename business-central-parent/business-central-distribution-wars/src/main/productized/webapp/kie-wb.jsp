@@ -33,7 +33,7 @@
     <script src="org.kie.bc.KIEWebapp/zeroclipboard/ZeroClipboardLoader.js"></script>
 
     <link rel="stylesheet" href="styles/product.css">
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="favicon.png"/>
 
 </head>
 <body>

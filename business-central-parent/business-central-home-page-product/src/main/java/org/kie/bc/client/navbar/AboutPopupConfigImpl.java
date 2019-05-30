@@ -73,7 +73,7 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
 
     @Override
     public String backgroundImageUrl() {
-        return "images/product_home_bg.png";
+        return "images/home-background.svg";
     }
     
     public void refreshMenuOnProfilesChange(@Observes PreferenceUpdatedEvent event) {
