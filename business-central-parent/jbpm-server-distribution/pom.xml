@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>business-central-parent</artifactId>
-    <version>7.23.1-SNAPSHOT</version>
+    <version>7.23.0.Final</version>
   </parent>
   <artifactId>jbpm-server-distribution</artifactId>
   <packaging>pom</packaging>
