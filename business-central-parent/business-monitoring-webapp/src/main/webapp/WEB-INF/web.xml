@@ -120,6 +120,27 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
+  <!-- Basic Auth Filter for REST and Maven2 repo -->
+  <filter>
+    <filter-name>HTTP Basic Auth Filter</filter-name>
+    <filter-class>org.uberfire.ext.security.server.BasicAuthSecurityFilter</filter-class>
+    <init-param>
+      <param-name>realmName</param-name>
+      <param-value>Business Central Realm</param-value>
+    </init-param>
+    <init-param>
+      <param-name>excludedPaths</param-name>
+      <param-value>/rest/healthy,/rest/ready</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>HTTP Basic Auth Filter</filter-name>
+    <url-pattern>/rest/*</url-pattern>
+    <url-pattern>/maven2/*</url-pattern>
+    <url-pattern>/ws/*</url-pattern>
+  </filter-mapping>
+
   <filter>
     <filter-name>GzipFilter</filter-name>
     <filter-class>org.uberfire.backend.server.util.gzip.GzipFilter</filter-class>
@@ -280,7 +301,6 @@ minutes. it is now 24 hours. -->
       <url-pattern>/stencilset/*</url-pattern>
       <url-pattern>/plugins/*</url-pattern>
       <url-pattern>/verifier/*</url-pattern>
-      <url-pattern>/docs/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
@@ -289,6 +309,17 @@ minutes. it is now 24 hours. -->
       <role-name>user</role-name>
       <role-name>manager</role-name>
       <role-name>process-admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <!-- Basic auth for WebSocket endpoints -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>WebSocket basic auth resources</web-resource-name>
+      <url-pattern>/websocket/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>rest-all</role-name>
     </auth-constraint>
   </security-constraint>
 
@@ -302,19 +333,6 @@ minutes. it is now 24 hours. -->
       <url-pattern>/rest/ready</url-pattern>
       <url-pattern>/rest/healthy</url-pattern>
     </web-resource-collection>
-  </security-constraint>
-
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>BASIC auth resources</web-resource-name>
-      <url-pattern>/websocket/*</url-pattern>
-      <url-pattern>/rest/*</url-pattern>
-      <url-pattern>/maven2/*</url-pattern>
-      <url-pattern>/ws/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>*</role-name>
-    </auth-constraint>
   </security-constraint>
 
   <login-config>
@@ -371,6 +389,16 @@ minutes. it is now 24 hours. -->
       definitions and process instances.
     </description>
     <role-name>process-admin</role-name>
+  </security-role>
+
+  <security-role>
+    <description>REST user - Users with the rest-all role can access Business Central REST capabilities.</description>
+    <role-name>rest-all</role-name>
+  </security-role>
+
+  <security-role>
+    <description>REST project - Users with the rest-project role can access Business Central REST capabilities.</description>
+    <role-name>rest-project</role-name>
   </security-role>
 
   <error-page>

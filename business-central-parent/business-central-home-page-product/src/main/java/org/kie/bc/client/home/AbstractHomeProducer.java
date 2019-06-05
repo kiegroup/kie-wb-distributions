@@ -63,7 +63,7 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
         this.profilePreferences = profilePreferences;
         HomeModel model = new HomeModel(translationService.format(Constants.Heading), 
                                         translationService.format(Constants.SubHeading),
-                                        "images/product_home_bg.png");
+                                        "images/home-background.svg");
         switch (profilePreferences.getProfile()) {
             case FULL:
                 addProfileFullShortcuts(model);
@@ -71,7 +71,7 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
             case PLANNER_AND_RULES:
                 model = new HomeModel(translationService.format(Constants.HeadingDecisionManager), 
                                       translationService.format(Constants.SubHeadingDecisionManager),
-                                      "images/product_home_bg.png");
+                                      "images/home-background.svg");
                 addProfileRulesPlannerShortcuts(model);
                 break;
         }
