@@ -17,6 +17,7 @@
 package org.kie.wb.test.rest.security;
 
 import org.guvnor.rest.client.JobRequest;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -26,22 +27,29 @@ import org.kie.wb.test.rest.User;
 @RunWith(Parameterized.class)
 public class JobAccessIntegrationTest extends AccessRestTestBase {
 
+    private static String randomString;
+
     public JobAccessIntegrationTest(User user) {
         super(user);
     }
 
+    @BeforeClass
+    public static void beforeClass() {
+        randomString = getRandomString();
+    }
+
+
     @Test
     public void testGetJob() {
-        JobRequest jobRequest = createSpace("getSpaceWith" + user.getUserName());
+        JobRequest jobRequest = createSpace("getSpaceWith" + user.getUserName() + "-" + randomString);
 
         assertOperation(() -> roleClient.getJob(jobRequest.getJobId()));
     }
 
     @Test
     public void testDeleteJob() {
-        JobRequest jobRequest = createSpace("deleteSpaceWith" + user.getUserName());
+        JobRequest jobRequest = createSpace("deleteSpaceWith" + user.getUserName() + "-" + randomString);
 
         assertOperation(() -> roleClient.deleteJob(jobRequest.getJobId()));
     }
-
 }

@@ -16,55 +16,85 @@
 
 package org.kie.wb.test.rest.functional;
 
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Random;
 
+import org.guvnor.rest.client.Space;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.SpacesScreenLibraryPreference;
 import org.kie.workbench.common.screens.library.api.SpacesScreenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SpacesScreenServiceIntegrationTest extends RestTestBase {
 
-    private static final String SPACE_NAME = "ASpace";
+    private Logger logger = LoggerFactory.getLogger(SpacesScreenServiceIntegrationTest.class);
+
+    private static final String SPACE_NAME = "ASpace_";
+
+    private String spaceName;
 
     @BeforeClass
-    public static void cleanupSpaces(){
+    public static void cleanupSpaces() {
         deleteAllSpaces();
     }
 
     @Before
     public void before() {
+        this.spaceName = SPACE_NAME + getRandomString();
         try {
-            client.deleteSpace(SPACE_NAME);
-        } catch (Exception ex){
-            //ignore
+            Collection<Space> spaces = client.getSpaces();
+            spaces.forEach(space -> client.deleteSpace(space.getName()));
+        } catch (Exception ex) {
+            logger.error("Error ignored", ex);
+        }
+    }
+
+    @After
+    public void after() {
+        try {
+            Collection<Space> spaces = client.getSpaces();
+            spaces.forEach(space -> client.deleteSpace(space.getName()));
+        } catch (Exception ex) {
+            logger.error("Error ignored", ex);
         }
     }
 
     @Test
     public void testGetSpaces() {
-        assertEquals(0, client.spacesScreen_getSpaces().readEntity(List.class).size());
-        createSpace(SPACE_NAME);
-        assertEquals(1, client.spacesScreen_getSpaces().readEntity(List.class).size());
+        assertEquals(0,
+                     getSpaces().size());
+        createSpace(this.spaceName);
+        assertEquals(1,
+                     getSpaces().size());
     }
 
     @Test
     public void testGetSpace() {
-        createSpace(SPACE_NAME);
-        assertEquals(200, client.spacesScreen_getSpace(SPACE_NAME).getStatus());
+        createSpace(this.spaceName);
+        assertEquals(200,
+                     client.spacesScreen_getSpace(this.spaceName).getStatus());
     }
 
     @Test
     public void testSaveLibraryPreference() {
-        createSpace(SPACE_NAME);
-        createNewProject(SPACE_NAME, "AProject", "com.AProject", "1.0.0");
+        createSpace(this.spaceName);
+        createNewProject(this.spaceName,
+                         "AProject",
+                         "com.AProject",
+                         "1.0.0");
 
-        assertEquals(200, client.spacesScreen_savePreference(new SpacesScreenLibraryPreference(false, "AProject")).getStatus());
+        assertEquals(200,
+                     client.spacesScreen_savePreference(new SpacesScreenLibraryPreference(false,
+                                                                                          this.spaceName)).getStatus());
     }
 
     @Test
@@ -78,6 +108,18 @@ public class SpacesScreenServiceIntegrationTest extends RestTestBase {
         newSpace.groupId = "foo.bar";
         newSpace.name = SPACE_NAME;
 
-        assertEquals(201, client.spacesScreen_postSpace(newSpace).getStatus());
+        assertEquals(201,
+                     client.spacesScreen_postSpace(newSpace).getStatus());
+    }
+
+    private List<LinkedHashMap<String, Object>> getSpaces() {
+        List spaces = client.spacesScreen_getSpaces().readEntity(List.class);
+
+        spaces.removeIf(o -> {
+            LinkedHashMap<String, Object> space = (LinkedHashMap<String, Object>) o;
+            return (Boolean) space.get("deleted");
+        });
+
+        return spaces;
     }
 }

@@ -40,7 +40,8 @@ public abstract class AccessRestTestBase extends RestTestBase {
     public AccessRestTestBase(User user) {
         this.user = user;
 
-        roleClient = RestWorkbenchClient.createWorkbenchClient(URL, user.getUserName(), user.getPassword());
+        int fiveMinutes = 5 * 60;
+        roleClient = RestWorkbenchClient.createWorkbenchClient(URL, user.getUserName(), user.getPassword(), fiveMinutes, fiveMinutes, fiveMinutes);
     }
 
     private void assertOperationDoesNotFail(Operation operation) {
@@ -70,7 +71,7 @@ public abstract class AccessRestTestBase extends RestTestBase {
 
     @FunctionalInterface
     protected interface Operation {
+
         Object execute();
     }
-
 }
