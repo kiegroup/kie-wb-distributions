@@ -80,7 +80,7 @@
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
               <execution>
-                <id>get-business-central</id>
+                <id>get-wildfly-dist</id>
                 <phase>generate-sources</phase>
                 <goals>
                   <goal>unpack</goal>
