@@ -34,6 +34,7 @@
     <module>business-monitoring-webapp</module>
     <module>business-central-webapp</module>
     <module>business-central-distribution-wars</module>
+    <module>add-ons-distribution</module>
   </modules>
 
   <properties>
