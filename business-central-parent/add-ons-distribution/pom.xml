@@ -21,6 +21,7 @@
         <engine.staging.dir>${project.build.directory}/drools-engine</engine.staging.dir>
         <migration-tool.staging.dir>${project.build.directory}/migration-tool</migration-tool.staging.dir>
         <kie-server-controller-ee7.staging.dir>${project.build.directory}/kie-server-controller-ee7.war</kie-server-controller-ee7.staging.dir>
+        <kie-server-ee7.staging.dir>${project.build.directory}/kie-server-ee7.war</kie-server-ee7.staging.dir>
     </properties>
 
     <profiles>
@@ -65,7 +66,7 @@
                                 </goals>
                                 <configuration>
                                     <artifactItems>
-                                        <!-- kie server -->
+                                        <!-- kie server jws -->
                                         <artifactItem>
                                             <groupId>org.kie.server</groupId>
                                             <artifactId>kie-server</artifactId>
@@ -73,6 +74,15 @@
                                             <type>war</type>
                                             <classifier>webc</classifier>
                                             <outputDirectory>${kie-server-webc.staging.dir}</outputDirectory>
+                                        </artifactItem>
+                                        <!-- kie server ee7 -->
+                                        <artifactItem>
+                                            <groupId>org.kie.server</groupId>
+                                            <artifactId>kie-server</artifactId>
+                                            <version>${version.org.kie}</version>
+                                            <type>war</type>
+                                            <classifier>ee7</classifier>
+                                            <outputDirectory>${kie-server-ee7.staging.dir}</outputDirectory>
                                         </artifactItem>
                                         <!-- controller ee7 -->
                                         <artifactItem>
@@ -178,6 +188,7 @@
                                         <descriptor>${basedir}/src/main/assembly/decision-engine.zip.xml</descriptor>
                                         <descriptor>${basedir}/src/main/assembly/migration-tool.zip.xml</descriptor>
                                         <descriptor>${basedir}/src/main/assembly/add-ons.zip.xml</descriptor>
+                                        <descriptor>${basedir}/src/main/assembly/kie-server-ee7.zip.xml</descriptor>
                                     </descriptors>
                                 </configuration>
                             </execution>
