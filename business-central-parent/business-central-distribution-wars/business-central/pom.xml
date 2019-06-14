@@ -114,7 +114,6 @@
                   <descriptors>
                     <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-14.xml</descriptor>
                     <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-14.zip.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-eap-7.xml</descriptor>
                   </descriptors>
                 </configuration>
               </execution>
