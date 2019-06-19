@@ -46,6 +46,32 @@
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>get-wildfly-dist</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.wildfly</groupId>
+                      <artifactId>wildfly-dist</artifactId>
+                      <version>${version.org.wildfly}</version>
+                      <type>zip</type>
+                      <outputDirectory>${project.build.directory}</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                  <overWriteSnapshots>true</overWriteSnapshots>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-assembly-plugin</artifactId>
             <executions>
               <execution>
@@ -56,7 +82,7 @@
                 <configuration>
                   <descriptors>
                     <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-14.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-eap-7.xml</descriptor>
+                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-14.zip.xml</descriptor>
                   </descriptors>
                 </configuration>
               </execution>
