@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.StopWatch;
@@ -134,6 +135,18 @@ public abstract class RestTestBase {
                 log.debug("Deleting space '{}' took {} ms", space.getName(), stopWatch.getTime());
             }
         });
+    }
+
+    protected static String getRandomString() {
+        Random random = new Random();
+        String dic = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int len = 5;
+        String result = "";
+        for (int i = 0; i < len; i++) {
+            int index = random.nextInt(dic.length());
+            result += dic.charAt(index);
+        }
+        return result;
     }
 
     protected static String getLocalGitRepositoryUrl() {
