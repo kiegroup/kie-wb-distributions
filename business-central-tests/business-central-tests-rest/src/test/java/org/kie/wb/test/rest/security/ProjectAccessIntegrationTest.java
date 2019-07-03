@@ -67,18 +67,12 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
 
     @Test
     public void testCompileProject() {
-        String name = "compileProjectWith" + user.getUserName();
-        createProject(name);
-
-        assertOperation(() -> roleClient.compileProject(SPACE_NAME, name));
+        assertOperation(() -> roleClient.compileProject(SPACE_NAME, PROJECT_NAME));
     }
 
     @Test
     public void testTestProject() {
-        String name = "testProjectWith" + user.getUserName();
-        createProject(name);
-
-        assertOperation(() -> roleClient.testProject(SPACE_NAME, name));
+        assertOperation(() -> roleClient.testProject(SPACE_NAME, PROJECT_NAME));
     }
 
     @Test
@@ -98,10 +92,6 @@ public class ProjectAccessIntegrationTest extends AccessRestTestBase {
     }
 
     private void createProject(String name) {
-        CreateProjectRequest createProjectRequest = new CreateProjectRequest();
-        createProjectRequest.setGroupId("org.myteam");
-        createProjectRequest.setVersion("1.0.0");
-        createProjectRequest.setName(name);
-        client.createProject(SPACE_NAME, createProjectRequest);
+        createNewProject(SPACE_NAME, name, "org.myteam", "1.0.0");
     }
 }
