@@ -1,0 +1,72 @@
+<!--
+  ~ JBoss, Home of Professional Open Source
+  ~ Copyright 2011 Red Hat Inc. and/or its affiliates and other contributors
+  ~ as indicated by the @author tags. All rights reserved.
+  ~ See the copyright.txt in the distribution for a
+  ~ full listing of individual contributors.
+  ~
+  ~ This copyrighted material is made available to anyone wishing to use,
+  ~ modify, copy, or redistribute it subject to the terms and conditions
+  ~ of the GNU Lesser General Public License, v. 2.1.
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT A
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~ PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+  ~ You should have received a copy of the GNU Lesser General Public License,
+  ~ v.2.1 along with this distribution; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+  ~ MA  02110-1301, USA.
+  -->
+
+<assembly
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+    <id>wildfly-deployable</id>
+    <formats>
+        <format>zip</format>
+        <format>dir</format>
+    </formats>
+    <baseDirectory>wildfly-${version.org.wildfly}</baseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>${project.build.directory}/wildfly-${version.org.wildfly}</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>bin/*.sh</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/wildfly-${version.org.wildfly}</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>bin/*.conf*</include>
+                <include>domain/configuration/application*.properties</include>
+                <include>domain/configuration/domain.xml</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/wildfly-${version.org.wildfly}/domain/configuration</directory>
+            <outputDirectory>standalone/configuration</outputDirectory>
+            <includes>
+                <include>application*.properties</include>
+                <include>logging.properties</include>
+                <include>mgmt*.properties</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}/src/main</directory>
+            <includes>
+                <include>community/standalone/deployments/business-central.war.dodeploy</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>${project.build.directory}/${project.artifactId}-${project.version}-wildfly14</directory>
+            <outputDirectory>/standalone/deployments/business-central.war</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
