@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>business-central-distribution-wars</artifactId>
-    <version>7.24.0-SNAPSHOT</version>
+    <version>7.26.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>business-monitoring</artifactId>
@@ -49,7 +49,7 @@
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
               <execution>
-                <id>get-business-central</id>
+                <id>get-wildfly-dist</id>
                 <phase>generate-sources</phase>
                 <goals>
                   <goal>unpack</goal>
@@ -83,7 +83,6 @@
                   <descriptors>
                     <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-14.xml</descriptor>
                     <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-14.zip.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-eap-7.xml</descriptor>
                   </descriptors>
                 </configuration>
               </execution>
