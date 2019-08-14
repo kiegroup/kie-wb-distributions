@@ -145,12 +145,14 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         NavTree workbenchNavTree = navigationManager.getNavTree().getItemAsTree(NavTreeDefinitions.GROUP_WORKBENCH);
         TopLevelMenusBuilder<MenuBuilder> builder = menusHelper.buildMenusFromNavTree(workbenchNavTree);
 
-        Menus menus = builder.build();
+        if (builder != null) {
+            Menus menus = builder.build();
 
-        // Refresh the menu bar
-        menuBar.clear();
-        menuBar.addMenus(menus);
-        menusHelper.addUtilitiesMenuItems();
+            // Refresh the menu bar
+            menuBar.clear();
+            menuBar.addMenus(menus);
+            menusHelper.addUtilitiesMenuItems();
+        }
     }
 
     // Listen to changes in the navigation tree
