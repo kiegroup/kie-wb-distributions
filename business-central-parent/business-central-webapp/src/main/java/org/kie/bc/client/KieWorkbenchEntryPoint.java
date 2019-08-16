@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 import org.dashbuilder.client.cms.screen.explorer.NavigationExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
-import org.dashbuilder.client.navigation.event.NavTreeChangedEvent;
+import org.dashbuilder.navigation.event.NavTreeChangedEvent;
 import org.dashbuilder.client.navigation.widget.editor.NavTreeEditor;
 import org.dashbuilder.navigation.NavTree;
 import org.guvnor.common.services.shared.config.AppConfigService;
@@ -70,9 +70,9 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     protected NavigationManager navigationManager;
 
     private NavigationExplorerScreen navigationExplorerScreen;
-    
+
     private ProfilePreferences profilePreferences;
-    
+
     private Event<WorkbenchProfileCssClass> workbenchProfileCssClassEvent;
 
     private AppFormerJsBridge appFormerJsBridge;
@@ -132,12 +132,12 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
             // Set the default nav tree
             NavTree navTree = navTreeDefinitions.buildDefaultNavTree();
             navigationManager.setDefaultNavTree(navTree);
-            
+
             // Initialize the  menu bar
             initMenuBar();
-            
+
             workbench.removeStartupBlocker(KieWorkbenchEntryPoint.class);
-            
+
         });
     }
 
@@ -153,22 +153,24 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     protected void refreshMenuBar() {
         profilePreferences.load(p -> refreshMenuBar(p.getProfile()), RuntimeException::new);
     }
-    
+
     protected void refreshMenuBar(Profile profile) {
         // Turn the workbench nav tree into a Menus instance that is passed as input to the workbench's menu bar
         NavTree workbenchNavTree = navigationManager.getNavTree().getItemAsTree(NavTreeDefinitions.GROUP_WORKBENCH);
-        
+
         profile.getMenuBlackList().forEach(workbenchNavTree::deleteItem);
-    
+
         TopLevelMenusBuilder<MenuBuilder> builder = menusHelper.buildMenusFromNavTree(workbenchNavTree);
-        
-        Menus menus = builder.build();
-        
-        // Refresh the menu bar
-        menuBar.clear();
-        menuBar.addMenus(menus);
-        menusHelper.addUtilitiesMenuItems();
-        workbenchProfileCssClassEvent.fire(new WorkbenchProfileCssClass(profile.name()));
+
+        if (builder != null) {
+            Menus menus = builder.build();
+
+            // Refresh the menu bar
+            menuBar.clear();
+            menuBar.addMenus(menus);
+            menusHelper.addUtilitiesMenuItems();
+            workbenchProfileCssClassEvent.fire(new WorkbenchProfileCssClass(profile.name()));
+        }
     }
 
     // Listen to changes in the navigation tree
@@ -206,7 +208,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         // Mega Menu's linked perspectives don't support passing a navigation context
         navTreeEditor.setPerspectiveContextEnabled(NavTreeDefinitions.GROUP_WORKBENCH, false).applyToAllChildren();
     }
-    
+
     public void refreshMenuOnProfilesChange(@Observes PreferenceUpdatedEvent event) {
         if (event.getKey().equalsIgnoreCase("ProfilePreferences")) {
             ProfilePreferences pref = (ProfilePreferences) event.getValue();
