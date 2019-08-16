@@ -37,6 +37,7 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
         }
 
         projectLibrary = home.getNavbar().projects();
+        projectLibrary.enterDefaultSpace();
     }
 
     @Test

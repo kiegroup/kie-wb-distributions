@@ -85,19 +85,6 @@ public class SpacesScreenServiceIntegrationTest extends RestTestBase {
     }
 
     @Test
-    public void testSaveLibraryPreference() {
-        createSpace(this.spaceName);
-        createNewProject(this.spaceName,
-                         "AProject",
-                         "com.AProject",
-                         "1.0.0");
-
-        assertEquals(200,
-                     client.spacesScreen_savePreference(new SpacesScreenLibraryPreference(false,
-                                                                                          this.spaceName)).getStatus());
-    }
-
-    @Test
     public void testValidGroupId() {
         assertTrue(client.spacesScreen_isValidGroupId("foo.bar"));
     }

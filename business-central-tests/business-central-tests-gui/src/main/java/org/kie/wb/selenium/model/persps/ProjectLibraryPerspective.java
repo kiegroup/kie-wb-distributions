@@ -36,7 +36,8 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
             PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
             IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
             TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
-            DEPLOY_BUTTON = By.id("deploy");
+            DEPLOY_BUTTON = By.id("deploy"),
+            DEFAULT_SPACE_CARD = By.className("card-pf-view-single-select");
 
     @Override
     public void waitForLoaded() {
@@ -58,6 +59,10 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
         click(PROJECT_ACTIONS_BUTTON);
         click(TRY_SAMPLES_BUTTON);
         return ImportProjectsScreen.newInstance();
+    }
+
+    public void enterDefaultSpace() {
+        click(DEFAULT_SPACE_CARD);
     }
 
     public void buildAndDeployProject() {
