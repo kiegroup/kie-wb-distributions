@@ -23,13 +23,15 @@ import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.kie.wb.selenium.model.KieSeleniumTest.getHomepageLoadingTimeoutSeconds;
+
 public class HomePerspective extends AbstractPerspective {
 
     private static final Logger LOG = LoggerFactory.getLogger(HomePerspective.class);
     private static final By HOME_CONTENT = By.className("kie-page");
     private static final int DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS = 15;
     // Troubleshooting webapp loading issues on tomcat / jenkins slaves where the default 15 seconds is not enough
-    private static final int HOME_PERSP_LOADING_TIMEOUT_SECONDS = getTimeoutSeconds();
+    private static final int HOME_PERSP_LOADING_TIMEOUT_SECONDS = getHomepageLoadingTimeoutSeconds(DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS);
 
     @Override
     public void waitForLoaded() {
@@ -47,15 +49,6 @@ public class HomePerspective extends AbstractPerspective {
             return true;
         } catch (NoSuchElementException nse) {
             return false;
-        }
-    }
-
-    private static int getTimeoutSeconds() {
-        String timeout = System.getProperty("selenium.homepage.loading.timeout.seconds");
-        try {
-            return Integer.parseInt(timeout);
-        } catch (NumberFormatException nfe) {
-            return DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS;
         }
     }
 }

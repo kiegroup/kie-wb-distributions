@@ -23,9 +23,14 @@ import org.junit.runner.RunWith;
 import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.util.ScreenshotOnFailure;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RunWith(Arquillian.class)
 public abstract class KieSeleniumTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(KieSeleniumTest.class);
+    private static String HOMEPAGE_LOADING_TIMEOUT = "selenium.homepage.loading.timeout.seconds";
 
     @Drone
     protected static WebDriver driver;
@@ -42,5 +47,17 @@ public abstract class KieSeleniumTest {
         return KieWbDistribution
                 .fromWarNameString(prop)
                 .orElseThrow(() -> new IllegalStateException("Invalid app.name='" + prop + "' Expecting business-central or business-monitoring"));
+    }
+
+    public static int getHomepageLoadingTimeoutSeconds(final int defaultTimeout) {
+        final String timeout = System.getProperty("selenium.homepage.loading.timeout.seconds");
+        try {
+            return Integer.parseInt(timeout);
+        } catch (NumberFormatException nfe) {
+            LOG.warn("System property \'{}\' can not be parsed. Setting to default value: {}",
+                     HOMEPAGE_LOADING_TIMEOUT,
+                     defaultTimeout);
+            return defaultTimeout;
+        }
     }
 }
