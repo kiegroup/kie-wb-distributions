@@ -39,7 +39,8 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
             IMPORT_PROJECT_BUTTON = By.xpath("//button[@data-field='import-project']"),
             TRY_SAMPLES_BUTTON = By.xpath("//button[@data-field='try-samples']"),
             DEPLOY_BUTTON = By.id("deploy"),
-            DEFAULT_SPACE_CARD = By.className("card-pf-view-single-select");
+            DEFAULT_SPACE_CARD = By.className("card-pf-view-single-select"),
+            LOADING_POPUP = ByJQuery.selector("div.well > div.spinner + span:contains('Loading')");
 
     @Override
     public void waitForLoaded() {
@@ -48,6 +49,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
+        Waits.elementAbsent(LOADING_POPUP);
         return Waits.isElementPresent(SPACES_BREADCRUMB, 60);
     }
 

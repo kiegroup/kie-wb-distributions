@@ -52,7 +52,6 @@ public abstract class AbstractPerspective extends PageObject {
     public void waitForLoaded() {
     }
 
-
     public void click(By locatorOfThingToClick) {
         WebElement thingToClick = Waits.elementPresent(locatorOfThingToClick);
         retryClickUntilNotObstructed(thingToClick);
