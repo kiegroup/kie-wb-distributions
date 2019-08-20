@@ -118,7 +118,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     private void verifyPerspectiveIsLoaded(By verifier) {
         try {
-            Waits.elementPresent(verifier, getHomepageLoadingTimeoutSeconds(15));
+            Waits.elementPresent(verifier, getHomepageLoadingTimeoutSeconds());
         } catch (WebDriverException exception) {
             Assertions.fail("The standalone perspective was not loaded.", exception);
         }

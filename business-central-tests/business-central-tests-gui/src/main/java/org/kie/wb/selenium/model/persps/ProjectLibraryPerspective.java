@@ -40,7 +40,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
             TRY_SAMPLES_BUTTON = By.xpath("//button[@data-field='try-samples']"),
             DEPLOY_BUTTON = By.id("deploy"),
             DEFAULT_SPACE_CARD = By.className("card-pf-view-single-select"),
-            LOADING_POPUP = ByJQuery.selector("div.well > div.spinner + span:contains('Loading')");
+            LOADING_POPUP = ByJQuery.selector("span:contains('Loading...')");
 
     @Override
     public void waitForLoaded() {

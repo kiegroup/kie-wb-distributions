@@ -29,14 +29,11 @@ public class HomePerspective extends AbstractPerspective {
 
     private static final Logger LOG = LoggerFactory.getLogger(HomePerspective.class);
     private static final By HOME_CONTENT = By.className("kie-page");
-    private static final int DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS = 15;
-    // Troubleshooting webapp loading issues on tomcat / jenkins slaves where the default 15 seconds is not enough
-    private static final int HOME_PERSP_LOADING_TIMEOUT_SECONDS = getHomepageLoadingTimeoutSeconds(DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS);
 
     @Override
     public void waitForLoaded() {
         long start = System.currentTimeMillis();
-        Waits.elementPresent(HOME_CONTENT, HOME_PERSP_LOADING_TIMEOUT_SECONDS);
+        Waits.elementPresent(HOME_CONTENT, getHomepageLoadingTimeoutSeconds());
         long homePageLoadingDurationMillis = System.currentTimeMillis() - start;
         Duration loadingDuration = Duration.ofMillis(homePageLoadingDurationMillis);
         LOG.info("It took {} seconds to load home page.", loadingDuration.getSeconds());

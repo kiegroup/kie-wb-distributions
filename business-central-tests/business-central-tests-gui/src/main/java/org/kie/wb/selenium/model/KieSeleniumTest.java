@@ -23,14 +23,12 @@ import org.junit.runner.RunWith;
 import org.kie.wb.selenium.model.persps.HomePerspective;
 import org.kie.wb.selenium.util.ScreenshotOnFailure;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Arquillian.class)
 public abstract class KieSeleniumTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(KieSeleniumTest.class);
     private static String HOMEPAGE_LOADING_TIMEOUT = "selenium.homepage.loading.timeout.seconds";
+    private static final int DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS = 15;
 
     @Drone
     protected static WebDriver driver;
@@ -49,15 +47,16 @@ public abstract class KieSeleniumTest {
                 .orElseThrow(() -> new IllegalStateException("Invalid app.name='" + prop + "' Expecting business-central or business-monitoring"));
     }
 
-    public static int getHomepageLoadingTimeoutSeconds(final int defaultTimeout) {
-        final String timeout = System.getProperty("selenium.homepage.loading.timeout.seconds");
-        try {
-            return Integer.parseInt(timeout);
-        } catch (NumberFormatException nfe) {
-            LOG.warn("System property \'{}\' can not be parsed. Setting to default value: {}",
-                     HOMEPAGE_LOADING_TIMEOUT,
-                     defaultTimeout);
-            return defaultTimeout;
-        }
+    /**
+     *
+     * @return 'HOMEPAGE_LOADING_TIMEOUT' system property value or
+     *         'DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS' constant value if system property is not set
+     * @throws NumberFormatException if 'HOMEPAGE_LOADING_TIMEOUT' system property is not valid number
+     */
+    public static int getHomepageLoadingTimeoutSeconds() throws NumberFormatException {
+        final String timeout = System.getProperty(HOMEPAGE_LOADING_TIMEOUT,
+                                                  String.valueOf(DEFAULT_HOME_PERSP_LOADING_TIMEOUT_SECONDS));
+
+        return Integer.parseInt(timeout);
     }
 }
