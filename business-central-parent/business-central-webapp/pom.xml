@@ -1775,6 +1775,26 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- UF Security management provider for Keycloak. -->
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-security-management-keycloak</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Keycloak -->
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-common</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- Validation -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
