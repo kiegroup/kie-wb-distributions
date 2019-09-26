@@ -11,6 +11,7 @@
 
   <!-- Uberfire Extensions - Core Widgets -->
   <inherits name="org.uberfire.ext.widgets.core.UberfireWidgetsCore"/>
+  <inherits name="org.uberfire.ext.widgets.core.client.UberfireWidgetsEditors"/>
   <inherits name="org.uberfire.UberfireDocksClient"/>
 
   <!-- Uberfire SSH -->
