@@ -33,7 +33,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     private static final By
             SPACES_BREADCRUMB = ByJQuery.linkText("Spaces"),
-            PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
+            PROJECT_ACTIONS_BUTTON = By.id("add-project-dropdown"),
             IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
             TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
             DEPLOY_BUTTON = By.id("deploy"),
