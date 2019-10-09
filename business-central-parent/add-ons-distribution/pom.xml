@@ -144,6 +144,7 @@
                                         <artifactItem>
                                             <groupId>org.optaweb.employeerostering</groupId>
                                             <artifactId>employee-rostering-distribution</artifactId>
+                                            <classifier>sources</classifier>
                                             <version>${version.org.kie}</version>
                                             <type>zip</type>
                                             <destFileName>add-ons-${project.version}-employee-rostering.zip
