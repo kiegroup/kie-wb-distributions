@@ -34,7 +34,6 @@
     <module>business-monitoring-webapp</module>
     <module>business-central-webapp</module>
     <module>business-central-distribution-wars</module>
-    <module>add-ons-distribution</module>
   </modules>
 
   <properties>
@@ -231,6 +230,7 @@
       </activation>
       <modules>
         <module>business-central-home-page-product</module>
+        <module>add-ons-distribution</module>
       </modules>
 
       <build>
