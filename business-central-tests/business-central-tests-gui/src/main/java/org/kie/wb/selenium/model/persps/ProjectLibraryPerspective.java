@@ -33,9 +33,11 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     private static final By
             SPACES_BREADCRUMB = ByJQuery.linkText("Spaces"),
-            PROJECT_ACTIONS_BUTTON = By.id("dropdown-space-actions"),
-            IMPORT_PROJECT_BUTTON = By.linkText("Import Project"),
-            TRY_SAMPLES_BUTTON = By.linkText("Try Samples"),
+            PROJECT_ACTIONS_BUTTON = By.id("add-project-dropdown"),
+            IMPORT_PROJECT_ACTION_BUTTON = By.linkText("Import Project"),
+            TRY_SAMPLES_ACTION_BUTTON = By.linkText("Try Samples"),
+            IMPORT_PROJECT_BUTTON = By.xpath("//button[@data-field='import-project']"),
+            TRY_SAMPLES_BUTTON = By.xpath("//button[@data-field='try-samples']"),
             DEPLOY_BUTTON = By.id("deploy"),
             DEFAULT_SPACE_CARD = By.className("card-pf-view-single-select");
 
@@ -50,14 +52,23 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
     }
 
     private ImportRepositoryModal importProject() {
-        click(PROJECT_ACTIONS_BUTTON);
-        click(IMPORT_PROJECT_BUTTON);
+        if (Waits.isElementPresent(IMPORT_PROJECT_BUTTON)) {
+            click(IMPORT_PROJECT_BUTTON);
+        } else {
+            click(PROJECT_ACTIONS_BUTTON);
+            click(IMPORT_PROJECT_ACTION_BUTTON);
+        }
         return ImportRepositoryModal.newInstance();
     }
 
     private ImportProjectsScreen trySamples() {
-        click(PROJECT_ACTIONS_BUTTON);
-        click(TRY_SAMPLES_BUTTON);
+        if (Waits.isElementPresent(TRY_SAMPLES_BUTTON)) {
+            click(TRY_SAMPLES_BUTTON);
+        } else {
+            click(PROJECT_ACTIONS_BUTTON);
+            click(TRY_SAMPLES_ACTION_BUTTON);
+        }
+
         return ImportProjectsScreen.newInstance();
     }
 
