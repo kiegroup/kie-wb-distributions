@@ -161,7 +161,6 @@
             </systemPropertyVariables>
             <failIfNoTests>false</failIfNoTests>
             <argLine>-Xmx1024m -Dfile.encoding=UTF-8</argLine>
-            <rerunFailingTestsCount>2</rerunFailingTestsCount>
           </configuration>
           <executions>
             <execution>
