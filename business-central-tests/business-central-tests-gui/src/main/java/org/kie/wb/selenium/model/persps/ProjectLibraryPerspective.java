@@ -48,7 +48,7 @@ public class ProjectLibraryPerspective extends AbstractPerspective {
 
     @Override
     public boolean isDisplayed() {
-        return Waits.isElementPresent(SPACES_BREADCRUMB, 60);
+        return Waits.elementClickable(SPACES_BREADCRUMB, 60) != null;
     }
 
     private ImportRepositoryModal importProject() {

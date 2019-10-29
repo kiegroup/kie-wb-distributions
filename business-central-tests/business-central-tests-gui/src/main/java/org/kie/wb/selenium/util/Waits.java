@@ -51,7 +51,11 @@ public class Waits {
     }
 
     public static WebElement elementClickable(By locator) {
-        return new WebDriverWait(GrapheneUtil.getDriver(), DEFAULT_TIMEOUT)
+        return elementClickable(locator, DEFAULT_TIMEOUT);
+    }
+
+    public static WebElement elementClickable(By locator, int timeoutSeconds) {
+        return new WebDriverWait(GrapheneUtil.getDriver(), timeoutSeconds)
                 .until(ExpectedConditions.elementToBeClickable(locator));
     }
 
