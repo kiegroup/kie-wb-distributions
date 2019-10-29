@@ -191,6 +191,7 @@
             <selenium.homepage.loading.timeout.seconds>${selenium.homepage.loading.timeout.seconds}</selenium.homepage.loading.timeout.seconds>
             <webdriver.firefox.logfile>${project.build.directory}/firefox-webdriver.log</webdriver.firefox.logfile>
           </systemPropertyVariables>
+          <rerunFailingTestsCount>2</rerunFailingTestsCount>      
         </configuration>
       </plugin>
     </plugins>
