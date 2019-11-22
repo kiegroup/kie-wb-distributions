@@ -79,9 +79,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
 
         final CloneProjectRequest cloneProjectRequest = new CloneProjectRequest();
         cloneProjectRequest.setName("clonedInternalRepo");
-        cloneProjectRequest.setGitURL(URL + "/" + SPACE + "/" + originalRepo);
-        cloneProjectRequest.setUserName("admin");
-        cloneProjectRequest.setPassword("admin1234");
+        cloneProjectRequest.setGitURL("git://localhost:" + GIT_PORT + "/" + SPACE + "/" + originalRepo);
 
         final CloneProjectJobRequest request = client.cloneRepository(SPACE, cloneProjectRequest);
         assertThat(request).isNotNull();
