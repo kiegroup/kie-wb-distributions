@@ -158,9 +158,10 @@
               <kie.wb.url>http://${container.host}:${container.port}/${deployable.context}</kie.wb.url>
               <kie.controller.url>ws://${container.host}:${container.port}/${deployable.context}/websocket/controller</kie.controller.url>
               <org.uberfire.nio.git.daemon.port>${cargo.git.port}</org.uberfire.nio.git.daemon.port>
+              <org.uberfire.nio.git.daemon.enabled>true</org.uberfire.nio.git.daemon.enabled>
             </systemPropertyVariables>
             <failIfNoTests>false</failIfNoTests>
-            <argLine>-Xmx1024m -Dfile.encoding=UTF-8</argLine>
+            <argLine>-Xmx1024m -Dfile.encoding=UTF-8 -Dorg.uberfire.nio.git.daemon.enabled=true</argLine>
           </configuration>
           <executions>
             <execution>
@@ -281,6 +282,7 @@
                   <systemProperties>
                     <jboss.https.port>${cargo.https.port}</jboss.https.port>
                     <org.uberfire.nio.git.daemon.port>${cargo.git.port}</org.uberfire.nio.git.daemon.port>
+                    <org.uberfire.nio.git.daemon.enabled>true</org.uberfire.nio.git.daemon.enabled>
                     <org.uberfire.nio.git.ssh.enabled>false</org.uberfire.nio.git.ssh.enabled>
                     <datasource.management.wildfly.port>${cargo.management.port}</datasource.management.wildfly.port>
                     <!-- disable incremental build to make tests less IO intensive and more stable (https://issues.jboss.org/browse/AF-1310) -->
@@ -290,7 +292,7 @@
                 <configuration>
                   <properties>
                     <cargo.jboss.configuration>standalone</cargo.jboss.configuration>
-                    <cargo.jvmargs>-Xmx1024m</cargo.jvmargs>
+                    <cargo.jvmargs>-Xmx1024m -Dorg.uberfire.nio.git.daemon.enabled=true</cargo.jvmargs>
                     <cargo.servlet.port>${container.port}</cargo.servlet.port>
                     <cargo.jboss.management-http.port>${cargo.management.port}</cargo.jboss.management-http.port>
                     <cargo.jboss.ajp.port>${cargo.ajp.port}</cargo.jboss.ajp.port>
