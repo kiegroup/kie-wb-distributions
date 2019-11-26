@@ -974,6 +974,7 @@
     <dependency>
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-bus</artifactId>
+      <scope>provided</scope>
       <exclusions>
         <exclusion>
           <groupId>io.netty</groupId>
