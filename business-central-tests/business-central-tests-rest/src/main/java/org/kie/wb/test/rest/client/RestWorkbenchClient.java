@@ -283,11 +283,29 @@ public class RestWorkbenchClient implements WorkbenchClient {
                 .request().post(createEntity(""), requestType);
     }
 
+    private <T extends JobRequest> T postMavenRequest(String spaceName, String projectName, String branchName, String phase, Class<T> requestType) {
+        return target.path("spaces/{spaceName}/projects/{projectName}/branches/{branchName}/maven/{phase}")
+                .resolveTemplate("spaceName", spaceName)
+                .resolveTemplate("projectName", projectName)
+                .resolveTemplate("branchName", branchName)
+                .resolveTemplate("phase", phase)
+                .request().post(createEntity(""), requestType);
+    }
+
     @Override
     public CompileProjectRequest compileProject(String spaceName, String projectName) {
         log.info("Compiling project '{}' from space '{}'", projectName, spaceName);
 
         CompileProjectRequest request = postMavenRequest(spaceName, projectName, "compile", CompileProjectRequest.class);
+
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
+    }
+
+    @Override
+    public CompileProjectRequest compileProject(String spaceName, String projectName, String branchName) {
+        log.info("Compiling project '{}' branch '{}' from space '{}'", projectName, branchName, spaceName);
+
+        CompileProjectRequest request = postMavenRequest(spaceName, projectName, branchName, "compile", CompileProjectRequest.class);
 
         return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
@@ -302,6 +320,15 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
+    public InstallProjectRequest installProject(String spaceName, String projectName, String branchName) {
+        log.info("Installing project '{}' branch '{}' from space '{}'", projectName, branchName, spaceName);
+
+        InstallProjectRequest request = postMavenRequest(spaceName, projectName, branchName, "install", InstallProjectRequest.class);
+
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
+    }
+
+    @Override
     public TestProjectRequest testProject(String spaceName, String projectName) {
         log.info("Testing project '{}' from space '{}'", projectName, spaceName);
 
@@ -311,10 +338,28 @@ public class RestWorkbenchClient implements WorkbenchClient {
     }
 
     @Override
+    public TestProjectRequest testProject(String spaceName, String projectName, String branchName) {
+        log.info("Testing project '{}' branch '{}' from space '{}'", projectName, branchName, spaceName);
+
+        TestProjectRequest request = postMavenRequest(spaceName, projectName, branchName, "test", TestProjectRequest.class);
+
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
+    }
+
+    @Override
     public DeployProjectRequest deployProject(String spaceName, String projectName) {
         log.info("Deploying project '{}' from space '{}'", projectName, spaceName);
 
         DeployProjectRequest request = postMavenRequest(spaceName, projectName, "deploy", DeployProjectRequest.class);
+
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
+    }
+
+    @Override
+    public DeployProjectRequest deployProject(String spaceName, String projectName, String branchName) {
+        log.info("Deploying project '{}' branch '{}' from space '{}'", projectName, branchName, spaceName);
+
+        DeployProjectRequest request = postMavenRequest(spaceName, projectName, branchName, "deploy", DeployProjectRequest.class);
 
         return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }

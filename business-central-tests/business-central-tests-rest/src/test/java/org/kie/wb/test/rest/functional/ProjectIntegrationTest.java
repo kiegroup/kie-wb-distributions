@@ -138,6 +138,17 @@ public class ProjectIntegrationTest extends RestTestBase {
     }
 
     @Test
+    public void testCompileProjectMasterBranch() {
+        String name = "projectToBeCompiled";
+        createProject(name, null, GROUP_ID, VERSION);
+
+        CompileProjectRequest request = client.compileProject(SPACE, name, "master");
+        assertThat(request.getSpaceName()).isEqualTo(SPACE);
+        assertThat(request.getProjectName()).isEqualTo(name);
+        assertThat(request.getBranchName()).isEqualTo("master");
+    }
+
+    @Test
     public void testTestProject() {
         String name = "projectToBeTested";
         createProject(name, null, GROUP_ID, VERSION);
@@ -148,6 +159,17 @@ public class ProjectIntegrationTest extends RestTestBase {
     }
 
     @Test
+    public void testTestProjectMasterBranch() {
+        String name = "projectToBeTested";
+        createProject(name, null, GROUP_ID, VERSION);
+
+        TestProjectRequest request = client.testProject(SPACE, name, "master");
+        assertThat(request.getSpaceName()).isEqualTo(SPACE);
+        assertThat(request.getProjectName()).isEqualTo(name);
+        assertThat(request.getBranchName()).isEqualTo("master");
+    }
+
+    @Test
     public void testInstallProject() {
         String name = "projectToBeInstalled" + Math.random();
         createProject(name, null, GROUP_ID, VERSION);
@@ -155,6 +177,17 @@ public class ProjectIntegrationTest extends RestTestBase {
         InstallProjectRequest request = client.installProject(SPACE, name);
         assertThat(request.getSpaceName()).isEqualTo(SPACE);
         assertThat(request.getProjectName()).isEqualTo(name);
+    }
+
+    @Test
+    public void testInstallProjectMasterBranch() {
+        String name = "projectToBeInstalled" + Math.random();
+        createProject(name, null, GROUP_ID, VERSION);
+
+        InstallProjectRequest request = client.installProject(SPACE, name, "master");
+        assertThat(request.getSpaceName()).isEqualTo(SPACE);
+        assertThat(request.getProjectName()).isEqualTo(name);
+        assertThat(request.getBranchName()).isEqualTo("master");
     }
 
     @Test
@@ -195,6 +228,17 @@ public class ProjectIntegrationTest extends RestTestBase {
         DeployProjectRequest request = client.deployProject(SPACE, name);
         assertThat(request.getSpaceName()).isEqualTo(SPACE);
         assertThat(request.getProjectName()).isEqualTo(name);
+    }
+
+    @Test
+    public void testDeployProjectMasterBranch() {
+        String name = "projectToBeDeployed" + Math.random();
+        createProject(name, null, GROUP_ID, VERSION);
+
+        DeployProjectRequest request = client.deployProject(SPACE, name, "master");
+        assertThat(request.getSpaceName()).isEqualTo(SPACE);
+        assertThat(request.getProjectName()).isEqualTo(name);
+        assertThat(request.getBranchName()).isEqualTo("master");
     }
 
     @Test

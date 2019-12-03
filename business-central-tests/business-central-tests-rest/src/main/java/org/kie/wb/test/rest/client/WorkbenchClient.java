@@ -136,9 +136,19 @@ public interface WorkbenchClient {
     CompileProjectRequest compileProject(String spaceName, String projectName);
 
     /**
+     * [POST] /spaces/{spaceName}/projects/{projectName}/branches/{branchName}/maven/compile
+     */
+    CompileProjectRequest compileProject(String spaceName, String projectName, String branchName);
+
+    /**
      * [POST] /spaces/{spaceName}/projects/{projectName}/maven/install
      */
     InstallProjectRequest installProject(String spaceName, String projectName);
+
+    /**
+     * [POST] /spaces/{spaceName}/projects/{projectName}/branches/{branchName}/maven/install
+     */
+    InstallProjectRequest installProject(String spaceName, String projectName, String branchName);
 
     /**
      * [POST] /spaces/{spaceName}/projects/{projectName}/maven/test
@@ -146,9 +156,19 @@ public interface WorkbenchClient {
     TestProjectRequest testProject(String spaceName, String projectName);
 
     /**
+     * [POST] /spaces/{spaceName}/projects/{projectName}/branches/{branchName}/maven/test
+     */
+    TestProjectRequest testProject(String spaceName, String projectName, String branchName);
+
+    /**
      * [POST] /spaces/{spaceName}/projects/{projectName}/maven/deploy
      */
     DeployProjectRequest deployProject(String spaceName, String projectName);
+
+    /**
+     * [POST] /spaces/{spaceName}/projects/{projectName}/branches/{branchName}/maven/deploy
+     */
+    DeployProjectRequest deployProject(String spaceName, String projectName, String branchName);
 
     /**
      * [GET] /spacesScreen/spaces
