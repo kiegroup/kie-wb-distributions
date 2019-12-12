@@ -17,11 +17,11 @@
 package org.kie.wb.test.rest.client;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.ws.rs.core.Response;
 
 import org.guvnor.rest.client.CloneProjectJobRequest;
+import org.guvnor.rest.client.AddBranchJobRequest;
 import org.guvnor.rest.client.CloneProjectRequest;
 import org.guvnor.rest.client.CompileProjectRequest;
 import org.guvnor.rest.client.CreateProjectJobRequest;
@@ -29,13 +29,15 @@ import org.guvnor.rest.client.CreateProjectRequest;
 import org.guvnor.rest.client.DeleteProjectRequest;
 import org.guvnor.rest.client.DeployProjectRequest;
 import org.guvnor.rest.client.InstallProjectRequest;
+import org.guvnor.rest.client.AddBranchRequest;
+import org.guvnor.rest.client.RemoveBranchJobRequest;
 import org.guvnor.rest.client.JobResult;
 import org.guvnor.rest.client.ProjectResponse;
+import org.guvnor.rest.client.BranchResponse;
 import org.guvnor.rest.client.RemoveSpaceRequest;
 import org.guvnor.rest.client.Space;
 import org.guvnor.rest.client.SpaceRequest;
 import org.guvnor.rest.client.TestProjectRequest;
-import org.guvnor.structure.organizationalunit.OrganizationalUnit;
 import org.kie.workbench.common.screens.library.api.SpacesScreenService;
 
 public interface WorkbenchClient {
@@ -194,4 +196,19 @@ public interface WorkbenchClient {
      * [POST] /spacesScreen/spaces
      */
     Response spacesScreen_postSpace(SpacesScreenService.NewSpace newSpace);
+
+    /**
+     * [GET] /spaces/{spaceName}/projects/{projectName}/branches
+     */
+    Collection<BranchResponse> getBranches(String spaceName, String projectName);
+
+    /**
+     * [POST] /spaces/{spaceName}/projects/{projectName}/branches
+     */
+    AddBranchJobRequest addBranch(String spaceName, String projectName, AddBranchRequest addBranchRequest);
+
+    /**
+     * [DELETE] /spaces/{spaceName}/projects/{projectName}/branches/{branchName}
+     */
+    RemoveBranchJobRequest removeBranch(String spaceName, String projectName, String branchName);
 }

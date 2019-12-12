@@ -28,8 +28,12 @@ import org.guvnor.rest.client.CreateProjectRequest;
 import org.guvnor.rest.client.DeleteProjectRequest;
 import org.guvnor.rest.client.DeployProjectRequest;
 import org.guvnor.rest.client.InstallProjectRequest;
+import org.guvnor.rest.client.AddBranchRequest;
+import org.guvnor.rest.client.AddBranchJobRequest;
+import org.guvnor.rest.client.RemoveBranchJobRequest;
 import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
+import org.guvnor.rest.client.BranchResponse;
 import org.guvnor.rest.client.TestProjectRequest;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -269,6 +273,117 @@ public class ProjectIntegrationTest extends RestTestBase {
         request = client.deployProject(SPACE, name);
         assertThat(request.getSpaceName()).isEqualTo(SPACE);
         assertThat(request.getProjectName()).isEqualTo(name);
+    }
+
+    @Test
+    public void testGetBranches() {
+        String name = "getBranches" + Math.random();
+        createProject(name, null, GROUP_ID, VERSION);
+
+        Collection<BranchResponse> response = client.getBranches(SPACE, name);
+
+        assertThat(response.size()).isEqualTo(1);
+        assertThat(response.toArray(new BranchResponse[1])[0].getName()).isEqualTo("master");
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testGetBranchesUndefinedProject() {
+        client.getBranches(SPACE, "undefined");
+    }
+
+    @Test
+    public void addBranch() {
+        String name = "addBranch" + Math.random();
+        createProject(name, null, GROUP_ID, VERSION);
+
+        AddBranchRequest addBranchRequest = new AddBranchRequest();
+        addBranchRequest.setNewBranchName("branch01");
+        addBranchRequest.setBaseBranchName("master");
+
+        AddBranchJobRequest request = client.addBranch(SPACE, name, addBranchRequest);
+
+        assertThat(request.getSpaceName()).isEqualTo(SPACE);
+        assertThat(request.getProjectName()).isEqualTo(name);
+        assertThat(request.getNewBranchName()).isEqualTo("branch01");
+        assertThat(request.getBaseBranchName()).isEqualTo("master");
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void addBranchUndefinedProject() {
+        AddBranchRequest addBranchRequest = new AddBranchRequest();
+        addBranchRequest.setNewBranchName("branch01");
+        addBranchRequest.setBaseBranchName("master");
+
+        client.addBranch(SPACE, "undefined", addBranchRequest);
+    }
+
+    @Test
+    public void addBranchUndefinedBaseBranch() {
+        String name = "addBranch" + Math.random();
+        createProject(name, null, GROUP_ID, VERSION);
+
+        AddBranchRequest addBranchRequest = new AddBranchRequest();
+        addBranchRequest.setNewBranchName("branch02");
+        addBranchRequest.setBaseBranchName("branch01");
+
+        try {
+            client.addBranch(SPACE, name, addBranchRequest);
+        } catch (NotSuccessException ex) {
+            assertThat(ex.getJobResult().getStatus()).isEqualTo(JobStatus.FAIL);
+        }
+    }
+
+    @Test
+    public void addBranchTwice() {
+        String name = "addBranch" + Math.random();
+        createProject(name, null, GROUP_ID, VERSION);
+
+        AddBranchRequest addBranchRequest = new AddBranchRequest();
+        addBranchRequest.setNewBranchName("branch01");
+        addBranchRequest.setBaseBranchName("master");
+
+        client.addBranch(SPACE, name, addBranchRequest);
+
+        try {
+            client.addBranch(SPACE, name, addBranchRequest);
+        } catch (NotSuccessException ex) {
+            assertThat(ex.getJobResult().getStatus()).isEqualTo(JobStatus.DUPLICATE_RESOURCE);
+        }
+    }
+
+    @Test
+    public void removeBranch() {
+        String name = "removeBranch" + Math.random();
+        createProject(name, null, GROUP_ID, VERSION);
+
+        AddBranchRequest addBranchRequest = new AddBranchRequest();
+        addBranchRequest.setNewBranchName("branch01");
+        addBranchRequest.setBaseBranchName("master");
+
+        client.addBranch(SPACE, name, addBranchRequest);
+
+        RemoveBranchJobRequest request = client.removeBranch(SPACE, name, "branch01");
+
+        assertThat(request.getSpaceName()).isEqualTo(SPACE);
+        assertThat(request.getProjectName()).isEqualTo(name);
+        assertThat(request.getBranchName()).isEqualTo("branch01");
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void removeBranchUndefinedProject() {
+        client.removeBranch(SPACE, "undefined", "branch01");
+    }
+
+    @Test
+    public void removeBranchUndefined() {
+        String name = "removeBranch" + Math.random();
+        createProject(name, null, GROUP_ID, VERSION);
+
+        try {
+            client.removeBranch(SPACE, name, "undefined");
+        } catch (NotSuccessException ex) {
+            assertThat(ex.getJobResult().getStatus()).isEqualTo(JobStatus.FAIL);
+        }
     }
 
     private void createProject(String name, String description, String groupId, String version) {
