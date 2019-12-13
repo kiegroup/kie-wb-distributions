@@ -1,8 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--
+~ Copyright 2012 Red Hat, Inc. and/or its affiliates.
+~
+~ Licensed under the Apache License, Version 2.0 (the "License");
+~ you may not use this file except in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~       http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing, software
+~ distributed under the License is distributed on an "AS IS" BASIS,
+~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~ See the License for the specific language governing permissions and
+~ limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
+    <artifactId>business-monitoring-webapp-parent</artifactId>
     <groupId>org.kie</groupId>
-    <artifactId>business-central-parent</artifactId>
     <version>7.32.0-SNAPSHOT</version>
   </parent>
 
@@ -301,11 +317,11 @@
     <dependency>
       <groupId>org.kie.workbench.profile</groupId>
       <artifactId>kie-wb-common-profile-api</artifactId>
-    </dependency> 
+    </dependency>
     <dependency>
       <groupId>org.kie.workbench.profile</groupId>
       <artifactId>kie-wb-common-profile-backend</artifactId>
-    </dependency> 
+    </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-project-api</artifactId>
@@ -1424,41 +1440,41 @@
 
     <plugins>
       <plugin>
-	<artifactId>maven-war-plugin</artifactId>
-	<configuration>
-	  <packagingExcludes>
-	    WEB-INF/classes/javax/**/*.*,
-	    WEB-INF/classes/org/kie/workbench/client/**/*.class,
-	    WEB-INF/classes/org/kie/workbench/client/resources/i18n/App*.properties,
-	    WEB-INF/classes/org/kie/workbench/client/docks/**,
-	    WEB-INF/classes/org/kie/workbench/client/navbar/**,
-	    WEB-INF/classes/org/kie/workbench/client/perspectives/**,
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <packagingExcludes>
+            WEB-INF/classes/javax/**/*.*,
+            WEB-INF/classes/org/kie/workbench/client/**/*.class,
+            WEB-INF/classes/org/kie/workbench/client/resources/i18n/App*.properties,
+            WEB-INF/classes/org/kie/workbench/client/docks/**,
+            WEB-INF/classes/org/kie/workbench/client/navbar/**,
+            WEB-INF/classes/org/kie/workbench/client/perspectives/**,
 
-	    WEB-INF/classes/**/public/**,
-	    WEB-INF/classes/logback.xml,
-	    **/*.gwt.xml,
-	    **/*.symbolMap
-	  </packagingExcludes>
-	  <archive>
-	    <addMavenDescriptor>false</addMavenDescriptor>
-	  </archive>
-	  <overlays>
-	    <overlay>
-	      <groupId>org.kie</groupId>
-	      <artifactId>business-central-webapp-common</artifactId>
-	      <filtered>true</filtered>
-	    </overlay>
-	  </overlays>
-	</configuration>
-	<executions>
-	  <execution>
-	    <id>unpack-overlay</id>
-	    <phase>process-resources</phase>
-	    <goals>
-	      <goal>exploded</goal>
-	    </goals>
-	  </execution>
-	</executions>
+            WEB-INF/classes/**/public/**,
+            WEB-INF/classes/logback.xml,
+            **/*.gwt.xml,
+            **/*.symbolMap
+          </packagingExcludes>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+          </archive>
+          <overlays>
+            <overlay>
+              <groupId>org.kie</groupId>
+              <artifactId>business-central-webapp-common</artifactId>
+              <filtered>true</filtered>
+            </overlay>
+          </overlays>
+        </configuration>
+        <executions>
+          <execution>
+            <id>unpack-overlay</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>exploded</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -1625,10 +1641,6 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>io.thorntail</groupId>
-        <artifactId>thorntail-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
