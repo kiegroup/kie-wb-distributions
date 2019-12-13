@@ -12,14 +12,14 @@
 ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ~ See the License for the specific language governing permissions and
 ~ limitations under the License.
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-  <modelVersion>4.0.0</modelVersion>
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
+    <artifactId>business-central-webapp-parent</artifactId>
     <groupId>org.kie</groupId>
-    <artifactId>business-central-parent</artifactId>
     <version>7.32.0-SNAPSHOT</version>
   </parent>
+  <modelVersion>4.0.0</modelVersion>
 
   <artifactId>business-central-webapp</artifactId>
   <packaging>war</packaging>
@@ -1777,21 +1777,21 @@
       <artifactId>uberfire-security-management-keycloak</artifactId>
       <scope>runtime</scope>
       <exclusions>
-        <exclusion> 
+        <exclusion>
           <groupId>org.jboss.resteasy</groupId>
           <artifactId>resteasy-jackson-provider</artifactId>
         </exclusion>
-        <exclusion> 
+        <exclusion>
           <groupId>org.codehaus.jackson</groupId>
           <artifactId>jackson-core-asl</artifactId>
         </exclusion>
-	<exclusion>
-	  <groupId>org.jboss.resteasy</groupId>
-	  <artifactId>resteasy-jaxrs</artifactId>
-	</exclusion>
-        <exclusion> 
-	  <groupId>org.keycloak</groupId>
-	  <artifactId>keycloak-common</artifactId>
+        <exclusion>
+          <groupId>org.jboss.resteasy</groupId>
+          <artifactId>resteasy-jaxrs</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.keycloak</groupId>
+          <artifactId>keycloak-common</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -1802,15 +1802,15 @@
       <artifactId>keycloak-core</artifactId>
       <scope>runtime</scope>
       <exclusions>
-        <exclusion> 
+        <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk15on</artifactId>
         </exclusion>
-        <exclusion> 
+        <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk15on</artifactId>
         </exclusion>
-      </exclusions> 
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -1818,15 +1818,15 @@
       <artifactId>keycloak-common</artifactId>
       <scope>runtime</scope>
       <exclusions>
-        <exclusion> 
+        <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk15on</artifactId>
         </exclusion>
-        <exclusion> 
+        <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk15on</artifactId>
         </exclusion>
-      </exclusions> 
+      </exclusions>
     </dependency>
 
     <!-- Validation -->
@@ -2348,41 +2348,41 @@
 
     <plugins>
       <plugin>
-	<artifactId>maven-war-plugin</artifactId>
-	<configuration>
-	  <packagingExcludes>
-	    WEB-INF/classes/javax/**/*.*,
-	    WEB-INF/classes/org/kie/bc/client/**/*.class,
-	    WEB-INF/classes/org/kie/bc/client/resources/i18n/App*.properties,
-	    WEB-INF/classes/org/kie/bc/client/docks/**,
-	    WEB-INF/classes/org/kie/bc/client/navbar/**,
-	    WEB-INF/classes/org/kie/bc/client/perspectives/**,
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <packagingExcludes>
+            WEB-INF/classes/javax/**/*.*,
+            WEB-INF/classes/org/kie/bc/client/**/*.class,
+            WEB-INF/classes/org/kie/bc/client/resources/i18n/App*.properties,
+            WEB-INF/classes/org/kie/bc/client/docks/**,
+            WEB-INF/classes/org/kie/bc/client/navbar/**,
+            WEB-INF/classes/org/kie/bc/client/perspectives/**,
 
-	    WEB-INF/classes/**/public/**,
-	    WEB-INF/classes/logback.xml,
-	    **/*.gwt.xml,
-	    **/*.symbolMap
-	  </packagingExcludes>
-	  <archive>
-	    <addMavenDescriptor>false</addMavenDescriptor>
-	  </archive>
-	  <overlays>
-	    <overlay>
-	      <groupId>org.kie</groupId>
-	      <artifactId>business-central-webapp-common</artifactId>
-	      <filtered>true</filtered>
-	    </overlay>
-	  </overlays>
-	</configuration>
-	<executions>
-	  <execution>
-	    <id>unpack-overlay</id>
-	    <phase>process-resources</phase>
-	    <goals>
-	      <goal>exploded</goal>
-	    </goals>
-	  </execution>
-	</executions>
+            WEB-INF/classes/**/public/**,
+            WEB-INF/classes/logback.xml,
+            **/*.gwt.xml,
+            **/*.symbolMap
+          </packagingExcludes>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+          </archive>
+          <overlays>
+            <overlay>
+              <groupId>org.kie</groupId>
+              <artifactId>business-central-webapp-common</artifactId>
+              <filtered>true</filtered>
+            </overlay>
+          </overlays>
+        </configuration>
+        <executions>
+          <execution>
+            <id>unpack-overlay</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>exploded</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <!-- Fix translated file names from zanata -->
       <plugin>
@@ -2788,10 +2788,6 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>io.thorntail</groupId>
-        <artifactId>thorntail-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

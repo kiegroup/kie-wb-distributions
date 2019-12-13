@@ -1,0 +1,21 @@
+/target
+/local
+/overlays
+/src/main/gwt-unitCache/
+/src/main/webapp/service-tasks/
+/src/main/webapp/WEB-INF/classes/
+/src/main/webapp/WEB-INF/lib/
+/src/main/webapp/WEB-INF/tlds/
+/src/main/webapp/org.kie.bc.KIEWebapp/
+
+# Eclipse, Netbeans and IntelliJ files
+/.*
+/**/.*
+!.gitignore
+/nbproject
+*.ipr
+*.iws
+*.iml
+
+# Repository wide ignore mac DS_Store files
+.DS_Store

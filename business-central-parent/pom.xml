@@ -32,7 +32,7 @@
     <module>business-central-deployment-validation</module>
     <module>business-central-theme</module>
     <module>business-monitoring-webapp</module>
-    <module>business-central-webapp</module>
+    <module>business-central-webapp-parent</module>
     <module>business-central-distribution-wars</module>
   </modules>
 
