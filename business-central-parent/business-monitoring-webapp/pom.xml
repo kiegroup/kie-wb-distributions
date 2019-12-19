@@ -552,10 +552,6 @@
     <!-- Errai Core -->
     <dependency>
       <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-bus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
       <artifactId>errai-ioc</artifactId>
     </dependency>
     <dependency>
@@ -832,6 +828,10 @@
         <exclusion>
           <groupId>jakarta-regexp</groupId>
           <artifactId>jakarta-regexp</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>io.netty</groupId>
+          <artifactId>netty</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
