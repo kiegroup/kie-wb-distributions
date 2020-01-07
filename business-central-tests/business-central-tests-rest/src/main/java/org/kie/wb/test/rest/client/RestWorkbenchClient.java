@@ -27,6 +27,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.guvnor.rest.client.CloneProjectJobRequest;
+import org.guvnor.rest.client.AddBranchJobRequest;
+import org.guvnor.rest.client.RemoveBranchJobRequest;
 import org.guvnor.rest.client.CloneProjectRequest;
 import org.guvnor.rest.client.CompileProjectRequest;
 import org.guvnor.rest.client.CreateProjectJobRequest;
@@ -34,10 +36,12 @@ import org.guvnor.rest.client.CreateProjectRequest;
 import org.guvnor.rest.client.DeleteProjectRequest;
 import org.guvnor.rest.client.DeployProjectRequest;
 import org.guvnor.rest.client.InstallProjectRequest;
+import org.guvnor.rest.client.AddBranchRequest;
 import org.guvnor.rest.client.JobRequest;
 import org.guvnor.rest.client.JobResult;
 import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
+import org.guvnor.rest.client.BranchResponse;
 import org.guvnor.rest.client.RemoveSpaceRequest;
 import org.guvnor.rest.client.Space;
 import org.guvnor.rest.client.SpaceRequest;
@@ -399,6 +403,42 @@ public class RestWorkbenchClient implements WorkbenchClient {
         return target.path("spacesScreen/spaces")
                 .request()
                 .post(createEntity(newSpace));
+    }
+
+    @Override
+    public Collection<BranchResponse> getBranches(String spaceName, String projectName) {
+        return target.path("/spaces/{spaceName}/projects/{projectName}/branches")
+                .resolveTemplate("spaceName", spaceName)
+                .resolveTemplate("projectName", projectName)
+                .request()
+                .get(new GenericType<Collection<BranchResponse>>() {});
+    }
+
+    @Override
+    public AddBranchJobRequest addBranch(String spaceName, String projectName, AddBranchRequest addBranchRequest) {
+        log.info("Adding Branch '{}' in space '{}' project '{}'", addBranchRequest.getName(), spaceName, projectName);
+
+        AddBranchJobRequest request = target.path("spaces/{spaceName}/projects/{projectName}/branches")
+                .resolveTemplate("spaceName", spaceName)
+                .resolveTemplate("projectName", projectName)
+                .request()
+                .post(createEntity(addBranchRequest), AddBranchJobRequest.class);
+
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
+    }
+
+    @Override
+    public RemoveBranchJobRequest removeBranch(String spaceName, String projectName, String branchName) {
+        log.info("Removing Branch '{}' in space '{}' project '{}'", branchName, spaceName, projectName);
+
+        RemoveBranchJobRequest request = target.path("spaces/{spaceName}/projects/{projectName}/branches/{branchName}")
+                .resolveTemplate("spaceName", spaceName)
+                .resolveTemplate("projectName", projectName)
+                .resolveTemplate("branchName", branchName)
+                .request()
+                .delete(RemoveBranchJobRequest.class);
+
+        return waitUntilJobFinished(request, projectJobTimeoutSeconds);
     }
 
     private <T extends JobRequest> T waitUntilJobFinished(T request) {
