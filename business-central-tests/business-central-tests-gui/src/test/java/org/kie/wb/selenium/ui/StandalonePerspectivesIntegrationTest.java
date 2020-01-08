@@ -18,6 +18,7 @@ package org.kie.wb.selenium.ui;
 import org.assertj.core.api.Assertions;
 import org.guvnor.rest.client.CloneProjectRequest;
 import org.guvnor.rest.client.Space;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,7 +35,6 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     private final static String
             PROJECT_URL = "https://github.com/Rikkola/single-project-test-repository.git",
-            SPACE_NAME = "Standalone_space",
             PROJECT_NAME = "Standalone_project";
 
     private final static String
@@ -44,10 +44,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
             // URL of a standalone perspective:
             PERSPECTIVE_PARAMETER = "&perspective=",
             HEADER_PARAMETER = "&header=UberfireBreadcrumbsContainer",
-            PERSPECTIVE_FULL_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PERSPECTIVE_PARAMETER,
-            // URL of a standalone editor:
-            PROJECT_ASSET_PATH = "&path=default://master@" + SPACE_NAME + "/" + PROJECT_NAME + "/src/main/java/mortgages/mortgages/Applicant.java",
-            EDITOR_FULL_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PROJECT_ASSET_PATH;
+            PERSPECTIVE_FULL_URL = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + PERSPECTIVE_PARAMETER;
 
     private static final By
             CONTENT_MANAGEMENT = By.cssSelector("[title='Content Manager']"),
@@ -55,15 +52,24 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
             HEADER = By.id("workbenchHeaderPanel"),
             LIBRARY = By.className("toolbar-data-title-kie");
 
+    private static WorkbenchClient workbenchClient;
+
+    private static String spaceName, projectAssetPath, editorFullUrl;
+
     @BeforeClass
     public static void cloneTestingProject() {
-        WorkbenchClient workbenchClient = RestWorkbenchClient
+        workbenchClient = RestWorkbenchClient
                 // REST credentials from Cargo configuration in business-central-tests/pom.xml:
                 .createWorkbenchClient(BASE_URL, "restAll", "restAll1234;");
 
+        // Create unique space name
+        spaceName = "Standalone_space_" + System.currentTimeMillis();
+        projectAssetPath = "&path=default://master@" + spaceName + "/" + PROJECT_NAME + "/src/main/java/mortgages/mortgages/Applicant.java";
+        editorFullUrl = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + projectAssetPath;
+
         // Create a space:
         final Space space = new Space();
-        space.setName(SPACE_NAME);
+        space.setName(spaceName);
         space.setOwner("donald@duck.gov");
         space.setDefaultGroupId("gov.duck");
         workbenchClient.createSpace(space);
@@ -72,7 +78,12 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
         CloneProjectRequest cloneReq = new CloneProjectRequest();
         cloneReq.setGitURL(PROJECT_URL);
         cloneReq.setName(PROJECT_NAME);
-        workbenchClient.cloneRepository(SPACE_NAME, cloneReq);
+        workbenchClient.cloneRepository(spaceName, cloneReq);
+    }
+
+    @AfterClass
+    public static void cleanWorkbench() {
+        workbenchClient.deleteSpace(spaceName);
     }
 
     @Before
@@ -103,7 +114,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
     @Test
     public void testStandaloneEditorPerspective() {
-        driver.get(EDITOR_FULL_URL);
+        driver.get(editorFullUrl);
 
         verifyPerspectiveIsLoaded(DATA_OBJECT);
     }
