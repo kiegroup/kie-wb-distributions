@@ -2781,7 +2781,10 @@
       </plugin>
       <plugin>
         <groupId>io.thorntail</groupId>
-        <artifactId>thorntail-maven-plugin</artifactId>
+	<artifactId>thorntail-maven-plugin</artifactId>
+        <configuration>
+          <filterWebInfLib>uberjar-only</filterWebInfLib>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
