@@ -79,5 +79,6 @@
 #
 
 org.uberfire.java.nio.fs.jgit.JGitFileSystemProvider  # file system provider, also default (1st)
+org.uberfire.java.nio.fs.k8s.K8SFileSystemProvider    # can be set as default at runtime by system property: org.kie.workbench.controller.openshift.enabled
 org.uberfire.java.nio.fs.file.SimpleFileSystemProvider
 # org.kie.commons.java.nio.fs.eclipse.EclipseFileSystemProvider  # eclipse provider
