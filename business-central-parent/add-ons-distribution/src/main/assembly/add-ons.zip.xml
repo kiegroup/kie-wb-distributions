@@ -56,10 +56,5 @@
             <destName>add-ons-${project.version.short}-migration-tool.zip</destName>
             <fileMode>0644</fileMode>
         </file>
-      <file>
-        <source>${project.build.directory}/add-ons-${project.version}-employee-rostering.zip</source>
-        <destName>add-ons-${project.version.short}-employee-rostering.zip</destName>
-        <fileMode>0644</fileMode>
-      </file>
     </files>
 </assembly>

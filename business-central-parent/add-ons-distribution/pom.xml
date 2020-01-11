@@ -132,38 +132,6 @@
                                     <overWriteSnapshots>true</overWriteSnapshots>
                                 </configuration>
                             </execution>
-                            <execution>
-                                <id>copy</id>
-                                <phase>generate-sources</phase>
-                                <goals>
-                                    <goal>copy</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <!-- employee rostering -->
-                                        <artifactItem>
-                                            <groupId>org.optaweb.employeerostering</groupId>
-                                            <artifactId>employee-rostering-distribution</artifactId>
-                                            <classifier>sources</classifier>
-                                            <version>${version.org.kie}</version>
-                                            <type>zip</type>
-                                            <destFileName>add-ons-${project.version}-employee-rostering.zip
-                                            </destFileName>
-                                            <outputDirectory>${project.build.directory}</outputDirectory>
-                                        </artifactItem>
-                                        <!-- decision engine addon-jar -->
-                                        <artifactItem>
-                                            <groupId>org.kie</groupId>
-                                            <artifactId>kie-tomcat-integration</artifactId>
-                                            <version>${version.org.kie}</version>
-                                            <type>jar</type>
-                                            <overWrite>false</overWrite>
-                                            <outputDirectory>${project.build.directory}/addon-jar</outputDirectory>
-                                        </artifactItem>
-                                    </artifactItems>
-                                    <overWriteSnapshots>true</overWriteSnapshots>
-                                </configuration>
-                            </execution>
                         </executions>
                     </plugin>
                     <plugin>

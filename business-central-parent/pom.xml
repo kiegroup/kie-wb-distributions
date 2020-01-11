@@ -196,6 +196,7 @@
       <modules>
         <module>business-central-home-page-community</module>
         <module>jbpm-server-distribution</module>
+        <module>add-ons-distribution</module>
       </modules>
 
       <build>
@@ -230,7 +231,6 @@
       </activation>
       <modules>
         <module>business-central-home-page-product</module>
-        <module>add-ons-distribution</module>
       </modules>
 
       <build>
