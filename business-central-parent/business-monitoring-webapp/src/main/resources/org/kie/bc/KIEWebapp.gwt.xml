@@ -52,6 +52,7 @@
   <!--Common Screens -->
   <inherits name="org.kie.workbench.common.screens.server.management.ServerManagementClient"/>
   <inherits name="org.kie.workbench.common.workbench.KieDefaultWorkbenchClient"/>
+  <inherits name="org.kie.workbench.common.screens.archetype.mgmt.KieWorkbenchArchetypeMgmtClient"/>
 
   <!-- Datasource management -->
   <inherits name="org.kie.workbench.common.screens.datasource.KieWorkbenchDataSourceClient" />
