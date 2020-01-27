@@ -15,11 +15,17 @@
  */
 package org.kie.bc.client.navigation;
 
+import java.util.Optional;
+
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.dashbuilder.navigation.NavTree;
 import org.dashbuilder.navigation.impl.NavTreeBuilder;
+import org.jboss.errai.common.client.api.Caller;
+import org.kie.bc.client.home.FileSystemConfiguration;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
+import org.uberfire.backend.fs.FileSystemService;
 
 import static org.dashbuilder.navigation.workbench.NavWorkbenchCtx.perspective;
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.CONTENT_MANAGEMENT;
@@ -62,23 +68,46 @@ public class NavTreeDefinitions {
     public static final String ENTRY_TASK_DASHBOARD = "wb_entry_task_dashboard";
 
     private NavigationConstants i18n = NavigationConstants.INSTANCE;
+    private Caller<FileSystemService> fileSystemService;
+    private FileSystemConfiguration configuration = new FileSystemConfiguration();
+
+    public NavTreeDefinitions() {
+    }
+
+    @Inject
+    public NavTreeDefinitions(Caller<FileSystemService> fileSystemService) {
+        this.fileSystemService = fileSystemService;
+    }
+
+    public void initialize(Runnable done) {
+        this.fileSystemService.call((Boolean enabled) -> {
+            configuration.setGitEnabled(enabled);
+            done.run();
+        }).isGitDefaultFileSystem();
+    }
 
     public NavTree buildDefaultNavTree() {
-        return new NavTreeBuilder()
+        NavTreeBuilder navTreeBuilder = new NavTreeBuilder()
                 .group(GROUP_WORKBENCH,
-                        i18n.navTreeWorkbenchName(),
-                        i18n.navTreeWorkbenchDescr(),
-                        false)
-                .group(GROUP_DESIGN,
-                       i18n.navTreeDesignName(),
-                       i18n.navTreeDesignDescr(),
-                       false)
-                .item(ENTRY_PAGES,
-                      i18n.navTreePageAuthoringName(),
-                      i18n.navTreePageAuthoringDescr(),
-                      false,
-                      perspective(CONTENT_MANAGEMENT))
-                .endGroup()
+                       i18n.navTreeWorkbenchName(),
+                       i18n.navTreeWorkbenchDescr(),
+                       false);
+
+        if (configuration.isGitEnabled()) {
+            navTreeBuilder = navTreeBuilder
+                    .group(GROUP_DESIGN,
+                           i18n.navTreeDesignName(),
+                           i18n.navTreeDesignDescr(),
+                           false)
+                    .item(ENTRY_PAGES,
+                          i18n.navTreePageAuthoringName(),
+                          i18n.navTreePageAuthoringDescr(),
+                          false,
+                          perspective(CONTENT_MANAGEMENT))
+                    .endGroup();
+        }
+        
+        navTreeBuilder = navTreeBuilder
                 .group(GROUP_DEPLOY,
                        i18n.navTreeDeployName(),
                        i18n.navTreeDeployDescr(),
@@ -144,7 +173,7 @@ public class NavTreeDefinitions {
                       true,
                       perspective(TASK_DASHBOARD))
                 .endGroup()
-                .endGroup()
-                .build();
+                .endGroup();
+        return navTreeBuilder.build();
     }
 }

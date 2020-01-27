@@ -11,19 +11,19 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 package org.kie.bc.client.home;
 
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
-import org.kie.workbench.common.screens.home.model.HomeModel;
+import org.kie.bc.client.resources.i18n.Constants;
 import org.kie.workbench.common.profile.api.preferences.Profile;
 import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
+import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
+import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.workbench.client.PerspectiveIds;
-import org.kie.bc.client.resources.i18n.Constants;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -59,6 +59,7 @@ public class HomeProducerDroolsPlannerProfileTest {
         profilePreferences = new ProfilePreferences(Profile.PLANNER_AND_RULES);
         doAnswer((InvocationOnMock invocation) -> invocation.getArguments()[0]).when(translationService).format(anyString());
     }
+
     @Test
     public void checkSetupWithProvisioningGranted() {
         when(shortcutHelper.authorize(PerspectiveIds.PROVISIONING)).thenReturn(true);
