@@ -75,6 +75,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>appformer-kogito-bridge</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.spec.javax.servlet.jsp</groupId>
       <artifactId>jboss-jsp-api_2.3_spec</artifactId>
       <scope>provided</scope>
@@ -2640,6 +2645,7 @@
             <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-js</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:appformer-js-bridge</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:appformer-kogito-bridge</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-security-client-backend</compileSourcesArtifact>
