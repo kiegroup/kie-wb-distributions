@@ -418,6 +418,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/org.kie.bc.KIEWebapp/zeroclipboard/*</url-pattern>
       <url-pattern>/rest/ready</url-pattern>
       <url-pattern>/rest/healthy</url-pattern>
+      <url-pattern>/rest/swagger.json</url-pattern>
     </web-resource-collection>
   </security-constraint>
 
