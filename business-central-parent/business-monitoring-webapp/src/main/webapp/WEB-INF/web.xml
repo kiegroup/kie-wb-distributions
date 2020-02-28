@@ -332,6 +332,7 @@ minutes. it is now 24 hours. -->
       <url-pattern>/org.kie.bc.KIEWebapp/img/*</url-pattern>
       <url-pattern>/rest/ready</url-pattern>
       <url-pattern>/rest/healthy</url-pattern>
+      <url-pattern>/rest/swagger.json</url-pattern>
     </web-resource-collection>
   </security-constraint>
 
