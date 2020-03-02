@@ -6,7 +6,7 @@
     <parent>
         <artifactId>business-central-parent</artifactId>
         <groupId>org.kie</groupId>
-        <version>7.34.0-SNAPSHOT</version>
+        <version>7.35.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>add-ons-distribution</artifactId>

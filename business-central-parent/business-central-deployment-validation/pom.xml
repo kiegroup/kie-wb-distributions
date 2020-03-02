@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>business-central-parent</artifactId>
-    <version>7.34.0-SNAPSHOT</version>
+    <version>7.35.0-SNAPSHOT</version>
   </parent>
   <artifactId>business-central-deployment-validation</artifactId>
   <name>Business Central Deployment Validation</name>
