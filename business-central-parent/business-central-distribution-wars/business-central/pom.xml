@@ -112,8 +112,8 @@
                 </goals>
                 <configuration>
                   <descriptors>
-                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-14.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly-14.zip.xml</descriptor>
+                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly.xml</descriptor>
+                    <descriptor>${project.parent.basedir}/src/main/community/assembly-kie-wb-wildfly.zip.xml</descriptor>
                   </descriptors>
                 </configuration>
               </execution>

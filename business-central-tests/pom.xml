@@ -21,11 +21,7 @@
   </modules>
 
   <properties>
-    <deployable.classifier.wildfly>wildfly14</deployable.classifier.wildfly>
-    <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
-    <deployable.classifier.standalone>thorntail</deployable.classifier.standalone>
     <deployable.context>business-central</deployable.context>
-
     <deployable.groupId>org.kie</deployable.groupId>
     <deployable.artifactId>business-central</deployable.artifactId>
     <deployable.version>${version.org.kie}</deployable.version>

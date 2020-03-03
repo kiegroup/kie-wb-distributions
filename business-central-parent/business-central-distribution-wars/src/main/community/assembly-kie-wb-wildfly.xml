@@ -20,7 +20,7 @@
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
   <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name/id of the artifact -->
-  <id>wildfly14</id>
+  <id>wildfly18</id>
   <formats>
     <format>war</format>
     <format>dir</format>
@@ -29,7 +29,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
 
   <componentDescriptors>
-    <componentDescriptor>${project.parent.basedir}/src/main/assembly/component-kie-wb-wildfly-14-eap-7-common.xml</componentDescriptor>
+    <componentDescriptor>${project.parent.basedir}/src/main/assembly/component-kie-wb-wildfly-eap-7-common.xml</componentDescriptor>
   </componentDescriptors>
 
 </assembly>

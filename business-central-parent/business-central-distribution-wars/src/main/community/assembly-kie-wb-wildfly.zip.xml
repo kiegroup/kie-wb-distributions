@@ -65,7 +65,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>${project.build.directory}/${project.artifactId}-${project.version}-wildfly14</directory>
+            <directory>${project.build.directory}/${project.artifactId}-${project.version}-wildfly18</directory>
             <outputDirectory>/standalone/deployments/business-central.war</outputDirectory>
         </fileSet>
     </fileSets>
