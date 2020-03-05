@@ -121,26 +121,6 @@
   </welcome-file-list>
 
   <!-- Basic Auth Filter for REST and Maven2 repo -->
-  <filter>
-    <filter-name>HTTP Basic Auth Filter</filter-name>
-    <filter-class>org.uberfire.ext.security.server.BasicAuthSecurityFilter</filter-class>
-    <init-param>
-      <param-name>realmName</param-name>
-      <param-value>Business Central Realm</param-value>
-    </init-param>
-    <init-param>
-      <param-name>excludedPaths</param-name>
-      <param-value>/rest/healthy,/rest/ready</param-value>
-    </init-param>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>HTTP Basic Auth Filter</filter-name>
-    <url-pattern>/git/*</url-pattern>
-    <url-pattern>/rest/*</url-pattern>
-    <url-pattern>/maven2/*</url-pattern>
-    <url-pattern>/ws/*</url-pattern>
-  </filter-mapping>
 
   <filter>
     <filter-name>GzipFilter</filter-name>
