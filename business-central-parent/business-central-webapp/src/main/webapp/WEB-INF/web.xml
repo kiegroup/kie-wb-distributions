@@ -130,7 +130,7 @@
     </init-param>
     <init-param>
       <param-name>excludedPaths</param-name>
-      <param-value>/rest/healthy,/rest/ready</param-value>
+      <param-value>/rest/healthy,/rest/ready,/rest/swagger.json</param-value>
     </init-param>
   </filter>
 
