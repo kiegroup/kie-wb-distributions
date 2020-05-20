@@ -278,6 +278,8 @@
                     <jboss.https.port>${cargo.https.port}</jboss.https.port>
                     <org.uberfire.nio.git.daemon.port>${cargo.git.port}</org.uberfire.nio.git.daemon.port>
                     <org.uberfire.nio.git.ssh.enabled>false</org.uberfire.nio.git.ssh.enabled>
+                    <!-- https://issues.redhat.com/browse/AF-2523 -->
+                    <org.uberfire.ext.security.management.wildfly.cli.port>${cargo.management.port}</org.uberfire.ext.security.management.wildfly.cli.port>
                     <datasource.management.wildfly.port>${cargo.management.port}</datasource.management.wildfly.port>
                     <!-- disable incremental build to make tests less IO intensive and more stable (https://issues.jboss.org/browse/AF-1310) -->
                     <build.enable-incremental>false</build.enable-incremental>
