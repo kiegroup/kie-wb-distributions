@@ -22,7 +22,7 @@ import org.dashbuilder.navigation.impl.NavTreeBuilder;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
 
 import static org.dashbuilder.navigation.workbench.NavWorkbenchCtx.perspective;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.*;
 
 /**
  * Navigation tree definitions such as the workbench menu bar

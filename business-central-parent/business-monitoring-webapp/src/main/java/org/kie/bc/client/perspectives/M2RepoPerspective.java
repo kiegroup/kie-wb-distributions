@@ -18,7 +18,7 @@ package org.kie.bc.client.perspectives;
 import javax.enterprise.context.Dependent;
 
 import org.kie.bc.client.resources.i18n.AppConstants;
-import org.kie.workbench.common.workbench.client.PerspectiveIds;
+import org.kie.workbench.common.services.shared.resources.PerspectiveIds;
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPerspective;
