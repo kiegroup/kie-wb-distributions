@@ -1796,13 +1796,13 @@
           <groupId>org.codehaus.jackson</groupId>
           <artifactId>jackson-core-asl</artifactId>
         </exclusion>
-	<exclusion>
-	  <groupId>org.jboss.resteasy</groupId>
-	  <artifactId>resteasy-jaxrs</artifactId>
-	</exclusion>
+        <exclusion>
+          <groupId>org.jboss.resteasy</groupId>
+          <artifactId>resteasy-jaxrs</artifactId>
+        </exclusion>
         <exclusion> 
-	  <groupId>org.keycloak</groupId>
-	  <artifactId>keycloak-common</artifactId>
+          <groupId>org.keycloak</groupId>
+          <artifactId>keycloak-common</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -1836,6 +1836,10 @@
         <exclusion> 
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk15on</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.sun.activation</groupId>
+          <artifactId>jakarta.activation</artifactId>
         </exclusion>
       </exclusions> 
     </dependency>
