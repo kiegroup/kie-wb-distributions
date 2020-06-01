@@ -21,8 +21,8 @@ import javax.inject.Inject;
 
 import org.dashbuilder.client.cms.screen.explorer.NavigationExplorerScreen;
 import org.dashbuilder.client.navigation.NavigationManager;
-import org.dashbuilder.navigation.event.NavTreeChangedEvent;
 import org.dashbuilder.navigation.NavTree;
+import org.dashbuilder.navigation.event.NavTreeChangedEvent;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
@@ -116,15 +116,16 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     @Override
     public void setupMenu() {
         navigationManager.init(() -> {
+            navTreeDefinitions.initialize(()->{
+                // Set the default nav tree
+                NavTree navTree = navTreeDefinitions.buildDefaultNavTree();
+                navigationManager.setDefaultNavTree(navTree);
 
-            // Set the default nav tree
-            NavTree navTree = navTreeDefinitions.buildDefaultNavTree();
-            navigationManager.setDefaultNavTree(navTree);
+                // Initialize the  menu bar
+                initMenuBar();
 
-            // Initialize the  menu bar
-            initMenuBar();
-
-            workbench.removeStartupBlocker(KieWorkbenchEntryPoint.class);
+                workbench.removeStartupBlocker(KieWorkbenchEntryPoint.class);
+            });
         });
     }
 

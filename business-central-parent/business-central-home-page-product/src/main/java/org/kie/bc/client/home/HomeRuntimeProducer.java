@@ -20,12 +20,15 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
+import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.bc.client.resources.i18n.Constants;
 import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
+import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
 import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
+import org.uberfire.backend.fs.FileSystemService;
 import org.uberfire.client.mvp.PlaceManager;
 
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.CONTENT_MANAGEMENT;
@@ -35,6 +38,9 @@ import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 @ApplicationScoped
 public class HomeRuntimeProducer extends AbstractHomeProducer {
 
+    private Caller<FileSystemService> fileSystemService;
+    private FileSystemConfiguration configuration = new FileSystemConfiguration();
+
     public HomeRuntimeProducer() {
         //CDI proxy
     }
@@ -42,10 +48,31 @@ public class HomeRuntimeProducer extends AbstractHomeProducer {
     @Inject
     public HomeRuntimeProducer(final PlaceManager placeManager,
                                final TranslationService translationService,
-                               final ShortcutHelper shortcutHelper) {
+                               final ShortcutHelper shortcutHelper,
+                               Caller<FileSystemService> fileSystemService) {
         super(placeManager,
               translationService,
               shortcutHelper);
+        this.fileSystemService = fileSystemService;
+    }
+
+    @Override
+    public void initialize(Runnable done) {
+        this.fileSystemService.call((Boolean enabled) -> {
+            configuration.setGitEnabled(enabled);
+            done.run();
+        }).isGitDefaultFileSystem();
+    }
+
+    @Override
+    protected void addProfileFullShortcuts(final HomeModel model) {
+
+        if (configuration.isGitEnabled()) {
+            model.addShortcut(createDesignShortcut());
+        }
+        model.addShortcut(createDeployShortcut());
+        model.addShortcut(createManageShortcut());
+        model.addShortcut(createTrackShortcut());
     }
 
     @Override

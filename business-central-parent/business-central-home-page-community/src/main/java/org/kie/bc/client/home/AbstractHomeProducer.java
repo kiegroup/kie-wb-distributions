@@ -16,17 +16,20 @@
 
 package org.kie.bc.client.home;
 
+import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.bc.client.resources.i18n.Constants;
+import org.kie.workbench.common.profile.api.preferences.Profile;
+import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
 import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.ShortcutHelper;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeModelProvider;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
 import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
-import org.kie.workbench.common.profile.api.preferences.Profile;
-import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
+import org.uberfire.backend.fs.FileSystemService;
 import org.uberfire.client.mvp.PlaceManager;
+
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.EXECUTION_ERRORS;
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.JOBS;
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.PROCESS_DASHBOARD;
@@ -37,8 +40,8 @@ import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.TASKS;
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.TASKS_ADMIN;
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.TASK_DASHBOARD;
-import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
+import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
 public abstract class AbstractHomeProducer implements HomeModelProvider {
 
@@ -46,6 +49,7 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
     protected TranslationService translationService;
     protected ProfilePreferences profilePreferences;
     private ShortcutHelper shortcutHelper;
+    private FileSystemConfiguration configuration = new FileSystemConfiguration();
 
     public AbstractHomeProducer() {
         //CDI proxy
@@ -59,13 +63,18 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
         this.shortcutHelper = shortcutHelper;
     }
 
+    @Override
+    public void initialize(Runnable done) {
+        done.run();
+    }
+
     public HomeModel get(ProfilePreferences preferences) {
         this.profilePreferences = preferences;
         final HomeModel model = new HomeModel(translationService.format(Constants.Heading),
                                               translationService.format(Constants.SubHeading),
                                               "images/community_home_bg.jpg");
 
-        switch(profilePreferences.getProfile()) {
+        switch (profilePreferences.getProfile()) {
             case FULL:
                 addProfileFullShortcuts(model);
                 break;
@@ -75,17 +84,16 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
             default:
                 addProfileFullShortcuts(model);
                 break;
-        
         }
         return model;
     }
-    
+
     private void addProfileRulesPlannerShortcuts(final HomeModel model) {
         model.addShortcut(createDesignShortcut());
         model.addShortcut(createDeployShortcut());
     }
 
-    private void addProfileFullShortcuts(final HomeModel model) {
+    protected void addProfileFullShortcuts(final HomeModel model) {
         model.addShortcut(createDesignShortcut());
         model.addShortcut(createDeployShortcut());
         model.addShortcut(createManageShortcut());
@@ -155,12 +163,12 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
         }
         return translationService.format(Constants.DeployDescription1);
     }
-    
+
     protected String getDesignDescription() {
         if (profilePreferences.getProfile() == Profile.PLANNER_AND_RULES) {
             return translationService.format(Constants.DesignDescription);
         } else {
-            return translationService.format(Constants.DesignDescriptionFull);        
+            return translationService.format(Constants.DesignDescriptionFull);
         }
     }
 
