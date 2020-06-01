@@ -11,7 +11,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 
 package org.kie.bc.client.home;
 
@@ -19,6 +19,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.enterprise.inject.Alternative;
 
+import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.bc.client.resources.i18n.Constants;
 import org.kie.workbench.common.profile.api.preferences.Profile;
@@ -28,6 +29,7 @@ import org.kie.workbench.common.screens.home.model.HomeModelProvider;
 import org.kie.workbench.common.screens.home.model.HomeShortcut;
 import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
+import org.uberfire.backend.fs.FileSystemService;
 import org.uberfire.client.mvp.PlaceManager;
 
 import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
@@ -62,7 +64,7 @@ public class HomeProducer extends AbstractHomeProducer {
                                             LIBRARY));
         if (profilePreferences.getProfile() == Profile.FULL) {
             design.addLink(new HomeShortcutLink(translationService.format(Constants.Pages),
-                                            CONTENT_MANAGEMENT));
+                                                CONTENT_MANAGEMENT));
         }
         return design;
     }

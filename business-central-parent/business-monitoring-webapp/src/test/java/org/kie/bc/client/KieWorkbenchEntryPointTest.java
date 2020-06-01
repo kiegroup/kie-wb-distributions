@@ -30,7 +30,6 @@ import org.guvnor.common.services.shared.config.AppConfigService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.bc.client.KieWorkbenchEntryPoint;
 import org.kie.bc.client.navigation.NavTreeDefinitions;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
@@ -38,6 +37,7 @@ import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
 import org.kie.workbench.common.workbench.client.error.DefaultWorkbenchErrorCallback;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
 import org.mockito.Mock;
+import org.uberfire.backend.fs.FileSystemService;
 import org.uberfire.client.mvp.ActivityBeansCache;
 import org.uberfire.client.workbench.Workbench;
 import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPresenter;
@@ -48,8 +48,17 @@ import org.uberfire.mocks.EventSourceMock;
 import org.uberfire.mvp.Command;
 import org.uberfire.workbench.model.menu.MenuFactory;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(GwtMockitoTestRunner.class)
 public class KieWorkbenchEntryPointTest {
@@ -100,11 +109,15 @@ public class KieWorkbenchEntryPointTest {
     @Mock
     private DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback;
 
+    @Mock
+    private FileSystemService fileSystemService;
+
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     @Before
     public void setup() {
-        navTreeDefinitions = new NavTreeDefinitions();
+        doReturn(true).when(this.fileSystemService).isGitDefaultFileSystem();
+        navTreeDefinitions = new NavTreeDefinitions(new CallerMock<>(this.fileSystemService));
         navigationManager = new NavigationManagerImpl(new CallerMock<>(navigationServices),
                                                       null,
                                                       navTreeLoadedEvent,
@@ -148,7 +161,7 @@ public class KieWorkbenchEntryPointTest {
     }
 
     @Test
-    public void testInitializeWorkbench(){
+    public void testInitializeWorkbench() {
         kieWorkbenchEntryPoint.initializeWorkbench();
 
         verify(permissionTreeSetup).configureTree();
@@ -243,7 +256,7 @@ public class KieWorkbenchEntryPointTest {
     }
 
     @Test
-    public void testSetupAdminPage(){
+    public void testSetupAdminPage() {
         kieWorkbenchEntryPoint.setupAdminPage();
 
         verify(adminPageHelper).setup(false,
