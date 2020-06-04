@@ -11,10 +11,6 @@
   <name>jBPM server distribution</name>
   <description>Single ZIP jBPM server distribution</description>
 
-  <properties>
-    <version.org.postgresql>42.2.1</version.org.postgresql>
-  </properties>
-  
   <dependencies>
     <dependency>
       <groupId>org.kie.server</groupId>
