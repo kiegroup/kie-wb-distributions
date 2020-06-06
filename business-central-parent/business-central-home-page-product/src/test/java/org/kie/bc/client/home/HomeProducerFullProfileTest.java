@@ -29,7 +29,7 @@ import org.kie.workbench.common.screens.home.client.widgets.shortcut.utils.Short
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.profile.api.preferences.Profile;
 import org.kie.workbench.common.profile.api.preferences.ProfilePreferences;
-import org.kie.workbench.common.workbench.client.PerspectiveIds;
+import  org.kie.workbench.common.services.shared.resources.PerspectiveIds;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;

@@ -16,6 +16,17 @@
 
 package org.kie.bc.client.home;
 
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.EXECUTION_ERRORS;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.JOBS;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.PROCESS_DASHBOARD;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.PROCESS_DEFINITIONS;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.PROCESS_INSTANCES;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.PROVISIONING;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.SERVER_MANAGEMENT;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.TASKS;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.TASKS_ADMIN;
+import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.TASK_DASHBOARD;
+
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.kie.bc.client.resources.i18n.Constants;
 import org.kie.workbench.common.profile.api.preferences.Profile;
@@ -28,16 +39,6 @@ import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.uberfire.client.mvp.PlaceManager;
 
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.EXECUTION_ERRORS;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.JOBS;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DASHBOARD;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_DEFINITIONS;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROCESS_INSTANCES;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.PROVISIONING;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.SERVER_MANAGEMENT;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASKS_ADMIN;
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.TASK_DASHBOARD;
 import static org.uberfire.workbench.model.ActivityResourceType.PERSPECTIVE;
 
 public abstract class AbstractHomeProducer implements HomeModelProvider {
