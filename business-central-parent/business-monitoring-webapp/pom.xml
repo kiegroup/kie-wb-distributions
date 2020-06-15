@@ -1167,6 +1167,16 @@
       <scope>runtime</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.wildfly.core</groupId>
+      <artifactId>wildfly-domain-management</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.msc</groupId>
+      <artifactId>jboss-msc</artifactId>
+    </dependency>
+
     <!-- Validation -->
     <dependency>
       <groupId>org.jboss.errai</groupId>

@@ -41,6 +41,10 @@
           <groupId>xml-apis</groupId>
           <artifactId>xml-apis-ext</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.jboss.modules</groupId>
+          <artifactId>jboss-modules</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
