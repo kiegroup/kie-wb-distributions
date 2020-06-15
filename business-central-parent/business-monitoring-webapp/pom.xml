@@ -14,7 +14,7 @@
 
   <properties>
     <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
-    <jboss.home>${project.build.directory}/wildfly-${version.org.jboss.errai.wildfly}</jboss.home>
+    <jboss.home>${project.build.directory}/wildfly-${version.org.wildfly}</jboss.home>
   </properties>
 
   <dependencies>
