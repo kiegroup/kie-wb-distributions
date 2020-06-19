@@ -1782,7 +1782,7 @@
       <scope>runtime</scope>
     </dependency>
 
-    <dependency>
+    <!--dependency>
       <groupId>org.wildfly.core</groupId>
       <artifactId>wildfly-domain-management</artifactId>
     </dependency>
@@ -1790,7 +1790,7 @@
     <dependency>
       <groupId>org.jboss.msc</groupId>
       <artifactId>jboss-msc</artifactId>
-    </dependency>
+    </dependency-->
 
     <!-- UF Security management provider for Keycloak.  -->
     <dependency>
