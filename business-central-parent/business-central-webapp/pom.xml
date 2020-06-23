@@ -896,7 +896,6 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-workitems-editor-backend</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
