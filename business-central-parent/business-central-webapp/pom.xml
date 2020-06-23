@@ -677,7 +677,6 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-workbench-backend</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <!-- Datasource management -->
