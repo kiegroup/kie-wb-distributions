@@ -668,6 +668,7 @@
     <dependency>
       <groupId>org.kie.workbench.profile</groupId>
       <artifactId>kie-wb-common-profile-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
@@ -676,6 +677,7 @@
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-workbench-backend</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Datasource management -->
@@ -895,6 +897,7 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-wb-workitems-editor-backend</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -1310,6 +1313,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-ssh-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -1476,6 +1480,7 @@
     <dependency>
       <groupId>org.kie.soup</groupId>
       <artifactId>kie-soup-dataset-core</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie.soup</groupId>
@@ -2161,6 +2166,7 @@
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
       <artifactId>kie-wb-common-stunner-case-mgmt-project-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -2194,6 +2200,7 @@
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
       <artifactId>kie-wb-common-stunner-bpmn-project-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -2322,6 +2329,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-experimental-backend</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
