@@ -38,7 +38,7 @@
 
   <properties>
     <!-- Add the absolute path for $JBOSS_HOME below to manage another instance -->
-    <errai.jboss.home>${project.build.directory}/wildfly-${version.org.jboss.errai.wildfly}</errai.jboss.home>
+    <errai.jboss.home>${project.build.directory}/wildfly-${version.org.wildfly}</errai.jboss.home>
     <gwt.compiler.localWorkers>1</gwt.compiler.localWorkers>
     <gwt.memory.settings>-Xmx6g -Xms1g -Xss1M</gwt.memory.settings>
     <login.bundle.name>org.kie.bc.client.resources.i18n.LoginConstants</login.bundle.name>
