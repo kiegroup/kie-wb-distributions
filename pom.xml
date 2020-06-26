@@ -30,7 +30,7 @@
   <description>Business Central - Distributions</description>
 
   <properties>
-    <deployable.classifier.wildfly>wildfly18</deployable.classifier.wildfly>
+    <deployable.classifier.wildfly>wildfly19</deployable.classifier.wildfly>
     <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
     <deployable.classifier.standalone>thorntail</deployable.classifier.standalone>       
 
