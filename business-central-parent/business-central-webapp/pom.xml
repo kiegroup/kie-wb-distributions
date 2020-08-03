@@ -1563,6 +1563,11 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.dashbuilder</groupId>
+      <artifactId>dashbuilder-external-backend</artifactId>
+    </dependency>
+
     <!-- org.drools -->
     <dependency>
       <groupId>org.drools</groupId>

@@ -115,6 +115,17 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
 
+	<!-- Custom Component assets server -->
+
+  <servlet>
+    <servlet-name>DashbuilderExternalComponentsServlet</servlet-name>
+    <servlet-class>org.dashbuilder.external.ExternalComponentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DashbuilderExternalComponentsServlet</servlet-name>
+    <url-pattern>/dashbuilder/component/*</url-pattern>
+  </servlet-mapping>	 
+
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>
@@ -381,6 +392,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/stencilset/*</url-pattern>
       <url-pattern>/plugins/*</url-pattern>
       <url-pattern>/verifier/*</url-pattern>
+      <url-pattern>/dashbuilder/component/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
