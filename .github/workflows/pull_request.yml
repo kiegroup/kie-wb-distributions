@@ -17,7 +17,7 @@ jobs:
           java-version: ${{ matrix.java-version }}
       - name: Build Chain ${{ matrix.java-version }}
         id: build-chain
-        uses: kiegroup/github-action-build-chain@master
+        uses: kiegroup/github-action-build-chain@v1.4
         with:
           parent-dependencies: 'optaweb-vehicle-routing'
           build-command: 'mvn -e -nsu clean install -Dfull -Prun-code-coverage -Pwildfly -Dcontainer=wildfly -Dcontainer.profile=wildfly -Dintegration-tests=true -Dmaven.test.failure.ignore=true -Pbusiness-central -Dgwt.compiler.localWorkers=1 -Dwebdriver.firefox.bin=/opt/tools/firefox-60esr/firefox-bin -DjvmArgs="-Xms1g -Xmx4g"'
