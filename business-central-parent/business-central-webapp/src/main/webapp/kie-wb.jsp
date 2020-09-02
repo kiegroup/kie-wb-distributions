@@ -35,6 +35,14 @@
     <link rel="shortcut icon" href="images/drools.gif" type="image/gif"/>
     <link rel="icon" href="images/drools.gif" type="image/gif"/>
 
+    <script type="text/javascript" src="model/Jsonix-all.js"></script>
+    <script type="text/javascript" src="model/DC.js"></script>
+    <script type="text/javascript" src="model/DI.js"></script>
+    <script type="text/javascript" src="model/DMNDI12.js"></script>
+    <script type="text/javascript" src="model/DMN12.js"></script>
+    <script type="text/javascript" src="model/KIE.js"></script>
+    <script type="text/javascript" src="model/MainJs.js"></script>
+    <script type="text/javascript" src="model/FormatterJs.js"></script>
 </head>
 <body>
   <iframe id="__gwt_historyFrame" style="width: 0; height: 0; border: 0"></iframe>
