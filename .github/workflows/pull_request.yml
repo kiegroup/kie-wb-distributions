@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     name: disk space info
     steps:
-      - name: Install takari
+      - name:  disk info
         run: df -H
                                                                                 
