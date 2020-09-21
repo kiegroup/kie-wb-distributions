@@ -13,8 +13,9 @@ jobs:
     steps:
       - name: Free disk space
         run: |
-          df -h          
-          sudo swapoff /swapfile
+          df -h
+          sudo swapoff -a
+          sudo rm -f /swapfile
           sudo rm -rf /swapfile /usr/share/dotnet /usr/local/lib/android /opt/ghc
           sudo apt clean
           docker rmi $(docker image ls -aq) >/dev/null 2>&1
