@@ -24,7 +24,7 @@ jobs:
         id: build-chain
         uses: kiegroup/github-action-build-chain@v1.4
         with:
-          parent-dependencies: 'optaweb-vehicle-routing'
+          parent-dependencies: 'optaweb-vehicle-routing@master:7.x'
           build-command: 'mvn -e -nsu install -Dfull -Prun-code-coverage -Pwildfly -Dcontainer=wildfly -Dcontainer.profile=wildfly -Dintegration-tests=true -Dmaven.test.failure.ignore=true -Pbusiness-central -Dgwt.compiler.localWorkers=1 -Dwebdriver.firefox.bin=/opt/tools/firefox-60esr/firefox-bin'
           build-command-upstream: |
             mvn -e --builder smart -T1C install -DskipTests -Dgwt.compiler.skip=true -Dgwt.skipCompilation=true -Denforcer.skip=true -Dcheckstyle.skip=true -Dspotbugs.skip=true -Drevapi.skip=true
