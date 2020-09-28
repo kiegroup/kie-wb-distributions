@@ -40,6 +40,7 @@ public class HomeRuntimeProducer extends AbstractHomeProducer {
 
     private Caller<FileSystemService> fileSystemService;
     private FileSystemConfiguration configuration = new FileSystemConfiguration();
+    private HomeConfiguration homeConfiguration;
 
     public HomeRuntimeProducer() {
         //CDI proxy
@@ -49,11 +50,13 @@ public class HomeRuntimeProducer extends AbstractHomeProducer {
     public HomeRuntimeProducer(final PlaceManager placeManager,
                                final TranslationService translationService,
                                final ShortcutHelper shortcutHelper,
-                               Caller<FileSystemService> fileSystemService) {
+                               Caller<FileSystemService> fileSystemService,
+                               final HomeConfiguration homeConfiguration) {
         super(placeManager,
               translationService,
               shortcutHelper);
         this.fileSystemService = fileSystemService;
+        this.homeConfiguration = homeConfiguration;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class HomeRuntimeProducer extends AbstractHomeProducer {
     @Override
     protected void addProfileFullShortcuts(final HomeModel model) {
 
-        if (configuration.isGitEnabled()) {
+        if (configuration.isGitEnabled() && !homeConfiguration.isMonitoring()) {
             model.addShortcut(createDesignShortcut());
         }
         model.addShortcut(createDeployShortcut());

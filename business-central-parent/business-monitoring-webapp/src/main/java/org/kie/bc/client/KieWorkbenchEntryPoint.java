@@ -26,6 +26,7 @@ import org.dashbuilder.navigation.event.NavTreeChangedEvent;
 import org.guvnor.common.services.shared.config.AppConfigService;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.ioc.client.api.EntryPoint;
+import org.kie.bc.client.home.HomeConfiguration;
 import org.kie.bc.client.navigation.NavTreeDefinitions;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.authz.PermissionTreeSetup;
@@ -66,6 +67,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
     protected NavigationExplorerScreen navigationExplorerScreen;
 
     protected AppFormerJsBridge appFormerJsBridge;
+    
+    private HomeConfiguration homeConfiguration;
 
     @Inject
     public KieWorkbenchEntryPoint(final Caller<AppConfigService> appConfigService,
@@ -80,7 +83,8 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
                                   final NavigationManager navigationManager,
                                   final NavigationExplorerScreen navigationExplorerScreen,
                                   final DefaultWorkbenchErrorCallback defaultWorkbenchErrorCallback,
-                                  final AppFormerJsBridge appFormerJsBridge) {
+                                  final AppFormerJsBridge appFormerJsBridge,
+                                  final HomeConfiguration homeConfiguration) {
         super(appConfigService,
               activityBeansCache,
               defaultWorkbenchErrorCallback);
@@ -94,12 +98,14 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         this.navigationManager = navigationManager;
         this.navigationExplorerScreen = navigationExplorerScreen;
         this.appFormerJsBridge = appFormerJsBridge;
+        this.homeConfiguration = homeConfiguration;
     }
 
     @PostConstruct
     public void init() {
         appFormerJsBridge.init("org.kie.bc.KIEWebapp");
-
+        homeConfiguration.setMonitoring(true);
+        
         workbench.addStartupBlocker(KieWorkbenchEntryPoint.class);
 
         // Due to a limitation in the Menus API the number of levels in the workbench's menu bar
