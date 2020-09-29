@@ -15,20 +15,16 @@
  */
 package org.kie.bc.client.navigation;
 
-import java.util.Optional;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.dashbuilder.navigation.NavTree;
 import org.dashbuilder.navigation.impl.NavTreeBuilder;
 import org.jboss.errai.common.client.api.Caller;
-import org.kie.bc.client.home.FileSystemConfiguration;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
 import org.uberfire.backend.fs.FileSystemService;
 
 import static org.dashbuilder.navigation.workbench.NavWorkbenchCtx.perspective;
-import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.CONTENT_MANAGEMENT;
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.EXECUTION_ERRORS;
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.JOBS;
 import static org.kie.workbench.common.services.shared.resources.PerspectiveIds.PROCESS_DASHBOARD;
@@ -48,9 +44,6 @@ public class NavTreeDefinitions {
 
     public static final String GROUP_WORKBENCH = "wb_group";
 
-    public static final String GROUP_DESIGN = "wb_group_design";
-    public static final String ENTRY_PAGES = "wb_entry_pages";
-
     public static final String GROUP_DEPLOY = "wb_group_deploy";
     public static final String ENTRY_PROVISIONING = "wb_entry_provisioning";
     public static final String ENTRY_EXECUTION_SERVERS = "wb_entry_execution_servers";
@@ -68,22 +61,12 @@ public class NavTreeDefinitions {
     public static final String ENTRY_TASK_DASHBOARD = "wb_entry_task_dashboard";
 
     private NavigationConstants i18n = NavigationConstants.INSTANCE;
-    private Caller<FileSystemService> fileSystemService;
-    private FileSystemConfiguration configuration = new FileSystemConfiguration();
 
     public NavTreeDefinitions() {
     }
 
-    @Inject
-    public NavTreeDefinitions(Caller<FileSystemService> fileSystemService) {
-        this.fileSystemService = fileSystemService;
-    }
-
     public void initialize(Runnable done) {
-        this.fileSystemService.call((Boolean enabled) -> {
-            configuration.setGitEnabled(enabled);
-            done.run();
-        }).isGitDefaultFileSystem();
+        done.run();
     }
 
     public NavTree buildDefaultNavTree() {
@@ -93,20 +76,6 @@ public class NavTreeDefinitions {
                        i18n.navTreeWorkbenchDescr(),
                        false);
 
-        if (configuration.isGitEnabled()) {
-            navTreeBuilder = navTreeBuilder
-                    .group(GROUP_DESIGN,
-                           i18n.navTreeDesignName(),
-                           i18n.navTreeDesignDescr(),
-                           false)
-                    .item(ENTRY_PAGES,
-                          i18n.navTreePageAuthoringName(),
-                          i18n.navTreePageAuthoringDescr(),
-                          false,
-                          perspective(CONTENT_MANAGEMENT))
-                    .endGroup();
-        }
-        
         navTreeBuilder = navTreeBuilder
                 .group(GROUP_DEPLOY,
                        i18n.navTreeDeployName(),

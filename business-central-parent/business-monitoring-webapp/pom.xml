@@ -1545,7 +1545,11 @@
             <compileSourcesArtifact>org.dashbuilder:dashbuilder-renderer-c3</compileSourcesArtifact>
             <compileSourcesArtifact>org.dashbuilder:dashbuilder-navigation-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.dashbuilder:dashbuilder-navigation-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.dashbuilder:dashbuilder-cms-client</compileSourcesArtifact>
+	    <compileSourcesArtifact>org.dashbuilder:dashbuilder-cms-client</compileSourcesArtifact>
+
+            <!-- Layout Manager -->
+            <compileSourcesArtifact>org.uberfire:uberfire-layout-editor-api</compileSourcesArtifact>
+	    <compileSourcesArtifact>org.uberfire:uberfire-layout-editor-client</compileSourcesArtifact>
 
             <!-- Guvnor -->
             <compileSourcesArtifact>org.uberfire:uberfire-structure-api</compileSourcesArtifact>

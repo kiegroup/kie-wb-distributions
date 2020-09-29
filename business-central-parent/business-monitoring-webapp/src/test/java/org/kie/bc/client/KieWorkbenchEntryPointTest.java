@@ -30,6 +30,7 @@ import org.guvnor.common.services.shared.config.AppConfigService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kie.bc.client.home.HomeConfiguration;
 import org.kie.bc.client.navigation.NavTreeDefinitions;
 import org.kie.bc.client.resources.i18n.NavigationConstants;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
@@ -49,7 +50,6 @@ import org.uberfire.mvp.Command;
 import org.uberfire.workbench.model.menu.MenuFactory;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doAnswer;
@@ -111,13 +111,16 @@ public class KieWorkbenchEntryPointTest {
 
     @Mock
     private FileSystemService fileSystemService;
+    
+    @Mock
+    private HomeConfiguration homeConfiguration;
 
     private KieWorkbenchEntryPoint kieWorkbenchEntryPoint;
 
     @Before
     public void setup() {
         doReturn(true).when(this.fileSystemService).isGitDefaultFileSystem();
-        navTreeDefinitions = new NavTreeDefinitions(new CallerMock<>(this.fileSystemService));
+        navTreeDefinitions = new NavTreeDefinitions();
         navigationManager = new NavigationManagerImpl(new CallerMock<>(navigationServices),
                                                       null,
                                                       navTreeLoadedEvent,
@@ -145,7 +148,8 @@ public class KieWorkbenchEntryPointTest {
                                                                 navigationManager,
                                                                 navigationExplorerScreen,
                                                                 defaultWorkbenchErrorCallback,
-                                                                mock(AppFormerJsBridge.class)));
+                                                                mock(AppFormerJsBridge.class), 
+                                                                homeConfiguration));
 
         doNothing().when(kieWorkbenchEntryPoint).hideLoadingPopup();
         when(navigationExplorerScreen.getNavTreeEditor()).thenReturn(navTreeEditor);
@@ -185,9 +189,6 @@ public class KieWorkbenchEntryPointTest {
 
         NavGroup workbench = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_WORKBENCH);
 
-        NavGroup design = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DESIGN);
-        NavItem pages = navTree.getItemById(NavTreeDefinitions.ENTRY_PAGES);
-
         NavGroup deploy = (NavGroup) navTree.getItemById(NavTreeDefinitions.GROUP_DEPLOY);
         NavItem execServers = navTree.getItemById(NavTreeDefinitions.ENTRY_EXECUTION_SERVERS);
 
@@ -204,22 +205,15 @@ public class KieWorkbenchEntryPointTest {
         NavItem taskDashboard = navTree.getItemById(NavTreeDefinitions.ENTRY_TASK_DASHBOARD);
 
         assertNotNull(workbench);
-        assertNotNull(design);
         assertNotNull(deploy);
         assertNotNull(manage);
         assertNotNull(track);
-        assertEquals(design.getParent(),
-                     workbench);
         assertEquals(deploy.getParent(),
                      workbench);
         assertEquals(manage.getParent(),
                      workbench);
         assertEquals(track.getParent(),
                      workbench);
-
-        assertNotNull(pages);
-        assertEquals(pages.getParent(),
-                     design);
 
         assertNotNull(execServers);
         assertEquals(execServers.getParent(),
@@ -251,8 +245,6 @@ public class KieWorkbenchEntryPointTest {
         assertEquals(taskDashboard.getParent(),
                      track);
 
-        assertFalse(design.isModifiable());
-        assertFalse(pages.isModifiable());
     }
 
     @Test
