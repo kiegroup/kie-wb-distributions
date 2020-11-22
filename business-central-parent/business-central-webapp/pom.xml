@@ -2053,17 +2053,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.kie.workbench.stunner</groupId>
-      <artifactId>kie-wb-common-stunner-kogito-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.kie.workbench.stunner</groupId>
-      <artifactId>kie-wb-common-stunner-kogito-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
     <!-- Stunner and BPMN set. -->
     <dependency>
       <groupId>org.kie.workbench.stunner</groupId>
@@ -2679,8 +2668,6 @@
 
             <!-- TODO kogito needs refactoring out of Business Central -->
             <compileSourcesArtifact>org.kie.workbench:kie-wb-common-kogito-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-kogito-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-kogito-client</compileSourcesArtifact>
 
             <!-- Stunner <-> jBPM Designer integration -->
             <compileSourcesArtifact>org.kie.workbench.stunner:kie-wb-common-stunner-jbpm-designer-integration-shared</compileSourcesArtifact>
