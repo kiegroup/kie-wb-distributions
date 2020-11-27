@@ -141,7 +141,6 @@
   <!-- Stunner. -->
   <inherits name="org.kie.workbench.common.stunner.project.StunnerProjectClient"/>
   <inherits name="org.kie.workbench.common.stunner.bpmn.StunnerBpmnProjectClient"/>
-  <inherits name="org.kie.workbench.common.stunner.cm.StunnerCaseManagementProjectClient"/>
 
   <!-- TODO kogito needs refactoring out of Business Central -->
   <inherits name="org.kie.workbench.common.stunner.kogito.StunnerKogitoClient"/>
