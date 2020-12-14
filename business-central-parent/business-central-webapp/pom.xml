@@ -323,6 +323,19 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- TRUSTY PMML -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-pmml-dependencies</artifactId>
+      <type>pom</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.glassfish.jaxb</groupId>
+          <artifactId>jaxb-runtime</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- LEGACY PMML -->
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>kie-pmml</artifactId>
