@@ -25,6 +25,7 @@ import org.guvnor.rest.client.CloneProjectRequest;
 import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
@@ -42,6 +43,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
         createSpace(SPACE);
     }
 
+    @Ignore("https://issues.redhat.com/browse/JBPM-9542")
     @Test
     @Jira("GUVNOR-2542")
     public void testCloneRepositoryNotExistingUrl() {
