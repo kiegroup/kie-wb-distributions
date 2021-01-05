@@ -27,6 +27,7 @@ import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.Space;
 import org.guvnor.rest.client.SpaceRequest;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
@@ -75,6 +76,7 @@ public class SpaceIntegrationTest extends RestTestBase {
         testCreate(space);
     }
 
+    @Ignore("https://issues.redhat.com/browse/JBPM-9542")
     @Test
     @Jira("GUVNOR-2542")
     public void testCreateWithDescription() {

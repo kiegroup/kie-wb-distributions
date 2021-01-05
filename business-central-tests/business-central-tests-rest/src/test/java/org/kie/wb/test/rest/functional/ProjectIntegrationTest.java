@@ -36,6 +36,7 @@ import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.BranchResponse;
 import org.guvnor.rest.client.TestProjectRequest;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
@@ -60,6 +61,7 @@ public class ProjectIntegrationTest extends RestTestBase {
         createSpace(SPACE);
     }
 
+    @Ignore("https://issues.redhat.com/browse/JBPM-9542")
     @Test
     @Jira("GUVNOR-2542")
     public void testCreateProjectWithoutName() {
@@ -95,6 +97,7 @@ public class ProjectIntegrationTest extends RestTestBase {
         createProject("projectWithoutVersion", null, GROUP_ID, VERSION);
     }
 
+    @Ignore("https://issues.redhat.com/browse/JBPM-9542")
     @Jira("GUVNOR-2542")
     @Test(expected = NotFoundException.class)
     public void testDeleteNotExistingProject() {
