@@ -41,8 +41,6 @@ import org.kie.wb.test.rest.client.RestWorkbenchClient;
 import org.kie.wb.test.rest.client.WorkbenchClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import qa.tools.ikeeper.client.JiraClient;
-import qa.tools.ikeeper.test.IKeeperJUnitConnector;
 
 public abstract class RestTestBase {
 
@@ -103,9 +101,6 @@ public abstract class RestTestBase {
             System.out.println();
         }
     };
-
-    @Rule
-    public IKeeperJUnitConnector issueKeeper = new IKeeperJUnitConnector(new JiraClient("https://issues.jboss.org"));
 
     protected static SpaceRequest createSpace(String name) {
         Space orgUnit = new Space();

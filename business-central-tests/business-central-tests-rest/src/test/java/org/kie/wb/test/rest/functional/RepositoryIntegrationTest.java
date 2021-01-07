@@ -25,10 +25,10 @@ import org.guvnor.rest.client.CloneProjectRequest;
 import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
-import qa.tools.ikeeper.annotation.Jira;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.wb.test.rest.functional.Utils.getProjectNames;
@@ -43,7 +43,7 @@ public class RepositoryIntegrationTest extends RestTestBase {
     }
 
     @Test
-    @Jira("GUVNOR-2542")
+    @Ignore("GUVNOR-2542")
     public void testCloneRepositoryNotExistingUrl() {
         final CloneProjectRequest cloneProjectRequest = new CloneProjectRequest();
         cloneProjectRequest.setName("clonedRepoWithNotExistingUrl");
