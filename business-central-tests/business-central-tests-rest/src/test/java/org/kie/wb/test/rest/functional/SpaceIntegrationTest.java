@@ -27,10 +27,10 @@ import org.guvnor.rest.client.JobStatus;
 import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.Space;
 import org.guvnor.rest.client.SpaceRequest;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
-import qa.tools.ikeeper.annotation.Jira;
 
 public class SpaceIntegrationTest extends RestTestBase {
 
@@ -76,7 +76,7 @@ public class SpaceIntegrationTest extends RestTestBase {
     }
 
     @Test
-    @Jira("GUVNOR-2542")
+    @Ignore("GUVNOR-2542")
     public void testCreateWithDescription() {
         final Space space = new Space();
         space.setName("spaceWithDescription");
