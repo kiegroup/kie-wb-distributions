@@ -36,10 +36,10 @@ import org.guvnor.rest.client.ProjectResponse;
 import org.guvnor.rest.client.BranchResponse;
 import org.guvnor.rest.client.TestProjectRequest;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.wb.test.rest.RestTestBase;
 import org.kie.wb.test.rest.client.NotSuccessException;
-import qa.tools.ikeeper.annotation.Jira;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -61,7 +61,7 @@ public class ProjectIntegrationTest extends RestTestBase {
     }
 
     @Test
-    @Jira("GUVNOR-2542")
+    @Ignore("GUVNOR-2542")
     public void testCreateProjectWithoutName() {
         CreateProjectRequest createProjectRequest = new CreateProjectRequest();
         createProjectRequest.setGroupId(GROUP_ID);
@@ -95,7 +95,7 @@ public class ProjectIntegrationTest extends RestTestBase {
         createProject("projectWithoutVersion", null, GROUP_ID, VERSION);
     }
 
-    @Jira("GUVNOR-2542")
+    @Ignore("GUVNOR-2542")
     @Test(expected = NotFoundException.class)
     public void testDeleteNotExistingProject() {
         try {
