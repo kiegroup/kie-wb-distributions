@@ -433,6 +433,21 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     </web-resource-collection>
   </security-constraint>
 
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>rest controller</web-resource-name>
+      <url-pattern>/rest/controller/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>PUT</http-method>
+      <http-method>POST</http-method>
+      <http-method>DELETE</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>rest-all</role-name>
+    </auth-constraint>
+  </security-constraint>
+
   <login-config>
     <auth-method>BASIC?silent=true,FORM</auth-method>
     <form-login-config>
