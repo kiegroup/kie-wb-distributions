@@ -24,6 +24,16 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>business-central-webapp</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.activation</groupId>
+          <artifactId>activation</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jboss.spec.javax.xml.bind</groupId>
+          <artifactId>jboss-jaxb-api_2.3_spec</artifactId>
+        </exclusion>
+      </exclusions>
       <type>war</type>
     </dependency>
 
@@ -63,7 +73,15 @@
        <exclusion>
           <groupId>org.jboss.modules</groupId>
           <artifactId>jboss-modules</artifactId>
-        </exclusion>	       
+        </exclusion>
+        <exclusion>
+          <groupId>org.jboss.spec.javax.xml.bind</groupId>
+          <artifactId>jboss-jaxb-api_2.3_spec</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.activation</groupId>
+          <artifactId>activation</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
   </dependencies>
