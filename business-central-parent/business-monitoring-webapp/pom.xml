@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>business-central-parent</artifactId>
-    <version>7.49.0-SNAPSHOT</version>
+    <version>7.50.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>business-monitoring-webapp</artifactId>
@@ -1106,6 +1106,12 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-nio2-k8s</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.xml.bind</groupId>
+          <artifactId>jaxb-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
