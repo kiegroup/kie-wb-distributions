@@ -155,21 +155,35 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>io.thorntail</groupId>
-          <artifactId>thorntail-maven-plugin</artifactId>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-jar-maven-plugin</artifactId>
           <configuration>
-            <fractionDetectMode>never</fractionDetectMode>
-            <fractions>
-              <fraction>logging</fraction>
-              <fraction>undertow</fraction>
-              <fraction>cdi</fraction>
-              <fraction>ejb</fraction>
-              <fraction>jaxrs</fraction>
-              <fraction>ee</fraction>
-              <fraction>security</fraction>
-              <fraction>management</fraction>
-              <fraction>datasources</fraction>
-            </fractions>
+            <feature-pack-location>org.jboss.eap:wildfly-galleon-pack:${version.server.bootable-jar}</feature-pack-location>
+            <layers>
+              <layer>logging</layer>
+              <layer>undertow</layer>
+              <layer>cdi</layer>
+              <layer>ejb</layer>
+              <layer>jaxrs</layer>
+              <layer>ee</layer>
+<!--              <layer>elytron</layer> &lt;!&ndash; Is this right? &ndash;&gt;-->
+              <layer>legacy-security</layer> <!-- Is this right? -->
+              <layer>management</layer>
+              <layer>datasources</layer>
+            </layers>
+
+<!--            <fractionDetectMode>never</fractionDetectMode>-->
+<!--            <fractions>-->
+<!--              <fraction>logging</fraction>-->
+<!--              <fraction>undertow</fraction>-->
+<!--              <fraction>cdi</fraction>-->
+<!--              <fraction>ejb</fraction>-->
+<!--              <fraction>jaxrs</fraction>-->
+<!--              <fraction>ee</fraction>-->
+<!--              <fraction>security</fraction>-->
+<!--              <fraction>management</fraction>-->
+<!--              <fraction>datasources</fraction>-->
+<!--            </fractions>-->
           </configuration>
           <executions>
             <execution>
