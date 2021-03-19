@@ -28,6 +28,8 @@
       <!-- JMS API required by kie-server-client as there is an runtime API dependency
            (even though the JMS is not being used for the communication itself). -->
       <module name="javax.jms.api"/>
+      <!-- For Kafka Dataset -->
+      <module name="org.jboss.remoting-jmx"/>
     </dependencies>
   </deployment>
 </jboss-deployment-structure>
