@@ -1654,7 +1654,6 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-dmn-api</artifactId>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
@@ -1664,7 +1663,6 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-dmn-feel</artifactId>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
@@ -2277,6 +2275,33 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- DMN Editor - Client side FEEL -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-dmn-feel-gwt</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-dmn-feel-gwt</artifactId>
+      <classifier>sources</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-dmn-feel</artifactId>
+      <classifier>sources</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.rikkola.gwt</groupId>
+      <artifactId>antlr4-c3-gwt</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4gwt-runtime</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.kie.workbench.screens</groupId>
       <artifactId>kie-wb-common-library-api</artifactId>
@@ -2567,6 +2592,14 @@
             <compileSourcesArtifact>org.kie.workbench:kie-wb-common-dmn-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench:kie-wb-common-dmn-project-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench:kie-wb-common-dmn-webapp-kogito-marshaller</compileSourcesArtifact>
+
+            <!-- DMN Editor - Client side FEEL -->
+            <compileSourcesArtifact>org.rikkola.gwt:antlr4-c3-gwt</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie:kie-dmn-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie:kie-dmn-feel</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie:kie-dmn-feel-gwt</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie:kie-dmn-feel-gwt-functions</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie:kie-dmn-model</compileSourcesArtifact>
 
             <!-- Models for OptaPlanner Workbench Screens -->
             <compileSourcesArtifact>org.optaplanner:optaplanner-workbench-models-datamodel-api</compileSourcesArtifact>
