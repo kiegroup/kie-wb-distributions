@@ -142,6 +142,14 @@
       <param-name>excludedPaths</param-name>
       <param-value>/rest/healthy,/rest/ready,/rest/swagger.json</param-value>
     </init-param>
+    <init-param>
+      <param-name>allowRoles</param-name>
+      <param-value>admin,rest-all</param-value>
+    </init-param>
+    <init-param>
+      <param-name>needAuthorizationPaths</param-name>
+      <param-value>/rest/controller/</param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>
@@ -431,21 +439,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/rest/healthy</url-pattern>
       <url-pattern>/rest/swagger.json</url-pattern>
     </web-resource-collection>
-  </security-constraint>
-
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>rest controller</web-resource-name>
-      <url-pattern>/rest/controller/*</url-pattern>
-      <http-method>GET</http-method>
-      <http-method>PUT</http-method>
-      <http-method>POST</http-method>
-      <http-method>DELETE</http-method>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>admin</role-name>
-      <role-name>rest-all</role-name>
-    </auth-constraint>
   </security-constraint>
 
   <login-config>
