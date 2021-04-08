@@ -38,6 +38,22 @@
           <groupId>ant</groupId>
           <artifactId>ant</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>net.sourceforge.htmlunit</groupId>
+          <artifactId>htmlunit</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-webapp</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-servlets</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-annotations</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -540,6 +556,16 @@
     <dependency>
       <groupId>org.kie.workbench.services</groupId>
       <artifactId>kie-wb-common-refactoring-backend</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-analyzers-common</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.uberfire</groupId>
+      <artifactId>uberfire-metadata-backend-elasticsearch</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -1801,6 +1827,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.wildfly.security</groupId>
+      <artifactId>wildfly-elytron</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.wildfly.core</groupId>
       <artifactId>wildfly-domain-management</artifactId>
     </dependency>
@@ -1816,11 +1848,11 @@
       <artifactId>uberfire-security-management-keycloak</artifactId>
       <scope>runtime</scope>
       <exclusions>
-        <exclusion> 
+        <exclusion>
           <groupId>org.jboss.resteasy</groupId>
           <artifactId>resteasy-jackson-provider</artifactId>
         </exclusion>
-        <exclusion> 
+        <exclusion>
           <groupId>org.codehaus.jackson</groupId>
           <artifactId>jackson-core-asl</artifactId>
         </exclusion>
@@ -1828,7 +1860,7 @@
           <groupId>org.jboss.resteasy</groupId>
           <artifactId>resteasy-jaxrs</artifactId>
         </exclusion>
-        <exclusion> 
+        <exclusion>
           <groupId>org.keycloak</groupId>
           <artifactId>keycloak-common</artifactId>
         </exclusion>
@@ -1841,15 +1873,15 @@
       <artifactId>keycloak-core</artifactId>
       <scope>runtime</scope>
       <exclusions>
-        <exclusion> 
+        <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk15on</artifactId>
         </exclusion>
-        <exclusion> 
+        <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk15on</artifactId>
         </exclusion>
-      </exclusions> 
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -1857,11 +1889,11 @@
       <artifactId>keycloak-common</artifactId>
       <scope>runtime</scope>
       <exclusions>
-        <exclusion> 
+        <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk15on</artifactId>
         </exclusion>
-        <exclusion> 
+        <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk15on</artifactId>
         </exclusion>
@@ -1869,7 +1901,7 @@
           <groupId>com.sun.activation</groupId>
           <artifactId>jakarta.activation</artifactId>
         </exclusion>
-      </exclusions> 
+      </exclusions>
     </dependency>
 
     <!-- Validation -->
