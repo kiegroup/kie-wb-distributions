@@ -231,7 +231,7 @@
         </dependency>
       </dependencies>
       <properties>
-        <cargo.container.id>wildfly19x</cargo.container.id>
+        <cargo.container.id>wildfly23x</cargo.container.id>
       </properties>
       <build>
         <pluginManagement>
@@ -342,8 +342,8 @@
               <configuration>
                 <container>
                   <type>installed</type>
-                  <!-- WildFly ~= EAP 7, so just reuse the wildfly19x containerId -->
-                  <containerId>wildfly19x</containerId>
+                  <!-- WildFly ~= EAP 7, so just reuse the wildfly23x containerId -->
+                  <containerId>wildfly23x</containerId>
                   <type>installed</type>
                   <zipUrlInstaller>
                     <url>${eap7.download.url}</url>
