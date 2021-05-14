@@ -64,9 +64,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Install firefox and set FIREFOX_FOLDER env variable
+        run: |
+          wget https://ftp.mozilla.org/pub/firefox/releases/60.9.0esr/linux-x86_64/en-US/firefox-60.9.0esr.tar.bz2
+          tar -xf firefox-60.9.0esr.tar.bz2
+          echo "FIREFOX_FOLDER=`pwd`/firefox" >> $GITHUB_ENV
       - name: Build Chain ${{ matrix.java-version }}
         id: build-chain
-        uses: kiegroup/github-action-build-chain@v2.2
+        uses: kiegroup/github-action-build-chain@v2.5.4
         with:
           definition-file: https://raw.githubusercontent.com/${GROUP}/droolsjbpm-build-bootstrap/${BRANCH}/.ci/pull-request-config.yaml
         env:
