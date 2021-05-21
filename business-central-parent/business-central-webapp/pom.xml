@@ -2410,7 +2410,12 @@
         <filtering>true</filtering>
       </testResource>
     </testResources>
-
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
 	<artifactId>maven-war-plugin</artifactId>
