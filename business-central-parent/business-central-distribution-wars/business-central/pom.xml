@@ -50,7 +50,7 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>business-central-webapp</artifactId>
-      <classifier>thorntail</classifier>
+      <classifier>bootable</classifier>
       <exclusions>
         <exclusion>
           <groupId>org.yaml</groupId>
