@@ -32,7 +32,7 @@
   <properties>
     <deployable.classifier.wildfly>wildfly23</deployable.classifier.wildfly>
     <deployable.classifier.eap7>eap7</deployable.classifier.eap7>
-    <deployable.classifier.standalone>thorntail</deployable.classifier.standalone>       
+    <deployable.classifier.standalone>standalone</deployable.classifier.standalone>
 
     <spotbugs.failOnViolation>true</spotbugs.failOnViolation>
     <errai.marshalling.very_short_names>false</errai.marshalling.very_short_names>

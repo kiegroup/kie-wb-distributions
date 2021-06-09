@@ -282,7 +282,7 @@
                 </container>
                 <configuration>
                   <properties>
-                    <cargo.jboss.configuration>standalone</cargo.jboss.configuration>
+                    <cargo.jboss.configuration>bootable</cargo.jboss.configuration>
                     <cargo.jvmargs>-Xmx1024m</cargo.jvmargs>
                     <cargo.servlet.port>${container.port}</cargo.servlet.port>
                     <cargo.jboss.management-http.port>${cargo.management.port}</cargo.jboss.management-http.port>

@@ -21,7 +21,7 @@
   <dependencySets>
     <dependencySet>
       <includes>
-        <include>org.kie:${artifactId}-webapp:jar:thorntail</include>
+        <include>org.kie:${artifactId}-webapp:jar:standalone</include>
       </includes>
       <outputDirectory>.</outputDirectory>
       <unpack>true</unpack>
