@@ -31,7 +31,7 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>business-monitoring-webapp</artifactId>
-      <classifier>thorntail</classifier>
+      <classifier>bootable</classifier>
       <exclusions>
         <exclusion>
           <groupId>org.yaml</groupId>
