@@ -107,7 +107,7 @@
       <plugins>
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
-          <artifactId>cargo-maven2-plugin</artifactId>
+          <artifactId>cargo-maven3-plugin</artifactId>
           <configuration>
             <container>
               <containerId>${cargo.container.id}</containerId>
@@ -231,7 +231,7 @@
         </dependency>
       </dependencies>
       <properties>
-        <cargo.container.id>wildfly19x</cargo.container.id>
+        <cargo.container.id>wildfly23x</cargo.container.id>
       </properties>
       <build>
         <pluginManagement>
@@ -260,7 +260,7 @@
             </plugin>
             <plugin>
               <groupId>org.codehaus.cargo</groupId>
-              <artifactId>cargo-maven2-plugin</artifactId>
+              <artifactId>cargo-maven3-plugin</artifactId>
               <configuration>
                 <container>
                   <type>installed</type>
@@ -338,12 +338,12 @@
           <plugins>
             <plugin>
               <groupId>org.codehaus.cargo</groupId>
-              <artifactId>cargo-maven2-plugin</artifactId>
+              <artifactId>cargo-maven3-plugin</artifactId>
               <configuration>
                 <container>
                   <type>installed</type>
-                  <!-- WildFly ~= EAP 7, so just reuse the wildfly19x containerId -->
-                  <containerId>wildfly19x</containerId>
+                  <!-- WildFly ~= EAP 7, so just reuse the wildfly23x containerId -->
+                  <containerId>wildfly23x</containerId>
                   <type>installed</type>
                   <zipUrlInstaller>
                     <url>${eap7.download.url}</url>
@@ -422,7 +422,7 @@
             </plugin>
             <plugin>
               <groupId>org.codehaus.cargo</groupId>
-              <artifactId>cargo-maven2-plugin</artifactId>
+              <artifactId>cargo-maven3-plugin</artifactId>
               <executions>
                 <execution>
                   <id>start-container</id>
