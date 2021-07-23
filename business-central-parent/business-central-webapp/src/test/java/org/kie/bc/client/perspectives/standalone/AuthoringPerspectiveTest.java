@@ -85,7 +85,7 @@ public class AuthoringPerspectiveTest {
     public void onOpenTest() {
         final Path path = mock(Path.class);
         final WorkspaceProject workspaceProject = mock(WorkspaceProject.class);
-        authoringPerspective.projectPathString = "git://master@MySpace/MyProject/src/main/java/com/myspace/myproject/myasset.java";
+        authoringPerspective.projectPathString = "git://main@MySpace/MyProject/src/main/java/com/myspace/myproject/myasset.java";
 
         doReturn(promises.resolve(true)).when(projectController).canReadBranch(workspaceProject);
         doReturn(true).when(vfsServices).isRegularFile(authoringPerspective.projectPathString);
@@ -102,7 +102,7 @@ public class AuthoringPerspectiveTest {
     @Test
     public void onOpenWithoutPermissionTest() {
         final Path path = mock(Path.class);
-        authoringPerspective.projectPathString = "git://master@MySpace/MyProject/src/main/java/com/myspace/myproject/myasset.java";
+        authoringPerspective.projectPathString = "git://main@MySpace/MyProject/src/main/java/com/myspace/myproject/myasset.java";
 
         doReturn(promises.resolve(false)).when(projectController).canReadBranch(any());
         doReturn(true).when(vfsServices).isRegularFile(authoringPerspective.projectPathString);

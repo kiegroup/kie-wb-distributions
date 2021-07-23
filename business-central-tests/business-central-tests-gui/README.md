@@ -17,4 +17,4 @@ mvn clean verify -Pbusiness-central,wildfly -Dwebdriver.firefox.bin=/path/to/fir
 ```
 
 By default the tests are using headless firefox, so the browser window is not shown.
-If you want to view the browser window as the tests are running, remove `<property name="firefoxArguments">-headless</property>` from [arquillian.xml](https://github.com/kiegroup/business-central-distributions/blob/master/business-central-tests/business-central-tests-gui/src/test/filtered-resources/arquillian.xml).
+If you want to view the browser window as the tests are running, remove `<property name="firefoxArguments">-headless</property>` from [arquillian.xml](https://github.com/kiegroup/business-central-distributions/blob/main/business-central-tests/business-central-tests-gui/src/test/filtered-resources/arquillian.xml).
