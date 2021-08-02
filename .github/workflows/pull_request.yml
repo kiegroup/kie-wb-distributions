@@ -6,7 +6,7 @@ on:
     paths-ignore:
       - 'LICENSE*'
       - '.gitignore'
-      - '*.md'
+      - '**.md'
       - '*.adoc'
       - '*.txt'
 
