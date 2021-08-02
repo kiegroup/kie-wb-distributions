@@ -547,12 +547,6 @@
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-security-client</artifactId>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.spec.javax.interceptor</groupId>
-          <artifactId>jboss-interceptors-api_1.2_spec</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <!-- Errai AS -->

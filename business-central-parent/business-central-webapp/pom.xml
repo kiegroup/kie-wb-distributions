@@ -1009,12 +1009,6 @@
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-security-client</artifactId>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>jakarta.interceptor</groupId>
-          <artifactId>jakarta.interceptor-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <!-- Errai AS -->
