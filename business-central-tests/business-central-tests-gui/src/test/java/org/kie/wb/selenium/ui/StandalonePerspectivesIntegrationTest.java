@@ -64,7 +64,7 @@ public class StandalonePerspectivesIntegrationTest extends KieSeleniumTest {
 
         // Create unique space name
         spaceName = "Standalone_space_" + System.currentTimeMillis();
-        projectAssetPath = "&path=default://main@" + spaceName + "/" + PROJECT_NAME + "/src/main/java/mortgages/mortgages/Applicant.java";
+        projectAssetPath = "&path=default://master@" + spaceName + "/" + PROJECT_NAME + "/src/main/java/mortgages/mortgages/Applicant.java";
         editorFullUrl = BASE_URL + "/" + APP_CONTEXT + STANDALONE_PARAMETER + projectAssetPath;
 
         // Create a space:

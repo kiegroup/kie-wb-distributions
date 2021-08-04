@@ -146,10 +146,10 @@ public class ProjectIntegrationTest extends RestTestBase {
         String name = "projectToBeCompiled";
         createProject(name, null, GROUP_ID, VERSION);
 
-        CompileProjectRequest request = client.compileProject(SPACE, name, "main");
+        CompileProjectRequest request = client.compileProject(SPACE, name, "master");
         assertThat(request.getSpaceName()).isEqualTo(SPACE);
         assertThat(request.getProjectName()).isEqualTo(name);
-        assertThat(request.getBranchName()).isEqualTo("main");
+        assertThat(request.getBranchName()).isEqualTo("master");
     }
 
     @Test
@@ -167,10 +167,10 @@ public class ProjectIntegrationTest extends RestTestBase {
         String name = "projectToBeTested";
         createProject(name, null, GROUP_ID, VERSION);
 
-        TestProjectRequest request = client.testProject(SPACE, name, "main");
+        TestProjectRequest request = client.testProject(SPACE, name, "master");
         assertThat(request.getSpaceName()).isEqualTo(SPACE);
         assertThat(request.getProjectName()).isEqualTo(name);
-        assertThat(request.getBranchName()).isEqualTo("main");
+        assertThat(request.getBranchName()).isEqualTo("master");
     }
 
     @Test
@@ -188,10 +188,10 @@ public class ProjectIntegrationTest extends RestTestBase {
         String name = "projectToBeInstalled" + Math.random();
         createProject(name, null, GROUP_ID, VERSION);
 
-        InstallProjectRequest request = client.installProject(SPACE, name, "main");
+        InstallProjectRequest request = client.installProject(SPACE, name, "master");
         assertThat(request.getSpaceName()).isEqualTo(SPACE);
         assertThat(request.getProjectName()).isEqualTo(name);
-        assertThat(request.getBranchName()).isEqualTo("main");
+        assertThat(request.getBranchName()).isEqualTo("master");
     }
 
     @Test
@@ -239,10 +239,10 @@ public class ProjectIntegrationTest extends RestTestBase {
         String name = "projectToBeDeployed" + Math.random();
         createProject(name, null, GROUP_ID, VERSION);
 
-        DeployProjectRequest request = client.deployProject(SPACE, name, "main");
+        DeployProjectRequest request = client.deployProject(SPACE, name, "master");
         assertThat(request.getSpaceName()).isEqualTo(SPACE);
         assertThat(request.getProjectName()).isEqualTo(name);
-        assertThat(request.getBranchName()).isEqualTo("main");
+        assertThat(request.getBranchName()).isEqualTo("master");
     }
 
     @Test
@@ -283,7 +283,7 @@ public class ProjectIntegrationTest extends RestTestBase {
         Collection<BranchResponse> response = client.getBranches(SPACE, name);
 
         assertThat(response.size()).isEqualTo(1);
-        assertThat(response.toArray(new BranchResponse[1])[0].getName()).isEqualTo("main");
+        assertThat(response.toArray(new BranchResponse[1])[0].getName()).isEqualTo("master");
     }
 
     @Test(expected = NotFoundException.class)
@@ -298,14 +298,14 @@ public class ProjectIntegrationTest extends RestTestBase {
 
         AddBranchRequest addBranchRequest = new AddBranchRequest();
         addBranchRequest.setNewBranchName("branch01");
-        addBranchRequest.setBaseBranchName("main");
+        addBranchRequest.setBaseBranchName("master");
 
         AddBranchJobRequest request = client.addBranch(SPACE, name, addBranchRequest);
 
         assertThat(request.getSpaceName()).isEqualTo(SPACE);
         assertThat(request.getProjectName()).isEqualTo(name);
         assertThat(request.getNewBranchName()).isEqualTo("branch01");
-        assertThat(request.getBaseBranchName()).isEqualTo("main");
+        assertThat(request.getBaseBranchName()).isEqualTo("master");
     }
 
     @Test(expected = NotFoundException.class)
@@ -340,7 +340,7 @@ public class ProjectIntegrationTest extends RestTestBase {
 
         AddBranchRequest addBranchRequest = new AddBranchRequest();
         addBranchRequest.setNewBranchName("branch01");
-        addBranchRequest.setBaseBranchName("main");
+        addBranchRequest.setBaseBranchName("master");
 
         client.addBranch(SPACE, name, addBranchRequest);
 
@@ -358,7 +358,7 @@ public class ProjectIntegrationTest extends RestTestBase {
 
         AddBranchRequest addBranchRequest = new AddBranchRequest();
         addBranchRequest.setNewBranchName("branch01");
-        addBranchRequest.setBaseBranchName("main");
+        addBranchRequest.setBaseBranchName("master");
 
         client.addBranch(SPACE, name, addBranchRequest);
 
