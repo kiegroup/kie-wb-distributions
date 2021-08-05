@@ -392,6 +392,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
       <url-pattern>/plugins/*</url-pattern>
       <url-pattern>/verifier/*</url-pattern>
       <url-pattern>/dashbuilder/component/*</url-pattern>
+      <url-pattern>/docs</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
