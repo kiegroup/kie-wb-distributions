@@ -158,7 +158,7 @@ public class KieWorkbenchEntryPoint extends DefaultWorkbenchEntryPoint {
         // Turn the workbench nav tree into a Menus instance that is passed as input to the workbench's menu bar
         NavTree workbenchNavTree = navigationManager.getNavTree().getItemAsTree(NavTreeDefinitions.GROUP_WORKBENCH);
 
-        profile.getMenuBlackList().forEach(workbenchNavTree::deleteItem);
+        profile.getMenuDenyList().forEach(workbenchNavTree::deleteItem);
 
         TopLevelMenusBuilder<MenuBuilder> builder = menusHelper.buildMenusFromNavTree(workbenchNavTree);
 
