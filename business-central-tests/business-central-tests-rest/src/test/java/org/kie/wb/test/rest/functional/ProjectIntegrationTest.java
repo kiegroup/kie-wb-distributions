@@ -142,7 +142,7 @@ public class ProjectIntegrationTest extends RestTestBase {
     }
 
     @Test
-    public void testCompileProjectMasterBranch() {
+    public void testCompileProjectMainBranch() {
         String name = "projectToBeCompiled";
         createProject(name, null, GROUP_ID, VERSION);
 
@@ -163,7 +163,7 @@ public class ProjectIntegrationTest extends RestTestBase {
     }
 
     @Test
-    public void testTestProjectMasterBranch() {
+    public void testTestProjectMainBranch() {
         String name = "projectToBeTested";
         createProject(name, null, GROUP_ID, VERSION);
 
@@ -184,7 +184,7 @@ public class ProjectIntegrationTest extends RestTestBase {
     }
 
     @Test
-    public void testInstallProjectMasterBranch() {
+    public void testInstallProjectMainBranch() {
         String name = "projectToBeInstalled" + Math.random();
         createProject(name, null, GROUP_ID, VERSION);
 
@@ -235,7 +235,7 @@ public class ProjectIntegrationTest extends RestTestBase {
     }
 
     @Test
-    public void testDeployProjectMasterBranch() {
+    public void testDeployProjectMainBranch() {
         String name = "projectToBeDeployed" + Math.random();
         createProject(name, null, GROUP_ID, VERSION);
 
@@ -312,7 +312,7 @@ public class ProjectIntegrationTest extends RestTestBase {
     public void addBranchUndefinedProject() {
         AddBranchRequest addBranchRequest = new AddBranchRequest();
         addBranchRequest.setNewBranchName("branch01");
-        addBranchRequest.setBaseBranchName("master");
+        addBranchRequest.setBaseBranchName("main");
 
         client.addBranch(SPACE, "undefined", addBranchRequest);
     }
