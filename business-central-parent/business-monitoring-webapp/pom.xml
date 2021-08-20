@@ -153,13 +153,6 @@
       </exclusions>
     </dependency>
 
-    <!-- security for kie server client interaction -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-security</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
     <!-- Logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
