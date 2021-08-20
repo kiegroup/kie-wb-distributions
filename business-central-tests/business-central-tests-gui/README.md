@@ -1,6 +1,6 @@
 # Business Central GUI tests (selenium)
 
-Before the tests run, container is started (using cargo-maven2-plugin) with business-central deployed.
+Before the tests run, container is started (using cargo-maven3-plugin) with business-central deployed.
 These tests require Firefox to be available on the system.
 
 ## Running from CLI
