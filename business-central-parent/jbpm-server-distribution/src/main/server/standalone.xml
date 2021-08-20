@@ -73,13 +73,6 @@
                         <keystore path="application.keystore" relative-to="jboss.server.config.dir" keystore-password="password" alias="server" key-password="password" generate-self-signed-certificate-host="localhost"/>
                     </ssl>
                 </server-identities>
-                <authentication>
-                    <local default-user="$local" allowed-users="*" skip-group-loading="true"/>
-                    <properties path="users.properties" relative-to="jboss.server.config.dir"/>
-                </authentication>
-                <authorization>
-                    <properties path="roles.properties" relative-to="jboss.server.config.dir"/>
-                </authorization>
             </security-realm>
         </security-realms>
         <audit-log>
@@ -259,6 +252,9 @@
             </thread-pools>
             <iiop enable-by-default="false" use-qualified-name="false"/>
             <default-security-domain value="other"/>
+            <application-security-domains>
+                <application-security-domain name="other" security-domain="ApplicationDomain"/>
+            </application-security-domains>
             <default-missing-method-permissions-deny-access value="true"/>
             <log-system-exceptions value="true"/>
         </subsystem>
@@ -276,7 +272,7 @@
             </audit-logging>
             <security-domains>
                 <security-domain name="ApplicationDomain" default-realm="ApplicationRealm" permission-mapper="default-permission-mapper">
-                    <realm name="ApplicationRealm" role-decoder="groups-to-roles"/>
+                    <realm name="ApplicationRealm" role-decoder="from-roles-attribute"/>
                     <realm name="local"/>
                 </security-domain>
                 <security-domain name="ManagementDomain" default-realm="ManagementRealm" permission-mapper="default-permission-mapper">
@@ -286,14 +282,13 @@
             </security-domains>
             <security-realms>
                 <identity-realm name="local" identity="$local"/>
-                <properties-realm name="ApplicationRealm">
-                    <users-properties path="application-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ApplicationRealm"/>
-                    <groups-properties path="application-roles.properties" relative-to="jboss.server.config.dir"/>
-                </properties-realm>
                 <properties-realm name="ManagementRealm">
                     <users-properties path="mgmt-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ManagementRealm"/>
                     <groups-properties path="mgmt-groups.properties" relative-to="jboss.server.config.dir"/>
                 </properties-realm>
+                <filesystem-realm name="ApplicationRealm">
+                    <file path="kie-fs-realm-users" relative-to="jboss.server.config.dir"/>
+                </filesystem-realm>
             </security-realms>
             <mappers>
                 <simple-permission-mapper name="default-permission-mapper" mapping-mode="first">
@@ -304,10 +299,12 @@
                     <permission-mapping match-all="true">
                         <permission-set name="login-permission"/>
                         <permission-set name="default-permissions"/>
+                        <permission-set name="security-domain-permission"/>
                     </permission-mapping>
                 </simple-permission-mapper>
                 <constant-realm-mapper name="local" realm-name="local"/>
                 <simple-role-decoder name="groups-to-roles" attribute="groups"/>
+                <simple-role-decoder name="from-roles-attribute" attribute="role"/>
                 <constant-role-mapper name="super-user-mapper">
                     <role name="SuperUser"/>
                 </constant-role-mapper>
@@ -321,6 +318,9 @@
                     <permission class-name="org.wildfly.transaction.client.RemoteTransactionPermission" module="org.wildfly.transaction.client"/>
                     <permission class-name="org.jboss.ejb.client.RemoteEJBPermission" module="org.jboss.ejb-client"/>
                 </permission-set>
+                <permission-set name="security-domain-permission">
+                    <permission class-name="org.wildfly.security.permission.ElytronPermission" target-name="getSecurityDomain"/>
+                </permission-set>
             </permission-sets>
             <http>
                 <http-authentication-factory name="management-http-authentication" security-domain="ManagementDomain" http-server-mechanism-factory="global">
@@ -328,6 +328,14 @@
                         <mechanism mechanism-name="DIGEST">
                             <mechanism-realm realm-name="ManagementRealm"/>
                         </mechanism>
+                    </mechanism-configuration>
+                </http-authentication-factory>
+                <http-authentication-factory name="application-http-authentication" security-domain="ApplicationDomain" http-server-mechanism-factory="global">
+                    <mechanism-configuration>
+                        <mechanism mechanism-name="BASIC">
+                            <mechanism-realm realm-name="ApplicationRealm"/>
+                        </mechanism>
+                        <mechanism mechanism-name="FORM"/>
                     </mechanism-configuration>
                 </http-authentication-factory>
                 <provider-http-server-mechanism-factory name="global"/>
@@ -442,6 +450,7 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
             <server name="default">
+                <security elytron-domain="ApplicationDomain"/>
                 <security-setting name="#">
                     <role name="guest" send="true" consume="true" create-non-durable-queue="true" delete-non-durable-queue="true"/>
                 </security-setting>
@@ -481,40 +490,6 @@
         <subsystem xmlns="urn:jboss:domain:request-controller:1.0"/>
         <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0"/>
         <subsystem xmlns="urn:jboss:domain:sar:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:security:2.0">
-            <security-domains>
-                <security-domain name="other" cache-type="default">
-                    <authentication>
-                        <login-module code="Remoting" flag="optional">
-                            <module-option name="password-stacking" value="useFirstPass"/>
-                        </login-module>
-                        <login-module code="RealmDirect" flag="required">
-                            <module-option name="password-stacking" value="useFirstPass"/>
-                        </login-module>
-                        <login-module code="org.kie.security.jaas.KieLoginModule" flag="optional" module="deployment.business-central.war"/>
-                        <login-module code="org.kie.security.jaas.KieLoginModule" flag="optional" module="deployment.jbpm-casemgmt.war"/>
-                    </authentication>
-                </security-domain>
-                <security-domain name="jboss-web-policy" cache-type="default">
-                    <authorization>
-                        <policy-module code="Delegating" flag="required"/>
-                    </authorization>
-                </security-domain>
-                <security-domain name="jaspitest" cache-type="default">
-                    <authentication-jaspi>
-                        <login-module-stack name="dummy">
-                            <login-module code="Dummy" flag="optional"/>
-                        </login-module-stack>
-                        <auth-module code="Dummy"/>
-                    </authentication-jaspi>
-                </security-domain>
-                <security-domain name="jboss-ejb-policy" cache-type="default">
-                    <authorization>
-                        <policy-module code="Delegating" flag="required"/>
-                    </authorization>
-                </security-domain>
-            </security-domains>
-        </subsystem>
         <subsystem xmlns="urn:jboss:domain:security-manager:1.0">
             <deployment-permissions>
                 <maximum-set>
@@ -548,6 +523,9 @@
             <handlers>
                 <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
             </handlers>
+            <application-security-domains>
+                <application-security-domain name="other" security-domain="ApplicationDomain"/>
+            </application-security-domains>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:webservices:2.0">
             <wsdl-host>${jboss.bind.address:127.0.0.1}</wsdl-host>
