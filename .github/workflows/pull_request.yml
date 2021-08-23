@@ -48,7 +48,7 @@ jobs:
           echo "FIREFOX_FOLDER=`pwd`/firefox" >> $GITHUB_ENV
       - name: Build Chain ${{ matrix.java-version }}
         id: build-chain
-        uses: kiegroup/github-action-build-chain@issue_167
+        uses: kiegroup/github-action-build-chain@issue_165
         with:
           definition-file: https://raw.githubusercontent.com/${GROUP}/droolsjbpm-build-bootstrap/${BRANCH}/.ci/pull-request-config.yaml
         env:
