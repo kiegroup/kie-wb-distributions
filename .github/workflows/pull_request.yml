@@ -43,8 +43,8 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ matrix.java-version }}-m2
       - name: Install firefox and set FIREFOX_FOLDER env variable
         run: |
-          wget https://ftp.mozilla.org/pub/firefox/releases/60.9.0esr/linux-x86_64/en-US/firefox-60.9.0esr.tar.bz2
-          tar -xf firefox-60.9.0esr.tar.bz2
+          wget https://ftp.mozilla.org/pub/firefox/releases/91.0.1esr/linux-x86_64/en-US/firefox-91.0.1esr.tar.bz2
+          tar -xf firefox-91.0.1esr.tar.bz2
           echo "FIREFOX_FOLDER=`pwd`/firefox" >> $GITHUB_ENV
       - name: Build Chain ${{ matrix.java-version }}
         id: build-chain
