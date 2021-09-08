@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <identity xmlns="urn:elytron:1.0">
     <credentials>
-        <password algorithm="clear" format="base64">AWtpZXNlcnZlcg==</password>
+        <password algorithm="clear" format="base64">AWtpZXNlcnZlcjEh</password>
     </credentials>
     <attributes>
         <attribute name="role" value="kie-server"/>
