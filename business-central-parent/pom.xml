@@ -177,6 +177,10 @@
               <goals>
                 <goal>package</goal>
               </goals>
+              <configuration>
+                <outputFileName>${project.build.finalName}-standalone.jar</outputFileName>
+                <installArtifactClassifier>standalone</installArtifactClassifier>
+              </configuration>
             </execution>
           </executions>
         </plugin>
