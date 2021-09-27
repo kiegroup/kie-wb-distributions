@@ -24,14 +24,8 @@ public class Constants {
     public static final String Heading = "Heading";
     
     @TranslationKey(defaultValue = "")
-    public static final String HeadingDecisionManager = "Heading.DecisionManager";
-
-    @TranslationKey(defaultValue = "")
     public static final String SubHeading = "SubHeading";
     
-    @TranslationKey(defaultValue = "")
-    public static final String SubHeadingDecisionManager = "SubHeading.DecisionManager";
-
     @TranslationKey(defaultValue = "")
     public static final String Design = "Design";
 
@@ -64,9 +58,6 @@ public class Constants {
 
     @TranslationKey(defaultValue = "")
     public static final String ProductName = "ProductName";
-    
-    @TranslationKey(defaultValue = "")
-    public static final String ProductNameRHDM = "ProductNameRHDM";
     
     @TranslationKey(defaultValue = "")
     public static final String BrandImageLabel = "BrandImageLabel";

@@ -160,13 +160,5 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
         return translationService.format(Constants.DeployDescription1);
     }
 
-    protected String getDesignDescription() {
-        if (profilePreferences.getProfile() == Profile.PLANNER_AND_RULES) {
-            return translationService.format(Constants.DesignDescription);
-        } else {
-            return translationService.format(Constants.DesignDescriptionFull);
-        }
-    }
-
     protected abstract HomeShortcut createDesignShortcut();
 }

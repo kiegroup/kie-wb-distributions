@@ -56,7 +56,7 @@ public class HomeProducer extends AbstractHomeProducer {
     protected HomeShortcut createDesignShortcut() {
         final HomeShortcut design = ModelUtils.makeShortcut("pficon pficon-blueprint",
                                                             translationService.format(Constants.Design),
-                                                            getDesignDescription(),
+                                                            translationService.format(Constants.DesignDescriptionFull),
                                                             () -> placeManager.goTo(LIBRARY),
                                                             LIBRARY,
                                                             PERSPECTIVE);

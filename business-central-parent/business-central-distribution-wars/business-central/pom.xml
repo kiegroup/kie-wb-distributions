@@ -150,7 +150,6 @@
                   <descriptors>
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-eap-7-redhat.xml</descriptor>
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-redhat.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-redhat-RHDM.xml</descriptor>
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-zip-redhat.xml</descriptor>
                   </descriptors>
                   <archive>

@@ -111,16 +111,24 @@ public class HomeProducerDroolsPlannerProfileTest {
         assertEquals(Constants.SubHeading,
                      model.getDescription());
 
-        assertEquals(2,
+        assertEquals(4,
                      model.getShortcuts().size());
         assertEquals(Constants.Design,
                      model.getShortcuts().get(0).getHeading());
-        assertEquals(Constants.DesignDescription,
+        assertEquals(Constants.DesignDescriptionFull,
                      model.getShortcuts().get(0).getSubHeading());
         assertEquals(Constants.Deploy,
-                     model.getShortcuts().get(1).getHeading());
+                model.getShortcuts().get(1).getHeading());
         assertEquals(deployDescription,
-                     model.getShortcuts().get(1).getSubHeading());
+                model.getShortcuts().get(1).getSubHeading());
+        assertEquals(Constants.Manage,
+                model.getShortcuts().get(2).getHeading());
+        assertEquals(Constants.ManageDescription,
+                model.getShortcuts().get(2).getSubHeading());
+        assertEquals(Constants.Track,
+                model.getShortcuts().get(3).getHeading());
+        assertEquals(Constants.TrackDescription,
+                model.getShortcuts().get(3).getSubHeading());
     }
 
     private void assertDesign(final HomeModel model) {
