@@ -84,10 +84,11 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
     } 
     
     private void updateProductName(ProfilePreferences p) {
-        if (p.getProfile().equals(Profile.FULL)) {
-            productNameConstant = Constants.ProductName;
-        } else if (p.getProfile().equals(Profile.PLANNER_AND_RULES)) {
-            productNameConstant = Constants.ProductNameRHDM;
+        switch(p.getProfile()) {
+            case Profile.FULL:
+                productNameConstant = Constants.ProductName;
+            default:
+                throw new RuntimeException(String.format("%s is not expected and profile to define product name", p.getProfile()));
         }
     }
 }

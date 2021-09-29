@@ -25,12 +25,11 @@ public class AboutPopupConfigImplTest {
         AboutPopupConfigImpl aboutPopup = new AboutPopupConfigImpl(profilePreferences, translationService);
         aboutPopup.init();
         aboutPopup.productName();
-        Mockito.verify(translationService, times(0)).format(Constants.ProductNameRHDM);
         Mockito.verify(translationService).format(Constants.ProductName);
                                 
     }
     
-    @Test
+    @Test(expected = RuntimeException.class)
     public void aboutPopUpForPlannerAndRulesProfile() {
         ProfilePreferences profilePreferences = mockProfileServices(Profile.PLANNER_AND_RULES);
         TranslationService translationService = mockTranslationservice();
@@ -38,7 +37,6 @@ public class AboutPopupConfigImplTest {
         aboutPopup.init();
         aboutPopup.productName();
         Mockito.verify(translationService, times(0)).format(Constants.ProductName);
-        Mockito.verify(translationService).format(Constants.ProductNameRHDM);
     }
     
     private ProfilePreferences mockProfileServices(Profile profile) {

@@ -76,21 +76,11 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
 
         switch (profilePreferences.getProfile()) {
             case FULL:
-                addProfileFullShortcuts(model);
-                break;
-            case PLANNER_AND_RULES:
-                addProfileRulesPlannerShortcuts(model);
-                break;
             default:
                 addProfileFullShortcuts(model);
                 break;
         }
         return model;
-    }
-
-    private void addProfileRulesPlannerShortcuts(final HomeModel model) {
-        model.addShortcut(createDesignShortcut());
-        model.addShortcut(createDeployShortcut());
     }
 
     protected void addProfileFullShortcuts(final HomeModel model) {
@@ -162,14 +152,6 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
             return translationService.format(Constants.DeployDescription2);
         }
         return translationService.format(Constants.DeployDescription1);
-    }
-
-    protected String getDesignDescription() {
-        if (profilePreferences.getProfile() == Profile.PLANNER_AND_RULES) {
-            return translationService.format(Constants.DesignDescription);
-        } else {
-            return translationService.format(Constants.DesignDescriptionFull);
-        }
     }
 
     protected abstract HomeShortcut createDesignShortcut();
