@@ -89,7 +89,7 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
                 productNameConstant = Constants.ProductName;
                 break;
             default:
-                throw new RuntimeException(String.format("%s is not expected and profile to define product name", profilePreferences.getProfile().getName()));
+                throw new RuntimeException("The profile is not expected and profile to define product name");
         }
     }
 }
