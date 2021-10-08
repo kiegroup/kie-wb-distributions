@@ -76,7 +76,7 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
                 break;
             default:
                 throw new RuntimeException(
-                        String.format("%s is not expected and profile to define product name", profilePreferences.getProfile()));
+                        String.format("%s is not expected and profile to define product name", profilePreferences.getProfile().getName()));
         }
         return model;
     }
