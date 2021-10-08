@@ -41,7 +41,7 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
 
     @Inject
     public AboutPopupConfigImpl(ProfilePreferences profilePreferences,
-            TranslationService translationService) {
+                                TranslationService translationService) {
         this.profilePreferences = profilePreferences;
         this.translationService = translationService;
     }
@@ -84,13 +84,12 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
     }
 
     private void updateProductName(ProfilePreferences profilePreferences) {
-        switch (profilePreferences.getProfile()) {
+        switch(profilePreferences.getProfile()) {
             case FULL:
                 productNameConstant = Constants.ProductName;
                 break;
             default:
-                throw new RuntimeException(
-                        String.format("%s is not expected and profile to define product name", profilePreferences.getProfile()));
+                throw new RuntimeException(String.format("%s is not expected and profile to define product name", profilePreferences.getProfile()));
         }
     }
 }
