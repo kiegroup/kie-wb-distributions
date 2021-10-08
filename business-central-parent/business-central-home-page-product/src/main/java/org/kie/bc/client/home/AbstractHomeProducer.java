@@ -53,8 +53,8 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
     }
 
     public AbstractHomeProducer(final PlaceManager placeManager,
-                                final TranslationService translationService,
-                                final ShortcutHelper shortcutHelper) {
+            final TranslationService translationService,
+            final ShortcutHelper shortcutHelper) {
         this.placeManager = placeManager;
         this.translationService = translationService;
         this.shortcutHelper = shortcutHelper;
@@ -68,25 +68,17 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
     public HomeModel get(ProfilePreferences profilePreferences) {
         this.profilePreferences = profilePreferences;
         HomeModel model = new HomeModel(translationService.format(Constants.Heading),
-                                        translationService.format(Constants.SubHeading),
-                                        "images/home-background.svg");
+                translationService.format(Constants.SubHeading),
+                "images/home-background.svg");
         switch (profilePreferences.getProfile()) {
             case FULL:
                 addProfileFullShortcuts(model);
                 break;
-            case PLANNER_AND_RULES:
-                model = new HomeModel(translationService.format(Constants.HeadingDecisionManager),
-                                      translationService.format(Constants.SubHeadingDecisionManager),
-                                      "images/home-background.svg");
-                addProfileRulesPlannerShortcuts(model);
-                break;
+            default:
+                throw new RuntimeException(
+                        String.format("%s is not expected and profile to define product name", profilePreferences.getProfile()));
         }
         return model;
-    }
-
-    private void addProfileRulesPlannerShortcuts(final HomeModel model) {
-        model.addShortcut(createDesignShortcut());
-        model.addShortcut(createDeployShortcut());
     }
 
     protected void addProfileFullShortcuts(final HomeModel model) {
@@ -98,53 +90,53 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
 
     protected HomeShortcut createTrackShortcut() {
         final HomeShortcut track = ModelUtils.makeShortcut("pficon pficon-trend-up",
-                                                           translationService.format(Constants.Track),
-                                                           translationService.format(Constants.TrackDescription),
-                                                           () -> placeManager.goTo(PROCESS_DASHBOARD),
-                                                           PROCESS_DASHBOARD,
-                                                           PERSPECTIVE);
+                translationService.format(Constants.Track),
+                translationService.format(Constants.TrackDescription),
+                () -> placeManager.goTo(PROCESS_DASHBOARD),
+                PROCESS_DASHBOARD,
+                PERSPECTIVE);
         track.addLink(new HomeShortcutLink(translationService.format(Constants.TaskInbox),
-                                           TASKS));
+                TASKS));
         track.addLink(new HomeShortcutLink(translationService.format(Constants.ProcessReports),
-                                           PROCESS_DASHBOARD));
+                PROCESS_DASHBOARD));
         track.addLink(new HomeShortcutLink(translationService.format(Constants.TaskReports),
-                                           TASK_DASHBOARD));
+                TASK_DASHBOARD));
         return track;
     }
 
     protected HomeShortcut createManageShortcut() {
         final HomeShortcut manage = ModelUtils.makeShortcut("fa fa-briefcase",
-                                                            translationService.format(Constants.Manage),
-                                                            translationService.format(Constants.ManageDescription),
-                                                            () -> placeManager.goTo(PROCESS_INSTANCES),
-                                                            PROCESS_INSTANCES,
-                                                            PERSPECTIVE);
+                translationService.format(Constants.Manage),
+                translationService.format(Constants.ManageDescription),
+                () -> placeManager.goTo(PROCESS_INSTANCES),
+                PROCESS_INSTANCES,
+                PERSPECTIVE);
         manage.addLink(new HomeShortcutLink(translationService.format(Constants.ProcessDefinitions),
-                                            PROCESS_DEFINITIONS));
+                PROCESS_DEFINITIONS));
         manage.addLink(new HomeShortcutLink(translationService.format(Constants.ProcessInstances),
-                                            PROCESS_INSTANCES));
+                PROCESS_INSTANCES));
         manage.addLink(new HomeShortcutLink(translationService.format(Constants.Tasks),
-                                            TASKS_ADMIN));
+                TASKS_ADMIN));
         manage.addLink(new HomeShortcutLink(translationService.format(Constants.Jobs),
-                                            JOBS));
+                JOBS));
         manage.addLink(new HomeShortcutLink(translationService.format(Constants.ExecutionErrors),
-                                            EXECUTION_ERRORS));
+                EXECUTION_ERRORS));
         return manage;
     }
 
     protected HomeShortcut createDeployShortcut() {
         final HomeShortcutLink deployments = new HomeShortcutLink(translationService.format(Constants.Provisioning),
-                                                                  PROVISIONING);
+                PROVISIONING);
         final HomeShortcutLink servers = new HomeShortcutLink(translationService.format(Constants.Servers),
-                                                              SERVER_MANAGEMENT);
+                SERVER_MANAGEMENT);
         final boolean isDeploymentsAuthorized = shortcutHelper.authorize(deployments.getPerspectiveIdentifier());
 
         final HomeShortcut deploy = ModelUtils.makeShortcut("fa fa-gears",
-                                                            translationService.format(Constants.Deploy),
-                                                            getDeployDescription(isDeploymentsAuthorized),
-                                                            () -> placeManager.goTo(SERVER_MANAGEMENT),
-                                                            SERVER_MANAGEMENT,
-                                                            PERSPECTIVE);
+                translationService.format(Constants.Deploy),
+                getDeployDescription(isDeploymentsAuthorized),
+                () -> placeManager.goTo(SERVER_MANAGEMENT),
+                SERVER_MANAGEMENT,
+                PERSPECTIVE);
         if (isDeploymentsAuthorized) {
             deploy.addLink(deployments);
         }

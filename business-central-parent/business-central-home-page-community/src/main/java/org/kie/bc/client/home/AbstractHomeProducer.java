@@ -76,9 +76,11 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
 
         switch (profilePreferences.getProfile()) {
             case FULL:
-            default:
                 addProfileFullShortcuts(model);
                 break;
+            default:
+                throw new RuntimeException(
+                        String.format("%s is not expected and profile to define product name", profilePreferences.getProfile()));
         }
         return model;
     }

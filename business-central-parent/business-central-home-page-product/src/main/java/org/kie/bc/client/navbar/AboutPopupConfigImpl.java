@@ -34,18 +34,18 @@ import org.uberfire.preferences.shared.event.PreferenceUpdatedEvent;
 public class AboutPopupConfigImpl implements AboutPopupConfig {
 
     private TranslationService translationService;
-    
+
     private ProfilePreferences profilePreferences;
-    
+
     String productNameConstant = Constants.ProductName;
-    
+
     @Inject
     public AboutPopupConfigImpl(ProfilePreferences profilePreferences,
-                                TranslationService translationService) {
+            TranslationService translationService) {
         this.profilePreferences = profilePreferences;
         this.translationService = translationService;
     }
-    
+
     @PostConstruct
     public void init() {
         profilePreferences.load(this::updateProductName, RuntimeException::new);
@@ -75,20 +75,22 @@ public class AboutPopupConfigImpl implements AboutPopupConfig {
     public String backgroundImageUrl() {
         return "images/home-background.svg";
     }
-    
+
     public void refreshMenuOnProfilesChange(@Observes PreferenceUpdatedEvent event) {
         if (event.getKey().equalsIgnoreCase("ProfilePreferences")) {
             ProfilePreferences pref = (ProfilePreferences) event.getValue();
             updateProductName(pref);
         }
-    } 
-    
-    private void updateProductName(ProfilePreferences p) {
-        switch(p.getProfile()) {
-            case Profile.FULL:
+    }
+
+    private void updateProductName(ProfilePreferences profilePreferences) {
+        switch (profilePreferences.getProfile()) {
+            case FULL:
                 productNameConstant = Constants.ProductName;
+                break;
             default:
-                throw new RuntimeException(String.format("%s is not expected and profile to define product name", p.getProfile()));
+                throw new RuntimeException(
+                        String.format("%s is not expected and profile to define product name", profilePreferences.getProfile()));
         }
     }
 }
