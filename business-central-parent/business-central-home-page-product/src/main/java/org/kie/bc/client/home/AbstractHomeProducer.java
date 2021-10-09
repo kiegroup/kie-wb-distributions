@@ -74,19 +74,10 @@ public abstract class AbstractHomeProducer implements HomeModelProvider {
             case FULL:
                 addProfileFullShortcuts(model);
                 break;
-            case PLANNER_AND_RULES:
-                model = new HomeModel(translationService.format(Constants.HeadingDecisionManager),
-                                      translationService.format(Constants.SubHeadingDecisionManager),
-                                      "images/home-background.svg");
-                addProfileRulesPlannerShortcuts(model);
-                break;
+            default:
+                throw new RuntimeException("The profile is not expected and profile to define product name");
         }
         return model;
-    }
-
-    private void addProfileRulesPlannerShortcuts(final HomeModel model) {
-        model.addShortcut(createDesignShortcut());
-        model.addShortcut(createDeployShortcut());
     }
 
     protected void addProfileFullShortcuts(final HomeModel model) {
