@@ -1,0 +1,8 @@
+
+# Adding users here
+
+/subsystem=elytron/filesystem-realm=ApplicationRealm:add(path=kie-fs-realm-users,relative-to=jboss.server.config.dir)
+/subsystem=elytron/simple-role-decoder=from-roles-attribute:add(attribute=role)
+/subsystem=elytron/security-domain=exampleFsSD:add(realms=[{realm=ApplicationRealm,role-decoder=from-roles-attribute}],default-realm=ApplicationRealm,permission-mapper=default-permission-mapper)
+/subsystem=elytron/http-authentication-factory=example-fs-http-auth:add(http-server-mechanism-factory=global,security-domain=exampleFsSD,mechanism-configurations=[{mechanism-name=BASIC,mechanism-realm-configurations=[{realm-name=exampleApplicationDomain}]}])
+/subsystem=undertow/application-security-domain=exampleApplicationDomain:add(http-authentication-factory=example-fs-http-auth)

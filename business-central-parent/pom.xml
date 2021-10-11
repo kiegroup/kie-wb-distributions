@@ -155,27 +155,32 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>io.thorntail</groupId>
-          <artifactId>thorntail-maven-plugin</artifactId>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-jar-maven-plugin</artifactId>
           <configuration>
-            <fractionDetectMode>never</fractionDetectMode>
-            <fractions>
-              <fraction>logging</fraction>
-              <fraction>undertow</fraction>
-              <fraction>cdi</fraction>
-              <fraction>ejb</fraction>
-              <fraction>jaxrs</fraction>
-              <fraction>ee</fraction>
-              <fraction>security</fraction>
-              <fraction>management</fraction>
-              <fraction>datasources</fraction>
-            </fractions>
+            <outputFileName>${project.build.finalName}-standalone.jar</outputFileName>
+            <feature-pack-location>wildfly@maven(org.jboss.universe:community-universe)#${version.org.wildfly}</feature-pack-location>
+            <layers>
+              <layer>logging</layer>
+              <layer>undertow</layer>
+              <layer>cdi</layer>
+              <layer>ejb</layer>
+              <layer>jaxrs</layer>
+              <layer>ee</layer>
+              <layer>elytron</layer>
+              <layer>management</layer>
+              <layer>datasources</layer>
+            </layers>
           </configuration>
           <executions>
             <execution>
               <goals>
                 <goal>package</goal>
               </goals>
+              <configuration>
+                <outputFileName>${project.build.finalName}-standalone.jar</outputFileName>
+                <installArtifactClassifier>standalone</installArtifactClassifier>
+              </configuration>
             </execution>
           </executions>
         </plugin>

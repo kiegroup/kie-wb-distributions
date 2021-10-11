@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<identity xmlns="urn:elytron:1.0">
+    <credentials>
+        <password algorithm="clear" format="base64">AXNhbGFib3k=</password>
+    </credentials>
+    <attributes>
+        <attribute name="role" value="admin"/>
+        <attribute name="role" value="analyst"/>
+        <attribute name="role" value="IT"/>
+        <attribute name="role" value="HR"/>
+        <attribute name="role" value="Accounting"/>
+        <attribute name="role" value="rest-all"/>
+        <attribute name="role" value="kie-server"/>
+    </attributes></identity>
