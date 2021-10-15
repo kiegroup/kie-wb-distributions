@@ -279,6 +279,7 @@
                     <!-- disable incremental build to make tests less IO intensive and more stable (https://issues.jboss.org/browse/AF-1310) -->
                     <build.enable-incremental>false</build.enable-incremental>
                   </systemProperties>
+                  <timeout>240000</timeout>
                 </container>
                 <configuration>
                   <properties>
