@@ -1,0 +1,13 @@
+# Add testadmin user
+/subsystem=elytron/filesystem-realm=KieRealm:add-identity(identity=testadmin)
+/subsystem=elytron/filesystem-realm=KieRealm:set-password(identity=testadmin, clear={password="admin1234;"})
+/subsystem=elytron/filesystem-realm=KieRealm:add-identity-attribute(identity=testadmin, name=role, value=["admin","user","rest-all","rest-client","kie-server"])
+
+# Kie Server properties
+/system-property=org.kie.server.id:add(value=test-kie-server)
+/system-property=org.kie.server.location:add(value=http://localhost:8230/kie-server/services/rest/server)
+/system-property=org.kie.server.controller:add(value=http://localhost:8080/rest/controller)
+/system-property=org.kie.server.controller.user:add(value=kieservercontrolleruser)
+/system-property=org.kie.server.controller.pwd:add(value=kieservercontrollerpwd1*)
+/system-property=org.kie.server.user:add(value=kieserveruser)
+/system-property=org.kie.server.pwd:add(value=kieserverpwd1*)
