@@ -20,7 +20,7 @@
   <!-- Assembly configuration for WildFly 10 and EAP 7, shared between the community and product assemblies. -->
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/target/webapp</directory>
+      <directory>${project.basedir}/target/${project.artifactId}-webapp</directory>
       <excludes>
         <exclude>_bootstrap/${project.artifactId}-webapp.war</exclude>
       </excludes>

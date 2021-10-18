@@ -154,7 +154,7 @@
                       <artifactId>${project.artifactId}-webapp</artifactId>
                       <version>${project.version}</version>
                       <classifier>standalone</classifier>
-                      <outputDirectory>${project.build.directory}/webapp</outputDirectory>
+                      <outputDirectory>${project.build.directory}/${project.artifactId}-webapp</outputDirectory>
                     </artifactItem>
                   </artifactItems>
                 </configuration>
@@ -178,7 +178,7 @@
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-zip-redhat.xml</descriptor>
                   </descriptors>
                   <archive>
-                    <manifestFile>${project.build.directory}/webapp/META-INF/MANIFEST.MF</manifestFile>
+                    <manifestFile>${project.build.directory}/${project.artifactId}-webapp/META-INF/MANIFEST.MF</manifestFile>
                   </archive>
                 </configuration>
               </execution>
