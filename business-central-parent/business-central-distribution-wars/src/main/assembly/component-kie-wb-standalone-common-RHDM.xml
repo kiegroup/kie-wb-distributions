@@ -18,21 +18,15 @@
 <component xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/component/1.1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/component/1.1.3 http://maven.apache.org/xsd/component-1.1.3.xsd">
   <!-- Assembly configuration for WildFly 10 and EAP 7, shared between the community and product assemblies. -->
-  <dependencySets>
-    <dependencySet>
-      <includes>
-        <include>org.kie:${artifactId}-webapp:jar:standalone</include>
-      </includes>
+  <fileSets>
+    <fileSet>
+      <directory>${project.basedir}/target/${project.artifactId}-webapp</directory>
+      <excludes>
+        <exclude>_bootstrap/${project.artifactId}-webapp.war</exclude>
+      </excludes>
       <outputDirectory>.</outputDirectory>
-      <unpack>true</unpack>
-      <unpackOptions>
-        <excludes>
-          <exclude>_bootstrap/${artifactId}-webapp.war</exclude>
-        </excludes>
-      </unpackOptions>
-      <useStrictFiltering>true</useStrictFiltering>
-    </dependencySet>
-  </dependencySets>
+    </fileSet>
+  </fileSets>
 
   <files>
 
