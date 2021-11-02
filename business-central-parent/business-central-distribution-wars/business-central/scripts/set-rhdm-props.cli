@@ -1,0 +1,4 @@
+/system-property=org.kie.workbench.profile:add(value=FORCE_PLANNER_AND_RULES)
+/system-property=org.kie.workbench.profile:read-resource
+/system-property=org.jbpm.designer.perspective:add(value=ruleflow)
+/system-property=org.jbpm.designer.perspective:read-resource
