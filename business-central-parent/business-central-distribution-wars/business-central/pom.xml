@@ -224,7 +224,7 @@
                 </goals>
                 <configuration>
                   <outputFileName>${project.build.finalName}-standalone-redhat.jar</outputFileName>
-                  <installArtifactClassifier>standalone</installArtifactClassifier>
+                  <installArtifactClassifier>standalone-redhat</installArtifactClassifier>
                   <cli-sessions>
                     <cli-session>
                       <properties-file>target/cli.properties</properties-file>
@@ -243,7 +243,7 @@
                 </goals>
                 <configuration>
                   <outputFileName>${project.build.finalName}-standalone-redhat-RHDM.jar</outputFileName>
-                  <installArtifactClassifier>standalone-RHDM</installArtifactClassifier>
+                  <installArtifactClassifier>standalone-redhat-RHDM</installArtifactClassifier>
                   <cli-sessions>
                     <cli-session>
                       <properties-file>target/cli.properties</properties-file>
