@@ -63,7 +63,7 @@
        <exclusion>
           <groupId>org.jboss.modules</groupId>
           <artifactId>jboss-modules</artifactId>
-        </exclusion>	       
+        </exclusion>
       </exclusions>
     </dependency>
   </dependencies>
@@ -138,6 +138,22 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>properties-maven-plugin</artifactId>
+            <version>1.0.0</version>
+            <executions>
+              <execution>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>write-project-properties</goal>
+                </goals>
+                <configuration>
+                  <outputFile>${project.build.directory}/cli.properties</outputFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
@@ -173,12 +189,51 @@
                 <configuration>
                   <descriptors>
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-eap-7-redhat.xml</descriptor>
-                    <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-redhat.xml</descriptor>
                     <descriptor>${project.parent.basedir}/src/main/productized/assembly-kie-wb-standalone-zip-redhat.xml</descriptor>
                   </descriptors>
                   <archive>
                     <manifestFile>${project.build.directory}/${project.artifactId}-webapp/META-INF/MANIFEST.MF</manifestFile>
                   </archive>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.wildfly.plugins</groupId>
+            <artifactId>wildfly-jar-maven-plugin</artifactId>
+            <configuration>
+              <feature-pack-location>wildfly@maven(org.jboss.universe:community-universe)#${version.org.wildfly}</feature-pack-location>
+              <layers>
+                <layer>logging</layer>
+                <layer>undertow</layer>
+                <layer>cdi</layer>
+                <layer>ejb</layer>
+                <layer>jaxrs</layer>
+                <layer>ee</layer>
+                <layer>elytron</layer>
+                <layer>management</layer>
+                <layer>datasources</layer>
+              </layers>
+            <hollowJar>true</hollowJar>
+            </configuration>
+            <executions>
+              <execution>
+                <id>rhpam-standalone</id>
+                <goals>
+                  <goal>package</goal>
+                </goals>
+                <configuration>
+                  <outputFileName>${project.build.finalName}-standalone-redhat.jar</outputFileName>
+                  <installArtifactClassifier>standalone-redhat</installArtifactClassifier>
+                  <cli-sessions>
+                    <cli-session>
+                      <properties-file>target/cli.properties</properties-file>
+                      <script-files>
+                        <script>../../scripts/build-script.cli</script>
+                        <script>scripts/deploy-script.cli</script>
+                      </script-files>
+                    </cli-session>
+                  </cli-sessions>
                 </configuration>
               </execution>
             </executions>
