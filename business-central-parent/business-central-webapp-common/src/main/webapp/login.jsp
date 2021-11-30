@@ -22,17 +22,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/forms.css">
-  <link rel="stylesheet" href="styles/login-screen.css">
-  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="<%= request.getContextPath() %>//styles/base.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>//styles/forms.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>//styles/login-screen.css">
+  <link rel="shortcut icon" href="<%= request.getContextPath() %>/favicon.ico" />
   <title><i18n:message key="LoginTitle"></i18n:message></title>
 </head>
 
 <body id="login">
 
 <div id="pfly-login-screen">
-  <img id="logo" src="images/business-central.png" alt="Business Central Logo" title="Powered By Drools/jBPM"/>
+  <img id="logo" src="<%= request.getContextPath() %>/images/business-central.png" alt="Business Central Logo" title="Powered By Drools/jBPM"/>
 
   <div id="login-wrapper" class="png_bg">
     <div id="login-top">
