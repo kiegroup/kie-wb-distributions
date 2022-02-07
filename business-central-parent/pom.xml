@@ -159,7 +159,7 @@
           <artifactId>wildfly-jar-maven-plugin</artifactId>
           <configuration>
             <outputFileName>${project.build.finalName}-standalone.jar</outputFileName>
-            <feature-pack-location>wildfly@maven(org.jboss.universe:community-universe)#${version.org.wildfly}</feature-pack-location>
+            <feature-pack-location>${wildfly.bootable.jar.gav}</feature-pack-location>
             <layers>
               <layer>logging</layer>
               <layer>undertow</layer>
