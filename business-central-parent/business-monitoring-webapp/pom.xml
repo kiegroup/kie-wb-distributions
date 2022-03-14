@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>business-central-parent</artifactId>
-    <version>7.67.0.Final</version>
+    <version>7.67.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>business-monitoring-webapp</artifactId>
