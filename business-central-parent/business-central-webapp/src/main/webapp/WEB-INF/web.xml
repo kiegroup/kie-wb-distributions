@@ -420,6 +420,7 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>public</web-resource-name>
+      <url-pattern>/styles/*</url-pattern>
       <url-pattern>/org.kie.bc.KIEWebapp/ace/*</url-pattern>
       <url-pattern>/org.kie.bc.KIEWebapp/bootstrap-daterangepicker/*</url-pattern>
       <url-pattern>/org.kie.bc.KIEWebapp/bootstrap-select/*</url-pattern>
