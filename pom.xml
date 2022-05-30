@@ -103,13 +103,6 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.optaplanner</groupId>
-        <artifactId>optaplanner-bom</artifactId>
-        <version>${version.org.kie}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
         <groupId>org.jbpm</groupId>
         <artifactId>jbpm-bom</artifactId>
         <version>${version.org.kie}</version>
@@ -212,7 +205,7 @@
 
       <!-- Temporary workaround for https://issues.jboss.org/browse/ERRAI-1101. Needs to stay here until
         we find a general solution (e.g. moving all localized code to Errai TranslationService. -->
-      
+
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>

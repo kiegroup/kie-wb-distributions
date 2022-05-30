@@ -63,9 +63,9 @@
 
   <!-- Home Page - This has the same GWT Module name for Community and Product so we do not need a different module for Product -->
   <inherits name="org.kie.bc.BusinessCentralHomePage"/>
-  
+
   <!-- Profile API -->
-  <inherits name="org.kie.workbench.common.profile.ProfileAPI"/>  
+  <inherits name="org.kie.workbench.common.profile.ProfileAPI"/>
 
   <!--Common Screens -->
   <inherits name="org.kie.workbench.common.screens.explorer.KieWorkbenchProjectExplorerClient"/>
@@ -114,11 +114,6 @@
   <inherits name="org.kie.workbench.common.dmn.project.DMNProjectAPI"/>
   <inherits name="org.kie.workbench.common.dmn.project.DMNProjectClient"/>
   <inherits name="org.kie.workbench.common.dmn.webapp.kogito.marshaller.DMNMarshaller"/>
-
-  <!-- Optaplanner Workbench Screens -->
-  <inherits name="org.optaplanner.workbench.screens.domaineditor.OptaPlannerWorkbenchDomainEditorClient"/>
-  <inherits name="org.optaplanner.workbench.screens.guidedrule.OptaPlannerWorkbenchGuidedRuleEditorClient"/>
-  <inherits name="org.optaplanner.workbench.screens.solver.OptaPlannerWorkbenchSolverEditorClient"/>
 
   <!-- Errai -->
   <inherits name="org.jboss.errai.ui.UI"/>
