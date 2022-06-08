@@ -297,6 +297,7 @@ profile in pom.xml to use that. -->
   </servlet-mapping>
 
   <!-- Start jBPM Designer -->
+  <!--
   <filter>
     <filter-name>Redirect Filter</filter-name>
     <filter-class>org.jbpm.designer.filter.DesignerResourcesRedirectFilter</filter-class>
@@ -309,6 +310,8 @@ profile in pom.xml to use that. -->
     <filter-name>Redirect Filter</filter-name>
     <url-pattern>/org.jbpm.designer.jBPMDesigner/*</url-pattern>
   </filter-mapping>
+
+  -->
   <!-- the number within the session-timout element must be expressed in
 minutes. it is now 24 hours. -->
   <session-config>

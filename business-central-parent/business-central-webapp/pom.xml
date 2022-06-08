@@ -1092,6 +1092,7 @@
     </dependency>
 
     <!-- jBPM Designer -->
+    <!--
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-designer-client</artifactId>
@@ -1136,7 +1137,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-
+-->
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm</artifactId>
@@ -2448,8 +2449,10 @@
             <compileSourcesArtifact>org.jbpm:jbpm-wb-executor-service-client</compileSourcesArtifact>
 
             <!-- jBPM Designer -->
+            <!--
             <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.jbpm:jbpm-designer-client</compileSourcesArtifact>
+            -->
 
             <!-- jBPM Dashboard integration-->
             <compileSourcesArtifact>org.jbpm:jbpm-wb-dashboard-api</compileSourcesArtifact>

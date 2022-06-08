@@ -27,8 +27,10 @@
   <inherits name="org.uberfire.ext.apps.UberfireAppsClient"/>
 
   <!-- designer -->
+  <!--
   <inherits name="org.jbpm.designer.jBPMDesignerAPI"/>
   <inherits name="org.jbpm.designer.jBPMDesignerClient"/>
+  -->
 
   <!-- jbpm-wb -->
   <inherits name="org.jbpm.workbench.ht.JbpmWorkbenchHumanTasksClient"/>
