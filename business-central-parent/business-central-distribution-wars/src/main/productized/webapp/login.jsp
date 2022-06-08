@@ -28,7 +28,7 @@
 </head>
 <body style="background-image: url(<%=request.getContextPath()%>/img/login-background.svg); background-position: top center; background-repeat: no-repeat; background-size: cover">
     <span id="badge">
-        <img id="logo" src="<%=request.getContextPath()%>/img/redhat_logo.svg" alt="Red Hat Logo">
+        <img id="logo" src="<%=request.getContextPath()%>/img/ibm_logo.svg" alt="IBM Logo">
     </span>
 
     <div class="container">
