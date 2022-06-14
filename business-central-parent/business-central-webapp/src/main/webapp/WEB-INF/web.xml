@@ -522,4 +522,9 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <location>/not_authorized.jsp</location>
   </error-page>
 
+  <error-page>
+    <error-code>405</error-code>
+    <location>/NotAuthorizedHandler</location>
+  </error-page>
+
 </web-app>
