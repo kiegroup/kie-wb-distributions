@@ -43,8 +43,8 @@ public class ProjectLibraryIntegrationTest extends KieSeleniumTest {
     @Test
     public void importAndBuildProjectFromStockRepository() {
         final String
-                projectName = "OptaCloud",
-                projectGav = "optacloud:optacloud:1.0.0-SNAPSHOT";
+                projectName = "Mortgages",
+                projectGav = "mortgages:mortgages:1.0.0-SNAPSHOT";
 
         importBuildDeployAndCheckArtifact(
                 projectGav,
