@@ -17,7 +17,6 @@
     <properties>
         <kie-server-webc.staging.dir>${project.build.directory}/kie-server-webc.war</kie-server-webc.staging.dir>
         <kie-server-controller-webc.staging.dir>${project.build.directory}/kie-server-controller-webc.war</kie-server-controller-webc.staging.dir>
-        <optaplanner.staging.dir>${project.build.directory}/optaplanner-distribution-${version.org.kie}</optaplanner.staging.dir>
         <engine.staging.dir>${project.build.directory}/drools-engine</engine.staging.dir>
         <migration-tool.staging.dir>${project.build.directory}/migration-tool</migration-tool.staging.dir>
         <kie-server-controller-ee7.staging.dir>${project.build.directory}/kie-server-controller-ee7.war</kie-server-controller-ee7.staging.dir>
@@ -102,14 +101,6 @@
                                             <classifier>webc</classifier>
                                             <outputDirectory>${kie-server-controller-webc.staging.dir}</outputDirectory>
                                         </artifactItem>
-                                        <!-- planner engine -->
-                                        <artifactItem>
-                                            <groupId>org.optaplanner</groupId>
-                                            <artifactId>optaplanner-distribution</artifactId>
-                                            <version>${version.org.kie}</version>
-                                            <type>zip</type>
-                                            <outputDirectory>${project.build.directory}</outputDirectory>
-                                        </artifactItem>
                                         <!-- decision engine -->
                                         <artifactItem>
                                             <groupId>org.drools</groupId>
@@ -153,7 +144,6 @@
                                         <descriptor>${basedir}/src/main/assembly/kie-server-jws.zip.xml</descriptor>
                                         <descriptor>${basedir}/src/main/assembly/controller-ee7.zip.xml</descriptor>
                                         <descriptor>${basedir}/src/main/assembly/controller-jws.zip.xml</descriptor>
-                                        <descriptor>${basedir}/src/main/assembly/planner-engine.zip.xml</descriptor>
                                         <descriptor>${basedir}/src/main/assembly/decision-engine.zip.xml</descriptor>
                                         <descriptor>${basedir}/src/main/assembly/migration-tool.zip.xml</descriptor>
                                         <descriptor>${basedir}/src/main/assembly/add-ons.zip.xml</descriptor>
