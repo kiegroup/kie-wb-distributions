@@ -1223,6 +1223,11 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>org.w3c</groupId>
+      <artifactId>dom</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-client</artifactId>
       <scope>provided</scope>
