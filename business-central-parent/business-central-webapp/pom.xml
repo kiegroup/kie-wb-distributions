@@ -1212,10 +1212,6 @@
       <artifactId>uberfire-backend-server</artifactId>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>org.w3c</groupId>
-      <artifactId>dom</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>org.uberfire</groupId>
