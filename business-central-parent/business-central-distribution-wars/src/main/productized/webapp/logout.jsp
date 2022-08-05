@@ -31,21 +31,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" class="login-pf" style="background-image: none">
 <head>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/org.kie.bc.KIEWebapp/css/rcue.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/org.kie.bc.KIEWebapp/css/rcue-additions.min.css">
+    <link rel="stylesheet" href="org.kie.bc.KIEWebapp/css/rcue.min.css">
+    <link rel="stylesheet" href="org.kie.bc.KIEWebapp/css/rcue-additions.min.css">
     <link rel="shortcut icon" href="favicon.png"/>
     <title>Business Central</title>
 </head>
-<body style="background-image: url(<%=request.getContextPath()%>/img/login-background.svg); background-position: top center; background-repeat: no-repeat; background-size: cover">
+<body style="background-image: url(img/login-background.svg); background-position: top center; background-repeat: no-repeat; background-size: cover">
     <span id="badge">
-        <img id="logo" src="<%=request.getContextPath()%>/img/redhat_logo.svg" alt="Red Hat Logo">
+        <img id="logo" src="img/redhat_logo.svg" alt="Red Hat Logo">
     </span>
 
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <div id="brand">
-                    <img style="height: auto" src="<%=request.getContextPath()%>/img/BC_Logo.png" alt="BUSINESS CENTRAL" title="BUSINESS CENTRAL"/>
+                    <img style="height: auto" src="img/BC_Logo.png" alt="BUSINESS CENTRAL" title="BUSINESS CENTRAL"/>
                 </div>
             </div>
             <div class="col-sm-7 col-md-6 col-lg-5 login">
@@ -53,7 +53,7 @@
                     <span class="pficon pficon-ok"></span>
                     <strong><i18n:message key="logoutSuccssful">Logout successful</i18n:message></strong>
                 </div>
-                <form class="form-horizontal" role="form" action="<%= request.getContextPath() %>/kie-wb.jsp?locale=<%=locale%>" method="POST">
+                <form class="form-horizontal" role="form" action="kie-wb.jsp?locale=<%=locale%>" method="POST">
                     <div class="form-group">
                         <div class="col-xs-offset-8 col-xs-4 col-sm-offset-8 col-sm-4 col-md-offset-8 col-md-4 submit">
                             <button type="submit" class="btn btn-primary btn-lg" tabindex="1"><i18n:message key="loginAgain">Login again</i18n:message></button>
