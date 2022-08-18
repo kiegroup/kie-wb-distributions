@@ -325,7 +325,6 @@ See http://www.w3.org/TR/SVG/intro.html#MIMEType. -->
     <extension>ico</extension>
     <mime-type>image/x-icon</mime-type>
   </mime-mapping>
-  <!-- End jBPM Designer -->
 
   <!-- security settings -->
   <security-constraint>

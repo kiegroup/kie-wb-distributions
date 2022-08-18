@@ -138,11 +138,6 @@
   <inherits name="org.kie.workbench.common.stunner.project.StunnerProjectClient"/>
   <inherits name="org.kie.workbench.common.stunner.bpmn.StunnerBpmnProjectClient"/>
 
-  <!-- Stunner <-> jBPM Designer integration -->
-  <inherits name="org.kie.workbench.common.stunner.bpmn.integration.StunnerJBPMDesignerIntegrationShared"/>
-  <inherits name="org.kie.workbench.common.stunner.bpmn.integration.StunnerJBPMDesignerIntegrationAPI"/>
-  <inherits name="org.kie.workbench.common.stunner.bpmn.integration.StunnerJBPMDesignerIntegrationClient"/>
-
   <!-- Experimental -->
   <inherits name="org.uberfire.experimental.UberfireExperimentalClient"/>
 

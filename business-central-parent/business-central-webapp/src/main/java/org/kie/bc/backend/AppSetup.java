@@ -109,10 +109,6 @@ public class AppSetup extends BaseAppSetup {
                                                                  "true" ) );
         group.addConfigItem( configurationFactory.newConfigItem( "rule-modeller-onlyShowDSLStatements",
                                                                  "false" ) );
-        group.addConfigItem( configurationFactory.newConfigItem( "designer.context",
-                                                                 "designer" ) );
-        group.addConfigItem( configurationFactory.newConfigItem( "designer.profile",
-                                                                 "jbpm" ) );
         group.addConfigItem( configurationFactory.newConfigItem( "support.runtime.deploy",
                                                                  "true" ) );
         return group;
