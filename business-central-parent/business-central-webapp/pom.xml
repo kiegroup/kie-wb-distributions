@@ -557,11 +557,6 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-metadata-backend-elasticsearch</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <groupId>org.kie.workbench.services</groupId>
       <artifactId>kie-wb-common-refactoring-client</artifactId>
       <scope>provided</scope>
