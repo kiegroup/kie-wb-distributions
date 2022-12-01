@@ -246,7 +246,10 @@ minutes. it is now 24 hours. -->
   <session-config>
     <session-timeout>1440</session-timeout>
     <cookie-config>
+      <path>/</path>
       <http-only>true</http-only>
+      <secure>true</secure>
+      <max-age>1440</max-age>
     </cookie-config>
   </session-config>
 
