@@ -57,6 +57,7 @@ public class LoginPage extends PageObject {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
         loginButton.submit();
+        System.out.println("### TEST - I AM HERE");
     }
 
     public boolean isDisplayed() {
