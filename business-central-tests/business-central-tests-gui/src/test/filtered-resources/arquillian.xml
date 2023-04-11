@@ -22,6 +22,6 @@ limitations under the License.
     <property name="firefox_binary">${webdriver.firefox.bin}</property>
     <property name="firefoxArguments">-headless</property>
     <property name="firefoxDriverVersion">0.26.0</property>
-    <property name="firefoxDriverUrl">https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz</property>
+    <property name="firefoxDriverUrl">https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz</property>
   </extension>
 </arquillian>
