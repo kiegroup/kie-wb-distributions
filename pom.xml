@@ -39,7 +39,7 @@
     <!-- The version greater than 1.0.0.GA is not compatible with GWT 2.8.x -->
     <version.javax.validation>1.0.0.GA</version.javax.validation>
     <wildfly.bootable.jar.gav>org.wildfly:wildfly-galleon-pack:${version.org.wildfly}</wildfly.bootable.jar.gav>
-    <wildfly.bootable.productized.jar.gav>org.jboss.eap:wildfly-galleon-pack:4.0.0.GA-redhat-00011</wildfly.bootable.productized.jar.gav>
+    <wildfly.bootable.productized.jar.gav>org.jboss.eap:wildfly-galleon-pack:4.0.0.GA-redhat-00017</wildfly.bootable.productized.jar.gav>
   </properties>
 
   <repositories>
