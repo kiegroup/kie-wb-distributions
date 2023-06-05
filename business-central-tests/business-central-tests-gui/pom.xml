@@ -138,6 +138,10 @@
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-standalone</artifactId>
     </dependency>
+    <dependency>
+        <groupId>xalan</groupId>
+        <artifactId>xalan</artifactId>
+    </dependency>
 
     <!-- Replacement for the above excluded 'commons-logging:commons-logging' -->
     <dependency>
