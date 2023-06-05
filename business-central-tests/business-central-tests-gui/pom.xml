@@ -142,6 +142,10 @@
         <groupId>xalan</groupId>
         <artifactId>xalan</artifactId>
     </dependency>
+    <dependency>
+        <groupId>xalan</groupId>
+        <artifactId>serializer</artifactId>
+    </dependency>
 
     <!-- Replacement for the above excluded 'commons-logging:commons-logging' -->
     <dependency>
