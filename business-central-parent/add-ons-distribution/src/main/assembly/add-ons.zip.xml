@@ -41,11 +41,6 @@
             <destName>add-ons-${project.version.short}-controller-jws.zip</destName>
             <fileMode>0644</fileMode>
         </file>
-        <file>
-            <source>${project.basedir}/target/add-ons-${project.version}-planner-engine.zip</source>
-            <destName>add-ons-${project.version.short}-planner-engine.zip</destName>
-            <fileMode>0644</fileMode>
-        </file>
       <file>
         <source>${project.build.directory}/add-ons-${project.version}-decision-engine.zip</source>
         <destName>add-ons-${project.version.short}-decision-engine.zip</destName>
