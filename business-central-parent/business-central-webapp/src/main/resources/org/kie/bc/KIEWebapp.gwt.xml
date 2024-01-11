@@ -152,6 +152,7 @@
   <extend-property name="locale" values="es"/>
   <extend-property name="locale" values="fr"/>
   <extend-property name="locale" values="ja"/>
+  <extend-property name="locale" values="it"/>
 
   <collapse-property name="locale" values="*"/>
 
