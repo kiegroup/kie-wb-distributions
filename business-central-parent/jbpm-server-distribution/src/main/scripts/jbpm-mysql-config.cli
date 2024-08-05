@@ -1,7 +1,7 @@
 embed-server --server-config=standalone.xml
 
 try
-	module add --name=com.mysql --resources=drivers/mysql-connector-java.jar --dependencies=javax.api,javax.transaction.api
+	module add --name=com.mysql --resources=drivers/mysql-connector-j.jar --dependencies=javax.api,javax.transaction.api
 catch
 	echo "MySQL module exists"
 end-try

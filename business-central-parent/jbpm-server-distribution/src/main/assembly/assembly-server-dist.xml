@@ -71,7 +71,7 @@
 
     <dependencySet>
       <includes>
-        <include>mysql:mysql-connector-java</include>
+        <include>com.mysql:mysql-connector-j</include>
       </includes>
       <outputDirectory>bin/drivers</outputDirectory>
       <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
