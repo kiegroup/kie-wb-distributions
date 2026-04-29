@@ -123,6 +123,12 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- Override plexus-utils transitive dependency version -->
+      <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-utils</artifactId>
+        <version>3.6.1</version>
+      </dependency>
       <!-- dependencies for jbpm-server-distribution -->
       <dependency>
         <groupId>org.jbpm</groupId>
